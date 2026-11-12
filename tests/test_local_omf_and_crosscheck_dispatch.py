@@ -76,7 +76,7 @@ class IntegrationPass3(unittest.TestCase):
         with self.assertRaises(ValueError):bind_multi(obj,bad,b'',[])
 
     def test_crosscheck_uses_group_member_gate_and_binding(self):
-        recipe=read_json(ROOT/'recipes/obj_seg027.json')
+        recipe=read_json(ROOT/'recipes/audiores.json')
         source=(ROOT/recipe['source']).read_bytes()
         obj,_=compile_source(source,recipe['profile'],recipe.get('compiler_flags'),
                              sparse_zero=recipe.get('sparse_zero'),

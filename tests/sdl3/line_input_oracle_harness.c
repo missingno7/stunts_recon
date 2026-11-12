@@ -1,4 +1,4 @@
-/* Host driver for the separately compiled fresh obj_seg032_group overlay. */
+/* Host driver for the separately compiled fresh lineedit overlay. */
 #include "../../port/port_runtime.h"
 
 #include <stdio.h>

@@ -1,0 +1,180 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "binding": {
+    "declarations": {
+      "externals": [
+        "_shapepointer"
+      ],
+      "groups": [],
+      "publics": [
+        {
+          "name": "_file_unflip_shape2d_pes",
+          "offset": 0,
+          "segment": "S012_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 198,
+          "name": "S012_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 40,
+          "alignment": "byte",
+          "alignment_code": 1,
+          "big": false,
+          "class": "STUNTSD",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 0,
+          "name": "DSEG",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "asm-external-far-call-self-base16-v1"
+  },
+  "end": 156092,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 18979,
+    "line_start": 18849,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DSEG",
+      "frame_index": 2,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "base16",
+      "offset": 40,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "DSEG",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "pointer32",
+      "offset": 45,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_shapepointer",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 155934,
+      "offset": 24862,
+      "segment": 8192
+    },
+    {
+      "load_offset": 155941,
+      "offset": 24869,
+      "segment": 8192
+    }
+  ],
+  "id": "unflip",
+  "include_closure": [
+    {
+      "path": "include/platform_hw.inc",
+      "sha256": "8961b57e4f26d730398c81f883947e5a9836f03b8817bf9fd3637a9a94e52d76",
+      "size": 1927
+    }
+  ],
+  "inventory_name": "file_unflip_shape2d_pes",
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [
+      "_shapepointer"
+    ],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_file_unflip_shape2d_pes",
+        "offset": 0,
+        "segment": "S012_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 198,
+        "name": "S012_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 40,
+        "alignment": "byte",
+        "alignment_code": 1,
+        "big": false,
+        "class": "STUNTSD",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 0,
+        "name": "DSEG",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "S012_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "public": "_file_unflip_shape2d_pes",
+  "source": "lib/unflip.ASM",
+  "stable_id": "load_260f6",
+  "start": 155894,
+  "target": {
+    "sha256": "fb6f20754fb848ed98396de77deba32aa460eafd0dadb9adaf5f961a5f3ec25d",
+    "size": 198
+  }
+}

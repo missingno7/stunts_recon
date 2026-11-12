@@ -39,7 +39,7 @@ class UnitTests(unittest.TestCase):
                 cu.check_manifest(m, _recipe_of)
         refused(lambda items: items[0].update(name='_word_32A30'), 'placeholder')
         refused(lambda items: items[5]['size_basis'].update(declaration='int nowhere;'), 'not in a declaring source')
-        refused(lambda items: items[5].update(declarers=['obj_seg031']), 'declarers')
+        refused(lambda items: items[5].update(declarers=['startup']), 'declarers')
         absorbed = next(i for i in self.row['communals'] if i['size_basis']['kind'] == 'absorbed-gap')
         self.assertEqual((absorbed['name'], absorbed['size'], absorbed['size_basis']['element_size']),
                          ('_rcmapix', 90, 2))

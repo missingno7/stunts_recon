@@ -1,4 +1,4 @@
-/* The include is extracted verbatim from the production obj_seg006 overlay. */
+/* The include is extracted verbatim from the production polygon overlay. */
 #include <stdint.h>
 #define I8 char
 #define I16 int16_t

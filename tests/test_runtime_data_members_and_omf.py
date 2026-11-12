@@ -151,7 +151,7 @@ class LinkFillTests(unittest.TestCase):
         image, _ = _image()
         rows = {o['start']: o for o in manifest['owners'] if o['kind'] == 'LINK_FILL'}
         lead = rows[117842]
-        self.assertEqual((lead['end'], lead['basis'], lead['object']), (117858, DOSSEG_LEAD_BASIS, 'obj_seg009'))
+        self.assertEqual((lead['end'], lead['basis'], lead['object']), (117858, DOSSEG_LEAD_BASIS, 'trackedt'))
         self.assertEqual(checked_fill(lead, manifest, image)['text_frame'], 117840)
         for start in (192387, 192671):
             checked_fill(rows[start], manifest, image)
@@ -181,8 +181,8 @@ class NameBindingTests(unittest.TestCase):
         from assembler import assemble_source
         from omf import OmfReader
         # the data publics that other objects reach with target/external frames
-        wanted = {'keyboard_input_callbacks': {'_joystick_enabled'}, 'projection_vector_window': {'_projection_x_scale', '_projection_y_scale'},
-                  'input_keyboard_joystick_services': {'_callbackflags2'}, 'timer_counter_deadline_helpers': {'_line_input_font_header'}}
+        wanted = {'kbcalls': {'_joystick_enabled'}, 'project': {'_projection_x_scale', '_projection_y_scale'},
+                  'kbjoy': {'_callbackflags2'}, 'timerhlp': {'_line_input_font_header'}}
         for name, publics in wanted.items():
             recipe = read_json(ROOT / ('recipes/%s.json' % name))
             obj, receipt = assemble_source((ROOT / recipe['source']).read_bytes(), recipe['profile'])

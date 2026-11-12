@@ -1,5 +1,5 @@
 """integ33: reviewed L7 readable names adopted program-wide, the far-data `dw seg`
-binder (font_matrix_shape_decode owns fontdefseg + word_30602) and owned DGROUP word-alignment
+binder (fontmat owns fontdefseg + word_30602) and owned DGROUP word-alignment
 fill (link_fill.WORD_BASIS)."""
 import copy
 import sys
@@ -49,7 +49,7 @@ class FarDataSegmentWordTests(unittest.TestCase):
     def setUpClass(cls):
         from assembler import assemble_source
         cls.image, cls.relocations = _oracle()
-        cls.recipe = read_json(ROOT / 'recipes/font_matrix_shape_decode.json')
+        cls.recipe = read_json(ROOT / 'recipes/fontmat.json')
         cls.obj, _ = assemble_source((ROOT / cls.recipe['source']).read_bytes(), cls.recipe['profile'])
 
     def bind(self, recipe=None, obj=None):
@@ -108,7 +108,7 @@ class DgroupWordFillTests(unittest.TestCase):
         from link_fill import checked_fill
         manifest = copy.deepcopy(self.manifest)
         row = self.rows(manifest)[0]
-        row['object'] = 'obj_seg005:_DATA'
+        row['object'] = 'race:_DATA'
         with self.assertRaisesRegex(ValueError, 'does not follow'):
             checked_fill(row, manifest, self.image)
         manifest = copy.deepcopy(self.manifest)

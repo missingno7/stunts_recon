@@ -16,7 +16,8 @@ fields use kind=field and struct, with optional asm_old/asm_new spellings.
 File rows use kind=c-unit or file, old/new repository source paths. Assembly
 module rows use kind=asm-module, old/new owner IDs, source/new_source paths.
 Moves update full path references in recipes/manifest/tools/tests/layout/evidence;
-the oracle lock and port side are immutable to this tool. Inventory member and
+frozen evidence and the oracle lock are immutable. Owner and file references on
+the port side follow these moves. Inventory member and
 mapped_target names stay historical facts. Reports list old-name port occurrences.
 
 --with-declarations OWNER=CANDIDATE stages a C source (in current spellings)
@@ -87,8 +88,9 @@ fprem fprem1 fptan frstor fsave fscale fsetpm fsin fsincos fstcw fstenv fsubp fs
 ftst fucom fucomp fucompp fxam fxtract fyl2x fyl2xp1 fdivp fdivr fdivrp nothing readonly
 private memory endstruc sizestr textequ fortran _based _self _segment _segname'''.split())
 CONFIDENCE = {'low': 0, 'medium': 1, 'high': 2}
-SOURCE_DIRS = ('src', 'asm', 'include')
-STATE_DIRS = (*SOURCE_DIRS, 'recipes', 'layout', 'tools', 'tests', 'evidence')
+SOURCE_DIRS = ('game', 'lib', 'include')
+STATE_DIRS = (*SOURCE_DIRS, 'recipes', 'layout', 'tools', 'tests', 'evidence', 'port', 'docs')
+ROOT_FILES = ('Makefile', 'README.md', 'AGENTS.md')
 MOVE_KINDS = {'file', 'c-unit', 'asm-module'}
 
 def row_id(row):
@@ -163,45 +165,81 @@ def renamed(value, mapping):
     return value
 
 
+def owner_moves(rows):
+    # Legacy c-unit path rows remain plain file renames.
+    return {r['old']: r['new'] for r in rows
+            if r.get('kind') in ('c-unit', 'asm-module') and 'source' in r}
+
+
+def recipe_moves(files, rows):
+    owners = owner_moves(rows)
+    return {key: 'recipes/' + owners[owner] + '.json'
+            for key, item in active_recipes(files).items() for owner in item['owners']
+            if owner in owners and key != 'recipes/' + owners[owner] + '.json'}
+
+
+def frozen_path(name):
+    return (name.startswith(('evidence/', 'docs/evidence/freeze-campaign/')) or
+            name in ('layout/oracle.lock.json', 'layout/function-evidence.json'))
+
+
 def renamed_owners(value, mapping, field=None):
     if isinstance(value, dict):
-        return {mapping.get(k, k): renamed_owners(v, mapping, k) for k, v in value.items()}
+        result = {mapping.get(k, k): renamed_owners(v, mapping, k)
+                  for k, v in value.items()}
+        if value.get('id') in mapping and value.get('kind', '').startswith('MATCHING_'):
+            if 'name' in value:
+                result['name'] = mapping[value['id']]
+        return result
     if isinstance(value, list):
-        return [renamed_owners(v, mapping, field) for v in value]
+        result = [renamed_owners(v, mapping, field) for v in value]
+        return sorted(result) if field in ('declarers', 'declaring_owners') else result
     if isinstance(value, str):
-        if field in ('id', 'owner', 'owner_id', 'code_owner', 'source_owner', 'owners', 'declaring_owners', 'declaring_owner', 'parent') and value in mapping:
-            return mapping.get(value, value)
+        if field in ('id', 'owner', 'owner_id', 'code_owner', 'source_owner',
+                     'owners', 'declaring_owners', 'declaring_owner', 'declarers',
+                     'parent', 'object', 'previous_owner') and value in mapping:
+            return mapping[value]
         for old, new in mapping.items():
-            if value == old + ':_BSS':
-                return new + ':_BSS'
+            if value.startswith(old + ':'):
+                return new + value[len(old):]
     return value
 
 
 def canonical_files(root):
-    return {p.relative_to(root).as_posix(): p.read_bytes()
-            for folder in STATE_DIRS
-            for p in sorted((root / folder).rglob('*'))
-            if p.is_file() and '__pycache__' not in p.parts}
+    paths = [p for folder in STATE_DIRS for p in sorted((root / folder).rglob('*'))
+             if p.is_file() and '__pycache__' not in p.parts]
+    paths.extend(root / n for n in ROOT_FILES if (root / n).is_file())
+    return {p.relative_to(root).as_posix(): p.read_bytes() for p in paths}
 
 
 def make_changes(files, rows):
     mapping = symbol_map(rows)
     omf = {k: v for k, v in mapping.items() if k.startswith('_')}
-    moves = file_moves(rows)
+    moves = {a: b for a, b in file_moves(rows).items() if a != b}
+    moves.update(recipe_moves(files, rows))
     path_spellings = dict(moves)
     for old, new in moves.items():
         path_spellings[old.replace('/', '\\')] = new.replace('/', '\\')
         path_spellings[old.replace('/', '\\\\')] = new.replace('/', '\\\\')
-        if Path(old).name != Path(new).name:
-            require(old not in files or sum(Path(n).name.casefold() == Path(old).name.casefold() for n in files if n.startswith(('src/', 'asm/'))) == 1,
+        if Path(old).name != Path(new).name and old.split('/')[0] in SOURCE_DIRS:
+            require(old not in files or sum(Path(n).name.casefold() == Path(old).name.casefold() for n in files if n.split('/')[0] in SOURCE_DIRS[:-1]) == 1,
                     'Ambiguous source basename in path references: ' + Path(old).name)
             path_spellings[Path(old).name] = Path(new).name
-    owners = {r['old']: r['new'] for r in rows if r.get('kind') == 'asm-module'}
+    owners = owner_moves(rows)
+    recipe_ids = {key: owners[owner] for key, item in active_recipes(files).items()
+                  for owner in item['owners'] if owner in owners}
+    path_pattern = re.compile(r'(?<![A-Za-z_0-9.])(?:' + '|'.join(
+        re.escape(n) for n in sorted(path_spellings, key=len, reverse=True)) +
+        r')(?![A-Za-z_0-9.])', re.I) if path_spellings else None
+    folded_paths = {k.casefold(): v for k, v in path_spellings.items()}
     fields = [r for r in rows if r.get('kind') == 'field']
     changes = {}
     for name, raw in files.items():
         path = Path(name)
-        if name.startswith(('port/', 'tools/porting/', 'docs/porting/')):
+        if frozen_path(name):
+            continue
+        port_side = name.startswith(('port/', 'tools/porting/', 'docs/porting/'))
+        if port_side and not (owners or moves):
             continue
         if path.parts[0] in SOURCE_DIRS and path.suffix.lower() in ('.c', '.h', '.asm', '.inc'):
             asm = path.suffix.lower() in ('.asm', '.inc')
@@ -215,8 +253,17 @@ def make_changes(files, rows):
             # immutable inventory facts (recipe members and mapped_target).
             document = json.loads(raw)
             historical = name.startswith(('evidence/', 'tests/fixtures/')) or name == 'layout/function-evidence.json'
-            updated = renamed(document, {**({} if historical else omf), **moves})
-            updated = renamed_owners(updated, owners)
+            updated = renamed(document, {**({} if historical or port_side else omf), **moves})
+            if not historical:
+                updated = renamed_owners(updated, owners)
+            if name in recipe_ids:
+                if 'members' not in document and 'prefix_members' not in document and document['id'] != recipe_ids[name]:
+                    updated.setdefault('inventory_name', document['id'])
+                updated['id'] = recipe_ids[name]
+            if name == 'layout/link-objects.json':
+                for before, after in zip(document['objects'], updated['objects']):
+                    if before['id'] != after['id']:
+                        after.setdefault('inventory_id', before['id'])
             if name == 'layout/code-symbols.json':
                 for old, new in omf.items():
                     if old in document['symbols'] and new in updated['symbols']:
@@ -253,12 +300,25 @@ def make_changes(files, rows):
             result = json_bytes(updated) if updated != document else raw
         else:
             result = raw
+        if owners and path.suffix in ('.py', '.c', '.h', '.md') and path.parts[0] not in SOURCE_DIRS:
+            text = result.decode('latin1')
+            text = re.sub(r'(?<![A-Za-z_0-9])(?:' + '|'.join(
+                re.escape(n) for n in sorted(owners, key=len, reverse=True)) +
+                r')(?![A-Za-z_0-9])', lambda m: owners[m[0]], text)
+            result = text.encode('latin1')
         # Explicit source paths may occur in recipes, tools, tests and evidence.
         # Replace complete path spellings, including paths embedded in prose.
         if name != 'layout/oracle.lock.json' and moves:
             text = result.decode('latin1')
-            for old, new in path_spellings.items():
-                text = re.sub(r'(?<![A-Za-z_0-9.])' + re.escape(old) + r'(?![A-Za-z_0-9.])', lambda _: new, text, flags=re.I)
+            text = path_pattern.sub(lambda m: folded_paths[m[0].casefold()], text)
+            for old, new in moves.items():
+                if old.split('/')[0] not in SOURCE_DIRS or Path(old).parent == Path(new).parent:
+                    continue
+                # Python/Make-style path construction with separately quoted components.
+                pattern = (r"(['\"])" + re.escape(Path(old).parent.as_posix()) +
+                           r"\1(\s*/\s*)(['\"])" + re.escape(Path(old).name) + r"\3")
+                text = re.sub(pattern, lambda m: m[1] + Path(new).parent.as_posix() +
+                              m[1] + m[2] + m[3] + Path(new).name + m[3], text, flags=re.I)
             result = text.encode('latin1')
         if result != raw:
             changes[name] = result
@@ -560,21 +620,33 @@ def preflight(rows, files, namespace=None):
                 source, destination = next(iter(moves.items()))
                 for path in (source, destination):
                     publication_path(path)
-                require(source in files and destination not in files, 'Source absent or destination exists')
+                require(source in files and (destination not in files or
+                        (source == destination and old in owner_moves([row]))),
+                        'Source absent or destination exists')
                 require(list(file_moves(rows).values()).count(destination) == 1, 'Duplicate move destination')
                 require(sum(r.get('source', r['old']) == source for r in rows if r.get('kind') in MOVE_KINDS) == 1,
                         'Duplicate move source')
-                require(source.split('/')[0] in SOURCE_DIRS[:2] and
-                        destination.split('/')[0] == source.split('/')[0] and
+                require(source.split('/')[0] in SOURCE_DIRS[:-1] and
+                        destination.split('/')[0] in SOURCE_DIRS[:-1] and
                         Path(source).suffix.lower() == Path(destination).suffix.lower(),
-                        'Move must preserve the C/ASM source kind and directory')
+                        'Move must preserve the C/ASM source kind')
                 require(any(x['recipe']['source'] == source for x in recipes.values()),
                         'Source has no active rebuildable recipe')
-                if row.get('kind') == 'asm-module':
-                    require(IDENT.fullmatch(old) and IDENT.fullmatch(new) and
-                            any(old in x['owners'] for x in recipes.values()) and new not in present and
-                            new not in {o for x in recipes.values() for o in x['owners']},
-                            'Invalid or colliding assembly owner')
+                if old in owner_moves([row]):
+                    ids = {o for x in recipes.values() for o in x['owners']}
+                    manifest = json.loads(files['layout/manifest.json'])
+                    runtime = {Path(o['module'].replace('\\', '/')).stem.casefold()
+                               for o in manifest['owners'] if o['kind'] == 'KNOWN_TOOLCHAIN_LIBRARY'}
+                    destinations = list(owner_moves(rows).values())
+                    require(IDENT.fullmatch(old) and IDENT.fullmatch(new) and old in ids and
+                            new.casefold() not in {o.casefold() for o in ids if o != old} and
+                            new.casefold() not in runtime and
+                            sum(n.casefold() == new.casefold() for n in destinations) == 1,
+                            'Invalid or colliding project owner')
+                    target_recipe = 'recipes/' + new + '.json'
+                    require(target_recipe not in files or any(k == target_recipe and
+                            old in x['owners'] for k, x in recipes.items()),
+                            'Recipe destination exists')
                 good.append(row)
             except ValueError as error:
                 refused.append({**row, 'status': 'refused', 'reason': str(error)})
@@ -850,7 +922,7 @@ def declaration_candidates(files, values):
                    if target in (v['recipe']['source'], *v['owners'])}
         require(len(matches) == 1, 'Select one accepted C owner for declarations: ' + target)
         source = matches.pop()
-        require(source.startswith('src/') and source.endswith('.c') and source not in sources,
+        require(source.split('/')[0] in SOURCE_DIRS[:-1] and source.endswith('.c') and source not in sources,
                 'Declaration candidates must select distinct C sources')
         sources[source] = Path(path).read_bytes()
     return sources
@@ -918,23 +990,26 @@ class ProofEngine:
             except ValueError as error:
                 failures.append({'owner': self.recipes[key]['owners'], 'recipe': key,
                                  'record': 'baseline-MASM-listing', 'error': str(error), 'category': 'refused'})
+        recipe_paths = recipe_moves(self.files, rows)
         self.stage(changes)
         # Included source hashes are recomputed by the real frontend, never
         # copied from the previous receipt or inferred from changed tokens.
         from promote import _cosmetic_closure
         for key in affected:
             item = self.recipes[key]
-            recipe = json.loads(changes.get(key, self.files[key]))
+            target_key = recipe_paths.get(key, key)
+            recipe = json.loads(changes.get(target_key, self.files.get(target_key, self.files[key])))
             source = changes.get(recipe['source'], self.files.get(recipe['source']))
             field, closure = _cosmetic_closure(recipe, source)
             if recipe.get(field, []) != closure:
                 recipe[field] = closure
-                changes[key] = json_bytes(recipe)
+                changes[target_key] = json_bytes(recipe)
         self.stage(dict(changes))
         for key in affected:
             if isinstance(self.baselines[key], dict):
                 continue
-            recipe = json.loads(changes.get(key, self.files[key]))
+            target_key = recipe_paths.get(key, key)
+            recipe = json.loads(changes.get(target_key, self.files.get(target_key, self.files[key])))
             source = changes.get(recipe['source'], self.files.get(recipe['source']))
             fingerprint = (key, hashlib.sha256(source + json_bytes(recipe) +
                            b''.join(changes[n] or b'' for n in sorted(changes) if n.startswith('include/'))).hexdigest())
@@ -982,7 +1057,7 @@ class ProofEngine:
                                                   'requires': 'whole-image/BSS-link and historical BUILT_EXACT'})
                     updated = refresh_expectations(recipe, after[0])
                     if updated != recipe:
-                        changes[key] = json_bytes(updated)
+                        changes[target_key] = json_bytes(updated)
         if not failures and communal_additions:
             manifest = json.loads(changes.get('layout/manifest.json', self.files['layout/manifest.json']))
             for row in manifest['bss_owners']:
@@ -1133,7 +1208,7 @@ def publish(changes, expected, verify):
 def publication_path(relative):
     path = (ROOT / relative).resolve()
     require(path.is_relative_to(ROOT.resolve()) and '\\' not in relative and
-            relative.split('/')[0] in STATE_DIRS and not relative.startswith(('tools/porting/', 'tests/../')) and
+            (relative.split('/')[0] in STATE_DIRS or relative in ROOT_FILES) and not frozen_path(relative) and
             relative == path.relative_to(ROOT.resolve()).as_posix() and
             path != (ROOT / 'layout/oracle.lock.json').resolve(),
             'Invalid rename publication path: ' + relative)
@@ -1241,7 +1316,7 @@ def worker(request):
 
 def tracked_snapshot(root):
     command = subprocess.run(['git', 'ls-files', '-z'], cwd=root, capture_output=True, check=True)
-    return {name: (root / name).read_bytes() for name in command.stdout.decode().split('\0') if name}
+    return {name: (root / name).read_bytes() for name in command.stdout.decode().split('\0') if name and (root / name).is_file()}
 
 
 def run(args):
@@ -1280,7 +1355,7 @@ def run(args):
     work = Path(tempfile.mkdtemp(prefix='run-', dir=work_root))
     stage = work / 'tree'
     for name, raw in {**tracked, **expected}.items():
-        if Path(name).parts[0] in (*SOURCE_DIRS, 'recipes', 'layout', 'tools', 'tests', 'evidence', 'historical'):
+        if Path(name).parts[0] in (*STATE_DIRS, 'historical') or name in ROOT_FILES:
             path = stage / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(raw)

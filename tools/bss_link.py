@@ -181,6 +181,11 @@ def check_partition(manifest, objects, evidence, bss_start, bss_end):
     on any violation.  Every raw row is one reviewed evidence row; an accepted
     row replaces exactly one object's placeholder (same object and extent) and
     no object has two BSS rows."""
+    # The frozen placeholder inventory keeps its original object spellings.
+    # Current object ids retain that identity explicitly across owner renames.
+    current_ids = {o.get('inventory_id', o['id']): o['id'] for o in objects}
+    evidence = {**evidence, 'rows': [{**e, 'object': current_ids.get(e.get('object'), e.get('object'))}
+                                     for e in evidence['rows']]}
     rows = manifest.get('bss_owners')
     require(isinstance(rows, list) and rows, 'BSS ownership partition missing')
     owners = {o['id']: o for o in manifest['owners']}

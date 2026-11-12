@@ -1,0 +1,150 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "binding": {
+    "declarations": {
+      "externals": [
+        "_clearscreen",
+        "_video_add_exithandler"
+      ],
+      "groups": [],
+      "publics": [
+        {
+          "name": "_initgraphics",
+          "offset": 0,
+          "segment": "S012_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 50,
+          "name": "S012_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "asm-external-far-call-v1"
+  },
+  "end": 145480,
+  "evidence": {
+    "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
+    "line_end": 11216,
+    "line_start": 11193,
+    "path": "src/restunts/asmorig/seg012.asm",
+    "repository": "restunts"
+  },
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "pointer32",
+      "offset": 1,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_video_add_exithandler",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "00000000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "pointer32",
+      "offset": 42,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_clearscreen",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 4
+    }
+  ],
+  "expected_relocations": [
+    {
+      "load_offset": 145433,
+      "offset": 14361,
+      "segment": 8192
+    },
+    {
+      "load_offset": 145474,
+      "offset": 14402,
+      "segment": 8192
+    }
+  ],
+  "id": "mode13h",
+  "include_closure": [
+    {
+      "path": "include/platform_hw.inc",
+      "sha256": "8961b57e4f26d730398c81f883947e5a9836f03b8817bf9fd3637a9a94e52d76",
+      "size": 1927
+    }
+  ],
+  "inventory_name": "video_set_mode_13h",
+  "kind": "asm",
+  "object_declarations": {
+    "externals": [
+      "_clearscreen",
+      "_video_add_exithandler"
+    ],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_initgraphics",
+        "offset": 0,
+        "segment": "S012_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 50,
+        "name": "S012_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "S012_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "public": "_initgraphics",
+  "source": "lib/mode13h.ASM",
+  "stable_id": "load_23816",
+  "start": 145430,
+  "target": {
+    "sha256": "e8f62bc39b509ba297d7fe8d34d2b7f55c5a9f917fad1c9bd23ff5e7f01f15f3",
+    "size": 50
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 146112,
+  "expected_fixups": [
+    {
+      "displacement": 10,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 101,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 2,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 112,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 20,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 121,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [],
+  "external_binding": {
+    "mode": "asm-external-dgroup-offset16-v1"
+  },
+  "id": "iconmask",
+  "include_closure": [
+    {
+      "path": "include/platform_hw.inc",
+      "sha256": "8961b57e4f26d730398c81f883947e5a9836f03b8817bf9fd3637a9a94e52d76",
+      "size": 1927
+    }
+  ],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 145950,
+      "name": "nopsub_339FA",
+      "public": "_andfxy",
+      "stable_id": "load_239fa",
+      "start": 145914,
+      "target": {
+        "sha256": "7af16f169b3896eb2ad5a437e2a855f5dfc3091e587356c1ad1f832df10a1556",
+        "size": 36
+      }
+    },
+    {
+      "end": 146112,
+      "name": "putpixel_iconMask",
+      "public": "_andfxya",
+      "stable_id": null,
+      "start": 145950,
+      "target": {
+        "sha256": "a079b91e5a4f0282b5d9e3bbda1f2411f599a646b1c90c71343461bd8a017454",
+        "size": 162
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "_sprite1"
+    ],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_andfxy",
+        "offset": 0,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_andfxya",
+        "offset": 36,
+        "segment": "S012_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 198,
+        "name": "S012_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "S012_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "source": "lib/iconmask.ASM",
+  "stable_id": "multi_seg012_nopsub339fa_group",
+  "start": 145914,
+  "subsumed_owners": [],
+  "target": {
+    "sha256": "2925e79444ecd568688c9b2f9f1de2f2694451f1bbe42aeaadbcf197c3826752",
+    "size": 198
+  }
+}

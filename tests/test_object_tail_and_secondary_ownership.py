@@ -25,7 +25,7 @@ class Seg028Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.image, cls.relocations = _oracle()
-        cls.recipe = read_json(ROOT / 'recipes/obj_seg028.json')
+        cls.recipe = read_json(ROOT / 'recipes/audioply.json')
 
     def test_object_tail_after_the_members_own_pad(self):
         from function_evidence import current_inventory
@@ -65,7 +65,7 @@ class OwnedDataTests(unittest.TestCase):
 
     def test_module_far_callback_in_its_own_data(self):
         from multi_contribution import bind_multi
-        recipe, obj = self._asm('keyboard_input_callbacks')
+        recipe, obj = self._asm('kbcalls')
         payload, receipt = bind_multi(obj, recipe, self.image, self.relocations)
         self.assertEqual(payload, self.image[recipe['start']:recipe['end']])
         # The callback's segment word is an ordered data relocation obligation.
@@ -80,13 +80,13 @@ class OwnedDataTests(unittest.TestCase):
     def test_secondary_growth_keeps_segments_and_exact_bytes(self):
         from promote import apply_ownership
         manifest = read_json(ROOT / 'layout/manifest.json')
-        recipe = read_json(ROOT / 'recipes/obj_seg009.json')
-        self.assertIs(apply_ownership(manifest, 'obj_seg009', recipe, None, self.image), manifest)
+        recipe = read_json(ROOT / 'recipes/trackedt.json')
+        self.assertIs(apply_ownership(manifest, 'trackedt', recipe, None, self.image), manifest)
         short = copy.deepcopy(recipe)
         spec = short['secondary_dgroup_segments']['_DATA']
         spec['end'] -= 2
         with self.assertRaises(ValueError):
-            apply_ownership(manifest, 'obj_seg009', short, None, self.image)
+            apply_ownership(manifest, 'trackedt', short, None, self.image)
 
 
 if __name__ == '__main__':

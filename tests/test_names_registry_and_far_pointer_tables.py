@@ -138,7 +138,7 @@ class NamesRegistryTests(unittest.TestCase):
                     self.assertEqual(alias['mapped_target']['name'], row['inventory_name'], row)
                     declaring_owners = {owner for owner, names in declared_by_owner.items() if old in names}
                     if declaring_owners:
-                        self.assertEqual(declaring_owners, {'obj_seg007'}, row)
+                        self.assertEqual(declaring_owners, {'audioeng'}, row)
                     else:
                         self.assertNotIn(old, declared, row)
                     continue

@@ -1,910 +1,940 @@
 {
-  "schema": "link-objects-v1",
   "authority": "Diagnostic real-link unit map for tools/reallink.py only; grants no ownership. Object and module boundaries from the integ-era objmap study (distinct LINK code frames, push-cs near-call closure, shared relocation runs, record cuts), with the integ29 link-fidelity corrections: seg017 ends at 158450; [158450,158452) is its own C object in the 0x26AF frame (nopsub_36AF2).",
   "objects": [
     {
-      "id": "obj_seg000",
+      "end": 18194,
+      "frame": 0,
+      "id": "frontend",
+      "inventory_id": "obj_seg000",
       "kind": "C",
       "segment": "seg000",
-      "frame": 0,
-      "start": 0,
-      "end": 18194
+      "start": 0
     },
     {
+      "end": 40390,
+      "frame": 1137,
       "id": "obj_seg001",
       "kind": "C",
       "segment": "seg001",
-      "frame": 1137,
-      "start": 18194,
-      "end": 40390
+      "start": 18194
     },
     {
-      "id": "obj_seg002",
+      "end": 40724,
+      "frame": 2524,
+      "id": "rpmrand",
+      "inventory_id": "obj_seg002",
       "kind": "ASM",
       "segment": "seg002",
-      "frame": 2524,
-      "start": 40390,
-      "end": 40724
+      "start": 40390
     },
     {
-      "id": "obj_seg003",
+      "end": 57760,
+      "frame": 2545,
+      "id": "render",
+      "inventory_id": "obj_seg003",
       "kind": "C",
       "segment": "seg003",
-      "frame": 2545,
-      "start": 40724,
-      "end": 57760
+      "start": 40724
     },
     {
-      "id": "obj_seg004",
+      "end": 72570,
+      "frame": 3610,
+      "id": "trkscene",
+      "inventory_id": "obj_seg004",
       "kind": "C",
       "segment": "seg004",
-      "frame": 3610,
-      "start": 57760,
-      "end": 72570
+      "start": 57760
     },
     {
-      "id": "obj_seg005",
+      "end": 85348,
+      "frame": 4535,
+      "id": "race",
+      "inventory_id": "obj_seg005",
       "kind": "C",
       "segment": "seg005",
-      "frame": 4535,
-      "start": 72570,
-      "end": 85348
+      "start": 72570
     },
     {
-      "id": "obj_seg006",
+      "end": 93102,
+      "frame": 5334,
+      "id": "polygon",
+      "inventory_id": "obj_seg006",
       "kind": "C",
       "segment": "seg006",
-      "frame": 5334,
-      "start": 85348,
-      "end": 93102
+      "start": 85348
     },
     {
-      "id": "obj_seg007",
+      "end": 95407,
+      "frame": 5818,
+      "id": "audioeng",
+      "inventory_id": "obj_seg007",
       "kind": "ASM",
       "segment": "seg007",
-      "frame": 5818,
-      "start": 93102,
-      "end": 95407
+      "start": 93102
     },
     {
-      "id": "obj_seg008",
+      "end": 107196,
+      "frame": 5963,
+      "id": "uires",
+      "inventory_id": "obj_seg008",
       "kind": "C",
       "segment": "seg008",
-      "frame": 5963,
-      "start": 95408,
-      "end": 107196
+      "start": 95408
     },
     {
-      "id": "obj_seg009",
+      "end": 117842,
+      "frame": 6699,
+      "id": "trackedt",
+      "inventory_id": "obj_seg009",
       "kind": "C",
       "segment": "seg009",
-      "frame": 6699,
-      "start": 107196,
-      "end": 117842
+      "start": 107196
     },
     {
+      "end": 118055,
+      "frame": 7365,
       "id": "rt_dos_crt0.asm_117858",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 117858,
-      "end": 118055
+      "start": 117858
     },
     {
+      "end": 118410,
+      "frame": 7365,
       "id": "rt_dos_crt0dat.asm_118056",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 118056,
-      "end": 118410
+      "start": 118056
     },
     {
+      "end": 118446,
+      "frame": 7365,
       "id": "rt_dos_crt0msg.asm_118410",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 118410,
-      "end": 118446
+      "start": 118410
     },
     {
+      "end": 118452,
+      "frame": 7365,
       "id": "rt_crt0fp.asm_118446",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 118446,
-      "end": 118452
+      "start": 118446
     },
     {
+      "end": 118488,
+      "frame": 7365,
       "id": "rt_chkstk.asm_118452",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 118452,
-      "end": 118488
+      "start": 118452
     },
     {
+      "end": 118526,
+      "frame": 7365,
       "id": "rt_chksum.asm_118488",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 118488,
-      "end": 118526
+      "start": 118488
     },
     {
+      "end": 118928,
+      "frame": 7365,
       "id": "rt_dos_stdargv.asm_118526",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 118526,
-      "end": 118928
+      "start": 118526
     },
     {
+      "end": 119038,
+      "frame": 7365,
       "id": "rt_dos_stdenvp.asm_118928",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 118928,
-      "end": 119038
+      "start": 118928
     },
     {
+      "end": 119124,
+      "frame": 7365,
       "id": "rt_dos_nmsghdr.asm_119038",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 119038,
-      "end": 119124
+      "start": 119038
     },
     {
+      "end": 119190,
+      "frame": 7365,
       "id": "rt_dos_stdalloc.asm_119124",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 119124,
-      "end": 119190
+      "start": 119124
     },
     {
+      "end": 119274,
+      "frame": 7365,
       "id": "rt_dos_dosret.asm_119190",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 119190,
-      "end": 119274
+      "start": 119190
     },
     {
+      "end": 119326,
+      "frame": 7365,
       "id": "rt_flushall.c_119274",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 119274,
-      "end": 119326
+      "start": 119274
     },
     {
+      "end": 119392,
+      "frame": 7365,
       "id": "rt_printf.c_119326",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 119326,
-      "end": 119392
+      "start": 119326
     },
     {
+      "end": 119742,
+      "frame": 7365,
       "id": "rt__flsbuf.c_119392",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 119392,
-      "end": 119742
+      "start": 119392
     },
     {
+      "end": 119852,
+      "frame": 7365,
       "id": "rt__getbuf.c_119742",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 119742,
-      "end": 119852
+      "start": 119742
     },
     {
+      "end": 120142,
+      "frame": 7365,
       "id": "rt__sftbuf.c_119852",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 119852,
-      "end": 120142
+      "start": 119852
     },
     {
+      "end": 120254,
+      "frame": 7365,
       "id": "rt_fflush.c_120142",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 120142,
-      "end": 120254
+      "start": 120142
     },
     {
+      "end": 122542,
+      "frame": 7365,
       "id": "rt_output.c_120254",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 120254,
-      "end": 122542
+      "start": 120254
     },
     {
+      "end": 122664,
+      "frame": 7365,
       "id": "rt_dos_lseek.asm_122542",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 122542,
-      "end": 122664
+      "start": 122542
     },
     {
+      "end": 122962,
+      "frame": 7365,
       "id": "rt_write.asm_122664",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 122664,
-      "end": 122962
+      "start": 122664
     },
     {
+      "end": 122982,
+      "frame": 7365,
       "id": "rt_stackava.asm_122962",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 122962,
-      "end": 122982
+      "start": 122962
     },
     {
+      "end": 123070,
+      "frame": 7365,
       "id": "rt_nmalloc.asm_122982",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 122982,
-      "end": 123070
+      "start": 122982
     },
     {
+      "end": 123425,
+      "frame": 7365,
       "id": "rt_amalloc.asm_123070",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 123070,
-      "end": 123425
+      "start": 123070
     },
     {
+      "end": 123622,
+      "frame": 7365,
       "id": "rt_dos_brkctl.asm_123426",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 123426,
-      "end": 123622
+      "start": 123426
     },
     {
+      "end": 123685,
+      "frame": 7365,
       "id": "rt_strcat.asm_123622",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 123622,
-      "end": 123685
+      "start": 123622
     },
     {
+      "end": 123736,
+      "frame": 7365,
       "id": "rt_strcpy.asm_123686",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 123686,
-      "end": 123736
+      "start": 123686
     },
     {
+      "end": 123779,
+      "frame": 7365,
       "id": "rt_strcmp.asm_123736",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 123736,
-      "end": 123779
+      "start": 123736
     },
     {
+      "end": 123807,
+      "frame": 7365,
       "id": "rt_strlen.asm_123780",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 123780,
-      "end": 123807
+      "start": 123780
     },
     {
+      "end": 123835,
+      "frame": 7365,
       "id": "rt_itoa.asm_123808",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 123808,
-      "end": 123835
+      "start": 123808
     },
     {
+      "end": 123846,
+      "frame": 7365,
       "id": "rt_ultoa.asm_123836",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 123836,
-      "end": 123846
+      "start": 123836
     },
     {
+      "end": 123880,
+      "frame": 7365,
       "id": "rt_abort.asm_123846",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 123846,
-      "end": 123880
+      "start": 123846
     },
     {
+      "end": 123915,
+      "frame": 7365,
       "id": "rt_isatty.asm_123880",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 123880,
-      "end": 123915
+      "start": 123880
     },
     {
+      "end": 124044,
+      "frame": 7365,
       "id": "rt_dos_int86.asm_123916",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 123916,
-      "end": 124044
+      "start": 123916
     },
     {
+      "end": 124134,
+      "frame": 7365,
       "id": "rt_sprintf.c_124044",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 124044,
-      "end": 124134
+      "start": 124044
     },
     {
+      "end": 124200,
+      "frame": 7365,
       "id": "rt_stricmp.asm_124134",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 124134,
-      "end": 124200
+      "start": 124134
     },
     {
+      "end": 124295,
+      "frame": 7365,
       "id": "rt_xtoa.asm_124200",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 124200,
-      "end": 124295
+      "start": 124200
     },
     {
+      "end": 124318,
+      "frame": 7365,
       "id": "rt_abs.c_124296",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 124296,
-      "end": 124318
+      "start": 124296
     },
     {
+      "end": 124475,
+      "frame": 7365,
       "id": "rt_dos_raise.asm_124318",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 124318,
-      "end": 124475
+      "start": 124318
     },
     {
+      "end": 124534,
+      "frame": 7365,
       "id": "rt_rand.c_124476",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 124476,
-      "end": 124534
+      "start": 124476
     },
     {
+      "end": 124903,
+      "frame": 7365,
       "id": "rt_dos_signal.asm_124534",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 124534,
-      "end": 124903
+      "start": 124534
     },
     {
+      "end": 124914,
+      "frame": 7365,
       "id": "rt_oldnorm.asm_124904",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 124904,
-      "end": 124914
+      "start": 124904
     },
     {
+      "end": 124924,
+      "frame": 7365,
       "id": "rt_oldnorm.asm_124914",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 124914,
-      "end": 124924
+      "start": 124914
     },
     {
+      "end": 124934,
+      "frame": 7365,
       "id": "rt_oldshift.asm_124924",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 124924,
-      "end": 124934
+      "start": 124924
     },
     {
+      "end": 124944,
+      "frame": 7365,
       "id": "rt_oldnorm.asm_124934",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 124934,
-      "end": 124944
+      "start": 124934
     },
     {
+      "end": 124987,
+      "frame": 7365,
       "id": "rt_strrchr.asm_124944",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 124944,
-      "end": 124987
+      "start": 124944
     },
     {
+      "end": 125144,
+      "frame": 7365,
       "id": "rt_ldiv.asm_124988",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 124988,
-      "end": 125144
+      "start": 124988
     },
     {
+      "end": 125196,
+      "frame": 7365,
       "id": "rt_lmul.asm_125144",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 125144,
-      "end": 125196
+      "start": 125144
     },
     {
+      "end": 125207,
+      "frame": 7365,
       "id": "rt_lshr.asm_125196",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 125196,
-      "end": 125207
+      "start": 125196
     },
     {
+      "end": 125244,
+      "frame": 7365,
       "id": "rt_aldiv.asm_125208",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 125208,
-      "end": 125244
+      "start": 125208
     },
     {
+      "end": 125280,
+      "frame": 7365,
       "id": "rt_almul.asm_125244",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 125244,
-      "end": 125280
+      "start": 125244
     },
     {
+      "end": 125313,
+      "frame": 7365,
       "id": "rt_alshr.asm_125280",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 125280,
-      "end": 125313
+      "start": 125280
     },
     {
+      "end": 125350,
+      "frame": 7365,
       "id": "rt_auldiv.asm_125314",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 125314,
-      "end": 125350
+      "start": 125314
     },
     {
+      "end": 125447,
+      "frame": 7365,
       "id": "rt_uldiv.asm_125350",
       "kind": "RUNTIME",
       "segment": "seg010(_TEXT)",
-      "frame": 7365,
-      "start": 125350,
-      "end": 125447
+      "start": 125350
     },
     {
+      "end": 125482,
+      "frame": 7840,
       "id": "obj_seg011",
       "kind": "C",
       "segment": "seg011",
-      "frame": 7840,
-      "start": 125448,
-      "end": 125482
+      "start": 125448
     },
     {
-      "id": "graphics_resource_runtime",
+      "end": 131253,
+      "frame": 7842,
+      "id": "gfxres",
+      "inventory_id": "graphics_resource_runtime",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 125482,
-      "end": 131253
+      "start": 125482
     },
     {
-      "id": "timer_video_interrupt_runtime",
+      "end": 132055,
+      "frame": 7842,
+      "id": "timerint",
+      "inventory_id": "timer_video_interrupt_runtime",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 131254,
-      "end": 132055
+      "start": 131254
     },
     {
-      "id": "input_keyboard_joystick_services",
+      "end": 133137,
+      "frame": 7842,
+      "id": "kbjoy",
+      "inventory_id": "input_keyboard_joystick_services",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 132056,
-      "end": 133137
+      "start": 132056
     },
     {
-      "id": "keyboard_interrupt_runtime",
+      "end": 133659,
+      "frame": 7842,
+      "id": "kbint",
+      "inventory_id": "keyboard_interrupt_runtime",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 133138,
-      "end": 133659
+      "start": 133138
     },
     {
-      "id": "keyboard_input_callbacks",
+      "end": 133839,
+      "frame": 7842,
+      "id": "kbcalls",
+      "inventory_id": "keyboard_input_callbacks",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 133660,
-      "end": 133839
+      "start": 133660
     },
     {
-      "id": "resource_file_io_decompression",
+      "end": 135290,
+      "frame": 7842,
+      "id": "fileio",
+      "inventory_id": "resource_file_io_decompression",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 133840,
-      "end": 135290
+      "start": 133840
     },
     {
-      "id": "resource_memory_manager",
+      "end": 137138,
+      "frame": 7842,
+      "id": "memmgr",
+      "inventory_id": "resource_memory_manager",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 135290,
-      "end": 137138
+      "start": 135290
     },
     {
-      "id": "prerender_wheel_raster",
+      "end": 139609,
+      "frame": 7842,
+      "id": "whlrast",
+      "inventory_id": "prerender_wheel_raster",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 137138,
-      "end": 139609
+      "start": 137138
     },
     {
-      "id": "textmode_debug_console",
+      "end": 139967,
+      "frame": 7842,
+      "id": "textcon",
+      "inventory_id": "textmode_debug_console",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 139610,
-      "end": 139967
+      "start": 139610
     },
     {
-      "id": "projection_vector_window",
+      "end": 140538,
+      "frame": 7842,
+      "id": "project",
+      "inventory_id": "projection_vector_window",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 139968,
-      "end": 140538
+      "start": 139968
     },
     {
+      "end": 141361,
+      "frame": 7842,
       "id": "asm012_140538",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 140538,
-      "end": 141361
+      "start": 140538
     },
     {
-      "id": "font_matrix_shape_decode",
+      "end": 143365,
+      "frame": 7842,
+      "id": "fontmat",
+      "inventory_id": "font_matrix_shape_decode",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 141362,
-      "end": 143365
+      "start": 141362
     },
     {
-      "id": "vector_sphere_sprite_ops",
+      "end": 144063,
+      "frame": 7842,
+      "id": "vecspr",
+      "inventory_id": "vector_sphere_sprite_ops",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 143366,
-      "end": 144063
+      "start": 143366
     },
     {
+      "end": 149179,
+      "frame": 7842,
       "id": "asm012_144064",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 144064,
-      "end": 149179
+      "start": 144064
     },
     {
-      "id": "line_sprite_shape_render",
+      "end": 150407,
+      "frame": 7842,
+      "id": "linerend",
+      "inventory_id": "line_sprite_shape_render",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 149180,
-      "end": 150407
+      "start": 149180
     },
     {
-      "id": "patterned_lines_windows",
+      "end": 154405,
+      "frame": 7842,
+      "id": "patlines",
+      "inventory_id": "patterned_lines_windows",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 150408,
-      "end": 154405
+      "start": 150408
     },
     {
+      "end": 154485,
+      "frame": 7842,
       "id": "asm012_154406",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 154406,
-      "end": 154485
+      "start": 154406
     },
     {
-      "id": "sprite_rectangle_scaled_blitters",
+      "end": 155463,
+      "frame": 7842,
+      "id": "scalblit",
+      "inventory_id": "sprite_rectangle_scaled_blitters",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 154486,
-      "end": 155463
+      "start": 154486
     },
     {
+      "end": 155894,
+      "frame": 7842,
       "id": "asm012_155464",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 155464,
-      "end": 155894
+      "start": 155464
     },
     {
+      "end": 156092,
+      "frame": 7842,
       "id": "asm012_155894",
       "kind": "ASM",
       "segment": "seg012",
-      "frame": 7842,
-      "start": 155894,
-      "end": 156092
+      "start": 155894
     },
     {
+      "end": 156230,
+      "frame": 9755,
       "id": "obj_seg013",
       "kind": "C",
       "segment": "seg013",
-      "frame": 9755,
-      "start": 156092,
-      "end": 156230
+      "start": 156092
     },
     {
+      "end": 156690,
+      "frame": 9764,
       "id": "obj_seg014",
       "kind": "C",
       "segment": "seg014",
-      "frame": 9764,
-      "start": 156230,
-      "end": 156690
+      "start": 156230
     },
     {
+      "end": 157618,
+      "frame": 9793,
       "id": "obj_seg015",
       "kind": "C",
       "segment": "seg015",
-      "frame": 9793,
-      "start": 156690,
-      "end": 157618
+      "start": 156690
     },
     {
+      "end": 157866,
+      "frame": 9851,
       "id": "obj_seg016",
       "kind": "C",
       "segment": "seg016",
-      "frame": 9851,
-      "start": 157618,
-      "end": 157866
+      "start": 157618
     },
     {
+      "end": 158450,
+      "frame": 9866,
       "id": "obj_seg017",
       "kind": "C",
       "segment": "seg017",
-      "frame": 9866,
-      "start": 157866,
-      "end": 158450
+      "start": 157866
     },
     {
+      "end": 158452,
+      "frame": 9903,
       "id": "obj_load_26af2",
       "kind": "C",
       "segment": "seg018",
-      "frame": 9903,
-      "start": 158450,
-      "end": 158452
+      "start": 158450
     },
     {
+      "end": 158486,
+      "frame": 9903,
       "id": "obj_seg018",
       "kind": "ASM",
       "segment": "seg018",
-      "frame": 9903,
-      "start": 158452,
-      "end": 158486
+      "start": 158452
     },
     {
+      "end": 158654,
+      "frame": 9905,
       "id": "obj_seg019",
       "kind": "C",
       "segment": "seg019",
-      "frame": 9905,
-      "start": 158486,
-      "end": 158654
+      "start": 158486
     },
     {
+      "end": 158696,
+      "frame": 9915,
       "id": "obj_seg020",
       "kind": "C",
       "segment": "seg020",
-      "frame": 9915,
-      "start": 158654,
-      "end": 158696
+      "start": 158654
     },
     {
+      "end": 158846,
+      "frame": 9918,
       "id": "obj_seg021",
       "kind": "C",
       "segment": "seg021",
-      "frame": 9918,
-      "start": 158696,
-      "end": 158846
+      "start": 158696
     },
     {
+      "end": 159424,
+      "frame": 9927,
       "id": "obj_seg022",
       "kind": "C",
       "segment": "seg022",
-      "frame": 9927,
-      "start": 158846,
-      "end": 159424
+      "start": 158846
     },
     {
+      "end": 159530,
+      "frame": 9964,
       "id": "obj_seg023",
       "kind": "C",
       "segment": "seg023",
-      "frame": 9964,
-      "start": 159424,
-      "end": 159530
+      "start": 159424
     },
     {
+      "end": 159790,
+      "frame": 9970,
       "id": "obj_seg024",
       "kind": "C",
       "segment": "seg024",
-      "frame": 9970,
-      "start": 159530,
-      "end": 159790
+      "start": 159530
     },
     {
+      "end": 159930,
+      "frame": 9986,
       "id": "obj_seg025",
       "kind": "C",
       "segment": "seg025",
-      "frame": 9986,
-      "start": 159790,
-      "end": 159930
+      "start": 159790
     },
     {
+      "end": 159954,
+      "frame": 9995,
       "id": "obj_seg026",
       "kind": "C",
       "segment": "seg026",
-      "frame": 9995,
-      "start": 159930,
-      "end": 159954
+      "start": 159930
     },
     {
-      "id": "obj_seg027",
+      "end": 165436,
+      "frame": 9997,
+      "id": "audiores",
+      "inventory_id": "obj_seg027",
       "kind": "C",
       "segment": "seg027",
-      "frame": 9997,
-      "start": 159954,
-      "end": 165436
+      "start": 159954
     },
     {
-      "id": "obj_seg028",
+      "end": 170708,
+      "frame": 10339,
+      "id": "audioply",
+      "inventory_id": "obj_seg028",
       "kind": "C",
       "segment": "seg028",
-      "frame": 10339,
-      "start": 165436,
-      "end": 170708
+      "start": 165436
     },
     {
-      "id": "obj_seg029",
+      "end": 171214,
+      "frame": 10669,
+      "id": "audiochk",
+      "inventory_id": "obj_seg029",
       "kind": "C",
       "segment": "seg029",
-      "frame": 10669,
-      "start": 170708,
-      "end": 171214
+      "start": 170708
     },
     {
+      "end": 171540,
+      "frame": 10700,
       "id": "obj_seg030",
       "kind": "C",
       "segment": "seg030",
-      "frame": 10700,
-      "start": 171214,
-      "end": 171540
+      "start": 171214
     },
     {
-      "id": "obj_seg031",
+      "end": 173238,
+      "frame": 10721,
+      "id": "startup",
+      "inventory_id": "obj_seg031",
       "kind": "C",
       "segment": "seg031",
-      "frame": 10721,
-      "start": 171540,
-      "end": 173238
+      "start": 171540
     },
     {
+      "end": 174424,
+      "frame": 10827,
       "id": "obj_seg032",
       "kind": "C",
       "segment": "seg032",
-      "frame": 10827,
-      "start": 173238,
-      "end": 174424
+      "start": 173238
     },
     {
+      "end": 174550,
+      "frame": 10901,
       "id": "obj_seg033",
       "kind": "C",
       "segment": "seg033",
-      "frame": 10901,
-      "start": 174424,
-      "end": 174550
+      "start": 174424
     },
     {
+      "end": 175320,
+      "frame": 10909,
       "id": "obj_seg034",
       "kind": "C",
       "segment": "seg034",
-      "frame": 10909,
-      "start": 174550,
-      "end": 175320
+      "start": 174550
     },
     {
+      "end": 176314,
+      "frame": 10957,
       "id": "obj_seg035",
       "kind": "C",
       "segment": "seg035",
-      "frame": 10957,
-      "start": 175320,
-      "end": 176314
+      "start": 175320
     },
     {
+      "end": 176426,
+      "frame": 11019,
       "id": "obj_seg036",
       "kind": "C",
       "segment": "seg036",
-      "frame": 11019,
-      "start": 176314,
-      "end": 176426
+      "start": 176314
     },
     {
+      "end": 176576,
+      "frame": 11026,
       "id": "obj_seg037",
       "kind": "C",
       "segment": "seg037",
-      "frame": 11026,
-      "start": 176426,
-      "end": 176576
+      "start": 176426
     },
     {
-      "id": "fardata_11036",
+      "end": 176624,
+      "frame": 11036,
+      "id": "planes",
+      "inventory_id": "fardata_11036",
       "kind": "DATA",
       "segment": "seg038 (far data)",
-      "frame": 11036,
-      "start": 176576,
-      "end": 176624
+      "start": 176576
     },
     {
-      "id": "fardata_11039",
+      "end": 178032,
+      "frame": 11039,
+      "id": "deffont",
+      "inventory_id": "fardata_11039",
       "kind": "DATA",
       "segment": "seg039 (far data)",
-      "frame": 11039,
-      "start": 176624,
-      "end": 178032
+      "start": 176624
     },
     {
+      "end": 190232,
+      "frame": 11127,
       "id": "data_track_constants",
       "kind": "DATA",
       "segment": "DGROUP:_DATA",
-      "frame": 11127,
-      "start": 180672,
-      "end": 190232
+      "start": 180672
     }
-  ]
+  ],
+  "schema": "link-objects-v1"
 }

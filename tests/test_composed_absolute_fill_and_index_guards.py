@@ -155,7 +155,7 @@ class NegativeFoldedIndexTests(unittest.TestCase):
         from communal_unit import recipe_declarations, check_object_communals
         from oracle import verify
         from mz import MZ
-        cls.recipe = read_json(ROOT / 'recipes/obj_seg004.json')
+        cls.recipe = read_json(ROOT / 'recipes/trkscene.json')
         source = (ROOT / cls.recipe['source']).read_bytes()
         declarations = recipe_declarations(cls.recipe)
         communals = None if declarations is None else [name for name, _ in declarations]

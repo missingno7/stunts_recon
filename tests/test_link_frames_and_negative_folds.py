@@ -43,7 +43,7 @@ class LinkFaithfulAsmTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         from assembler import assemble_source
-        cls.recipe = read_json(ROOT / 'recipes/kb_shift_checking1.json')
+        cls.recipe = read_json(ROOT / 'recipes/kbshift1.json')
         cls.inside, _ = assemble_source(KB_INSIDE.replace(b'\n', b'\r\n'), 'masm510-game')
         cls.outside, _ = assemble_source(_outside(KB_INSIDE).replace(b'\n', b'\r\n'), 'masm510-game')
         cls.text_segment, _ = assemble_source(
@@ -89,7 +89,7 @@ class StrlenNegativeFoldTests(unittest.TestCase):
         from communal_unit import recipe_declarations, check_object_communals
         from oracle import verify
         from mz import MZ
-        cls.recipe = read_json(ROOT / 'recipes/audio_make_filename.json')
+        cls.recipe = read_json(ROOT / 'recipes/audiofn.json')
         source = (ROOT / cls.recipe['source']).read_bytes()
         declarations = recipe_declarations(cls.recipe)
         communals = None if declarations is None else [name for name, _ in declarations]

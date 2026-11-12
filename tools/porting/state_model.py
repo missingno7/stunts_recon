@@ -506,14 +506,14 @@ def public_delta(report_path):
 
 
 def collect_member_offsets(generate=True):
-    """Measure nested aggregate offsets from the accepted obj_seg003 declarations."""
+    """Measure nested aggregate offsets from the accepted render declarations."""
     result_path = WORK / "member-offset-results.json"
     if not generate:
         if not result_path.is_file():
             raise RuntimeError(f"--no-probes requires the cache at {result_path.relative_to(ROOT)}")
         return read_json(result_path)
 
-    source_path = "src/render.c"
+    source_path = "game/render.c"
     source_text = (ROOT / source_path).read_text(encoding="utf-8", errors="replace")
     definitions = type_definitions(source_text, mask_noncode(source_text), source_path)
     by_line = c_functions(source_text)[1]
@@ -1161,32 +1161,32 @@ def enum_unit_lifetime_replay(name, typ, owner_subsystem, readers, writers, addr
             break
     if any(k in n for k in ("projection_half_width", "projection_half_height", "projection_left_origin", "projection_top_origin", "projection_center_x", "projection_center_y")):
         unit = "screen-space projection extent/origin in integer pixels"
-        unit_basis = [{"citation": "asm/project.ASM:11-27"}]
+        unit_basis = [{"citation": "lib/project.ASM:11-27"}]
     elif any(k in n for k in ("projection_x_angle", "projection_y_angle")):
         unit = "projection angle parameter; source uses turn-based trig, but scale for this stored value is not established"
-        unit_basis = [{"citation": "asm/project.ASM:11-27"}, {"citation": "asm/mathres.ASM:456-515"}]
+        unit_basis = [{"citation": "lib/project.ASM:11-27"}, {"citation": "lib/mathres.ASM:456-515"}]
     elif any(k in n for k in ("projection_x_scale", "projection_y_scale")):
         unit = "projection scale coefficient; fixed-point denominator not established"
-        unit_basis = [{"citation": "asm/project.ASM:11-27"}]
+        unit_basis = [{"citation": "lib/project.ASM:11-27"}]
     elif "speed" in n and "car" in n:
         unit = "speed fields in CARSTATE use unsigned Q8 mph where documented; this object's specific scale is not established"
-        unit_basis = [{"citation": "src/render.c:101-107"}]
+        unit_basis = [{"citation": "game/render.c:101-107"}]
     elif (any(k in n for k in ("mouse_x", "mouse_y", "mousex", "mousey", "mouse_api_y", "cursorx", "msecoordx", "pos_x", "pos_y"))
           and owner_subsystem in ("input", "render_video", "menu_ui")):
         unit = "screen-space integer pixel coordinate"
-        unit_basis = [{"citation": "src/mouse.c:40-68"}]
+        unit_basis = [{"citation": "lib/mouse.c:40-68"}]
     elif "angle" in n or "rot" in n:
         unit = "integer angle/rotation parameter; where passed to fast trig, a turn is 0x400 units; field-specific scale not established"
-        unit_basis = [{"citation": "asm/mathres.ASM:456-515"}]
+        unit_basis = [{"citation": "lib/mathres.ASM:456-515"}]
     elif any(k in n for k in ("tick", "timer", "clock", "countdown")):
         unit = "timer/tick count or control flag; tick duration must be taken from timer source"
-        unit_basis = [{"citation": "asm/timerhlp.ASM:57-84"}]
+        unit_basis = [{"citation": "lib/timerhlp.ASM:57-84"}]
     if owner_subsystem in ("simulation", "track_replay") and any(k in n for k in ("pos", "coord", "world", "track", "row", "col", "center")):
         unit = "simulation/track coordinate or index; field-specific coordinate frame/scale not established"
-        unit_basis = [{"citation": "src/carsim.c:740-745"}, {"citation": "src/carsim.c:2699-2711"}]
+        unit_basis = [{"citation": "game/carsim.c:740-745"}, {"citation": "game/carsim.c:2699-2711"}]
     if owner_subsystem == "render_video" and any(k in n for k in ("x", "y", "left", "right", "top", "bottom", "width", "height")):
         unit = "screen/raster coordinate or extent; field-specific pixel/fixed-point scale not established"
-        unit_basis = [{"citation": "src/polygon.c:408-415"}]
+        unit_basis = [{"citation": "game/polygon.c:408-415"}]
     if "*" in (typ or ""):
         if re.search(r"\bhuge\b", typ, re.I):
             unit = "16-bit huge pointer (segment:offset address); pointee storage is separately owned"
@@ -1480,16 +1480,16 @@ def build_model(run_probes=True):
             # Close that narrow pointer alias using the accepted assignment
             # and consumer bodies instead of reporting pointer formation as a
             # content read.
-            audio_text = mask_noncode(sources.get("src/carsim.c", ""))
+            audio_text = mask_noncode(sources.get("game/carsim.c", ""))
             audio_write = re.search(r"audioRecord\s*->\s*player_offsets\s*\[\s*0\s*\]\s*=", audio_text)
             audio_read = re.search(r"record\s*->\s*player_rpm", audio_text)
-            readers = ([{"function": "myupdatesfx1", "source": "src/carsim.c",
+            readers = ([{"function": "myupdatesfx1", "source": "game/carsim.c",
                          "line": line_no(audio_text, audio_read.start())}] if audio_read else [])
-            writers = ([{"function": "myupdatesfx", "source": "src/carsim.c",
+            writers = ([{"function": "myupdatesfx", "source": "game/carsim.c",
                          "line": line_no(audio_text, audio_write.start())}] if audio_write else [])
-            refs = ([{"function": "myupdatesfx", "source": "src/carsim.c",
+            refs = ([{"function": "myupdatesfx", "source": "game/carsim.c",
                       "line": line_no(audio_text, audio_write.start()), "access": "indirect buffer write through AUDIO_CAR_FRAME *"}] if audio_write else [])
-            refs += ([{"function": "myupdatesfx1", "source": "src/carsim.c",
+            refs += ([{"function": "myupdatesfx1", "source": "game/carsim.c",
                        "line": line_no(audio_text, audio_read.start()), "access": "indirect buffer read through AUDIO_CAR_FRAME *"}] if audio_read else [])
         evidence.extend({"kind": "access", "citation": f"{x['source']}:{x['line']}", "function": x["function"], "access": x["access"]}
                         for x in refs[:24])
@@ -1508,12 +1508,12 @@ def build_model(run_probes=True):
         if name == "g_tdreplay16buf":
             pointee_replay = {"class": "ordered_replay_input_bytes", "preserve_bit_exactly": True,
                               "reason": "The frame-indexed bytes are read by movesim and the pointer slot is only their process-local address.",
-                              "evidence": [{"citation": "src/carsim.c:1758-1770"}]}
+                              "evidence": [{"citation": "game/carsim.c:1758-1770"}]}
         elif name == "cvxs_a":
             pointee_replay = {"class": "GAMESTATE_replay_checkpoint_array", "preserve_bit_exactly": True,
                               "reason": "Each pointed checkpoint is assigned a whole GAMESTATE and restored as a whole GAMESTATE.",
-                              "evidence": [{"citation": "src/carsim.c:1734-1738"},
-                                           {"citation": "src/carsim.c:1758-1770"}]}
+                              "evidence": [{"citation": "game/carsim.c:1734-1738"},
+                                           {"citation": "game/carsim.c:1758-1770"}]}
         # Semantic aliases from accepted public-name proposals make the uncertainty inspectable.
         size_basis = ("accepted C typed view and canonical compiler sizeof probe" if name == "race_stats" else
             ("LINK communal-unit declared type" if communal else (
@@ -1643,21 +1643,21 @@ def build_model(run_probes=True):
     # the declared backing object is a struct array.
     audio_buffer = next((r for r in data_rows if r["name"] == "audio_frmarr"), None)
     audio_frame_record = next((d for owner, d, size in all_tags.get("AUDIO_CAR_FRAME", [])
-                               if owner["source"] == "src/carsim.c" and size is not None), None)
+                               if owner["source"] == "game/carsim.c" and size is not None), None)
     audio_frame_size = type_size_by_tag.get("AUDIO_CAR_FRAME")
     if audio_buffer and audio_frame_record and audio_frame_size and audio_buffer["size_bytes"] % audio_frame_size == 0:
         audio_probe = next((v for v in variants.values()
-                            if v.get("source") == "src/carsim.c"
+                            if v.get("source") == "game/carsim.c"
                             and v.get("tag") == "struct AUDIO_CAR_FRAME"), {})
         audio_decl_ev = next((e for e in audio_buffer["evidence"] if e.get("kind") in ("accepted_c_declaration", "accepted_c_declaration")), {})
         audio_access = next((x for x in audio_buffer["readers"] + audio_buffer["writers"]
                              if x.get("function") == "myupdatesfx"), {})
-        audio_source_text = sources.get("src/carsim.c", "")
+        audio_source_text = sources.get("game/carsim.c", "")
         audio_cast = re.search(r"\(\s*struct\s+AUDIO_CAR_FRAME\s*\*\s*\)\s*audio_frmarr", mask_noncode(audio_source_text))
-        audio_decl_citation = audio_decl_ev.get("citation", "src/carsim.c:unknown")
-        audio_cast_citation = (f"src/carsim.c:{line_no(audio_source_text, audio_cast.start())}" if audio_cast else
+        audio_decl_citation = audio_decl_ev.get("citation", "game/carsim.c:unknown")
+        audio_cast_citation = (f"game/carsim.c:{line_no(audio_source_text, audio_cast.start())}" if audio_cast else
                                (f"{audio_access['source']}:{audio_access['line']}" if audio_access else
-                                 "src/carsim.c:unknown")
+                                 "game/carsim.c:unknown")
                                )
         instances_by_tag["AUDIO_CAR_FRAME"].append({
             "name": "audio_frmarr cast-view as AUDIO_CAR_FRAME",
@@ -1735,16 +1735,16 @@ def build_model(run_probes=True):
         if tag in ("GAMESTATE", "CARSTATE"):
             type_replay = {"class": "simulation_snapshot", "preserve_bit_exactly": True,
                            "reason": "The accepted game code copies/restores whole GAMESTATE values and updates both embedded CARSTATE records as simulation proceeds.",
-                           "evidence": [{"kind": "state_copy_restore", "citation": "src/carsim.c:1734-1738"},
-                                        {"kind": "checkpoint_write", "citation": "src/carsim.c:1758-1770"},
-                                        {"kind": "car_update", "citation": "src/carsim.c:933-1060"}]}
+                           "evidence": [{"kind": "state_copy_restore", "citation": "game/carsim.c:1734-1738"},
+                                        {"kind": "checkpoint_write", "citation": "game/carsim.c:1758-1770"},
+                                        {"kind": "car_update", "citation": "game/carsim.c:933-1060"}]}
         elif tag == "SIMD":
             type_replay = {"class": "deterministic_race_configuration", "preserve_bit_exactly": True,
                            "reason": "SIMD tuning inputs are read by initialization, speed, grip and collision routines; replay needs the same selected tuning configuration.",
-                           "evidence": [{"kind": "simulation_use", "citation": "src/carsim.c:1511-1523"},
-                                        {"kind": "simulation_use", "citation": "src/carsim.c:2173-2197"},
-                                        {"kind": "simulation_use", "citation": "src/carsim.c:2362-2367"},
-                                        {"kind": "simulation_use", "citation": "src/carsim.c:3341-3355"}]}
+                           "evidence": [{"kind": "simulation_use", "citation": "game/carsim.c:1511-1523"},
+                                        {"kind": "simulation_use", "citation": "game/carsim.c:2173-2197"},
+                                        {"kind": "simulation_use", "citation": "game/carsim.c:2362-2367"},
+                                        {"kind": "simulation_use", "citation": "game/carsim.c:3341-3355"}]}
         elif instances:
             instance_values = [x.get("replay_determinism", {}).get("preserve_bit_exactly") for x in instances]
             if instance_values and all(v is True for v in instance_values):
@@ -1789,54 +1789,54 @@ def build_model(run_probes=True):
         field_semantics = []
         if tag == "CARSTATE":
             field_semantics = [
-                {"field": "car_speed", "unit": "unsigned Q8 mph", "meaning": "revolution-coupled speed field", "evidence": [{"citation": "src/render.c:101-107"}]},
-                {"field": "car_speed2", "unit": "unsigned Q8 mph", "meaning": "actual translational speed; can diverge from car_speed during jumps", "evidence": [{"citation": "src/render.c:101-107"}]},
-                {"field": "car_posWorld1", "unit": "world coordinates at 64 times short map/vector coordinates", "meaning": "car world position", "evidence": [{"citation": "src/carsim.c:740-745"}, {"citation": "src/carsim.c:1692-1695"}]},
-                {"field": "car_posWorld2", "unit": "world coordinates at 64 times short map/vector coordinates", "meaning": "prior/secondary car position used in simulation", "evidence": [{"citation": "src/carsim.c:2699-2711"}]},
-                {"field": "car_36MwhlAngle", "unit": "integer angle consumed by 0x400-turn fast-trig convention", "meaning": "normalized heading difference used as the car's angular skid/impact vector; also passed to intcos", "evidence": [{"citation": "src/carsim.c:2444-2460"}, {"citation": "src/carsim.c:2527-2537"}, {"citation": "asm/mathres.ASM:456-515"}]}
+                {"field": "car_speed", "unit": "unsigned Q8 mph", "meaning": "revolution-coupled speed field", "evidence": [{"citation": "game/render.c:101-107"}]},
+                {"field": "car_speed2", "unit": "unsigned Q8 mph", "meaning": "actual translational speed; can diverge from car_speed during jumps", "evidence": [{"citation": "game/render.c:101-107"}]},
+                {"field": "car_posWorld1", "unit": "world coordinates at 64 times short map/vector coordinates", "meaning": "car world position", "evidence": [{"citation": "game/carsim.c:740-745"}, {"citation": "game/carsim.c:1692-1695"}]},
+                {"field": "car_posWorld2", "unit": "world coordinates at 64 times short map/vector coordinates", "meaning": "prior/secondary car position used in simulation", "evidence": [{"citation": "game/carsim.c:2699-2711"}]},
+                {"field": "car_36MwhlAngle", "unit": "integer angle consumed by 0x400-turn fast-trig convention", "meaning": "normalized heading difference used as the car's angular skid/impact vector; also passed to intcos", "evidence": [{"citation": "game/carsim.c:2444-2460"}, {"citation": "game/carsim.c:2527-2537"}, {"citation": "lib/mathres.ASM:456-515"}]}
             ]
         elif tag == "GAMESTATE":
             field_semantics = [
-                {"field": "game_frame", "unit": "simulation frame index", "meaning": "indexes g_tdreplay16buf and advances once per state update", "evidence": [{"citation": "src/carsim.c:1758-1770"}]},
-                {"field": "game_end_delay_limit", "unit": "frames per second / scheduling rate", "meaning": "rate counter used by game loop timing", "evidence": [{"citation": "src/carsim.c:1770-1778"}]},
-                {"field": "game_inputmode", "unit": "enumerated byte flag (0 waiting, 1 active, 2 suppressed during intro)", "meaning": "simulation input mode", "evidence": [{"citation": "src/render.c:189"}, {"citation": "src/carsim.c:1758-1763"}]}
+                {"field": "game_frame", "unit": "simulation frame index", "meaning": "indexes g_tdreplay16buf and advances once per state update", "evidence": [{"citation": "game/carsim.c:1758-1770"}]},
+                {"field": "game_end_delay_limit", "unit": "frames per second / scheduling rate", "meaning": "rate counter used by game loop timing", "evidence": [{"citation": "game/carsim.c:1770-1778"}]},
+                {"field": "game_inputmode", "unit": "enumerated byte flag (0 waiting, 1 active, 2 suppressed during intro)", "meaning": "simulation input mode", "evidence": [{"citation": "game/render.c:189"}, {"citation": "game/carsim.c:1758-1763"}]}
             ]
         elif tag == "VECTORLONG":
             field_semantics = [
-                {"field": "lx, ly, lz", "unit": "world-coordinate integer at 64 times the short VECTOR/map coordinate", "meaning": "long car world position; conversions shift right by six when entering short simulation/render coordinates", "evidence": [{"citation": "src/carsim.c:740-745"}, {"citation": "src/carsim.c:1692-1695"}]}
+                {"field": "lx, ly, lz", "unit": "world-coordinate integer at 64 times the short VECTOR/map coordinate", "meaning": "long car world position; conversions shift right by six when entering short simulation/render coordinates", "evidence": [{"citation": "game/carsim.c:740-745"}, {"citation": "game/carsim.c:1692-1695"}]}
             ]
         elif tag == "VECTOR":
             field_semantics = [
-                {"field": "x, y, z", "unit": "context-dependent signed 16-bit coordinate triplet; short world/map coordinates in car-relative calculations, other call sites use model or view space", "meaning": "coordinate frame follows the owning instance and transform path", "evidence": [{"citation": "src/carsim.c:740-745"}, {"citation": "src/polygon.c:8"}]}
+                {"field": "x, y, z", "unit": "context-dependent signed 16-bit coordinate triplet; short world/map coordinates in car-relative calculations, other call sites use model or view space", "meaning": "coordinate frame follows the owning instance and transform path", "evidence": [{"citation": "game/carsim.c:740-745"}, {"citation": "game/polygon.c:8"}]}
             ]
         elif tag == "POINT2D":
             field_semantics = [
-                {"field": "px, py", "unit": "context-dependent signed integer pair; projected raster points are screen pixels, SIMD points are car/dashboard setup coordinates", "meaning": "do not assign one universal frame to all POINT2D instances", "evidence": [{"citation": "src/polygon.c:260-280"}, {"citation": "src/render.c:204-231"}]}
+                {"field": "px, py", "unit": "context-dependent signed integer pair; projected raster points are screen pixels, SIMD points are car/dashboard setup coordinates", "meaning": "do not assign one universal frame to all POINT2D instances", "evidence": [{"citation": "game/polygon.c:260-280"}, {"citation": "game/render.c:204-231"}]}
             ]
         elif tag == "RECTANGLE":
             field_semantics = [
-                {"field": "left, right, top, bottom", "unit": "screen-space integer pixel edges for renderer clipping rectangles", "meaning": "right/bottom comparisons use ptx+1 and pty+1 in transformed-shape bounds", "evidence": [{"citation": "src/polygon.c:408-415"}, {"citation": "src/polygon.c:8"}]}
+                {"field": "left, right, top, bottom", "unit": "screen-space integer pixel edges for renderer clipping rectangles", "meaning": "right/bottom comparisons use ptx+1 and pty+1 in transformed-shape bounds", "evidence": [{"citation": "game/polygon.c:408-415"}, {"citation": "game/polygon.c:8"}]}
             ]
         elif tag == "MouseRegs":
             field_semantics = [
-                {"field": "ax, bx, cx, dx", "unit": "DOS mouse interrupt register values; cx is horizontal coordinate (with mousehorscale mode adjustment), dx is vertical coordinate", "meaning": "BIOS/driver packet, not replay-frame simulation state", "evidence": [{"citation": "src/mouse.c:1-18"}, {"citation": "src/mouse.c:53-68"}]}
+                {"field": "ax, bx, cx, dx", "unit": "DOS mouse interrupt register values; cx is horizontal coordinate (with mousehorscale mode adjustment), dx is vertical coordinate", "meaning": "BIOS/driver packet, not replay-frame simulation state", "evidence": [{"citation": "lib/mouse.c:1-18"}, {"citation": "lib/mouse.c:53-68"}]}
             ]
         elif tag == "SIMD":
             field_semantics = [
-                {"field": "idle_rpm, downshift_rpm, upshift_rpm, max_rpm", "unit": "engine-rate thresholds compared with CARSTATE.car_currpm; RPM calibration is not independently established", "meaning": "initialize current RPM from idle_rpm and select shifts/clamp using the thresholds", "evidence": [{"citation": "src/carsim.c:1511"}, {"citation": "src/carsim.c:2173-2179"}, {"citation": "src/carsim.c:2228-2229"}]},
-                {"field": "car_mass", "unit": "simulation mass divisor; physical mass unit and scale are not established", "meaning": "divides the scaled speedDelta term in the engine acceleration path", "evidence": [{"citation": "src/carsim.c:2266"}]},
-                {"field": "gear_ratios[7]", "unit": "per-gear unsigned integer ratio; fixed-point denominator is not established", "meaning": "copied into CARSTATE and indexed by current gear", "evidence": [{"citation": "src/carsim.c:1519"}, {"citation": "src/carsim.c:2196-2197"}]},
-                {"field": "grip, sliding[5]", "unit": "integer grip/sliding coefficients; denominator is not established", "meaning": "combine tire and surface response during simulation", "evidence": [{"citation": "src/carsim.c:2362-2367"}]},
-                {"field": "collide_points[2]", "unit": "short car collision coordinates expanded by << 6 at world-coordinate use sites", "meaning": "car collision profile points used by car/car and car/track collision tests", "evidence": [{"citation": "src/carsim.c:1387"}, {"citation": "src/carsim.c:1429-1477"}]},
-                {"field": "wheel_coords[4]", "unit": "short VECTOR car-local wheel coordinate triplets; exact asset scale is not established", "meaning": "wheel placement input for vehicle simulation/render setup", "evidence": [{"citation": "src/carsim.c:1028"}, {"citation": "src/carsim.c:1386"}]},
-                {"field": "spdcenter, spdpoints; revcenter, revpoints", "unit": "integer dashboard raster coordinates / extents", "meaning": "position speedometer and tachometer lines/sprites", "evidence": [{"citation": "src/race.c:1600-1617"}]},
-                {"field": "knob_points[7]", "unit": "gear-selector/dashboard layout coordinates; pixel scale not established", "meaning": "per-gear knob position copied to CARSTATE and updated on shifts", "evidence": [{"citation": "src/carsim.c:1521-1523"}, {"citation": "src/carsim.c:2186-2216"}]},
-                {"field": "aero_resistance", "unit": "integer quadratic drag coefficient; fixed-point scale is not established", "meaning": "builds the per-car aerodynamic resistance table with an i-squared term and right shift 9", "evidence": [{"citation": "src/carsim.c:3348-3355"}]}
+                {"field": "idle_rpm, downshift_rpm, upshift_rpm, max_rpm", "unit": "engine-rate thresholds compared with CARSTATE.car_currpm; RPM calibration is not independently established", "meaning": "initialize current RPM from idle_rpm and select shifts/clamp using the thresholds", "evidence": [{"citation": "game/carsim.c:1511"}, {"citation": "game/carsim.c:2173-2179"}, {"citation": "game/carsim.c:2228-2229"}]},
+                {"field": "car_mass", "unit": "simulation mass divisor; physical mass unit and scale are not established", "meaning": "divides the scaled speedDelta term in the engine acceleration path", "evidence": [{"citation": "game/carsim.c:2266"}]},
+                {"field": "gear_ratios[7]", "unit": "per-gear unsigned integer ratio; fixed-point denominator is not established", "meaning": "copied into CARSTATE and indexed by current gear", "evidence": [{"citation": "game/carsim.c:1519"}, {"citation": "game/carsim.c:2196-2197"}]},
+                {"field": "grip, sliding[5]", "unit": "integer grip/sliding coefficients; denominator is not established", "meaning": "combine tire and surface response during simulation", "evidence": [{"citation": "game/carsim.c:2362-2367"}]},
+                {"field": "collide_points[2]", "unit": "short car collision coordinates expanded by << 6 at world-coordinate use sites", "meaning": "car collision profile points used by car/car and car/track collision tests", "evidence": [{"citation": "game/carsim.c:1387"}, {"citation": "game/carsim.c:1429-1477"}]},
+                {"field": "wheel_coords[4]", "unit": "short VECTOR car-local wheel coordinate triplets; exact asset scale is not established", "meaning": "wheel placement input for vehicle simulation/render setup", "evidence": [{"citation": "game/carsim.c:1028"}, {"citation": "game/carsim.c:1386"}]},
+                {"field": "spdcenter, spdpoints; revcenter, revpoints", "unit": "integer dashboard raster coordinates / extents", "meaning": "position speedometer and tachometer lines/sprites", "evidence": [{"citation": "game/race.c:1600-1617"}]},
+                {"field": "knob_points[7]", "unit": "gear-selector/dashboard layout coordinates; pixel scale not established", "meaning": "per-gear knob position copied to CARSTATE and updated on shifts", "evidence": [{"citation": "game/carsim.c:1521-1523"}, {"citation": "game/carsim.c:2186-2216"}]},
+                {"field": "aero_resistance", "unit": "integer quadratic drag coefficient; fixed-point scale is not established", "meaning": "builds the per-car aerodynamic resistance table with an i-squared term and right shift 9", "evidence": [{"citation": "game/carsim.c:3348-3355"}]}
             ]
         elif tag == "AUDIO_CAR_FRAME":
             field_semantics = [
-                {"field": "player_offsets[6], opponent_offsets[6]", "unit": "short-vector coordinate deltas for audio spatialization; source coordinate frame follows the target/current VECTOR inputs", "meaning": "capture past/current target deltas and pass them to the audio service", "evidence": [{"citation": "src/carsim.c:2738-2743"}, {"citation": "src/carsim.c:2832-2840"}]},
-                {"field": "player_rpm, opponent_rpm", "unit": "copied CARSTATE engine-rate values", "meaning": "per-frame audio pitch inputs; derived presentation state", "evidence": [{"citation": "src/carsim.c:2744"}, {"citation": "src/carsim.c:2753"}]}
+                {"field": "player_offsets[6], opponent_offsets[6]", "unit": "short-vector coordinate deltas for audio spatialization; source coordinate frame follows the target/current VECTOR inputs", "meaning": "capture past/current target deltas and pass them to the audio service", "evidence": [{"citation": "game/carsim.c:2738-2743"}, {"citation": "game/carsim.c:2832-2840"}]},
+                {"field": "player_rpm, opponent_rpm", "unit": "copied CARSTATE engine-rate values", "meaning": "per-frame audio pitch inputs; derived presentation state", "evidence": [{"citation": "game/carsim.c:2744"}, {"citation": "game/carsim.c:2753"}]}
             ]
         instance_subsystems = set()
         for instance in instances:
@@ -1865,29 +1865,29 @@ def build_model(run_probes=True):
     # Global data declarations with exact semantic scales grounded in accepted source comments/code.
     scale_ledger = [
         {"fact": "intsin selects one of four quadrants from the high byte, indexes the 256-entry quarter-wave table from the low byte, and intcos adds 0x100; one complete turn is 0x400 units. Table peak 16384 is Q14 amplitude.",
-         "evidence": ["asm/mathres.ASM:456-515", "asm/mathres.ASM:7-263", "asm/gfxres.ASM:3103-3121"]},
+         "evidence": ["lib/mathres.ASM:456-515", "lib/mathres.ASM:7-263", "lib/gfxres.ASM:3103-3121"]},
         {"fact": "CARSTATE.car_speed and car_speed2 are unsigned Q8 mph (raw value = mph * 256); car_speed is rev-coupled and car_speed2 is actual translational speed, so they diverge during jumps.",
-         "evidence": ["src/render.c:101-107", "src/render.c:101-107"]},
+         "evidence": ["game/render.c:101-107", "game/render.c:101-107"]},
         {"fact": "CARSTATE car_posWorld1/car_posWorld2 coordinates are 64 times short VECTOR/map coordinates at conversions that shift by six or shift short deltas left by six.",
-         "evidence": ["src/carsim.c:740-745", "src/carsim.c:1692-1695", "src/carsim.c:2699-2711"]},
+         "evidence": ["game/carsim.c:740-745", "game/carsim.c:1692-1695", "game/carsim.c:2699-2711"]},
         {"fact": "Projection center and half extents are stored in integer screen coordinates (160,100); transformed-shape clip rectangles compare projected coordinates as pixel edges.",
-         "evidence": ["asm/project.ASM:11-27", "src/polygon.c:408-415"]},
+         "evidence": ["lib/project.ASM:11-27", "game/polygon.c:408-415"]},
         {"fact": "Mouse x coordinates are converted by mousehorscale, which is set when the selected width is 320; mouse y coordinates are passed directly. The mouse API limits are pixel-coordinate bounds.",
-         "evidence": ["src/mouse.c:40-43", "src/mouse.c:49-68"]},
+         "evidence": ["lib/mouse.c:40-43", "lib/mouse.c:49-68"]},
         {"fact": "MouseRegs is a DOS interrupt register packet; it is device/presentation input and not recorded simulation state.",
-         "evidence": ["src/mouse.c:1-18", "src/mouse.c:62-68"]}
+         "evidence": ["lib/mouse.c:1-18", "lib/mouse.c:62-68"]}
     ]
     subsystem_notes = [
         {"subsystem": "simulation", "summary": "GAMESTATE checkpoint state, embedded player/opponent CARSTATE, deterministic SIMD car setup, and random-generator state.",
-         "evidence": ["src/render.c:90-235", "src/carsim.c:1758-1770", "src/carsim.c:933-1060", "src/carsim.c:1758-1770"]},
+         "evidence": ["game/render.c:90-235", "game/carsim.c:1758-1770", "game/carsim.c:933-1060", "game/carsim.c:1758-1770"]},
         {"subsystem": "camera_render", "summary": "Camera viewpoint/mode values feed world-to-view transforms; projection globals and per-frame transformed-shape workspaces feed clipping and raster coordinates.",
-         "evidence": ["src/render.c:936-971", "asm/project.ASM:11-27", "src/polygon.c:260-280", "src/polygon.c:408-415"]},
+         "evidence": ["game/render.c:936-971", "lib/project.ASM:11-27", "game/polygon.c:260-280", "game/polygon.c:408-415"]},
         {"subsystem": "menu_ui", "summary": "Menu configuration, score/name text, dialog selection and cursor/rectangle state live outside the per-frame simulation snapshot; persistent race configuration must still be reloaded identically.",
-         "evidence": ["src/frontend.c:550-555", "src/frontend.c:611-612", "src/uires.c:1766-1795"]},
+         "evidence": ["game/frontend.c:550-555", "game/frontend.c:611-612", "game/uires.c:1766-1795"]},
         {"subsystem": "input", "summary": "Keyboard/joystick/mouse polling and status stacks are device/UI state; replay consumes the frame-indexed byte stream through core.game_frame.",
-         "evidence": ["src/uires.c:770-817", "src/mouse.c:40-68", "src/carsim.c:1758-1770"]},
+         "evidence": ["game/uires.c:770-817", "lib/mouse.c:40-68", "game/carsim.c:1758-1770"]},
         {"subsystem": "audio", "summary": "Audio driver, chunks, voices, timers, and derived car-frame audio records are presentation/resource state; simulation car position and RPM are sampled to drive sound.",
-         "evidence": ["src/audiores.c:16-80", "src/audioeng.c:7-49", "src/carsim.c:2661-2809"]}
+         "evidence": ["lib/audiores.c:16-80", "game/audioeng.c:7-49", "game/carsim.c:2661-2809"]}
     ]
     supplemental_object_extents = []
     for row in extent_evidence.get("objects", []):
@@ -1902,7 +1902,7 @@ def build_model(run_probes=True):
             "type": "int16_t[9]",
             "size_bytes": row["allocated_extent_bytes"],
             "size_basis": row["allocation_basis"],
-            "owner_object": "obj_seg005",
+            "owner_object": "race",
             "replay_determinism": "presentation/menu state",
             "evidence": row["evidence"],
             "target_payload_hex": row.get("target_payload_hex"),
@@ -1998,12 +1998,12 @@ def write_markdown(model, output_dir=DOCS):
            "The simulation checkpoint is a complete 0x460-byte `GAMESTATE`, including both 0xD0-byte `CARSTATE`s, the six-byte random seed and opaque fields. `movesim` writes the full aggregate into the replay checkpoint array; `gotosim` assigns a full checkpoint back and initializes the random generator from its seed. Replay advances by `core.game_frame` through `g_tdreplay16buf`. Preserve the aggregate bytes, seed, replay bytes and frame order exactly. The pointer slots that address these buffers are process-local and are not portable replay data. Keyboard, joystick, mouse, raster, menu and audio-driver state stay in the presentation/device side of the boundary.", "",
            "| Evidence-backed state fact | Porting consequence | Evidence |", "|---|---|---|"]
     keyfacts = [
-        ("`GAMESTATE` has 0x460 bytes: three 24-element long arrays, timing/frame fields, two embedded `CARSTATE`s, seed bytes, replay flags and opaque spans.", "Keep the whole aggregate in checkpoints, including currently unexplained fields.", "src/render.c:155-202; src/carsim.c:1758-1770"),
-        ("Each embedded `CARSTATE` has 0xD0 bytes with two long world-position vectors, wheel-result arrays, RPM/speed/gearing and flags.", "Keep player and opponent state as separate complete records.", "src/render.c:90-153; compiler-sized `struct CARSTATE` probe in `struct_types`"),
-        ("`car_speed`/`car_speed2` are Q8 mph; `speed2` is actual movement speed and can diverge during jumps.", "Keep the unsigned 16-bit raw values and convert only at API boundaries.", "src/render.c:101-107"),
-        ("Fast trig uses 0x400 input units per turn, 0x100 per quadrant and a peak table value of 16384 (Q14).", "Keep angle and multiply-scale conventions at the legacy boundary.", "asm/mathres.ASM:456-515; asm/mathres.ASM:7-263; asm/gfxres.ASM:3103-3121"),
-        ("Car world-position longs are converted to short vectors with shifts by six.", "Apply the proven x64 conversion when entering short map/vector coordinates.", "src/carsim.c:740-745; src/carsim.c:1692-1695"),
-        ("`SIMD` stores per-car setup values including ratios, RPM thresholds, grip, wheel locations and dashboard-point data.", "Treat loaded tuning as deterministic race configuration; do not conflate with mutable `CARSTATE`.", "src/render.c:204-235; src/race.c:200-231"),
+        ("`GAMESTATE` has 0x460 bytes: three 24-element long arrays, timing/frame fields, two embedded `CARSTATE`s, seed bytes, replay flags and opaque spans.", "Keep the whole aggregate in checkpoints, including currently unexplained fields.", "game/render.c:155-202; game/carsim.c:1758-1770"),
+        ("Each embedded `CARSTATE` has 0xD0 bytes with two long world-position vectors, wheel-result arrays, RPM/speed/gearing and flags.", "Keep player and opponent state as separate complete records.", "game/render.c:90-153; compiler-sized `struct CARSTATE` probe in `struct_types`"),
+        ("`car_speed`/`car_speed2` are Q8 mph; `speed2` is actual movement speed and can diverge during jumps.", "Keep the unsigned 16-bit raw values and convert only at API boundaries.", "game/render.c:101-107"),
+        ("Fast trig uses 0x400 input units per turn, 0x100 per quadrant and a peak table value of 16384 (Q14).", "Keep angle and multiply-scale conventions at the legacy boundary.", "lib/mathres.ASM:456-515; lib/mathres.ASM:7-263; lib/gfxres.ASM:3103-3121"),
+        ("Car world-position longs are converted to short vectors with shifts by six.", "Apply the proven x64 conversion when entering short map/vector coordinates.", "game/carsim.c:740-745; game/carsim.c:1692-1695"),
+        ("`SIMD` stores per-car setup values including ratios, RPM thresholds, grip, wheel locations and dashboard-point data.", "Treat loaded tuning as deterministic race configuration; do not conflate with mutable `CARSTATE`.", "game/render.c:204-235; game/race.c:200-231"),
     ]
     for fact, effect, ev in keyfacts:
         out.append(f"| {fact} | {effect} | `{ev}` |")
@@ -2036,7 +2036,7 @@ def write_markdown(model, output_dir=DOCS):
             f"{r['replay_determinism']['class']} / {r['replay_determinism']['preserve_bit_exactly']}",
             readers, writers, ev])) + " |")
     out += ["", "## Accepted C struct/union types", "",
-            "Each row is an accepted translation-unit layout. Repeated tags remain separate because declarations differ between TUs; the 1014-byte `GAMESTATE` view in `src/trkscene.c:2` stays distinct from the 1120-byte live checkpoint. The JSON stores every member declaration and evidence line; `size_bytes` is measured by an isolated canonical MSC compile of `sizeof(tag)` bracket arrays, where the probe completed successfully.", "",
+            "Each row is an accepted translation-unit layout. Repeated tags remain separate because declarations differ between TUs; the 1014-byte `GAMESTATE` view in `game/trkscene.c:2` stays distinct from the 1120-byte live checkpoint. The JSON stores every member declaration and evidence line; `size_bytes` is measured by an isolated canonical MSC compile of `sizeof(tag)` bracket arrays, where the probe completed successfully.", "",
             "| Tag | Accepted TU variant | Size | Instances at addresses | Owner subsystem | Readers | Writers | Units | Lifetime | Replay class / exact? | Evidence |", "|---|---|---:|---|---|---|---|---|---|---|---|"]
     for t in model["struct_types"]:
         for v in t["variants"]:

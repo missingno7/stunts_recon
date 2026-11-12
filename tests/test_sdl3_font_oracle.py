@@ -81,7 +81,7 @@ def prepare_font_data(worker: Path) -> None:
     from project_headers import expand_project_headers
     from host_probe_modes import legacy_target_widths, transformed_source
 
-    source = "src/deffont.c"
+    source = "lib/deffont.c"
     expanded = expand_project_headers((ROOT / source).read_text(encoding="latin-1"), ROOT)
     adapted, _ = transformed_source(source, expanded, {}, {}, set())
     (worker / "font_data.c").write_text(legacy_target_widths(adapted), encoding="latin-1")
@@ -118,7 +118,7 @@ def compile_host_probe() -> tuple[Path, dict[str, str]]:
 
 def font_default_from_oracle(oracle: OracleImage) -> bytes:
     recipe = __import__("json").loads(
-        (ROOT / "recipes" / "fardata_11039.json").read_text(encoding="utf-8")
+        (ROOT / "recipes" / "deffont.json").read_text(encoding="utf-8")
     )
     start, end = recipe["start"], recipe["end"]
     data = oracle.load_image[start:end]
@@ -130,7 +130,7 @@ def font_default_from_oracle(oracle: OracleImage) -> bytes:
 def read_source_default_font() -> bytes:
     import re
 
-    source = (ROOT / "src" / "deffont.c").read_text(encoding="utf-8")
+    source = (ROOT / "lib" / "deffont.c").read_text(encoding="utf-8")
     match = re.search(r"fontdef_default\[1408\]\s*=\s*\{(.*?)\}", source, re.S)
     if match is None:
         raise AssertionError("could not find the built-in font initializer")
@@ -306,7 +306,7 @@ class Sdl3FontOracleTests(unittest.TestCase):
         cls.default_font = font_default_from_oracle(cls.oracle)
         source_default = read_source_default_font()
         if source_default != cls.default_font:
-            raise AssertionError("src/deffont.c differs from the locked built-in FONTDEF")
+            raise AssertionError("lib/deffont.c differs from the locked built-in FONTDEF")
         data_symbols = loads(
             (ROOT / "layout" / "data-symbols.json").read_text(encoding="utf-8")
         )

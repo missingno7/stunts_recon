@@ -1,0 +1,45 @@
+{
+  "compiler_flags": [
+    "/AM",
+    "/Oa",
+    "/Gs"
+  ],
+  "compiler_flags_register": "TUFLAG-Oa-seg023-025",
+  "end": 158846,
+  "evidence": {
+    "function_inventory": "evidence/functions.json",
+    "scope": "docs/acceptance.md"
+  },
+  "expected_fixups": [],
+  "expected_relocations": [],
+  "id": "heapsort",
+  "include_closure": [],
+  "inventory_name": "heapsort_by_order",
+  "object_segment": "UNIT_TEXT",
+  "preprocessor_closure": [
+    {
+      "path": "include/mathapi.h",
+      "sha256": "8a97c7559d3d628ce16e28d545ef34d7743306dec558e8efedaf92878b63756f",
+      "size": 467
+    },
+    {
+      "path": "include/radius2d.h",
+      "sha256": "097d90d5382c47225c46504009b67e05ba91fb87371aa84b351d101f8693077e",
+      "size": 120
+    },
+    {
+      "path": "include/stunts_types.h",
+      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
+      "size": 1091
+    }
+  ],
+  "profile": "msc510-medium",
+  "public": "_shellsort",
+  "source": "lib/heapsort.c",
+  "stable_id": "load_26be8",
+  "start": 158696,
+  "target": {
+    "sha256": "79d242fe30f1ffea7a5ef31431efffcb0e6326abab3a4cddbb09d2dcc8593ca6",
+    "size": 150
+  }
+}

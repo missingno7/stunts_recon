@@ -1,0 +1,347 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 145218,
+  "expected_fixups": [
+    {
+      "displacement": 12,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 8,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 14,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 34,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 16,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 45,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 16,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 59,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 18,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 73,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 2,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 111,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 10,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 132,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 20,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 143,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 2,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 244,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 2,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 276,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 10,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 292,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 206,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 336,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 218,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 399,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 222,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 417,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [],
+  "external_binding": {
+    "mode": "asm-external-dgroup-offset16-v1"
+  },
+  "id": "sprrects",
+  "include_closure": [
+    {
+      "path": "include/platform_hw.inc",
+      "sha256": "8961b57e4f26d730398c81f883947e5a9836f03b8817bf9fd3637a9a94e52d76",
+      "size": 1927
+    }
+  ],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 144850,
+      "name": "sprite_1_unk2",
+      "public": "_drawrectc",
+      "stable_id": "load_23578",
+      "start": 144760,
+      "target": {
+        "sha256": "3ff937e7406deeaad26031c94bc1f5fa58b78921941394bc27acd968005fb2eb",
+        "size": 90
+      }
+    },
+    {
+      "end": 145018,
+      "name": "sprite_1_unk",
+      "public": "_drawrect",
+      "stable_id": null,
+      "start": 144850,
+      "target": {
+        "sha256": "0e85dd71df87265558c40920a4b2e1a7cf2cf8bbe2fb4a1a8b6d80a73497c0d4",
+        "size": 168
+      }
+    },
+    {
+      "end": 145218,
+      "name": "sprite_1_unk3",
+      "public": "_sprite_blit_dither_phase",
+      "stable_id": "load_2367a",
+      "start": 145018,
+      "target": {
+        "sha256": "409b7dc916723b7bd5291d6f062834f5745f4cfd8f51ad6dfb3533e865b64b00",
+        "size": 200
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "_sprite1"
+    ],
+    "groups": [],
+    "publics": [
+      {
+        "name": "_sprite_blit_dither_phase",
+        "offset": 258,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_drawrect",
+        "offset": 90,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_drawrectc",
+        "offset": 0,
+        "segment": "S012_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 458,
+        "name": "S012_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "S012_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "source": "lib/sprrects.ASM",
+  "stable_id": "multi_seg012_sprite_1_unk_group",
+  "start": 144760,
+  "subsumed_owners": [],
+  "target": {
+    "sha256": "cbc8c50820faeef23739241f89e3784ebcc69d2aab73d6fe0de4300d36986d73",
+    "size": 458
+  }
+}

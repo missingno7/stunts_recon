@@ -8231,7 +8231,7 @@
         "start": 141938
       },
       "module_entry": {
-        "owner": "font_matrix_shape_decode"
+        "owner": "fontmat"
       }
     },
     "_mat_mul_vector": {

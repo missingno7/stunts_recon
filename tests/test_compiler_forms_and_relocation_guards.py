@@ -68,7 +68,7 @@ LITERAL_FAR_CALL_ASM = (b"UNIT_TEXT SEGMENT BYTE PUBLIC 'CODE'\r\n ASSUME CS:UNI
 class HardCodedProgramAddress(unittest.TestCase):
     def test_asm_literal_far_call_at_relocated_site_is_rejected(self):
         o = Oracle.load()
-        module = read_json(ROOT/'recipes/obj_seg008.json')
+        module = read_json(ROOT/'recipes/uires.json')
         accepted = next(m for m in module['members'] if m['name'] == 'timer_get_delta_alt')
         accepted = dict(accepted, expected_relocations=[r for r in module['expected_relocations']
                         if accepted['start'] <= r['load_offset'] < accepted['end']])
@@ -98,7 +98,7 @@ class HardCodedProgramAddress(unittest.TestCase):
     def test_accepted_sources_contain_no_far_pointer_literals(self):
         import re
         pattern = re.compile(rb'0x[0-9a-fA-F]{7,8}[lL]\b|MK_FP')
-        for path in sorted((ROOT/'src').glob('*.c')):
+        for path in sorted((ROOT/'game').glob('*.c')) + sorted((ROOT/'lib').glob('*.c')):
             self.assertIsNone(pattern.search(path.read_bytes()), path.name)
 
 
@@ -156,7 +156,7 @@ FIXTURES = ROOT/'recipes'
 
 class Seg029ObjectForm(unittest.TestCase):
     def recipe(self):
-        return read_json(FIXTURES/'obj_seg029.json')
+        return read_json(FIXTURES/'audiochk.json')
 
 
     def test_c_public_truncation_is_msc510_only(self):
@@ -218,7 +218,7 @@ class _FarOnly:
 class TuOwnedData(unittest.TestCase):
     def test_whole_object_group_owns_its_string_literal_pool(self):
         o = Oracle.load()
-        recipe = read_json(FIXTURES/'seg034_shape2d_group.json')
+        recipe = read_json(FIXTURES/'shp2file.json')
         payload, receipt = probe(recipe, o.result)
         spec = recipe['secondary_dgroup_segments']['_DATA']
         pool = bytes.fromhex(receipt['binding']['secondary_payloads']['_DATA'])
@@ -379,9 +379,9 @@ class SegmentFrameAnchor(unittest.TestCase):
 class SwitchTableGroup(unittest.TestCase):
     def locate(self):
         manifest = read_json(ROOT/'layout/manifest.json')
-        rows = [o for o in manifest['owners'] if o['id'] == 'obj_seg006']
+        rows = [o for o in manifest['owners'] if o['id'] == 'polygon']
         if not rows:
-            self.fail('obj_seg006 has no tracked accepted recipe')
+            self.fail('polygon has no tracked accepted recipe')
         return read_json(ROOT/rows[0]['recipe'])
 
     def test_c_group_switch_tables_bind_at_the_members_code_frame(self):

@@ -3,9 +3,9 @@
     {
       "classification": "GAME_C",
       "end": 200006,
-      "id": "obj_seg000:_BSS",
+      "id": "frontend:_BSS",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg000",
+      "parent": "frontend",
       "placement": "link-module-order-v1",
       "segment": "_BSS",
       "start": 199994,
@@ -17,9 +17,9 @@
     {
       "classification": "GAME_C",
       "end": 200042,
-      "id": "obj_seg001_complete:_BSS",
+      "id": "carsim:_BSS",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg001_complete",
+      "parent": "carsim",
       "placement": "link-module-order-v1",
       "segment": "_BSS",
       "start": 200006,
@@ -31,9 +31,9 @@
     {
       "classification": "GAME_C",
       "end": 200332,
-      "id": "obj_seg005:_BSS",
+      "id": "race:_BSS",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg005",
+      "parent": "race",
       "placement": "link-module-order-v1",
       "segment": "_BSS",
       "start": 200042,
@@ -45,9 +45,9 @@
     {
       "classification": "GAME_C",
       "end": 203476,
-      "id": "obj_seg006:_BSS",
+      "id": "polygon:_BSS",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg006",
+      "parent": "polygon",
       "placement": "link-module-order-v1",
       "segment": "_BSS",
       "start": 200332,
@@ -59,9 +59,9 @@
     {
       "classification": "GAME_C",
       "end": 205383,
-      "id": "obj_seg007:_BSS",
+      "id": "audioeng:_BSS",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg007",
+      "parent": "audioeng",
       "placement": "link-module-order-v1",
       "segment": "_BSS",
       "start": 203476,
@@ -75,15 +75,15 @@
       "end": 205384,
       "id": "fill_32247_32248",
       "kind": "LINK_FILL",
-      "object": "obj_seg007",
+      "object": "audioeng",
       "start": 205383
     },
     {
       "classification": "GAME_C",
       "end": 205400,
-      "id": "obj_seg008:_BSS",
+      "id": "uires:_BSS",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg008",
+      "parent": "uires",
       "placement": "link-module-order-v1",
       "segment": "_BSS",
       "start": 205384,
@@ -95,9 +95,9 @@
     {
       "classification": "GAME_C",
       "end": 207000,
-      "id": "obj_seg009:_BSS",
+      "id": "trackedt:_BSS",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg009",
+      "parent": "trackedt",
       "placement": "link-module-order-v1",
       "segment": "_BSS",
       "start": 205400,
@@ -123,9 +123,9 @@
     {
       "classification": "GAME_C",
       "end": 207086,
-      "id": "obj_seg027:_BSS",
+      "id": "audiores:_BSS",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg027",
+      "parent": "audiores",
       "placement": "link-module-order-v1",
       "segment": "_BSS",
       "start": 207038,
@@ -137,9 +137,9 @@
     {
       "classification": "GAME_C",
       "end": 207382,
-      "id": "obj_seg028:_BSS",
+      "id": "audioply:_BSS",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg028",
+      "parent": "audioply",
       "placement": "link-module-order-v1",
       "segment": "_BSS",
       "start": 207086,
@@ -151,9 +151,9 @@
     {
       "classification": "GAME_C",
       "end": 207396,
-      "id": "obj_seg032_group:_BSS",
+      "id": "lineedit:_BSS",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg032_group",
+      "parent": "lineedit",
       "placement": "link-module-order-v1",
       "segment": "_BSS",
       "start": 207382,
@@ -176,7 +176,7 @@
         {
           "address": 207408,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_trksign",
           "size": 4,
@@ -188,7 +188,7 @@
         {
           "address": 207412,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_kick_res",
           "size": 4,
@@ -200,7 +200,7 @@
         {
           "address": 207416,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_opp_follow_flag_backup",
           "size": 1,
@@ -212,7 +212,7 @@
         {
           "address": 207418,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_cur_shps",
           "size": 580,
@@ -224,7 +224,7 @@
         {
           "address": 207998,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_z_ctr_pos",
           "size": 60,
@@ -236,7 +236,7 @@
         {
           "address": 208058,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_pos_pt",
           "size": 6,
@@ -248,7 +248,7 @@
         {
           "address": 208064,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_ancv2",
           "size": 6,
@@ -260,7 +260,7 @@
         {
           "address": 208070,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_xcols",
           "size": 60,
@@ -272,8 +272,8 @@
         {
           "address": 208130,
           "declarers": [
-            "obj_seg000",
-            "obj_seg005"
+            "frontend",
+            "race"
           ],
           "name": "_tmr2",
           "size": 2,
@@ -285,7 +285,7 @@
         {
           "address": 208132,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_ctrmesh",
           "size": 6,
@@ -297,7 +297,7 @@
         {
           "address": 208138,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_g_op_carvector2",
           "size": 6,
@@ -309,7 +309,7 @@
         {
           "address": 208144,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_mssprite_arrays",
           "size": 16,
@@ -321,8 +321,8 @@
         {
           "address": 208160,
           "declarers": [
-            "obj_seg000",
-            "obj_seg004"
+            "frontend",
+            "trkscene"
           ],
           "name": "_wallanchor_x",
           "size": 2,
@@ -334,7 +334,7 @@
         {
           "address": 208162,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_g_td01_track_filecpy",
           "size": 4,
@@ -346,8 +346,8 @@
         {
           "address": 208166,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_g_plyr_snd_state",
           "size": 1,
@@ -359,7 +359,7 @@
         {
           "address": 208168,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_runrndx",
           "size": 2,
@@ -371,8 +371,8 @@
         {
           "address": 208170,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_audiooppflag",
           "size": 1,
@@ -384,8 +384,8 @@
         {
           "address": 208172,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_wallanchor_z",
           "size": 2,
@@ -397,7 +397,7 @@
         {
           "address": 208174,
           "declarers": [
-            "load_29cce"
+            "audiofn"
           ],
           "name": "_audiofiletmp",
           "size": 128,
@@ -409,7 +409,7 @@
         {
           "address": 208302,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_g_drvaudiocode",
           "size": 14,
@@ -421,7 +421,7 @@
         {
           "address": 208316,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_g_shapes3d",
           "size": 2860,
@@ -433,7 +433,7 @@
         {
           "address": 211176,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_trackdata_penalty_related",
           "size": 4,
@@ -445,7 +445,7 @@
         {
           "address": 211180,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_r_zp",
           "size": 60,
@@ -457,7 +457,7 @@
         {
           "address": 211240,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_chhtsample",
           "size": 4,
@@ -469,8 +469,8 @@
         {
           "address": 211244,
           "declarers": [
-            "obj_seg000",
-            "obj_seg004"
+            "frontend",
+            "trkscene"
           ],
           "name": "_test_pln",
           "size": 1,
@@ -482,7 +482,7 @@
         {
           "address": 211246,
           "declarers": [
-            "seg033_mcgawnd"
+            "mcgawnd"
           ],
           "name": "_mcgawnd_window_sprite",
           "size": 4,
@@ -494,7 +494,7 @@
         {
           "address": 211250,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_sky_hgt_world",
           "size": 2,
@@ -506,7 +506,7 @@
         {
           "address": 211252,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_boundglassrect",
           "size": 8,
@@ -518,8 +518,8 @@
         {
           "address": 211260,
           "declarers": [
-            "obj_seg000",
-            "obj_seg005"
+            "frontend",
+            "race"
           ],
           "name": "_g_rpl_init",
           "size": 1,
@@ -531,7 +531,7 @@
         {
           "address": 211261,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_g_vector_bitix",
           "size": 1,
@@ -543,7 +543,7 @@
         {
           "address": 211262,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_g_snaresnd",
           "size": 4,
@@ -555,7 +555,7 @@
         {
           "address": 211266,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_td3",
           "size": 4,
@@ -567,7 +567,7 @@
         {
           "address": 211270,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_track3_gap",
           "size": 4,
@@ -580,7 +580,7 @@
         {
           "address": 211274,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_tommsampleresource",
           "size": 4,
@@ -592,7 +592,7 @@
         {
           "address": 211278,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_poly_cursor1",
           "size": 2,
@@ -604,7 +604,7 @@
         {
           "address": 211280,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_on_off_dash",
           "size": 1,
@@ -616,7 +616,7 @@
         {
           "address": 211282,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_g_rot_mat_z",
           "size": 18,
@@ -628,8 +628,8 @@
         {
           "address": 211300,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_g_player_sound_id",
           "size": 2,
@@ -641,7 +641,7 @@
         {
           "address": 211302,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_didrace",
           "size": 1,
@@ -653,7 +653,7 @@
         {
           "address": 211303,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_g_gsnashape_data",
           "size": 5,
@@ -665,7 +665,7 @@
         {
           "address": 211308,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_audiochunktable",
           "size": 1824,
@@ -677,8 +677,8 @@
         {
           "address": 213132,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_op_eng_sound_id",
           "size": 2,
@@ -701,8 +701,8 @@
         {
           "address": 213646,
           "declarers": [
-            "obj_seg000",
-            "obj_seg004"
+            "frontend",
+            "trkscene"
           ],
           "name": "_road_num",
           "size": 2,
@@ -714,7 +714,7 @@
         {
           "address": 213648,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_block_audio_num",
           "size": 1,
@@ -726,7 +726,7 @@
         {
           "address": 213650,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_array_rpl",
           "size": 64,
@@ -738,8 +738,8 @@
         {
           "address": 213714,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_matrix_transform_view",
           "size": 18,
@@ -751,7 +751,7 @@
         {
           "address": 213732,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_call_proc_flag",
           "size": 1,
@@ -763,7 +763,7 @@
         {
           "address": 213734,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_polygonnumber",
           "size": 2,
@@ -775,7 +775,7 @@
         {
           "address": 213736,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_flagsdown",
           "size": 2,
@@ -787,7 +787,7 @@
         {
           "address": 213738,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_replay_steer_flag",
           "size": 64,
@@ -799,7 +799,7 @@
         {
           "address": 213802,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_cam_idg",
           "size": 1,
@@ -811,7 +811,7 @@
         {
           "address": 213804,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_audio_opp_res",
           "size": 4,
@@ -823,7 +823,7 @@
         {
           "address": 213808,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_intro_alt",
           "size": 22,
@@ -835,7 +835,7 @@
         {
           "address": 213830,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_numid",
           "size": 1,
@@ -847,7 +847,7 @@
         {
           "address": 213832,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_race_stats",
           "size": 22,
@@ -859,8 +859,8 @@
         {
           "address": 213854,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_rotxvehicle",
           "size": 2,
@@ -872,7 +872,7 @@
         {
           "address": 213856,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_musicfile",
           "size": 4,
@@ -884,7 +884,7 @@
         {
           "address": 213860,
           "declarers": [
-            "obj_seg031"
+            "startup"
           ],
           "name": "_mouse_ptr_cursor",
           "size": 4,
@@ -896,7 +896,7 @@
         {
           "address": 213864,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_resource_sound_hit",
           "size": 4,
@@ -908,7 +908,7 @@
         {
           "address": 213868,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_logo_title",
           "size": 22,
@@ -920,7 +920,7 @@
         {
           "address": 213890,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_waitm_ms",
           "size": 2,
@@ -932,7 +932,7 @@
         {
           "address": 213892,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_textstr",
           "size": 40,
@@ -944,7 +944,7 @@
         {
           "address": 213932,
           "declarers": [
-            "obj_seg009"
+            "trackedt"
           ],
           "name": "_gterrtrk",
           "size": 60,
@@ -956,7 +956,7 @@
         {
           "address": 213992,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_ywhlang",
           "size": 10,
@@ -968,7 +968,7 @@
         {
           "address": 214002,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_facenodeiterator",
           "size": 2,
@@ -980,7 +980,7 @@
         {
           "address": 214004,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_snd_tick_clock",
           "size": 2,
@@ -992,7 +992,7 @@
         {
           "address": 214006,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_coursedataappend_address",
           "size": 4,
@@ -1004,7 +1004,7 @@
         {
           "address": 214010,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_pts_set",
           "size": 36,
@@ -1016,7 +1016,7 @@
         {
           "address": 214046,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_secondveccar",
           "size": 36,
@@ -1028,7 +1028,7 @@
         {
           "address": 214082,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_veccar",
           "size": 36,
@@ -1040,7 +1040,7 @@
         {
           "address": 214118,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_car_dvecs",
           "size": 36,
@@ -1052,7 +1052,7 @@
         {
           "address": 214154,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_buf_obase",
           "size": 10,
@@ -1064,7 +1064,7 @@
         {
           "address": 214164,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_core",
           "size": 1120,
@@ -1076,7 +1076,7 @@
         {
           "address": 215284,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_veco",
           "size": 36,
@@ -1088,7 +1088,7 @@
         {
           "address": 215320,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_secondoveh",
           "size": 36,
@@ -1100,7 +1100,7 @@
         {
           "address": 215356,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_opponent_pointc",
           "size": 36,
@@ -1112,7 +1112,7 @@
         {
           "address": 215392,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_veh_od",
           "size": 36,
@@ -1124,7 +1124,7 @@
         {
           "address": 215428,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_statemgmtcpy",
           "size": 2,
@@ -1136,8 +1136,8 @@
         {
           "address": 215430,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_yrotrotveh",
           "size": 2,
@@ -1149,8 +1149,8 @@
         {
           "address": 215432,
           "declarers": [
-            "obj_seg000",
-            "obj_seg004"
+            "frontend",
+            "trkscene"
           ],
           "name": "_element_min_wall",
           "size": 2,
@@ -1162,7 +1162,7 @@
         {
           "address": 215434,
           "declarers": [
-            "seg017_mouse_whole"
+            "mouse"
           ],
           "name": "_msregisterms",
           "size": 14,
@@ -1174,8 +1174,8 @@
         {
           "address": 215448,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_anglerotate_car",
           "size": 2,
@@ -1187,8 +1187,8 @@
         {
           "address": 215450,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_idxtrk",
           "size": 1,
@@ -1200,8 +1200,8 @@
         {
           "address": 215451,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_g_hillf",
           "size": 1,
@@ -1213,8 +1213,8 @@
         {
           "address": 215452,
           "declarers": [
-            "obj_seg000",
-            "obj_seg003"
+            "frontend",
+            "render"
           ],
           "name": "_frmcs_time",
           "size": 2,
@@ -1226,8 +1226,8 @@
         {
           "address": 215454,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_tagtrk",
           "size": 1,
@@ -1239,8 +1239,8 @@
         {
           "address": 215455,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_pen_flag_count",
           "size": 1,
@@ -1252,7 +1252,7 @@
         {
           "address": 215456,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_gamerptrs",
           "size": 4,
@@ -1264,7 +1264,7 @@
         {
           "address": 215460,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_globalgamesettings",
           "size": 26,
@@ -1276,8 +1276,8 @@
         {
           "address": 215486,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_centerpos",
           "size": 4,
@@ -1289,7 +1289,7 @@
         {
           "address": 215490,
           "declarers": [
-            "obj_seg031"
+            "startup"
           ],
           "name": "_spritepointermini",
           "size": 4,
@@ -1301,8 +1301,8 @@
         {
           "address": 215494,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_veh_position",
           "size": 4,
@@ -1314,8 +1314,8 @@
         {
           "address": 215498,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_veh_z",
           "size": 4,
@@ -1327,7 +1327,7 @@
         {
           "address": 215502,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_entry_score_index",
           "size": 1,
@@ -1339,7 +1339,7 @@
         {
           "address": 215504,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_rate_frame",
           "size": 2,
@@ -1351,7 +1351,7 @@
         {
           "address": 215506,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_framerate_pad_0",
           "size": 2,
@@ -1364,7 +1364,7 @@
         {
           "address": 215508,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_road_trk",
           "size": 4,
@@ -1376,7 +1376,7 @@
         {
           "address": 215512,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_g_viewinx",
           "size": 2,
@@ -1388,8 +1388,8 @@
         {
           "address": 215514,
           "declarers": [
-            "obj_seg000",
-            "obj_seg005"
+            "frontend",
+            "race"
           ],
           "name": "_sigframe",
           "size": 1,
@@ -1401,7 +1401,7 @@
         {
           "address": 215516,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_trkptrpath",
           "size": 4,
@@ -1413,8 +1413,8 @@
         {
           "address": 215520,
           "declarers": [
-            "obj_seg000",
-            "obj_seg004"
+            "frontend",
+            "trkscene"
           ],
           "name": "_x_course_part",
           "size": 2,
@@ -1426,7 +1426,7 @@
         {
           "address": 215522,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_mode_flag",
           "size": 1,
@@ -1438,8 +1438,8 @@
         {
           "address": 215524,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_sndposrecord",
           "size": 2,
@@ -1451,7 +1451,7 @@
         {
           "address": 215526,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_g_rplmodui",
           "size": 1,
@@ -1463,8 +1463,8 @@
         {
           "address": 215528,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_table_lookup",
           "size": 2,
@@ -1476,7 +1476,7 @@
         {
           "address": 215530,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_bitmapdash",
           "size": 2,
@@ -1488,8 +1488,8 @@
         {
           "address": 215532,
           "declarers": [
-            "obj_seg000",
-            "obj_seg004"
+            "frontend",
+            "trkscene"
           ],
           "name": "_hgthgt",
           "size": 2,
@@ -1501,7 +1501,7 @@
         {
           "address": 215534,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_savedptr_ms",
           "size": 4,
@@ -1513,7 +1513,7 @@
         {
           "address": 215538,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_unused_count",
           "size": 2,
@@ -1525,7 +1525,7 @@
         {
           "address": 215540,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_transformed_vert_count",
           "size": 1,
@@ -1537,8 +1537,8 @@
         {
           "address": 215542,
           "declarers": [
-            "obj_seg000",
-            "obj_seg004"
+            "frontend",
+            "trkscene"
           ],
           "name": "_road_elem_ctrz",
           "size": 2,
@@ -1550,7 +1550,7 @@
         {
           "address": 215544,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_ptr_model_active",
           "size": 4,
@@ -1562,7 +1562,7 @@
         {
           "address": 215548,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_rotpr",
           "size": 4,
@@ -1574,7 +1574,7 @@
         {
           "address": 215552,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_resource_ptropp",
           "size": 4,
@@ -1586,7 +1586,7 @@
         {
           "address": 215556,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_tparr",
           "size": 120,
@@ -1598,7 +1598,7 @@
         {
           "address": 215676,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_openvfile",
           "size": 4,
@@ -1610,7 +1610,7 @@
         {
           "address": 215680,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_voicefile_gap_c",
           "size": 8,
@@ -1623,7 +1623,7 @@
         {
           "address": 215688,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_ground_skybox",
           "size": 2,
@@ -1635,7 +1635,7 @@
         {
           "address": 215690,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_timeraud",
           "size": 1,
@@ -1647,8 +1647,8 @@
         {
           "address": 215692,
           "declarers": [
-            "obj_seg000",
-            "obj_seg004"
+            "frontend",
+            "trkscene"
           ],
           "name": "_wall_wallelement",
           "size": 2,
@@ -1660,7 +1660,7 @@
         {
           "address": 215694,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_postable",
           "size": 60,
@@ -1672,7 +1672,7 @@
         {
           "address": 215754,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_audioblock",
           "size": 24,
@@ -1684,7 +1684,7 @@
         {
           "address": 215778,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_menutimeout",
           "size": 1,
@@ -1696,7 +1696,7 @@
         {
           "address": 215780,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_pixel_scales",
           "size": 2,
@@ -1719,7 +1719,7 @@
         {
           "address": 216294,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_hscore_trk11_ptr",
           "size": 4,
@@ -1731,7 +1731,7 @@
         {
           "address": 216298,
           "declarers": [
-            "obj_seg031"
+            "startup"
           ],
           "name": "_slow_video_mode_state",
           "size": 2,
@@ -1743,7 +1743,7 @@
         {
           "address": 216300,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_main_data_file_addr",
           "size": 4,
@@ -1755,7 +1755,7 @@
         {
           "address": 216304,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_brav",
           "size": 22,
@@ -1767,7 +1767,7 @@
         {
           "address": 216326,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_g_audchnkvalue",
           "size": 24,
@@ -1779,8 +1779,8 @@
         {
           "address": 216350,
           "declarers": [
-            "obj_seg000",
-            "obj_seg005"
+            "frontend",
+            "race"
           ],
           "name": "_g_audio_frms_ix",
           "size": 2,
@@ -1792,8 +1792,8 @@
         {
           "address": 216352,
           "declarers": [
-            "obj_seg000",
-            "obj_seg005"
+            "frontend",
+            "race"
           ],
           "name": "_viewyshift",
           "size": 2,
@@ -1805,7 +1805,7 @@
         {
           "address": 216354,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_fntndat",
           "size": 4,
@@ -1817,7 +1817,7 @@
         {
           "address": 216358,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_g_wndspr",
           "size": 4,
@@ -1829,7 +1829,7 @@
         {
           "address": 216362,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_g_matrix_yrot",
           "size": 18,
@@ -1841,7 +1841,7 @@
         {
           "address": 216380,
           "declarers": [
-            "seg017_mouse_whole"
+            "mouse"
           ],
           "name": "_cursorxposition",
           "size": 2,
@@ -1853,7 +1853,7 @@
         {
           "address": 216382,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_track04_plyraero",
           "size": 4,
@@ -1865,7 +1865,7 @@
         {
           "address": 216386,
           "declarers": [
-            "obj_seg009"
+            "trackedt"
           ],
           "name": "_td14tb",
           "size": 4,
@@ -1877,7 +1877,7 @@
         {
           "address": 216390,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_g_corkscrew_type_flag",
           "size": 1,
@@ -1889,8 +1889,8 @@
         {
           "address": 216391,
           "declarers": [
-            "obj_seg000",
-            "obj_seg004"
+            "frontend",
+            "trkscene"
           ],
           "name": "_g_cursurfacekindvalue",
           "size": 1,
@@ -1902,7 +1902,7 @@
         {
           "address": 216392,
           "declarers": [
-            "obj_seg028"
+            "audioply"
           ],
           "name": "_snd_sample_rate_phase",
           "size": 2,
@@ -1914,7 +1914,7 @@
         {
           "address": 216394,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_trackdata_05_opp_aerotbl",
           "size": 4,
@@ -1926,7 +1926,7 @@
         {
           "address": 216398,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_frm_rate2",
           "size": 2,
@@ -1938,8 +1938,8 @@
         {
           "address": 216400,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_opponent_spd_tbl",
           "size": 16,
@@ -1951,7 +1951,7 @@
         {
           "address": 216416,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_spdneedlegaugeclr",
           "size": 2,
@@ -1963,7 +1963,7 @@
         {
           "address": 216418,
           "declarers": [
-            "seg017_mouse_whole"
+            "mouse"
           ],
           "name": "_mouse_api_y",
           "size": 2,
@@ -1975,8 +1975,8 @@
         {
           "address": 216420,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_plncurrptr",
           "size": 4,
@@ -1988,7 +1988,7 @@
         {
           "address": 216424,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_buf_g_path",
           "size": 94,
@@ -2000,8 +2000,8 @@
         {
           "address": 216518,
           "declarers": [
-            "obj_seg000",
-            "obj_seg004"
+            "frontend",
+            "trkscene"
           ],
           "name": "_pl_i",
           "size": 2,
@@ -2013,7 +2013,7 @@
         {
           "address": 216520,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_g_vid_flg2_set",
           "size": 2,
@@ -2025,8 +2025,8 @@
         {
           "address": 216522,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_g_sgateopn",
           "size": 2,
@@ -2038,7 +2038,7 @@
         {
           "address": 216524,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_frmexcess",
           "size": 2,
@@ -2050,7 +2050,7 @@
         {
           "address": 216526,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_rectclip",
           "size": 120,
@@ -2062,7 +2062,7 @@
         {
           "address": 216646,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_cliprects_spare4",
           "size": 240,
@@ -2075,8 +2075,8 @@
         {
           "address": 216886,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_tvec2",
           "size": 6,
@@ -2088,8 +2088,8 @@
         {
           "address": 216892,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_pln_rot_output",
           "size": 6,
@@ -2101,8 +2101,8 @@
         {
           "address": 216898,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_pln_rotate_z",
           "size": 2,
@@ -2114,8 +2114,8 @@
         {
           "address": 216900,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_car_roty_pln",
           "size": 2,
@@ -2127,8 +2127,8 @@
         {
           "address": 216902,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_car_rotate_xc",
           "size": 2,
@@ -2140,8 +2140,8 @@
         {
           "address": 216904,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_frwhl_angadjusted",
           "size": 2,
@@ -2153,8 +2153,8 @@
         {
           "address": 216906,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_g_planidx2",
           "size": 2,
@@ -2166,8 +2166,8 @@
         {
           "address": 216908,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_audio_frmarr",
           "size": 1360,
@@ -2179,7 +2179,7 @@
         {
           "address": 218268,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_g_dastbmpbuf",
           "size": 4,
@@ -2191,7 +2191,7 @@
         {
           "address": 218272,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_dasm_shp_7",
           "size": 4,
@@ -2203,7 +2203,7 @@
         {
           "address": 218276,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_g_simprect",
           "size": 1,
@@ -2215,7 +2215,7 @@
         {
           "address": 218278,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_eng1resourceptr",
           "size": 4,
@@ -2227,7 +2227,7 @@
         {
           "address": 218282,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_pl_carres_3d",
           "size": 4,
@@ -2239,7 +2239,7 @@
         {
           "address": 218286,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_dashbmpy_copy",
           "size": 2,
@@ -2251,7 +2251,7 @@
         {
           "address": 218288,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_carcopyresourceptr",
           "size": 4,
@@ -2263,7 +2263,7 @@
         {
           "address": 218292,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_trackdat7",
           "size": 4,
@@ -2275,8 +2275,8 @@
         {
           "address": 218296,
           "declarers": [
-            "obj_seg000",
-            "obj_seg005"
+            "frontend",
+            "race"
           ],
           "name": "_inrepflg",
           "size": 1,
@@ -2288,7 +2288,7 @@
         {
           "address": 218298,
           "declarers": [
-            "obj_seg028"
+            "audioply"
           ],
           "name": "_mus_samplelimit",
           "size": 2,
@@ -2300,7 +2300,7 @@
         {
           "address": 218300,
           "declarers": [
-            "obj_seg009"
+            "trackedt"
           ],
           "name": "_td15p_9",
           "size": 4,
@@ -2312,7 +2312,7 @@
         {
           "address": 218304,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_kbjoyflags",
           "size": 2,
@@ -2324,8 +2324,8 @@
         {
           "address": 218306,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_g_planlist",
           "size": 4,
@@ -2337,7 +2337,7 @@
         {
           "address": 218310,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_def_fntadr",
           "size": 4,
@@ -2349,7 +2349,7 @@
         {
           "address": 218314,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_ride_audio_sound_res",
           "size": 4,
@@ -2361,7 +2361,7 @@
         {
           "address": 218318,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_maxscnh",
           "size": 2,
@@ -2373,7 +2373,7 @@
         {
           "address": 218320,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_td6_ptr_b",
           "size": 4,
@@ -2385,7 +2385,7 @@
         {
           "address": 218324,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_vidflg3is_minus1",
           "size": 2,
@@ -2397,7 +2397,7 @@
         {
           "address": 218326,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_td_18_ref",
           "size": 4,
@@ -2409,7 +2409,7 @@
         {
           "address": 218330,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_g_tdist",
           "size": 58,
@@ -2421,7 +2421,7 @@
         {
           "address": 218388,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_backlightovr8",
           "size": 1,
@@ -2433,8 +2433,8 @@
         {
           "address": 218390,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_st_hdg",
           "size": 2,
@@ -2446,7 +2446,7 @@
         {
           "address": 218392,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_scene_1ht",
           "size": 2,
@@ -2458,7 +2458,7 @@
         {
           "address": 218394,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_scene_2ht",
           "size": 2,
@@ -2470,7 +2470,7 @@
         {
           "address": 218396,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_scene_3ht",
           "size": 2,
@@ -2482,7 +2482,7 @@
         {
           "address": 218398,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_scene_4ht",
           "size": 2,
@@ -2494,7 +2494,7 @@
         {
           "address": 218400,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_rects_updt",
           "size": 15,
@@ -2506,7 +2506,7 @@
         {
           "address": 218415,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_slomodiv8",
           "size": 1,
@@ -2518,7 +2518,7 @@
         {
           "address": 218416,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_gmconfigbackup",
           "size": 26,
@@ -2530,7 +2530,7 @@
         {
           "address": 218442,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_polygon_link_3_list_iter",
           "size": 2,
@@ -2542,7 +2542,7 @@
         {
           "address": 218444,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_rclist",
           "size": 120,
@@ -2554,7 +2554,7 @@
         {
           "address": 218564,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_extra_rclist4",
           "size": 4,
@@ -2567,7 +2567,7 @@
         {
           "address": 218568,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_mouse_unk_sprite_ptr",
           "size": 4,
@@ -2579,7 +2579,7 @@
         {
           "address": 218572,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_g_miscfile_ptr",
           "size": 4,
@@ -2591,7 +2591,7 @@
         {
           "address": 218576,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_g_skybox_sky_clr",
           "size": 2,
@@ -2603,7 +2603,7 @@
         {
           "address": 218578,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_g_replaybarcpytgl",
           "size": 1,
@@ -2615,7 +2615,7 @@
         {
           "address": 218580,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_rcmapix",
           "size": 90,
@@ -2635,7 +2635,7 @@
         {
           "address": 218670,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_g_tdreplay16buf",
           "size": 4,
@@ -2647,7 +2647,7 @@
         {
           "address": 218674,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_mat_copy_clr_lst_ptr",
           "size": 2,
@@ -2659,7 +2659,7 @@
         {
           "address": 218676,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_is_in_rplcopy",
           "size": 1,
@@ -2671,7 +2671,7 @@
         {
           "address": 218677,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_g_road_piece_id",
           "size": 1,
@@ -2683,7 +2683,7 @@
         {
           "address": 218678,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_exwd",
           "size": 6,
@@ -2695,7 +2695,7 @@
         {
           "address": 218684,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_g_column_of_trkdata21_pth",
           "size": 4,
@@ -2707,8 +2707,8 @@
         {
           "address": 218688,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_ophys_7",
           "size": 776,
@@ -2720,7 +2720,7 @@
         {
           "address": 219464,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_sfx_audio_vol",
           "size": 1,
@@ -2732,7 +2732,7 @@
         {
           "address": 219466,
           "declarers": [
-            "obj_seg002"
+            "rpmrand"
           ],
           "name": "_randomseeds",
           "size": 6,
@@ -2744,7 +2744,7 @@
         {
           "address": 219472,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_g_musicvolumesetting",
           "size": 1,
@@ -2756,7 +2756,7 @@
         {
           "address": 219474,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_rc0_cpy",
           "size": 8,
@@ -2768,7 +2768,7 @@
         {
           "address": 219482,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_g_savrc",
           "size": 120,
@@ -2780,7 +2780,7 @@
         {
           "address": 219602,
           "declarers": [
-            "obj_seg028"
+            "audioply"
           ],
           "name": "_g_audiodrvvoices_count",
           "size": 1,
@@ -2792,7 +2792,7 @@
         {
           "address": 219604,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_rplbarabovehgt",
           "size": 2,
@@ -2804,7 +2804,7 @@
         {
           "address": 219606,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_g_mat_clrlist_copy_2_ptr",
           "size": 2,
@@ -2816,8 +2816,8 @@
         {
           "address": 219608,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_sndpendingstate",
           "size": 1,
@@ -2829,7 +2829,7 @@
         {
           "address": 219610,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_tdfrompathrow22",
           "size": 4,
@@ -2841,7 +2841,7 @@
         {
           "address": 219614,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_spare_td22_1",
           "size": 2,
@@ -2854,7 +2854,7 @@
         {
           "address": 219616,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_results_entryname",
           "size": 17,
@@ -2866,7 +2866,7 @@
         {
           "address": 219633,
           "declarers": [
-            "obj_seg031"
+            "startup"
           ],
           "name": "_g_vid_flag6",
           "size": 1,
@@ -2878,7 +2878,7 @@
         {
           "address": 219634,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_fontdefvalue",
           "size": 2,
@@ -2890,7 +2890,7 @@
         {
           "address": 219636,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_fntled_res",
           "size": 4,
@@ -2902,7 +2902,7 @@
         {
           "address": 219640,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_fontled_free_4",
           "size": 4,
@@ -2915,7 +2915,7 @@
         {
           "address": 219644,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_video_cnstval",
           "size": 2,
@@ -2927,8 +2927,8 @@
         {
           "address": 219646,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_nextpos_normalip",
           "size": 2,
@@ -2940,8 +2940,8 @@
         {
           "address": 219648,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_g_cvxintvl",
           "size": 2,
@@ -2953,7 +2953,7 @@
         {
           "address": 219650,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_tshapearrarg2",
           "size": 30,
@@ -2965,7 +2965,7 @@
         {
           "address": 219680,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_cvxs_a",
           "size": 4,
@@ -2977,7 +2977,7 @@
         {
           "address": 219684,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_elaptm1",
           "size": 2,
@@ -2989,7 +2989,7 @@
         {
           "address": 219686,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_snd_voices_tbl",
           "size": 736,
@@ -3001,7 +3001,7 @@
         {
           "address": 220422,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_g_hovercolor_idle",
           "size": 2,
@@ -3013,7 +3013,7 @@
         {
           "address": 220424,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_sdgresourcehandle",
           "size": 4,
@@ -3025,7 +3025,7 @@
         {
           "address": 220428,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_copy_mouse_modes",
           "size": 8,
@@ -3037,7 +3037,7 @@
         {
           "address": 220436,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_input_device_modestack",
           "size": 8,
@@ -3049,7 +3049,7 @@
         {
           "address": 220444,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_g_animphase",
           "size": 2,
@@ -3061,7 +3061,7 @@
         {
           "address": 220446,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_material_patlistptr_copy",
           "size": 2,
@@ -3073,7 +3073,7 @@
         {
           "address": 220448,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_material_pad_7",
           "size": 2,
@@ -3086,7 +3086,7 @@
         {
           "address": 220450,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_g_opp_resources",
           "size": 28,
@@ -3098,7 +3098,7 @@
         {
           "address": 220478,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_popupact",
           "size": 1,
@@ -3110,7 +3110,7 @@
         {
           "address": 220480,
           "declarers": [
-            "obj_seg009"
+            "trackedt"
           ],
           "name": "_lnoffsets",
           "size": 60,
@@ -3122,7 +3122,7 @@
         {
           "address": 220540,
           "declarers": [
-            "seg017_mouse_whole"
+            "mouse"
           ],
           "name": "_ms_buttons",
           "size": 2,
@@ -3134,7 +3134,7 @@
         {
           "address": 220542,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_g_ts_num",
           "size": 1,
@@ -3146,7 +3146,7 @@
         {
           "address": 220544,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_skypics",
           "size": 16,
@@ -3158,7 +3158,7 @@
         {
           "address": 220560,
           "declarers": [
-            "obj_seg009"
+            "trackedt"
           ],
           "name": "_sampled_trk_column",
           "size": 1,
@@ -3170,7 +3170,7 @@
         {
           "address": 220562,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_matpatlistcopypointer2",
           "size": 2,
@@ -3182,7 +3182,7 @@
         {
           "address": 220564,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_replayrst",
           "size": 2,
@@ -3194,8 +3194,8 @@
         {
           "address": 220566,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_wall_facingang",
           "size": 2,
@@ -3207,7 +3207,7 @@
         {
           "address": 220568,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_poly_link_listit4",
           "size": 2,
@@ -3219,7 +3219,7 @@
         {
           "address": 220570,
           "declarers": [
-            "obj_seg027"
+            "audiores"
           ],
           "name": "_audiochnk_actflags",
           "size": 24,
@@ -3231,8 +3231,8 @@
         {
           "address": 220594,
           "declarers": [
-            "obj_seg000",
-            "obj_seg005"
+            "frontend",
+            "race"
           ],
           "name": "_gm_playmode",
           "size": 1,
@@ -3244,7 +3244,7 @@
         {
           "address": 220596,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_g_td08d",
           "size": 4,
@@ -3256,7 +3256,7 @@
         {
           "address": 220600,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_roofbmphgt_saved",
           "size": 2,
@@ -3268,7 +3268,7 @@
         {
           "address": 220602,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_dashbmy9",
           "size": 2,
@@ -3280,7 +3280,7 @@
         {
           "address": 220604,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_sdgbmp_v",
           "size": 20,
@@ -3302,8 +3302,8 @@
         {
           "address": 220624,
           "declarers": [
-            "obj_seg000",
-            "obj_seg004"
+            "frontend",
+            "trkscene"
           ],
           "name": "_g_trackpiecescounter",
           "size": 2,
@@ -3315,7 +3315,7 @@
         {
           "address": 220626,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_trackctrpos2",
           "size": 60,
@@ -3327,7 +3327,7 @@
         {
           "address": 220686,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_engdata",
           "size": 4,
@@ -3339,7 +3339,7 @@
         {
           "address": 220690,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_loadedresourceptr",
           "size": 4,
@@ -3351,7 +3351,7 @@
         {
           "address": 220694,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_g_cur_track_row",
           "size": 1,
@@ -3363,7 +3363,7 @@
         {
           "address": 220696,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_gap_trackrow_1",
           "size": 2,
@@ -3376,7 +3376,7 @@
         {
           "address": 220698,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_pass_check_flag",
           "size": 1,
@@ -3388,7 +3388,7 @@
         {
           "address": 220700,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_tsix",
           "size": 58,
@@ -3400,7 +3400,7 @@
         {
           "address": 220758,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_td19hdl",
           "size": 4,
@@ -3412,7 +3412,7 @@
         {
           "address": 220762,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_simdp7",
           "size": 776,
@@ -3424,7 +3424,7 @@
         {
           "address": 221538,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_td13_replay_hdr",
           "size": 4,
@@ -3436,7 +3436,7 @@
         {
           "address": 221542,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_rect_num3",
           "size": 1,
@@ -3448,7 +3448,7 @@
         {
           "address": 221543,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_scene_idx",
           "size": 1,
@@ -3460,7 +3460,7 @@
         {
           "address": 221544,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_skyres_handle",
           "size": 4,
@@ -3472,7 +3472,7 @@
         {
           "address": 221548,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_msecoordx",
           "size": 2,
@@ -3484,7 +3484,7 @@
         {
           "address": 221550,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_trk_sample_count",
           "size": 1,
@@ -3496,7 +3496,7 @@
         {
           "address": 221551,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_replaybar_toggle",
           "size": 1,
@@ -3508,7 +3508,7 @@
         {
           "address": 221552,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_scrorder_idxs",
           "size": 14,
@@ -3520,7 +3520,7 @@
         {
           "address": 221566,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_game_rect_txt_in",
           "size": 8,
@@ -3532,7 +3532,7 @@
         {
           "address": 221574,
           "declarers": [
-            "obj_seg001_complete"
+            "carsim"
           ],
           "name": "_row_ctr_zs",
           "size": 60,
@@ -3544,7 +3544,7 @@
         {
           "address": 221634,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_dasty",
           "size": 2,
@@ -3556,7 +3556,7 @@
         {
           "address": 221636,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_g_game13dresource",
           "size": 4,
@@ -3568,7 +3568,7 @@
         {
           "address": 221640,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_gm_saved_rpl_mode",
           "size": 1,
@@ -3580,8 +3580,8 @@
         {
           "address": 221642,
           "declarers": [
-            "obj_seg000",
-            "obj_seg001_complete"
+            "carsim",
+            "frontend"
           ],
           "name": "_g_penaltytm",
           "size": 2,
@@ -3593,7 +3593,7 @@
         {
           "address": 221644,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_rfy5",
           "size": 2,
@@ -3605,7 +3605,7 @@
         {
           "address": 221646,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_pos_y_ms",
           "size": 2,
@@ -3617,7 +3617,7 @@
         {
           "address": 221648,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_vidflg4_is1",
           "size": 2,
@@ -3640,7 +3640,7 @@
         {
           "address": 222162,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_game2res_pointer",
           "size": 4,
@@ -3652,7 +3652,7 @@
         {
           "address": 222166,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_prevcamrot",
           "size": 2,
@@ -3664,7 +3664,7 @@
         {
           "address": 222168,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_sdgame2hdl",
           "size": 4,
@@ -3676,7 +3676,7 @@
         {
           "address": 222172,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_trkd23adr",
           "size": 4,
@@ -3688,8 +3688,8 @@
         {
           "address": 222176,
           "declarers": [
-            "obj_seg000",
-            "obj_seg003"
+            "frontend",
+            "render"
           ],
           "name": "_intraffic",
           "size": 1,
@@ -3701,7 +3701,7 @@
         {
           "address": 222178,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_g_skyboxwat_clr",
           "size": 2,
@@ -3713,7 +3713,7 @@
         {
           "address": 222180,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_resbuftext",
           "size": 80,
@@ -3725,7 +3725,7 @@
         {
           "address": 222260,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_g_curr_tsp",
           "size": 2,
@@ -3737,7 +3737,7 @@
         {
           "address": 222262,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_g_videoflg5",
           "size": 1,
@@ -3749,7 +3749,7 @@
         {
           "address": 222264,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_matrotation_tmp",
           "size": 18,
@@ -3761,7 +3761,7 @@
         {
           "address": 222282,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_dashbtogglesaved",
           "size": 1,
@@ -3773,7 +3773,7 @@
         {
           "address": 222284,
           "declarers": [
-            "obj_seg003"
+            "render"
           ],
           "name": "_wkmatx",
           "size": 18,
@@ -3785,7 +3785,7 @@
         {
           "address": 222302,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_textrespfxchr",
           "size": 1,
@@ -3797,7 +3797,7 @@
         {
           "address": 222304,
           "declarers": [
-            "obj_seg004"
+            "trkscene"
           ],
           "name": "_wallrecrecord",
           "size": 4,
@@ -3809,7 +3809,7 @@
         {
           "address": 222308,
           "declarers": [
-            "obj_seg000"
+            "frontend"
           ],
           "name": "_opptext_label",
           "size": 3,
@@ -3821,7 +3821,7 @@
         {
           "address": 222311,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_g_rplbfask",
           "size": 1,
@@ -3833,7 +3833,7 @@
         {
           "address": 222312,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_g_clocks",
           "size": 2,
@@ -3845,7 +3845,7 @@
         {
           "address": 222314,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_g_mousesave_x_tbl",
           "size": 8,
@@ -3857,7 +3857,7 @@
         {
           "address": 222322,
           "declarers": [
-            "obj_seg006"
+            "polygon"
           ],
           "name": "_matrix_x_rotation",
           "size": 18,
@@ -3869,7 +3869,7 @@
         {
           "address": 222340,
           "declarers": [
-            "obj_seg005"
+            "race"
           ],
           "name": "_g_rplybarenable",
           "size": 1,
@@ -3881,7 +3881,7 @@
         {
           "address": 222342,
           "declarers": [
-            "obj_seg008"
+            "uires"
           ],
           "name": "_g_mouseyposstacktable",
           "size": 10,
@@ -3926,10 +3926,10 @@
         }
       ],
       "end": 18194,
-      "id": "obj_seg000",
+      "id": "frontend",
       "kind": "MATCHING_C",
-      "name": "obj_seg000",
-      "recipe": "recipes/obj_seg000.json",
+      "name": "frontend",
+      "recipe": "recipes/frontend.json",
       "start": 0
     },
     {
@@ -3955,10 +3955,10 @@
         }
       ],
       "end": 40390,
-      "id": "obj_seg001_complete",
+      "id": "carsim",
       "kind": "MATCHING_C",
-      "name": "obj_seg001_complete",
-      "recipe": "recipes/obj_seg001_complete.json",
+      "name": "carsim",
+      "recipe": "recipes/carsim.json",
       "start": 18194
     },
     {
@@ -3975,11 +3975,11 @@
         }
       ],
       "end": 40724,
-      "id": "obj_seg002",
+      "id": "rpmrand",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "obj_seg002",
-      "recipe": "recipes/obj_seg002.json",
+      "name": "rpmrand",
+      "recipe": "recipes/rpmrand.json",
       "start": 40390
     },
     {
@@ -3996,9 +3996,9 @@
         }
       ],
       "end": 57760,
-      "id": "obj_seg003",
+      "id": "render",
       "kind": "MATCHING_C",
-      "name": "obj_seg003",
+      "name": "render",
       "ownership_corrections": [
         {
           "basis": "link-data-alignment",
@@ -4018,11 +4018,11 @@
             "kind": "MATCHING_C",
             "start": 40724
           },
-          "previous_owner": "obj_seg003",
+          "previous_owner": "render",
           "reason": "MSC _DATA SEGDEFs are WORD aligned, so the object's _DATA cannot start at odd 180605 (real LINK run: +1 cascade through DGROUP). The preceding 27 bytes 'crak','cinf','scensce2sce3sce4' are string literals of this object's own init_crak/load_skybox (formerly externs), so _DATA starts at even 180578; the old 57-byte RESOURCE_NAMES struct is replaced by the literals of load_sdgame2_shapes/setup_intro plus the word-aligned global aCarcoun_0 (its alignment hole is the zero byte at 180653)."
         }
       ],
-      "recipe": "recipes/obj_seg003.json",
+      "recipe": "recipes/render.json",
       "start": 40724
     },
     {
@@ -4039,10 +4039,10 @@
         }
       ],
       "end": 72570,
-      "id": "obj_seg004",
+      "id": "trkscene",
       "kind": "MATCHING_C",
-      "name": "obj_seg004",
-      "recipe": "recipes/obj_seg004.json",
+      "name": "trkscene",
+      "recipe": "recipes/trkscene.json",
       "start": 57760
     },
     {
@@ -4068,10 +4068,10 @@
         }
       ],
       "end": 85348,
-      "id": "obj_seg005",
+      "id": "race",
       "kind": "MATCHING_C",
-      "name": "obj_seg005",
-      "recipe": "recipes/obj_seg005.json",
+      "name": "race",
+      "recipe": "recipes/race.json",
       "start": 72570
     },
     {
@@ -4097,10 +4097,10 @@
         }
       ],
       "end": 93102,
-      "id": "obj_seg006",
+      "id": "polygon",
       "kind": "MATCHING_C",
-      "name": "obj_seg006",
-      "recipe": "recipes/obj_seg006.json",
+      "name": "polygon",
+      "recipe": "recipes/polygon.json",
       "start": 85348
     },
     {
@@ -4126,10 +4126,10 @@
         }
       ],
       "end": 95407,
-      "id": "obj_seg007",
+      "id": "audioeng",
       "kind": "MATCHING_C",
-      "name": "obj_seg007",
-      "recipe": "recipes/obj_seg007.json",
+      "name": "audioeng",
+      "recipe": "recipes/audioeng.json",
       "start": 93102
     },
     {
@@ -4137,7 +4137,7 @@
       "end": 95408,
       "id": "fill_174af_174b0",
       "kind": "LINK_FILL",
-      "object": "obj_seg007",
+      "object": "audioeng",
       "start": 95407
     },
     {
@@ -4163,10 +4163,10 @@
         }
       ],
       "end": 107196,
-      "id": "obj_seg008",
+      "id": "uires",
       "kind": "MATCHING_C",
-      "name": "obj_seg008",
-      "recipe": "recipes/obj_seg008.json",
+      "name": "uires",
+      "recipe": "recipes/uires.json",
       "start": 95408
     },
     {
@@ -4192,10 +4192,10 @@
         }
       ],
       "end": 117842,
-      "id": "obj_seg009",
+      "id": "trackedt",
       "kind": "MATCHING_C",
-      "name": "obj_seg009",
-      "recipe": "recipes/obj_seg009.json",
+      "name": "trackedt",
+      "recipe": "recipes/trackedt.json",
       "start": 107196
     },
     {
@@ -4203,7 +4203,7 @@
       "end": 117858,
       "id": "fill_1cc52_1cc62",
       "kind": "LINK_FILL",
-      "object": "obj_seg009",
+      "object": "trackedt",
       "start": 117842
     },
     {
@@ -20370,10 +20370,10 @@
     {
       "classification": "GAME_C",
       "end": 125482,
-      "id": "load_1ea08",
+      "id": "polarrad",
       "kind": "MATCHING_C",
-      "name": "polarRadius3D",
-      "recipe": "recipes/polarRadius3D.json",
+      "name": "polarrad",
+      "recipe": "recipes/polarrad.json",
       "start": 125448
     },
     {
@@ -20390,11 +20390,11 @@
         }
       ],
       "end": 131254,
-      "id": "graphics_resource_runtime",
+      "id": "gfxres",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "graphics_resource_runtime",
-      "recipe": "recipes/graphics_resource_runtime.json",
+      "name": "gfxres",
+      "recipe": "recipes/gfxres.json",
       "start": 125482
     },
     {
@@ -20411,11 +20411,11 @@
         }
       ],
       "end": 132056,
-      "id": "timer_video_interrupt_runtime",
+      "id": "timerint",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "timer_video_interrupt_runtime",
-      "recipe": "recipes/timer_video_interrupt_runtime.json",
+      "name": "timerint",
+      "recipe": "recipes/timerint.json",
       "start": 131254
     },
     {
@@ -20432,11 +20432,11 @@
         }
       ],
       "end": 133138,
-      "id": "input_keyboard_joystick_services",
+      "id": "kbjoy",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "input_keyboard_joystick_services",
-      "recipe": "recipes/input_keyboard_joystick_services.json",
+      "name": "kbjoy",
+      "recipe": "recipes/kbjoy.json",
       "reclassified_owners": [
         {
           "from": "MATCHING_C",
@@ -20462,10 +20462,10 @@
         }
       ],
       "end": 133660,
-      "id": "keyboard_interrupt_runtime",
+      "id": "kbint",
       "kind": "MATCHING_ASM",
-      "name": "keyboard_interrupt_runtime",
-      "recipe": "recipes/keyboard_interrupt_runtime.json",
+      "name": "kbint",
+      "recipe": "recipes/kbint.json",
       "start": 133138
     },
     {
@@ -20482,11 +20482,11 @@
         }
       ],
       "end": 133840,
-      "id": "keyboard_input_callbacks",
+      "id": "kbcalls",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "keyboard_input_callbacks",
-      "recipe": "recipes/keyboard_input_callbacks.json",
+      "name": "kbcalls",
+      "recipe": "recipes/kbcalls.json",
       "reclassified_owners": [
         {
           "from": "MATCHING_C",
@@ -20512,10 +20512,10 @@
         }
       ],
       "end": 135290,
-      "id": "resource_file_io_decompression",
+      "id": "fileio",
       "kind": "MATCHING_ASM",
-      "name": "resource_file_io_decompression",
-      "recipe": "recipes/resource_file_io_decompression.json",
+      "name": "fileio",
+      "recipe": "recipes/fileio.json",
       "start": 133840
     },
     {
@@ -20532,10 +20532,10 @@
         }
       ],
       "end": 137138,
-      "id": "resource_memory_manager",
+      "id": "memmgr",
       "kind": "MATCHING_ASM",
-      "name": "resource_memory_manager",
-      "recipe": "recipes/resource_memory_manager.json",
+      "name": "memmgr",
+      "recipe": "recipes/memmgr.json",
       "start": 135290
     },
     {
@@ -20552,11 +20552,11 @@
         }
       ],
       "end": 139609,
-      "id": "prerender_wheel_raster",
+      "id": "whlrast",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "prerender_wheel_raster",
-      "recipe": "recipes/prerender_wheel_raster.json",
+      "name": "whlrast",
+      "recipe": "recipes/whlrast.json",
       "start": 137138
     },
     {
@@ -20564,7 +20564,7 @@
       "end": 139610,
       "id": "fill_22159_2215a",
       "kind": "LINK_FILL",
-      "object": "prerender_wheel_raster",
+      "object": "whlrast",
       "start": 139609
     },
     {
@@ -20581,10 +20581,10 @@
         }
       ],
       "end": 139968,
-      "id": "textmode_debug_console",
+      "id": "textcon",
       "kind": "MATCHING_ASM",
-      "name": "textmode_debug_console",
-      "recipe": "recipes/textmode_debug_console.json",
+      "name": "textcon",
+      "recipe": "recipes/textcon.json",
       "start": 139610
     },
     {
@@ -20601,10 +20601,10 @@
         }
       ],
       "end": 140538,
-      "id": "projection_vector_window",
+      "id": "project",
       "kind": "MATCHING_ASM",
-      "name": "projection_vector_window",
-      "recipe": "recipes/projection_vector_window.json",
+      "name": "project",
+      "recipe": "recipes/project.json",
       "start": 139968
     },
     {
@@ -20621,10 +20621,10 @@
         }
       ],
       "end": 140718,
-      "id": "file_write_entries",
+      "id": "filewrit",
       "kind": "MATCHING_ASM",
-      "name": "file_write_entries",
-      "recipe": "recipes/file_write_entries.json",
+      "name": "filewrit",
+      "recipe": "recipes/filewrit.json",
       "start": 140538
     },
     {
@@ -20641,10 +20641,10 @@
         }
       ],
       "end": 140814,
-      "id": "video_mode_restore_handlers",
+      "id": "vidmode",
       "kind": "MATCHING_ASM",
-      "name": "video_mode_restore_handlers",
-      "recipe": "recipes/video_mode_restore_handlers.json",
+      "name": "vidmode",
+      "recipe": "recipes/vidmode.json",
       "start": 140718
     },
     {
@@ -20661,10 +20661,10 @@
         }
       ],
       "end": 141210,
-      "id": "math_resource_helpers",
+      "id": "mathres",
       "kind": "MATCHING_ASM",
-      "name": "math_resource_helpers",
-      "recipe": "recipes/math_resource_helpers.json",
+      "name": "mathres",
+      "recipe": "recipes/mathres.json",
       "start": 140814
     },
     {
@@ -20681,10 +20681,10 @@
         }
       ],
       "end": 141362,
-      "id": "timer_counter_deadline_helpers",
+      "id": "timerhlp",
       "kind": "MATCHING_ASM",
-      "name": "timer_counter_deadline_helpers",
-      "recipe": "recipes/timer_counter_deadline_helpers.json",
+      "name": "timerhlp",
+      "recipe": "recipes/timerhlp.json",
       "start": 141210
     },
     {
@@ -20701,138 +20701,138 @@
         }
       ],
       "end": 143366,
-      "id": "font_matrix_shape_decode",
+      "id": "fontmat",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "font_matrix_shape_decode",
-      "recipe": "recipes/font_matrix_shape_decode.json",
+      "name": "fontmat",
+      "recipe": "recipes/fontmat.json",
       "start": 141362
     },
     {
       "classification": "GAME_ASM",
       "end": 144064,
-      "id": "vector_sphere_sprite_ops",
+      "id": "vecspr",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "vector_sphere_sprite_ops",
-      "recipe": "recipes/vector_sphere_sprite_ops.json",
+      "name": "vecspr",
+      "recipe": "recipes/vecspr.json",
       "start": 143366
     },
     {
       "classification": "GAME_ASM",
       "end": 144176,
-      "id": "load_232c0",
+      "id": "sprclear",
       "kind": "MATCHING_ASM",
-      "name": "sprite_clear_1_color",
-      "recipe": "recipes/sprite_clear_1_color.json",
+      "name": "sprclear",
+      "recipe": "recipes/sprclear.json",
       "start": 144064
     },
     {
       "classification": "GAME_ASM",
       "end": 144320,
-      "id": "seg012_draw_unknown_lines_group",
+      "id": "linedisp",
       "kind": "MATCHING_ASM",
-      "name": "seg012_draw_unknown_lines_group",
-      "recipe": "recipes/seg012_draw_unknown_lines_group.json",
+      "name": "linedisp",
+      "recipe": "recipes/linedisp.json",
       "start": 144176
     },
     {
       "classification": "GAME_ASM",
       "end": 144760,
-      "id": "asm_load_233c0",
+      "id": "pixline",
       "kind": "MATCHING_ASM",
-      "name": "putpixel_line1_maybe",
-      "recipe": "recipes/putpixel_line1_maybe.json",
+      "name": "pixline",
+      "recipe": "recipes/pixline.json",
       "start": 144320
     },
     {
       "classification": "GAME_ASM",
       "end": 145218,
-      "id": "seg012_sprite_1_unk_group",
+      "id": "sprrects",
       "kind": "MATCHING_ASM",
-      "name": "seg012_sprite_1_unk_group",
-      "recipe": "recipes/seg012_sprite_1_unk_group.json",
+      "name": "sprrects",
+      "recipe": "recipes/sprrects.json",
       "start": 144760
     },
     {
       "classification": "GAME_ASM",
       "end": 145430,
-      "id": "load_23742",
+      "id": "fontdraw",
       "kind": "MATCHING_ASM",
-      "name": "font_draw_text",
-      "recipe": "recipes/font_draw_text.json",
+      "name": "fontdraw",
+      "recipe": "recipes/fontdraw.json",
       "start": 145218
     },
     {
       "classification": "GAME_ASM",
       "end": 145480,
-      "id": "load_23816",
+      "id": "mode13h",
       "kind": "MATCHING_ASM",
-      "name": "video_set_mode_13h",
-      "recipe": "recipes/video_set_mode_13h.json",
+      "name": "mode13h",
+      "recipe": "recipes/mode13h.json",
       "start": 145430
     },
     {
       "classification": "GAME_ASM",
       "end": 145516,
-      "id": "file_load_shape2d_thunks",
+      "id": "shpthunk",
       "kind": "MATCHING_ASM",
-      "name": "file_load_shape2d_thunks",
-      "recipe": "recipes/file_load_shape2d_thunks.json",
+      "name": "shpthunk",
+      "recipe": "recipes/shpthunk.json",
       "start": 145480
     },
     {
       "classification": "GAME_ASM",
       "end": 145914,
-      "id": "seg012_putimage_and_group",
+      "id": "maskblit",
       "kind": "MATCHING_ASM",
-      "name": "seg012_putimage_and_group",
-      "recipe": "recipes/seg012_putimage_and_group.json",
+      "name": "maskblit",
+      "recipe": "recipes/maskblit.json",
       "start": 145516
     },
     {
       "classification": "GAME_ASM",
       "end": 146112,
-      "id": "seg012_nopsub339fa_group",
+      "id": "iconmask",
       "kind": "MATCHING_ASM",
-      "name": "seg012_nopsub339fa_group",
-      "recipe": "recipes/seg012_nopsub339fa_group.json",
+      "name": "iconmask",
+      "recipe": "recipes/iconmask.json",
       "start": 145914
     },
     {
       "classification": "GAME_ASM",
       "end": 146328,
-      "id": "seg012_nopsub33ac0_group",
+      "id": "bmpmask",
       "kind": "MATCHING_ASM",
-      "name": "seg012_nopsub33ac0_group",
-      "recipe": "recipes/seg012_nopsub33ac0_group.json",
+      "name": "bmpmask",
+      "recipe": "recipes/bmpmask.json",
       "start": 146112
     },
     {
       "classification": "GAME_ASM",
       "end": 146700,
-      "id": "seg012_putimage_shared_group",
+      "id": "copyblit",
       "kind": "MATCHING_ASM",
-      "name": "seg012_putimage_shared_group",
-      "recipe": "recipes/seg012_putimage_shared_group.json",
+      "name": "copyblit",
+      "recipe": "recipes/copyblit.json",
       "start": 146328
     },
     {
       "classification": "GAME_ASM",
       "end": 146878,
-      "id": "seg012_shape_to_1_group",
+      "id": "shpcopy",
       "kind": "MATCHING_ASM",
-      "name": "seg012_shape_to_1_group",
-      "recipe": "recipes/seg012_shape_to_1_group.json",
+      "name": "shpcopy",
+      "recipe": "recipes/shpcopy.json",
       "start": 146700
     },
     {
       "classification": "GAME_ASM",
       "end": 147552,
-      "id": "seg012_shape2d_extended_group",
+      "id": "shp2ops",
       "kind": "MATCHING_ASM",
-      "name": "seg012_shape2d_extended_group",
-      "recipe": "recipes/seg012_shape2d_extended_group.json",
+      "name": "shp2ops",
+      "recipe": "recipes/shp2ops.json",
       "start": 146878
     },
     {
@@ -20849,20 +20849,20 @@
         }
       ],
       "end": 149180,
-      "id": "sprite_shape_video_ops",
+      "id": "sprvideo",
       "kind": "MATCHING_ASM",
-      "name": "sprite_shape_video_ops",
-      "recipe": "recipes/sprite_shape_video_ops.json",
+      "name": "sprvideo",
+      "recipe": "recipes/sprvideo.json",
       "start": 147552
     },
     {
       "classification": "GAME_ASM",
       "end": 150408,
-      "id": "line_sprite_shape_render",
+      "id": "linerend",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "line_sprite_shape_render",
-      "recipe": "recipes/line_sprite_shape_render.json",
+      "name": "linerend",
+      "recipe": "recipes/linerend.json",
       "start": 149180
     },
     {
@@ -20879,20 +20879,20 @@
         }
       ],
       "end": 154406,
-      "id": "patterned_lines_windows",
+      "id": "patlines",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "patterned_lines_windows",
-      "recipe": "recipes/patterned_lines_windows.json",
+      "name": "patlines",
+      "recipe": "recipes/patlines.json",
       "start": 150408
     },
     {
       "classification": "GAME_ASM",
       "end": 154486,
-      "id": "asm_load_25b26",
+      "id": "putpixel",
       "kind": "MATCHING_ASM",
-      "name": "putpixel_single_maybe",
-      "recipe": "recipes/putpixel_single_maybe.json",
+      "name": "putpixel",
+      "recipe": "recipes/putpixel.json",
       "start": 154406
     },
     {
@@ -20909,74 +20909,74 @@
         }
       ],
       "end": 155464,
-      "id": "sprite_rectangle_scaled_blitters",
+      "id": "scalblit",
       "kind": "MATCHING_ASM",
       "module_form": "asm-module",
-      "name": "sprite_rectangle_scaled_blitters",
-      "recipe": "recipes/sprite_rectangle_scaled_blitters.json",
+      "name": "scalblit",
+      "recipe": "recipes/scalblit.json",
       "start": 154486
     },
     {
       "classification": "GAME_ASM",
       "end": 155554,
-      "id": "asm_load_25f48",
+      "id": "shppal",
       "kind": "MATCHING_ASM",
-      "name": "file_load_shape2d_palmap_apply",
-      "recipe": "recipes/file_load_shape2d_palmap_apply.json",
+      "name": "shppal",
+      "recipe": "recipes/shppal.json",
       "start": 155464
     },
     {
       "classification": "GAME_ASM",
       "end": 155894,
-      "id": "asm_load_25fa2",
+      "id": "shpexpnd",
       "kind": "MATCHING_ASM",
-      "name": "file_load_shape2d_expand",
-      "recipe": "recipes/file_load_shape2d_expand.json",
+      "name": "shpexpnd",
+      "recipe": "recipes/shpexpnd.json",
       "start": 155554
     },
     {
       "classification": "GAME_ASM",
       "end": 156092,
-      "id": "load_260f6",
+      "id": "unflip",
       "kind": "MATCHING_ASM",
-      "name": "file_unflip_shape2d_pes",
-      "recipe": "recipes/file_unflip_shape2d_pes.json",
+      "name": "unflip",
+      "recipe": "recipes/unflip.json",
       "start": 155894
     },
     {
       "classification": "GAME_C",
       "end": 156230,
-      "id": "load_261bc",
+      "id": "sprrect",
       "kind": "MATCHING_C",
-      "name": "sprite_1_unk4",
-      "recipe": "recipes/sprite_1_unk4.json",
+      "name": "sprrect",
+      "recipe": "recipes/sprrect.json",
       "start": 156092
     },
     {
       "classification": "GAME_C",
       "end": 156690,
-      "id": "load_26246",
+      "id": "whlhelp3",
       "kind": "MATCHING_C",
-      "name": "preRender_wheel_helper3",
-      "recipe": "recipes/preRender_wheel_helper3.json",
+      "name": "whlhelp3",
+      "recipe": "recipes/whlhelp3.json",
       "start": 156230
     },
     {
       "classification": "GAME_C",
       "end": 157618,
-      "id": "load_26412",
+      "id": "sphhelp2",
       "kind": "MATCHING_C",
-      "name": "preRender_sphere_helper2",
-      "recipe": "recipes/preRender_sphere_helper2.json",
+      "name": "sphhelp2",
+      "recipe": "recipes/sphhelp2.json",
       "start": 156690
     },
     {
       "classification": "GAME_C",
       "end": 157866,
-      "id": "obj_seg016_group",
+      "id": "reslook",
       "kind": "MATCHING_C",
-      "name": "obj_seg016_group",
-      "recipe": "recipes/obj_seg016_group.json",
+      "name": "reslook",
+      "recipe": "recipes/reslook.json",
       "start": 157618
     },
     {
@@ -20993,9 +20993,9 @@
         }
       ],
       "end": 158450,
-      "id": "seg017_mouse_whole",
+      "id": "mouse",
       "kind": "MATCHING_C",
-      "name": "seg017_mouse_whole",
+      "name": "mouse",
       "ownership_corrections": [
         {
           "basis": "link-frame-reassignment",
@@ -21005,107 +21005,107 @@
             "kind": "MATCHING_C",
             "start": 157866
           },
-          "previous_owner": "seg017_mouse_whole",
+          "previous_owner": "mouse",
           "reason": "seg008 loads nopsub_36AF2 as the relocated far pointer 26AF:0002 (MOV AX,2 / MOV DX,26AFh at 102605, relocation 102609): its segment is framed 0x26AF, not seg017's 0x268A. [158450,158452) is therefore not part of this seg017 object, which ends at 158450 after nopsub_36ACA; a real LINK run otherwise produces 268A:0252."
         }
       ],
-      "recipe": "recipes/seg017_mouse_whole.json",
+      "recipe": "recipes/mouse.json",
       "start": 157866
     },
     {
       "classification": "GAME_C",
       "end": 158452,
-      "id": "load_26af2",
+      "id": "mousehk",
       "kind": "MATCHING_C",
-      "name": "nopsub_36AF2",
-      "recipe": "recipes/nopsub_36AF2.json",
+      "name": "mousehk",
+      "recipe": "recipes/mousehk.json",
       "start": 158450
     },
     {
       "classification": "GAME_ASM",
       "end": 158469,
-      "id": "load_26af4",
+      "id": "kbshift1",
       "kind": "MATCHING_ASM",
-      "name": "kb_shift_checking1",
-      "recipe": "recipes/kb_shift_checking1.json",
+      "name": "kbshift1",
+      "recipe": "recipes/kbshift1.json",
       "start": 158452
     },
     {
       "classification": "GAME_ASM",
       "end": 158486,
-      "id": "load_26b05",
+      "id": "kbshift2",
       "kind": "MATCHING_ASM",
-      "name": "kb_shift_checking2",
-      "recipe": "recipes/kb_shift_checking2.json",
+      "name": "kbshift2",
+      "recipe": "recipes/kbshift2.json",
       "start": 158469
     },
     {
       "classification": "GAME_C",
       "end": 158654,
-      "id": "load_26b16",
+      "id": "whlhelp2",
       "kind": "MATCHING_C",
-      "name": "preRender_wheel_helper2",
-      "recipe": "recipes/preRender_wheel_helper2.json",
+      "name": "whlhelp2",
+      "recipe": "recipes/whlhelp2.json",
       "start": 158486
     },
     {
       "classification": "GAME_C",
       "end": 158696,
-      "id": "load_26bbe",
+      "id": "sphhelp",
       "kind": "MATCHING_C",
-      "name": "preRender_sphere_helper",
-      "recipe": "recipes/preRender_sphere_helper.json",
+      "name": "sphhelp",
+      "recipe": "recipes/sphhelp.json",
       "start": 158654
     },
     {
       "classification": "GAME_C",
       "end": 158846,
-      "id": "load_26be8",
+      "id": "heapsort",
       "kind": "MATCHING_C",
-      "name": "heapsort_by_order",
-      "recipe": "recipes/heapsort_by_order.json",
+      "name": "heapsort",
+      "recipe": "recipes/heapsort.json",
       "start": 158696
     },
     {
       "classification": "GAME_C",
       "end": 159424,
-      "id": "load_26c7e",
+      "id": "wheel",
       "kind": "MATCHING_C",
-      "name": "preRender_wheel",
-      "recipe": "recipes/preRender_wheel.json",
+      "name": "wheel",
+      "recipe": "recipes/wheel.json",
       "start": 158846
     },
     {
       "classification": "GAME_C",
       "end": 159530,
-      "id": "load_26ec0",
+      "id": "whlhelp",
       "kind": "MATCHING_C",
-      "name": "preRender_wheel_helper",
-      "recipe": "recipes/preRender_wheel_helper.json",
+      "name": "whlhelp",
+      "recipe": "recipes/whlhelp.json",
       "start": 159424
     },
     {
       "classification": "GAME_C",
       "end": 159790,
-      "id": "seg024_matrot",
+      "id": "matrot",
       "kind": "MATCHING_C",
-      "name": "seg024_matrot",
-      "recipe": "recipes/seg024_matrot.json",
+      "name": "matrot",
+      "recipe": "recipes/matrot.json",
       "start": 159530
     },
     {
       "classification": "GAME_C",
       "end": 159930,
-      "id": "load_2702e",
+      "id": "rectout",
       "kind": "MATCHING_C",
-      "name": "sub_3702E",
-      "recipe": "recipes/sub_3702E.json",
+      "name": "rectout",
+      "recipe": "recipes/rectout.json",
       "start": 159790
     },
     {
       "classification": "GAME_C",
       "end": 159954,
-      "id": "load_270ba",
+      "id": "toupper",
       "kind": "MATCHING_C",
       "name": "toupper",
       "recipe": "recipes/toupper.json",
@@ -21134,10 +21134,10 @@
         }
       ],
       "end": 165436,
-      "id": "obj_seg027",
+      "id": "audiores",
       "kind": "MATCHING_C",
-      "name": "obj_seg027",
-      "recipe": "recipes/obj_seg027.json",
+      "name": "audiores",
+      "recipe": "recipes/audiores.json",
       "start": 159954
     },
     {
@@ -21163,19 +21163,19 @@
         }
       ],
       "end": 170708,
-      "id": "obj_seg028",
+      "id": "audioply",
       "kind": "MATCHING_C",
-      "name": "obj_seg028",
-      "recipe": "recipes/obj_seg028.json",
+      "name": "audioply",
+      "recipe": "recipes/audioply.json",
       "start": 165436
     },
     {
       "classification": "GAME_C",
       "end": 171213,
-      "id": "obj_seg029",
+      "id": "audiochk",
       "kind": "MATCHING_C",
-      "name": "obj_seg029",
-      "recipe": "recipes/obj_seg029.json",
+      "name": "audiochk",
+      "recipe": "recipes/audiochk.json",
       "start": 170708
     },
     {
@@ -21183,7 +21183,7 @@
       "end": 171214,
       "id": "fill_29ccd_29cce",
       "kind": "LINK_FILL",
-      "object": "obj_seg029",
+      "object": "audiochk",
       "start": 171213
     },
     {
@@ -21200,10 +21200,10 @@
         }
       ],
       "end": 171540,
-      "id": "load_29cce",
+      "id": "audiofn",
       "kind": "MATCHING_C",
-      "name": "audio_make_filename",
-      "recipe": "recipes/audio_make_filename.json",
+      "name": "audiofn",
+      "recipe": "recipes/audiofn.json",
       "start": 171214
     },
     {
@@ -21220,9 +21220,9 @@
         }
       ],
       "end": 173238,
-      "id": "obj_seg031",
+      "id": "startup",
       "kind": "MATCHING_C",
-      "name": "obj_seg031",
+      "name": "startup",
       "ownership_corrections": [
         {
           "basis": "link-data-alignment",
@@ -21242,11 +21242,11 @@
             "kind": "MATCHING_C",
             "start": 171540
           },
-          "previous_owner": "obj_seg031",
+          "previous_owner": "startup",
           "reason": "MSC _DATA SEGDEFs are WORD aligned, so the object's _DATA cannot start at odd 199447. The preceding 5 bytes 'pc15' are the writable driver-name array that init_main of this object patches (audiodriverstring[0..1]); it is defined here (char audiodriverstring[] = \"pc15\"), so _DATA starts at even 199442 at its reviewed alias address."
         }
       ],
-      "recipe": "recipes/obj_seg031.json",
+      "recipe": "recipes/startup.json",
       "start": 171540
     },
     {
@@ -21272,19 +21272,19 @@
         }
       ],
       "end": 174424,
-      "id": "obj_seg032_group",
+      "id": "lineedit",
       "kind": "MATCHING_C",
-      "name": "obj_seg032_group",
-      "recipe": "recipes/obj_seg032_group.json",
+      "name": "lineedit",
+      "recipe": "recipes/lineedit.json",
       "start": 173238
     },
     {
       "classification": "GAME_C",
       "end": 174550,
-      "id": "seg033_mcgawnd",
+      "id": "mcgawnd",
       "kind": "MATCHING_C",
-      "name": "seg033_mcgawnd",
-      "recipe": "recipes/seg033_mcgawnd.json",
+      "name": "mcgawnd",
+      "recipe": "recipes/mcgawnd.json",
       "start": 174424
     },
     {
@@ -21301,37 +21301,37 @@
         }
       ],
       "end": 175320,
-      "id": "seg034_shape2d_group",
+      "id": "shp2file",
       "kind": "MATCHING_C",
-      "name": "seg034_shape2d_group",
-      "recipe": "recipes/seg034_shape2d_group.json",
+      "name": "shp2file",
+      "recipe": "recipes/shp2file.json",
       "start": 174550
     },
     {
       "classification": "GAME_C",
       "end": 176314,
-      "id": "obj_seg035_group",
+      "id": "shp2res",
       "kind": "MATCHING_C",
-      "name": "obj_seg035_group",
-      "recipe": "recipes/obj_seg035_group.json",
+      "name": "shp2res",
+      "recipe": "recipes/shp2res.json",
       "start": 175320
     },
     {
       "classification": "GAME_C",
       "end": 176426,
-      "id": "load_2b0ba",
+      "id": "unflipsz",
       "kind": "MATCHING_C",
-      "name": "file_get_unflip_size",
-      "recipe": "recipes/file_get_unflip_size.json",
+      "name": "unflipsz",
+      "recipe": "recipes/unflipsz.json",
       "start": 176314
     },
     {
       "classification": "GAME_C",
       "end": 176564,
-      "id": "load_2b12a",
+      "id": "expandsz",
       "kind": "MATCHING_C",
-      "name": "file_load_shape2d_expandedsize",
-      "recipe": "recipes/file_load_shape2d_expandedsize.json",
+      "name": "expandsz",
+      "recipe": "recipes/expandsz.json",
       "start": 176426
     },
     {
@@ -21339,18 +21339,18 @@
       "end": 176576,
       "id": "fill_2b1b4_2b1c0",
       "kind": "LINK_FILL",
-      "object": "load_2b12a",
+      "object": "expandsz",
       "start": 176564
     },
     {
       "classification": "GAME_C",
       "end": 176624,
       "far_data": true,
-      "id": "fardata_11036",
+      "id": "planes",
       "kind": "MATCHING_C_DATA",
       "module_form": "data-only",
-      "name": "fardata_11036",
-      "recipe": "recipes/fardata_11036.json",
+      "name": "planes",
+      "recipe": "recipes/planes.json",
       "segment": "UNIT5_DATA",
       "start": 176576,
       "target": {
@@ -21362,11 +21362,11 @@
       "classification": "GAME_C",
       "end": 178032,
       "far_data": true,
-      "id": "fardata_11039",
+      "id": "deffont",
       "kind": "MATCHING_C_DATA",
       "module_form": "data-only",
-      "name": "fardata_11039",
-      "recipe": "recipes/fardata_11039.json",
+      "name": "deffont",
+      "recipe": "recipes/deffont.json",
       "segment": "UNIT5_DATA",
       "start": 176624,
       "target": {
@@ -21390,9 +21390,9 @@
     {
       "classification": "GAME_C",
       "end": 179538,
-      "id": "obj_seg000:_DATA",
+      "id": "frontend:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg000",
+      "parent": "frontend",
       "segment": "_DATA",
       "start": 178098,
       "target": {
@@ -21403,9 +21403,9 @@
     {
       "classification": "GAME_C",
       "end": 179756,
-      "id": "obj_seg001_complete:_DATA",
+      "id": "carsim:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg001_complete",
+      "parent": "carsim",
       "segment": "_DATA",
       "start": 179538,
       "target": {
@@ -21416,9 +21416,9 @@
     {
       "classification": "GAME_ASM",
       "end": 179764,
-      "id": "obj_seg002:_DATA",
+      "id": "rpmrand:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "obj_seg002",
+      "parent": "rpmrand",
       "segment": "_DATA",
       "start": 179756,
       "target": {
@@ -21429,9 +21429,9 @@
     {
       "classification": "GAME_C",
       "end": 180672,
-      "id": "obj_seg003:_DATA",
+      "id": "render:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg003",
+      "parent": "render",
       "segment": "_DATA",
       "start": 179764,
       "target": {
@@ -21442,11 +21442,11 @@
     {
       "classification": "GAME_C",
       "end": 190232,
-      "id": "track_constants_module",
+      "id": "trkconst",
       "kind": "MATCHING_C_DATA",
       "module_form": "data-only",
-      "name": "track_constants_module",
-      "recipe": "recipes/track_constants_module.json",
+      "name": "trkconst",
+      "recipe": "recipes/trkconst.json",
       "segment": "_DATA",
       "start": 180672,
       "target": {
@@ -21457,9 +21457,9 @@
     {
       "classification": "GAME_C",
       "end": 190343,
-      "id": "obj_seg004:_DATA",
+      "id": "trkscene:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg004",
+      "parent": "trkscene",
       "segment": "_DATA",
       "start": 190232,
       "target": {
@@ -21472,15 +21472,15 @@
       "end": 190344,
       "id": "fill_2e787_2e788",
       "kind": "LINK_FILL",
-      "object": "obj_seg004:_DATA",
+      "object": "trkscene:_DATA",
       "start": 190343
     },
     {
       "classification": "GAME_C",
       "end": 191064,
-      "id": "obj_seg005:_DATA",
+      "id": "race:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg005",
+      "parent": "race",
       "segment": "_DATA",
       "start": 190344,
       "target": {
@@ -21491,9 +21491,9 @@
     {
       "classification": "GAME_C",
       "end": 191244,
-      "id": "obj_seg006:_DATA",
+      "id": "polygon:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg006",
+      "parent": "polygon",
       "segment": "_DATA",
       "start": 191064,
       "target": {
@@ -21504,9 +21504,9 @@
     {
       "classification": "GAME_C",
       "end": 191309,
-      "id": "obj_seg007:_DATA",
+      "id": "audioeng:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg007",
+      "parent": "audioeng",
       "segment": "_DATA",
       "start": 191244,
       "target": {
@@ -21519,15 +21519,15 @@
       "end": 191310,
       "id": "fill_2eb4d_2eb4e",
       "kind": "LINK_FILL",
-      "object": "obj_seg007:_DATA",
+      "object": "audioeng:_DATA",
       "start": 191309
     },
     {
       "classification": "GAME_C",
       "end": 191519,
-      "id": "obj_seg008:_DATA",
+      "id": "uires:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg008",
+      "parent": "uires",
       "segment": "_DATA",
       "start": 191310,
       "target": {
@@ -21540,15 +21540,15 @@
       "end": 191520,
       "id": "fill_2ec1f_2ec20",
       "kind": "LINK_FILL",
-      "object": "obj_seg008:_DATA",
+      "object": "uires:_DATA",
       "start": 191519
     },
     {
       "classification": "GAME_C",
       "end": 191859,
-      "id": "obj_seg009:_DATA",
+      "id": "trackedt:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg009",
+      "parent": "trackedt",
       "segment": "_DATA",
       "start": 191520,
       "target": {
@@ -21561,7 +21561,7 @@
       "end": 191860,
       "id": "fill_2ed73_2ed74",
       "kind": "LINK_FILL",
-      "object": "obj_seg009:_DATA",
+      "object": "trackedt:_DATA",
       "start": 191859
     },
     {
@@ -21786,9 +21786,9 @@
     {
       "classification": "GAME_ASM",
       "end": 194664,
-      "id": "graphics_resource_runtime:_DATA",
+      "id": "gfxres:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "graphics_resource_runtime",
+      "parent": "gfxres",
       "segment": "_DATA",
       "start": 192704,
       "target": {
@@ -21799,9 +21799,9 @@
     {
       "classification": "GAME_ASM",
       "end": 194778,
-      "id": "timer_video_interrupt_runtime:_DATA",
+      "id": "timerint:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "timer_video_interrupt_runtime",
+      "parent": "timerint",
       "segment": "_DATA",
       "start": 194664,
       "target": {
@@ -21812,9 +21812,9 @@
     {
       "classification": "GAME_ASM",
       "end": 195400,
-      "id": "input_keyboard_joystick_services:_DATA",
+      "id": "kbjoy:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "input_keyboard_joystick_services",
+      "parent": "kbjoy",
       "segment": "_DATA",
       "start": 194778,
       "target": {
@@ -21825,9 +21825,9 @@
     {
       "classification": "GAME_ASM",
       "end": 196092,
-      "id": "keyboard_interrupt_runtime:_DATA",
+      "id": "kbint:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "keyboard_interrupt_runtime",
+      "parent": "kbint",
       "segment": "_DATA",
       "start": 195400,
       "target": {
@@ -21838,9 +21838,9 @@
     {
       "classification": "GAME_ASM",
       "end": 196097,
-      "id": "keyboard_input_callbacks:_DATA",
+      "id": "kbcalls:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "keyboard_input_callbacks",
+      "parent": "kbcalls",
       "segment": "_DATA",
       "start": 196092,
       "target": {
@@ -21853,15 +21853,15 @@
       "end": 196098,
       "id": "fill_2fe01_2fe02",
       "kind": "LINK_FILL",
-      "object": "keyboard_input_callbacks:_DATA",
+      "object": "kbcalls:_DATA",
       "start": 196097
     },
     {
       "classification": "GAME_ASM",
       "end": 196232,
-      "id": "resource_file_io_decompression:_DATA",
+      "id": "fileio:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "resource_file_io_decompression",
+      "parent": "fileio",
       "segment": "_DATA",
       "start": 196098,
       "target": {
@@ -21872,9 +21872,9 @@
     {
       "classification": "GAME_ASM",
       "end": 197400,
-      "id": "resource_memory_manager:_DATA",
+      "id": "memmgr:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "resource_memory_manager",
+      "parent": "memmgr",
       "segment": "_DATA",
       "start": 196232,
       "target": {
@@ -21885,9 +21885,9 @@
     {
       "classification": "GAME_C",
       "end": 197406,
-      "id": "seg017_mouse_whole:_DATA",
+      "id": "mouse:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "seg017_mouse_whole",
+      "parent": "mouse",
       "segment": "_DATA",
       "start": 197400,
       "target": {
@@ -21898,9 +21898,9 @@
     {
       "classification": "GAME_ASM",
       "end": 197418,
-      "id": "prerender_wheel_raster:_DATA",
+      "id": "whlrast:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "prerender_wheel_raster",
+      "parent": "whlrast",
       "segment": "_DATA",
       "start": 197406,
       "target": {
@@ -21911,9 +21911,9 @@
     {
       "classification": "GAME_ASM",
       "end": 197550,
-      "id": "textmode_debug_console:_DATA",
+      "id": "textcon:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "textmode_debug_console",
+      "parent": "textcon",
       "segment": "_DATA",
       "start": 197418,
       "target": {
@@ -21924,9 +21924,9 @@
     {
       "classification": "GAME_ASM",
       "end": 197602,
-      "id": "projection_vector_window:_DATA",
+      "id": "project:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "projection_vector_window",
+      "parent": "project",
       "segment": "_DATA",
       "start": 197550,
       "target": {
@@ -21937,9 +21937,9 @@
     {
       "classification": "GAME_ASM",
       "end": 197618,
-      "id": "file_write_entries:_DATA",
+      "id": "filewrit:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "file_write_entries",
+      "parent": "filewrit",
       "segment": "_DATA",
       "start": 197602,
       "target": {
@@ -21950,9 +21950,9 @@
     {
       "classification": "GAME_ASM",
       "end": 197620,
-      "id": "video_mode_restore_handlers:_DATA",
+      "id": "vidmode:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "video_mode_restore_handlers",
+      "parent": "vidmode",
       "segment": "_DATA",
       "start": 197618,
       "target": {
@@ -21963,9 +21963,9 @@
     {
       "classification": "GAME_ASM",
       "end": 198134,
-      "id": "math_resource_helpers:_DATA",
+      "id": "mathres:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "math_resource_helpers",
+      "parent": "mathres",
       "segment": "_DATA",
       "start": 197620,
       "target": {
@@ -21976,9 +21976,9 @@
     {
       "classification": "GAME_ASM",
       "end": 198144,
-      "id": "timer_counter_deadline_helpers:_DATA",
+      "id": "timerhlp:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "timer_counter_deadline_helpers",
+      "parent": "timerhlp",
       "segment": "_DATA",
       "start": 198134,
       "target": {
@@ -21989,9 +21989,9 @@
     {
       "classification": "GAME_ASM",
       "end": 198148,
-      "id": "font_matrix_shape_decode:_DATA",
+      "id": "fontmat:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "font_matrix_shape_decode",
+      "parent": "fontmat",
       "segment": "_DATA",
       "start": 198144,
       "target": {
@@ -22002,9 +22002,9 @@
     {
       "classification": "GAME_C",
       "end": 198570,
-      "id": "obj_seg027:_DATA",
+      "id": "audiores:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg027",
+      "parent": "audiores",
       "segment": "_DATA",
       "start": 198148,
       "target": {
@@ -22015,9 +22015,9 @@
     {
       "classification": "GAME_C",
       "end": 198572,
-      "id": "obj_seg028:_DATA",
+      "id": "audioply:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg028",
+      "parent": "audioply",
       "segment": "_DATA",
       "start": 198570,
       "target": {
@@ -22030,7 +22030,7 @@
       "end": 199442,
       "id": "audio_make_filename:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "load_29cce",
+      "parent": "audiofn",
       "segment": "_DATA",
       "start": 198572,
       "target": {
@@ -22041,9 +22041,9 @@
     {
       "classification": "GAME_C",
       "end": 199481,
-      "id": "obj_seg031:_DATA",
+      "id": "startup:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg031",
+      "parent": "startup",
       "segment": "_DATA",
       "start": 199442,
       "target": {
@@ -22056,15 +22056,15 @@
       "end": 199482,
       "id": "fill_30b39_30b3a",
       "kind": "LINK_FILL",
-      "object": "obj_seg031:_DATA",
+      "object": "startup:_DATA",
       "start": 199481
     },
     {
       "classification": "GAME_C",
       "end": 199484,
-      "id": "obj_seg032_group:_DATA",
+      "id": "lineedit:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "obj_seg032_group",
+      "parent": "lineedit",
       "segment": "_DATA",
       "start": 199482,
       "target": {
@@ -22075,9 +22075,9 @@
     {
       "classification": "GAME_ASM",
       "end": 199564,
-      "id": "sprite_shape_video_ops:_DATA",
+      "id": "sprvideo:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "sprite_shape_video_ops",
+      "parent": "sprvideo",
       "segment": "_DATA",
       "start": 199484,
       "target": {
@@ -22088,9 +22088,9 @@
     {
       "classification": "GAME_ASM",
       "end": 199612,
-      "id": "patterned_lines_windows:_DATA",
+      "id": "patlines:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "patterned_lines_windows",
+      "parent": "patlines",
       "segment": "_DATA",
       "start": 199564,
       "target": {
@@ -22101,9 +22101,9 @@
     {
       "classification": "GAME_C",
       "end": 199705,
-      "id": "seg034_shape2d_group:_DATA",
+      "id": "shp2file:_DATA",
       "kind": "MATCHING_C_DATA",
-      "parent": "seg034_shape2d_group",
+      "parent": "shp2file",
       "segment": "_DATA",
       "start": 199612,
       "target": {
@@ -22116,15 +22116,15 @@
       "end": 199706,
       "id": "fill_30c19_30c1a",
       "kind": "LINK_FILL",
-      "object": "seg034_shape2d_group:_DATA",
+      "object": "shp2file:_DATA",
       "start": 199705
     },
     {
       "classification": "GAME_ASM",
       "end": 199708,
-      "id": "sprite_rectangle_scaled_blitters:_DATA",
+      "id": "scalblit:_DATA",
       "kind": "MATCHING_ASM_DATA",
-      "parent": "sprite_rectangle_scaled_blitters",
+      "parent": "scalblit",
       "segment": "_DATA",
       "start": 199706,
       "target": {
@@ -22258,9 +22258,9 @@
       "start": 199993
     },
     {
-      "bss_owner": "obj_seg000:_BSS",
+      "bss_owner": "frontend:_BSS",
       "end": 200000,
-      "id": "obj_seg000:_BSS@image",
+      "id": "frontend:_BSS@image",
       "kind": "BSS_IN_IMAGE",
       "start": 199994
     }

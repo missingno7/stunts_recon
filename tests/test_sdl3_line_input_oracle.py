@@ -73,7 +73,7 @@ def fresh_transformed_line_input(compiler: Path) -> Path:
             "fresh PORT_BUILD transformation failed:\n" +
             refreshed.stdout + refreshed.stderr
         )
-    overlay = ROOT / "build" / "sdl3" / "host-build" / "overlay" / "src" / "lineedit.c"
+    overlay = ROOT / "build" / "sdl3" / "host-build" / "overlay" / "lib" / "lineedit.c"
     if not overlay.is_file():
         raise AssertionError("fresh host build did not produce lineedit.c")
     generated = overlay.read_text(encoding="latin-1")
@@ -126,12 +126,12 @@ U16 port_line_input_get_slot(void)
     helper_command = [
         *common,
         "-include", str(ROOT / "build" / "sdl3" / "host-build" / "config" /
-                        "obj_seg032_group.h"),
+                        "lineedit.h"),
         "-I", str(ROOT / "build" / "sdl3" / "host-build" / "include"),
         "-I", str(ROOT / "tools" / "porting" / "port_include"),
         "-I", str(ROOT / "tools" / "porting" / "host" / "include"),
         "-I", str(ROOT / "include"),
-        "-I", str(ROOT / "src"),
+        "-I", str(ROOT / "game"),
         "-c", str(translated), "-o", str(helper_object),
     ]
     driver_command = [
@@ -141,7 +141,7 @@ U16 port_line_input_get_slot(void)
         "-I", str(ROOT / "tools" / "porting" / "port_include"),
         "-I", str(ROOT / "tools" / "porting" / "host" / "include"),
         "-I", str(ROOT / "include"),
-        "-I", str(ROOT / "src"),
+        "-I", str(ROOT / "game"),
         "-c", str(ROOT / "tests" / "sdl3" / "line_input_oracle_harness.c"),
         "-o", str(driver_object),
     ]

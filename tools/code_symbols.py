@@ -38,11 +38,12 @@ def _complete_target_owner(owner, function):
                    for m in recipe['prefix_members'])
     if not (owner['start'] <= function['start'] and function['end'] <= owner['end']):
         return False
+    members = recipe.get('members', [dict(recipe, name=recipe.get('inventory_name', recipe['id']))])
     return recipe.get('id') == owner['name'] and any(
         (member.get('name'), member.get('start'), member.get('end'),
          member.get('target', {}).get('sha256')) ==
         (function['name'], function['start'], function['end'], function['sha256'])
-        for member in recipe.get('members', []))
+        for member in members)
 
 
 def _reference_entry_target(name, target, proof, inventory, owners, image):
@@ -560,7 +561,7 @@ def resolve_near_code_symbols(names, recipe, image):
             frame <= recipe['start'] < recipe['end'] <= frame+65536,
             'Near caller lacks a grounded physical segment')
     callers = [f for f in inventory['functions'] if
-               f.get('name') == recipe['id'] and f.get('start') == recipe['start'] and
+               f.get('name') == recipe.get('inventory_name', recipe['id']) and f.get('start') == recipe['start'] and
                f.get('segment_paragraph', -1)*16 == frame]
     require(len(callers) == 1, 'Near caller lacks verified segment membership')
     owners = read_json(ROOT/'layout/manifest.json')['owners']

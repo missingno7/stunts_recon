@@ -65,14 +65,14 @@ class AsmOrderExact(unittest.TestCase):
 
 
     def test_composed_asm_reversed_order_fails(self):
-        obj, recipe, symbols = self.single('asm_load_25fa2')
+        obj, recipe, symbols = self.single('shpexpnd')
         bad = copy.deepcopy(recipe)
         bad['expected_relocations'].reverse()
         with self.assertRaisesRegex(ValueError, 'order differs from its candidate FIXUPP order'):
             bind_contribution(obj, bad, symbols)
 
     def test_composed_asm_set_equal_but_reordered_fails(self):
-        obj, recipe, symbols = self.single('asm_load_25fa2')
+        obj, recipe, symbols = self.single('shpexpnd')
         bad = copy.deepcopy(recipe)
         rows = bad['expected_relocations']
         rows[0], rows[1] = rows[1], rows[0]
@@ -82,7 +82,7 @@ class AsmOrderExact(unittest.TestCase):
             bind_contribution(obj, bad, symbols)
 
     def test_candidate_fixupp_order_change_fails_against_unchanged_obligations(self):
-        obj, recipe, symbols = self.single('asm_load_25fa2')
+        obj, recipe, symbols = self.single('shpexpnd')
         changed = copy.deepcopy(obj)
         changed.linker_fixups = list(reversed(changed.linker_fixups))
         bad = copy.deepcopy(recipe)
@@ -91,7 +91,7 @@ class AsmOrderExact(unittest.TestCase):
             bind_contribution(changed, bad, symbols)
 
     def test_group_asm_set_equal_but_reordered_fails(self):
-        recipe = recipe_of('graphics_resource_runtime')
+        recipe = recipe_of('gfxres')
         obj, _ = assemble_source((ROOT/recipe['source']).read_bytes(), recipe['profile'])
         payload, receipt = bind_multi(obj, recipe, self.image, self.relocations)
         self.assertEqual(payload, self.image[recipe['start']:recipe['end']])

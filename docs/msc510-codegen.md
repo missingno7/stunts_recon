@@ -353,7 +353,7 @@ holes before word-aligned offsets only; integ25). The literal pool comes first e
 followed by `90 90` and SEGDEF length 107 vs 106 LEDATA bytes (one declared, unwritten byte); under /Oa the
 object is 106 bytes. Image slivers such as seg029's `90 90 00` before seg030 are such tails (tuflags3); a
 group recipe owns them as a reviewed `object_tail` (`msc-code-object-tail-v1`) with the CODE `sparse_zero`
-prefix (integ25, obj_seg029 505 B).
+prefix (integ25, audiochk 505 B).
 
 **O8 Single `00` between an odd procedure and the next is LINK fill between objects — REPORTED**
 (`FACT-00-pad-object-boundary`); `FACT-c-segment-one-object`: each C code segment is one object (objmap).

@@ -1,5 +1,5 @@
-"""integ38: whole seg012 modules owning their DGROUP data (timer_video_interrupt_runtime,
-sprite_rectangle_scaled_blitters), the in-image prefix of the first _BSS contribution
+"""integ38: whole seg012 modules owning their DGROUP data (timerint,
+scalblit), the in-image prefix of the first _BSS contribution
 (BSS_IN_IMAGE) with the word fill before it, DGROUP-framed external addends
 and the FONTHDR font-header STRUC."""
 import copy
@@ -39,8 +39,8 @@ class BssInImageTests(unittest.TestCase):
 
     def test_row_must_name_first_accepted_bss_owner(self):
         bad = copy.deepcopy(self.manifest)
-        bad['owners'][-1]['bss_owner'] = 'obj_seg001_complete:_BSS'
-        bad['owners'][-1]['id'] = 'obj_seg001_complete:_BSS@image'
+        bad['owners'][-1]['bss_owner'] = 'carsim:_BSS'
+        bad['owners'][-1]['id'] = 'carsim:_BSS@image'
         with self.assertRaisesRegex(ValueError, 'first accepted _BSS owner'):
             self.validate(bad, self.size)
 
@@ -63,10 +63,10 @@ class BssInImageTests(unittest.TestCase):
         image = Oracle.load().image
         fill = next(o for o in self.manifest['owners'] if o['start'] == 199993)
         receipt = checked_word_fill(fill, self.manifest, image)
-        self.assertEqual(receipt['next_segment']['owner'], 'obj_seg000:_BSS')
+        self.assertEqual(receipt['next_segment']['owner'], 'frontend:_BSS')
         self.assertEqual(receipt['next_segment']['alignment'], 'word')
         bad = copy.deepcopy(self.manifest)
-        bad['owners'][-1]['bss_owner'] = 'obj_seg005:_BSS'
+        bad['owners'][-1]['bss_owner'] = 'race:_BSS'
         fill = next(o for o in bad['owners'] if o['start'] == 199993)
         with self.assertRaisesRegex(ValueError, 'first _BSS contribution'):
             checked_word_fill(fill, bad, image)

@@ -80,10 +80,10 @@ class PerObjectFlags(unittest.TestCase):
     def test_flags_apply_to_the_whole_object(self):
         # A canonical-flag contribution in a flagged object must also be
         # reproduced under the object's flag set; others need no control.
-        flag2 = {k:v for k,v in read_json(ROOT/'recipes/obj_seg027.json').items()
+        flag2 = {k:v for k,v in read_json(ROOT/'recipes/audiores.json').items()
                  if not k.startswith('compiler_flags')}
         self.assertEqual(object_control_flags(flag2), ['/AM','/Ox','/Gs'])
-        unflagged = read_json(ROOT/'recipes/obj_seg006.json')
+        unflagged = read_json(ROOT/'recipes/polygon.json')
         self.assertIsNone(object_control_flags(unflagged))
         # A group spanning a flagged and an unflagged object is refused.
         spanning = {'id':'x', 'kind':'c', 'members':[
@@ -159,7 +159,7 @@ class WholeModules(unittest.TestCase):
         rows = [f for f in self.inventory['functions'] if f.get('segment') == 'seg002']
         members = [{'name':f['name'], 'public':'_'+f['name'], 'start':f['start'],
                     'stable_id':f.get('stable_id')} for f in sorted(rows, key=lambda f:f['start'])]
-        recipe = {'id':'obj_seg002', 'kind':'asm', 'start':40390, 'end':40724,
+        recipe = {'id':'rpmrand', 'kind':'asm', 'start':40390, 'end':40724,
                   'original_frame_load_address':40384, 'members':members,
                   'module_proof':{'kind':'asm-module-extent-v1',
                       'start_boundary':{'kind':'segment-frame-change','neighbour':'setup_aero_trackdata'},
@@ -242,7 +242,7 @@ class FarData(unittest.TestCase):
 
     def recipe(self, **changes):
         obj = self.obj
-        recipe = {'id':'fardata_11036', 'data_only':True, 'far_data':True,
+        recipe = {'id':'planes', 'data_only':True, 'far_data':True,
                   'start':176576, 'end':176624, 'target':identity(self.image[176576:176624]),
                   'object_segment':'UNIT5_DATA', 'expected_fixups':[], 'expected_relocations':[],
                   'required_pointer_sites':[],

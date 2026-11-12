@@ -100,14 +100,14 @@ class CodeWordFillTests(unittest.TestCase):
 
     def test_refusals(self):
         from link_fill import checked_fill
-        row = self.rows()[-1]      # obj_seg029 -> audio_make_filename
+        row = self.rows()[-1]      # audiochk -> audio_make_filename
         image = bytearray(self.image)
         image[row['start']] = 0x90
         with self.assertRaises(ValueError):
             checked_fill(row, self.manifest, bytes(image))
         wrong = copy.deepcopy(self.manifest)
         target = next(o for o in wrong['owners'] if o['id'] == row['id'])
-        target['object'] = 'load_29cce'
+        target['object'] = 'audiofn'
         with self.assertRaises(ValueError):
             checked_fill(target, wrong, self.image)
         import link_fill
@@ -119,7 +119,7 @@ class CodeWordFillTests(unittest.TestCase):
                 checked_fill(row, self.manifest, self.image)
         finally:
             link_fill._code_segdef = original
-        incomplete = {**next(o for o in self.manifest['owners'] if o['id'] == 'obj_seg029'), 'end': 171212}
+        incomplete = {**next(o for o in self.manifest['owners'] if o['id'] == 'audiochk'), 'end': 171212}
         with self.assertRaisesRegex(ValueError, 'complete'):
             link_fill._code_segdef(incomplete)
 

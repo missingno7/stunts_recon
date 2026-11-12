@@ -93,7 +93,7 @@ class CutRuleCompiledObjects(unittest.TestCase):
         return result
 
     def test_accepted_recipes_reproduce_records_and_relocation_order(self):
-        for name in ('obj_seg000', 'obj_seg004'):
+        for name in ('frontend', 'trkscene'):
             with self.subTest(recipe=name):
                 recipe = read_json(ROOT/'recipes'/f'{name}.json')
                 code, fixups, ends, records, _ = compiled_code(

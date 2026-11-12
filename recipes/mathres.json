@@ -1,0 +1,709 @@
+{
+  "assembler_flags": [
+    "/Mx",
+    "/I."
+  ],
+  "end": 141210,
+  "expected_fixups": [
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 8,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 47,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_sprite1",
+      "target_index": 3,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 228,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 226,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 236,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 228,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 246,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 230,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 259,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 232,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 271,
+      "encoded_addend": "0000",
+      "frame": "S012_TEXT",
+      "frame_index": 1,
+      "frame_kind": "segment",
+      "frame_method": 0,
+      "loc": "offset16",
+      "offset": 234,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "S012_TEXT",
+      "target_index": 1,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 242,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 255,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 265,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 280,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_DATA",
+      "target_index": 2,
+      "target_kind": "segment",
+      "target_method": 0,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_projection_x_scale",
+      "frame_index": 1,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 316,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_projection_x_scale",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_projection_y_scale",
+      "frame_index": 2,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 327,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_projection_y_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 338,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_projection_x_scale",
+      "target_index": 1,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "_projection_y_scale",
+      "frame_index": 2,
+      "frame_kind": "external",
+      "frame_method": 2,
+      "loc": "offset16",
+      "offset": 352,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_projection_y_scale",
+      "target_index": 2,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 364,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_timer_callback_counter",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 2,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 368,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_timer_callback_counter",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 0,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 383,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_timer_callback_counter",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    },
+    {
+      "displacement": 2,
+      "encoded_addend": "0000",
+      "frame": "DGROUP",
+      "frame_index": 1,
+      "frame_kind": "group",
+      "frame_method": 1,
+      "loc": "offset16",
+      "offset": 387,
+      "segment": "S012_TEXT",
+      "self_relative": false,
+      "target": "_timer_callback_counter",
+      "target_index": 4,
+      "target_kind": "external",
+      "target_method": 2,
+      "width": 2
+    }
+  ],
+  "expected_relocations": [],
+  "external_binding": {
+    "mode": "asm-external-dgroup-offset16-v1"
+  },
+  "id": "mathres",
+  "include_closure": [
+    {
+      "path": "include/platform_hw.inc",
+      "sha256": "8961b57e4f26d730398c81f883947e5a9836f03b8817bf9fd3637a9a94e52d76",
+      "size": 1927
+    }
+  ],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 140846,
+      "name": "sprite_copy_both_to_arg",
+      "public": "_savewindow",
+      "stable_id": "load_2260e",
+      "start": 140814,
+      "target": {
+        "sha256": "76e110bf85708d85c353610630c2cf640697be1ab6ed280f31996be0dcdf1c8f",
+        "size": 32
+      }
+    },
+    {
+      "end": 140874,
+      "name": "sprite_copy_arg_to_both",
+      "public": "_restorewindow",
+      "stable_id": "load_2262e",
+      "start": 140846,
+      "target": {
+        "sha256": "70696d82d48185434e7034e1bce46ab85587534a3556a22bd43f340087d13e6f",
+        "size": 28
+      }
+    },
+    {
+      "end": 140891,
+      "name": "file_get_res_shape_count",
+      "public": "_file_get_res_shape_count",
+      "stable_id": "load_2264a",
+      "start": 140874,
+      "target": {
+        "sha256": "03c4eedde9a8f23f9ba02924126549e6936c385e1911ab26f93a553ab7ff7ccd",
+        "size": 17
+      }
+    },
+    {
+      "end": 140986,
+      "name": "file_get_shape2d",
+      "public": "_shapepointer",
+      "stable_id": "load_2265b",
+      "start": 140891,
+      "target": {
+        "sha256": "89258c68d62b065a0ae09f36b9bb7c75c3a4f365b6313aad5d54ac7a7400cc05",
+        "size": 95
+      }
+    },
+    {
+      "end": 141022,
+      "name": "nopsub_326BA",
+      "public": "_nopsub_326BA",
+      "stable_id": "load_226ba",
+      "start": 140986,
+      "target": {
+        "sha256": "98f3e651a6c83b9894f4a1a8a8d1e1b469704ccd3bdbad60dc5841660a484f5a",
+        "size": 36
+      }
+    },
+    {
+      "end": 141100,
+      "name": "sin_fast",
+      "public": "_intsin",
+      "stable_id": "load_226de",
+      "start": 141022,
+      "target": {
+        "sha256": "af93b215c6978cf22f34e6e96798938909f5d5e4436115b445c8289e44226e1a",
+        "size": 78
+      }
+    },
+    {
+      "end": 141112,
+      "name": "cos_fast",
+      "public": "_intcos",
+      "stable_id": null,
+      "start": 141100,
+      "target": {
+        "sha256": "f856a560644eff8e9287dee4ca001aa8e3043540f28dddd484a2f449222982ff",
+        "size": 12
+      }
+    },
+    {
+      "end": 141126,
+      "name": "nopsub_32738",
+      "public": "_thickness",
+      "stable_id": "load_22738",
+      "start": 141112,
+      "target": {
+        "sha256": "444db9d5e46fc14671a5d97febb352bd416e145441e3321f29cf7c28cdbec49e",
+        "size": 14
+      }
+    },
+    {
+      "end": 141137,
+      "name": "nopsub_32746",
+      "public": "_scalethicknessxp",
+      "stable_id": "load_22746",
+      "start": 141126,
+      "target": {
+        "sha256": "ec6b20b841a7de4415679d031d7c75f6e48c91c3bf5657e9dd6e5a7e1c284b94",
+        "size": 11
+      }
+    },
+    {
+      "end": 141148,
+      "name": "nopsub_32751",
+      "public": "_scalethicknessyp",
+      "stable_id": "load_22751",
+      "start": 141137,
+      "target": {
+        "sha256": "5ab818cdb99c1fc91c0954b98acae45469122ef5bf571fc8db766837b2fb9669",
+        "size": 11
+      }
+    },
+    {
+      "end": 141162,
+      "name": "projectiondata9_times_ratio",
+      "public": "_thicknessxp",
+      "stable_id": "load_2275c",
+      "start": 141148,
+      "target": {
+        "sha256": "e384115bef950946a3e7abf7209785464ccca6d4cacb322ffe42104fef3a6398",
+        "size": 14
+      }
+    },
+    {
+      "end": 141176,
+      "name": "nopsub_3276A",
+      "public": "_thicknessyp",
+      "stable_id": "load_2276a",
+      "start": 141162,
+      "target": {
+        "sha256": "9f0a31e84de66895dfb136c88be738f18db4f2d9b8f7870c06b836324bfd5d78",
+        "size": 14
+      }
+    },
+    {
+      "end": 141186,
+      "name": "timer_get_counter",
+      "public": "_gettick",
+      "stable_id": "load_22778",
+      "start": 141176,
+      "target": {
+        "sha256": "824af8fc2a6a6f4b97ff26c56c6376da0a14bae57eb2e49ef92c653499205dca",
+        "size": 10
+      }
+    },
+    {
+      "end": 141210,
+      "name": "timer_custom_delta",
+      "public": "_tickcount",
+      "stable_id": "load_22782",
+      "start": 141186,
+      "target": {
+        "sha256": "66881e3ec87d8d6964afb02f5e39fae601e628cae1914d6dfefed1762bf07d03",
+        "size": 24
+      }
+    }
+  ],
+  "object_declarations": {
+    "externals": [
+      "_projection_x_scale",
+      "_projection_y_scale",
+      "_sprite1",
+      "_timer_callback_counter"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          2,
+          3,
+          4
+        ],
+        "segments": [
+          "_DATA",
+          "CONST",
+          "_BSS"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_thicknessxp",
+        "offset": 334,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_nopsub_326BA",
+        "offset": 172,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_thicknessyp",
+        "offset": 348,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_shapepointer",
+        "offset": 77,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_intcos",
+        "offset": 286,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_intsin",
+        "offset": 208,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_gettick",
+        "offset": 362,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_file_get_res_shape_count",
+        "offset": 60,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_restorewindow",
+        "offset": 32,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_sinetable",
+        "offset": 0,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_thickness",
+        "offset": 298,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_tickcount",
+        "offset": 372,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_scalethicknessxp",
+        "offset": 312,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_scalethicknessyp",
+        "offset": 323,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_savewindow",
+        "offset": 0,
+        "segment": "S012_TEXT"
+      }
+    ],
+    "segments": [
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CODE",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 1,
+        "length": 396,
+        "name": "S012_TEXT",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "DATA",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 2,
+        "length": 514,
+        "name": "_DATA",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "CONST",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 3,
+        "length": 0,
+        "name": "CONST",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      },
+      {
+        "acbp": 72,
+        "alignment": "word",
+        "alignment_code": 2,
+        "big": false,
+        "class": "BSS",
+        "combine": "public",
+        "combine_code": 2,
+        "frame": null,
+        "index": 4,
+        "length": 0,
+        "name": "_BSS",
+        "offset": null,
+        "overlay_index": 1,
+        "use_32bit_offset": false
+      }
+    ]
+  },
+  "object_segment": "S012_TEXT",
+  "original_frame_load_address": 125472,
+  "profile": "masm510-game",
+  "review_notes": [
+    "Combines the thirteen adjacent accepted assembly owners in S012 and the complete sine table. Unreferenced helpers must share a library member with referenced neighbours for ordinary library-search inclusion; this grouping is checked by the historical link, not an attribution of the original assembler."
+  ],
+  "secondary_dgroup_segments": {
+    "_DATA": {
+      "dgroup_offset": 19588,
+      "end": 198134,
+      "start": 197620,
+      "target": {
+        "sha256": "fc5f2210712a64118135be9f530c8b5305eb26c75569d00ba188911e105157cb",
+        "size": 514
+      }
+    }
+  },
+  "source": "lib/mathres.ASM",
+  "start": 140814,
+  "subsumed_data_owners": [
+    "sincos:_DATA"
+  ],
+  "subsumed_owners": [
+    "load_2260e",
+    "load_2262e",
+    "load_2264a",
+    "load_2265b",
+    "load_226ba",
+    "sincos",
+    "load_22738",
+    "load_22746",
+    "load_22751",
+    "load_2275c",
+    "load_2276a",
+    "load_22778",
+    "load_22782"
+  ],
+  "target": {
+    "sha256": "10f2355f00314c7507f0536b4259a6de890590e8258e59e812ec508a5dc4f8da",
+    "size": 396
+  }
+}

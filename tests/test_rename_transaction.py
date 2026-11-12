@@ -72,9 +72,9 @@ def communal_fixture(order):
 
 def fixture_files():
     return {
-        'src/owner.c': b'int old_function(void) { return 1; }\n',
-        'asm/caller.ASM': b'extrn _old_function:far\n',
-        'recipes/owner.json': json_bytes({'id': 'owner', 'source': 'src/owner.c', 'profile': 'fixture',
+        'game/owner.c': b'int old_function(void) { return 1; }\n',
+        'lib/caller.ASM': b'extrn _old_function:far\n',
+        'recipes/owner.json': json_bytes({'id': 'owner', 'source': 'game/owner.c', 'profile': 'fixture',
                                           'public': '_old_function', 'members': [
                                               {'name': 'old_function', 'public': '_old_function'}]}),
         'layout/manifest.json': json_bytes({'owners': [
@@ -100,12 +100,12 @@ class RenamePolicyTests(unittest.TestCase):
 
     def test_c_underscore_identifier_is_distinct_from_assembly_decoration(self):
         files = fixture_files()
-        files['src/owner.c'] += b'int _old_function;\nint old_function_suffix;\n'
+        files['game/owner.c'] += b'int _old_function;\nint old_function_suffix;\n'
         changes = rename.make_changes(files, [ROW])
-        self.assertIn(b'int _old_function;', changes['src/owner.c'])
-        self.assertIn(b'int old_function_suffix;', changes['src/owner.c'])
-        self.assertIn(b'int reviewed_function(void)', changes['src/owner.c'])
-        self.assertIn(b'_reviewed_function', changes['asm/caller.ASM'])
+        self.assertIn(b'int _old_function;', changes['game/owner.c'])
+        self.assertIn(b'int old_function_suffix;', changes['game/owner.c'])
+        self.assertIn(b'int reviewed_function(void)', changes['game/owner.c'])
+        self.assertIn(b'_reviewed_function', changes['lib/caller.ASM'])
 
     def test_multiline_comments_literals_and_crlf(self):
         text = '/* prose\r\nold_function */\r\n"old_function"; old_function(); \'x\';\r\n'
@@ -129,7 +129,7 @@ class RenamePolicyTests(unittest.TestCase):
 
     def test_truncation_collision(self):
         files = fixture_files()
-        files['asm/long.ASM'] = ('public _' + 'a' * 30 + 'first\n').encode()
+        files['lib/long.ASM'] = ('public _' + 'a' * 30 + 'first\n').encode()
         row = {**ROW, 'new': 'a' * 30 + 'second'}
         good, bad = rename.preflight([row], files)
         self.assertFalse(good)
@@ -158,11 +158,11 @@ class RenamePolicyTests(unittest.TestCase):
     def test_private_asm_entry_requires_listing_grounding(self):
         files = fixture_files()
         recipe = json.loads(files['recipes/owner.json'])
-        recipe.update(kind='asm', source='asm/private.ASM', start=16, end=32)
+        recipe.update(kind='asm', source='lib/private.ASM', start=16, end=32)
         recipe.pop('public')
         recipe.pop('members')
         files['recipes/owner.json'] = json_bytes(recipe)
-        files['asm/private.ASM'] = b'old_function proc far\n retf\nold_function endp\n'
+        files['lib/private.ASM'] = b'old_function proc far\n retf\nold_function endp\n'
         files['layout/code-symbols.json'] = b'{"symbols": {}}'
         registry = json.loads(files['layout/names-registry.json'])
         registry['names']['16']['object_declared'] = False
@@ -174,11 +174,11 @@ class RenamePolicyTests(unittest.TestCase):
     def test_unregistered_private_label_does_not_invent_inventory_facts(self):
         files = fixture_files()
         recipe = json.loads(files['recipes/owner.json'])
-        recipe.update(kind='asm', source='asm/private.ASM', start=16, end=32)
+        recipe.update(kind='asm', source='lib/private.ASM', start=16, end=32)
         recipe.pop('public')
         recipe.pop('members')
         files['recipes/owner.json'] = json_bytes(recipe)
-        files['asm/private.ASM'] = b'old_function proc far\n retf\nold_function endp\n'
+        files['lib/private.ASM'] = b'old_function proc far\n retf\nold_function endp\n'
         files['layout/code-symbols.json'] = b'{"symbols": {}}'
         files['layout/names-registry.json'] = b'{"names": {}}'
         good, bad = rename.preflight([ROW], files)
@@ -205,7 +205,7 @@ class RenamePolicyTests(unittest.TestCase):
         applied = {**files, **changes}
         rename.check_applied([ROW], applied)
         with self.assertRaisesRegex(ValueError, 'partially applied'):
-            rename.check_applied([ROW], {**applied, 'src/owner.c': files['src/owner.c']})
+            rename.check_applied([ROW], {**applied, 'game/owner.c': files['game/owner.c']})
 
     def test_key_collision_refuses(self):
         with self.assertRaisesRegex(ValueError, 'key collision'):
@@ -303,7 +303,7 @@ class RenamePolicyTests(unittest.TestCase):
     def test_reviewed_code_offset_requires_supported_inventory_spelling(self):
         files = fixture_files()
         recipe = json.loads(files['recipes/owner.json'])
-        files['recipes/caller.json'] = json_bytes({'id': 'caller', 'source': 'asm/caller.ASM',
+        files['recipes/caller.json'] = json_bytes({'id': 'caller', 'source': 'lib/caller.ASM',
                                                   'reviewed_code_offsets': ['_old_function']})
         manifest = json.loads(files['layout/manifest.json'])
         manifest['owners'].append({'id': 'caller', 'kind': 'MATCHING_ASM', 'recipe': 'recipes/caller.json'})
@@ -329,7 +329,7 @@ class RenamePolicyTests(unittest.TestCase):
 
     def test_communal_current_source_declaration_is_renamed_with_symbol(self):
         files = fixture_files()
-        files['src/owner.c'] += b'int old_global[2];\n'
+        files['game/owner.c'] += b'int old_global[2];\n'
         manifest = json.loads(files['layout/manifest.json'])
         manifest['bss_owners'] = [{'id': 'c_common', 'kind': 'LINK_COMMUNAL', 'communals': [
             {'name': '_old_global', 'size': 4, 'declarers': ['owner'], 'size_basis': {
@@ -341,11 +341,11 @@ class RenamePolicyTests(unittest.TestCase):
         self.assertEqual(item['name'], '_reviewed_global')
         self.assertEqual(item['size_basis']['declaration'], 'int reviewed_global[2];')
         self.assertEqual(item['size'], 4)
-        self.assertIn(item['size_basis']['declaration'].encode(), changes['src/owner.c'])
+        self.assertIn(item['size_basis']['declaration'].encode(), changes['game/owner.c'])
 
     def test_source_only_global_alias_does_not_invent_a_registry_public(self):
         files = fixture_files()
-        files['src/owner.c'] += b'extern int old_global;\n'
+        files['game/owner.c'] += b'extern int old_global;\n'
         files['layout/data-symbols.json'] = json_bytes({'symbols': {'_old_global': {'load_address': 32}}})
         row = {'kind': 'global', 'old': 'old_global', 'new': 'reviewed_global', 'address': 32}
         changes = rename.make_changes(files, [row])
@@ -359,9 +359,9 @@ class RenamePolicyTests(unittest.TestCase):
             root = Path(work)
             path = root / 'port/build.py'
             path.parent.mkdir()
-            original = b"source = ROOT / 'src' / 'OWNER.C'\n"
+            original = b"source = ROOT / 'game' / 'OWNER.C'\n"
             path.write_bytes(original)
-            rows = [{'kind': 'c-unit', 'old': 'src/owner.c', 'new': 'src/readable.c'}]
+            rows = [{'kind': 'c-unit', 'old': 'game/owner.c', 'new': 'game/readable.c'}]
             hits = rename.port_occurrences(root, rows)
             self.assertEqual(hits[0]['names'], ['owner.c'])
             self.assertEqual(hits[0]['line'], 1)
@@ -369,15 +369,15 @@ class RenamePolicyTests(unittest.TestCase):
 
     def test_file_move_updates_case_variant_path_references(self):
         files = fixture_files()
-        files['tools/ref.py'] = b"p = ROOT / 'src' / 'OWNER.C'\nq = 'SRC/OWNER.C'\n"
-        rows = [{'kind': 'c-unit', 'old': 'src/owner.c', 'new': 'src/readable.c'}]
+        files['tools/ref.py'] = b"p = ROOT / 'game' / 'OWNER.C'\nq = 'GAME/OWNER.C'\n"
+        rows = [{'kind': 'c-unit', 'old': 'game/owner.c', 'new': 'game/readable.c'}]
         changes = rename.make_changes(files, rows)
         self.assertIn(b"'readable.c'", changes['tools/ref.py'])
-        self.assertIn(b"'src/readable.c'", changes['tools/ref.py'])
+        self.assertIn(b"'game/readable.c'", changes['tools/ref.py'])
 
     def test_comment_mentions_do_not_collide(self):
         files = fixture_files()
-        files['asm/caller.ASM'] += b'; reviewed_function is a proposed contract name\n'
+        files['lib/caller.ASM'] += b'; reviewed_function is a proposed contract name\n'
         self.assertFalse(rename.preflight([ROW], files)[1])
 
 
@@ -558,7 +558,7 @@ class PublicationTests(unittest.TestCase):
         self.assertEqual(rename.canonical_files(self.root), self.files)
 
     def test_header_journal_cannot_write_an_oracle_or_escape(self):
-        for path in ('layout/oracle.lock.json', 'src/../layout/oracle.lock.json', '../outside',
+        for path in ('layout/oracle.lock.json', 'game/../layout/oracle.lock.json', '../outside',
                      'include/../../outside', '.git/index'):
             with self.subTest(path=path), self.assertRaises(ValueError):
                 rename.publication_path(path)
@@ -567,6 +567,7 @@ class PublicationTests(unittest.TestCase):
         path = self.root / 'port/service.c'
         path.parent.mkdir()
         path.write_bytes(b'int old_function(void);\n')
+        self.files['port/service.c'] = path.read_bytes()
         rename.publish(rename.make_changes(self.files, [ROW]), self.files, lambda: None)
         self.assertEqual(path.read_bytes(), b'int old_function(void);\n')
 
@@ -577,7 +578,7 @@ class PublicationTests(unittest.TestCase):
         candidate = {**baseline, 'loaded_library_modules': [('GAME.LIB', 2, 'UNIT')]}
         calls = []
         def historical():
-            calls.append((self.root / 'src/owner.c').read_bytes())
+            calls.append((self.root / 'game/owner.c').read_bytes())
             return baseline if len(calls) == 1 else candidate
         engine = rename.ProofEngine(self.root, self.files,
                                     compiler=lambda recipe, source: object_fixture(recipe['public']))
@@ -638,8 +639,8 @@ class PublicationTests(unittest.TestCase):
         rename.publish(rename.make_changes(self.files, [ROW]), self.files, lambda: None)
 
     def test_split_path_references_and_applied_move_check(self):
-        files = {**self.files, 'tools/ref.py': b"p = ROOT / 'src' / 'owner.c'\n"}
-        row = {'kind': 'c-unit', 'old': 'src/owner.c', 'new': 'src/readable.c'}
+        files = {**self.files, 'tools/ref.py': b"p = ROOT / 'game' / 'owner.c'\n"}
+        row = {'kind': 'c-unit', 'old': 'game/owner.c', 'new': 'game/readable.c'}
         changes = rename.make_changes(files, [row])
         self.assertIn(b"'readable.c'", changes['tools/ref.py'])
         applied = {k: v for k, v in {**files, **changes}.items() if v is not None}
@@ -659,7 +660,7 @@ class PublicationTests(unittest.TestCase):
         self.assertFalse(second['failures'])
         self.assertEqual(second['reused_from'], 1)
         self.assertEqual(calls, [1])
-        self.assertIn(b'reviewed_function', (self.root / 'src/owner.c').read_bytes())
+        self.assertIn(b'reviewed_function', (self.root / 'game/owner.c').read_bytes())
 
     def test_failed_unrenamed_baseline_is_a_proof_error(self):
         engine = rename.ProofEngine(self.root, self.files,
@@ -671,34 +672,34 @@ class PublicationTests(unittest.TestCase):
 
     def test_assembly_owner_move_updates_child_parent_without_inventory_rewrite(self):
         recipe = json.loads(self.files['recipes/owner.json'])
-        recipe.update(kind='asm', source='asm/caller.ASM')
+        recipe.update(kind='asm', source='lib/caller.ASM')
         self.files['recipes/owner.json'] = json_bytes(recipe)
         manifest = json.loads(self.files['layout/manifest.json'])
         manifest['owners'].append({'id': 'owner:_BSS', 'kind': 'MATCHING_ASM_DATA', 'parent': 'owner'})
         self.files['layout/manifest.json'] = json_bytes(manifest)
         row = {'kind': 'asm-module', 'old': 'owner', 'new': 'readable_module',
-               'source': 'asm/caller.ASM', 'new_source': 'asm/readable.ASM'}
+               'source': 'lib/caller.ASM', 'new_source': 'lib/readable.ASM'}
         changes = rename.make_changes(self.files, [row])
         child = json.loads(changes['layout/manifest.json'])['owners'][1]
         self.assertEqual(child['parent'], 'readable_module')
         self.assertEqual(child['id'], 'readable_module:_BSS')
 
     def test_file_move_updates_paths_and_rolls_back(self):
-        for key in ('tools/ref.py', 'tests/ref.py', 'layout/ref.json', 'evidence/ref.md'):
-            self.files[key] = b'"src/owner.c"\n'
+        for key in ('tools/ref.py', 'tests/ref.py', 'layout/ref.json'):
+            self.files[key] = b'"game/owner.c"\n'
             path = self.root / key
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(self.files[key])
-        row = {'kind': 'c-unit', 'old': 'src/owner.c', 'new': 'src/readable.c'}
+        row = {'kind': 'c-unit', 'old': 'game/owner.c', 'new': 'game/readable.c'}
         good, bad = rename.preflight([row], self.files)
         self.assertEqual(good, [row])
         self.assertFalse(bad)
         changes = rename.make_changes(self.files, [row])
-        self.assertIsNone(changes['src/owner.c'])
-        self.assertEqual(changes['src/readable.c'], self.files['src/owner.c'])
-        for key in ('tools/ref.py', 'tests/ref.py', 'layout/ref.json', 'evidence/ref.md'):
-            self.assertIn(b'src/readable.c', changes[key])
-        self.assertEqual(json.loads(changes['recipes/owner.json'])['source'], 'src/readable.c')
+        self.assertIsNone(changes['game/owner.c'])
+        self.assertEqual(changes['game/readable.c'], self.files['game/owner.c'])
+        for key in ('tools/ref.py', 'tests/ref.py', 'layout/ref.json'):
+            self.assertIn(b'game/readable.c', changes[key])
+        self.assertEqual(json.loads(changes['recipes/owner.json'])['source'], 'game/readable.c')
         def fail():
             self.assertFalse((self.root / row['old']).exists())
             self.assertTrue((self.root / row['new']).exists())
@@ -710,20 +711,87 @@ class PublicationTests(unittest.TestCase):
 
     def test_assembly_owner_and_source_move_together(self):
         recipe = json.loads(self.files['recipes/owner.json'])
-        recipe.update(kind='asm', source='asm/caller.ASM')
+        recipe.update(kind='asm', source='lib/caller.ASM')
         self.files['recipes/owner.json'] = json_bytes(recipe)
         row = {'kind': 'asm-module', 'old': 'owner', 'new': 'readable_module',
-               'source': 'asm/caller.ASM', 'new_source': 'asm/readable.ASM'}
+               'source': 'lib/caller.ASM', 'new_source': 'lib/readable.ASM'}
         good, bad = rename.preflight([row], self.files)
         self.assertFalse(bad)
         changes = rename.make_changes(self.files, good)
-        self.assertEqual(json.loads(changes['recipes/owner.json'])['id'], 'readable_module')
+        self.assertEqual(json.loads(changes['recipes/readable_module.json'])['id'], 'readable_module')
         self.assertEqual(json.loads(changes['layout/manifest.json'])['owners'][0]['id'], 'readable_module')
-        self.assertIsNone(changes['asm/caller.ASM'])
-        self.assertIn('asm/readable.ASM', changes)
+        self.assertIsNone(changes['lib/caller.ASM'])
+        self.assertIn('lib/readable.ASM', changes)
+
+    def test_cross_directory_moves_update_every_current_reference_and_prove(self):
+        for source, destination in (('game/owner.c', 'lib/owner.c'),
+                                    ('lib/caller.ASM', 'game/caller.ASM')):
+            with self.subTest(source=source):
+                files = dict(self.files)
+                recipe = json.loads(files['recipes/owner.json'])
+                recipe['source'] = source
+                files['recipes/owner.json'] = json_bytes(recipe)
+                for path in ('port/ref.py', 'tools/porting/ref.py', 'docs/porting/ref.md',
+                             'README.md', 'AGENTS.md', 'Makefile'):
+                    files[path] = (source + "\nROOT / '" + str(Path(source).parent) +
+                                   "' / '" + Path(source).name + "'\n").encode()
+                files['evidence/ref.md'] = source.encode()
+                row = dict(kind='file', old=source, new=destination)
+                good, bad = rename.preflight([row], files)
+                self.assertFalse(bad)
+                changes = rename.make_changes(files, good)
+                self.assertIsNone(changes[source])
+                self.assertEqual(changes[destination], files[source])
+                self.assertEqual(json.loads(changes['recipes/owner.json'])['source'], destination)
+                self.assertNotIn('evidence/ref.md', changes)
+                for path in ('port/ref.py', 'tools/porting/ref.py', 'docs/porting/ref.md',
+                             'README.md', 'AGENTS.md', 'Makefile'):
+                    self.assertIn(destination.encode(), changes[path])
+                    self.assertIn(("'" + str(Path(destination).parent) + "'").encode(), changes[path])
+                engine = rename.ProofEngine(self.root, files,
+                    compiler=lambda recipe, source: object_fixture(),
+                    image=lambda: {'status': 'HYBRID_EXACT'})
+                self.assertFalse(engine.trial([row], whole=True)['failures'])
+                engine.stage({})
+
+    def test_owner_only_renames_are_complete_for_both_source_kinds(self):
+        for kind, source in (('c-unit', 'game/owner.c'), ('asm-module', 'lib/caller.ASM')):
+            with self.subTest(kind=kind):
+                files = dict(self.files)
+                recipe = json.loads(files['recipes/owner.json'])
+                recipe.update(source=source, kind='asm' if kind == 'asm-module' else 'c')
+                files['recipes/owner.json'] = json_bytes(recipe)
+                manifest = json.loads(files['layout/manifest.json'])
+                manifest['owners'][0]['name'] = 'old_inventory_function'
+                manifest['owners'].append({'id': 'owner:_DATA', 'kind': 'MATCHING_C_DATA',
+                                           'parent': 'owner'})
+                manifest['bss_owners'] = [{'id': 'owner:_BSS', 'parent': 'owner',
+                                          'declarers': ['owner']}]
+                files['layout/manifest.json'] = json_bytes(manifest)
+                files['evidence/old.json'] = b'{"owner": "owner"}'
+                files['port/ref.py'] = b'owner_id = "owner"\n'
+                row = dict(kind=kind, old='owner', new='readable', source=source, new_source=source)
+                good, bad = rename.preflight([row], files)
+                self.assertFalse(bad)
+                changes = rename.make_changes(files, good)
+                self.assertIsNone(changes['recipes/owner.json'])
+                self.assertNotIn(source, changes)
+                updated = json.loads(changes['layout/manifest.json'])
+                self.assertEqual(updated['owners'][0]['name'], 'readable')
+                self.assertEqual(updated['owners'][0]['recipe'], 'recipes/readable.json')
+                self.assertEqual(updated['owners'][1]['id'], 'readable:_DATA')
+                self.assertEqual(updated['bss_owners'][0]['declarers'], ['readable'])
+                self.assertNotIn('evidence/old.json', changes)
+                self.assertIn(b'"readable"', changes['port/ref.py'])
+                engine = rename.ProofEngine(self.root, files,
+                    compiler=lambda recipe, source: object_fixture(),
+                    image=lambda: {'status': 'HYBRID_EXACT'})
+                result = engine.trial([row], whole=True)
+                self.assertFalse(result['failures'])
+                engine.stage({})
 
     def test_file_move_passes_same_object_and_image_proof(self):
-        row = {'kind': 'c-unit', 'old': 'src/owner.c', 'new': 'src/readable.c'}
+        row = {'kind': 'c-unit', 'old': 'game/owner.c', 'new': 'game/readable.c'}
         sources = []
         def compiler(recipe, source):
             sources.append(recipe['source'])
@@ -731,12 +799,12 @@ class PublicationTests(unittest.TestCase):
         engine = rename.ProofEngine(self.root, self.files, compiler, image=lambda: {'status': 'HYBRID_EXACT'})
         result = engine.trial([row], whole=True)
         self.assertFalse(result['failures'])
-        self.assertEqual(sources, ['src/owner.c', 'src/readable.c'])
+        self.assertEqual(sources, ['game/owner.c', 'game/readable.c'])
         engine.stage({})
         self.assertEqual(rename.canonical_files(self.root), self.files)
 
     def test_move_recovery_restores_source_and_removes_destination(self):
-        row = {'kind': 'c-unit', 'old': 'src/owner.c', 'new': 'src/readable.c'}
+        row = {'kind': 'c-unit', 'old': 'game/owner.c', 'new': 'game/readable.c'}
         with transaction.exclusive():
             transaction.apply(rename.prepare_publication(rename.make_changes(self.files, [row])))
         rename.rollback_publication()
@@ -774,15 +842,15 @@ class PublicationTests(unittest.TestCase):
 
     def test_concurrent_edit_is_preserved_for_recovery(self):
         def concurrent():
-            (self.root / 'src/owner.c').write_bytes(b'user edit')
+            (self.root / 'game/owner.c').write_bytes(b'user edit')
             raise ValueError('image failed')
         with self.assertRaisesRegex(ValueError, 'conflicting edit'):
             rename.publish(rename.make_changes(self.files, [ROW]), self.files, concurrent)
-        self.assertEqual((self.root / 'src/owner.c').read_bytes(), b'user edit')
+        self.assertEqual((self.root / 'game/owner.c').read_bytes(), b'user edit')
         self.assertTrue(transaction.journal_path().exists())
 
     def test_stale_inputs_refuse_before_writes(self):
-        (self.root / 'src/owner.c').write_bytes(b'user edit')
+        (self.root / 'game/owner.c').write_bytes(b'user edit')
         with self.assertRaisesRegex(ValueError, 'Canonical files changed'):
             rename.publish(rename.make_changes(self.files, [ROW]), self.files, lambda: None)
         self.assertFalse(transaction.journal_path().exists())
@@ -823,8 +891,8 @@ class PublicationTests(unittest.TestCase):
 
     def test_bisection_retains_good_name_and_proves_union(self):
         # Tiny injected compiler: one name changes a real object payload byte.
-        files = {**self.files, 'src/owner.c': self.files['src/owner.c'] + b'int second_function(void);\n'}
-        (self.root / 'src/owner.c').write_bytes(files['src/owner.c'])
+        files = {**self.files, 'game/owner.c': self.files['game/owner.c'] + b'int second_function(void);\n'}
+        (self.root / 'game/owner.c').write_bytes(files['game/owner.c'])
         def compiler(recipe, source):
             public = recipe['public']
             return object_fixture(public, payload=(b'\x9a\0\0\0\0\xc3' if b'sensitive_function' in source
@@ -840,8 +908,8 @@ class PublicationTests(unittest.TestCase):
         self.assertEqual(final['whole_image']['status'], 'HYBRID_EXACT')
 
     def test_interacting_names_do_not_block_good_subset(self):
-        files = {**self.files, 'src/owner.c': self.files['src/owner.c'] + b'int second_function(void);\n'}
-        (self.root / 'src/owner.c').write_bytes(files['src/owner.c'])
+        files = {**self.files, 'game/owner.c': self.files['game/owner.c'] + b'int second_function(void);\n'}
+        (self.root / 'game/owner.c').write_bytes(files['game/owner.c'])
         def compiler(recipe, source):
             sensitive = b'sensitive_function' in source and b'reviewed_function' in source
             return object_fixture(recipe['public'], payload=(b'\x9a\0\0\0\0\xc3' if sensitive

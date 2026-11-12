@@ -21,7 +21,7 @@ static inline I16 stunts_port_call_read_line_view(I8 *buffer, I16 first, I16 sec
 }
 static inline struct SHAPE2D *stunts_port_locate_shape_fatal_shape_view(void *resource, I8 *name)
 {
-    /* load_20f9d returns through a generic thunk; this cast follows obj_seg000 uses. */
+    /* load_20f9d returns through a generic thunk; this cast follows frontend uses. */
     return (struct SHAPE2D *)locate_shape_fatal(resource, name);
 }
 #endif
@@ -60,7 +60,7 @@ static inline void stunts_port_audio_init_chunk_7_view(I16 first, I16 last,
 
 #if defined(STUNTS_TU_audioeng)
 /* PORT_BUILD host dispatch policy. The historical I16 result is proven and
-   consumed by obj_seg007; the host implementation remains an integration hook. */
+   consumed by audioeng; the host implementation remains an integration hook. */
 extern I16 stunts_port_send_audio_stop_event_dispatch(U16 rate, I16 chunk_index);
 static inline I16 stunts_port_send_audio_stop_event_value_view(U16 rate, I16 chunk_index)
 {

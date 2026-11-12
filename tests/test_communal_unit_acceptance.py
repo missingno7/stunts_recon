@@ -167,7 +167,7 @@ class NamesAndBasisTests(unittest.TestCase):
         self.assertTrue(cu.check_names([item('__bufxx', 215782, 'pinned-member')], manifest))
 
     def test_size_basis_forms(self):
-        src = 'src/mcgawnd.c'
+        src = 'lib/mcgawnd.c'
         declared = {'_a': [('o', 40, src)], '_b': [('o', 6, src)], '_c': [('o', 2, src)]}
         text = 'struct SPRITE far *mcgawnd_window_sprite;'
         items = [
@@ -245,7 +245,7 @@ class TransactionTests(unittest.TestCase):
     def test_probe_binds_a_tentative_definition_exactly(self):
         from probe_module import probe
         from compiler import compile_source
-        recipe = read_json(ROOT / 'recipes/seg033_mcgawnd.json')
+        recipe = read_json(ROOT / 'recipes/mcgawnd.json')
         source = (ROOT / recipe['source']).read_bytes()
         names = [row['name'] for row in recipe['communal_declarations']]
         obj, _ = compile_source(source, recipe['profile'], communals=names)

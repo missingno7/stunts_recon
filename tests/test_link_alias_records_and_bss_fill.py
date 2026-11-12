@@ -55,13 +55,13 @@ class AcceptedObjectAliasTests(unittest.TestCase):
 class BssWordFillTests(unittest.TestCase):
 
     def fixture(self):
-        objects = [{'id': 'obj_seg007', 'start': 0, 'end': 10},
-                   {'id': 'obj_seg008', 'start': 10, 'end': 20}]
+        objects = [{'id': 'audioeng', 'start': 0, 'end': 10},
+                   {'id': 'uires', 'start': 10, 'end': 20}]
         manifest = {
             'owners': [
-                {'id': 'owner007', 'kind': 'MATCHING_C', 'name': 'obj_seg007',
+                {'id': 'owner007', 'kind': 'MATCHING_C', 'name': 'audioeng',
                  'start': 1, 'end': 2},
-                {'id': 'owner008', 'kind': 'MATCHING_C', 'name': 'obj_seg008',
+                {'id': 'owner008', 'kind': 'MATCHING_C', 'name': 'uires',
                  'start': 11, 'end': 12},
             ],
             'bss_owners': [
@@ -70,18 +70,18 @@ class BssWordFillTests(unittest.TestCase):
                  'target': {'sha256': 'a', 'size': 5}, 'placement': bss_link.STATIC},
                 {'id': 'fill_003ed_003ee', 'kind': 'LINK_FILL',
                  'basis': bss_link.BSS_WORD_FILL, 'start': 1005, 'end': 1006,
-                 'object': 'obj_seg007'},
+                 'object': 'audioeng'},
                 {'id': 'owner008:_BSS', 'kind': 'MATCHING_C_DATA', 'parent': 'owner008',
                  'segment': '_BSS', 'start': 1006, 'end': 1011,
                  'target': {'sha256': 'b', 'size': 5}, 'placement': bss_link.STATIC},
             ],
         }
         evidence = {'schema': 'bss-raw-placeholders-v1', 'rows': [
-            {'id': 'raw_obj7', 'object': 'obj_seg007', 'raw_form': bss_link.OBJECT_BSS,
+            {'id': 'raw_obj7', 'object': 'audioeng', 'raw_form': bss_link.OBJECT_BSS,
              'start': 1000, 'end': 1005},
             {'id': 'raw_fill', 'object': None, 'raw_form': bss_link.WORD_FILL,
              'start': 1005, 'end': 1006},
-            {'id': 'raw_obj8', 'object': 'obj_seg008', 'raw_form': bss_link.OBJECT_BSS,
+            {'id': 'raw_obj8', 'object': 'uires', 'raw_form': bss_link.OBJECT_BSS,
              'start': 1006, 'end': 1011},
         ]}
         return objects, manifest, evidence
@@ -90,7 +90,7 @@ class BssWordFillTests(unittest.TestCase):
         objects, manifest, evidence = self.fixture()
         rows = bss_link.check_partition(manifest, objects, evidence, 1000, 1011)
         self.assertEqual(rows[1], {'id': 'fill_003ed_003ee', 'kind': 'LINK_FILL',
-                                   'form': bss_link.BSS_WORD_FILL, 'object': 'obj_seg007',
+                                   'form': bss_link.BSS_WORD_FILL, 'object': 'audioeng',
                                    'start': 1005, 'end': 1006})
         report = bss_link.ownership_report(rows)
         self.assertEqual(report['raw_fill'], 0)

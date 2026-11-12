@@ -128,7 +128,7 @@ def recipe_segments(recipe, image=None):
     functions = read_json(ROOT/'evidence/functions.json')['functions']
     # A record-closed prefix lists the full inventory rows of its members.
     listed = recipe.get('members', recipe.get('prefix_members'))
-    names = ([m['name'] for m in listed] if listed is not None else [recipe['id']])
+    names = ([m['name'] for m in listed] if listed is not None else [recipe.get('inventory_name', recipe['id'])])
     segments = set()
     for name in names:
         rows = [f for f in functions if f.get('name') == name]
