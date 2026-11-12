@@ -23,26 +23,26 @@ aLocatesound4_4sSoundNotF db 'locatesound - %-4.4s SOUND NOT FOUND',13,10
 _DATA ends
 DGROUP group _DATA,DSEG
 assume ds:DGROUP
-extrn _fatal_error:far
-extrn _copy_paras_reverse:far
-extrn _mmgr_get_chunk_by_name:far
-extrn _file_paras:far
-extrn _mmgr_alloc_pages:far
-extrn _file_decomp_paras:far
-extrn _mmgr_resize_memory:far
+extrn _abortmessage:far
+extrn _negblockmove:far
+extrn _checkmodule:far
+extrn _filesizea:far
+extrn _reservememory:far
+extrn _unpacksizea:far
+extrn _resizememory:far
 extrn _file_decomp_vle:far
-public _file_read, _file_read_nofatal, _file_read_fatal
+public _loadfileata, _loadfileatz, _loadfileat
 public _file_decomp_rle, _file_decomp_rle_single, _file_decomp_rle_seq
-public _file_load_binary
-public _file_load_binary_nofatal
-public _file_decomp, _file_decomp_nofatal, _file_decomp_fatal
-public _locate_shape_nofatal
+public _loadfilea
+public _loadfilez
+public _loadpacka, _loadpackz, _loadpack
+public _locateshapez
 public _locate_shape_fatal
 public _locate_sound_fatal
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 
-; file_read
+; loadfileata
 ; -----------------------------------------------------------------------------
 ; Purpose: Read file data through the DOS handle API.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -76,7 +76,7 @@ assume cs:S012_TEXT
 ; ASMDOC not close an already-open handle
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_read (unchanged).
-_file_read proc far
+_loadfileata proc far
     var_fatal = word ptr -8
     arg_fatal = word ptr 12
 
@@ -89,7 +89,7 @@ _file_read proc far
     jmp     short read_body
     even ; word-align the following entry
 
-_file_read endp
+_loadfileata endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Read file data and return failure without raising a fatal error.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -121,7 +121,7 @@ _file_read endp
 ; ASMDOC not close an already-open handle
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_read_nofatal (unchanged).
-_file_read_nofatal proc far
+_loadfileatz proc far
     var_fatal = word ptr -8
     push    bp
     mov     bp, sp
@@ -131,7 +131,7 @@ _file_read_nofatal proc far
     jmp     short read_body
     nop ; retained code pad at an even offset; EVEN would emit no byte
 
-_file_read_nofatal endp
+_loadfileatz endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Read file data and route failures to the fatal-error handler.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_dstoff (word ptr 8);
@@ -165,7 +165,7 @@ _file_read_nofatal endp
 ; ASMDOC not close an already-open handle
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_read_fatal (unchanged).
-_file_read_fatal proc far
+_loadfileat proc far
     var_fatal = word ptr -8
     var_curseg = word ptr -6
     var_curoff = word ptr -4
@@ -229,9 +229,9 @@ fatal:
     mov     ds, bx
     push    [bp+arg_filename]
     push    ax
-    call    far ptr _fatal_error
+    call    far ptr _abortmessage
 
-_file_read_fatal endp
+_loadfileat endp
 
 ; file_decomp_rle
 ; -----------------------------------------------------------------------------
@@ -343,7 +343,7 @@ no_remainder:
     mov     [bp+arg_srcseg], bx
     push    bx
     push    [bp+arg_dstoff]
-    call far ptr _copy_paras_reverse
+    call far ptr _negblockmove
     add     sp, 6
     xor     si, si
     mov     [bp+arg_srcoff], si
@@ -653,7 +653,7 @@ _file_decomp_rle_seq endp
 ; ASMDOC callee contract
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_load_binary (unchanged).
-_file_load_binary proc far
+_loadfilea proc far
     push bp
     mov bp, sp
     sub sp, 2
@@ -661,7 +661,7 @@ _file_load_binary proc far
     mov [bp-2], ax
     jmp short common_entry
     nop
-_file_load_binary endp
+_loadfilea endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file load binary nofatal.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -691,7 +691,7 @@ _file_load_binary endp
 ; ASMDOC callee contract
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_load_binary_nofatal (unchanged).
-_file_load_binary_nofatal proc far
+_loadfilez proc far
     push bp
     mov bp, sp
     sub sp, 2
@@ -706,25 +706,25 @@ fatal_entry:
     mov word ptr [bp-2], 1
 common_entry:
     push word ptr [bp+6]
-    call far ptr _mmgr_get_chunk_by_name
+    call far ptr _checkmodule
     add sp, 2
     or dx, dx
     jnz load_complete
     push word ptr [bp-2]
     push word ptr [bp+6]
-    call far ptr _file_paras
+    call far ptr _filesizea
     add sp, 4
     or ax, ax
     jz empty_file
     push ax
     push word ptr [bp+6]
-    call far ptr _mmgr_alloc_pages
+    call far ptr _reservememory
     add sp, 4
     push word ptr [bp-2]
     push dx
     push ax
     push word ptr [bp+6]
-    call far ptr _file_read
+    call far ptr _loadfileata
     add sp, 8
 load_complete:
     mov sp, bp
@@ -733,7 +733,7 @@ load_complete:
 empty_file:
     xor dx, dx
     jmp short load_complete
-_file_load_binary_nofatal endp
+_loadfilez endp
 
 ; file_decomp_group
 ; -----------------------------------------------------------------------------
@@ -777,7 +777,7 @@ _file_load_binary_nofatal endp
 ; ASMDOC fatal_error(format,filename) for enabled errors; allocated storage not released on failure here
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_decomp (unchanged).
-_file_decomp proc far
+_loadpacka proc far
     var_fatal = word ptr -12
     arg_fatal = word ptr 8
 
@@ -790,7 +790,7 @@ _file_decomp proc far
     mov     [bp+var_fatal], ax
     jmp     short decomp_body
     nop ; retained code pad at an even offset; EVEN would emit no byte
-_file_decomp endp
+_loadpacka endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Dispatch resource decompression with nonfatal error handling.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -832,7 +832,7 @@ _file_decomp endp
 ; ASMDOC fatal_error(format,filename) for enabled errors; allocated storage not released on failure here
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _file_decomp_nofatal (unchanged).
-_file_decomp_nofatal proc far
+_loadpackz proc far
     var_fatal = word ptr -12
     push    bp
     mov     bp, sp
@@ -842,7 +842,7 @@ _file_decomp_nofatal proc far
     mov     [bp+var_fatal], 0
     jmp     short decomp_body
     nop ; retained code pad at an even offset; EVEN would emit no byte
-_file_decomp_nofatal endp
+_loadpackz endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Dispatch resource decompression with fatal error handling.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_6 (word ptr 12);
@@ -885,7 +885,7 @@ _file_decomp_nofatal endp
 ; ASMDOC fatal_error(format,filename) for enabled errors; allocated storage not released on failure here
 ; ASMDOC dead: True
 ; ASMDOC Public name from existing plan: _file_decomp_fatal (unchanged).
-_file_decomp_fatal proc far
+_loadpack proc far
     var_fatal = word ptr -12
     var_nextsrcseg = word ptr -10
     var_passes = word ptr -8
@@ -904,7 +904,7 @@ _file_decomp_fatal proc far
     mov     [bp+var_fatal], 1
 decomp_body:
     push    [bp+arg_filename]
-    call    _mmgr_get_chunk_by_name
+    call    _checkmodule
     add     sp, 2
     or      dx, dx
     jz      short fd_not_found
@@ -919,7 +919,7 @@ decomp_fatal_loop_head_01:
 fd_not_found:
     push    [bp+var_fatal]
     push    [bp+arg_filename]
-    call    _file_decomp_paras
+    call    _unpacksizea
     add     sp, 4
     or      ax, ax
     jz      short decomp_fatal_loop_head_01
@@ -927,13 +927,13 @@ fd_not_found:
     mov     [bp+var_decomp_paras], ax
     push    ax
     push    [bp+arg_filename]
-    call    _mmgr_alloc_pages
+    call    _reservememory
     add     sp, 4
     mov     [bp+var_dstoff], ax
     mov     [bp+var_dstseg], dx
     push    [bp+var_fatal]
     push    [bp+arg_filename]
-    call    _file_paras
+    call    _filesizea
     add     sp, 4
     or      ax, ax
     jz      short decomp_fatal_loop_head_01
@@ -944,7 +944,7 @@ fd_not_found:
     push    dx
     push    [bp+var_dstoff]
     push    [bp+arg_filename]
-    call    _file_read
+    call    _loadfileata
     add     sp, 8
     or      dx, dx
     jz      short decomp_fatal_loop_head_01
@@ -999,7 +999,7 @@ decomp_fatal_branch_path_01:
     mov     [bp+var_nextsrcseg], bx
     push    bx
     push    [bp+var_dstseg]
-    call    _copy_paras_reverse
+    call    _negblockmove
     add     sp, 6
     mov     ds, [bp+var_nextsrcseg]
     xor     si, si
@@ -1025,14 +1025,14 @@ decomp_fatal_error_path_01:
     push    [bp+arg_filename]
     mov     ax, offset DGROUP:_aSInvalidPackTy; "%s INVALID PACK TYPE\r"
     push    ax
-    call    far ptr _fatal_error
+    call    far ptr _abortmessage
 fd_done:
     mov     ax, [bp+var_decomp_paras]
     sub     ax, 4
     push    ax
     push    [bp+var_dstseg]
     push    [bp+var_dstoff]
-    call    _mmgr_resize_memory
+    call    _resizememory
     add     sp, 6
     mov     ax, [bp+var_dstoff]
     mov     dx, [bp+var_dstseg]
@@ -1069,7 +1069,7 @@ fd_done:
 decomp_fatal_join_02:
     push    [bp+var_fatal]
     push    [bp+arg_filename]
-    call    _file_decomp_fatal
+    call    _loadpack
     add     sp, 4
     pop     di
     pop     si
@@ -1077,7 +1077,7 @@ decomp_fatal_join_02:
     pop     bp
     retf
 
-_file_decomp_fatal endp
+_loadpack endp
 
 ; locate_entries
 ; -----------------------------------------------------------------------------
@@ -1112,7 +1112,7 @@ _file_decomp_fatal endp
 ; ASMDOC requested-name memory only
 ; ASMDOC dead: False
 ; ASMDOC Public name from existing plan: _locate_shape_nofatal (unchanged).
-_locate_shape_nofatal proc far
+_locateshapez proc far
     push    bp
     mov     bp, sp
     push    ds
@@ -1121,7 +1121,7 @@ _locate_shape_nofatal proc far
     xor     dx, dx
     jmp     short _alt_locate_resource
     nop ; retained code pad at an even offset; EVEN would emit no byte
-_locate_shape_nofatal endp
+_locateshapez endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by locate shape fatal.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -1266,7 +1266,7 @@ find_sound_fatal_error_path_01:
     mov     ds, ax
     push    [bp+arg_requested_name]
     push    dx
-    call    far ptr _fatal_error
+    call    far ptr _abortmessage
     int     R5HW_DOS_TERMINATE_INT ; DOS - PROGRAM TERMINATION /* PLATFORM(dos): terminates the DOS process. */
 find_sound_fatal_branch_path_04:
     xor     ax, ax

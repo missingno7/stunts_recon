@@ -40,7 +40,7 @@ public _clear_rect
 public _incnums
 public _mcgatranslation
 public _mcgatransrange
-public _shape2d_scale_blit_hotspot
+public _scalefxy
 public _shape2d_scale_blit_tail
 ; -----------------------------------------------------------------------------
 ; Purpose: Draw a filled rectangle using the scaled sprite blitter.
@@ -423,7 +423,7 @@ _mcgatransrange endp
 ; ASMDOC step=floor(65536/scale), Q8 sampling; initial half-step selects sampling center; raw FFh skips (no incnums
 ; ASMDOC remap). Shares live tail _loc_35ED9..
 ; ASMDOC Proposed routine name: _shape2d_scale_blit_hotspot.
-_shape2d_scale_blit_hotspot proc far
+_scalefxy proc far
     local_horizontal_fraction = word ptr -20
     local_vertical_fraction = word ptr -18
     local_reciprocal_step_q8 = word ptr -16
@@ -632,6 +632,6 @@ return_after_sprite_draw:
     pop     bp
     retf
     db 0 ; retained zero fill at this boundary
-_shape2d_scale_blit_hotspot endp
+_scalefxy endp
 S012_TEXT ends
 end

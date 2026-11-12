@@ -705,16 +705,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_mmgr_release",
-      "frame_index": 2,
+      "frame": "_purgememory",
+      "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 544,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_mmgr_release",
-      "target_index": 2,
+      "target": "_purgememory",
+      "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -739,16 +739,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_fatal_error",
-      "frame_index": 1,
+      "frame": "_abortmessage",
+      "frame_index": 2,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 566,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_fatal_error",
-      "target_index": 1,
+      "target": "_abortmessage",
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -862,8 +862,8 @@
   ],
   "object_declarations": {
     "externals": [
-      "_fatal_error",
-      "_mmgr_release",
+      "_purgememory",
+      "_abortmessage",
       "_intcos",
       "_intsin",
       "_intatan"

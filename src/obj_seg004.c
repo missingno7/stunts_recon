@@ -32,7 +32,7 @@ int z_ctr_pos[30];
 extern U8  far *td14tb;
 extern U8  far *td15p_9;
 extern struct TRACKOBJECT trklst[215];
-extern I16 far intsin(I16),far intcos(I16),far mulscl(I16,I16);
+extern I16 far intsin(I16),far intcos(I16),far fixedmult(I16,I16);
 extern I16 far inthypot(I16,I16),far intatan(I16,I16);
 short pl_i;
 short road_num;
@@ -61,7 +61,7 @@ void far *ptr_model_active;
 extern I32 far availmem(void),far modsize(I8 far *);
 extern I8 far *fluffyload(I8 *name);
 extern I8 far *locate_shape_fatal();
-extern I8 far *locate_shape_nofatal();
+extern I8 far *locateshapez();
 extern void makeobjdef(I8 far *,struct SHAPE3D *);
 struct SHAPE3D g_shapes3d[130];
 extern I8 aBarn[116][5];
@@ -89,7 +89,7 @@ extern struct VECTOR shape_template_points_a[],shape_template_points_b[],shape_t
 char g_road_piece_id;
 char trk_sample_count;
 extern I8 far *mmgr_alloc_resbytes(I8 *,I32);
-extern void far mmgr_free(void far *),far mmgr_release(void far *);
+extern void far freememory(void far *),far purgememory(void far *);
 /* Unused OMF-order alias; accesses use g_shapes3d[127].shape3d_verts. */
 extern I8 far *shape127_vertices_alias;
 /* Unused OMF-order alias; accesses use g_shapes3d[126].shape3d_verts. */
@@ -190,8 +190,8 @@ void getpinfo(struct VECTOR *position, struct VECTOR *nextPosition)
 		slope:
 			locElemCrds.x = position->x - x_course_part;
 			locElemCrds.z = position->z - road_elem_ctrz;
-			side = mulscl(intcos(step), locElemCrds.x) +
-				mulscl(intsin(step), locElemCrds.z);
+			side = fixedmult(intcos(step), locElemCrds.x) +
+				fixedmult(intsin(step), locElemCrds.z);
 			if (side < 0)
 				g_cursurfacekindvalue = 5;
 			break;
@@ -470,8 +470,8 @@ void getpinfo(struct VECTOR *position, struct VECTOR *nextPosition)
 			else if (locElemCrds.z < 0) { pl_i = baseIndex + 3; localX = 1; }
 			else if (locElemCrds.z < 0xa8) { pl_i = baseIndex + 5; localX = 2; }
 			else if (locElemCrds.z < 0x14e) { pl_i = baseIndex + 7; localX = 3; }
-			side = mulscl(intcos(step), locElemCrds.x) +
-				mulscl(intsin(step), locElemCrds.z - bkRdEntr_triang_zAdjust[localX]);
+			side = fixedmult(intcos(step), locElemCrds.x) +
+				fixedmult(intsin(step), locElemCrds.z - bkRdEntr_triang_zAdjust[localX]);
 			if (side > 0) ++pl_i;
 		}
 		break;
@@ -594,8 +594,8 @@ loop_base:
 		else if (locElemCrds.x < 0) { pl_i = 0x47; localX = -0x39; step = -8; }
 		else if (locElemCrds.x > 0x54) { pl_i = 0x4d; localX = 0x64; step = 5; }
 		else { pl_i = 0x4b; localX = 0x39; step = 8; }
-		side = mulscl(intcos(step), locElemCrds.x - localX) +
-			mulscl(intsin(step), locElemCrds.z);
+		side = fixedmult(intcos(step), locElemCrds.x - localX) +
+			fixedmult(intsin(step), locElemCrds.z);
 		if (side < 0) ++pl_i;
 		break;
 	case 31:
@@ -817,13 +817,13 @@ finish:
 			if (pl_i == 0) pl_i = 3;
 			break;
 		case 11: case 12: case 13: case 14:
-			side = mulscl(intcos(0xff80), locElemCrds.x) +
-				mulscl(intsin(0xff80), locElemCrds.z);
+			side = fixedmult(intcos(0xff80), locElemCrds.x) +
+				fixedmult(intsin(0xff80), locElemCrds.z);
 			if (side < 0) pl_i = 4;
 			break;
 		case 15: case 16: case 17: case 18:
-			side = mulscl(intcos(0xff80), locElemCrds.x) +
-				mulscl(intsin(0xff80), locElemCrds.z);
+			side = fixedmult(intcos(0xff80), locElemCrds.x) +
+				fixedmult(intsin(0xff80), locElemCrds.z);
 			if (side > 0) pl_i = 5;
 			else hgthgt = 0x1c2;
 			break;
@@ -990,7 +990,7 @@ I16 shape3d_load_all(void)
     /* PLATFORM(file): load a 3D resource. */ g_game13dresource = fluffyload(aGame1);
     /* PLATFORM(file): load a 3D resource. */ game2res_pointer = fluffyload(aGame2);
     for (i = 0; i < 0x74; ++i) {
-        ptr_model_active = locate_shape_nofatal(g_game13dresource, aBarn[i]);
+        ptr_model_active = locateshapez(g_game13dresource, aBarn[i]);
         if (ptr_model_active == 0) {
             ptr_model_active = locate_shape_fatal(game2res_pointer, aBarn[i]);
         }
@@ -1004,10 +1004,10 @@ I16 shape3d_load_all(void)
 void shape3d_free_all(void)
 {
     if (g_game13dresource != 0) {
-        /* PLATFORM(memory): release resource memory. */ mmgr_free(g_game13dresource);
+        /* PLATFORM(memory): release resource memory. */ freememory(g_game13dresource);
     }
     if (game2res_pointer != 0) {
-        /* PLATFORM(memory): release resource memory. */ mmgr_free(game2res_pointer);
+        /* PLATFORM(memory): release resource memory. */ freememory(game2res_pointer);
     }
 }
 
@@ -1112,10 +1112,10 @@ void shape3d_free_car_shapes(void)
 {
     if (carcopyresourceptr != 0) {
         settires(&g_shapes3d[127].shape3d_verts[8], 0, car_wheel_offsets, buf_obase, veco, (I16S *)&ctrmesh);
-        /* PLATFORM(memory): release a resource block. */ mmgr_release(carcopyresourceptr);
+        /* PLATFORM(memory): release a resource block. */ purgememory(carcopyresourceptr);
     }
     settires(&g_shapes3d[126].shape3d_verts[8], 0, car_wheel_offsets, ywhlang, pts_set, (I16S *)&pos_pt);
-    /* PLATFORM(memory): release resource memory. */ mmgr_free(pl_carres_3d);
+    /* PLATFORM(memory): release resource memory. */ freememory(pl_carres_3d);
 }
 
 /* Rebuilds cached wheel vertices when steering or wheel height changes. Params: output vertices, steering angle, base heights, cached values, source offsets and origin. Returns: none. State: updates wheel geometry and cached values. */
@@ -1136,21 +1136,21 @@ void settires(struct VECTOR far *out, I16 angle,
         cosine = intcos(angle >> 1);
 
         for (i = 0; i < 6; ++i) {
-            out[i].x = mulscl(source[i].z, sine)
+            out[i].x = fixedmult(source[i].z, sine)
                      + origin[0]
-                     + mulscl(source[i].x, cosine);
-            out[i].z = mulscl(source[i].x, sine)
+                     + fixedmult(source[i].x, cosine);
+            out[i].z = fixedmult(source[i].x, sine)
                      + origin[2]
-                     + mulscl(source[i].z, cosine);
+                     + fixedmult(source[i].z, cosine);
         }
 
         for (i = 6; i < 12; ++i) {
-            out[i].x = mulscl(source[i].z, sine)
+            out[i].x = fixedmult(source[i].z, sine)
                      + origin[3]
-                     + mulscl(source[i].x, cosine);
-            out[i].z = mulscl(source[i].x, sine)
+                     + fixedmult(source[i].x, cosine);
+            out[i].z = fixedmult(source[i].x, sine)
                      + origin[5]
-                     + mulscl(source[i].z, cosine);
+                     + fixedmult(source[i].z, cosine);
         }
 
         last_angle_and_y[4] = angle;
@@ -1891,7 +1891,7 @@ I16 compiletrack(void)
     g_cur_track_row = y;
   }
   /* PLATFORM(memory): release a resource block. */
-  mmgr_release(alloc);
+  purgememory(alloc);
 
   return err;
 }

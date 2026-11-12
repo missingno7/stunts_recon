@@ -68,7 +68,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -85,7 +85,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -102,7 +102,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -119,7 +119,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -136,7 +136,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_prerender_max_line_width",
-      "target_index": 5,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -144,16 +144,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_preRender_sphere_helper",
-      "frame_index": 3,
+      "frame": "_solidellipseh",
+      "frame_index": 5,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 305,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_preRender_sphere_helper",
-      "target_index": 3,
+      "target": "_solidellipseh",
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -170,7 +170,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -187,7 +187,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -204,7 +204,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -238,7 +238,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -255,7 +255,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -272,7 +272,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -289,7 +289,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -306,7 +306,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -323,7 +323,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -340,7 +340,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -357,7 +357,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -374,7 +374,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -391,7 +391,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -408,7 +408,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -425,7 +425,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -442,7 +442,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -498,7 +498,7 @@
     },
     {
       "name": "nopsub_3320E",
-      "public": "_sprite_set_window_bounds",
+      "public": "_clippixwindow",
       "stable_id": "load_2320e",
       "start": 143886
     },
@@ -510,7 +510,7 @@
     },
     {
       "name": "video_clear_color",
-      "public": "_video_clear_color",
+      "public": "_clearscreen",
       "stable_id": null,
       "start": 144040
     }
@@ -528,9 +528,9 @@
     "externals": [
       "_vector_op_base_z",
       "_draw_filled_lines",
-      "_preRender_sphere_helper",
       "_sprite1",
       "_prerender_max_line_width",
+      "_solidellipseh",
       "_putpixel_single_maybe"
     ],
     "groups": [
@@ -551,6 +551,11 @@
     ],
     "publics": [
       {
+        "name": "_clearscreen",
+        "offset": 674,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_zclip",
         "offset": 0,
         "segment": "S012_TEXT"
@@ -561,12 +566,7 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_video_clear_color",
-        "offset": 674,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_sprite_set_window_bounds",
+        "name": "_clippixwindow",
         "offset": 520,
         "segment": "S012_TEXT"
       },

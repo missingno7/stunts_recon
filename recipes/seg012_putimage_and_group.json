@@ -278,7 +278,7 @@
     {
       "end": 145552,
       "name": "sprite_putimage_and_alt2",
-      "public": "_sprite_putimage_and_alt2",
+      "public": "_andcfxy",
       "stable_id": "load_2386c",
       "start": 145516,
       "target": {
@@ -289,7 +289,7 @@
     {
       "end": 145914,
       "name": "sprite_putimage_and",
-      "public": "_sprite_putimage_and",
+      "public": "_andcfxya",
       "stable_id": null,
       "start": 145552,
       "target": {
@@ -305,12 +305,12 @@
     "groups": [],
     "publics": [
       {
-        "name": "_sprite_putimage_and_alt2",
+        "name": "_andcfxy",
         "offset": 0,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite_putimage_and",
+        "name": "_andcfxya",
         "offset": 36,
         "segment": "S012_TEXT"
       }

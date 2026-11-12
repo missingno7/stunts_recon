@@ -89,24 +89,24 @@ void FAR audio_driver_func1E(I16 first, I16 last);
 void FAR reset_audio_event_state(void);
 I8 * FAR audio_make_filename(I8 *name, I8 *ext, I8 *kind);
     /* PLATFORM(file): load or decompress the named audio resource. */
-void FAR * FAR file_load_binary_nofatal(I8 *name);
+void FAR * FAR loadfilez(I8 *name);
     /* PLATFORM(file): load or decompress the named audio resource. */
-void FAR * FAR file_decomp_nofatal(I8 *name);
+void FAR * FAR loadpackz(I8 *name);
     /* PLATFORM(memory): release storage through the game memory manager. */
-void FAR mmgr_release(void FAR *ptr);
-void FAR fatal_error(I8 *format, ...);
-void FAR add_exit_handler(void (FAR *handler)(void));
+void FAR purgememory(void FAR *ptr);
+void FAR abortmessage(I8 *format, ...);
+void FAR addexit(void (FAR *handler)(void));
     /* PLATFORM(timer): use or register the game timer service. */
-void FAR timer_reg_callback(void (FAR *callback)(void));
+void FAR addtimer(void (FAR *callback)(void));
     /* PLATFORM(timer): use or register the game timer service. */
-void FAR timer_remove_callback(void (FAR *callback)(void));
+void FAR deltimer(void (FAR *callback)(void));
 void FAR audiodriver_timer(void);
     /* PLATFORM(timer): use or register the game timer service. */
 void FAR setticks(I32 ticks);
     /* PLATFORM(timer): use or register the game timer service. */
 void FAR waitticks(void);
     /* PLATFORM(file): resolve an audio resource entry in the loaded bundle. */
-void FAR * FAR locate_shape_nofatal(void FAR *shapes, I8 *name);
+void FAR * FAR locateshapez(void FAR *shapes, I8 *name);
 I16 FAR audioresource_get_chunk_index(I16 start, I16 count, I8 *name, I8 FAR *names);
 I16 FAR audioresource_compare_chunknames(I16 flag, I8 FAR *name1, I8 FAR *name2, I16 length);
 void FAR audioresource_copy_n_bytes(U8 FAR *src, U8 FAR *dst, I16 count);
@@ -495,7 +495,7 @@ I16 FAR audio_load_driver(I8 *filename, I16 unused, I16 signature)
     if (audiodriverbinary != 0)
         audiodrv_atexit();
     else
-        add_exit_handler(audiodrv_atexit);
+        addexit(audiodrv_atexit);
     audiodriverbinary = 0;
     len = strlen(filename);
     while (len != 0 && filename[len] != '\\' && filename[len] != ':')
@@ -507,7 +507,7 @@ I16 FAR audio_load_driver(I8 *filename, I16 unused, I16 signature)
     g_drvaudiocode[2] = 0;
     path = audio_make_filename(filename, "drv", "");
     /* PLATFORM(file): load or decompress the named audio resource. */
-    audiodriverbinary = file_load_binary_nofatal(path);
+    audiodriverbinary = loadfilez(path);
     g_musicvolumesetting = 0x7f;
     sfx_audio_vol = 0x7f;
     if (audiodriverbinary != 0) {
@@ -521,15 +521,15 @@ I16 FAR audio_load_driver(I8 *filename, I16 unused, I16 signature)
         }
         reset_audio_driver_state();
         /* PLATFORM(timer): use or register the game timer service. */
-        timer_reg_callback(audiodriver_timer);
+        addtimer(audiodriver_timer);
         if (audio_driver_mode != 0) {
         /* PLATFORM(file): load or decompress the named audio resource. */
-            patches = file_load_binary_nofatal("mt32.plb");
+            patches = loadfilez("mt32.plb");
             if (patches != 0) {
         /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
                 ((DRVPROC)((I8 FAR *)audiodriverbinary + 0x42))(patches);
         /* PLATFORM(memory): release storage through the game memory manager. */
-                mmgr_release(patches);
+                purgememory(patches);
                 audio_driver_volume_command[3] = 100;
         /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
                 ((DRVPROC)((I8 FAR *)audiodriverbinary + 0x3f))(4, (void FAR *)audio_driver_volume_command);
@@ -541,7 +541,7 @@ I16 FAR audio_load_driver(I8 *filename, I16 unused, I16 signature)
         audioflag6 = 1;
         return 0;
     } else {
-        fatal_error("Can't find driver!\n");
+        abortmessage("Can't find driver!\n");
     }
 }
 
@@ -555,7 +555,7 @@ void FAR audiodrv_atexit(void)
     audio_update_lock = 1;
     if (audiodriverbinary != 0) {
     /* PLATFORM(timer): use or register the game timer service. */
-        timer_remove_callback(audiodriver_timer);
+        deltimer(audiodriver_timer);
         audioflag2 = 0;
         audioflag6 = 0;
         if (audio_driver_mode != 0) {
@@ -568,7 +568,7 @@ void FAR audiodrv_atexit(void)
     /* PLATFORM(audio): dispatch an operation to the loaded DOS audio driver. */
         ((DRVPROC)((I8 FAR *)audiodriverbinary + 3))();
     /* PLATFORM(memory): release storage through the game memory manager. */
-        mmgr_release(audiodriverbinary);
+        purgememory(audiodriverbinary);
         audiodriverbinary = 0;
         audio_driver_mode = 0;
         audio_driver_extension_mode = 0;
@@ -586,7 +586,7 @@ void FAR * FAR load_sfx_ge(I8 *filename, I8 *extension, I8 *kind)
     void FAR *resource;
 
     /* PLATFORM(file): load or decompress the named audio resource. */
-    resource = file_load_binary_nofatal(audio_make_filename(filename, extension, kind));
+    resource = loadfilez(audio_make_filename(filename, extension, kind));
     if (resource != 0)
         return resource;
     buffer[0] = 'P';
@@ -594,27 +594,27 @@ void FAR * FAR load_sfx_ge(I8 *filename, I8 *extension, I8 *kind)
     buffer[2] = extension[1];
     buffer[3] = 0;
     /* PLATFORM(file): load or decompress the named audio resource. */
-    resource = file_decomp_nofatal(audio_make_filename(filename, buffer, kind));
+    resource = loadpackz(audio_make_filename(filename, buffer, kind));
     if (resource != 0)
         return resource;
     /* PLATFORM(file): load or decompress the named audio resource. */
-    resource = file_load_binary_nofatal(audio_make_filename(filename, extension, "ge"));
+    resource = loadfilez(audio_make_filename(filename, extension, "ge"));
     if (resource != 0)
         return resource;
     /* PLATFORM(file): load or decompress the named audio resource. */
-    resource = file_decomp_nofatal(audio_make_filename(filename, buffer, "ge"));
+    resource = loadpackz(audio_make_filename(filename, buffer, "ge"));
     if (resource != 0)
         return resource;
     /* PLATFORM(file): load or decompress the named audio resource. */
-    resource = file_load_binary_nofatal(audio_make_filename(filename, extension, ""));
+    resource = loadfilez(audio_make_filename(filename, extension, ""));
     if (resource != 0)
         return resource;
     /* PLATFORM(file): load or decompress the named audio resource. */
-    resource = file_decomp_nofatal(audio_make_filename(filename, buffer, ""));
+    resource = loadpackz(audio_make_filename(filename, buffer, ""));
     if (resource != 0)
         return resource;
     /* PLATFORM(file): load or decompress the named audio resource. */
-    resource = file_load_binary_nofatal(filename);
+    resource = loadfilez(filename);
     if (resource != 0)
         return resource;
     return resource;
@@ -635,7 +635,7 @@ void FAR * FAR load_sfx_file(I8 *filename)
     if (result == 0)
         result = load_sfx_ge(filename, "sfx", g_drvaudiocode);
     if (result == 0 && audio_load_error_policy != 0)
-        fatal_error("cannot load sfx file %s", filename);
+        abortmessage("cannot load sfx file %s", filename);
     return result;
 }
 
@@ -646,7 +646,7 @@ void FAR * FAR load_song_file(I8 *filename)
     result = 0;
     result = load_sfx_ge(filename, "kms", g_drvaudiocode);
     if (result == 0 && audio_load_error_policy != 0)
-        fatal_error("cannot load song file %s", filename);
+        abortmessage("cannot load song file %s", filename);
     return result;
 }
 
@@ -660,7 +660,7 @@ void FAR * FAR load_voice_file(I8 *filename)
     if (result == 0)
         result = load_sfx_ge(filename, "vce", g_drvaudiocode);
     if (result == 0 && audio_load_error_policy != 0)
-        fatal_error("cannot load voice file %s", filename);
+        abortmessage("cannot load voice file %s", filename);
     return result;
 }
 
@@ -670,7 +670,7 @@ void FAR * FAR audio_load_sample_bank(I8 *filename)
 
     result = load_sfx_ge(filename, "slb", g_drvaudiocode);
     if (result == 0 && audio_load_error_policy != 0)
-        fatal_error("cannot load sample file %s", filename);
+        abortmessage("cannot load sample file %s", filename);
     return result;
 }
 
@@ -768,7 +768,7 @@ void FAR link_audio_shape_resources(U8 FAR *res, void FAR *shapes)
                 name[j] = resptr[j + 6];
             destptr = resptr + 6;
     /* PLATFORM(file): resolve an audio resource entry in the loaded bundle. */
-            shapeptr = locate_shape_nofatal(shapes, name);
+            shapeptr = locateshapez(shapes, name);
             if (shapeptr != 0) {
                 audioresource_copy_4_bytes((U8 FAR *)destptr, (U8 FAR *)&shapeptr);
                 resptr[10] = 0xff;

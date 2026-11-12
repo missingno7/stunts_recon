@@ -9,13 +9,13 @@
 #define WHEEL_HALF_RING_POINT_COUNT 8
 struct Point { I16 x; I16 y; };
 struct WheelRect { I16 left, top, section_p1_x, section_p1_y, section_p2_x, section_p2_y, x, y; };
-extern void FAR preRender_wheel_helper(struct WheelRect *, I16 *, I16);
+extern void FAR tire(struct WheelRect *, I16 *, I16);
 extern void FAR preRender_wheel_helper4(I16, I16, ...);
-extern void FAR preRender_default_alt(I16, I16, I8 *);
+extern void FAR drawpolyp(I16, I16, I8 *);
 /* Construct the wheel perimeter and submit front, back, and side vertices for drawing.
  * Params and return follow the declared C signature. */
 /* PLATFORM(video): submit wheel faces and point buffers to the renderer. */
-void FAR preRender_wheel(struct WheelRect *rect, I16 count, I16 color,
+void FAR solidtire(struct WheelRect *rect, I16 count, I16 color,
     I16 styleA, I16 styleB)
 {
     struct Point *pointPtr;
@@ -30,7 +30,7 @@ void FAR preRender_wheel(struct WheelRect *rect, I16 count, I16 color,
     I16 topY;
     I16 topPoint;
 
-    preRender_wheel_helper(rect, (I16 *)vertices, count);
+    tire(rect, (I16 *)vertices, count);
     pointPtr = vertices;
     for (position = 0; position < WHEEL_RING_POINT_COUNT - 1; ++position) {
     /* PLATFORM(video): submit generated wheel geometry to the renderer. */
@@ -79,7 +79,7 @@ void FAR preRender_wheel(struct WheelRect *rect, I16 count, I16 color,
         }
     }
     /* PLATFORM(video): submit generated wheel geometry to the renderer. */
-    preRender_default_alt(styleA, 0x12, (I8 *)drawVertices);
+    drawpolyp(styleA, 0x12, (I8 *)drawVertices);
 
     firstPoint = vertices + topPoint;
     secondSet = vertices + WHEEL_SECOND_RING_OFFSET + topPoint;
@@ -101,7 +101,7 @@ void FAR preRender_wheel(struct WheelRect *rect, I16 count, I16 color,
         }
     }
     /* PLATFORM(video): submit generated wheel geometry to the renderer. */
-    preRender_default_alt(styleA, 0x12, (I8 *)drawVertices);
+    drawpolyp(styleA, 0x12, (I8 *)drawVertices);
     /* PLATFORM(video): submit generated wheel geometry to the renderer. */
-    preRender_default_alt(styleB, 0x10, (I8 *)(vertices + WHEEL_SECOND_RING_OFFSET));
+    drawpolyp(styleB, 0x10, (I8 *)(vertices + WHEEL_SECOND_RING_OFFSET));
 }

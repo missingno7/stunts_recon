@@ -738,6 +738,40 @@
       },
       "reviewed_alias": "_abort"
     },
+    "_abortmessage": {
+      "anchors": [
+        {
+          "caller_task": "load_16c3c",
+          "hex": "9a0a00a21e",
+          "relocation": {
+            "load_offset": 93931,
+            "offset": 28395,
+            "segment": 4096
+          },
+          "site": 93928
+        },
+        {
+          "caller_task": "load_1fe1c",
+          "hex": "9a0a00a21e",
+          "relocation": {
+            "load_offset": 130630,
+            "offset": 65094,
+            "segment": 4096
+          },
+          "site": 130627
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 125518,
+        "name": "fatal_error",
+        "sha256": "33b1d20db5f6f1855d4e92838acf85266bab6721980a5a3ef9d7132d2a7e9b3b",
+        "stable_id": "load_1ea2a",
+        "start": 125482
+      },
+      "reviewed_alias": "_abortmessage"
+    },
     "_abs": {
       "anchors": [
         {
@@ -770,7 +804,7 @@
       },
       "owner": "library_abs"
     },
-    "_add_exit_handler": {
+    "_addexit": {
       "anchors": [
         {
           "caller_task": "load_201a0",
@@ -800,7 +834,187 @@
         "sha256": "a82909711ad7cb9a4bd611b78e9ccc4ac2525a1a93d3b2706df1375b743ea6cc",
         "stable_id": "load_1fe1c",
         "start": 130588
-      }
+      },
+      "reviewed_alias": "_addexit"
+    },
+    "_addtimer": {
+      "anchors": [
+        {
+          "caller_task": "load_1255a",
+          "hex": "9a8a18a21e",
+          "relocation": {
+            "load_offset": 75115,
+            "offset": 9579,
+            "segment": 4096
+          },
+          "site": 75112
+        },
+        {
+          "caller_task": "load_16bae",
+          "hex": "9a8a18a21e",
+          "relocation": {
+            "load_offset": 93136,
+            "offset": 27600,
+            "segment": 4096
+          },
+          "site": 93133
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131806,
+        "name": "timer_reg_callback",
+        "sha256": "8d2fb99194bdd4c492da936be089c3b8d2c0827dc680bf764f62c6980ca240ba",
+        "stable_id": "load_202aa",
+        "start": 131754
+      },
+      "reviewed_alias": "_addtimer"
+    },
+    "_adrtoseg": {
+      "anchors": [
+        {
+          "caller_task": "load_2ad9c",
+          "hex": "9a1409a21e",
+          "relocation": {
+            "load_offset": 176022,
+            "offset": 44950,
+            "segment": 8192
+          },
+          "site": 176019
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 127836,
+        "name": "parse_shape2d_helper2",
+        "sha256": "f481eaad2e8838916992d1d58c7936dd6501a8b5aea1ea1e0b6d966cbb658b68",
+        "start": 127796
+      },
+      "reviewed_alias": "_adrtoseg"
+    },
+    "_andcfxy": {
+      "anchors": [
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9a4c4ea21e",
+          "relocation": {
+            "load_offset": 78136,
+            "offset": 12600,
+            "segment": 4096
+          },
+          "site": 78133
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 145552,
+        "name": "sprite_putimage_and_alt2",
+        "sha256": "69b4282e3106f5cab07e1a721344e3d0dc4de141624b7d7966266cf3bf18611f",
+        "stable_id": "load_2386c",
+        "start": 145516
+      },
+      "reviewed_alias": "_andcfxy"
+    },
+    "_andcfxya": {
+      "anchors": [
+        {
+          "caller_task": "load_18e04",
+          "hex": "9a704ea21e",
+          "relocation": {
+            "load_offset": 101977,
+            "offset": 36441,
+            "segment": 4096
+          },
+          "site": 101974
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 145914,
+        "name": "sprite_putimage_and",
+        "sha256": "a2e4fb432655ff104f70ba7e7ce5972927c8ae19dad3f51b61867bb5f24688a2",
+        "start": 145552
+      },
+      "reviewed_alias": "_andcfxya"
+    },
+    "_andfxya": {
+      "anchors": [
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9afe4fa21e",
+          "relocation": {
+            "load_offset": 109261,
+            "offset": 43725,
+            "segment": 4096
+          },
+          "site": 109258
+        },
+        {
+          "caller_task": "load_1beb6",
+          "hex": "9afe4fa21e",
+          "relocation": {
+            "load_offset": 114550,
+            "offset": 49014,
+            "segment": 4096
+          },
+          "site": 114547
+        },
+        {
+          "caller_task": "load_1c0a8",
+          "hex": "9afe4fa21e",
+          "relocation": {
+            "load_offset": 115780,
+            "offset": 50244,
+            "segment": 4096
+          },
+          "site": 115777
+        }
+      ],
+      "distinct_verified_callers": 3,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 146112,
+        "name": "putpixel_iconMask",
+        "sha256": "a079b91e5a4f0282b5d9e3bbda1f2411f599a646b1c90c71343461bd8a017454",
+        "start": 145950
+      },
+      "reviewed_alias": "_andfxya"
+    },
+    "_andpackf": {
+      "anchors": [
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9ae250a21e",
+          "relocation": {
+            "load_offset": 73926,
+            "offset": 8390,
+            "segment": 4096
+          },
+          "site": 73923
+        },
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ae250a21e",
+          "relocation": {
+            "load_offset": 79049,
+            "offset": 13513,
+            "segment": 4096
+          },
+          "site": 79046
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 146328,
+        "name": "shape2d_render_bmp_as_mask",
+        "sha256": "e15f4017389165a30ac97dde5ca5a8d8a2ce8b3e18e6dfea6c7509402b990349",
+        "stable_id": "load_23b02",
+        "start": 146178
+      },
+      "reviewed_alias": "_andpackf"
     },
     "_audio_add_driver_timer": {
       "anchors": [
@@ -1888,28 +2102,6 @@
       },
       "reviewed_alias": "_calcrpm"
     },
-    "_call_exitlist2": {
-      "anchors": [
-        {
-          "caller_task": "load_19f5c",
-          "hex": "9a5414a21e",
-          "relocation": {
-            "load_offset": 106404,
-            "offset": 40868,
-            "segment": 4096
-          },
-          "site": 106401
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 130690,
-        "name": "call_exitlist2",
-        "sha256": "b8ffa52146ea8abf6d595231029fb157c28e43849c8ea32faad543d807e8c463",
-        "start": 130676
-      }
-    },
     "_call_read_line": {
       "anchors": [
         {
@@ -1975,6 +2167,39 @@
         "start": 159930
       },
       "reviewed_alias": "_cap"
+    },
+    "_checkmodule": {
+      "anchors": [
+        {
+          "caller_task": "load_20d88",
+          "hex": "9a4a29a21e",
+          "relocation": {
+            "load_offset": 134567,
+            "offset": 3495,
+            "segment": 8192
+          },
+          "site": 134564
+        },
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a4a29a21e",
+          "relocation": {
+            "load_offset": 174712,
+            "offset": 43640,
+            "segment": 8192
+          },
+          "site": 174709
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 136233,
+        "name": "mmgr_get_chunk_by_name",
+        "sha256": "286b985ba3e3fe01a6a82a9db32fb88ea8b60b9f636c443f4a53ca54e502d7d3",
+        "stable_id": "load_2136a",
+        "start": 136042
+      },
+      "reviewed_alias": "_checkmodule"
     },
     "_clear_keyboardbuffer": {
       "anchors": [
@@ -2044,6 +2269,39 @@
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "proposal_basis": "accepted by workspace-local generalized embedded-data overlay parser; see function_evidence_tables.diff",
       "reviewed_alias": "_clear_rect"
+    },
+    "_clearscreen": {
+      "anchors": [
+        {
+          "caller_task": "load_203d8",
+          "hex": "9a8848a21e",
+          "relocation": {
+            "load_offset": 132062,
+            "offset": 990,
+            "segment": 8192
+          },
+          "site": 132059
+        },
+        {
+          "caller_task": "load_225d6",
+          "hex": "9a8848a21e",
+          "relocation": {
+            "load_offset": 140801,
+            "offset": 9729,
+            "segment": 8192
+          },
+          "site": 140798
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 144064,
+        "name": "video_clear_color",
+        "sha256": "21cdb02328e72f6dce62013cdc1dc21b00125b5155a4a96592f2ed8b41e19be7",
+        "start": 144040
+      },
+      "reviewed_alias": "_clearscreen"
     },
     "_clipline": {
       "anchors": [
@@ -3191,38 +3449,6 @@
       "proposal_basis": "autosym-v1 neutral binding alias from original relocated anchors; not an original PUBDEF/source/TU claim; receipt in autosym_receipts.json",
       "reviewed_alias": "_code_load_2b12a"
     },
-    "_compare_ds_ss": {
-      "anchors": [
-        {
-          "caller_task": "load_12596",
-          "hex": "9afd18a21e",
-          "relocation": {
-            "load_offset": 75161,
-            "offset": 9625,
-            "segment": 4096
-          },
-          "site": 75158
-        },
-        {
-          "caller_task": "load_16fa3",
-          "hex": "9afd18a21e",
-          "relocation": {
-            "load_offset": 94126,
-            "offset": 28590,
-            "segment": 4096
-          },
-          "site": 94123
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 131881,
-        "name": "compare_ds_ss",
-        "sha256": "cb815c6fee5059d41a0841efafc6983e10ae0b8226e602d1c8e91dc94228797c",
-        "stable_id": "load_2031d",
-        "start": 131869
-      }
-    },
     "_compiletrack": {
       "anchors": [
         {
@@ -3345,37 +3571,30 @@
       },
       "reviewed_alias": "_console_delete_current_row"
     },
-    "_copy_paras_reverse": {
+    "_convertjoy": {
       "anchors": [
         {
-          "caller_task": "load_212fd",
-          "hex": "9ab527a21e",
+          "caller_task": "load_19b32",
+          "hex": "9ab21da21e",
           "relocation": {
-            "load_offset": 136035,
-            "offset": 4963,
-            "segment": 8192
+            "load_offset": 105657,
+            "offset": 40121,
+            "segment": 4096
           },
-          "site": 136032
-        },
-        {
-          "caller_task": "load_2147c",
-          "hex": "9ab527a21e",
-          "relocation": {
-            "load_offset": 136451,
-            "offset": 5379,
-            "segment": 8192
-          },
-          "site": 136448
+          "site": 105654
         }
       ],
+      "distinct_verified_callers": 1,
       "frame_load_address": 125472,
       "mapped_target": {
-        "end": 135720,
-        "name": "copy_paras_reverse",
-        "sha256": "00e1b6f9fddf61341dfa884a9dfa1ecd0f924ef82b9f0bc3521ac3fa15ff51b5",
-        "stable_id": "load_211d5",
-        "start": 135637
-      }
+        "end": 133091,
+        "name": "sub_307D2",
+        "sha256": "372806e7d3af2c17ff4d92078bf35c28af4c00f09d0c2b19ea667163b9095e38",
+        "stable_id": "load_207d2",
+        "start": 133074
+      },
+      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "reviewed_alias": "_convertjoy"
     },
     "_cos_fast": {
       "anchors": [
@@ -3409,6 +3628,30 @@
         "start": 141100
       }
     },
+    "_criterr": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9a5709a21e",
+          "relocation": {
+            "load_offset": 172260,
+            "offset": 41188,
+            "segment": 8192
+          },
+          "site": 172257
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 127932,
+        "name": "set_criterr_handler",
+        "sha256": "a64f5c0dc573f0c7d6ecc98fff4afcf9d2b92e091326335286c70939e9de2319",
+        "stable_id": "load_1f377",
+        "start": 127863
+      },
+      "reviewed_alias": "_criterr"
+    },
     "_debug_printf_text": {
       "anchors": [
         {
@@ -3432,6 +3675,39 @@
         "start": 139677
       },
       "reviewed_alias": "_debug_printf_text"
+    },
+    "_deltimer": {
+      "anchors": [
+        {
+          "caller_task": "load_12576",
+          "hex": "9abe18a21e",
+          "relocation": {
+            "load_offset": 75151,
+            "offset": 9615,
+            "segment": 4096
+          },
+          "site": 75148
+        },
+        {
+          "caller_task": "load_16bd5",
+          "hex": "9abe18a21e",
+          "relocation": {
+            "load_offset": 93184,
+            "offset": 27648,
+            "segment": 4096
+          },
+          "site": 93181
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131869,
+        "name": "timer_remove_callback",
+        "sha256": "4ccb2ff67693053cc52bccf92027ec620421b4c7cf6cb2d7db7fd84904e79298",
+        "stable_id": "load_202de",
+        "start": 131806
+      },
+      "reviewed_alias": "_deltimer"
     },
     "_displaywindow": {
       "anchors": [
@@ -3620,31 +3896,6 @@
       ],
       "reviewed_alias": "_do_joystick_resource_text"
     },
-    "_do_key_resource_text": {
-      "distinct_verified_callers": 1,
-      "frame_load_address": 95408,
-      "mapped_target": {
-        "end": 105972,
-        "name": "do_key_restext",
-        "sha256": "8ea8594a2149266f3a93af268f80b5c0ea1d26316c89b33b53861ba04e3fe7e5",
-        "stable_id": "load_19d9a",
-        "start": 105882
-      },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
-      "pointer_anchors": [
-        {
-          "caller_task": "load_29e56",
-          "hex": "b8ea28ba4b17",
-          "relocation": {
-            "load_offset": 171673,
-            "offset": 40601,
-            "segment": 8192
-          },
-          "site": 171669
-        }
-      ],
-      "reviewed_alias": "_do_key_resource_text"
-    },
     "_do_key_restext": {
       "distinct_verified_callers": 1,
       "frame_load_address": 95408,
@@ -3765,30 +4016,6 @@
         "stable_id": "load_19df4",
         "start": 105972
       }
-    },
-    "_do_pau_restext": {
-      "distinct_verified_callers": 1,
-      "frame_load_address": 95408,
-      "mapped_target": {
-        "end": 106136,
-        "name": "do_pau_restext",
-        "sha256": "5f56841a3419740c988518cdfe99fede83a4d7939282c96e2e0e188f7b46d064",
-        "stable_id": "load_19e4a",
-        "start": 106058
-      },
-      "pointer_anchors": [
-        {
-          "caller_task": "load_29e56",
-          "hex": "b89a29ba4b17",
-          "relocation": {
-            "load_offset": 171713,
-            "offset": 40641,
-            "segment": 8192
-          },
-          "site": 171709
-        }
-      ],
-      "reviewed_alias": "_do_pau_restext"
     },
     "_do_sonsof_resource_text": {
       "distinct_verified_callers": 1,
@@ -4021,6 +4248,63 @@
       },
       "reviewed_alias": "_drawcline"
     },
+    "_drawpolyp": {
+      "anchors": [
+        {
+          "caller_task": "load_26bbe",
+          "hex": "9aa12da21e",
+          "relocation": {
+            "load_offset": 158690,
+            "offset": 27618,
+            "segment": 8192
+          },
+          "site": 158687
+        },
+        {
+          "caller_task": "load_26c7e",
+          "hex": "9aa12da21e",
+          "relocation": {
+            "load_offset": 159228,
+            "offset": 28156,
+            "segment": 8192
+          },
+          "site": 159225
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 137183,
+        "name": "preRender_default_alt",
+        "sha256": "fdf294344f6bece5b2a43cf611af251b13245b37c801488132bfee62900215bb",
+        "stable_id": "load_217c1",
+        "start": 137153
+      },
+      "reviewed_alias": "_drawpolyp"
+    },
+    "_drawpolypt": {
+      "anchors": [
+        {
+          "caller_task": "load_15ff6",
+          "hex": "9a922da21e",
+          "relocation": {
+            "load_offset": 90237,
+            "offset": 24701,
+            "segment": 4096
+          },
+          "site": 90234
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 137153,
+        "name": "preRender_default",
+        "sha256": "d5f99bcc3dce9fdd4ddd2d1a697057b2c20ad4c78efe041d2b3009caf2e4d32e",
+        "stable_id": "load_217b2",
+        "start": 137138
+      },
+      "reviewed_alias": "_drawpolypt"
+    },
     "_drawrect": {
       "anchors": [
         {
@@ -4144,6 +4428,29 @@
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "reviewed_alias": "_drawworldflipzones"
     },
+    "_dsiexit": {
+      "anchors": [
+        {
+          "caller_task": "load_19f5c",
+          "hex": "9a5414a21e",
+          "relocation": {
+            "load_offset": 106404,
+            "offset": 40868,
+            "segment": 4096
+          },
+          "site": 106401
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 130690,
+        "name": "call_exitlist2",
+        "sha256": "b8ffa52146ea8abf6d595231029fb157c28e43849c8ea32faad543d807e8c463",
+        "start": 130676
+      },
+      "reviewed_alias": "_dsiexit"
+    },
     "_elapsedticks": {
       "anchors": [
         {
@@ -4177,6 +4484,54 @@
         "start": 141210
       },
       "reviewed_alias": "_elapsedticks"
+    },
+    "_ellipse": {
+      "anchors": [
+        {
+          "caller_task": "load_26b16",
+          "hex": "9a06002426",
+          "relocation": {
+            "load_offset": 158643,
+            "offset": 27571,
+            "segment": 8192
+          },
+          "site": 158640
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 156224,
+      "mapped_target": {
+        "end": 156690,
+        "name": "preRender_wheel_helper3",
+        "sha256": "59d0ff312c4f4bf29b97956546111249f3fda11dcdec0949cf41464fb61c25e0",
+        "stable_id": "load_26246",
+        "start": 156230
+      },
+      "reviewed_alias": "_ellipse"
+    },
+    "_ellipseh": {
+      "anchors": [
+        {
+          "caller_task": "load_26bbe",
+          "hex": "9a02004126",
+          "relocation": {
+            "load_offset": 158671,
+            "offset": 27599,
+            "segment": 8192
+          },
+          "site": 158668
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 156688,
+      "mapped_target": {
+        "end": 157618,
+        "name": "preRender_sphere_helper2",
+        "sha256": "6fdfe6fa031ac9c260732dce91cc10d4098287dab9b28d4a2be7f4f3020fce13",
+        "stable_id": "load_26412",
+        "start": 156690
+      },
+      "reviewed_alias": "_ellipseh"
     },
     "_ensure_file_exists": {
       "anchors": [
@@ -4234,39 +4589,6 @@
       },
       "name_provenance": "pinned runtime library public: toolchain/msc510/MLIBCR.LIB member dos\\crt0dat.asm defines _exit at this entry (integ30 program-wide name)",
       "reviewed_alias": "_exit"
-    },
-    "_fatal_error": {
-      "anchors": [
-        {
-          "caller_task": "load_16c3c",
-          "hex": "9a0a00a21e",
-          "relocation": {
-            "load_offset": 93931,
-            "offset": 28395,
-            "segment": 4096
-          },
-          "site": 93928
-        },
-        {
-          "caller_task": "load_1fe1c",
-          "hex": "9a0a00a21e",
-          "relocation": {
-            "load_offset": 130630,
-            "offset": 65094,
-            "segment": 4096
-          },
-          "site": 130627
-        }
-      ],
-      "distinct_verified_callers": 2,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 125518,
-        "name": "fatal_error",
-        "sha256": "33b1d20db5f6f1855d4e92838acf85266bab6721980a5a3ef9d7132d2a7e9b3b",
-        "stable_id": "load_1ea2a",
-        "start": 125482
-      }
     },
     "_fflush": {
       "anchors": [
@@ -4344,74 +4666,6 @@
         "start": 171556
       }
     },
-    "_file_decomp": {
-      "anchors": [
-        {
-          "caller_task": "load_2a9fc",
-          "hex": "9ac623a21e",
-          "relocation": {
-            "load_offset": 174961,
-            "offset": 43889,
-            "segment": 8192
-          },
-          "site": 174958
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 134647,
-        "name": "file_decomp",
-        "sha256": "d2fcbc3be61fccaa84d602d115e222d38a706bf96df9738faf6060a47a1b50dc",
-        "stable_id": "load_20de6",
-        "start": 134630
-      }
-    },
-    "_file_decomp_nofatal": {
-      "anchors": [
-        {
-          "caller_task": "load_27b14",
-          "hex": "9ad723a21e",
-          "relocation": {
-            "load_offset": 162751,
-            "offset": 31679,
-            "segment": 8192
-          },
-          "site": 162748
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 134663,
-        "name": "file_decomp_nofatal",
-        "sha256": "74fd8e535c88f50013fa3efaadb3f64b4a0a87ea828c02d8d1eac8f7cd8887bc",
-        "stable_id": "load_20df7",
-        "start": 134647
-      }
-    },
-    "_file_decomp_paras": {
-      "anchors": [
-        {
-          "caller_task": "load_20e07",
-          "hex": "9a0615a21e",
-          "relocation": {
-            "load_offset": 134709,
-            "offset": 3637,
-            "segment": 8192
-          },
-          "site": 134706
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 130872,
-        "name": "file_decomp_paras",
-        "sha256": "131a8844b54e934fc53af7420e3ba35a26db15f6fba45de85c13f6ca59137508",
-        "stable_id": "load_1ff26",
-        "start": 130854
-      }
-    },
     "_file_decomp_rle": {
       "frame_load_address": 125472,
       "mapped_target": {
@@ -4454,60 +4708,6 @@
           "site": 134920
         }
       ]
-    },
-    "_file_find": {
-      "anchors": [
-        {
-          "caller_task": "load_1a1a6",
-          "hex": "9ab415a21e",
-          "relocation": {
-            "load_offset": 106996,
-            "offset": 41460,
-            "segment": 4096
-          },
-          "site": 106993
-        },
-        {
-          "caller_task": "load_1a2bc",
-          "hex": "9ab415a21e",
-          "relocation": {
-            "load_offset": 112586,
-            "offset": 47050,
-            "segment": 4096
-          },
-          "site": 112583
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 131118,
-        "name": "file_find",
-        "sha256": "6310d8ced7c48e941d3530cc35832d3a1240b271edc4cfb8bff1637a8632cea7",
-        "stable_id": "load_1ffd4",
-        "start": 131028
-      }
-    },
-    "_file_find_next": {
-      "anchors": [
-        {
-          "caller_task": "load_29e4c",
-          "hex": "9a0e16a21e",
-          "relocation": {
-            "load_offset": 171599,
-            "offset": 40527,
-            "segment": 8192
-          },
-          "site": 171596
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 131140,
-        "name": "file_find_next",
-        "sha256": "13a425d8e9d98476c2f013f8e08feffa7c4cc20952abc0c0f11a6917ffc33b11",
-        "start": 131118
-      }
     },
     "_file_find_next_alt": {
       "anchors": [
@@ -4571,38 +4771,6 @@
         "sha256": "03c4eedde9a8f23f9ba02924126549e6936c385e1911ab26f93a553ab7ff7ccd",
         "stable_id": "load_2264a",
         "start": 140874
-      }
-    },
-    "_file_get_shape2d": {
-      "anchors": [
-        {
-          "caller_task": "load_260f6",
-          "hex": "9a3b3ca21e",
-          "relocation": {
-            "load_offset": 155941,
-            "offset": 24869,
-            "segment": 8192
-          },
-          "site": 155938
-        },
-        {
-          "caller_task": "load_2ad9c",
-          "hex": "9a3b3ca21e",
-          "relocation": {
-            "load_offset": 175986,
-            "offset": 44914,
-            "segment": 8192
-          },
-          "site": 175983
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 140986,
-        "name": "file_get_shape2d",
-        "sha256": "89258c68d62b065a0ae09f36b9bb7c75c3a4f365b6313aad5d54ac7a7400cc05",
-        "stable_id": "load_2265b",
-        "start": 140891
       }
     },
     "_file_get_unflip_size": {
@@ -4692,61 +4860,6 @@
         "sha256": "5ad013a4d105141df1fa70ab0883aedd07c7a8789bd394c2b21bcb276b7fcbc4",
         "stable_id": "load_197fc",
         "start": 104444
-      }
-    },
-    "_file_load_binary": {
-      "anchors": [
-        {
-          "caller_task": "load_2a9fc",
-          "hex": "9a5923a21e",
-          "relocation": {
-            "load_offset": 175194,
-            "offset": 44122,
-            "segment": 8192
-          },
-          "site": 175191
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 134536,
-        "name": "file_load_binary",
-        "sha256": "47992b451070eb9dafb00f1c83b8011b1c3a029bba0baff881ff6cc80e82fb03",
-        "stable_id": "load_20d79",
-        "start": 134521
-      }
-    },
-    "_file_load_binary_nofatal": {
-      "anchors": [
-        {
-          "caller_task": "load_278ca",
-          "hex": "9a6823a21e",
-          "relocation": {
-            "load_offset": 162155,
-            "offset": 31083,
-            "segment": 8192
-          },
-          "site": 162152
-        },
-        {
-          "caller_task": "load_27b14",
-          "hex": "9a6823a21e",
-          "relocation": {
-            "load_offset": 162607,
-            "offset": 31535,
-            "segment": 8192
-          },
-          "site": 162604
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 134630,
-        "name": "file_load_binary_nofatal",
-        "sha256": "9669e1410727e5aba451c6f3ea17eacd3ce609ffd0ccfcdb3a7812829a8c3442",
-        "stable_id": "load_20d88",
-        "start": 134536
       }
     },
     "_file_load_resfile": {
@@ -4917,29 +5030,6 @@
         "start": 176426
       }
     },
-    "_file_load_shape2d_fatal": {
-      "anchors": [
-        {
-          "caller_task": "load_2385c",
-          "hex": "ea06009d2a",
-          "relocation": {
-            "load_offset": 145503,
-            "offset": 14431,
-            "segment": 8192
-          },
-          "site": 145500
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 174544,
-      "mapped_target": {
-        "end": 174570,
-        "name": "file_load_shape2d_fatal",
-        "sha256": "68c4bd4d747ca1b1eadb9b9115301a0d6871940ee2db45b759d6d202ca7351c1",
-        "stable_id": "load_2a9d6",
-        "start": 174550
-      }
-    },
     "_file_load_shape2d_fatal_thunk": {
       "anchors": [
         {
@@ -4970,29 +5060,6 @@
         "sha256": "613882cc7ed6e2158c8b6726a4db5821fb6490f31a44cd756a1a3db4930353bd",
         "stable_id": "load_2385c",
         "start": 145500
-      }
-    },
-    "_file_load_shape2d_nofatal": {
-      "anchors": [
-        {
-          "caller_task": "load_23861",
-          "hex": "ea1a009d2a",
-          "relocation": {
-            "load_offset": 145508,
-            "offset": 14436,
-            "segment": 8192
-          },
-          "site": 145505
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 174544,
-      "mapped_target": {
-        "end": 174588,
-        "name": "file_load_shape2d_nofatal",
-        "sha256": "8c0aee23fb3b48de8f827aa81776bc9619edb46ef9a326b248d548968486d7cf",
-        "stable_id": "load_2a9ea",
-        "start": 174570
       }
     },
     "_file_load_shape2d_nofatal2": {
@@ -5087,108 +5154,6 @@
       },
       "reviewed_alias": "_file_load_shape2d_res_nofatal_t"
     },
-    "_file_paras": {
-      "anchors": [
-        {
-          "caller_task": "load_20d88",
-          "hex": "9a6214a21e",
-          "relocation": {
-            "load_offset": 134585,
-            "offset": 3513,
-            "segment": 8192
-          },
-          "site": 134582
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 130708,
-        "name": "file_paras",
-        "sha256": "95d90181ef2ec154288e618376e600bd2ecbf2f7b5c53a631e5a24607b6b9880",
-        "stable_id": "load_1fe82",
-        "start": 130690
-      }
-    },
-    "_file_read": {
-      "anchors": [
-        {
-          "caller_task": "load_20d88",
-          "hex": "9ab020a21e",
-          "relocation": {
-            "load_offset": 134617,
-            "offset": 3545,
-            "segment": 8192
-          },
-          "site": 134614
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 133856,
-        "name": "file_read",
-        "sha256": "13adc2c3214d2ce6821896ec3410fb41f80850fdfc29a374666b0a7fe2647e49",
-        "stable_id": "load_20ad0",
-        "start": 133840
-      }
-    },
-    "_file_read_fatal": {
-      "anchors": [
-        {
-          "caller_task": "load_010d0",
-          "hex": "9acf20a21e",
-          "relocation": {
-            "load_offset": 5434,
-            "offset": 5434,
-            "segment": 0
-          },
-          "site": 5431
-        },
-        {
-          "caller_task": "load_12c92",
-          "hex": "9acf20a21e",
-          "relocation": {
-            "load_offset": 76993,
-            "offset": 11457,
-            "segment": 4096
-          },
-          "site": 76990
-        }
-      ],
-      "distinct_verified_callers": 2,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 133986,
-        "name": "file_read_fatal",
-        "sha256": "dcfe59c492f5baa9966645a7b7256bdf9ca33578145216fd0d390d99884ac21a",
-        "stable_id": "load_20aef",
-        "start": 133871
-      }
-    },
-    "_file_read_nofatal": {
-      "anchors": [
-        {
-          "caller_task": "load_19a86",
-          "hex": "9ac020a21e",
-          "relocation": {
-            "load_offset": 105170,
-            "offset": 39634,
-            "segment": 4096
-          },
-          "site": 105167
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 133871,
-        "name": "file_read_nofatal",
-        "sha256": "1d47c660e2c0c1dce054b270f3ff71edb840ace6579bbbcfaa99df983805fd37",
-        "stable_id": "load_20ae0",
-        "start": 133856
-      }
-    },
     "_file_unflip_shape2d": {
       "anchors": [
         {
@@ -5266,6 +5231,86 @@
         "start": 140555
       }
     },
+    "_filesizea": {
+      "anchors": [
+        {
+          "caller_task": "load_20d88",
+          "hex": "9a6214a21e",
+          "relocation": {
+            "load_offset": 134585,
+            "offset": 3513,
+            "segment": 8192
+          },
+          "site": 134582
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 130708,
+        "name": "file_paras",
+        "sha256": "95d90181ef2ec154288e618376e600bd2ecbf2f7b5c53a631e5a24607b6b9880",
+        "stable_id": "load_1fe82",
+        "start": 130690
+      },
+      "reviewed_alias": "_filesizea"
+    },
+    "_findfirst": {
+      "anchors": [
+        {
+          "caller_task": "load_1a1a6",
+          "hex": "9ab415a21e",
+          "relocation": {
+            "load_offset": 106996,
+            "offset": 41460,
+            "segment": 4096
+          },
+          "site": 106993
+        },
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9ab415a21e",
+          "relocation": {
+            "load_offset": 112586,
+            "offset": 47050,
+            "segment": 4096
+          },
+          "site": 112583
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131118,
+        "name": "file_find",
+        "sha256": "6310d8ced7c48e941d3530cc35832d3a1240b271edc4cfb8bff1637a8632cea7",
+        "stable_id": "load_1ffd4",
+        "start": 131028
+      },
+      "reviewed_alias": "_findfirst"
+    },
+    "_findnext": {
+      "anchors": [
+        {
+          "caller_task": "load_29e4c",
+          "hex": "9a0e16a21e",
+          "relocation": {
+            "load_offset": 171599,
+            "offset": 40527,
+            "segment": 8192
+          },
+          "site": 171596
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131140,
+        "name": "file_find_next",
+        "sha256": "13a425d8e9d98476c2f013f8e08feffa7c4cc20952abc0c0f11a6917ffc33b11",
+        "start": 131118
+      },
+      "reviewed_alias": "_findnext"
+    },
     "_finishgame": {
       "anchors": [
         {
@@ -5298,6 +5343,41 @@
         "start": 38374
       },
       "reviewed_alias": "_finishgame"
+    },
+    "_fixedmult": {
+      "anchors": [
+        {
+          "caller_task": "load_04712",
+          "hex": "9a2416a21e",
+          "relocation": {
+            "load_offset": 19790,
+            "offset": 19790,
+            "segment": 0
+          },
+          "site": 19787
+        },
+        {
+          "caller_task": "load_04da2",
+          "hex": "9a2416a21e",
+          "relocation": {
+            "load_offset": 26622,
+            "offset": 26622,
+            "segment": 0
+          },
+          "site": 26619
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131166,
+        "name": "multiply_and_scale",
+        "sha256": "90cf1ee851e9b7ac712999a3158bc4badc615ef1f485ed40d00081df8f9c4a79",
+        "stable_id": "load_20044",
+        "start": 131140
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_fixedmult"
     },
     "_fluffyload": {
       "anchors": [
@@ -5653,6 +5733,39 @@
         "start": 104632
       }
     },
+    "_freememory": {
+      "anchors": [
+        {
+          "caller_task": "load_0059a",
+          "hex": "9a5c2aa21e",
+          "relocation": {
+            "load_offset": 1544,
+            "offset": 1544,
+            "segment": 0
+          },
+          "site": 1541
+        },
+        {
+          "caller_task": "load_00f3c",
+          "hex": "9a5c2aa21e",
+          "relocation": {
+            "load_offset": 4020,
+            "offset": 4020,
+            "segment": 0
+          },
+          "site": 4017
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 136485,
+        "name": "mmgr_free",
+        "sha256": "56dfe4eee60738b3caa0c1ea5550776e12041aac165384dc64a521e7c697978c",
+        "stable_id": "load_2147c",
+        "start": 136316
+      },
+      "reviewed_alias": "_freememory"
+    },
     "_fsavereq": {
       "anchors": [
         {
@@ -5797,38 +5910,6 @@
         "start": 132604
       }
     },
-    "_get_kb_or_joy_flags": {
-      "anchors": [
-        {
-          "caller_task": "load_11b7a",
-          "hex": "9a181ba21e",
-          "relocation": {
-            "load_offset": 74141,
-            "offset": 8605,
-            "segment": 4096
-          },
-          "site": 74138
-        },
-        {
-          "caller_task": "load_187c4",
-          "hex": "9a181ba21e",
-          "relocation": {
-            "load_offset": 100359,
-            "offset": 34823,
-            "segment": 4096
-          },
-          "site": 100356
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 132552,
-        "name": "get_kb_or_joy_flags",
-        "sha256": "26ac770ed7803ed39383bdafeff4b7198f759098417a069382d85b4e377fc778",
-        "stable_id": "load_20538",
-        "start": 132408
-      }
-    },
     "_get_kevinrandom": {
       "anchors": [
         {
@@ -5860,6 +5941,30 @@
         "stable_id": "load_09e7b",
         "start": 40571
       }
+    },
+    "_get_pstring": {
+      "anchors": [
+        {
+          "caller_task": "load_190bc",
+          "hex": "9a06004b2a",
+          "relocation": {
+            "load_offset": 102650,
+            "offset": 37114,
+            "segment": 4096
+          },
+          "site": 102647
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 173232,
+      "mapped_target": {
+        "end": 174070,
+        "name": "read_line",
+        "sha256": "4ae6b08aa7f26c6923aaea8a5cf74b33e413181895d349658ada8935fe6aaeaa",
+        "stable_id": "load_2a4b6",
+        "start": 173238
+      },
+      "reviewed_alias": "_get_pstring"
     },
     "_get_super_random": {
       "anchors": [
@@ -5917,6 +6022,39 @@
       },
       "reviewed_alias": "_getbiostick"
     },
+    "_getmousepos": {
+      "anchors": [
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9ac0018a26",
+          "relocation": {
+            "load_offset": 74342,
+            "offset": 8806,
+            "segment": 4096
+          },
+          "site": 74339
+        },
+        {
+          "caller_task": "load_187c4",
+          "hex": "9ac0018a26",
+          "relocation": {
+            "load_offset": 100536,
+            "offset": 35000,
+            "segment": 4096
+          },
+          "site": 100533
+        }
+      ],
+      "frame_load_address": 157856,
+      "mapped_target": {
+        "end": 158362,
+        "name": "mouse_get_state",
+        "sha256": "226181f31e3c250ed1485052bcfc8971123860015ff202aa215e6c54efa5a4f6",
+        "stable_id": "load_26a60",
+        "start": 158304
+      },
+      "reviewed_alias": "_getmousepos"
+    },
     "_getpinfo": {
       "anchors": [
         {
@@ -5971,6 +6109,40 @@
       },
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "reviewed_alias": "_getpinfo"
+    },
+    "_gettick": {
+      "anchors": [
+        {
+          "caller_task": "load_1998e",
+          "hex": "9a583da21e",
+          "relocation": {
+            "load_offset": 104872,
+            "offset": 39336,
+            "segment": 4096
+          },
+          "site": 104869
+        },
+        {
+          "caller_task": "load_20a77",
+          "hex": "9a583da21e",
+          "relocation": {
+            "load_offset": 133764,
+            "offset": 2692,
+            "segment": 8192
+          },
+          "site": 133761
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 141186,
+        "name": "timer_get_counter",
+        "sha256": "824af8fc2a6a6f4b97ff26c56c6376da0a14bae57eb2e49ef92c653499205dca",
+        "stable_id": "load_22778",
+        "start": 141176
+      },
+      "reviewed_alias": "_gettick"
     },
     "_getwpinfo": {
       "anchors": [
@@ -6318,6 +6490,30 @@
       },
       "reviewed_alias": "_initdrawworld"
     },
+    "_initgraphics": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9af64da21e",
+          "relocation": {
+            "load_offset": 172157,
+            "offset": 41085,
+            "segment": 8192
+          },
+          "site": 172154
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 145480,
+        "name": "video_set_mode_13h",
+        "sha256": "e8f62bc39b509ba297d7fe8d34d2b7f55c5a9f917fad1c9bd23ff5e7f01f15f3",
+        "stable_id": "load_23816",
+        "start": 145430
+      },
+      "reviewed_alias": "_initgraphics"
+    },
     "_initialize_div0": {
       "anchors": [
         {
@@ -6474,6 +6670,54 @@
         "start": 37856
       },
       "reviewed_alias": "_initlogo"
+    },
+    "_initmemory": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9ad126a21e",
+          "relocation": {
+            "load_offset": 171836,
+            "offset": 40764,
+            "segment": 8192
+          },
+          "site": 171833
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 135422,
+        "name": "mmgr_alloc_a000",
+        "sha256": "001dd065a9a0975f506d4f9a187b2f3c6d511c4ad553c7c789bde1d8dc0a5fe6",
+        "stable_id": "load_210f1",
+        "start": 135409
+      },
+      "reviewed_alias": "_initmemory"
+    },
+    "_initmouse": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9a32008a26",
+          "relocation": {
+            "load_offset": 172191,
+            "offset": 41119,
+            "segment": 8192
+          },
+          "site": 172188
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 157856,
+      "mapped_target": {
+        "end": 158044,
+        "name": "mouse_init",
+        "sha256": "696b5b20cb6263d604290492cc3160575d3cd826996eed2a059ada665117f239",
+        "stable_id": "load_268d2",
+        "start": 157906
+      },
+      "reviewed_alias": "_initmouse"
     },
     "_initscenery": {
       "anchors": [
@@ -6729,6 +6973,63 @@
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "reviewed_alias": "_intcos"
     },
+    "_interpretkey": {
+      "anchors": [
+        {
+          "caller_task": "load_204b6",
+          "hex": "9ae419a21e",
+          "relocation": {
+            "load_offset": 132309,
+            "offset": 1237,
+            "segment": 8192
+          },
+          "site": 132306
+        },
+        {
+          "caller_task": "load_20519",
+          "hex": "9ae419a21e",
+          "relocation": {
+            "load_offset": 132402,
+            "offset": 1330,
+            "segment": 8192
+          },
+          "site": 132399
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 132190,
+        "name": "kb_parse_key",
+        "sha256": "44ad4483246d4aebcdafa77d1cb35414882d0fee992a51028c24dae41fe46cea",
+        "stable_id": "load_20404",
+        "start": 132100
+      },
+      "reviewed_alias": "_interpretkey"
+    },
+    "_interpretsub": {
+      "anchors": [
+        {
+          "caller_task": "load_29e56",
+          "hex": "9a3e1aa21e",
+          "relocation": {
+            "load_offset": 171804,
+            "offset": 40732,
+            "segment": 8192
+          },
+          "site": 171801
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 132271,
+        "name": "kb_reg_callback",
+        "sha256": "bb1ba299a6840d456d46798daeff7333e1b4cf84463929b6572dbbe9b4ee916a",
+        "stable_id": "load_2045e",
+        "start": 132190
+      },
+      "reviewed_alias": "_interpretsub"
+    },
     "_inthypot": {
       "anchors": [
         {
@@ -6841,117 +7142,38 @@
       },
       "owner": "library_itoa_123808"
     },
-    "_joystick_flags_to_index": {
+    "_joystate": {
       "anchors": [
         {
-          "caller_task": "load_19b32",
-          "hex": "9ab21da21e",
+          "caller_task": "load_11b7a",
+          "hex": "9a181ba21e",
           "relocation": {
-            "load_offset": 105657,
-            "offset": 40121,
+            "load_offset": 74141,
+            "offset": 8605,
             "segment": 4096
           },
-          "site": 105654
+          "site": 74138
+        },
+        {
+          "caller_task": "load_187c4",
+          "hex": "9a181ba21e",
+          "relocation": {
+            "load_offset": 100359,
+            "offset": 34823,
+            "segment": 4096
+          },
+          "site": 100356
         }
       ],
-      "distinct_verified_callers": 1,
       "frame_load_address": 125472,
       "mapped_target": {
-        "end": 133091,
-        "name": "sub_307D2",
-        "sha256": "372806e7d3af2c17ff4d92078bf35c28af4c00f09d0c2b19ea667163b9095e38",
-        "stable_id": "load_207d2",
-        "start": 133074
+        "end": 132552,
+        "name": "get_kb_or_joy_flags",
+        "sha256": "26ac770ed7803ed39383bdafeff4b7198f759098417a069382d85b4e377fc778",
+        "stable_id": "load_20538",
+        "start": 132408
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
-      "reviewed_alias": "_joystick_flags_to_index"
-    },
-    "_kb_call_readchar_callback": {
-      "anchors": [
-        {
-          "caller_task": "load_20a5d",
-          "hex": "9afc1fa21e",
-          "relocation": {
-            "load_offset": 133728,
-            "offset": 2656,
-            "segment": 8192
-          },
-          "site": 133725
-        },
-        {
-          "caller_task": "load_20a77",
-          "hex": "9afc1fa21e",
-          "relocation": {
-            "load_offset": 133754,
-            "offset": 2682,
-            "segment": 8192
-          },
-          "site": 133751
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 133665,
-        "name": "kb_call_readchar_callback",
-        "sha256": "525407e37815a5dfd3a1a62c465a957ef3fca41a6eb3fc37b8679097f94d0552",
-        "stable_id": "load_20a1c",
-        "start": 133660
-      }
-    },
-    "_kb_check": {
-      "anchors": [
-        {
-          "caller_task": "load_19b32",
-          "hex": "9a4820a21e",
-          "relocation": {
-            "load_offset": 105854,
-            "offset": 40318,
-            "segment": 4096
-          },
-          "site": 105851
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 133751,
-        "name": "kb_check",
-        "sha256": "312ec5462c61f39cd93c0b21ca0ef4b19c61baad71890679d199ec23bb2deb31",
-        "stable_id": "load_20a68",
-        "start": 133736
-      }
-    },
-    "_kb_checking": {
-      "anchors": [
-        {
-          "caller_task": "load_26af4",
-          "hex": "9a1520a21e",
-          "relocation": {
-            "load_offset": 158466,
-            "offset": 27394,
-            "segment": 8192
-          },
-          "site": 158463
-        },
-        {
-          "caller_task": "load_26b05",
-          "hex": "9a1520a21e",
-          "relocation": {
-            "load_offset": 158483,
-            "offset": 27411,
-            "segment": 8192
-          },
-          "site": 158480
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 133700,
-        "name": "kb_checking",
-        "sha256": "1e9aec00fbdebdc19b3f0574ef37a0f64419798d8efc7f9b3955693c24723e8c",
-        "stable_id": "load_20a35",
-        "start": 133685
-      }
+      "reviewed_alias": "_joystate"
     },
     "_kb_exit_handler": {
       "anchors": [
@@ -6974,60 +7196,6 @@
         "sha256": "2fcc8b964fb5876117a312399ee4945965c0df78f6c109cf4a905e9bb0a7b704",
         "stable_id": "load_20883",
         "start": 133251
-      }
-    },
-    "_kb_get_char": {
-      "anchors": [
-        {
-          "caller_task": "load_11b7a",
-          "hex": "9af91aa21e",
-          "relocation": {
-            "load_offset": 74119,
-            "offset": 8583,
-            "segment": 4096
-          },
-          "site": 74116
-        },
-        {
-          "caller_task": "load_187c4",
-          "hex": "9af91aa21e",
-          "relocation": {
-            "load_offset": 100336,
-            "offset": 34800,
-            "segment": 4096
-          },
-          "site": 100333
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 132408,
-        "name": "kb_get_char",
-        "sha256": "33c546d2438bcd4c400c13c036401182ef614d949641e647f597c0b0b5f07617",
-        "stable_id": "load_20519",
-        "start": 132377
-      }
-    },
-    "_kb_get_key_state": {
-      "anchors": [
-        {
-          "caller_task": "load_13b4c",
-          "hex": "9aed1fa21e",
-          "relocation": {
-            "load_offset": 82353,
-            "offset": 16817,
-            "segment": 4096
-          },
-          "site": 82350
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 133660,
-        "name": "kb_get_key_state",
-        "sha256": "71603d95dcd7ab5d0a9a30de0dc3d499ed1ebe4db6bf247ba1994d02f0b84297",
-        "start": 133645
       }
     },
     "_kb_init_interrupt": {
@@ -7076,84 +7244,6 @@
         }
       ],
       "reviewed_alias": "_kb_line_edit_noop"
-    },
-    "_kb_parse_key": {
-      "anchors": [
-        {
-          "caller_task": "load_204b6",
-          "hex": "9ae419a21e",
-          "relocation": {
-            "load_offset": 132309,
-            "offset": 1237,
-            "segment": 8192
-          },
-          "site": 132306
-        },
-        {
-          "caller_task": "load_20519",
-          "hex": "9ae419a21e",
-          "relocation": {
-            "load_offset": 132402,
-            "offset": 1330,
-            "segment": 8192
-          },
-          "site": 132399
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 132190,
-        "name": "kb_parse_key",
-        "sha256": "44ad4483246d4aebcdafa77d1cb35414882d0fee992a51028c24dae41fe46cea",
-        "stable_id": "load_20404",
-        "start": 132100
-      }
-    },
-    "_kb_read_char": {
-      "anchors": [
-        {
-          "caller_task": "load_19b32",
-          "hex": "9a0120a21e",
-          "relocation": {
-            "load_offset": 105625,
-            "offset": 40089,
-            "segment": 4096
-          },
-          "site": 105622
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 133685,
-        "name": "kb_read_char",
-        "sha256": "4470c32dd18492ab50a6244e6b8db965a723614ea0ca828f39c384221195ce5a",
-        "stable_id": "load_20a21",
-        "start": 133665
-      }
-    },
-    "_kb_reg_callback": {
-      "anchors": [
-        {
-          "caller_task": "load_29e56",
-          "hex": "9a3e1aa21e",
-          "relocation": {
-            "load_offset": 171804,
-            "offset": 40732,
-            "segment": 8192
-          },
-          "site": 171801
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 132271,
-        "name": "kb_reg_callback",
-        "sha256": "bb1ba299a6840d456d46798daeff7333e1b4cf84463929b6572dbbe9b4ee916a",
-        "stable_id": "load_2045e",
-        "start": 132190
-      }
     },
     "_kb_shift_checking1": {
       "anchors": [
@@ -7250,6 +7340,29 @@
       },
       "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
       "reviewed_alias": "_keyboard_shift_checking1"
+    },
+    "_keystate": {
+      "anchors": [
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9aed1fa21e",
+          "relocation": {
+            "load_offset": 82353,
+            "offset": 16817,
+            "segment": 4096
+          },
+          "site": 82350
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133660,
+        "name": "kb_get_key_state",
+        "sha256": "71603d95dcd7ab5d0a9a30de0dc3d499ed1ebe4db6bf247ba1994d02f0b84297",
+        "start": 133645
+      },
+      "reviewed_alias": "_keystate"
     },
     "_libsub_quit_to_dos": {
       "anchors": [
@@ -7558,6 +7671,145 @@
       },
       "reviewed_alias": "_loaddrawbits"
     },
+    "_loadfilea": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9a5923a21e",
+          "relocation": {
+            "load_offset": 175194,
+            "offset": 44122,
+            "segment": 8192
+          },
+          "site": 175191
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 134536,
+        "name": "file_load_binary",
+        "sha256": "47992b451070eb9dafb00f1c83b8011b1c3a029bba0baff881ff6cc80e82fb03",
+        "stable_id": "load_20d79",
+        "start": 134521
+      },
+      "reviewed_alias": "_loadfilea"
+    },
+    "_loadfileat": {
+      "anchors": [
+        {
+          "caller_task": "load_010d0",
+          "hex": "9acf20a21e",
+          "relocation": {
+            "load_offset": 5434,
+            "offset": 5434,
+            "segment": 0
+          },
+          "site": 5431
+        },
+        {
+          "caller_task": "load_12c92",
+          "hex": "9acf20a21e",
+          "relocation": {
+            "load_offset": 76993,
+            "offset": 11457,
+            "segment": 4096
+          },
+          "site": 76990
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133986,
+        "name": "file_read_fatal",
+        "sha256": "dcfe59c492f5baa9966645a7b7256bdf9ca33578145216fd0d390d99884ac21a",
+        "stable_id": "load_20aef",
+        "start": 133871
+      },
+      "reviewed_alias": "_loadfileat"
+    },
+    "_loadfileata": {
+      "anchors": [
+        {
+          "caller_task": "load_20d88",
+          "hex": "9ab020a21e",
+          "relocation": {
+            "load_offset": 134617,
+            "offset": 3545,
+            "segment": 8192
+          },
+          "site": 134614
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133856,
+        "name": "file_read",
+        "sha256": "13adc2c3214d2ce6821896ec3410fb41f80850fdfc29a374666b0a7fe2647e49",
+        "stable_id": "load_20ad0",
+        "start": 133840
+      },
+      "reviewed_alias": "_loadfileata"
+    },
+    "_loadfileatz": {
+      "anchors": [
+        {
+          "caller_task": "load_19a86",
+          "hex": "9ac020a21e",
+          "relocation": {
+            "load_offset": 105170,
+            "offset": 39634,
+            "segment": 4096
+          },
+          "site": 105167
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133871,
+        "name": "file_read_nofatal",
+        "sha256": "1d47c660e2c0c1dce054b270f3ff71edb840ace6579bbbcfaa99df983805fd37",
+        "stable_id": "load_20ae0",
+        "start": 133856
+      },
+      "reviewed_alias": "_loadfileatz"
+    },
+    "_loadfilez": {
+      "anchors": [
+        {
+          "caller_task": "load_278ca",
+          "hex": "9a6823a21e",
+          "relocation": {
+            "load_offset": 162155,
+            "offset": 31083,
+            "segment": 8192
+          },
+          "site": 162152
+        },
+        {
+          "caller_task": "load_27b14",
+          "hex": "9a6823a21e",
+          "relocation": {
+            "load_offset": 162607,
+            "offset": 31535,
+            "segment": 8192
+          },
+          "site": 162604
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 134630,
+        "name": "file_load_binary_nofatal",
+        "sha256": "9669e1410727e5aba451c6f3ea17eacd3ce609ffd0ccfcdb3a7812829a8c3442",
+        "stable_id": "load_20d88",
+        "start": 134536
+      },
+      "reviewed_alias": "_loadfilez"
+    },
     "_loading": {
       "anchors": [
         {
@@ -7591,6 +7843,54 @@
       },
       "reviewed_alias": "_loading"
     },
+    "_loadpacka": {
+      "anchors": [
+        {
+          "caller_task": "load_2a9fc",
+          "hex": "9ac623a21e",
+          "relocation": {
+            "load_offset": 174961,
+            "offset": 43889,
+            "segment": 8192
+          },
+          "site": 174958
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 134647,
+        "name": "file_decomp",
+        "sha256": "d2fcbc3be61fccaa84d602d115e222d38a706bf96df9738faf6060a47a1b50dc",
+        "stable_id": "load_20de6",
+        "start": 134630
+      },
+      "reviewed_alias": "_loadpacka"
+    },
+    "_loadpackz": {
+      "anchors": [
+        {
+          "caller_task": "load_27b14",
+          "hex": "9ad723a21e",
+          "relocation": {
+            "load_offset": 162751,
+            "offset": 31679,
+            "segment": 8192
+          },
+          "site": 162748
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 134663,
+        "name": "file_decomp_nofatal",
+        "sha256": "74fd8e535c88f50013fa3efaadb3f64b4a0a87ea828c02d8d1eac8f7cd8887bc",
+        "stable_id": "load_20df7",
+        "start": 134647
+      },
+      "reviewed_alias": "_loadpackz"
+    },
     "_loadreplay": {
       "anchors": [
         {
@@ -7614,6 +7914,54 @@
         "start": 76946
       },
       "reviewed_alias": "_loadreplay"
+    },
+    "_loadshape": {
+      "anchors": [
+        {
+          "caller_task": "load_2385c",
+          "hex": "ea06009d2a",
+          "relocation": {
+            "load_offset": 145503,
+            "offset": 14431,
+            "segment": 8192
+          },
+          "site": 145500
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 174544,
+      "mapped_target": {
+        "end": 174570,
+        "name": "file_load_shape2d_fatal",
+        "sha256": "68c4bd4d747ca1b1eadb9b9115301a0d6871940ee2db45b759d6d202ca7351c1",
+        "stable_id": "load_2a9d6",
+        "start": 174550
+      },
+      "reviewed_alias": "_loadshape"
+    },
+    "_loadshapez": {
+      "anchors": [
+        {
+          "caller_task": "load_23861",
+          "hex": "ea1a009d2a",
+          "relocation": {
+            "load_offset": 145508,
+            "offset": 14436,
+            "segment": 8192
+          },
+          "site": 145505
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 174544,
+      "mapped_target": {
+        "end": 174588,
+        "name": "file_load_shape2d_nofatal",
+        "sha256": "8c0aee23fb3b48de8f827aa81776bc9619edb46ef9a326b248d548968486d7cf",
+        "stable_id": "load_2a9ea",
+        "start": 174570
+      },
+      "reviewed_alias": "_loadshapez"
     },
     "_locate_many_resources": {
       "anchors": [
@@ -7711,38 +8059,6 @@
         "start": 135069
       }
     },
-    "_locate_shape_nofatal": {
-      "anchors": [
-        {
-          "caller_task": "load_0fe94",
-          "hex": "9a7225a21e",
-          "relocation": {
-            "load_offset": 65283,
-            "offset": 65283,
-            "segment": 0
-          },
-          "site": 65280
-        },
-        {
-          "caller_task": "load_12d2e",
-          "hex": "9a7225a21e",
-          "relocation": {
-            "load_offset": 77544,
-            "offset": 12008,
-            "segment": 4096
-          },
-          "site": 77541
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 135069,
-        "name": "locate_shape_nofatal",
-        "sha256": "2ace478ba340ce8bdd0b708ac3db7f0650def671978bd121fd00bb8f8567c6dc",
-        "stable_id": "load_20f92",
-        "start": 135058
-      }
-    },
     "_locate_sound_fatal": {
       "anchors": [
         {
@@ -7831,6 +8147,39 @@
       },
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "reviewed_alias": "_locate_text_resource"
+    },
+    "_locateshapez": {
+      "anchors": [
+        {
+          "caller_task": "load_0fe94",
+          "hex": "9a7225a21e",
+          "relocation": {
+            "load_offset": 65283,
+            "offset": 65283,
+            "segment": 0
+          },
+          "site": 65280
+        },
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9a7225a21e",
+          "relocation": {
+            "load_offset": 77544,
+            "offset": 12008,
+            "segment": 4096
+          },
+          "site": 77541
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 135069,
+        "name": "locate_shape_nofatal",
+        "sha256": "2ace478ba340ce8bdd0b708ac3db7f0650def671978bd121fd00bb8f8567c6dc",
+        "stable_id": "load_20f92",
+        "start": 135058
+      },
+      "reviewed_alias": "_locateshapez"
     },
     "_main": {
       "anchors": [
@@ -8232,60 +8581,30 @@
       },
       "reviewed_alias": "_messagebox"
     },
-    "_mmgr_alloc_a000": {
-      "anchors": [
+    "_mkeyon": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 105972,
+        "name": "do_key_restext",
+        "sha256": "8ea8594a2149266f3a93af268f80b5c0ea1d26316c89b33b53861ba04e3fe7e5",
+        "stable_id": "load_19d9a",
+        "start": 105882
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "pointer_anchors": [
         {
           "caller_task": "load_29e56",
-          "hex": "9ad126a21e",
+          "hex": "b8ea28ba4b17",
           "relocation": {
-            "load_offset": 171836,
-            "offset": 40764,
+            "load_offset": 171673,
+            "offset": 40601,
             "segment": 8192
           },
-          "site": 171833
+          "site": 171669
         }
       ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 135422,
-        "name": "mmgr_alloc_a000",
-        "sha256": "001dd065a9a0975f506d4f9a187b2f3c6d511c4ad553c7c789bde1d8dc0a5fe6",
-        "stable_id": "load_210f1",
-        "start": 135409
-      }
-    },
-    "_mmgr_alloc_pages": {
-      "anchors": [
-        {
-          "caller_task": "load_20d88",
-          "hex": "9a2828a21e",
-          "relocation": {
-            "load_offset": 134601,
-            "offset": 3529,
-            "segment": 8192
-          },
-          "site": 134598
-        },
-        {
-          "caller_task": "load_2a460",
-          "hex": "9a2828a21e",
-          "relocation": {
-            "load_offset": 173180,
-            "offset": 42108,
-            "segment": 8192
-          },
-          "site": 173177
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 135933,
-        "name": "mmgr_alloc_pages",
-        "sha256": "f5c1d9771f9f0644d756a554ab8edb395d446ff704cd0ffdcc3129c575417c01",
-        "stable_id": "load_21248",
-        "start": 135752
-      }
+      "reviewed_alias": "_mkeyon"
     },
     "_mmgr_alloc_resbytes": {
       "anchors": [
@@ -8351,62 +8670,6 @@
         "start": 135290
       }
     },
-    "_mmgr_compact_chunk": {
-      "anchors": [
-        {
-          "caller_task": "load_2acfe",
-          "hex": "9a122da21e",
-          "relocation": {
-            "load_offset": 175507,
-            "offset": 44435,
-            "segment": 8192
-          },
-          "site": 175504
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 137138,
-        "name": "mmgr_op_unk",
-        "sha256": "be834298774c58f62794983514a3c78dcb643823391588c2293dd64c24ef4418",
-        "stable_id": null,
-        "start": 137010
-      },
-      "reviewed_alias": "_mmgr_compact_chunk"
-    },
-    "_mmgr_copy_paras": {
-      "anchors": [
-        {
-          "caller_task": "load_2136a",
-          "hex": "9a6d27a21e",
-          "relocation": {
-            "load_offset": 136185,
-            "offset": 5113,
-            "segment": 8192
-          },
-          "site": 136182
-        },
-        {
-          "caller_task": "load_21525",
-          "hex": "9a6d27a21e",
-          "relocation": {
-            "load_offset": 136671,
-            "offset": 5599,
-            "segment": 8192
-          },
-          "site": 136668
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 135637,
-        "name": "mmgr_copy_paras",
-        "sha256": "fd89188541b8f5e7b5b4c49930b436c762fb41875db0281e25841e4bd555fc50",
-        "stable_id": "load_2118d",
-        "start": 135565
-      }
-    },
     "_mmgr_find_free": {
       "anchors": [
         {
@@ -8428,102 +8691,6 @@
         "sha256": "27d316a6b4dd0067e31f7f717107723db82f5c146a32a3008be46d0db783ab23",
         "stable_id": "load_212fd",
         "start": 135933
-      }
-    },
-    "_mmgr_free": {
-      "anchors": [
-        {
-          "caller_task": "load_0059a",
-          "hex": "9a5c2aa21e",
-          "relocation": {
-            "load_offset": 1544,
-            "offset": 1544,
-            "segment": 0
-          },
-          "site": 1541
-        },
-        {
-          "caller_task": "load_00f3c",
-          "hex": "9a5c2aa21e",
-          "relocation": {
-            "load_offset": 4020,
-            "offset": 4020,
-            "segment": 0
-          },
-          "site": 4017
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 136485,
-        "name": "mmgr_free",
-        "sha256": "56dfe4eee60738b3caa0c1ea5550776e12041aac165384dc64a521e7c697978c",
-        "stable_id": "load_2147c",
-        "start": 136316
-      }
-    },
-    "_mmgr_get_chunk_by_name": {
-      "anchors": [
-        {
-          "caller_task": "load_20d88",
-          "hex": "9a4a29a21e",
-          "relocation": {
-            "load_offset": 134567,
-            "offset": 3495,
-            "segment": 8192
-          },
-          "site": 134564
-        },
-        {
-          "caller_task": "load_2a9fc",
-          "hex": "9a4a29a21e",
-          "relocation": {
-            "load_offset": 174712,
-            "offset": 43640,
-            "segment": 8192
-          },
-          "site": 174709
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 136233,
-        "name": "mmgr_get_chunk_by_name",
-        "sha256": "286b985ba3e3fe01a6a82a9db32fb88ea8b60b9f636c443f4a53ca54e502d7d3",
-        "stable_id": "load_2136a",
-        "start": 136042
-      }
-    },
-    "_mmgr_get_chunk_size": {
-      "anchors": [
-        {
-          "caller_task": "load_2a496",
-          "hex": "9a5c2ca21e",
-          "relocation": {
-            "load_offset": 173218,
-            "offset": 42146,
-            "segment": 8192
-          },
-          "site": 173215
-        },
-        {
-          "caller_task": "load_2acfe",
-          "hex": "9a5c2ca21e",
-          "relocation": {
-            "load_offset": 175443,
-            "offset": 44371,
-            "segment": 8192
-          },
-          "site": 175440
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 136866,
-        "name": "mmgr_get_chunk_size",
-        "sha256": "4981ce0e781e5b9d402147f8588255f57c61b1f6c8cade357ce919378d166f89",
-        "stable_id": "load_2167c",
-        "start": 136828
       }
     },
     "_mmgr_path_to_name": {
@@ -8558,61 +8725,6 @@
         "start": 135720
       }
     },
-    "_mmgr_release": {
-      "anchors": [
-        {
-          "caller_task": "load_03178",
-          "hex": "9a212ca21e",
-          "relocation": {
-            "load_offset": 14767,
-            "offset": 14767,
-            "segment": 0
-          },
-          "site": 14764
-        },
-        {
-          "caller_task": "load_10438",
-          "hex": "9a212ca21e",
-          "relocation": {
-            "load_offset": 66674,
-            "offset": 1138,
-            "segment": 4096
-          },
-          "site": 66671
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 136828,
-        "name": "mmgr_release",
-        "sha256": "1ed3b0c6dc3f6afa4bcfbaf75e6fe0450b3eba7e110284370f63010287e07d93",
-        "stable_id": "load_21641",
-        "start": 136769
-      }
-    },
-    "_mmgr_resize_memory": {
-      "anchors": [
-        {
-          "caller_task": "load_2ad9c",
-          "hex": "9a822ca21e",
-          "relocation": {
-            "load_offset": 176256,
-            "offset": 45184,
-            "segment": 8192
-          },
-          "site": 176253
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 137010,
-        "name": "mmgr_resize_memory",
-        "sha256": "b072d0a61ee363343745e21c2c0a42a6a0f235e82b298632ce05dd6d746bd85f",
-        "stable_id": "load_216a2",
-        "start": 136866
-      }
-    },
     "_modsize": {
       "anchors": [
         {
@@ -8636,6 +8748,39 @@
         "start": 173206
       },
       "reviewed_alias": "_modsize"
+    },
+    "_modulesize": {
+      "anchors": [
+        {
+          "caller_task": "load_2a496",
+          "hex": "9a5c2ca21e",
+          "relocation": {
+            "load_offset": 173218,
+            "offset": 42146,
+            "segment": 8192
+          },
+          "site": 173215
+        },
+        {
+          "caller_task": "load_2acfe",
+          "hex": "9a5c2ca21e",
+          "relocation": {
+            "load_offset": 175443,
+            "offset": 44371,
+            "segment": 8192
+          },
+          "site": 175440
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 136866,
+        "name": "mmgr_get_chunk_size",
+        "sha256": "4981ce0e781e5b9d402147f8588255f57c61b1f6c8cade357ce919378d166f89",
+        "stable_id": "load_2167c",
+        "start": 136828
+      },
+      "reviewed_alias": "_modulesize"
     },
     "_mouse_draw_opaque_check": {
       "anchors": [
@@ -8699,107 +8844,6 @@
         "sha256": "29283b25a8657ff159e3d9a0266ddbd175987aee3d9a7b4dcf1bdcbbaa6f56ce",
         "stable_id": "load_18d9e",
         "start": 101790
-      }
-    },
-    "_mouse_get_state": {
-      "anchors": [
-        {
-          "caller_task": "load_11b7a",
-          "hex": "9ac0018a26",
-          "relocation": {
-            "load_offset": 74342,
-            "offset": 8806,
-            "segment": 4096
-          },
-          "site": 74339
-        },
-        {
-          "caller_task": "load_187c4",
-          "hex": "9ac0018a26",
-          "relocation": {
-            "load_offset": 100536,
-            "offset": 35000,
-            "segment": 4096
-          },
-          "site": 100533
-        }
-      ],
-      "frame_load_address": 157856,
-      "mapped_target": {
-        "end": 158362,
-        "name": "mouse_get_state",
-        "sha256": "226181f31e3c250ed1485052bcfc8971123860015ff202aa215e6c54efa5a4f6",
-        "stable_id": "load_26a60",
-        "start": 158304
-      }
-    },
-    "_mouse_init": {
-      "anchors": [
-        {
-          "caller_task": "load_29e56",
-          "hex": "9a32008a26",
-          "relocation": {
-            "load_offset": 172191,
-            "offset": 41119,
-            "segment": 8192
-          },
-          "site": 172188
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 157856,
-      "mapped_target": {
-        "end": 158044,
-        "name": "mouse_init",
-        "sha256": "696b5b20cb6263d604290492cc3160575d3cd826996eed2a059ada665117f239",
-        "stable_id": "load_268d2",
-        "start": 157906
-      }
-    },
-    "_mouse_set_minmax": {
-      "anchors": [
-        {
-          "caller_task": "load_13a50",
-          "hex": "9abc008a26",
-          "relocation": {
-            "load_offset": 80529,
-            "offset": 14993,
-            "segment": 4096
-          },
-          "site": 80526
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 157856,
-      "mapped_target": {
-        "end": 158128,
-        "name": "mouse_set_minmax",
-        "sha256": "a5fcbe42c6403890134091f66be33f762d64ced0b35e0f3220474947fedc497d",
-        "stable_id": "load_2695c",
-        "start": 158044
-      }
-    },
-    "_mouse_set_position": {
-      "anchors": [
-        {
-          "caller_task": "load_13a50",
-          "hex": "9a8c018a26",
-          "relocation": {
-            "load_offset": 80507,
-            "offset": 14971,
-            "segment": 4096
-          },
-          "site": 80504
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 157856,
-      "mapped_target": {
-        "end": 158304,
-        "name": "mouse_set_position",
-        "sha256": "358a476240a644b1c2cc9160e095fc2c5cec59439e01d8dd324ce888377dae21",
-        "stable_id": "load_26a2c",
-        "start": 158252
       }
     },
     "_mouse_timer_sprite_unk": {
@@ -8999,6 +9043,179 @@
       },
       "reviewed_alias": "_movesim"
     },
+    "_movfxya": {
+      "anchors": [
+        {
+          "caller_task": "load_175c6",
+          "hex": "9a1053a21e",
+          "relocation": {
+            "load_offset": 95751,
+            "offset": 30215,
+            "segment": 4096
+          },
+          "site": 95748
+        },
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9a1053a21e",
+          "relocation": {
+            "load_offset": 109082,
+            "offset": 43546,
+            "segment": 4096
+          },
+          "site": 109079
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 146766,
+        "name": "sprite_shape_to_1",
+        "sha256": "23510cca666e90eecd51843c6a2d302a6e432c6a70aecb3d593af9e440bd662a",
+        "stable_id": "load_23d30",
+        "start": 146736
+      },
+      "reviewed_alias": "_movfxya"
+    },
+    "_movpackcf": {
+      "anchors": [
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ab254a21e",
+          "relocation": {
+            "load_offset": 77770,
+            "offset": 12234,
+            "segment": 4096
+          },
+          "site": 77767
+        },
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ab254a21e",
+          "relocation": {
+            "load_offset": 77786,
+            "offset": 12250,
+            "segment": 4096
+          },
+          "site": 77783
+        },
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ab254a21e",
+          "relocation": {
+            "load_offset": 78425,
+            "offset": 12889,
+            "segment": 4096
+          },
+          "site": 78422
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 147552,
+        "name": "shape2d_op_unk3",
+        "sha256": "2cbadcd705c00360c66536b8ce365d030df5b9bc800136bba2c8edaad1292f62",
+        "start": 147154
+      },
+      "reviewed_alias": "_movpackcf"
+    },
+    "_movpackcfxya": {
+      "anchors": [
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9a9454a21e",
+          "relocation": {
+            "load_offset": 77509,
+            "offset": 11973,
+            "segment": 4096
+          },
+          "site": 77506
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 147154,
+        "name": "shape2d_op_unk2",
+        "sha256": "485afdca4e5f5638af886d76849e586963cc96043f12e992a8d35219b36b2738",
+        "stable_id": "load_23eb4",
+        "start": 147124
+      },
+      "reviewed_alias": "_movpackcfxya"
+    },
+    "_movpackf": {
+      "anchors": [
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 77740,
+            "offset": 12204,
+            "segment": 4096
+          },
+          "site": 77737
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 80887,
+            "offset": 15351,
+            "segment": 4096
+          },
+          "site": 80884
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 81170,
+            "offset": 15634,
+            "segment": 4096
+          },
+          "site": 81167
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 81590,
+            "offset": 16054,
+            "segment": 4096
+          },
+          "site": 81587
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 81664,
+            "offset": 16128,
+            "segment": 4096
+          },
+          "site": 81661
+        },
+        {
+          "caller_task": "load_13b4c",
+          "hex": "9ae053a21e",
+          "relocation": {
+            "load_offset": 81748,
+            "offset": 16212,
+            "segment": 4096
+          },
+          "site": 81745
+        }
+      ],
+      "distinct_verified_callers": 2,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 147088,
+        "name": "shape2d_op_unk",
+        "sha256": "59aced1134042f07f0ead320f4bdaf31c723e6f92c41ba4218f26deb3574d275",
+        "start": 146944
+      },
+      "reviewed_alias": "_movpackf"
+    },
     "_movtxy": {
       "anchors": [
         {
@@ -9101,40 +9318,29 @@
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "reviewed_alias": "_msdrawtransparentchk"
     },
-    "_mulscl": {
-      "anchors": [
+    "_msystempause": {
+      "distinct_verified_callers": 1,
+      "frame_load_address": 95408,
+      "mapped_target": {
+        "end": 106136,
+        "name": "do_pau_restext",
+        "sha256": "5f56841a3419740c988518cdfe99fede83a4d7939282c96e2e0e188f7b46d064",
+        "stable_id": "load_19e4a",
+        "start": 106058
+      },
+      "pointer_anchors": [
         {
-          "caller_task": "load_04712",
-          "hex": "9a2416a21e",
+          "caller_task": "load_29e56",
+          "hex": "b89a29ba4b17",
           "relocation": {
-            "load_offset": 19790,
-            "offset": 19790,
-            "segment": 0
+            "load_offset": 171713,
+            "offset": 40641,
+            "segment": 8192
           },
-          "site": 19787
-        },
-        {
-          "caller_task": "load_04da2",
-          "hex": "9a2416a21e",
-          "relocation": {
-            "load_offset": 26622,
-            "offset": 26622,
-            "segment": 0
-          },
-          "site": 26619
+          "site": 171709
         }
       ],
-      "distinct_verified_callers": 2,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 131166,
-        "name": "multiply_and_scale",
-        "sha256": "90cf1ee851e9b7ac712999a3158bc4badc615ef1f485ed40d00081df8f9c4a79",
-        "stable_id": "load_20044",
-        "start": 131140
-      },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
-      "reviewed_alias": "_mulscl"
+      "reviewed_alias": "_msystempause"
     },
     "_multiply_and_scale": {
       "anchors": [
@@ -9284,6 +9490,129 @@
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "reviewed_alias": "_myupdatesfx1"
     },
+    "_negblockmove": {
+      "anchors": [
+        {
+          "caller_task": "load_212fd",
+          "hex": "9ab527a21e",
+          "relocation": {
+            "load_offset": 136035,
+            "offset": 4963,
+            "segment": 8192
+          },
+          "site": 136032
+        },
+        {
+          "caller_task": "load_2147c",
+          "hex": "9ab527a21e",
+          "relocation": {
+            "load_offset": 136451,
+            "offset": 5379,
+            "segment": 8192
+          },
+          "site": 136448
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 135720,
+        "name": "copy_paras_reverse",
+        "sha256": "00e1b6f9fddf61341dfa884a9dfa1ecd0f924ef82b9f0bc3521ac3fa15ff51b5",
+        "stable_id": "load_211d5",
+        "start": 135637
+      },
+      "reviewed_alias": "_negblockmove"
+    },
+    "_nextkey": {
+      "anchors": [
+        {
+          "caller_task": "load_26af4",
+          "hex": "9a1520a21e",
+          "relocation": {
+            "load_offset": 158466,
+            "offset": 27394,
+            "segment": 8192
+          },
+          "site": 158463
+        },
+        {
+          "caller_task": "load_26b05",
+          "hex": "9a1520a21e",
+          "relocation": {
+            "load_offset": 158483,
+            "offset": 27411,
+            "segment": 8192
+          },
+          "site": 158480
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133700,
+        "name": "kb_checking",
+        "sha256": "1e9aec00fbdebdc19b3f0574ef37a0f64419798d8efc7f9b3955693c24723e8c",
+        "stable_id": "load_20a35",
+        "start": 133685
+      },
+      "reviewed_alias": "_nextkey"
+    },
+    "_normkey": {
+      "anchors": [
+        {
+          "caller_task": "load_19b32",
+          "hex": "9a0120a21e",
+          "relocation": {
+            "load_offset": 105625,
+            "offset": 40089,
+            "segment": 4096
+          },
+          "site": 105622
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133685,
+        "name": "kb_read_char",
+        "sha256": "4470c32dd18492ab50a6244e6b8db965a723614ea0ca828f39c384221195ce5a",
+        "stable_id": "load_20a21",
+        "start": 133665
+      },
+      "reviewed_alias": "_normkey"
+    },
+    "_normkeyi": {
+      "anchors": [
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9af91aa21e",
+          "relocation": {
+            "load_offset": 74119,
+            "offset": 8583,
+            "segment": 4096
+          },
+          "site": 74116
+        },
+        {
+          "caller_task": "load_187c4",
+          "hex": "9af91aa21e",
+          "relocation": {
+            "load_offset": 100336,
+            "offset": 34800,
+            "segment": 4096
+          },
+          "site": 100333
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 132408,
+        "name": "kb_get_char",
+        "sha256": "33c546d2438bcd4c400c13c036401182ef614d949641e647f597c0b0b5f07617",
+        "stable_id": "load_20519",
+        "start": 132377
+      },
+      "reviewed_alias": "_normkeyi"
+    },
     "_nullsub_1": {
       "anchors": [
         {
@@ -9372,50 +9701,152 @@
       },
       "reviewed_alias": "_opponentcompile"
     },
-    "_parse_shape2d_helper": {
+    "_orcfxy": {
       "anchors": [
         {
-          "caller_task": "load_2ad9c",
-          "hex": "9af408a21e",
+          "caller_task": "load_12d2e",
+          "hex": "9a4056a21e",
           "relocation": {
-            "load_offset": 176187,
-            "offset": 45115,
-            "segment": 8192
+            "load_offset": 78154,
+            "offset": 12618,
+            "segment": 4096
           },
-          "site": 176184
+          "site": 78151
         }
       ],
       "distinct_verified_callers": 1,
       "frame_load_address": 125472,
       "mapped_target": {
-        "end": 127796,
-        "name": "parse_shape2d_helper",
-        "sha256": "cb76529b7946de9a150fbeadb66ad02aadc435e02e2e19efca8636765261152d",
-        "stable_id": "load_1f314",
-        "start": 127764
-      }
+        "end": 147588,
+        "name": "sprite_putimage_or_alt",
+        "sha256": "69b4282e3106f5cab07e1a721344e3d0dc4de141624b7d7966266cf3bf18611f",
+        "stable_id": "load_24060",
+        "start": 147552
+      },
+      "reviewed_alias": "_orcfxy"
     },
-    "_parse_shape2d_helper2": {
+    "_orcfxya": {
       "anchors": [
         {
-          "caller_task": "load_2ad9c",
-          "hex": "9a1409a21e",
+          "caller_task": "load_18e04",
+          "hex": "9a6456a21e",
           "relocation": {
-            "load_offset": 176022,
-            "offset": 44950,
-            "segment": 8192
+            "load_offset": 102004,
+            "offset": 36468,
+            "segment": 4096
           },
-          "site": 176019
+          "site": 102001
         }
       ],
       "distinct_verified_callers": 1,
       "frame_load_address": 125472,
       "mapped_target": {
-        "end": 127836,
-        "name": "parse_shape2d_helper2",
-        "sha256": "f481eaad2e8838916992d1d58c7936dd6501a8b5aea1ea1e0b6d966cbb658b68",
-        "start": 127796
-      }
+        "end": 147986,
+        "name": "sprite_putimage_or",
+        "sha256": "ffc72afa38cd1b9059186ee37be694f59cb3100a30feeb036c0acf0153d3ce36",
+        "start": 147588
+      },
+      "reviewed_alias": "_orcfxya"
+    },
+    "_orfxya": {
+      "anchors": [
+        {
+          "caller_task": "load_1a2bc",
+          "hex": "9af257a21e",
+          "relocation": {
+            "load_offset": 109291,
+            "offset": 43755,
+            "segment": 4096
+          },
+          "site": 109288
+        },
+        {
+          "caller_task": "load_1beb6",
+          "hex": "9af257a21e",
+          "relocation": {
+            "load_offset": 114599,
+            "offset": 49063,
+            "segment": 4096
+          },
+          "site": 114596
+        },
+        {
+          "caller_task": "load_1c0a8",
+          "hex": "9af257a21e",
+          "relocation": {
+            "load_offset": 115827,
+            "offset": 50291,
+            "segment": 4096
+          },
+          "site": 115824
+        }
+      ],
+      "distinct_verified_callers": 3,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 148214,
+        "name": "putpixel_iconFillings",
+        "sha256": "c36982b91e262412116409e913829eaf0469f62fa93266a7754a0942ddea37a3",
+        "start": 147986
+      },
+      "reviewed_alias": "_orfxya"
+    },
+    "_orpackf": {
+      "anchors": [
+        {
+          "caller_task": "load_11b7a",
+          "hex": "9ad658a21e",
+          "relocation": {
+            "load_offset": 73942,
+            "offset": 8406,
+            "segment": 4096
+          },
+          "site": 73939
+        },
+        {
+          "caller_task": "load_12d2e",
+          "hex": "9ad658a21e",
+          "relocation": {
+            "load_offset": 79065,
+            "offset": 13529,
+            "segment": 4096
+          },
+          "site": 79062
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 148400,
+        "name": "shape2d_op_unk4",
+        "sha256": "c3797ccf9e61c57a0b845e916b93c6ca9edc80a0e0419f936b1f4de99959ff09",
+        "stable_id": "load_242f6",
+        "start": 148214
+      },
+      "reviewed_alias": "_orpackf"
+    },
+    "_packmemory": {
+      "anchors": [
+        {
+          "caller_task": "load_2acfe",
+          "hex": "9a122da21e",
+          "relocation": {
+            "load_offset": 175507,
+            "offset": 44435,
+            "segment": 8192
+          },
+          "site": 175504
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 137138,
+        "name": "mmgr_op_unk",
+        "sha256": "be834298774c58f62794983514a3c78dcb643823391588c2293dd64c24ef4418",
+        "stable_id": null,
+        "start": 137010
+      },
+      "reviewed_alias": "_packmemory"
     },
     "_plane_distance": {
       "anchors": [
@@ -9589,60 +10020,38 @@
       },
       "reviewed_alias": "_ported_sprite_clear_1_color_"
     },
-    "_preRender_default": {
+    "_posblockmove": {
       "anchors": [
         {
-          "caller_task": "load_15ff6",
-          "hex": "9a922da21e",
+          "caller_task": "load_2136a",
+          "hex": "9a6d27a21e",
           "relocation": {
-            "load_offset": 90237,
-            "offset": 24701,
-            "segment": 4096
-          },
-          "site": 90234
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 137153,
-        "name": "preRender_default",
-        "sha256": "d5f99bcc3dce9fdd4ddd2d1a697057b2c20ad4c78efe041d2b3009caf2e4d32e",
-        "stable_id": "load_217b2",
-        "start": 137138
-      }
-    },
-    "_preRender_default_alt": {
-      "anchors": [
-        {
-          "caller_task": "load_26bbe",
-          "hex": "9aa12da21e",
-          "relocation": {
-            "load_offset": 158690,
-            "offset": 27618,
+            "load_offset": 136185,
+            "offset": 5113,
             "segment": 8192
           },
-          "site": 158687
+          "site": 136182
         },
         {
-          "caller_task": "load_26c7e",
-          "hex": "9aa12da21e",
+          "caller_task": "load_21525",
+          "hex": "9a6d27a21e",
           "relocation": {
-            "load_offset": 159228,
-            "offset": 28156,
+            "load_offset": 136671,
+            "offset": 5599,
             "segment": 8192
           },
-          "site": 159225
+          "site": 136668
         }
       ],
       "frame_load_address": 125472,
       "mapped_target": {
-        "end": 137183,
-        "name": "preRender_default_alt",
-        "sha256": "fdf294344f6bece5b2a43cf611af251b13245b37c801488132bfee62900215bb",
-        "stable_id": "load_217c1",
-        "start": 137153
-      }
+        "end": 135637,
+        "name": "mmgr_copy_paras",
+        "sha256": "fd89188541b8f5e7b5b4c49930b436c762fb41875db0281e25841e4bd555fc50",
+        "stable_id": "load_2118d",
+        "start": 135565
+      },
+      "reviewed_alias": "_posblockmove"
     },
     "_preRender_line": {
       "anchors": [
@@ -9697,144 +10106,6 @@
         "sha256": "202c00c0d4b3d851192c77e8f7a9d3d6d74a5be408f6853299d106756b834385",
         "stable_id": "load_22886",
         "start": 141446
-      }
-    },
-    "_preRender_sphere_helper": {
-      "anchors": [
-        {
-          "caller_task": "load_23072",
-          "hex": "9a0e00bb26",
-          "relocation": {
-            "load_offset": 143673,
-            "offset": 12601,
-            "segment": 8192
-          },
-          "site": 143670
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 158640,
-      "mapped_target": {
-        "end": 158696,
-        "name": "preRender_sphere_helper",
-        "sha256": "fceeec357e298da3418a0d54a7317700b45ebf020f9bb50bda10ce24d0b58b17",
-        "stable_id": "load_26bbe",
-        "start": 158654
-      }
-    },
-    "_preRender_sphere_helper2": {
-      "anchors": [
-        {
-          "caller_task": "load_26bbe",
-          "hex": "9a02004126",
-          "relocation": {
-            "load_offset": 158671,
-            "offset": 27599,
-            "segment": 8192
-          },
-          "site": 158668
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 156688,
-      "mapped_target": {
-        "end": 157618,
-        "name": "preRender_sphere_helper2",
-        "sha256": "6fdfe6fa031ac9c260732dce91cc10d4098287dab9b28d4a2be7f4f3020fce13",
-        "stable_id": "load_26412",
-        "start": 156690
-      }
-    },
-    "_preRender_wheel": {
-      "anchors": [
-        {
-          "caller_task": "load_15ff6",
-          "hex": "9a0e00c726",
-          "relocation": {
-            "load_offset": 90555,
-            "offset": 25019,
-            "segment": 4096
-          },
-          "site": 90552
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 158832,
-      "mapped_target": {
-        "end": 159424,
-        "name": "preRender_wheel",
-        "sha256": "7a9945bcbc9ccf081161d33d031c8998957f1e3d871eaab31a98b0c8ece621c9",
-        "stable_id": "load_26c7e",
-        "start": 158846
-      }
-    },
-    "_preRender_wheel_helper": {
-      "anchors": [
-        {
-          "caller_task": "load_26c7e",
-          "hex": "9a0000ec26",
-          "relocation": {
-            "load_offset": 158868,
-            "offset": 27796,
-            "segment": 8192
-          },
-          "site": 158865
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 159424,
-      "mapped_target": {
-        "end": 159530,
-        "name": "preRender_wheel_helper",
-        "sha256": "b0d96a0f55f8b509bfee3e9d95f66895278be20e09dc7c2451f0795d9ba18ba0",
-        "stable_id": "load_26ec0",
-        "start": 159424
-      }
-    },
-    "_preRender_wheel_helper2": {
-      "anchors": [
-        {
-          "caller_task": "load_26ec0",
-          "hex": "9a0600b126",
-          "relocation": {
-            "load_offset": 159443,
-            "offset": 28371,
-            "segment": 8192
-          },
-          "site": 159440
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 158480,
-      "mapped_target": {
-        "end": 158654,
-        "name": "preRender_wheel_helper2",
-        "sha256": "9af48a4fc0aad2bb0abe12895d0c10b828bc547971e72c799823807609c87d26",
-        "stable_id": "load_26b16",
-        "start": 158486
-      }
-    },
-    "_preRender_wheel_helper3": {
-      "anchors": [
-        {
-          "caller_task": "load_26b16",
-          "hex": "9a06002426",
-          "relocation": {
-            "load_offset": 158643,
-            "offset": 27571,
-            "segment": 8192
-          },
-          "site": 158640
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 156224,
-      "mapped_target": {
-        "end": 156690,
-        "name": "preRender_wheel_helper3",
-        "sha256": "59d0ff312c4f4bf29b97956546111249f3fda11dcdec0949cf41464fb61c25e0",
-        "stable_id": "load_26246",
-        "start": 156230
       }
     },
     "_preRender_wheel_helper4": {
@@ -9974,6 +10245,63 @@
       },
       "reviewed_alias": "_pullmouse"
     },
+    "_purgekey": {
+      "anchors": [
+        {
+          "caller_task": "load_19b32",
+          "hex": "9a4820a21e",
+          "relocation": {
+            "load_offset": 105854,
+            "offset": 40318,
+            "segment": 4096
+          },
+          "site": 105851
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133751,
+        "name": "kb_check",
+        "sha256": "312ec5462c61f39cd93c0b21ca0ef4b19c61baad71890679d199ec23bb2deb31",
+        "stable_id": "load_20a68",
+        "start": 133736
+      },
+      "reviewed_alias": "_purgekey"
+    },
+    "_purgememory": {
+      "anchors": [
+        {
+          "caller_task": "load_03178",
+          "hex": "9a212ca21e",
+          "relocation": {
+            "load_offset": 14767,
+            "offset": 14767,
+            "segment": 0
+          },
+          "site": 14764
+        },
+        {
+          "caller_task": "load_10438",
+          "hex": "9a212ca21e",
+          "relocation": {
+            "load_offset": 66674,
+            "offset": 1138,
+            "segment": 4096
+          },
+          "site": 66671
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 136828,
+        "name": "mmgr_release",
+        "sha256": "1ed3b0c6dc3f6afa4bcfbaf75e6fe0450b3eba7e110284370f63010287e07d93",
+        "stable_id": "load_21641",
+        "start": 136769
+      },
+      "reviewed_alias": "_purgememory"
+    },
     "_pushmouse": {
       "anchors": [
         {
@@ -9997,90 +10325,6 @@
         "start": 105196
       },
       "reviewed_alias": "_pushmouse"
-    },
-    "_putpixel_iconFillings": {
-      "anchors": [
-        {
-          "caller_task": "load_1a2bc",
-          "hex": "9af257a21e",
-          "relocation": {
-            "load_offset": 109291,
-            "offset": 43755,
-            "segment": 4096
-          },
-          "site": 109288
-        },
-        {
-          "caller_task": "load_1beb6",
-          "hex": "9af257a21e",
-          "relocation": {
-            "load_offset": 114599,
-            "offset": 49063,
-            "segment": 4096
-          },
-          "site": 114596
-        },
-        {
-          "caller_task": "load_1c0a8",
-          "hex": "9af257a21e",
-          "relocation": {
-            "load_offset": 115827,
-            "offset": 50291,
-            "segment": 4096
-          },
-          "site": 115824
-        }
-      ],
-      "distinct_verified_callers": 3,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 148214,
-        "name": "putpixel_iconFillings",
-        "sha256": "c36982b91e262412116409e913829eaf0469f62fa93266a7754a0942ddea37a3",
-        "start": 147986
-      }
-    },
-    "_putpixel_iconMask": {
-      "anchors": [
-        {
-          "caller_task": "load_1a2bc",
-          "hex": "9afe4fa21e",
-          "relocation": {
-            "load_offset": 109261,
-            "offset": 43725,
-            "segment": 4096
-          },
-          "site": 109258
-        },
-        {
-          "caller_task": "load_1beb6",
-          "hex": "9afe4fa21e",
-          "relocation": {
-            "load_offset": 114550,
-            "offset": 49014,
-            "segment": 4096
-          },
-          "site": 114547
-        },
-        {
-          "caller_task": "load_1c0a8",
-          "hex": "9afe4fa21e",
-          "relocation": {
-            "load_offset": 115780,
-            "offset": 50244,
-            "segment": 4096
-          },
-          "site": 115777
-        }
-      ],
-      "distinct_verified_callers": 3,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 146112,
-        "name": "putpixel_iconMask",
-        "sha256": "a079b91e5a4f0282b5d9e3bbda1f2411f599a646b1c90c71343461bd8a017454",
-        "start": 145950
-      }
     },
     "_putpixel_single_maybe": {
       "anchors": [
@@ -10160,29 +10404,6 @@
       },
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "reviewed_alias": "_read_file_with_retry"
-    },
-    "_read_line": {
-      "anchors": [
-        {
-          "caller_task": "load_190bc",
-          "hex": "9a06004b2a",
-          "relocation": {
-            "load_offset": 102650,
-            "offset": 37114,
-            "segment": 4096
-          },
-          "site": 102647
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 173232,
-      "mapped_target": {
-        "end": 174070,
-        "name": "read_line",
-        "sha256": "4ae6b08aa7f26c6923aaea8a5cf74b33e413181895d349658ada8935fe6aaeaa",
-        "stable_id": "load_2a4b6",
-        "start": 173238
-      }
     },
     "_rect_array_sort_by_top": {
       "anchors": [
@@ -10302,31 +10523,6 @@
         "stable_id": "load_16a52",
         "start": 92754
       }
-    },
-    "_rectsorttop": {
-      "anchors": [
-        {
-          "caller_task": "load_09f14",
-          "hex": "9aea1dd614",
-          "relocation": {
-            "load_offset": 40906,
-            "offset": 40906,
-            "segment": 0
-          },
-          "site": 40903
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 85344,
-      "mapped_target": {
-        "end": 93102,
-        "name": "rect_array_sort_by_top",
-        "sha256": "ed2e720e674e31c9e33da7e7b0ad200bc57cc10843cedff5623ce0f6469fc449",
-        "stable_id": "load_16b4a",
-        "start": 93002
-      },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
-      "reviewed_alias": "_rectsorttop"
     },
     "_release_audio_chunk": {
       "anchors": [
@@ -10485,6 +10681,39 @@
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "reviewed_alias": "_reserve_audio_chunk"
     },
+    "_reservememory": {
+      "anchors": [
+        {
+          "caller_task": "load_20d88",
+          "hex": "9a2828a21e",
+          "relocation": {
+            "load_offset": 134601,
+            "offset": 3529,
+            "segment": 8192
+          },
+          "site": 134598
+        },
+        {
+          "caller_task": "load_2a460",
+          "hex": "9a2828a21e",
+          "relocation": {
+            "load_offset": 173180,
+            "offset": 42108,
+            "segment": 8192
+          },
+          "site": 173177
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 135933,
+        "name": "mmgr_alloc_pages",
+        "sha256": "f5c1d9771f9f0644d756a554ab8edb395d446ff704cd0ffdcc3129c575417c01",
+        "stable_id": "load_21248",
+        "start": 135752
+      },
+      "reviewed_alias": "_reservememory"
+    },
     "_reset_audio_driver_state": {
       "anchors": [
         {
@@ -10628,6 +10857,30 @@
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "reviewed_alias": "_reset_joystick_selection"
     },
+    "_resizememory": {
+      "anchors": [
+        {
+          "caller_task": "load_2ad9c",
+          "hex": "9a822ca21e",
+          "relocation": {
+            "load_offset": 176256,
+            "offset": 45184,
+            "segment": 8192
+          },
+          "site": 176253
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 137010,
+        "name": "mmgr_resize_memory",
+        "sha256": "b072d0a61ee363343745e21c2c0a42a6a0f235e82b298632ce05dd6d746bd85f",
+        "stable_id": "load_216a2",
+        "start": 136866
+      },
+      "reviewed_alias": "_resizememory"
+    },
     "_restore_audio_volume": {
       "anchors": [
         {
@@ -10687,6 +10940,63 @@
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "reviewed_alias": "_restoreboxwindow"
     },
+    "_restorewindow": {
+      "anchors": [
+        {
+          "caller_task": "load_175c6",
+          "hex": "9a0e3ca21e",
+          "relocation": {
+            "load_offset": 95837,
+            "offset": 30301,
+            "segment": 4096
+          },
+          "site": 95834
+        },
+        {
+          "caller_task": "load_18dc8",
+          "hex": "9a0e3ca21e",
+          "relocation": {
+            "load_offset": 101881,
+            "offset": 36345,
+            "segment": 4096
+          },
+          "site": 101878
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 140874,
+        "name": "sprite_copy_arg_to_both",
+        "sha256": "70696d82d48185434e7034e1bce46ab85587534a3556a22bd43f340087d13e6f",
+        "stable_id": "load_2262e",
+        "start": 140846
+      },
+      "reviewed_alias": "_restorewindow"
+    },
+    "_ring": {
+      "anchors": [
+        {
+          "caller_task": "load_26ec0",
+          "hex": "9a0600b126",
+          "relocation": {
+            "load_offset": 159443,
+            "offset": 28371,
+            "segment": 8192
+          },
+          "site": 159440
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 158480,
+      "mapped_target": {
+        "end": 158654,
+        "name": "preRender_wheel_helper2",
+        "sha256": "9af48a4fc0aad2bb0abe12895d0c10b828bc547971e72c799823807609c87d26",
+        "stable_id": "load_26b16",
+        "start": 158486
+      },
+      "reviewed_alias": "_ring"
+    },
     "_roadupcheck": {
       "anchors": [
         {
@@ -10744,6 +11054,63 @@
         "start": 72570
       }
     },
+    "_savewindow": {
+      "anchors": [
+        {
+          "caller_task": "load_174b0",
+          "hex": "9aee3ba21e",
+          "relocation": {
+            "load_offset": 95572,
+            "offset": 30036,
+            "segment": 4096
+          },
+          "site": 95569
+        },
+        {
+          "caller_task": "load_18dc8",
+          "hex": "9aee3ba21e",
+          "relocation": {
+            "load_offset": 101845,
+            "offset": 36309,
+            "segment": 4096
+          },
+          "site": 101842
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 140846,
+        "name": "sprite_copy_both_to_arg",
+        "sha256": "76e110bf85708d85c353610630c2cf640697be1ab6ed280f31996be0dcdf1c8f",
+        "stable_id": "load_2260e",
+        "start": 140814
+      },
+      "reviewed_alias": "_savewindow"
+    },
+    "_scalecfxy": {
+      "anchors": [
+        {
+          "caller_task": "load_0a0f4",
+          "hex": "9abc5da21e",
+          "relocation": {
+            "load_offset": 49340,
+            "offset": 49340,
+            "segment": 0
+          },
+          "site": 49337
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 150284,
+        "name": "shape_op_explosion",
+        "sha256": "a8298ba471419f29e485e9330772ffb68580cc03ad7b6dbf95f53b6af8856c1e",
+        "start": 149468
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_scalecfxy"
+    },
     "_seedrandom": {
       "anchors": [
         {
@@ -10767,6 +11134,30 @@
         "start": 172636
       },
       "reviewed_alias": "_seedrandom"
+    },
+    "_segtoadr": {
+      "anchors": [
+        {
+          "caller_task": "load_2ad9c",
+          "hex": "9af408a21e",
+          "relocation": {
+            "load_offset": 176187,
+            "offset": 45115,
+            "segment": 8192
+          },
+          "site": 176184
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 127796,
+        "name": "parse_shape2d_helper",
+        "sha256": "cb76529b7946de9a150fbeadb66ad02aadc435e02e2e19efca8636765261152d",
+        "stable_id": "load_1f314",
+        "start": 127764
+      },
+      "reviewed_alias": "_segtoadr"
     },
     "_select_cliprect_rotate": {
       "anchors": [
@@ -10872,51 +11263,6 @@
         "start": 132056
       }
     },
-    "_set_criterr_handler": {
-      "anchors": [
-        {
-          "caller_task": "load_29e56",
-          "hex": "9a5709a21e",
-          "relocation": {
-            "load_offset": 172260,
-            "offset": 41188,
-            "segment": 8192
-          },
-          "site": 172257
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 127932,
-        "name": "set_criterr_handler",
-        "sha256": "a64f5c0dc573f0c7d6ecc98fff4afcf9d2b92e091326335286c70939e9de2319",
-        "stable_id": "load_1f377",
-        "start": 127863
-      }
-    },
-    "_set_fontdefseg": {
-      "anchors": [
-        {
-          "caller_task": "load_1988a",
-          "hex": "9a5c61a21e",
-          "relocation": {
-            "load_offset": 104598,
-            "offset": 39062,
-            "segment": 4096
-          },
-          "site": 104595
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 150408,
-        "name": "set_fontdefseg",
-        "sha256": "1468b9883dd04af10b7d1122e9f78329a508ec9f1b21c186fabdb4f2e106c085",
-        "start": 150396
-      }
-    },
     "_set_projection": {
       "anchors": [
         {
@@ -10972,6 +11318,77 @@
         "start": 125662
       },
       "reviewed_alias": "_setbiosticks"
+    },
+    "_setfont": {
+      "anchors": [
+        {
+          "caller_task": "load_1988a",
+          "hex": "9a5c61a21e",
+          "relocation": {
+            "load_offset": 104598,
+            "offset": 39062,
+            "segment": 4096
+          },
+          "site": 104595
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 150408,
+        "name": "set_fontdefseg",
+        "sha256": "1468b9883dd04af10b7d1122e9f78329a508ec9f1b21c186fabdb4f2e106c085",
+        "start": 150396
+      },
+      "reviewed_alias": "_setfont"
+    },
+    "_setmousebounds": {
+      "anchors": [
+        {
+          "caller_task": "load_13a50",
+          "hex": "9abc008a26",
+          "relocation": {
+            "load_offset": 80529,
+            "offset": 14993,
+            "segment": 4096
+          },
+          "site": 80526
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 157856,
+      "mapped_target": {
+        "end": 158128,
+        "name": "mouse_set_minmax",
+        "sha256": "a5fcbe42c6403890134091f66be33f762d64ced0b35e0f3220474947fedc497d",
+        "stable_id": "load_2695c",
+        "start": 158044
+      },
+      "reviewed_alias": "_setmousebounds"
+    },
+    "_setmousepos": {
+      "anchors": [
+        {
+          "caller_task": "load_13a50",
+          "hex": "9a8c018a26",
+          "relocation": {
+            "load_offset": 80507,
+            "offset": 14971,
+            "segment": 4096
+          },
+          "site": 80504
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 157856,
+      "mapped_target": {
+        "end": 158304,
+        "name": "mouse_set_position",
+        "sha256": "358a476240a644b1c2cc9160e095fc2c5cec59439e01d8dd324ce888377dae21",
+        "stable_id": "load_26a2c",
+        "start": 158252
+      },
+      "reviewed_alias": "_setmousepos"
     },
     "_setticks": {
       "anchors": [
@@ -11184,79 +11601,6 @@
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "reviewed_alias": "_shadowtext"
     },
-    "_shape2d_blit_rle": {
-      "anchors": [
-        {
-          "caller_task": "load_12d2e",
-          "hex": "9ae053a21e",
-          "relocation": {
-            "load_offset": 77740,
-            "offset": 12204,
-            "segment": 4096
-          },
-          "site": 77737
-        },
-        {
-          "caller_task": "load_13b4c",
-          "hex": "9ae053a21e",
-          "relocation": {
-            "load_offset": 80887,
-            "offset": 15351,
-            "segment": 4096
-          },
-          "site": 80884
-        },
-        {
-          "caller_task": "load_13b4c",
-          "hex": "9ae053a21e",
-          "relocation": {
-            "load_offset": 81170,
-            "offset": 15634,
-            "segment": 4096
-          },
-          "site": 81167
-        },
-        {
-          "caller_task": "load_13b4c",
-          "hex": "9ae053a21e",
-          "relocation": {
-            "load_offset": 81590,
-            "offset": 16054,
-            "segment": 4096
-          },
-          "site": 81587
-        },
-        {
-          "caller_task": "load_13b4c",
-          "hex": "9ae053a21e",
-          "relocation": {
-            "load_offset": 81664,
-            "offset": 16128,
-            "segment": 4096
-          },
-          "site": 81661
-        },
-        {
-          "caller_task": "load_13b4c",
-          "hex": "9ae053a21e",
-          "relocation": {
-            "load_offset": 81748,
-            "offset": 16212,
-            "segment": 4096
-          },
-          "site": 81745
-        }
-      ],
-      "distinct_verified_callers": 2,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 147088,
-        "name": "shape2d_op_unk",
-        "sha256": "59aced1134042f07f0ead320f4bdaf31c723e6f92c41ba4218f26deb3574d275",
-        "start": 146944
-      },
-      "reviewed_alias": "_shape2d_blit_rle"
-    },
     "_shape2d_blit_rle_at": {
       "anchors": [
         {
@@ -11292,73 +11636,6 @@
       "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
       "reviewed_alias": "_shape2d_blit_rle_at"
     },
-    "_shape2d_blit_rle_clipped": {
-      "anchors": [
-        {
-          "caller_task": "load_12d2e",
-          "hex": "9ab254a21e",
-          "relocation": {
-            "load_offset": 77770,
-            "offset": 12234,
-            "segment": 4096
-          },
-          "site": 77767
-        },
-        {
-          "caller_task": "load_12d2e",
-          "hex": "9ab254a21e",
-          "relocation": {
-            "load_offset": 77786,
-            "offset": 12250,
-            "segment": 4096
-          },
-          "site": 77783
-        },
-        {
-          "caller_task": "load_12d2e",
-          "hex": "9ab254a21e",
-          "relocation": {
-            "load_offset": 78425,
-            "offset": 12889,
-            "segment": 4096
-          },
-          "site": 78422
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 147552,
-        "name": "shape2d_op_unk3",
-        "sha256": "2cbadcd705c00360c66536b8ce365d030df5b9bc800136bba2c8edaad1292f62",
-        "start": 147154
-      },
-      "reviewed_alias": "_shape2d_blit_rle_clipped"
-    },
-    "_shape2d_blit_rle_clipped_at": {
-      "anchors": [
-        {
-          "caller_task": "load_12d2e",
-          "hex": "9a9454a21e",
-          "relocation": {
-            "load_offset": 77509,
-            "offset": 11973,
-            "segment": 4096
-          },
-          "site": 77506
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 147154,
-        "name": "shape2d_op_unk2",
-        "sha256": "485afdca4e5f5638af886d76849e586963cc96043f12e992a8d35219b36b2738",
-        "stable_id": "load_23eb4",
-        "start": 147124
-      },
-      "reviewed_alias": "_shape2d_blit_rle_clipped_at"
-    },
     "_shape2d_op_unk5": {
       "anchors": [
         {
@@ -11390,71 +11667,6 @@
         "sha256": "485afdca4e5f5638af886d76849e586963cc96043f12e992a8d35219b36b2738",
         "stable_id": "load_23de2",
         "start": 146914
-      }
-    },
-    "_shape2d_or_rle": {
-      "anchors": [
-        {
-          "caller_task": "load_11b7a",
-          "hex": "9ad658a21e",
-          "relocation": {
-            "load_offset": 73942,
-            "offset": 8406,
-            "segment": 4096
-          },
-          "site": 73939
-        },
-        {
-          "caller_task": "load_12d2e",
-          "hex": "9ad658a21e",
-          "relocation": {
-            "load_offset": 79065,
-            "offset": 13529,
-            "segment": 4096
-          },
-          "site": 79062
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 148400,
-        "name": "shape2d_op_unk4",
-        "sha256": "c3797ccf9e61c57a0b845e916b93c6ca9edc80a0e0419f936b1f4de99959ff09",
-        "stable_id": "load_242f6",
-        "start": 148214
-      },
-      "reviewed_alias": "_shape2d_or_rle"
-    },
-    "_shape2d_render_bmp_as_mask": {
-      "anchors": [
-        {
-          "caller_task": "load_11b7a",
-          "hex": "9ae250a21e",
-          "relocation": {
-            "load_offset": 73926,
-            "offset": 8390,
-            "segment": 4096
-          },
-          "site": 73923
-        },
-        {
-          "caller_task": "load_12d2e",
-          "hex": "9ae250a21e",
-          "relocation": {
-            "load_offset": 79049,
-            "offset": 13513,
-            "segment": 4096
-          },
-          "site": 79046
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 146328,
-        "name": "shape2d_render_bmp_as_mask",
-        "sha256": "e15f4017389165a30ac97dde5ca5a8d8a2ce8b3e18e6dfea6c7509402b990349",
-        "stable_id": "load_23b02",
-        "start": 146178
       }
     },
     "_shape3d_free_all": {
@@ -11607,30 +11819,6 @@
         "start": 149468
       }
     },
-    "_shapeexpl": {
-      "anchors": [
-        {
-          "caller_task": "load_0a0f4",
-          "hex": "9abc5da21e",
-          "relocation": {
-            "load_offset": 49340,
-            "offset": 49340,
-            "segment": 0
-          },
-          "site": 49337
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 150284,
-        "name": "shape_op_explosion",
-        "sha256": "a8298ba471419f29e485e9330772ffb68580cc03ad7b6dbf95f53b6af8856c1e",
-        "start": 149468
-      },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
-      "reviewed_alias": "_shapeexpl"
-    },
     "_shapepack": {
       "anchors": [
         {
@@ -11654,6 +11842,39 @@
         "start": 175516
       },
       "reviewed_alias": "_shapepack"
+    },
+    "_shapepointer": {
+      "anchors": [
+        {
+          "caller_task": "load_260f6",
+          "hex": "9a3b3ca21e",
+          "relocation": {
+            "load_offset": 155941,
+            "offset": 24869,
+            "segment": 8192
+          },
+          "site": 155938
+        },
+        {
+          "caller_task": "load_2ad9c",
+          "hex": "9a3b3ca21e",
+          "relocation": {
+            "load_offset": 175986,
+            "offset": 44914,
+            "segment": 8192
+          },
+          "site": 175983
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 140986,
+        "name": "file_get_shape2d",
+        "sha256": "89258c68d62b065a0ae09f36b9bb7c75c3a4f365b6313aad5d54ac7a7400cc05",
+        "stable_id": "load_2265b",
+        "start": 140891
+      },
+      "reviewed_alias": "_shapepointer"
     },
     "_shellsort": {
       "anchors": [
@@ -11782,6 +12003,79 @@
         "start": 125768
       },
       "reviewed_alias": "_slopeline"
+    },
+    "_solidellipseh": {
+      "anchors": [
+        {
+          "caller_task": "load_23072",
+          "hex": "9a0e00bb26",
+          "relocation": {
+            "load_offset": 143673,
+            "offset": 12601,
+            "segment": 8192
+          },
+          "site": 143670
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 158640,
+      "mapped_target": {
+        "end": 158696,
+        "name": "preRender_sphere_helper",
+        "sha256": "fceeec357e298da3418a0d54a7317700b45ebf020f9bb50bda10ce24d0b58b17",
+        "stable_id": "load_26bbe",
+        "start": 158654
+      },
+      "reviewed_alias": "_solidellipseh"
+    },
+    "_solidtire": {
+      "anchors": [
+        {
+          "caller_task": "load_15ff6",
+          "hex": "9a0e00c726",
+          "relocation": {
+            "load_offset": 90555,
+            "offset": 25019,
+            "segment": 4096
+          },
+          "site": 90552
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 158832,
+      "mapped_target": {
+        "end": 159424,
+        "name": "preRender_wheel",
+        "sha256": "7a9945bcbc9ccf081161d33d031c8998957f1e3d871eaab31a98b0c8ece621c9",
+        "stable_id": "load_26c7e",
+        "start": 158846
+      },
+      "reviewed_alias": "_solidtire"
+    },
+    "_sortzonelist": {
+      "anchors": [
+        {
+          "caller_task": "load_09f14",
+          "hex": "9aea1dd614",
+          "relocation": {
+            "load_offset": 40906,
+            "offset": 40906,
+            "segment": 0
+          },
+          "site": 40903
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 85344,
+      "mapped_target": {
+        "end": 93102,
+        "name": "rect_array_sort_by_top",
+        "sha256": "ed2e720e674e31c9e33da7e7b0ad200bc57cc10843cedff5623ce0f6469fc449",
+        "stable_id": "load_16b4a",
+        "start": 93002
+      },
+      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "reviewed_alias": "_sortzonelist"
     },
     "_sprcopy2to12": {
       "anchors": [
@@ -12118,70 +12412,6 @@
         "start": 102222
       }
     },
-    "_sprite_copy_arg_to_both": {
-      "anchors": [
-        {
-          "caller_task": "load_175c6",
-          "hex": "9a0e3ca21e",
-          "relocation": {
-            "load_offset": 95837,
-            "offset": 30301,
-            "segment": 4096
-          },
-          "site": 95834
-        },
-        {
-          "caller_task": "load_18dc8",
-          "hex": "9a0e3ca21e",
-          "relocation": {
-            "load_offset": 101881,
-            "offset": 36345,
-            "segment": 4096
-          },
-          "site": 101878
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 140874,
-        "name": "sprite_copy_arg_to_both",
-        "sha256": "70696d82d48185434e7034e1bce46ab85587534a3556a22bd43f340087d13e6f",
-        "stable_id": "load_2262e",
-        "start": 140846
-      }
-    },
-    "_sprite_copy_both_to_arg": {
-      "anchors": [
-        {
-          "caller_task": "load_174b0",
-          "hex": "9aee3ba21e",
-          "relocation": {
-            "load_offset": 95572,
-            "offset": 30036,
-            "segment": 4096
-          },
-          "site": 95569
-        },
-        {
-          "caller_task": "load_18dc8",
-          "hex": "9aee3ba21e",
-          "relocation": {
-            "load_offset": 101845,
-            "offset": 36309,
-            "segment": 4096
-          },
-          "site": 101842
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 140846,
-        "name": "sprite_copy_both_to_arg",
-        "sha256": "76e110bf85708d85c353610630c2cf640697be1ab6ed280f31996be0dcdf1c8f",
-        "stable_id": "load_2260e",
-        "start": 140814
-      }
-    },
     "_sprite_copy_wnd_to_1": {
       "anchors": [
         {
@@ -12460,28 +12690,6 @@
         "start": 146394
       }
     },
-    "_sprite_putimage_and": {
-      "anchors": [
-        {
-          "caller_task": "load_18e04",
-          "hex": "9a704ea21e",
-          "relocation": {
-            "load_offset": 101977,
-            "offset": 36441,
-            "segment": 4096
-          },
-          "site": 101974
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 145914,
-        "name": "sprite_putimage_and",
-        "sha256": "a2e4fb432655ff104f70ba7e7ce5972927c8ae19dad3f51b61867bb5f24688a2",
-        "start": 145552
-      }
-    },
     "_sprite_putimage_and_alt": {
       "anchors": [
         {
@@ -12512,74 +12720,6 @@
         "sha256": "84ac879a14ba82fed71a8ebdf1b87cc465a682913437c4e7a762c896ae3be389",
         "stable_id": "load_23bbc",
         "start": 146364
-      }
-    },
-    "_sprite_putimage_and_alt2": {
-      "anchors": [
-        {
-          "caller_task": "load_12d2e",
-          "hex": "9a4c4ea21e",
-          "relocation": {
-            "load_offset": 78136,
-            "offset": 12600,
-            "segment": 4096
-          },
-          "site": 78133
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 145552,
-        "name": "sprite_putimage_and_alt2",
-        "sha256": "69b4282e3106f5cab07e1a721344e3d0dc4de141624b7d7966266cf3bf18611f",
-        "stable_id": "load_2386c",
-        "start": 145516
-      }
-    },
-    "_sprite_putimage_or": {
-      "anchors": [
-        {
-          "caller_task": "load_18e04",
-          "hex": "9a6456a21e",
-          "relocation": {
-            "load_offset": 102004,
-            "offset": 36468,
-            "segment": 4096
-          },
-          "site": 102001
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 147986,
-        "name": "sprite_putimage_or",
-        "sha256": "ffc72afa38cd1b9059186ee37be694f59cb3100a30feeb036c0acf0153d3ce36",
-        "start": 147588
-      }
-    },
-    "_sprite_putimage_or_alt": {
-      "anchors": [
-        {
-          "caller_task": "load_12d2e",
-          "hex": "9a4056a21e",
-          "relocation": {
-            "load_offset": 78154,
-            "offset": 12618,
-            "segment": 4096
-          },
-          "site": 78151
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 147588,
-        "name": "sprite_putimage_or_alt",
-        "sha256": "69b4282e3106f5cab07e1a721344e3d0dc4de141624b7d7966266cf3bf18611f",
-        "stable_id": "load_24060",
-        "start": 147552
       }
     },
     "_sprite_putimage_transparent": {
@@ -12705,38 +12845,6 @@
       "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
       "reviewed_alias": "_sprite_setup1_from_arg_pointer"
     },
-    "_sprite_shape_to_1": {
-      "anchors": [
-        {
-          "caller_task": "load_175c6",
-          "hex": "9a1053a21e",
-          "relocation": {
-            "load_offset": 95751,
-            "offset": 30215,
-            "segment": 4096
-          },
-          "site": 95748
-        },
-        {
-          "caller_task": "load_1a2bc",
-          "hex": "9a1053a21e",
-          "relocation": {
-            "load_offset": 109082,
-            "offset": 43546,
-            "segment": 4096
-          },
-          "site": 109079
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 146766,
-        "name": "sprite_shape_to_1",
-        "sha256": "23510cca666e90eecd51843c6a2d302a6e432c6a70aecb3d593af9e440bd662a",
-        "stable_id": "load_23d30",
-        "start": 146736
-      }
-    },
     "_sprite_shape_to_1_alt": {
       "anchors": [
         {
@@ -12861,6 +12969,39 @@
       },
       "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
       "reviewed_alias": "_sprset1size"
+    },
+    "_sseqds": {
+      "anchors": [
+        {
+          "caller_task": "load_12596",
+          "hex": "9afd18a21e",
+          "relocation": {
+            "load_offset": 75161,
+            "offset": 9625,
+            "segment": 4096
+          },
+          "site": 75158
+        },
+        {
+          "caller_task": "load_16fa3",
+          "hex": "9afd18a21e",
+          "relocation": {
+            "load_offset": 94126,
+            "offset": 28590,
+            "segment": 4096
+          },
+          "site": 94123
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 131881,
+        "name": "compare_ds_ss",
+        "sha256": "cb815c6fee5059d41a0841efafc6983e10ae0b8226e602d1c8e91dc94228797c",
+        "stable_id": "load_2031d",
+        "start": 131869
+      },
+      "reviewed_alias": "_sseqds"
     },
     "_start_audio_voice_sample": {
       "anchors": [
@@ -13874,6 +14015,39 @@
       "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
       "reviewed_alias": "_testbiosticks"
     },
+    "_testkey": {
+      "anchors": [
+        {
+          "caller_task": "load_20a5d",
+          "hex": "9afc1fa21e",
+          "relocation": {
+            "load_offset": 133728,
+            "offset": 2656,
+            "segment": 8192
+          },
+          "site": 133725
+        },
+        {
+          "caller_task": "load_20a77",
+          "hex": "9afc1fa21e",
+          "relocation": {
+            "load_offset": 133754,
+            "offset": 2682,
+            "segment": 8192
+          },
+          "site": 133751
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 133665,
+        "name": "kb_call_readchar_callback",
+        "sha256": "525407e37815a5dfd3a1a62c465a957ef3fca41a6eb3fc37b8679097f94d0552",
+        "stable_id": "load_20a1c",
+        "start": 133660
+      },
+      "reviewed_alias": "_testkey"
+    },
     "_testticks": {
       "anchors": [
         {
@@ -14012,39 +14186,6 @@
       },
       "reviewed_alias": "_timedwait"
     },
-    "_timer_get_counter": {
-      "anchors": [
-        {
-          "caller_task": "load_1998e",
-          "hex": "9a583da21e",
-          "relocation": {
-            "load_offset": 104872,
-            "offset": 39336,
-            "segment": 4096
-          },
-          "site": 104869
-        },
-        {
-          "caller_task": "load_20a77",
-          "hex": "9a583da21e",
-          "relocation": {
-            "load_offset": 133764,
-            "offset": 2692,
-            "segment": 8192
-          },
-          "site": 133761
-        }
-      ],
-      "distinct_verified_callers": 2,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 141186,
-        "name": "timer_get_counter",
-        "sha256": "824af8fc2a6a6f4b97ff26c56c6376da0a14bae57eb2e49ef92c653499205dca",
-        "stable_id": "load_22778",
-        "start": 141176
-      }
-    },
     "_timer_get_delta_alt": {
       "anchors": [
         {
@@ -14077,70 +14218,6 @@
         "start": 107056
       }
     },
-    "_timer_reg_callback": {
-      "anchors": [
-        {
-          "caller_task": "load_1255a",
-          "hex": "9a8a18a21e",
-          "relocation": {
-            "load_offset": 75115,
-            "offset": 9579,
-            "segment": 4096
-          },
-          "site": 75112
-        },
-        {
-          "caller_task": "load_16bae",
-          "hex": "9a8a18a21e",
-          "relocation": {
-            "load_offset": 93136,
-            "offset": 27600,
-            "segment": 4096
-          },
-          "site": 93133
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 131806,
-        "name": "timer_reg_callback",
-        "sha256": "8d2fb99194bdd4c492da936be089c3b8d2c0827dc680bf764f62c6980ca240ba",
-        "stable_id": "load_202aa",
-        "start": 131754
-      }
-    },
-    "_timer_remove_callback": {
-      "anchors": [
-        {
-          "caller_task": "load_12576",
-          "hex": "9abe18a21e",
-          "relocation": {
-            "load_offset": 75151,
-            "offset": 9615,
-            "segment": 4096
-          },
-          "site": 75148
-        },
-        {
-          "caller_task": "load_16bd5",
-          "hex": "9abe18a21e",
-          "relocation": {
-            "load_offset": 93184,
-            "offset": 27648,
-            "segment": 4096
-          },
-          "site": 93181
-        }
-      ],
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 131869,
-        "name": "timer_remove_callback",
-        "sha256": "4ccb2ff67693053cc52bccf92027ec620421b4c7cf6cb2d7db7fd84904e79298",
-        "stable_id": "load_202de",
-        "start": 131806
-      }
-    },
     "_timer_setup_interrupt": {
       "anchors": [
         {
@@ -14163,6 +14240,30 @@
         "stable_id": "load_201a0",
         "start": 131488
       }
+    },
+    "_tire": {
+      "anchors": [
+        {
+          "caller_task": "load_26c7e",
+          "hex": "9a0000ec26",
+          "relocation": {
+            "load_offset": 158868,
+            "offset": 27796,
+            "segment": 8192
+          },
+          "site": 158865
+        }
+      ],
+      "distinct_verified_callers": 1,
+      "frame_load_address": 159424,
+      "mapped_target": {
+        "end": 159530,
+        "name": "preRender_wheel_helper",
+        "sha256": "b0d96a0f55f8b509bfee3e9d95f66895278be20e09dc7c2451f0795d9ba18ba0",
+        "stable_id": "load_26ec0",
+        "start": 159424
+      },
+      "reviewed_alias": "_tire"
     },
     "_transformed_shape_op": {
       "anchors": [
@@ -14289,6 +14390,29 @@
       },
       "reviewed_alias": "_unlockedmemory"
     },
+    "_unpacksizea": {
+      "anchors": [
+        {
+          "caller_task": "load_20e07",
+          "hex": "9a0615a21e",
+          "relocation": {
+            "load_offset": 134709,
+            "offset": 3637,
+            "segment": 8192
+          },
+          "site": 134706
+        }
+      ],
+      "frame_load_address": 125472,
+      "mapped_target": {
+        "end": 130872,
+        "name": "file_decomp_paras",
+        "sha256": "131a8844b54e934fc53af7420e3ba35a26db15f6fba45de85c13f6ca59137508",
+        "stable_id": "load_1ff26",
+        "start": 130854
+      },
+      "reviewed_alias": "_unpacksizea"
+    },
     "_update_car_speed": {
       "anchors": [
         {
@@ -14358,38 +14482,6 @@
         "start": 140718
       }
     },
-    "_video_clear_color": {
-      "anchors": [
-        {
-          "caller_task": "load_203d8",
-          "hex": "9a8848a21e",
-          "relocation": {
-            "load_offset": 132062,
-            "offset": 990,
-            "segment": 8192
-          },
-          "site": 132059
-        },
-        {
-          "caller_task": "load_225d6",
-          "hex": "9a8848a21e",
-          "relocation": {
-            "load_offset": 140801,
-            "offset": 9729,
-            "segment": 8192
-          },
-          "site": 140798
-        }
-      ],
-      "distinct_verified_callers": 2,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 144064,
-        "name": "video_clear_color",
-        "sha256": "21cdb02328e72f6dce62013cdc1dc21b00125b5155a4a96592f2ed8b41e19be7",
-        "start": 144040
-      }
-    },
     "_video_set_mode4": {
       "anchors": [
         {
@@ -14436,29 +14528,6 @@
         "sha256": "b938d9ffc18d4b2ee4b90cdb5097835f0c1c9b5f6b6ea5296fd218394e52ca61",
         "stable_id": "load_20120",
         "start": 131360
-      }
-    },
-    "_video_set_mode_13h": {
-      "anchors": [
-        {
-          "caller_task": "load_29e56",
-          "hex": "9af64da21e",
-          "relocation": {
-            "load_offset": 172157,
-            "offset": 41085,
-            "segment": 8192
-          },
-          "site": 172154
-        }
-      ],
-      "distinct_verified_callers": 1,
-      "frame_load_address": 125472,
-      "mapped_target": {
-        "end": 145480,
-        "name": "video_set_mode_13h",
-        "sha256": "e8f62bc39b509ba297d7fe8d34d2b7f55c5a9f917fad1c9bd23ff5e7f01f15f3",
-        "stable_id": "load_23816",
-        "start": 145430
       }
     },
     "_vsyncstate": {

@@ -36,14 +36,14 @@ SPRITE ends
 extrn _fontdefseg:word
 extrn _shape2d_scale_blit_tail:near
 public _draw_filled_lines
-public _shape2d_capture_bitmap_hotspot
+public _readfxy
 public _sprite_clear_shape_alt
 public _sprite_clear_shape
-public _shapeexpl
+public _scalecfxy
 public _sprite1
 public _sprite2
 public _font_setup_unknown
-public _set_fontdefseg
+public _setfont
 ; -----------------------------------------------------------------------------
 ; Purpose: Draw filled scan lines from the prepared line descriptors.
 ; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: arg_color (word ptr
@@ -193,7 +193,7 @@ _draw_filled_lines endp
 ; 228; shared epilogue
 ; ASMDOC at 251 restores them. Core switches DS to sprite pixels and ES to caller shape segment. Height <=0
 ; still copies one row.
-_shape2d_capture_bitmap_hotspot proc far
+_readfxy proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -217,7 +217,7 @@ _shape2d_capture_bitmap_hotspot proc far
     mov     [bp+local_destination_y], ax
     jmp     short shape_clear_join_01
     even ; word-align the following entry
-_shape2d_capture_bitmap_hotspot endp
+_readfxy endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by sprite clear shape alt.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -410,7 +410,7 @@ _sprite_clear_shape endp
 ; ASMDOC Edge cases: Unlabeled alternate coordinate/header-origin prologues at lines 308 and 330 are bypassed.
 ; Bytes 449..650 are
 ; ASMDOC public descriptors and row table inside PROC extent, never executed by normal entry.
-_shapeexpl proc far
+_scalecfxy proc far
     local_horizontal_fraction = word ptr -20
     local_vertical_fraction = word ptr -18
     local_reciprocal_step_q8 = word ptr -16
@@ -613,7 +613,7 @@ row_number = 0
     dw row_number * 320
 row_number = row_number + 1
     ENDM
-_shapeexpl endp
+_scalecfxy endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the graphics or geometry helper identified by font setup unknown.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -734,7 +734,7 @@ _font_setup_unknown endp
 ; ASMDOC Services: none.
 ; ASMDOC Dead: false. Reachability: Direct caller src/obj_seg008.c:1454; port/font.c:53 adapts far segment to
 ; host pointer.
-_set_fontdefseg proc far
+_setfont proc far
     arg_font_segment = word ptr 8
 
     push    bp
@@ -744,6 +744,6 @@ _set_fontdefseg proc far
     pop     bp
     retf
     db 0 ; retained zero fill at this boundary
-_set_fontdefseg endp
+_setfont endp
 S012_TEXT ends
 end

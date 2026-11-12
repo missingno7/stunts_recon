@@ -3,10 +3,10 @@
     "declarations": {
       "externals": [
         "__acrtused",
-        "_preRender_wheel_helper",
+        "_tire",
         "_preRender_wheel_helper4",
-        "_preRender_default_alt",
-        "_preRender_wheel"
+        "_drawpolyp",
+        "_solidtire"
       ],
       "groups": [
         {
@@ -26,7 +26,7 @@
       ],
       "publics": [
         {
-          "name": "_preRender_wheel",
+          "name": "_solidtire",
           "offset": 0,
           "segment": "UNIT_TEXT"
         }
@@ -115,7 +115,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_preRender_default_alt",
+      "frame": "_drawpolyp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -123,7 +123,7 @@
       "offset": 566,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_preRender_default_alt",
+      "target": "_drawpolyp",
       "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
@@ -132,7 +132,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_preRender_default_alt",
+      "frame": "_drawpolyp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -140,7 +140,7 @@
       "offset": 546,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_preRender_default_alt",
+      "target": "_drawpolyp",
       "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
@@ -149,7 +149,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_preRender_default_alt",
+      "frame": "_drawpolyp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -157,7 +157,7 @@
       "offset": 380,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_preRender_default_alt",
+      "target": "_drawpolyp",
       "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
@@ -200,7 +200,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_preRender_wheel_helper",
+      "frame": "_tire",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -208,7 +208,7 @@
       "offset": 20,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_preRender_wheel_helper",
+      "target": "_tire",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -258,7 +258,7 @@
     }
   ],
   "profile": "msc510-medium",
-  "public": "_preRender_wheel",
+  "public": "_solidtire",
   "source": "src/preRender_wheel.c",
   "stable_id": "load_26c7e",
   "start": 158846,

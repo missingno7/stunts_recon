@@ -83,7 +83,7 @@ I16 norm_zone(struct VECTOR* vec);
 void projectp(struct VECTOR* vec, struct POINT2D* outpt);
 void zclipline(struct VECTOR* vec1, struct VECTOR* vec2, struct VECTOR* outvec, I16S i);
 
-I16S mulscl(I16S a1, I16S a2);
+I16S fixedmult(I16S a1, I16S a2);
 
 void mergezones(struct RECTANGLE* r1, struct RECTANGLE* r2, struct RECTANGLE* outrc);
 I16 clipzone(struct RECTANGLE* r1, struct RECTANGLE* r2);
@@ -369,8 +369,8 @@ extern void dodash(I16);
 extern void drawworld(I8, struct RECTANGLE*);
 extern void doreplay(I16, I16, I16);
 extern void gameintinit(void);
-extern void mouse_minmax_position(I16);
-extern I16 kb_get_char(void);
+extern void initmousedrive(I16);
+extern I16 normkeyi(void);
 extern void mainkey(I16);
 
 extern I16 flagsdown;
@@ -500,7 +500,7 @@ extern void selectcar(struct GAMEINFO* unk, I8* unk2, I8* unk3, U16  unk4);
 extern void run_game(void);
 extern unsigned end_hiscore(void);
 extern unsigned run_option_menu(void);
-extern void security_check(void);
+extern void getprotection(void);
 
 extern void ensure_file_exists(I16 unk);
 
@@ -509,7 +509,7 @@ extern void far* load_voice_file(const I8* filename);
 extern void far* load_sfx_file(const I8* filename);
 extern void far* load_shape2d_nofatal_thunk(const I8* filename);
 extern void far* load_shape2d_res_nofatal_thunk(const I8* filename);
-extern void far* file_load_shape2d_nofatal(I8* shapename);
+extern void far* loadshapez(I8* shapename);
 extern void far* file_load_shape2d_nofatal2(I8* shapename);
 extern void far* init_audio_resources(void far* songptr, void far* voiceptr, const I8* name);
 extern void load_audio_finalize(void far* audiores);
@@ -525,26 +525,26 @@ extern I16 input_do_checking(I16 unk);
 extern void keyboard_exit_handler(void);
 extern void keyboard_shift_checking1(void);
 extern void kb_shift_checking2(void);
-extern void kb_reg_callback(I16 code, void (far* callback)(void));
+extern void interpretsub(I16 code, void (far* callback)(void));
 extern void show_graphic_levels_menu(void);
 extern void do_joystick_resource_text(void);
-extern void do_key_resource_text(void);
+extern void mkeyon(void);
 extern void do_mof_resource_text(void);
-extern void do_pau_restext(void);
+extern void msystempause(void);
 extern void do_dos_resource_text(void);
 extern void do_sonsof_resource_text(void);
-extern I16S get_kb_or_joy_flags(void);
+extern I16S joystate(void);
 
-extern I16S mouse_init(I16S a1, I16S a2);
+extern I16S initmouse(I16S a1, I16S a2);
 extern void msdrawopaquechk(void);
 
 extern void video_set_mode4(void);
 extern void video_set_mode7(void);
-extern void video_set_mode_13h(void);
+extern void initgraphics(void);
 
 extern void shape3d_load_car_shapes(I8* carid, I8* oppcarid);
 
-extern void load_palandcursor(void);
+extern void loadpalandmouse(void);
 extern void sprset1size(U16S  left, U16S  right, U16S  top, U16S  height);
 extern void sprite_clear_1_color(U8 );
 extern void sprite_blit_to_video(struct SPRITE far* sprite);
@@ -554,9 +554,9 @@ extern I16S (far* old_intr0_handler)(void);
 extern void timer_setup_interrupt(void);
 extern U32  timer_get_delta_alt(void);
 
-extern I16S set_criterr_handler(I16S (far* callback)(void));
+extern I16S criterr(I16S (far* callback)(void));
 extern void exit(I16S a1);
-extern void fatal_error(const I8*, ...);
+extern void abortmessage(const I8*, ...);
 extern I16S do_dea_textres(void);
 
 extern void* _memcpy(void*, const void*, unsigned);
@@ -643,7 +643,7 @@ extern I16 polygonnumber;
 extern U8  far* polyinfoptrs[];
 /* Unused OMF-order declaration: this address is private poly_link_list[0] in obj_seg006. */
 extern U16  poly_linked_list_40ED6[];
-extern void preRender_default(I16 color, I16 vertlinecount, I16* vertlines);
+extern void drawpolypt(I16 color, I16 vertlinecount, I16* vertlines);
 extern U8  opponent_spd_tbl[];
 extern struct TRACKOBJECT trklst[];
 extern U16  calcrpm(U16 , U16 , U16 , I16, U16 );
@@ -681,7 +681,7 @@ extern I16 f36f40_whlData;
 void moveopponent(void);
 void mat_mul_vector2(struct VECTOR *invec, struct MATRIX far *mat, struct VECTOR *outvec);
 void movecar(struct CARSTATE* activeCarState, struct SIMD* activeCarSetup, struct CARSTATE* otherCarState, struct SIMD* otherCarSetup, I8 isOpponent);
-void init_carstate_from_simd(struct CARSTATE* playerstate, struct SIMD* simd,
+void initcar(struct CARSTATE* playerstate, struct SIMD* simd,
     I8 transmission, I32 posX, I32 posY, I32 posZ, I16S trkang);
 void initialize_game_state(I16S arg);
 void gotosim(I16 frame);
@@ -698,7 +698,7 @@ void audio_dispatch_car_events(I8 flags, I16S audioId);
 void myupdatesfx1(struct AUDIO_CAR_FRAME *record, I16S value);
 I8 gettlistpoint(I16 trackIndex, struct TRACKRESULT *result, I8 side,
               I8 *opponentSpeed);
-I8 car_test_car_overlap(struct POINT2D *pCollPoints,
+I8 boxcheck(struct POINT2D *pCollPoints,
                               struct VECTOR *pWorldCrds,
                               struct POINT2D *oCollPoints,
                               struct VECTOR *oWorldCrds);
@@ -943,9 +943,9 @@ steer:
         core.opponentstate.car_route_bearing = intatan(-waypoint.x, waypoint.z) & ANGLE_TURN_MASK;
     }
     if (core.opponentstate.car_finish_route_passed != 0) {
-        temp = mulscl(intcos(st_hdg),
+        temp = fixedmult(intcos(st_hdg),
             row_ctr_zs[tagtrk] - (core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT)); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-        temp += mulscl(intsin(st_hdg),
+        temp += fixedmult(intsin(st_hdg),
             trackctrpos2[idxtrk] - (core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT)); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
         if (temp < 0)
             finishgame(3, 1);
@@ -1468,7 +1468,7 @@ wheels_done:
 			objPos[1].x = otherCarState->car_rotate.z;
 			objPos[1].y = otherCarState->car_rotate.y;
 			objPos[1].z = otherCarState->car_rotate.x;
-			if (car_test_car_overlap(activeCarSetup->collide_points, self, otherCarSetup->collide_points, objPos)) {
+			if (boxcheck(activeCarSetup->collide_points, self, otherCarSetup->collide_points, objPos)) {
 				if (activeCarState->car_contact_processed != 0)
 					return;
 				if (calccoll(activeCarState, otherCarState) == 0)
@@ -1492,7 +1492,7 @@ wheels_done:
 				objPos[0].x = objPts[i].x;
 				objPos[0].y = objPts[i].y;
 				objPos[0].z = objPts[i].z;
-				if (car_test_car_overlap(activeCarSetup->collide_points, self, pointsizeinfo, objPos)) {
+				if (boxcheck(activeCarSetup->collide_points, self, pointsizeinfo, objPos)) {
 					activeCarState->car_36MwhlAngle -= ANGLE_HALF_TURN;
 
 					finishgame(1, isOpponent);
@@ -1505,19 +1505,19 @@ wheels_done:
 			objPos[0].x = td10checkptr[i].x;
 			objPos[0].y = td10checkptr[i].y;
 			objPos[0].z = td10checkptr[i].z;
-			if (car_test_car_overlap(activeCarSetup->collide_points, self, signsizeinfo, objPos)) {
+			if (boxcheck(activeCarSetup->collide_points, self, signsizeinfo, objPos)) {
 				core.game_track_object_broken[i] = 1;
 				init_explode(i + 2, -activeCarState->car_rotate.x, (I32)activeCarState->car_speed2 * 0x580 / 0x3C00U);
 			}
 		}
 		if (res.x == idxtrk && res.z == tagtrk) {
-			objPos[0].x = trackctrpos2[idxtrk] + mulscl(intsin(st_hdg + ANGLE_QUARTER_TURN), 126);
+			objPos[0].x = trackctrpos2[idxtrk] + fixedmult(intsin(st_hdg + ANGLE_QUARTER_TURN), 126);
 			objPos[0].y = terheight[g_hillf];
-			objPos[0].z = mulscl(intcos(st_hdg + ANGLE_QUARTER_TURN), 126) + row_ctr_zs[tagtrk];
-			if ((found = car_test_car_overlap(activeCarSetup->collide_points, self, sfpostsizeinfo, objPos)) == 0) {
-				objPos[0].x = mulscl(intsin(st_hdg + ANGLE_THREE_QUARTERS_TURN), 126) + trackctrpos2[idxtrk];
-				objPos[0].z = mulscl(intcos(st_hdg + ANGLE_THREE_QUARTERS_TURN), 126) + row_ctr_zs[tagtrk];
-				found = car_test_car_overlap(activeCarSetup->collide_points, self, sfpostsizeinfo, objPos);
+			objPos[0].z = fixedmult(intcos(st_hdg + ANGLE_QUARTER_TURN), 126) + row_ctr_zs[tagtrk];
+			if ((found = boxcheck(activeCarSetup->collide_points, self, sfpostsizeinfo, objPos)) == 0) {
+				objPos[0].x = fixedmult(intsin(st_hdg + ANGLE_THREE_QUARTERS_TURN), 126) + trackctrpos2[idxtrk];
+				objPos[0].z = fixedmult(intcos(st_hdg + ANGLE_THREE_QUARTERS_TURN), 126) + row_ctr_zs[tagtrk];
+				found = boxcheck(activeCarSetup->collide_points, self, sfpostsizeinfo, objPos);
 			}
 			if (found != 0) {
 				finishgame(1, isOpponent);
@@ -1535,7 +1535,7 @@ store_state:
 	activeCarState->car_contact_processed = 0;
 }
 
-void init_carstate_from_simd(struct CARSTATE* playerstate, struct SIMD* simd,
+void initcar(struct CARSTATE* playerstate, struct SIMD* simd,
     I8 transmission, I32 posX, I32 posY, I32 posZ, I16S trkang)
 {
     register I16 zero = 0;
@@ -1658,15 +1658,15 @@ void initialize_game_state(I16S arg)
 		}
 
 		core.game_chase_camera_pos[0].x =
-			  mulscl(intsin(st_hdg + ANGLE_HALF_TURN), 4096)
-			+ mulscl(intsin(st_hdg + ANGLE_THREE_QUARTERS_TURN),  512)
+			  fixedmult(intsin(st_hdg + ANGLE_HALF_TURN), 4096)
+			+ fixedmult(intsin(st_hdg + ANGLE_THREE_QUARTERS_TURN),  512)
 			+ (idxtrk << 10);
 
 		core.game_chase_camera_pos[0].y = terheight[g_hillf] + 960;
 
 		core.game_chase_camera_pos[0].z =
-			  mulscl(intcos(st_hdg + ANGLE_HALF_TURN), 4096)
-			+ mulscl(intcos(st_hdg + ANGLE_THREE_QUARTERS_TURN),  512)
+			  fixedmult(intcos(st_hdg + ANGLE_HALF_TURN), 4096)
+			+ fixedmult(intcos(st_hdg + ANGLE_THREE_QUARTERS_TURN),  512)
 			+ r_zp[tagtrk];
 
 		core.game_chase_camera_pos[1] = core.game_chase_camera_pos[0];
@@ -1686,14 +1686,14 @@ void initialize_game_state(I16S arg)
 
 		
 		tmpcol =
-			  mulscl(intsin(st_hdg + ANGLE_QUARTER_TURN),  36)
-			+ mulscl(intsin(st_hdg + ANGLE_HALF_TURN), 210);
+			  fixedmult(intsin(st_hdg + ANGLE_QUARTER_TURN),  36)
+			+ fixedmult(intsin(st_hdg + ANGLE_HALF_TURN), 210);
 		
 		tmprow =
-			  mulscl(intcos(st_hdg + ANGLE_QUARTER_TURN),  36)
-			+ mulscl(intcos(st_hdg + ANGLE_HALF_TURN), 210);
+			  fixedmult(intcos(st_hdg + ANGLE_QUARTER_TURN),  36)
+			+ fixedmult(intcos(st_hdg + ANGLE_HALF_TURN), 210);
 
-		init_carstate_from_simd(
+		initcar(
 			&core.playerstate,
 			&simdp7,
 			globalgamesettings.game_playertransmission,
@@ -1724,14 +1724,14 @@ void initialize_game_state(I16S arg)
 
 		
 		tmpcol =
-			  mulscl(intsin(st_hdg + ANGLE_THREE_QUARTERS_TURN),  36)
-			+ mulscl(intsin(st_hdg + ANGLE_HALF_TURN), 210);
+			  fixedmult(intsin(st_hdg + ANGLE_THREE_QUARTERS_TURN),  36)
+			+ fixedmult(intsin(st_hdg + ANGLE_HALF_TURN), 210);
 		
 		tmprow =
-			  mulscl(intcos(st_hdg + ANGLE_THREE_QUARTERS_TURN),  36)
-			+ mulscl(intcos(st_hdg + ANGLE_HALF_TURN), 210);
+			  fixedmult(intcos(st_hdg + ANGLE_THREE_QUARTERS_TURN),  36)
+			+ fixedmult(intcos(st_hdg + ANGLE_HALF_TURN), 210);
 
-		init_carstate_from_simd(
+		initcar(
 			&core.opponentstate,
 			&ophys_7,
 			1,
@@ -1854,8 +1854,8 @@ void movesim() {
 
 			if (g_rpl_init == 2) {
 				tmp =
-					mulscl(intcos(st_hdg), row_ctr_zs[tagtrk] - (core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT)) /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-					+ mulscl(intsin(st_hdg), trackctrpos2[idxtrk] - (core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT)); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+					fixedmult(intcos(st_hdg), row_ctr_zs[tagtrk] - (core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT)) /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
+					+ fixedmult(intsin(st_hdg), trackctrpos2[idxtrk] - (core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT)); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
 				if (tmp > 0xE4) {
 					if (core.playerstate.car_speed < 0x500) {
 						moveplayer(1);
@@ -2082,9 +2082,9 @@ search:
 	}
 check_lap:
 	if (core.playerstate.car_finish_route_passed != 0) {
-		height = mulscl(intcos(st_hdg),
+		height = fixedmult(intcos(st_hdg),
 			row_ctr_zs[tagtrk] - (core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SCALE_SHIFT)); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
-		height += mulscl(intsin(st_hdg),
+		height += fixedmult(intsin(st_hdg),
 			trackctrpos2[idxtrk] - (core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SCALE_SHIFT)); /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
 		if (height < 0)
 			finishgame(3, 0);
@@ -2495,7 +2495,7 @@ void dohandling(struct CARSTATE *car, struct SIMD *simd, I16 isOpponent)
             car->car_angle_z += (limit - baseAngleValue) / 14;
             car->car_angle_z /= 2;
             if (car->car_angle_z == 0) {
-                car->car_speed2 = mulscl(
+                car->car_speed2 = fixedmult(
                     intcos(car->car_36MwhlAngle), car->car_speed2);
                 if (intcos(car->car_36MwhlAngle) < 0)
                     car->car_speed2 = 0;
@@ -2563,10 +2563,10 @@ I8 calccoll(struct CARSTATE *player, struct CARSTATE *opponent)
     opponentSpeed = opponent->car_speed2;
     pHeading = player->car_rotate.x;
     opponentHeading = opponent->car_rotate.x;
-    playerSin = mulscl(currentSpeed >> Q8_FRACTION_BITS, intsin(pHeading)); /* PORT: Q8 value is converted at the legacy boundary. */
-    opponentSin = mulscl(opponentSpeed >> Q8_FRACTION_BITS, intsin(opponentHeading)); /* PORT: Q8 value is converted at the legacy boundary. */
-    playerCosAngle = mulscl(currentSpeed >> Q8_FRACTION_BITS, intcos(pHeading)); /* PORT: Q8 value is converted at the legacy boundary. */
-    opponentCosAng = mulscl(opponentSpeed >> Q8_FRACTION_BITS, intcos(opponentHeading)); /* PORT: Q8 value is converted at the legacy boundary. */
+    playerSin = fixedmult(currentSpeed >> Q8_FRACTION_BITS, intsin(pHeading)); /* PORT: Q8 value is converted at the legacy boundary. */
+    opponentSin = fixedmult(opponentSpeed >> Q8_FRACTION_BITS, intsin(opponentHeading)); /* PORT: Q8 value is converted at the legacy boundary. */
+    playerCosAngle = fixedmult(currentSpeed >> Q8_FRACTION_BITS, intcos(pHeading)); /* PORT: Q8 value is converted at the legacy boundary. */
+    opponentCosAng = fixedmult(opponentSpeed >> Q8_FRACTION_BITS, intcos(opponentHeading)); /* PORT: Q8 value is converted at the legacy boundary. */
     distanceToCar = inthypot(opponentSin - playerSin, opponentCosAng - playerCosAngle);
     if (distanceToCar < 10)
         distanceToCar = 10;
@@ -3017,7 +3017,7 @@ I8 gettlistpoint(I16 trackIndex, struct TRACKRESULT *result, I8 side,
     return (arrow - 1) == side;
 }
 
-I8 car_test_car_overlap(struct POINT2D *pCollPoints,
+I8 boxcheck(struct POINT2D *pCollPoints,
                               struct VECTOR *pWorldCrds,
                               struct POINT2D *oCollPoints,
                               struct VECTOR *oWorldCrds)
@@ -3129,7 +3129,7 @@ void initlogo(void)
     ((I16S far *)td3)[9] = 1; ((I16S far *)td3)[10] = 2; ((I16S far *)td3)[11] = 3; ((I16S far *)td3)[12] = 4;
     ((I16S far *)td3)[13] = zeroValue; ((I16S far *)td3)[14] = 1; ((I16S far *)td3)[15] = 2; ((I16S far *)td3)[16] = 3; ((I16S far *)td3)[17] = zeroValue;
     opponent_spd_tbl[0] = 0xC8;
-    init_carstate_from_simd(&core.opponentstate, &ophys_7, 1,
+    initcar(&core.opponentstate, &ophys_7, 1,
         0x17700L, 0L, ((I32)(r_zp[28] + 0x12E)) << WORLD_COORDINATE_SCALE_SHIFT, 0); /* PORT: Map-to-world scale is 64:1. */
     gettlistpoint(((I16S far *)td3)[core.opponentstate.car_trackdata3_index],
         &core.opponentstate.car_route_center, core.opponentstate.car_route_point_index++,

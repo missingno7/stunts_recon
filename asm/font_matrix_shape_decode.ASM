@@ -68,10 +68,10 @@ extrn _line_pattern_bits:word
 extrn _spritefunc:word
 extrn _imagefunc:word
 extrn _callbackflags2:byte
-extrn _file_get_shape2d:far
+extrn _shapepointer:far
 extrn _draw_patterned_lines:far
 extrn _preRender_line:far
-extrn _prerender_shared_setup:near
+extrn _polycmn:near
 public _textnpixels
 public _textpixels
 public _preRender_patterned
@@ -297,7 +297,7 @@ patterned_loop_head_01:
     mov     _spritefunc, ax
     mov     ax, offset _preRender_line
     mov     _imagefunc, ax
-    jmp     _prerender_shared_setup
+    jmp     _polycmn
 _preRender_patterned endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 328C9.
@@ -884,7 +884,7 @@ unflip_shape_loop_head_01:
     push    [bp+arg_memchunkofs]
     mov     ax, seg dseg
     mov     ds, ax
-    call    _file_get_shape2d; get shape in binary at index
+    call    _shapepointer; get shape in binary at index
     add     sp, 6
     mov     [bp+var_numshapes], ax
     mov     si, ax

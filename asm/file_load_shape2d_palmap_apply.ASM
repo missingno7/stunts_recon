@@ -8,7 +8,7 @@
 INCLUDE include\platform_hw.inc
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-extrn _file_get_shape2d:far
+extrn _shapepointer:far
 public _file_load_shape2d_palmap_apply
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file load shape2d palmap apply.
@@ -76,7 +76,7 @@ shape_palmap_when_less:
     push    ax
     push    [bp+arg_memchunkseg]
     push    [bp+arg_memchunkoff]
-    call    _file_get_shape2d
+    call    _shapepointer
     add     sp, 6
     mov     es, dx
     mov     di, ax

@@ -165,7 +165,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_timer_get_counter",
+      "frame": "_gettick",
       "frame_index": 2,
       "frame_kind": "external",
       "frame_method": 2,
@@ -173,7 +173,7 @@
       "offset": 102,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_timer_get_counter",
+      "target": "_gettick",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -216,7 +216,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_timer_get_counter",
+      "frame": "_gettick",
       "frame_index": 2,
       "frame_kind": "external",
       "frame_method": 2,
@@ -224,7 +224,7 @@
       "offset": 130,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_timer_get_counter",
+      "target": "_gettick",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -250,7 +250,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_timer_get_counter",
+      "frame": "_gettick",
       "frame_index": 2,
       "frame_kind": "external",
       "frame_method": 2,
@@ -258,7 +258,7 @@
       "offset": 157,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_timer_get_counter",
+      "target": "_gettick",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -312,31 +312,31 @@
   "members": [
     {
       "name": "kb_call_readchar_callback",
-      "public": "_kb_call_readchar_callback",
+      "public": "_testkey",
       "stable_id": "load_20a1c",
       "start": 133660
     },
     {
       "name": "kb_read_char",
-      "public": "_kb_read_char",
+      "public": "_normkey",
       "stable_id": "load_20a21",
       "start": 133665
     },
     {
       "name": "kb_checking",
-      "public": "_kb_checking",
+      "public": "_nextkey",
       "stable_id": "load_20a35",
       "start": 133685
     },
     {
       "name": "nopsub_kb_set_readchar_callback",
-      "public": "_kb_set_readchar_callback",
+      "public": "_keysub",
       "stable_id": "load_20a44",
       "start": 133700
     },
     {
       "name": "nopsub_kb_get_readchar_callback",
-      "public": "_kb_get_readchar_callback",
+      "public": "_currentkeysub",
       "stable_id": "load_20a55",
       "start": 133717
     },
@@ -348,7 +348,7 @@
     },
     {
       "name": "kb_check",
-      "public": "_kb_check",
+      "public": "_purgekey",
       "stable_id": "load_20a68",
       "start": 133736
     },
@@ -383,7 +383,7 @@
   "object_declarations": {
     "externals": [
       "_timer_copy_target_high",
-      "_timer_get_counter",
+      "_gettick",
       "_timer_deadline_ticks"
     ],
     "groups": [
@@ -404,37 +404,37 @@
     ],
     "publics": [
       {
-        "name": "_kb_checking",
-        "offset": 25,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_flush_stdin",
         "offset": 65,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_kb_get_readchar_callback",
-        "offset": 57,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_kb_set_readchar_callback",
+        "name": "_keysub",
         "offset": 40,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_kb_read_char",
+        "name": "_normkey",
         "offset": 5,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_kb_call_readchar_callback",
+        "name": "_nextkey",
+        "offset": 25,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_testkey",
         "offset": 0,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_kb_check",
+        "name": "_currentkeysub",
+        "offset": 57,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_purgekey",
         "offset": 76,
         "segment": "S012_TEXT"
       },

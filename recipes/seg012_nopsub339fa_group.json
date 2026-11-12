@@ -74,7 +74,7 @@
     {
       "end": 145950,
       "name": "nopsub_339FA",
-      "public": "_shape2d_and_bitmap_hotspot",
+      "public": "_andfxy",
       "stable_id": "load_239fa",
       "start": 145914,
       "target": {
@@ -85,7 +85,7 @@
     {
       "end": 146112,
       "name": "putpixel_iconMask",
-      "public": "_putpixel_iconMask",
+      "public": "_andfxya",
       "stable_id": null,
       "start": 145950,
       "target": {
@@ -101,13 +101,13 @@
     "groups": [],
     "publics": [
       {
-        "name": "_putpixel_iconMask",
-        "offset": 36,
+        "name": "_andfxy",
+        "offset": 0,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_shape2d_and_bitmap_hotspot",
-        "offset": 0,
+        "name": "_andfxya",
+        "offset": 36,
         "segment": "S012_TEXT"
       }
     ],

@@ -23,7 +23,7 @@ extern I8 *itoa(I16 value, I8 *buffer, I16 radix);
 extern unsigned strlen(I8 *s);
 extern I8 *strcpy(I8 *destination, I8 *source);
 extern I8 *strcat(I8 *destination, I8 *source);
-extern void far* mmgr_free(I8 far* ptr);
+extern void far* freememory(I8 far* ptr);
 extern I8 far *locate_shape_fatal(I8 far *data, I8 *name);
 char textrespfxchr;
 int msecoordx;
@@ -41,12 +41,12 @@ extern struct SPRITE far *spritepointermini;
 void sprite_setup1_from_arg_pointer(struct SPRITE far *argsprite);
 void sprite_clear_1_color(U8  color);
 void far displaywindow(void);
-void far sprite_copy_both_to_arg(struct SPRITE *argsprite);
-void far sprite_copy_arg_to_both(struct SPRITE *argsprite);
+void far savewindow(struct SPRITE *argsprite);
+void far restorewindow(struct SPRITE *argsprite);
 void far sprputimage(struct SHAPE2D far *shape);
 void far sprite_clear_shape_alt(struct SHAPE2D far *shape, I16 x, I16 y);
-void far sprite_putimage_and(struct SHAPE2D far *shape, U16S  x, U16S  y);
-void far sprite_putimage_or(struct SHAPE2D far *shape, U16S  x, U16S  y);
+void far andcfxya(struct SHAPE2D far *shape, U16S  x, U16S  y);
+void far orcfxya(struct SHAPE2D far *shape, U16S  x, U16S  y);
 void far sprite_blit_dither_phase(struct SHAPE2D far *shape, I16 index);
 /* PORT: Resource headers are read directly; preserve byte fields and 2-byte record alignment. */
 struct SHAPE3DHEADER { U8  numverts, numprimitives, numpaints, reserved; };
@@ -60,13 +60,13 @@ extern I16 rate_frame;
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 unsigned int fontdefvalue;
 extern void far *def_fntadr;
-extern void far set_fontdefseg(void far *data);
+extern void far setfont(void far *data);
 extern I8S  mouse_transparent_mode;
 signed char copy_mouse_modes[8];
 signed char input_device_modestack[8];
 extern U32  elapsedticks(void);
 extern I16 far timer_get_delta_alt(void);
-extern U32  far timer_get_counter(void);
+extern U32  far gettick(void);
 extern I16 far rand(void);
 extern I16 far get_kevinrandom(void);
 /* PORT: This compact snapshot is an MSC 16-bit record; host widths and alignment must not alter its byte layout. */
@@ -93,10 +93,10 @@ extern I8 mouseonscreen;
 extern I8 g_is_busy;
 extern U16S  dialog_frame_color;
 void far *main_data_file_addr;
-extern I16 far kb_get_char(void);
+extern I16 far normkeyi(void);
 extern I16 far get_joy_flags(void);
-extern I16 far get_kb_or_joy_flags(void);
-extern void far mouse_get_state(I16 *buttons, I16 *x, I16 *y);
+extern I16 far joystate(void);
+extern void far getmousepos(I16 *buttons, I16 *x, I16 *y);
 extern void far dohidemouse(void);
 extern void far doshowmouse(void);
 extern void far msdrawopaquechk(void);
@@ -112,15 +112,15 @@ extern void far *file_load_resource_file(I8 *filename);
 extern void far file_load_audio_resource(I8 *songfile, I8 *voicefile, I8 *name);
 extern void far *fluffyload(I8 *filename);
 extern I16S far do_dea_textres(void);
-extern void far *file_load_binary_nofatal(I8 *filename);
+extern void far *loadfilez(I8 *filename);
 extern void far *load_shape2d_nofatal_thunk(I8 *filename);
 extern void far *load_shape2d_res_nofatal_thunk(I8 *filename);
 extern void far *load_song_file(I8 *filename);
 extern void far *load_voice_file(I8 *filename);
 extern void far *load_sfx_file(I8 *filename);
-extern void far *file_decomp_nofatal(I8 *filename);
+extern void far *loadpackz(I8 *filename);
 extern void far *file_load_shape2d_nofatal2(I8 *filename);
-extern void far *file_read_nofatal(U16  first, U16  second, U16  third);
+extern void far *loadfileatz(U16  first, U16  second, U16  third);
 extern void far *init_audio_resources(void far *song, void far *voice, I8 *name);
 extern void far load_audio_finalize(void far *audiores);
 extern void far audio_driver_func3F(I16 command);
@@ -151,7 +151,7 @@ I8 far point_in_rectangle(I16 x1, I16 x2, I16 y1, I16 y2)
     extern struct SPRITE far *savedptr_ms;
     extern I32 far availmem(void);
     extern struct SPRITE far *far sprite_make_window(I16 width, I16 height, I16 flags);
-    extern void far sprite_copy_both_to_arg(struct SPRITE *argsprite);
+    extern void far savewindow(struct SPRITE *argsprite);
     extern void far displaywindow(void);
     extern void far sprite_clear_shape_alt(struct SHAPE2D far *shape, I16 x, I16 y);
     struct SPRITE saved_sprites[2];
@@ -163,7 +163,7 @@ I8 far point_in_rectangle(I16 x1, I16 x2, I16 y1, I16 y2)
     mssprite_arrays[mouse_buffer_count] = sprite_make_window(x2 - x1, y2 - y1, 15) /* PLATFORM(video): allocate a temporary sprite window. */;
     g_mousesave_x_tbl[mouse_buffer_count] = x1;
     g_mouseyposstacktable[mouse_buffer_count] = y1;
-    sprite_copy_both_to_arg(&saved_sprites[0]) /* PLATFORM(video): save both active sprite buffers. */;
+    savewindow(&saved_sprites[0]) /* PLATFORM(video): save both active sprite buffers. */;
     savedptr_ms[mouse_buffer_count * 2] = saved_sprites[0];
     savedptr_ms[mouse_buffer_count * 2 + 1] = saved_sprites[1];
     displaywindow() /* PLATFORM(video): copy sprite buffer 2 into buffer 1. */;
@@ -184,20 +184,20 @@ void far restoreboxwindow(void)
     extern I16 g_mouseyposstacktable[];
     extern struct SPRITE far *mssprite_arrays[];
     extern struct SPRITE far *savedptr_ms;
-    extern void far sprite_shape_to_1(struct SHAPE2D far *shape, I16 x, I16 y);
-    extern void far sprite_copy_arg_to_both(struct SPRITE *argsprite);
+    extern void far movfxya(struct SHAPE2D far *shape, I16 x, I16 y);
+    extern void far restorewindow(struct SPRITE *argsprite);
     extern void far sprite_free_window(void far *window);
     struct SPRITE saved_sprites[2];
 
     if (mouse_buffer_count == 0) return;
     --mouse_buffer_count;
     msdrawopaquechk() /* PLATFORM(video): redraw the pointer in opaque mode when needed. */;
-    sprite_shape_to_1(mssprite_arrays[mouse_buffer_count]->sprite_bitmapptr,
+    movfxya(mssprite_arrays[mouse_buffer_count]->sprite_bitmapptr,
                       g_mousesave_x_tbl[mouse_buffer_count],
                       g_mouseyposstacktable[mouse_buffer_count]) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
     saved_sprites[0] = savedptr_ms[mouse_buffer_count * 2];
     saved_sprites[1] = savedptr_ms[mouse_buffer_count * 2 + 1];
-    sprite_copy_arg_to_both(&saved_sprites[0]) /* PLATFORM(video): restore both active sprite buffers. */;
+    restorewindow(&saved_sprites[0]) /* PLATFORM(video): restore both active sprite buffers. */;
     sprite_free_window(mssprite_arrays[mouse_buffer_count]) /* PLATFORM(video): release a temporary sprite window. */;
     msdrawtransparentchk() /* PLATFORM(video): redraw the pointer in transparent mode when needed. */;
 }
@@ -791,10 +791,10 @@ I16 input_checking(I16 delta)
         input_framecount3 -= 10000;
     }
 
-    key = kb_get_char() /* PLATFORM(input_kb): read the next keyboard character. */;
+    key = normkeyi() /* PLATFORM(input_kb): read the next keyboard character. */;
     if (key != 0) kbormouse = 0;
     joy = get_joy_flags() /* PLATFORM(input_joy): read joystick button/direction state. */;
-    kbjoyflags = get_kb_or_joy_flags() /* PLATFORM(input_kb): read the configured keyboard-or-joystick state. */;
+    kbjoyflags = joystate() /* PLATFORM(input_kb): read the configured keyboard-or-joystick state. */;
 
     if (joyflags != joy) {
         newjoyflags = (joyflags ^ joy) & joy;
@@ -818,7 +818,7 @@ I16 input_checking(I16 delta)
 
 /* MSC 5.10: removing this unused label changes the complete object. */
 mouse_poll:
-    mouse_get_state(&flagsdown, &msecoordx, &pos_y_ms) /* PLATFORM(input_mouse): read mouse buttons and coordinates. */;
+    getmousepos(&flagsdown, &msecoordx, &pos_y_ms) /* PLATFORM(input_mouse): read mouse buttons and coordinates. */;
     if (mouse_oldx != msecoordx || mouse_oldy != pos_y_ms ||
         mouse_oldbut != flagsdown) {
         mouse_oldx = msecoordx;
@@ -896,7 +896,7 @@ void far *file_load_resource_file(I8 *filename)
 
 /* target unload_resource @ 5576; accepted source src/unload_resource.c */
 void far closeresource(void far* resptr) { /* PURPOSE: Release a loaded resource through the game memory manager. Params: resptr. Returns: void. Globals: none. */ /* PLATFORM(memory): allocates or releases game-managed memory. */
-    mmgr_free(resptr) /* PLATFORM(memory): release the resource through game memory management. */;
+    freememory(resptr) /* PLATFORM(memory): release the resource through game memory management. */;
 }
 
 /* target locate_shape_alt @ 5596; accepted source src/locate_shape_alt.c */
@@ -1062,10 +1062,10 @@ void far msdrawopaquechk(void)
 void far dohidemouse(void)
 { /* PURPOSE: Save the sprite buffers, draw the pointer, and restore the buffers. Params: none. Returns: void. Globals: reads mouse_unk_sprite_ptr; writes mouse_isdirty. */ /* PLATFORM(video): draws pixels, sprites, or text. */
     struct SPRITE saved_sprite[2];
-    sprite_copy_both_to_arg(saved_sprite) /* PLATFORM(video): save both active sprite buffers. */;
+    savewindow(saved_sprite) /* PLATFORM(video): save both active sprite buffers. */;
     displaywindow() /* PLATFORM(video): copy sprite buffer 2 into buffer 1. */;
     sprputimage(mouse_unk_sprite_ptr->sprite_bitmapptr) /* PLATFORM(video): draw the selected shape. */;
-    sprite_copy_arg_to_both(saved_sprite) /* PLATFORM(video): restore both active sprite buffers. */;
+    restorewindow(saved_sprite) /* PLATFORM(video): restore both active sprite buffers. */;
     mouseonscreen = 0;
 }
 
@@ -1076,12 +1076,12 @@ void far doshowmouse(void)
     register I16 xpos;
     xpos = msecoordx;
     xpos -= xpos % g_vid_flg2_set;
-    sprite_copy_both_to_arg(saved_sprite) /* PLATFORM(video): save both active sprite buffers. */;
+    savewindow(saved_sprite) /* PLATFORM(video): save both active sprite buffers. */;
     displaywindow() /* PLATFORM(video): copy sprite buffer 2 into buffer 1. */;
     sprite_clear_shape_alt(mouse_unk_sprite_ptr->sprite_bitmapptr, xpos, pos_y_ms) /* PLATFORM(video): clear the requested shape in sprite buffer 1. */;
-    sprite_putimage_and(mouse_ptr_cursor->sprite_bitmapptr, msecoordx, pos_y_ms) /* PLATFORM(video): apply a sprite mask at the requested position. */;
-    sprite_putimage_or(spritepointermini->sprite_bitmapptr, msecoordx, pos_y_ms) /* PLATFORM(video): apply sprite pixels at the requested position. */;
-    sprite_copy_arg_to_both(saved_sprite) /* PLATFORM(video): restore both active sprite buffers. */;
+    andcfxya(mouse_ptr_cursor->sprite_bitmapptr, msecoordx, pos_y_ms) /* PLATFORM(video): apply a sprite mask at the requested position. */;
+    orcfxya(spritepointermini->sprite_bitmapptr, msecoordx, pos_y_ms) /* PLATFORM(video): apply sprite pixels at the requested position. */;
+    restorewindow(saved_sprite) /* PLATFORM(video): restore both active sprite buffers. */;
     mouseonscreen = 1;
 }
 
@@ -1106,7 +1106,7 @@ void far clear_keyboardbuffer(void)
 { /* PURPOSE: Poll keyboard or mouse state and update the input frame counter. Params: none. Returns: void. Globals: reads flagsdown, kbormouse; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(timer): registers, removes, or reads the game timer. */
     I8 done;
     do {
-        if (get_kb_or_joy_flags() /* PLATFORM(input_kb): read the configured keyboard-or-joystick state. */ & 0x30) {
+        if (joystate() /* PLATFORM(input_kb): read the configured keyboard-or-joystick state. */ & 0x30) {
             done = 1;
         } else if (input_checking(timer_get_delta_alt() /* PLATFORM(timer): read the elapsed timer delta through the far entry point. */) /* PLATFORM(input_kb): poll the configured input devices. */ != 0) {
             done = 1;
@@ -1184,11 +1184,11 @@ I16 far call_read_line(I8 *buffer, I16 x, I16 y, I16 width, I16 limit, I16 flags
 { /* PURPOSE: Invoke the common line editor at the requested screen position. Params: buffer, x, y, width, limit, flags. Returns: int. Globals: none. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(input_kb): polls or updates keyboard state. */
     I16 result;
     I16 index;
-    extern I16 far read_line(I16, I8 *, I16, I16, I16, I16, I16, void (far *)(void), I16, I16);
+    extern I16 far get_pstring(I16, I8 *, I16, I16, I16, I16, I16, void (far *)(void), I16, I16);
     extern void far kb_line_edit_noop(void);
 
     msdrawopaquechk() /* PLATFORM(video): redraw the pointer in opaque mode when needed. */;
-    result = read_line(2, buffer, 0, x, x * 9 + 9, y, width,
+    result = get_pstring(2, buffer, 0, x, x * 9 + 9, y, width,
                        kb_line_edit_noop,
                        limit, flags) /* PLATFORM(input_kb): run the keyboard line editor. */;
     msdrawtransparentchk() /* PLATFORM(video): redraw the pointer in transparent mode when needed. */;
@@ -1443,15 +1443,15 @@ void file_load_audio_resource(const I8* songfile, const I8* voicefile, const I8*
 void far audio_unload(void)
 { /* PURPOSE: Stop audio playback, release loaded resources, and clear the loaded flag. Params: none. Returns: void. Globals: reads musicfile, openvfile; writes is_audioloaded. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(memory): allocates or releases game-managed memory. */
     audio_driver_func3F(2) /* PLATFORM(audio): stop active audio playback. */;
-    mmgr_free(musicfile) /* PLATFORM(memory): release the resource through game memory management. */;
-    mmgr_free(openvfile) /* PLATFORM(memory): release the resource through game memory management. */;
+    freememory(musicfile) /* PLATFORM(memory): release the resource through game memory management. */;
+    freememory(openvfile) /* PLATFORM(memory): release the resource through game memory management. */;
     is_audioloaded = 0;
 }
 
 /* target font_set_fontdef2 @ 9178; accepted source src/font_set_fontdef2.c */
 void far fontsetfontdef2(void far *data)
 { /* PURPOSE: Apply a font-definition pointer and cache its value. Params: data. Returns: void. Globals: reads none; writes fontdefvalue. */ /* PLATFORM(video): draws pixels, sprites, or text. */
-    set_fontdefseg(data) /* PLATFORM(video): select the font-definition data segment. */;
+    setfont(data) /* PLATFORM(video): select the font-definition data segment. */;
     fontdefvalue = ((struct FONTDEF_PREFIX far *)data)->value;
 }
 
@@ -1488,7 +1488,7 @@ void far fmtframestr(I8 *destination, U16  frame_count, I16 hundredths)
 
 I16 get_super_random(void)
 { /* PURPOSE: Combine timer, random, and race-frame values into a nonnegative result. Params: none. Returns: int. Globals: reads race_stats; writes none. */ /* PLATFORM(timer): registers, removes, or reads the game timer. */
-    register I16 random_value = (I16)(timer_get_counter() /* PLATFORM(timer): read the current timer count. */ + get_kevinrandom() + rand() + race_stats.game_frame);
+    register I16 random_value = (I16)(gettick() /* PLATFORM(timer): read the current timer count. */ + get_kevinrandom() + rand() + race_stats.game_frame);
     return random_value < 0 ? -random_value : random_value;
 }
 
@@ -1499,15 +1499,15 @@ void far* file_load_resource(I16 type, const I8* filename) { /* PURPOSE: Dispatc
 		switch (type) {
 			case 0:
 				// try load the file, if it fails, show a dialog, and retry
-				result = file_load_binary_nofatal(filename) /* PLATFORM(file): load a binary file without terminating on failure. */;
+				result = loadfilez(filename) /* PLATFORM(file): load a binary file without terminating on failure. */;
 				break;
 
 			case 1:
-				return file_load_binary_nofatal(filename) /* PLATFORM(file): load a binary file without terminating on failure. */;
+				return loadfilez(filename) /* PLATFORM(file): load a binary file without terminating on failure. */;
 
 			case 7:
 				// try load a compressed file
-				return file_decomp_nofatal(filename) /* PLATFORM(file): decompress a resource without terminating on failure. */;
+				return loadpackz(filename) /* PLATFORM(file): decompress a resource without terminating on failure. */;
 
 			case 2:
 				// try load a 2d shape and retry if it failed
@@ -1556,10 +1556,10 @@ void far *read_file_with_retry(I16 type, U16  first, U16  second, U16  third)
     for (;;) {
         switch (type) {
         case 9:
-            result = file_read_nofatal(first, second, third) /* PLATFORM(file): read a file without terminating on failure. */;
+            result = loadfileatz(first, second, third) /* PLATFORM(file): read a file without terminating on failure. */;
             break;
         case 10:
-            return file_read_nofatal(first, second, third) /* PLATFORM(file): read a file without terminating on failure. */;
+            return loadfileatz(first, second, third) /* PLATFORM(file): read a file without terminating on failure. */;
         }
         if (result != 0) return result;
         if (do_dea_textres() == 2) return 0;
@@ -1596,9 +1596,9 @@ void far do_joystick_resource_text(void)
     extern I16 far audio_pause_playback(void);
     extern I16 far messagebox(I16, I16, I8 far *, I16, I16, I16, I16 *, I16);
     extern void far reset_joystick_selection(void);
-    extern I16 far joystick_flags_to_index(I16);
-    extern I16 far kb_check(void);
-    extern I16 far kb_read_char(void);
+    extern I16 far convertjoy(I16);
+    extern I16 far purgekey(void);
+    extern I16 far normkey(void);
     extern I16 far get_joy_flags(void);
     extern I16 far drawrect(I16, I16, I16, I16, I16);
     extern U16  dlg_colour;
@@ -1637,12 +1637,12 @@ void far do_joystick_resource_text(void)
         lastpos = -1;
         reset_joystick_selection();
         for (;;) {
-            if (kb_read_char() /* PLATFORM(input_kb): read the selected keyboard character. */ != 0)
+            if (normkey() /* PLATFORM(input_kb): read the selected keyboard character. */ != 0)
                 break;
             cur = get_joy_flags() /* PLATFORM(input_joy): read joystick button/direction state. */;
             if (cur & 0x30)
                 break;
-            cur = joystick_flags_to_index(cur) /* PLATFORM(input_joy): convert joystick flags to a control index. */;
+            cur = convertjoy(cur) /* PLATFORM(input_joy): convert joystick flags to a control index. */;
             if (cur == lastpos)
                 continue;
             for (idx = 0; idx < 9; ++idx)
@@ -1660,7 +1660,7 @@ void far do_joystick_resource_text(void)
     } else {
         joystick_enabled = 0;
     }
-    kb_check() /* PLATFORM(input_kb): poll keyboard state. */;
+    purgekey() /* PLATFORM(input_kb): poll keyboard state. */;
     mouse_enabled = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     input_pushed = 0;
@@ -1668,7 +1668,7 @@ void far do_joystick_resource_text(void)
 }
 
 /* merged owner s008-rest member do_key_restext */
-void far do_key_resource_text(void)
+void far mkeyon(void)
 { /* PURPOSE: Show keyboard help and restore audio and input state. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */
     extern U16  input_pushed;
     extern U8  joystick_enabled, mouse_enabled;
@@ -1708,7 +1708,7 @@ void far do_mou_resource_text(void)
 }
 
 /* merged owner s008-rest member do_pau_restext */
-void far do_pau_restext(void)
+void far msystempause(void)
 { /* PURPOSE: Show pause help and restore audio and input state. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */
     extern U16  input_pushed;
     extern I16 far audio_pause_playback(void);
@@ -1766,14 +1766,14 @@ void far do_dos_resource_text(void)
     extern U16  input_pushed;
     extern I16 far audio_pause_playback(void);
     extern I16 far messagebox(I16, I16, I8 far *, I16, I16, I16, I16, I16);
-    extern void far call_exitlist2(void);
+    extern void far dsiexit(void);
     extern void far restore_audio_volume(void);
     pushmouse() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
     input_pushed = 1;
     audio_pause_playback() /* PLATFORM(audio): read audio option state. */;
     if (messagebox(2, 1, locate_text_resource(main_data_file_addr, "dos") /* PLATFORM(file): locate a named text entry in resource data. */,
                     0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */ == 1)
-        call_exitlist2() /* PLATFORM(dos): run the DOS exit-list action. */;
+        dsiexit() /* PLATFORM(dos): run the DOS exit-list action. */;
     input_pushed = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     pullmouse() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
@@ -1857,8 +1857,8 @@ I16S far do_dea_textres(void)
 void far ensure_file_exists(I16 index)
 { /* PURPOSE: Find the requested file and ask for another path when it is absent. Params: index. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes kbormouse. */ /* PLATFORM(file): uses file and resource services. */ /* PLATFORM(video): draws pixels, sprites, or text. */
     extern I16 far messagebox(I16, I16, I8 far *, I16, I16, I16, I16, I16);
-    extern I16 far file_find(I8 *filename);
-    while (file_find(findfilenames[index - 1]) /* PLATFORM(file): search for a file by name. */ == 0) {
+    extern I16 far findfirst(I8 *filename);
+    while (findfirst(findfilenames[index - 1]) /* PLATFORM(file): search for a file by name. */ == 0) {
         messagebox(1, 1, locate_text_resource(main_data_file_addr, findfiletexts[index - 1]) /* PLATFORM(file): locate a named text entry in resource data. */,
                     0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
         msdrawopaquechk() /* PLATFORM(video): redraw the pointer in opaque mode when needed. */;

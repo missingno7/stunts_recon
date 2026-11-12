@@ -7,7 +7,7 @@
 INCLUDE include\platform_hw.inc
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-extrn _file_get_shape2d:far
+extrn _shapepointer:far
 public _file_unflip_shape2d_pes
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file unflip shape2d pes.
@@ -81,7 +81,7 @@ shape_unflip_wait_loop:
     push    [bp+arg_memchunkoff]
     mov     ax, seg dseg
     mov     ds, ax
-    call    _file_get_shape2d
+    call    _shapepointer
     add     sp, 6
     mov     [bp+var_shapeofs], ax
     mov     [bp+var_shapeseg], dx

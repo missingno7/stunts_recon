@@ -771,7 +771,7 @@
     {
       "end": 147588,
       "name": "sprite_putimage_or_alt",
-      "public": "_sprite_putimage_or_alt",
+      "public": "_orcfxy",
       "stable_id": "load_24060",
       "start": 147552,
       "target": {
@@ -782,7 +782,7 @@
     {
       "end": 147986,
       "name": "sprite_putimage_or",
-      "public": "_sprite_putimage_or",
+      "public": "_orcfxya",
       "stable_id": null,
       "start": 147588,
       "target": {
@@ -793,7 +793,7 @@
     {
       "end": 148214,
       "name": "putpixel_iconFillings",
-      "public": "_putpixel_iconFillings",
+      "public": "_orfxya",
       "stable_id": null,
       "start": 147986,
       "target": {
@@ -804,7 +804,7 @@
     {
       "end": 148400,
       "name": "shape2d_op_unk4",
-      "public": "_shape2d_or_rle",
+      "public": "_orpackf",
       "stable_id": "load_242f6",
       "start": 148214,
       "target": {
@@ -883,13 +883,18 @@
     ],
     "publics": [
       {
-        "name": "_sprite_putimage_or_alt",
-        "offset": 0,
+        "name": "_release_shape_resources",
+        "offset": 1222,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_release_shape_resources",
-        "offset": 1222,
+        "name": "_orfxya",
+        "offset": 434,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_orcfxy",
+        "offset": 0,
         "segment": "S012_TEXT"
       },
       {
@@ -898,18 +903,13 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite_putimage_or",
-        "offset": 36,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_shape2d_or_rle",
+        "name": "_orpackf",
         "offset": 662,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_putpixel_iconFillings",
-        "offset": 434,
+        "name": "_orcfxya",
+        "offset": 36,
         "segment": "S012_TEXT"
       },
       {

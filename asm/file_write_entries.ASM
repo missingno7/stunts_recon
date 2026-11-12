@@ -20,9 +20,9 @@ _BSS segment word public 'BSS'
 _BSS ends
 DGROUP group _DATA, CONST, _BSS
 assume cs:S012_TEXT, ds:DGROUP
-extrn _fatal_error:far
+extrn _abortmessage:far
 S012_TEXT segment word public 'CODE'
-public _file_write_nofatal
+public _savefile
 public _file_write_fatal
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file write nofatal.
@@ -57,7 +57,7 @@ public _file_write_fatal
 ; ASMDOC fatal_error(format,filename) only when BP-4==0; named callee effects/nonreturn assumption apply
 ; ASMDOC dead: True
 ; ASMDOC Public name from existing plan: _file_write_nofatal (unchanged).
-_file_write_nofatal proc far
+_savefile proc far
     var_fatal = word ptr -4
     push    bp
     mov     bp, sp
@@ -68,7 +68,7 @@ _file_write_nofatal proc far
     mov     [bp+var_fatal], 0
     jmp     short _file_write
     nop ; retained code pad at an even offset; EVEN would emit no byte
-_file_write_nofatal endp
+_savefile endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file write fatal.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_filename (word ptr 6);
@@ -182,7 +182,7 @@ write_file_fatal_when_below:
     mov     ax, offset DGROUP:aSFileError_0; "%s FILE ERROR\r"
     push    [bp+arg_filename]
     push    ax
-    call    far ptr _fatal_error
+    call    far ptr _abortmessage
 ; ASMDOC Success path ignores close status and forces AX=0.
 write_file_fatal_when_zero:
     mov     bx, [bp+var_filehandle]

@@ -83,13 +83,13 @@ DSEG segment word public 'DATA'
 DSEG ends
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT, ds:DGROUP
-extrn _add_exit_handler:far
+extrn _addexit:far
 public _kbinput
 public _kb_init_interrupt
 public _keyboard_exit_handler
 public _kb_int9_handler
 public _kb_int16_handler
-public _kb_get_key_state
+public _keystate
 ; -----------------------------------------------------------------------------
 ; Purpose: Install keyboard IRQ and BIOS keyboard handlers and register their exit cleanup.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -158,7 +158,7 @@ keyboard_init_finish_setup:
     push cs
     mov ax, offset _keyboard_exit_handler
     push ax
-    call far ptr _add_exit_handler
+    call far ptr _addexit
     add sp, 4
     pop di
     retf
@@ -447,7 +447,7 @@ _kb_int16_handler endp
 ; INPUTDOC Globals written:
 ; INPUTDOC Services:
 ; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
-_kb_get_key_state proc far
+_keystate proc far
     push bp
     mov bp, sp
 ; INPUTDOC No bounds check protects the 90-byte table; callers must supply a valid scan index.
@@ -457,6 +457,6 @@ _kb_get_key_state proc far
     pop bp
     retf
     db 0 ; retained zero fill at this boundary
-_kb_get_key_state endp
+_keystate endp
 S012_TEXT ends
 end

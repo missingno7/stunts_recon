@@ -67,12 +67,12 @@ extern void far zclipline(struct VECTOR*, struct VECTOR*, struct VECTOR*, I16);
 extern void far* far mmgr_alloc_resbytes(I8*, I32);
 extern I16 far intsin(unsigned);
 extern I16 far intcos(unsigned);
-extern void far preRender_default(I16, I16, struct POINT2D*);
+extern void far drawpolypt(I16, I16, struct POINT2D*);
 extern void far preRender_patterned(I16, I16, I16, struct POINT2D*);
 extern void far sprite_two_color_poly_list(I16, I16, I16, I16, struct POINT2D*);
 extern void far preRender_line(I16, I16, I16, I16, I16);
 extern void far drawcircle(I16, I16, I16, I16);
-extern void far preRender_wheel(struct POINT2D*, I16, I16, I16, I16);
+extern void far solidtire(struct POINT2D*, I16, I16, I16, I16);
 extern void far putpixel_single_maybe(I16, I16, I16);
 
 static struct MATRIX mat_no_turn, mat_quarter_turn, mat_half_turn, mat_three_quarters_turn;
@@ -124,14 +124,14 @@ extern U8  NP[];
 extern U8  PT[];
 static struct POINT2D* projected_point_ptr_table[11];
 
-void polyinfo_reset(void);
+void INIT_BUFFERS(void);
 void initnm(void);
 struct MATRIX* makematrix(I16, I16, I16, I16);
 unsigned getoutcode(struct POINT2D*);
 I8 front_facing(struct POINT2D far*);
 void zonecheck(struct POINT2D*, struct RECTANGLE*);
 norm_zone(struct VECTOR*);
-unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned, unsigned);
+unsigned polysort(unsigned, unsigned);
 
 void INIT_MATRIX(void)
 { /* PURPOSE: Allocate the polygon information pool and initialize cached rotations. Params: none. Returns: void. Globals: reads mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn; writes mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn, polyinfoptr. */ /* PLATFORM(memory): allocates or releases game-managed memory. */
@@ -152,7 +152,7 @@ void INIT_PALETTE(void* clrlist, void* clrlist2, void* patlist, void* patlist2, 
     video_cnstval = videoConst;
 }
 
-void polyinfo_reset(void)
+void INIT_BUFFERS(void)
 { /* PURPOSE: Reset polygon numbering, insertion state, and face-list cursors. Params: none. Returns: void. Globals: reads none; writes facenodeiterator, poly_list_insert_result, polygonnumber, polyinfo_offset, polyinfo_reset_marker. */
     polygonnumber = 0;
     polyinfo_offset = 0;
@@ -167,7 +167,7 @@ unsigned INIT_OBJECTS_BUFFER(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cli
     struct VECTOR vec, vec2;
 
     wkmatx = *makematrix(angZ, angX, angY, 1);
-    polyinfo_reset();
+    INIT_BUFFERS();
     selection_rect = *cliprect;
     half_scale_flag = unk;
     matptr = makematrix(-angZ, -angX, -angY, 0);
@@ -569,7 +569,7 @@ visible:
                 break;
             }
             shape_polyinfo->depth = i;
-            if ((poly_list_insert_result = insert_newest_poly_in_poly_linked_list_40ED6(i, (obj_flags & 1) || (primflag & 2) ? 0 : 1)) != 0)
+            if ((poly_list_insert_result = polysort(i, (obj_flags & 1) || (primflag & 2) ? 0 : 1)) != 0)
                 return 1;
         }
     } while (*current_prim_start != 0);
@@ -577,7 +577,7 @@ visible:
         return -1;
     return 0;
 }
-extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned depth, unsigned search_sorted_position) { /* PURPOSE: Handle the insert newest poly in poly linked list 40ed6 operation. Params: depth, search_sorted_position. Returns: unsigned. Globals: reads poly_cursor1, poly_info_ptrs, poly_link_list, poly_link_listit4, polygon_link_3_list_iter, polygonnumber, polyinfo_offset, transformed_vert_count; writes facenodeiterator, poly_link_list, poly_link_listit4, polygon_link_3_list_iter, polygonnumber, polyinfo_offset. */
+extern unsigned polysort(unsigned depth, unsigned search_sorted_position) { /* PURPOSE: Handle the insert newest poly in poly linked list 40ed6 operation. Params: depth, search_sorted_position. Returns: unsigned. Globals: reads poly_cursor1, poly_info_ptrs, poly_link_list, poly_link_listit4, polygon_link_3_list_iter, polygonnumber, polyinfo_offset, transformed_vert_count; writes facenodeiterator, poly_link_list, poly_link_listit4, polygon_link_3_list_iter, polygonnumber, polyinfo_offset. */
     register I16 remaining;
     register I16 list_index;
     if (search_sorted_position == 0) {
@@ -664,7 +664,7 @@ void DRAW_OBJECTS(void)
             }
             switch (material_patlistptr_copy[materialIndex]) {
             case 0:
-                preRender_default(fill, pointCount, polypts) /* PLATFORM(video): draw a filled polygon. */;
+                drawpolypt(fill, pointCount, polypts) /* PLATFORM(video): draw a filled polygon. */;
                 break;
             case 1:
                 if (matpatlistcopypointer2[materialIndex] != 0)
@@ -681,7 +681,7 @@ void DRAW_OBJECTS(void)
         case 3:
             for (idx = 0; idx < 4; idx++)
                 polypts[idx] = info->points[idx];
-            preRender_wheel(polypts, 0x2500, fill, mat_copy_clr_lst_ptr[materialIndex + 1], mat_copy_clr_lst_ptr[materialIndex + 2]) /* PLATFORM(video): draw a wheel primitive. */;
+            solidtire(polypts, 0x2500, fill, mat_copy_clr_lst_ptr[materialIndex + 1], mat_copy_clr_lst_ptr[materialIndex + 2]) /* PLATFORM(video): draw a wheel primitive. */;
             break;
         case 2:
             drawcircle(info->points[0].x, info->points[0].y, info->points[1].x, fill) /* PLATFORM(video): draw a sphere primitive. */;
@@ -691,7 +691,7 @@ void DRAW_OBJECTS(void)
             break;
         }
     }
-    polyinfo_reset();
+    INIT_BUFFERS();
 }
 
 
@@ -840,7 +840,7 @@ I32 lgabs(I32 value) { /* PURPOSE: Return the magnitude of a signed long value. 
 
 short g_vid_flg2_set;
 short vidflg3is_minus1;
-extern void fatal_error(I8 *);
+extern void abortmessage(I8 *);
 void mergezones(struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *);
 I8 clipzone(struct RECTANGLE *, struct RECTANGLE *);
 I8 zoneoverlap(struct RECTANGLE *, struct RECTANGLE *);
@@ -1078,7 +1078,7 @@ void makezonelist(U8  arg_rectcount, I8* arg_rectarray_indices,
 
 void shellsort(I16, I16*, I16*);
 
-void rectsorttop(I8 arg_array_length, struct RECTANGLE* arg_rect_array, I16* arg_array_indices) { /* PURPOSE: Sort rectangle indices by their top coordinate. Params: arg_array_length, arg_rect_array, arg_array_indices. Returns: void. Globals: none. */
+void sortzonelist(I8 arg_array_length, struct RECTANGLE* arg_rect_array, I16* arg_array_indices) { /* PURPOSE: Sort rectangle indices by their top coordinate. Params: arg_array_length, arg_rect_array, arg_array_indices. Returns: void. Globals: none. */
     register I16 sortIndex;
     I16 intbuffer[256];
     if (arg_array_length > 1) {

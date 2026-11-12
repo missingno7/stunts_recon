@@ -5,16 +5,16 @@
 #define WHEEL_OUTER_RING_OFFSET 32
 struct WheelRect { I16 left, top, section_p1_x, section_p1_y, section_p2_x, section_p2_y, x, y; };
 struct Point { I16 x, y; };
-extern void FAR preRender_wheel_helper2(struct WheelRect *, struct Point *, I16);
+extern void FAR ring(struct WheelRect *, struct Point *, I16);
 /* Generate wheel section rings and copy a translated ring using the rectangle origin delta.
  * Params and return follow the declared C signature. */
-void FAR preRender_wheel_helper(struct WheelRect *rect, struct Point *coords, I16 count)
+void FAR tire(struct WheelRect *rect, struct Point *coords, I16 count)
 {
     I16 dx, dy;
     I16 k;
     struct Point *src;
     struct Point *dst;
-    preRender_wheel_helper2(rect, coords, count);
+    ring(rect, coords, count);
     dx = rect->x - rect->left;
     dy = rect->y - rect->top;
     src = coords; dst = coords + WHEEL_OUTER_RING_OFFSET;

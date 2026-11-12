@@ -39,15 +39,15 @@ static char id_buffer[5];
 extern unsigned char audioflag6;
 extern unsigned char audio_driver_mode;
 
-extern int far compare_ds_ss(void);
-extern void far timer_reg_callback(void (far *callback)(void));
-extern void far timer_remove_callback(void (far *callback)(void));
+extern int far sseqds(void);
+extern void far addtimer(void (far *callback)(void));
+extern void far deltimer(void (far *callback)(void));
 extern void far release_audio_chunk(int handle);
 extern void far reset_audio_voice_length(int channel);
 extern u8 far * far locate_shape_fatal(void far *lookup, char *name);
 extern void far * far init_audio_resources(void far *resource, void far *lookup, char *name);
 extern int far reserve_audio_chunk(int a, int b);
-extern void far fatal_error(char *message);
+extern void far abortmessage(char *message);
 extern void far start_audio_voice_sample(int handle, u8 far *shape);
 extern short far send_audio_stop_event(u16 rate, int handle);
 extern void far audio_set_chunk_volume(int handle, int value);
@@ -67,7 +67,7 @@ void far audio_add_driver_timer(void)
     for (timer = audio_timer_table; timer < audio_timer_table + 25; timer++)
         timer->active = 0;
     audio_timer_count = 0x16;
-    timer_reg_callback(audio_driver_timer) /* PLATFORM(timer): register the audio update routine with the timer service. */;
+    addtimer(audio_driver_timer) /* PLATFORM(timer): register the audio update routine with the timer service. */;
 }
 
 void far audio_remove_driver_timer(void)
@@ -79,7 +79,7 @@ void far audio_remove_driver_timer(void)
             release_audio_chunk(timer->handle) /* PLATFORM(audio): stop an audio timer handle. */;
         timer->active = 0;
     }
-    timer_remove_callback(audio_driver_timer) /* PLATFORM(timer): remove the audio update routine from the timer service. */;
+    deltimer(audio_driver_timer) /* PLATFORM(timer): remove the audio update routine from the timer service. */;
 }
 
 char * far pad_id(u32 far *id)
@@ -142,7 +142,7 @@ int far audio_init_engine(int unused, u8 huge *blob, void far *lookup, void far 
         timer->active = 1;
         return slot;
     }
-    fatal_error("InitEngine: All handles used.");
+    abortmessage("InitEngine: All handles used.");
 }
 
 void far audio_op_unk(int index)
@@ -184,7 +184,7 @@ void far audio_driver_timer(void)
     int i;
     u8 pitch;
 
-    if (!compare_ds_ss())
+    if (!sseqds())
         return;
     if (++audio_tick_divider < 2 && audio_driver_mode)
         return;

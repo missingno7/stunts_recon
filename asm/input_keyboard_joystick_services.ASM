@@ -74,21 +74,21 @@ joystick_flags_to_axis_table db 00h, 01h, 05h, 00h, 03h, 02h, 04h, 03h, 07h, 08h
 extrn _kbinput:byte
 extrn _joystick_enabled:byte
 _DATA ends
-extrn _video_clear_color:far
+extrn _clearscreen:far
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _callbackflags2
 public _set_bios_mode3
-public _kb_parse_key
-public _kb_reg_callback
-public _kb_clear_key_callback
+public _interpretkey
+public _interpretsub
+public _interpretclear
 public _input_read_char_or_joystick
-public _kb_get_char
-public _get_kb_or_joy_flags
-public _input_get_action_buttons
+public _normkeyi
+public _joystate
+public _joybuttons
 public _get_joy_flags
 public _reset_joystick_selection
-public _joystick_flags_to_index
+public _convertjoy
 public _replay_axis_value
 public _joystick_scale_saved_y
 ; -----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ public _joystick_scale_saved_y
 _set_bios_mode3 proc far
     xor     ax, ax
     push    ax
-    call    far ptr _video_clear_color
+    call    far ptr _clearscreen
     add     sp, 2
     mov     ax, 40h
     mov     es, ax
@@ -159,7 +159,7 @@ _set_bios_mode3 endp
 ; INPUTDOC Globals written: key_parser_busy_flag; caller key stack word for ASCII; callback-dependent globals
 ; INPUTDOC Services: CLI/STI; indirect FAR callback with no explicitly supplied argument words
 ; INPUTDOC Reachability: Live via kb_get_char; callback targets are explicitly registered by src/obj_seg031.c.
-_kb_parse_key proc far
+_interpretkey proc far
     push bp
     mov bp, sp
     cli ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
@@ -210,7 +210,7 @@ return_without_callback:
     mov byte ptr ds:[key_parser_busy_flag], 0
     pop bp
     retf
-_kb_parse_key endp
+_interpretkey endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Register a keyboard input callback.
 ; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6);
@@ -236,7 +236,7 @@ _kb_parse_key endp
 ; INPUTDOC Globals written: _callbacks when free segment=0; _callbackflags or _callbackflags2
 ; INPUTDOC Services:
 ; INPUTDOC Reachability: Live: src/obj_seg031.c:161-177 registers nine key bindings.
-_kb_reg_callback proc far
+_interpretsub proc far
     arg_encoded_key = word ptr 6
     arg_callback_offset = word ptr 8
     arg_callback_segment = word ptr 10
@@ -286,7 +286,7 @@ store_scancode_flags:
     pop     bp
     retf
 
-_kb_reg_callback endp
+_interpretsub endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 304AF.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -310,14 +310,14 @@ _kb_reg_callback endp
 ; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
 ; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
-_kb_clear_key_callback proc far
+_interpretclear proc far
     push    bp
     mov     bp, sp
     xor     ax, ax
 ; INPUTDOC Shared tail pops this routine BP and RETFs using its own caller frame.
     jmp     short store_callback_flags
 
-_kb_clear_key_callback endp
+_interpretclear endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 304B6. Its internal flow uses return_empty_key_char,
 ; poll_joystick_for_character.
@@ -368,7 +368,7 @@ return_empty_key_char:
     int     R5HW_BIOS_KEYBOARD_INT
 ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
     push    ax
-    call far ptr _kb_parse_key
+    call far ptr _interpretkey
     add     sp, 2
     retf
 poll_joystick_for_character:
@@ -430,7 +430,7 @@ _input_read_char_or_joystick endp
 ; INPUTDOC Globals written: transitive queue dequeue, parser guard, callback state
 ; INPUTDOC Services: INT16 AH=01/00; kb_parse_key
 ; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
-_kb_get_char proc far
+_normkeyi proc far
     mov     ah, 1
     int     R5HW_BIOS_KEYBOARD_INT
 ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
@@ -447,12 +447,12 @@ read_buffered_key_char:
     int     R5HW_BIOS_KEYBOARD_INT
 ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
     push    ax
-    call far ptr _kb_parse_key
+    call far ptr _interpretkey
     add     sp, 2
 return_keyboard_character:
     retf
 
-_kb_get_char endp
+_normkeyi endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the combined keyboard or joystick input flags.
 ; ABI: FAR entry; source return form: RET, RETF mnemonic for FAR entry; stack arguments: no named stack
@@ -474,7 +474,7 @@ _kb_get_char endp
 ; INPUTDOC Globals written: transitive get_joy_flags globals on fallback
 ; INPUTDOC Services: get_joy_flags only when keyboard flags are zero
 ; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
-_get_kb_or_joy_flags proc far
+_joystate proc far
     xor     ax, ax
     xor     bx, bx
     mov     bl, _kbscancodes
@@ -534,7 +534,7 @@ use_joystick_when_no_key:
 return_input_flags:
     retf
 
-_get_kb_or_joy_flags endp
+_joystate endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 305C8. Its internal flow uses
 ; check_second_keyboard_scancode, read_joystick_buttons.
@@ -560,7 +560,7 @@ _get_kb_or_joy_flags endp
 ; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
 ; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
-_input_get_action_buttons proc far
+_joybuttons proc far
     xor     cx, cx
     xor     bx, bx
     mov     bl, _kbscancodes
@@ -586,7 +586,7 @@ return_combined_input_flags:
     or      ax, cx
     retf
 
-_input_get_action_buttons endp
+_joybuttons endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Read and normalize the game-port joystick button and axis state.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -875,7 +875,7 @@ _reset_joystick_selection endp
 ; INPUTDOC Globals written:
 ; INPUTDOC Services:
 ; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
-_joystick_flags_to_index proc far
+_convertjoy proc far
     arg_axis_flags = word ptr 6
 
     push    bp
@@ -888,7 +888,7 @@ _joystick_flags_to_index proc far
     xor     ah, ah
     pop     bp
     retf
-_joystick_flags_to_index endp
+_convertjoy endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return a recorded joystick axis value for replay.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments

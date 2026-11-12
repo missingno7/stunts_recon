@@ -8,7 +8,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_video_clear_color",
+      "frame": "_clearscreen",
       "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
@@ -16,7 +16,7 @@
       "offset": 4,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_video_clear_color",
+      "target": "_clearscreen",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -2145,19 +2145,19 @@
     },
     {
       "name": "kb_parse_key",
-      "public": "_kb_parse_key",
+      "public": "_interpretkey",
       "stable_id": "load_20404",
       "start": 132100
     },
     {
       "name": "kb_reg_callback",
-      "public": "_kb_reg_callback",
+      "public": "_interpretsub",
       "stable_id": "load_2045e",
       "start": 132190
     },
     {
       "name": "nopsub_304AF",
-      "public": "_kb_clear_key_callback",
+      "public": "_interpretclear",
       "stable_id": "load_204af",
       "start": 132271
     },
@@ -2169,19 +2169,19 @@
     },
     {
       "name": "kb_get_char",
-      "public": "_kb_get_char",
+      "public": "_normkeyi",
       "stable_id": "load_20519",
       "start": 132377
     },
     {
       "name": "get_kb_or_joy_flags",
-      "public": "_get_kb_or_joy_flags",
+      "public": "_joystate",
       "stable_id": "load_20538",
       "start": 132408
     },
     {
       "name": "nopsub_305C8",
-      "public": "_input_get_action_buttons",
+      "public": "_joybuttons",
       "stable_id": "load_205c8",
       "start": 132552
     },
@@ -2199,7 +2199,7 @@
     },
     {
       "name": "sub_307D2",
-      "public": "_joystick_flags_to_index",
+      "public": "_convertjoy",
       "stable_id": "load_207d2",
       "start": 133074
     },
@@ -2233,7 +2233,7 @@
   },
   "object_declarations": {
     "externals": [
-      "_video_clear_color",
+      "_clearscreen",
       "_kbinput",
       "_joystick_enabled"
     ],
@@ -2256,23 +2256,18 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_kb_get_char",
-        "offset": 321,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_replay_axis_value",
         "offset": 1035,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_joystick_flags_to_index",
-        "offset": 1018,
+        "name": "_interpretkey",
+        "offset": 44,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_kb_parse_key",
-        "offset": 44,
+        "name": "_interpretsub",
+        "offset": 134,
         "segment": "S012_TEXT"
       },
       {
@@ -2286,18 +2281,13 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_input_get_action_buttons",
-        "offset": 496,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_get_joy_flags",
         "offset": 548,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_get_kb_or_joy_flags",
-        "offset": 352,
+        "name": "_interpretclear",
+        "offset": 215,
         "segment": "S012_TEXT"
       },
       {
@@ -2306,18 +2296,28 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_kb_reg_callback",
-        "offset": 134,
+        "name": "_normkeyi",
+        "offset": 321,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_kb_clear_key_callback",
-        "offset": 215,
+        "name": "_joystate",
+        "offset": 352,
         "segment": "S012_TEXT"
       },
       {
         "name": "_input_read_char_or_joystick",
         "offset": 222,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_convertjoy",
+        "offset": 1018,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_joybuttons",
+        "offset": 496,
         "segment": "S012_TEXT"
       }
     ],

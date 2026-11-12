@@ -2134,13 +2134,13 @@
   "members": [
     {
       "name": "preRender_default",
-      "public": "_preRender_default",
+      "public": "_drawpolypt",
       "stable_id": "load_217b2",
       "start": 137138
     },
     {
       "name": "preRender_default_alt",
-      "public": "_preRender_default_alt",
+      "public": "_drawpolyp",
       "stable_id": "load_217c1",
       "start": 137153
     },
@@ -2191,7 +2191,7 @@
     "embedded_publics": [
       {
         "offset": 88,
-        "public": "_prerender_shared_setup"
+        "public": "_polycmn"
       }
     ],
     "end_boundary": {
@@ -2228,11 +2228,6 @@
     ],
     "publics": [
       {
-        "name": "_prerender_shared_setup",
-        "offset": 88,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_preRender_helper2",
         "offset": 693,
         "segment": "S012_TEXT"
@@ -2250,11 +2245,6 @@
       {
         "name": "_preRender_wheel_helper4",
         "offset": 60,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_preRender_default",
-        "offset": 0,
         "segment": "S012_TEXT"
       },
       {
@@ -2278,12 +2268,17 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_polycmn",
+        "offset": 88,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_imagefunc",
         "offset": 8,
         "segment": "_DATA"
       },
       {
-        "name": "_preRender_default_alt",
+        "name": "_drawpolyp",
         "offset": 15,
         "segment": "S012_TEXT"
       },
@@ -2296,6 +2291,11 @@
         "name": "_spritefunc",
         "offset": 4,
         "segment": "_DATA"
+      },
+      {
+        "name": "_drawpolypt",
+        "offset": 0,
+        "segment": "S012_TEXT"
       }
     ],
     "segments": [

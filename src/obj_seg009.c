@@ -122,13 +122,13 @@ extern I16 far doslider();
 extern void far sprite_blit_to_video(struct SPRITE far *sprite, I16 mode);
 extern void far preRender_line(I16 x1, I16 y1, I16 x2, I16 y2, I16 color);
 extern void far sprcopy2to12(void);
-extern void far sprite_shape_to_1(void far *shape, I16 x, I16 y);
+extern void far movfxya(void far *shape, I16 x, I16 y);
 extern void far sprite_clear_shape_alt(void far *shape, I16 x, I16 y);
 extern void far sprite_putimage_and_alt(void far *shape, I16 x, I16 y);
-extern void far sprite_putimage_and(void far *shape, I16 x, I16 y);
-extern void far sprite_putimage_or(void far *shape, I16 x, I16 y);
-extern void far putpixel_iconMask(void far *shape, I16 x, I16 y);
-extern void far putpixel_iconFillings(void far *shape, I16 x, I16 y);
+extern void far andcfxya(void far *shape, I16 x, I16 y);
+extern void far orcfxya(void far *shape, I16 x, I16 y);
+extern void far andfxya(void far *shape, I16 x, I16 y);
+extern void far orfxya(void far *shape, I16 x, I16 y);
 extern void far msdrawopaquechk(void);
 extern void far msdrawtransparentchk(void);
 extern void far font_setup_unknown(I16 colour, I16 mode);
@@ -146,14 +146,14 @@ extern void far clear_keyboardbuffer(void);
 extern I8 far do_fileselect_dialog(I8 *dir, I8 *name, I8 *ext, I8 far *title);
 extern I8 far fsavereq(I8 *dir, I8 *name, I8 far *title);
 extern void far makename(I8 *dir, I8 *name, I8 *ext, I8 *dst);
-extern void far file_read_fatal(I8 *path, U8  far *buffer);
+extern void far loadfileat(I8 *path, U8  far *buffer);
 extern I16 far file_write_fatal(I8 *path, U8  far *buffer, I32 size);
-extern I16 far file_find(I8 *query);
+extern I16 far findfirst(I8 *query);
 extern void far highscore_write_a(I16 mode);
 extern void far xorbox(I16 x1, I16 y1, I16 x2, I16 y2, I16 color);
 extern void far sprite_free_window(struct SPRITE far *sprite);
 extern void far closeresource(U8  far *data);
-extern void far mmgr_free(U8  far *data);
+extern void far freememory(U8  far *data);
 extern U8  far roadupcheck(U16  terrain, U16  element);
 
 I8 checktracksyntax();
@@ -392,16 +392,16 @@ nextFrame:
                 paletteModified = 0;
                 sprite_setup1_from_arg_pointer(windows[tileSize]) /* PLATFORM(video): select the sprite described by the argument pointer. */;
                 if (activeGroup == 0) {
-                    sprite_shape_to_1(terrain_tile_shapes[selectedPiece], 0, 0) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                    movfxya(terrain_tile_shapes[selectedPiece], 0, 0) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                     preRender_line(1, 0, 15, 0, performGraphColor) /* PLATFORM(video): draw a line primitive. */;
                     preRender_line(1, 14, 15, 14, performGraphColor) /* PLATFORM(video): draw a line primitive. */;
                     preRender_line(1, 0, 1, 14, performGraphColor) /* PLATFORM(video): draw a line primitive. */;
                     preRender_line(15, 0, 15, 14, performGraphColor) /* PLATFORM(video): draw a line primitive. */;
                 } else {
-                    sprite_shape_to_1(track_editor_cursors[tileSize], 0, 0) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                    movfxya(track_editor_cursors[tileSize], 0, 0) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                     if (selectedPiece != 0) {
-                        putpixel_iconMask(piece_mask_shapes[selectedPiece], 0, 0) /* PLATFORM(video): apply a track-piece icon mask. */;
-                        putpixel_iconFillings(piece_fill_shapes[selectedPiece], 0, 0) /* PLATFORM(video): apply a track-piece icon fill. */;
+                        andfxya(piece_mask_shapes[selectedPiece], 0, 0) /* PLATFORM(video): apply a track-piece icon mask. */;
+                        orfxya(piece_fill_shapes[selectedPiece], 0, 0) /* PLATFORM(video): apply a track-piece icon fill. */;
                     }
                 }
             }
@@ -499,9 +499,9 @@ nextFrame:
                 msdrawopaquechk() /* PLATFORM(video): redraw the pointer in opaque mode when needed. */;
                 if (!paletteArea) {
                     if (blinkFlag)
-                        sprite_shape_to_1(road_tile_shapes[tileSize], cursorLeft, screenPosY) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                        movfxya(road_tile_shapes[tileSize], cursorLeft, screenPosY) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                     else
-                        sprite_shape_to_1(windows[tileSize]->sprite_bitmapptr, cursorLeft, screenPosY) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                        movfxya(windows[tileSize]->sprite_bitmapptr, cursorLeft, screenPosY) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                 } else {
                     xorbox(cursorLeft, screenPosY - 1, cursorLeft + cursorPixW,
                         screenPosY + boxHeight - 1, text_cursor_outline_color) /* PLATFORM(video): draw a rectangle outline. */;
@@ -608,7 +608,7 @@ paletteClick:
         if (blinkFlag) {
             msdrawopaquechk() /* PLATFORM(video): redraw the pointer in opaque mode when needed. */;
             if (!drawnMode)
-                sprite_shape_to_1(road_tile_shapes[tileSize], cursorLeft, screenPosY) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                movfxya(road_tile_shapes[tileSize], cursorLeft, screenPosY) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
             else
                 xorbox(cursorLeft, screenPosY - 1, cursorLeft + cursorPixW,
                     screenPosY + boxHeight - 1, text_cursor_outline_color) /* PLATFORM(video): draw a rectangle outline. */;
@@ -729,7 +729,7 @@ paletteClick:
                             locate_text_resource(main_data_file_addr, "trk") /* PLATFORM(file): locate a named text entry in resource data. */) /* PLATFORM(file): open the file-selection UI and return its selection. */;
                         makename(track_file, globalgamesettings.game_trackname, ".trk", buf_g_path) /* PLATFORM(file): build the path used by the file service. */;
                         if (j > 0) {
-                            file_read_fatal(buf_g_path, td14tb) /* PLATFORM(file): read a file or enter the fatal-error path. */;
+                            loadfileat(buf_g_path, td14tb) /* PLATFORM(file): read a file or enter the fatal-error path. */;
                             compiletrack();
                             paletteArea = 0;
                             selRow[0] = g_cur_track_row;
@@ -750,7 +750,7 @@ save:
                                 makename(track_file, globalgamesettings.game_trackname, ".trk",
                                     buf_g_path) /* PLATFORM(file): build the path used by the file service. */;
                                 saveOutcome = 1;
-                                if (file_find(buf_g_path) /* PLATFORM(file): search for a file by name. */) {
+                                if (findfirst(buf_g_path) /* PLATFORM(file): search for a file by name. */) {
                                     j = messagebox(2, 1, locate_text_resource(main_data_file_addr, "fex") /* PLATFORM(file): locate a named text entry in resource data. */,
                                         -1, -1, performGraphColor, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
                                     if (j == -1)
@@ -925,7 +925,7 @@ save:
     sprite_free_window(windows[1]) /* PLATFORM(video): release a temporary sprite window. */;
     sprite_free_window(windows[0]) /* PLATFORM(video): release a temporary sprite window. */;
     closeresource(teditData) /* PLATFORM(memory): release a loaded resource. */;
-    mmgr_free(sdtBuffer) /* PLATFORM(memory): release the resource through game memory management. */;
+    freememory(sdtBuffer) /* PLATFORM(memory): release the resource through game memory management. */;
 }
 
 void drawpiecebox(U8  mode)
@@ -937,32 +937,32 @@ void drawpiecebox(U8  mode)
         for (row = 0; row < TRACK_PALETTE_GRID_SIDE; ++row) {
             stateId = palette_piece_layout[mode * TRACK_PALETTE_PAGE_CELL_COUNT + iconIndex * TRACK_PALETTE_GRID_SIDE + row];
             if (mode == 0) {
-                sprite_shape_to_1(terrain_tile_shapes[stateId], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
+                movfxya(terrain_tile_shapes[stateId], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
                     TRACK_EDITOR_GRID_Y_ORIGIN + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
             } else if (stateId < TRACK_ELEMENT_SPECIAL_BASE) {
-                sprite_shape_to_1(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
+                movfxya(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
                     TRACK_EDITOR_GRID_Y_ORIGIN + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                 switch (trklst[stateId].ss_multiTileFlag) {
                 case 1:
-                    sprite_shape_to_1(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
+                    movfxya(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
                         TRACK_EDITOR_GRID_Y_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                     break;
                 case 2:
-                    sprite_shape_to_1(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (row << TRACK_EDITOR_CELL_SHIFT),
+                    movfxya(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (row << TRACK_EDITOR_CELL_SHIFT),
                         TRACK_EDITOR_GRID_Y_ORIGIN + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                     break;
                 case 3:
-                    sprite_shape_to_1(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (row << TRACK_EDITOR_CELL_SHIFT),
+                    movfxya(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (row << TRACK_EDITOR_CELL_SHIFT),
                         TRACK_EDITOR_GRID_Y_ORIGIN + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
-                    sprite_shape_to_1(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
+                    movfxya(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
                         TRACK_EDITOR_GRID_Y_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
-                    sprite_shape_to_1(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (row << TRACK_EDITOR_CELL_SHIFT),
+                    movfxya(terrain_tile_shapes[0], TRACK_EDITOR_GRID_X_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (row << TRACK_EDITOR_CELL_SHIFT),
                         TRACK_EDITOR_GRID_Y_ORIGIN + TRACK_EDITOR_CELL_PIXELS + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                     break;
                 }
-                putpixel_iconMask(piece_mask_shapes[stateId], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
+                andfxya(piece_mask_shapes[stateId], TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT),
                     TRACK_EDITOR_GRID_Y_ORIGIN + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): apply a track-piece icon mask. */;
-                putpixel_iconFillings(piece_fill_shapes[stateId],
+                orfxya(piece_fill_shapes[stateId],
                     TRACK_EDITOR_GRID_X_ORIGIN + (row << TRACK_EDITOR_CELL_SHIFT), TRACK_EDITOR_GRID_Y_ORIGIN + (iconIndex << TRACK_EDITOR_CELL_SHIFT)) /* PLATFORM(video): apply a track-piece icon fill. */;
             }
         }
@@ -992,30 +992,30 @@ void drawtrackbox(U8  rowBase, U8  columnBase, U8  *lastElement, U8  *lastTerrai
                         (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
                     sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow + 1] + columnIndex + rowBase]],
                         (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_BELOW_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
-                    sprite_putimage_and(piece_mask_shapes[td14tb[lnoffsets[columnBase + mapRow] + columnIndex + rowBase - 1]],
+                    andcfxya(piece_mask_shapes[td14tb[lnoffsets[columnBase + mapRow] + columnIndex + rowBase - 1]],
                         (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_LEFT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
-                    sprite_putimage_or(piece_fill_shapes[td14tb[lnoffsets[columnBase + mapRow] + columnIndex + rowBase - 1]],
+                    orcfxya(piece_fill_shapes[td14tb[lnoffsets[columnBase + mapRow] + columnIndex + rowBase - 1]],
                         (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_LEFT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
                 } else if (tileId == TRACK_TILE_CONTINUE_DOWN && mapRow == 0) {
                     sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase]],
                         (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
                     sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase + 1]],
                         (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_RIGHT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
-                    sprite_putimage_and(piece_mask_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase]],
+                    andcfxya(piece_mask_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase]],
                         (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ABOVE_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
-                    sprite_putimage_or(piece_fill_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase]],
+                    orcfxya(piece_fill_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase]],
                         (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ABOVE_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
                 } else if (tileId == TRACK_TILE_CONTINUE_DOWN_RIGHT && mapRow == 0 && columnIndex == 0) {
                     sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase]],
                         (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
-                    sprite_putimage_and(piece_mask_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase - 1]],
+                    andcfxya(piece_mask_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase - 1]],
                         (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_LEFT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ABOVE_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
-                    sprite_putimage_or(piece_fill_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase - 1]],
+                    orcfxya(piece_fill_shapes[td14tb[lnoffsets[columnBase + mapRow - 1] + columnIndex + rowBase - 1]],
                         (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_LEFT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ABOVE_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
                 }
             } else if (tileId == 0) {
                 if (lastElement[mapIndex] != 0 || lastTerrain[mapIndex] != surface) {
-                    sprite_shape_to_1(terrain_tile_shapes[surface], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                    movfxya(terrain_tile_shapes[surface], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                     lastElement[mapIndex] = 0;
                     lastTerrain[mapIndex] = surface;
                 }
@@ -1023,23 +1023,23 @@ void drawtrackbox(U8  rowBase, U8  columnBase, U8  *lastElement, U8  *lastTerrai
                 if (lastElement[mapIndex] != tileId || lastTerrain[mapIndex] != surface) {
                     lastElement[mapIndex] = tileId;
                     lastTerrain[mapIndex] = surface;
-                    sprite_shape_to_1(terrain_tile_shapes[surface], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
+                    movfxya(terrain_tile_shapes[surface], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                     switch (trklst[tileId].ss_multiTileFlag) {
                     case 0:
-                        putpixel_iconMask(piece_mask_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a track-piece icon mask. */;
-                        putpixel_iconFillings(piece_fill_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a track-piece icon fill. */;
+                        andfxya(piece_mask_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a track-piece icon mask. */;
+                        orfxya(piece_fill_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a track-piece icon fill. */;
                         break;
                     case 1:
                         sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow + 1] + columnIndex + rowBase]],
                             (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_BELOW_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
-                        sprite_putimage_and(piece_mask_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
-                        sprite_putimage_or(piece_fill_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
+                        andcfxya(piece_mask_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
+                        orcfxya(piece_fill_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
                         break;
                     case 2:
                         sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase + 1]],
                             (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_RIGHT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
-                        sprite_putimage_and(piece_mask_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
-                        sprite_putimage_or(piece_fill_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
+                        andcfxya(piece_mask_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
+                        orcfxya(piece_fill_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
                         break;
                     case 3:
                         sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow] + columnIndex + rowBase + 1]],
@@ -1048,8 +1048,8 @@ void drawtrackbox(U8  rowBase, U8  columnBase, U8  *lastElement, U8  *lastTerrai
                             (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_BELOW_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
                         sprite_putimage_and_alt(terrain_tile_shapes[td15p_9[gterrtrk[columnBase + mapRow + 1] + columnIndex + rowBase + 1]],
                             (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_RIGHT_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_BELOW_Y) /* PLATFORM(video): apply the alternate sprite mask at the requested position. */;
-                        sprite_putimage_and(piece_mask_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
-                        sprite_putimage_or(piece_fill_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
+                        andcfxya(piece_mask_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply a sprite mask at the requested position. */;
+                        orcfxya(piece_fill_shapes[tileId], (columnIndex << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_X, (mapRow << TRACK_EDITOR_CELL_SHIFT) + TRACK_EDITOR_CELL_ORIGIN_Y) /* PLATFORM(video): apply sprite pixels at the requested position. */;
                         break;
                     }
                 }

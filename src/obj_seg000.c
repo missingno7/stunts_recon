@@ -121,7 +121,7 @@ extern void far do_dos_resource_text(void);
 extern I8 far do_fileselect_dialog(I8 *directory, I8 *track,
                                      I8 *extension, I8 far *text);
 extern void far do_joystick_resource_text(void);
-extern void far do_key_resource_text(void);
+extern void far mkeyon(void);
 extern void far do_mof_resource_text(void);
 extern void far do_mou_resource_text(void);
 extern void far do_sonsof_resource_text(void);
@@ -141,7 +141,7 @@ extern I16S far loadreplay(I8 *dir, I8 *name);
 extern void far *far file_load_resource_file(I8 *name);
 extern void far * far file_load_resource();
 extern void far * file_load_shape2d_fatal_thunk(I8 *);
-extern void far file_read_fatal(I8 *path, U8  far *destination);
+extern void far loadfileat(I8 *path, U8  far *destination);
 extern I16S far file_write_fatal(I8 *path, struct HighScoreRecord far *source,
                                   U32  length);
 extern void far font_draw_text(I8 *text, I16 x, I16 y);
@@ -165,8 +165,8 @@ extern void far locate_many_resources(void far *, I8 *, void far **);
 extern void far * far locate_shape_alt();
 extern struct SHAPE2D far * far locate_shape_fatal(void far *, I8 *);
 extern I8 far * far locate_text_resource(I8 far *data, I8 *name);
-extern void far mmgr_free(void far *);
-extern void far mmgr_release(void far *resource);
+extern void far freememory(void far *);
+extern void far purgememory(void far *resource);
 extern void far msdrawopaquechk(void);
 extern void far msdrawtransparentchk(void);
 extern I16 far mousecursor();
@@ -386,8 +386,8 @@ extern void far _memcpy(void *, void *, U16 );
 extern void far seedrandom(void);
 extern I16 far get_super_random(void);
 extern I16 far get_kevinrandom(void);
-extern void far security_check(I16);
-extern I16 far file_find(I8 *);
+extern void far getprotection(I16);
+extern I16 far findfirst(I8 *);
 extern void far run_game(void);
 extern I8 far end_hiscore(void);
 extern void far audio_stop_unknown(void);
@@ -553,7 +553,7 @@ I16 main(I16 argc, I8 *argv[])
     if (index != 0)
     {
       /* PLATFORM(file): Legacy file and resource API. */ makename(track_file, globalgamesettings.game_trackname, ".trk", buf_g_path);
-      /* PLATFORM(file): Legacy file and resource API. */ file_read_fatal(buf_g_path, td14tb);
+      /* PLATFORM(file): Legacy file and resource API. */ loadfileat(buf_g_path, td14tb);
     }
     menutimeout = 0;
     result = run_intro_looped();
@@ -605,9 +605,9 @@ I16 main(I16 argc, I8 *argv[])
           }
           seedrandom();
           if (pass_check_flag == 0)
-            security_check((I8)(get_super_random() % 20));
+            getprotection((I8)(get_super_random() % 20));
         }
-        else if (/* PLATFORM(file): Legacy file and resource API. */ file_find("tedit.*") == 0)
+        else if (/* PLATFORM(file): Legacy file and resource API. */ findfirst("tedit.*") == 0)
           goto prepare_intro;
         else
           goto init_replay;
@@ -653,7 +653,7 @@ I16 main(I16 argc, I8 *argv[])
       track_file[index] = coursedataappend_address[index + TRACK_MAP_PAIR_BYTES];
       replay_file[index] = coursedataappend_address[index + 0x75B];
     }
-    /* PLATFORM(memory): Game memory-manager API. */ mmgr_release(cvxs_a);
+    /* PLATFORM(memory): Game memory-manager API. */ purgememory(cvxs_a);
     if (menutimeout != 0)
       goto do_intro0;
     goto show_menu;
@@ -685,7 +685,7 @@ I16 far run_intro_looped(void)
     g_wndspr = /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_make_window(SCREEN_WIDTH_PIXELS, SCREEN_HEIGHT_PIXELS, 0x0f);
     inputResult = run_intro();
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
-    /* PLATFORM(memory): Game memory-manager API. */ mmgr_free(loadedresourceptr);
+    /* PLATFORM(memory): Game memory-manager API. */ freememory(loadedresourceptr);
     if (inputResult == 0) {
         inputResult = setup_intro();
         if (inputResult == 0) {
@@ -695,7 +695,7 @@ I16 far run_intro_looped(void)
             /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, 0);
             inputResult = load_intro_resources();
             /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
-            /* PLATFORM(memory): Game memory-manager API. */ mmgr_free(loadedresourceptr);
+            /* PLATFORM(memory): Game memory-manager API. */ freememory(loadedresourceptr);
         }
     }
     /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_unload();
@@ -911,7 +911,7 @@ I8 far select(void)
     data_resource = /* PLATFORM(file): Legacy file and resource API. */ file_load_resource(2, "sdmsel");
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_copy_wnd_to_1();
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_shape_to_1_alt(locate_shape_fatal(data_resource, "scrn"));
-    /* PLATFORM(memory): Game memory-manager API. */ mmgr_free(data_resource);
+    /* PLATFORM(memory): Game memory-manager API. */ freememory(data_resource);
 
     for (;;) {
         if (selection != oldSelection) {
@@ -1112,7 +1112,7 @@ menu_loop:
         /* PLATFORM(file): Legacy file and resource API. */ makename(track_file, globalgamesettings.game_trackname,
                         ".trk", buf_g_path);
         if (dialogRes != 0) {
-            /* PLATFORM(file): Legacy file and resource API. */ file_read_fatal(buf_g_path, td14tb);
+            /* PLATFORM(file): Legacy file and resource API. */ loadfileat(buf_g_path, td14tb);
             /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
             goto preview;
         }
@@ -1743,7 +1743,7 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
             /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(opponentWindowX);
             if (opponenttype == 0)
             closeresource(g_miscfile_ptr);
-            /* PLATFORM(memory): Game memory-manager API. */ mmgr_free(sdcselPos);
+            /* PLATFORM(memory): Game memory-manager API. */ freememory(sdcselPos);
             msdrawopaquechk();
             caridptr[0] = carids[carIndexY][0];
             caridptr[1] = carids[carIndexY][1];
@@ -2014,7 +2014,7 @@ menu_opponent_mouse_redraw:
                 /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
                 if (isLoaded != 0)
                     closeresource(oppRes);
-                /* PLATFORM(memory): Game memory-manager API. */ mmgr_free(resource_ptropp);
+                /* PLATFORM(memory): Game memory-manager API. */ freememory(resource_ptropp);
                 closeresource(g_miscfile_ptr);
                 msdrawopaquechk();
                 return;
@@ -2089,7 +2089,7 @@ I8 far run_option_menu(void)
                 locate_text_resource(g_miscfile_ptr, "mid"),
                 0xffff, 0xffff, performGraphColor, 0, color_or_file);
             switch (selection) {
-            case 0: do_key_resource_text(); break;
+            case 0: mkeyon(); break;
             case 1: do_joystick_resource_text(); break;
             case 2: do_mou_resource_text(); break;
             }
@@ -2381,7 +2381,7 @@ I8 far end_hiscore(void)
         break;
       }
     }
-    /* PLATFORM(memory): Game memory-manager API. */ mmgr_release(trackFile);
+    /* PLATFORM(memory): Game memory-manager API. */ purgememory(trackFile);
   }
   else
     newRecord = -1;
@@ -2695,7 +2695,7 @@ show_buttons:
         }
         /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_unload();
         if (opponent != 0)
-          /* PLATFORM(memory): Game memory-manager API. */ mmgr_release(scoreResource);
+          /* PLATFORM(memory): Game memory-manager API. */ purgememory(scoreResource);
         if (g_videoflg5 != 0)
           /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(hiddenWindow);
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_free_window(g_wndspr);
@@ -2742,7 +2742,7 @@ I8 aA00[] = "a00";
  * PLATFORM(video): Legacy video mode, sprite, pixel, or font API.
  */
 
-void far security_check(I16 selection)
+void far getprotection(I16 selection)
 {
     I8 prompt[1024];
     I8 questionID[6];

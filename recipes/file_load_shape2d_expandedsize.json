@@ -5,7 +5,7 @@
         "__acrtused",
         "__aFNalshr",
         "_file_get_res_shape_count",
-        "_file_get_shape2d",
+        "_shapepointer",
         "_file_load_shape2d_expandedsize"
       ],
       "groups": [
@@ -127,7 +127,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_file_get_shape2d",
+      "frame": "_shapepointer",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -135,7 +135,7 @@
       "offset": 54,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_file_get_shape2d",
+      "target": "_shapepointer",
       "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
@@ -187,7 +187,7 @@
       "__acrtused",
       "__aFNalshr",
       "_file_get_res_shape_count",
-      "_file_get_shape2d",
+      "_shapepointer",
       "_file_load_shape2d_expandedsize"
     ],
     "groups": [

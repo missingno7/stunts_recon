@@ -3,7 +3,7 @@
 ; ASMDOC-GEOMETRY Original source: asm/vector_sphere_sprite_ops.ASM; contracts below use ORIGINAL line
 ; references.
 ; ASMDOC-GEOMETRY Code exports: _nopsub_33006, _vector_op_unk, _preRender_sphere, _nopsub_3320E, _sprset1size,
-; _video_clear_color
+; _clearscreen
 ; ASMDOC-GEOMETRY All arguments/coordinates are 16-bit unless explicitly stated. BP offsets are after PUSH
 ; BP/MOV BP,SP.
 ; ASMDOC-GEOMETRY The detailed comments describe control flow including shared tails and transitive services;
@@ -23,16 +23,16 @@ extrn _sprite1:byte
 extrn _prerender_max_line_width:word
 extrn _vector_op_base_z:word
 extrn _draw_filled_lines:far
-extrn _preRender_sphere_helper:far
+extrn _solidellipseh:far
 extrn _putpixel_single_maybe:far
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT, ds:DGROUP
 public _zclip
 public _zclipline
 public _drawcircle
-public _sprite_set_window_bounds
+public _clippixwindow
 public _sprset1size
-public _video_clear_color
+public _clearscreen
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 33006.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
@@ -327,7 +327,7 @@ sphere_render_branch_path_02:
     add sp, 780h
     push dx
     push ax
-    call far ptr _preRender_sphere_helper
+    call far ptr _solidellipseh
     add sp, 4
     sub sp, 780h
     pop di
@@ -468,7 +468,7 @@ _drawcircle endp
 ; ASMDOC-GEOMETRY Dead: true. Reachability: No external symbolic calls/address-taking or table target found;
 ; rename plan dead=true.
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_sprite_set_window_bounds proc far
+_clippixwindow proc far
     arg_sprite_offset = word ptr 6
     arg_sprite_segment = word ptr 8
     arg_left = word ptr 10
@@ -522,7 +522,7 @@ noop_entry2_branch_path_01:
     pop     ds
     pop     bp
     retf
-_sprite_set_window_bounds endp
+_clippixwindow endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by sprset1size.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -621,7 +621,7 @@ _sprset1size endp
 ; ASMDOC-GEOMETRY Dead: false. Reachability: asm/video_set_mode_13h.ASM:34;
 ; asm/video_mode_restore_handlers.ASM:79; asm/input_keyboard_joystick_services.ASM:70
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_video_clear_color proc far
+_clearscreen proc far
     push bp
     mov bp,sp
     push di
@@ -635,6 +635,6 @@ _video_clear_color proc far
     pop bp
     retf
     db 0 ; retained zero fill at this boundary
-_video_clear_color endp
+_clearscreen endp
 S012_TEXT ends
 end

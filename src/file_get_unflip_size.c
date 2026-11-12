@@ -15,7 +15,7 @@ struct SHAPE2D {
     U8 s2d_plane_color1_bg;
 };
 extern I16 FAR file_get_res_shape_count(I8 FAR *memchunk);
-extern struct SHAPE2D FAR * FAR file_get_shape2d(I8 FAR *memchunk, I16 index);
+extern struct SHAPE2D FAR * FAR shapepointer(I8 FAR *memchunk, I16 index);
 
 /* Find the largest pixel area among a resource?s shapes and return its paragraph allocation size.
  * Params and return follow the declared C signature. */
@@ -28,7 +28,7 @@ U16 FAR file_get_unflip_size(I8 FAR *memchunk)
     shapecount = file_get_res_shape_count(memchunk);
     maxsize = 0;
     for (i = 0; i < shapecount; i++) {
-        memshape = file_get_shape2d(memchunk, i);
+        memshape = shapepointer(memchunk, i);
         size = memshape->s2d_width * memshape->s2d_height + SHAPE_UNFLIP_BUFFER_OVERHEAD_BYTES;
         size >>= DOS_PARAGRAPH_SHIFT;
         if (size > maxsize) maxsize = size;

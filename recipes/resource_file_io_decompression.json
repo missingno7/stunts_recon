@@ -25,7 +25,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_fatal_error",
+      "frame": "_abortmessage",
       "frame_index": 3,
       "frame_kind": "external",
       "frame_method": 2,
@@ -33,7 +33,7 @@
       "offset": 142,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_fatal_error",
+      "target": "_abortmessage",
       "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
@@ -59,16 +59,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_copy_paras_reverse",
-      "frame_index": 4,
+      "frame": "_negblockmove",
+      "frame_index": 2,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 266,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_copy_paras_reverse",
-      "target_index": 4,
+      "target": "_negblockmove",
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -144,16 +144,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_mmgr_get_chunk_by_name",
-      "frame_index": 1,
+      "frame": "_checkmodule",
+      "frame_index": 8,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 725,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_mmgr_get_chunk_by_name",
-      "target_index": 1,
+      "target": "_checkmodule",
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -161,16 +161,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_file_paras",
-      "frame_index": 7,
+      "frame": "_filesizea",
+      "frame_index": 6,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 743,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_file_paras",
-      "target_index": 7,
+      "target": "_filesizea",
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -178,16 +178,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_mmgr_alloc_pages",
-      "frame_index": 8,
+      "frame": "_reservememory",
+      "frame_index": 5,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 759,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_mmgr_alloc_pages",
-      "target_index": 8,
+      "target": "_reservememory",
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -212,16 +212,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_mmgr_get_chunk_by_name",
-      "frame_index": 1,
+      "frame": "_checkmodule",
+      "frame_index": 8,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 840,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_mmgr_get_chunk_by_name",
-      "target_index": 1,
+      "target": "_checkmodule",
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -246,16 +246,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_file_decomp_paras",
-      "frame_index": 2,
+      "frame": "_unpacksizea",
+      "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 867,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_file_decomp_paras",
-      "target_index": 2,
+      "target": "_unpacksizea",
+      "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -263,16 +263,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_mmgr_alloc_pages",
-      "frame_index": 8,
+      "frame": "_reservememory",
+      "frame_index": 5,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 889,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_mmgr_alloc_pages",
-      "target_index": 8,
+      "target": "_reservememory",
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -280,16 +280,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_file_paras",
-      "frame_index": 7,
+      "frame": "_filesizea",
+      "frame_index": 6,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 909,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_file_paras",
-      "target_index": 7,
+      "target": "_filesizea",
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -348,16 +348,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_copy_paras_reverse",
-      "frame_index": 4,
+      "frame": "_negblockmove",
+      "frame_index": 2,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 1062,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_copy_paras_reverse",
-      "target_index": 4,
+      "target": "_negblockmove",
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -383,7 +383,7 @@
       "displacement": 0,
       "encoded_addend": "00000000",
       "frame": "_file_decomp_vle",
-      "frame_index": 6,
+      "frame_index": 7,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
@@ -391,7 +391,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_file_decomp_vle",
-      "target_index": 6,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -416,7 +416,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_fatal_error",
+      "frame": "_abortmessage",
       "frame_index": 3,
       "frame_kind": "external",
       "frame_method": 2,
@@ -424,7 +424,7 @@
       "offset": 1115,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_fatal_error",
+      "target": "_abortmessage",
       "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
@@ -433,16 +433,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_mmgr_resize_memory",
-      "frame_index": 5,
+      "frame": "_resizememory",
+      "frame_index": 4,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 1133,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_mmgr_resize_memory",
-      "target_index": 5,
+      "target": "_resizememory",
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -535,7 +535,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_fatal_error",
+      "frame": "_abortmessage",
       "frame_index": 3,
       "frame_kind": "external",
       "frame_method": 2,
@@ -543,7 +543,7 @@
       "offset": 1353,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_fatal_error",
+      "target": "_abortmessage",
       "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
@@ -673,7 +673,7 @@
     {
       "end": 133856,
       "name": "file_read",
-      "public": "_file_read",
+      "public": "_loadfileata",
       "stable_id": "load_20ad0",
       "start": 133840,
       "target": {
@@ -684,7 +684,7 @@
     {
       "end": 133871,
       "name": "file_read_nofatal",
-      "public": "_file_read_nofatal",
+      "public": "_loadfileatz",
       "stable_id": "load_20ae0",
       "start": 133856,
       "target": {
@@ -695,7 +695,7 @@
     {
       "end": 133986,
       "name": "file_read_fatal",
-      "public": "_file_read_fatal",
+      "public": "_loadfileat",
       "stable_id": "load_20aef",
       "start": 133871,
       "target": {
@@ -739,7 +739,7 @@
     {
       "end": 134536,
       "name": "file_load_binary",
-      "public": "_file_load_binary",
+      "public": "_loadfilea",
       "stable_id": "load_20d79",
       "start": 134521,
       "target": {
@@ -750,7 +750,7 @@
     {
       "end": 134630,
       "name": "file_load_binary_nofatal",
-      "public": "_file_load_binary_nofatal",
+      "public": "_loadfilez",
       "stable_id": "load_20d88",
       "start": 134536,
       "target": {
@@ -761,7 +761,7 @@
     {
       "end": 134647,
       "name": "file_decomp",
-      "public": "_file_decomp",
+      "public": "_loadpacka",
       "stable_id": "load_20de6",
       "start": 134630,
       "target": {
@@ -772,7 +772,7 @@
     {
       "end": 134663,
       "name": "file_decomp_nofatal",
-      "public": "_file_decomp_nofatal",
+      "public": "_loadpackz",
       "stable_id": "load_20df7",
       "start": 134647,
       "target": {
@@ -783,7 +783,7 @@
     {
       "end": 135058,
       "name": "file_decomp_fatal",
-      "public": "_file_decomp_fatal",
+      "public": "_loadpack",
       "stable_id": "load_20e07",
       "start": 134663,
       "target": {
@@ -794,7 +794,7 @@
     {
       "end": 135069,
       "name": "locate_shape_nofatal",
-      "public": "_locate_shape_nofatal",
+      "public": "_locateshapez",
       "stable_id": "load_20f92",
       "start": 135058,
       "target": {
@@ -827,14 +827,14 @@
   ],
   "object_declarations": {
     "externals": [
-      "_mmgr_get_chunk_by_name",
-      "_file_decomp_paras",
-      "_fatal_error",
-      "_copy_paras_reverse",
-      "_mmgr_resize_memory",
+      "_unpacksizea",
+      "_negblockmove",
+      "_abortmessage",
+      "_resizememory",
+      "_reservememory",
+      "_filesizea",
       "_file_decomp_vle",
-      "_file_paras",
-      "_mmgr_alloc_pages"
+      "_checkmodule"
     ],
     "groups": [
       {
@@ -852,18 +852,13 @@
     ],
     "publics": [
       {
-        "name": "_file_decomp",
-        "offset": 790,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_file_decomp_fatal",
-        "offset": 823,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_file_read_nofatal",
+        "name": "_loadfileatz",
         "offset": 16,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_locateshapez",
+        "offset": 1218,
         "segment": "S012_TEXT"
       },
       {
@@ -872,18 +867,8 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_file_load_binary_nofatal",
-        "offset": 696,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_locate_sound_fatal",
         "offset": 1241,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_file_decomp_nofatal",
-        "offset": 807,
         "segment": "S012_TEXT"
       },
       {
@@ -892,18 +877,28 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_locate_shape_nofatal",
-        "offset": 1218,
+        "name": "_loadpack",
+        "offset": 823,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_file_read",
-        "offset": 0,
+        "name": "_loadpacka",
+        "offset": 790,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_file_read_fatal",
-        "offset": 31,
+        "name": "_loadfilea",
+        "offset": 681,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_loadpackz",
+        "offset": 807,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_loadfilez",
+        "offset": 696,
         "segment": "S012_TEXT"
       },
       {
@@ -912,13 +907,18 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_file_load_binary",
-        "offset": 681,
+        "name": "_loadfileat",
+        "offset": 31,
         "segment": "S012_TEXT"
       },
       {
         "name": "_file_decomp_rle_single",
         "offset": 296,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_loadfileata",
+        "offset": 0,
         "segment": "S012_TEXT"
       }
     ],

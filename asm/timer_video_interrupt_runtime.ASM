@@ -60,9 +60,9 @@ public _video_set_mode7
 public _timer_setup_sound_countdown
 public _timer_setup_interrupt
 public _audio_stop_unknown
-public _timer_reg_callback
-public _timer_remove_callback
-public _compare_ds_ss
+public _addtimer
+public _deltimer
+public _sseqds
 public _timer_intr_callback
 public _timer_tick_sound_and_chain
 extrn _intcos:far
@@ -70,8 +70,8 @@ extrn _intatan:far
 extrn _intsin:far
 extrn _video_mode4_active:byte
 extrn _set_bios_mode3:far
-extrn _add_exit_handler:far
-extrn _fatal_error:far
+extrn _addexit:far
+extrn _abortmessage:far
 
 ; polarRadius2D: _polradius2d
 ; -----------------------------------------------------------------------------
@@ -405,7 +405,7 @@ setup_after_old_seg:
  push cs
  mov ax,1848h
  push ax
- call far ptr _add_exit_handler
+ call far ptr _addexit
  add sp,4
  pop bp
  ret
@@ -486,7 +486,7 @@ timer_restore_prev_irq_vector:
     retf
 _audio_stop_unknown endp
 
-; timer_reg_callback: _timer_reg_callback
+; addtimer: _timer_reg_callback
 ; -----------------------------------------------------------------------------
 ; Purpose: Register a timer callback in the callback table.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -514,7 +514,7 @@ _audio_stop_unknown endp
 ; ASMDOC[timers] reachability: set_frame_callback and audio driver registration callers. FAR pointer, not a
 ; ASMDOC[timers]   callback/context pair; five slots plus sentinel.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
-_timer_reg_callback proc far
+_addtimer proc far
     arg_callback_offset = word ptr 6
     arg_callback_segment = word ptr 8
 
@@ -531,7 +531,7 @@ timer_callback_find_free_slot:
     loop    timer_callback_find_free_slot
     mov     ax, offset DGROUP:_adderr; "NO ROOM LEFT ON TIMER INTERRUPT ROUTINE"...
     push    ax
-    call    far ptr _fatal_error
+    call    far ptr _abortmessage
 timer_callback_slot_available:
     mov     ax, [bp+arg_callback_offset]
     mov     [bx], ax
@@ -541,9 +541,9 @@ timer_callback_slot_available:
     mov     word ptr [bx+6], 0
     pop     bp
     retf
-_timer_reg_callback endp
+_addtimer endp
 
-; timer_remove_callback: _timer_remove_callback
+; deltimer: _timer_remove_callback
 ; -----------------------------------------------------------------------------
 ; Purpose: Remove a timer callback from the callback table.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -568,7 +568,7 @@ _timer_reg_callback endp
 ; ASMDOC[timers] services: CLI/STI around compaction
 ; ASMDOC[timers] reachability: remove_frame_callback and audio timer teardown callers.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
-_timer_remove_callback proc far
+_deltimer proc far
     arg_callback_offset = word ptr 6
     arg_callback_segment = word ptr 8
 
@@ -607,9 +607,9 @@ timer_remove_clear_tail_slot:
     sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     pop     bp
     retf
-_timer_remove_callback endp
+_deltimer endp
 
-; compare_ds_ss: _compare_ds_ss
+; sseqds: _compare_ds_ss
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the timer service identified by compare ds ss.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -631,7 +631,7 @@ _timer_remove_callback endp
 ; ASMDOC[timers] services:
 ; ASMDOC[timers] reachability: Replay and audio paths directly test this result.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
-_compare_ds_ss proc far
+_sseqds proc far
 
     xor     ax, ax
     mov     bx, ss
@@ -641,7 +641,7 @@ _compare_ds_ss proc far
     inc     ax
 compare_equal_segment_return:
     retf
-_compare_ds_ss endp
+_sseqds endp
 
 ; timer_intr_group: _timer_intr_callback
 ; -----------------------------------------------------------------------------

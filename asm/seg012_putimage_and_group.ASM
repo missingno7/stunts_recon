@@ -11,8 +11,8 @@ INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-public _sprite_putimage_and_alt2
-public _sprite_putimage_and
+public _andcfxy
+public _andcfxya
 ; -----------------------------------------------------------------------------
 ; Purpose: Draw a sprite image using the second alternate AND path.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -42,7 +42,7 @@ public _sprite_putimage_and
 ; ASMDOC wrapped coordinates. Source and destination offsets wrap at 16 bits. Width-one, zero-source-skip path
 ; ASMDOC increments row advance after each row: later destination row strides grow by one. No callbacks, DOS or BIOS
 ; ASMDOC calls..
-_sprite_putimage_and_alt2 proc far
+_andcfxy proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -66,7 +66,7 @@ _sprite_putimage_and_alt2 proc far
     mov     [bp+local_destination_y], ax
     jmp     short putimage_and_shared_exit
     even ; word-align the following entry
-_sprite_putimage_and_alt2 endp
+_andcfxy endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Draw a sprite image using the AND compositing operation.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -95,7 +95,7 @@ _sprite_putimage_and_alt2 endp
 ; ASMDOC using signed 16-bit branches and wrapped coordinates. Source and destination offsets wrap at 16 bits.
 ; ASMDOC Width-one, zero-source-skip path increments row advance after each row: later destination row strides grow by
 ; ASMDOC one. No callbacks, DOS or BIOS calls..
-_sprite_putimage_and proc far
+_andcfxya proc far
     local_word_count = word ptr -14
     local_source_cursor = word ptr -12
     local_rows_left = word ptr -10
@@ -285,6 +285,6 @@ putimage_and_read_loop_7:
     jg      short putimage_and_read_loop_7
     jmp     putimage_and_draw_loop
     db 0 ; retained zero fill at this boundary
-_sprite_putimage_and endp
+_andcfxya endp
 S012_TEXT ends
 end

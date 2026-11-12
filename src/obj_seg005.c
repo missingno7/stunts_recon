@@ -94,7 +94,7 @@ I16 norm_zone(struct VECTOR* vec);
 void projectp(struct VECTOR* vec, struct POINT2D* outpt);
 void zclipline(struct VECTOR* vec1, struct VECTOR* vec2, struct VECTOR* outvec, I16S i);
 
-I16S mulscl(I16S a1, I16S a2);
+I16S fixedmult(I16S a1, I16S a2);
 
 void mergezones(struct RECTANGLE* r1, struct RECTANGLE* r2, struct RECTANGLE* outrc);
 I16 clipzone(struct RECTANGLE* r1, struct RECTANGLE* r2);
@@ -379,8 +379,8 @@ extern void dodash(I16);
 extern void drawworld(I8, struct RECTANGLE*);
 extern void doreplay(I16, I16, I16);
 extern void gameintinit(void);
-extern void mouse_minmax_position(I16);
-extern I16 kb_get_char(void);
+extern void initmousedrive(I16);
+extern I16 normkeyi(void);
 extern void far finishgame(I16, I16);
 extern void far do_mou_resource_text(void);
 extern void far initialize_game_state(I16);
@@ -543,7 +543,7 @@ extern void far *wallrecrecord;
 void run_game(void);
 extern unsigned end_hiscore(void);
 extern unsigned run_option_menu(void);
-extern void security_check(void);
+extern void getprotection(void);
 
 extern void ensure_file_exists(I16 unk);
 
@@ -552,7 +552,7 @@ extern void far* load_voice_file(const I8* filename);
 extern void far* load_sfx_file(const I8* filename);
 extern void far* load_shape2d_nofatal_thunk(const I8* filename);
 extern void far* load_shape2d_res_nofatal_thunk(const I8* filename);
-extern void far* file_load_shape2d_nofatal(I8* shapename);
+extern void far* loadshapez(I8* shapename);
 extern void far* file_load_shape2d_nofatal2(I8* shapename);
 extern void far* init_audio_resources(void far* songptr, void far* voiceptr, const I8* name);
 extern void load_audio_finalize(void far* audiores);
@@ -568,26 +568,26 @@ extern I16 input_do_checking(I16 unk);
 extern void keyboard_exit_handler(void);
 extern void keyboard_shift_checking1(void);
 extern void kb_shift_checking2(void);
-extern void kb_reg_callback(I16 code, void (far* callback)(void));
+extern void interpretsub(I16 code, void (far* callback)(void));
 extern void show_graphic_levels_menu(void);
 extern void do_joystick_resource_text(void);
-extern void do_key_resource_text(void);
+extern void mkeyon(void);
 extern void do_mof_resource_text(void);
-extern void do_pau_restext(void);
+extern void msystempause(void);
 extern void do_dos_resource_text(void);
 extern void do_sonsof_resource_text(void);
-extern I16S get_kb_or_joy_flags(void);
+extern I16S joystate(void);
 
-extern I16S mouse_init(I16S a1, I16S a2);
+extern I16S initmouse(I16S a1, I16S a2);
 extern void msdrawopaquechk(void);
 
 extern void video_set_mode4(void);
 extern void video_set_mode7(void);
-extern void video_set_mode_13h(void);
+extern void initgraphics(void);
 
 extern void shape3d_load_car_shapes(I8* carid, I8* oppcarid);
 
-extern void load_palandcursor(void);
+extern void loadpalandmouse(void);
 extern void sprset1size(U16S  left, U16S  right, U16S  top, U16S  height);
 extern void sprite_clear_1_color(U8 );
 extern void sprite_blit_to_video(struct SPRITE far* sprite);
@@ -597,9 +597,9 @@ extern I16S (far* old_intr0_handler)(void);
 extern void timer_setup_interrupt(void);
 extern I16 timer_get_delta_alt(void);
 
-extern I16S set_criterr_handler(I16S (far* callback)(void));
+extern I16S criterr(I16S (far* callback)(void));
 extern void exit(I16S a1);
-extern void fatal_error(const I8*, ...);
+extern void abortmessage(const I8*, ...);
 extern I16S do_dea_textres(void);
 
 extern void* _memcpy(void*, const void*, unsigned);
@@ -708,10 +708,10 @@ void run_game(void) {
 			replayrst = 0;
 			popupact = 0;
 			g_rpl_init = 1;
-			/* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(mouse_enabled);
+			/* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ initmousedrive(mouse_enabled);
 			gm_playmode = 1;
-			core.playerstate.car_posWorld1.lx += (I32)mulscl(intsin(st_hdg), -240) << 6;
-			core.playerstate.car_posWorld1.lz += (I32)mulscl(intcos(st_hdg), -240) << 6;
+			core.playerstate.car_posWorld1.lx += (I32)fixedmult(intsin(st_hdg), -240) << 6;
+			core.playerstate.car_posWorld1.lz += (I32)fixedmult(intcos(st_hdg), -240) << 6;
 			core.playerstate.car_posWorld1.ly += 0x580;
 			endhsdemo = 1;
 		} else {
@@ -851,8 +851,8 @@ replaybar_done:
 						mergezones(rectp, &temp_rect, rectp);
 					}
 				}
-				/* PLATFORM(video): draw a bitmap mask. */ shape2d_render_bmp_as_mask(dasm_shp_7);
-				/* PLATFORM(video): draw a shape layer. */ shape2d_or_rle(g_dastbmpbuf);
+				/* PLATFORM(video): draw a bitmap mask. */ andpackf(dasm_shp_7);
+				/* PLATFORM(video): draw a shape layer. */ orpackf(g_dastbmpbuf);
 			}
 
 			drawworldflipzones(&boundglassrect);
@@ -882,7 +882,7 @@ replaybar_done:
 			}
 
 			if (menutimeout != 0) {
-				/* PLATFORM(input_joy): read combined joystick flags. */ /* PLATFORM(input_kb): read combined keyboard flags. */ if (kb_get_char() != 0 || sigframe != 0 || get_kb_or_joy_flags() != 0)
+				/* PLATFORM(input_joy): read combined joystick flags. */ /* PLATFORM(input_kb): read combined keyboard flags. */ if (normkeyi() != 0 || sigframe != 0 || joystate() != 0)
 					break;
 				continue;
 			}
@@ -894,7 +894,7 @@ replaybar_done:
 					break;
 				sigframe = 0;
 				gm_playmode = 2;
-				/* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(0);
+				/* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ initmousedrive(0);
 				doreplay(0, 0, 0);
 				doreplay(2, 4, 0);
 				inrepflg = 1;
@@ -907,7 +907,7 @@ replaybar_done:
 			}
 
 			for (;;) {
-				/* PLATFORM(input_kb): read the next key code. */ replay_key_code = kb_get_char();
+				/* PLATFORM(input_kb): read the next key code. */ replay_key_code = normkeyi();
 				if (replay_key_code != 0) {
 					/* PLATFORM(input_kb): dispatch a normalized game key. */ mainkey(replay_key_code);
 				}
@@ -922,8 +922,8 @@ replaybar_done:
 			}
 
 			if (gm_playmode == 1) {
-				/* PLATFORM(input_mouse): read mouse buttons and coordinates. */ mouse_get_state(&flagsdown, &msecoordx, &pos_y_ms);
-				/* PLATFORM(input_joy): read combined joystick flags. */ /* PLATFORM(input_kb): read combined keyboard flags. */ if ((flagsdown & 3) != 0 || (get_kb_or_joy_flags() & 0x30) != 0) {
+				/* PLATFORM(input_mouse): read mouse buttons and coordinates. */ getmousepos(&flagsdown, &msecoordx, &pos_y_ms);
+				/* PLATFORM(input_joy): read combined joystick flags. */ /* PLATFORM(input_kb): read combined keyboard flags. */ if ((flagsdown & 3) != 0 || (joystate() & 0x30) != 0) {
 					gm_playmode = 0;
 					g_rpl_init = 0;
 					rate_frame = frm_rate2;
@@ -968,7 +968,7 @@ replaybar_done:
 		}
 
 		popupact = 0;
-		/* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(0);
+		/* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ initmousedrive(0);
 		removegameint();
 		removegamefiles();
 	}
@@ -1017,7 +1017,7 @@ I8 mainkey(unsigned key)
     case KEY_ASCII_UPPER_M:
     case KEY_ASCII_LOWER_M:
         do_mou_resource_text();
-        /* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(mouse_enabled);
+        /* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ initmousedrive(mouse_enabled);
         break;
     case KEY_ASCII_UPPER_D:
     case KEY_ASCII_LOWER_D:
@@ -1073,29 +1073,29 @@ void initialize_unknown(void)
 
 typedef void (far *callback_t)(void);
 extern void far gameint(void);
-extern void far timer_reg_callback(callback_t callback);
+extern void far addtimer(callback_t callback);
 unsigned g_clocks;
 unsigned char call_proc_flag;
 /* Starts per-frame callback processing. Params: none. Returns: none. State: resets the callback counter and registration flag. */
 /* PLATFORM(timer): reads timer state or registers a callback. */
 void far gameintinit(void) {
     g_clocks = 0;
-    /* PLATFORM(timer): register the timer callback. */ timer_reg_callback(gameint);
+    /* PLATFORM(timer): register the timer callback. */ addtimer(gameint);
     call_proc_flag = 0;
 }
 
 
 extern U32  far timedwait(U32  ticks);
-extern void far timer_remove_callback(callback_t callback);
+extern void far deltimer(callback_t callback);
 /* Stops per-frame callback processing. Params: none. Returns: none. State: removes the registered timer callback. */
 /* PLATFORM(timer): reads timer state or registers a callback. */
 void far removegameint(void)
 {
     /* PLATFORM(timer): read the timer counter. */ timedwait(10L);
-    /* PLATFORM(timer): remove the timer callback. */ timer_remove_callback(gameint);
+    /* PLATFORM(timer): remove the timer callback. */ deltimer(gameint);
 }
 
-extern I16 far compare_ds_ss(void);
+extern I16 far sseqds(void);
 extern void far myupdatesfx1(I8* record, I16 frame_count);
 extern I8 audio_frmarr[];
 /* Processes one timer frame. Params: none. Returns: none. State: reads frame timing and updates audio-frame state. */
@@ -1103,7 +1103,7 @@ extern I8 audio_frmarr[];
 /* PLATFORM(timer): reads timer state or registers a callback. */
 void far gameint(void)
 {
-    if (compare_ds_ss() == 0) {
+    if (sseqds() == 0) {
         return;
     }
     if (call_proc_flag != 0) {
@@ -1164,7 +1164,7 @@ frame_callback_done:
 signed char array_rpl[64];
 unsigned char replay_steer_flag[64];
 static I8 replay_control;
-extern I16 far kb_get_key_state(I16);
+extern I16 far keystate(I16);
 extern I8 far replay_axis_value(void);
 extern I16 far abs(I16);
 /* Processes replay input for the selected mode. Params: mode. Returns: none. State: reads and updates replay, camera and input state. */
@@ -1202,7 +1202,7 @@ replay_finished:
         finishgame(1, 0);
     if (mouse_enabled != 0 || joystick_enabled != 0) {
         if (mouse_enabled != 0) {
-            /* PLATFORM(input_mouse): read mouse buttons and coordinates. */ mouse_get_state(&flagsdown, &msecoordx, &pos_y_ms);
+            /* PLATFORM(input_mouse): read mouse buttons and coordinates. */ getmousepos(&flagsdown, &msecoordx, &pos_y_ms);
             i = msecoordx - 0xA0;
             if (abs(i) < 0x12)
                 i = 0;
@@ -1223,17 +1223,17 @@ replay_finished:
                 replay_control = replay_axis_magnitude[replay_control];
             else if (replay_control < 0)
                 replay_control = -replay_axis_magnitude[-replay_control];
-            /* PLATFORM(input_joy): read combined joystick flags. */ /* PLATFORM(input_kb): read combined keyboard flags. */ input = get_kb_or_joy_flags() & 0x33;
+            /* PLATFORM(input_joy): read combined joystick flags. */ /* PLATFORM(input_kb): read combined keyboard flags. */ input = joystate() & 0x33;
         }
         i = tmr2 & 0x3F;
         array_rpl[i] = replay_control;
         replay_steer_flag[i] = 1;
     } else {
-        /* PLATFORM(input_joy): read combined joystick flags. */ /* PLATFORM(input_kb): read combined keyboard flags. */ input = get_kb_or_joy_flags();
+        /* PLATFORM(input_joy): read combined joystick flags. */ /* PLATFORM(input_kb): read combined keyboard flags. */ input = joystate();
     }
-    /* PLATFORM(input_kb): read a key state. */ if (kb_get_key_state(0x1E))
+    /* PLATFORM(input_kb): read a key state. */ if (keystate(0x1E))
         input |= 0x10;
-    /* PLATFORM(input_kb): read a key state. */ if (kb_get_key_state(0x2C))
+    /* PLATFORM(input_kb): read a key state. */ if (keystate(0x2C))
         input |= 0x20;
 record_input:
     if (1500 * rate_frame <= tmr2 + elaptm1) {
@@ -1331,8 +1331,8 @@ void far movehelicopters(void)
             } else if (delta > 0xF0) {
                 delta = 0xF0;
             }
-            core.game_chase_camera_pos[index].x += mulscl(delta, intsin(bearing));
-            core.game_chase_camera_pos[index].z += mulscl(delta, intcos(bearing));
+            core.game_chase_camera_pos[index].x += fixedmult(delta, intsin(bearing));
+            core.game_chase_camera_pos[index].z += fixedmult(delta, intcos(bearing));
         }
 
         if (core.game_frame % (rate_frame >> 1) == 0) {
@@ -1361,7 +1361,7 @@ I8 loadreplay(const I8* dir, const I8* name)
 	/* PLATFORM(file): build a file path. */ makename(dir, name, ".rpl", buf_g_path);
 
 	g_is_busy = 1;
-	/* PLATFORM(file): read replay data from a file. */ file_read_fatal(buf_g_path, td13_replay_hdr);
+	/* PLATFORM(file): read replay data from a file. */ loadfileat(buf_g_path, td13_replay_hdr);
 	globalgamesettings = *(struct GAMEINFO far*)td13_replay_hdr;
 	g_is_busy = 0;
 	return 0;
@@ -1427,23 +1427,23 @@ extern I8 aDast[];
 extern I8 aDasm[];
 extern void far *file_load_resource(I16 type, const I8 *name);
 extern void locate_many_resources(void far *data, I8 *names, I8 far **result);
-extern I8 far *locate_shape_nofatal(void far *data, I8 *name);
+extern I8 far *locateshapez(void far *data, I8 *name);
 extern I8 far *locate_shape_fatal(void far *data, I8 *name);
 extern struct SPRITE far *sprite_make_window(U16  width, U16  height, U16  color);
 extern void sprite_free_window(struct SPRITE far *sprite);
 extern void sprite_setup1_from_arg_pointer(struct SPRITE far *sprite);
 extern void displaywindow(void);
 extern void sprite_putimage_and_alt(struct SHAPE2D far *shape, I16 x, I16 y);
-extern void sprite_putimage_and_alt2(struct SHAPE2D far *shape, I16 x, I16 y);
-extern void sprite_putimage_or_alt(struct SHAPE2D far *shape, I16 x, I16 y);
-extern void shape2d_blit_rle(struct SHAPE2D far *shape);
-extern void shape2d_blit_rle_clipped_at(struct SHAPE2D far *shape, I16 x, I16 y);
-extern void shape2d_blit_rle_clipped(struct SHAPE2D far *shape);
+extern void andcfxy(struct SHAPE2D far *shape, I16 x, I16 y);
+extern void orcfxy(struct SHAPE2D far *shape, I16 x, I16 y);
+extern void movpackf(struct SHAPE2D far *shape);
+extern void movpackcfxya(struct SHAPE2D far *shape, I16 x, I16 y);
+extern void movpackcf(struct SHAPE2D far *shape);
 extern void shape2d_blit_rle_at(struct SHAPE2D far *shape, I16 x, I16 y);
-extern void sprite_putimage_or(struct SHAPE2D far *shape, I16 x, I16 y);
+extern void orcfxya(struct SHAPE2D far *shape, I16 x, I16 y);
 extern void sprite_clear_shape_alt(struct SHAPE2D far *shape, I16 x, I16 y);
 extern void preRender_line(I16 x1, I16 y1, I16 x2, I16 y2, I16 color);
-extern void far *mmgr_free(I8 far *ptr);
+extern void far *freememory(I8 far *ptr);
 I8 aStdaxxxx[] = "stdaxxxx";
 I8 aStdbxxxx[] = "stdbxxxx";
 /* Prepares car dashboard and shape sprites. Params: mode. Returns: none. State: reads car/camera state and updates shape/resource handles. */
@@ -1507,15 +1507,15 @@ void far dodash(I16 mode)
         /* PLATFORM(video): create an offscreen sprite surface. */ gear_base_sprite = sprite_make_window(wheel_shapes[4]->s2d_width * pixel_scales, wheel_shapes[4]->s2d_height, 15);
         shape = (struct SHAPE2D far *)locate_shape_fatal(stdares, "dash");
         /* PLATFORM(video): select the sprite surface for drawing. */ sprite_setup1_from_arg_pointer(gear_base_sprite);
-        /* PLATFORM(video): draw a shape layer. */ shape2d_blit_rle_clipped_at(shape, shape->s2d_pos_x - wheel_shapes[4]->s2d_pos_x,
+        /* PLATFORM(video): draw a shape layer. */ movpackcfxya(shape, shape->s2d_pos_x - wheel_shapes[4]->s2d_pos_x,
                         shape->s2d_pos_y - wheel_shapes[4]->s2d_pos_y);
         /* PLATFORM(video): copy the working sprite page. */ displaywindow();
         dashbmy9 = shape->s2d_pos_y;
-        if (locate_shape_nofatal(stdares, "roof") != 0)
+        if (locateshapez(stdares, "roof") != 0)
             rfy5 = ((struct SHAPE2D far *)locate_shape_fatal(stdares, "roof"))->s2d_height;
         else
             rfy5 = 0;
-        shape = (struct SHAPE2D far *)locate_shape_nofatal(stdares, "dast");
+        shape = (struct SHAPE2D far *)locateshapez(stdares, "dast");
         if (shape != 0) {
             dasty = shape->s2d_pos_y;
             g_dastbmpbuf = shape;
@@ -1526,10 +1526,10 @@ void far dodash(I16 mode)
         return;
     /* PLATFORM(video): select the opaque drawing path. */ case 1:
         msdrawopaquechk();
-        /* PLATFORM(video): draw a shape layer. */ if (locate_shape_nofatal(stdares, "roof") != 0)
-            shape2d_blit_rle((struct SHAPE2D far *)locate_shape_fatal(stdares, "roof"));
-        /* PLATFORM(video): draw a shape layer. */ shape2d_blit_rle_clipped((struct SHAPE2D far *)locate_shape_fatal(stdares, "dash"));
-        /* PLATFORM(video): draw a shape layer. */ shape2d_blit_rle_clipped(wheel_shapes[1]);
+        /* PLATFORM(video): draw a shape layer. */ if (locateshapez(stdares, "roof") != 0)
+            movpackf((struct SHAPE2D far *)locate_shape_fatal(stdares, "roof"));
+        /* PLATFORM(video): draw a shape layer. */ movpackcf((struct SHAPE2D far *)locate_shape_fatal(stdares, "dash"));
+        /* PLATFORM(video): draw a shape layer. */ movpackcf(wheel_shapes[1]);
         /* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
         x = 0;
         gear_knob_visible_view[cam_idg] = g_viewinx[cam_idg] = 0;
@@ -1554,13 +1554,13 @@ void far dodash(I16 mode)
                    (core.playerstate.car_fpsmul2 != 0 && gear_knob_visible_view[cam_idg] == 0)) {
             /* PLATFORM(video): select the sprite surface for drawing. */ sprite_setup1_from_arg_pointer(gnob_sprite);
             gear_knob_visible_view[cam_idg] = 1;
-            /* PLATFORM(video): draw a shape layer. */ shape2d_blit_rle_clipped_at(wheel_shapes[4], 0, 0);
+            /* PLATFORM(video): draw a shape layer. */ movpackcfxya(wheel_shapes[4], 0, 0);
             x = core.playerstate.car_knob_x;
             y = core.playerstate.car_knob_y;
             gear_knob_x_last[cam_idg] = x;
             gear_knob_y_last[cam_idg] = y;
-            /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt2(gnobshapes[1], x, y);
-            /* PLATFORM(video): blit a shape with the OR raster operation. */ sprite_putimage_or_alt(gnobshapes[0], x, y);
+            /* PLATFORM(video): blit a shape to the display. */ andcfxy(gnobshapes[1], x, y);
+            /* PLATFORM(video): blit a shape with the OR raster operation. */ orcfxy(gnobshapes[0], x, y);
             if (g_videoflg5 != 0)
                 setup_mcgawnd2();
             else {
@@ -1588,13 +1588,13 @@ void far dodash(I16 mode)
             }
             switch (wheel_zone) {
             /* PLATFORM(video): draw a shape layer. */ case 0:
-                shape2d_blit_rle_clipped(wheel_shapes[0]);
+                movpackcf(wheel_shapes[0]);
                 break;
             /* PLATFORM(video): draw a shape layer. */ case 1:
-                shape2d_blit_rle_clipped(wheel_shapes[1]);
+                movpackcf(wheel_shapes[1]);
                 break;
             /* PLATFORM(video): draw a shape layer. */ case 2:
-                shape2d_blit_rle_clipped(wheel_shapes[2]);
+                movpackcf(wheel_shapes[2]);
                 break;
             }
             steering_zone[cam_idg] = wheel_zone;
@@ -1645,16 +1645,16 @@ void far dodash(I16 mode)
                     x -= SPEEDOMETER_HUNDREDS_BASE;
                 }
                 if (digit != 0) {
-                    /* PLATFORM(video): blit a shape with the OR raster operation. */ sprite_putimage_or(digshapes[digit], simdp7.spdpoints[0], simdp7.spdpoints[1]);
+                    /* PLATFORM(video): blit a shape with the OR raster operation. */ orcfxya(digshapes[digit], simdp7.spdpoints[0], simdp7.spdpoints[1]);
                     has_digit = 1;
                 }
                 digit = x / 10;
                 if (digit != 0 || has_digit != 0) {
-                    /* PLATFORM(video): blit a shape with the OR raster operation. */ sprite_putimage_or(digshapes[digit], simdp7.spdpoints[2], simdp7.spdpoints[3]);
+                    /* PLATFORM(video): blit a shape with the OR raster operation. */ orcfxya(digshapes[digit], simdp7.spdpoints[2], simdp7.spdpoints[3]);
                     x -= digit * 10;
                     has_digit = 1;
                 }
-                /* PLATFORM(video): blit a shape with the OR raster operation. */ sprite_putimage_or(digshapes[x], simdp7.spdpoints[4], simdp7.spdpoints[5]);
+                /* PLATFORM(video): blit a shape with the OR raster operation. */ orcfxya(digshapes[x], simdp7.spdpoints[4], simdp7.spdpoints[5]);
             } else if (speedo_type == 0) {
                 /* PLATFORM(video): draw a preview line. */ preRender_line(simdp7.spdcenter.px, simdp7.spdcenter.py,
                                simdp7.spdpoints[x * 2], simdp7.spdpoints[x * 2 + 1],
@@ -1665,12 +1665,12 @@ void far dodash(I16 mode)
                            spdneedlegaugeclr);
             switch (wheel_zone) {
             /* PLATFORM(video): draw a bitmap mask. */ case 0:
-                shape2d_render_bmp_as_mask(wheel_shapes[7]);
-                /* PLATFORM(video): draw a shape layer. */ shape2d_or_rle(wheel_shapes[5]);
+                andpackf(wheel_shapes[7]);
+                /* PLATFORM(video): draw a shape layer. */ orpackf(wheel_shapes[5]);
                 break;
             /* PLATFORM(video): draw a bitmap mask. */ case 2:
-                shape2d_render_bmp_as_mask(wheel_shapes[8]);
-                /* PLATFORM(video): draw a shape layer. */ shape2d_or_rle(wheel_shapes[6]);
+                andpackf(wheel_shapes[8]);
+                /* PLATFORM(video): draw a shape layer. */ orpackf(wheel_shapes[6]);
                 break;
             }
             if (g_videoflg5 != 0)
@@ -1697,8 +1697,8 @@ void far dodash(I16 mode)
             steering_dot_x[cam_idg] = (x_pos - gnobshapes[2]->s2d_hotspot_x) & vidflg3is_minus1;
             steering_dot_y[cam_idg] = y_pos - gnobshapes[2]->s2d_hotspot_y;
             /* PLATFORM(video): use the display text or sprite interface. */ sprite_clear_shape_alt(gnobshapes[numid + 4], steering_dot_x[cam_idg], steering_dot_y[cam_idg]);
-            /* PLATFORM(video): blit a shape to the display. */ sprite_putimage_and_alt2(gnobshapes[3], x_pos, y_pos);
-            /* PLATFORM(video): blit a shape with the OR raster operation. */ sprite_putimage_or_alt(gnobshapes[2], x_pos, y_pos);
+            /* PLATFORM(video): blit a shape to the display. */ andcfxy(gnobshapes[3], x_pos, y_pos);
+            /* PLATFORM(video): blit a shape with the OR raster operation. */ orcfxy(gnobshapes[2], x_pos, y_pos);
             last_steering_step[cam_idg] = steering;
         }
         /* PLATFORM(video): select the transparent drawing path. */ msdrawtransparentchk();
@@ -1707,8 +1707,8 @@ void far dodash(I16 mode)
         sprite_free_window(gear_base_sprite);
         /* PLATFORM(video): release an offscreen sprite surface. */ sprite_free_window(gnob_sprite);
         /* PLATFORM(video): release an offscreen sprite surface. */ sprite_free_window(meters_sprite);
-        /* PLATFORM(memory): release resource memory. */ mmgr_free(stdbres);
-        /* PLATFORM(memory): release resource memory. */ mmgr_free(stdares);
+        /* PLATFORM(memory): release resource memory. */ freememory(stdbres);
+        /* PLATFORM(memory): release resource memory. */ freememory(stdares);
         return;
     }
 }
@@ -1840,29 +1840,29 @@ void removegamefiles(void) {
 	removedrawbits();
 	/* PLATFORM(memory): release a loaded resource. */ closeresource(gamerptrs);
 	if (menutimeout == 0) {
-		/* PLATFORM(memory): release resource memory. */ mmgr_free(sdgresourcehandle);
+		/* PLATFORM(memory): release resource memory. */ freememory(sdgresourcehandle);
 		dodash(3);
 	}
 
-	/* PLATFORM(memory): release resource memory. */ mmgr_free(fntled_res);
+	/* PLATFORM(memory): release resource memory. */ freememory(fntled_res);
 	/* PLATFORM(audio): remove the audio timer hook. */ audio_remove_driver_timer();
-	/* PLATFORM(memory): release resource memory. */ mmgr_free(engdata);
-	/* PLATFORM(memory): release resource memory. */ mmgr_free(eng1resourceptr);
+	/* PLATFORM(memory): release resource memory. */ freememory(engdata);
+	/* PLATFORM(memory): release resource memory. */ freememory(eng1resourceptr);
 	shape3d_free_car_shapes();
 }
 
-void mouse_set_minmax(I16, I16, I16, I16);
-void mouse_set_position(I16, I16);
+void setmousebounds(I16, I16, I16, I16);
+void setmousepos(I16, I16);
 /* Sets the in-game mouse bounds. Params: enabled flag. Returns: none. State: maps the flag to mouse range and position. */
 /* PLATFORM(input_mouse): reads pointer state or configures pointer bounds. */
-void mouse_minmax_position(I16 enabled)
+void initmousedrive(I16 enabled)
 {
     if (enabled) {
-        /* PLATFORM(input_mouse): set the mouse coordinate range. */ mouse_set_minmax(15, 0, 0x131, PLATFORM_SCREEN_HEIGHT_PIXELS);
-        /* PLATFORM(input_mouse): set the mouse position. */ mouse_set_position(0xA0, 0x64);
+        /* PLATFORM(input_mouse): set the mouse coordinate range. */ setmousebounds(15, 0, 0x131, PLATFORM_SCREEN_HEIGHT_PIXELS);
+        /* PLATFORM(input_mouse): set the mouse position. */ setmousepos(0xA0, 0x64);
         return;
     }
-    /* PLATFORM(input_mouse): set the mouse coordinate range. */ mouse_set_minmax(0, 0, PLATFORM_SCREEN_WIDTH_PIXELS, PLATFORM_SCREEN_HEIGHT_PIXELS);
+    /* PLATFORM(input_mouse): set the mouse coordinate range. */ setmousebounds(0, 0, PLATFORM_SCREEN_WIDTH_PIXELS, PLATFORM_SCREEN_HEIGHT_PIXELS);
 }
 /* Applies the current replay steering sample. Params: none. Returns: none. State: reads replay samples and updates steering state. */
 void far mousesteer(void)
@@ -1943,15 +1943,15 @@ extern void far drawrect(I16, I16, I16, I16, I16);
 extern void far sprite_draw_rect_outline(I16, I16, I16, I16, I16);
 extern I16 far input_checking(I16);
 extern I16 far mousecursor(I16, I16 *, I16 *, I16 *, I16 *);
-extern I16 far kb_get_key_state(I16);
+extern I16 far keystate(I16);
 extern I8 far do_fileselect_dialog(I8 *, I8 *, I8 *, void far *);
 extern I8 far fsavereq(I8 *, I8 *, void far *);
-extern I16 far file_find(I8 *);
+extern I16 far findfirst(I8 *);
 extern void far strcpyfar(I8 *, I8 far *);
 extern struct RECTANGLE * far shadowtext(I8 *, I16, I16, I16, I16);
 
 extern I8 ReplayName[];
-extern I16 far file_find(I8 *path);
+extern I16 far findfirst(I8 *path);
 extern struct RECTANGLE *shadowtext(I8 *text, I16 x, I16 y, I16 color, I16 unk);
 extern void far strcpyfar(I8 *dst, I8 far *src);
 /* Runs one game/replay loop step and updates its UI. Params: mode, frame index and frame offset. Returns: none. State: reads and updates game, replay, camera and UI state. */
@@ -1996,7 +1996,7 @@ void doreplay(I16 mode, I16 frame_index, I16 frame_offset)
             for (i = 0; i < 9; i++)
                 camera_buttons_state_per_view[i * 2 + cam_idg] = 0;
             /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
-            /* PLATFORM(video): draw a shape layer. */ shape2d_blit_rle(replayshapes[0]);
+            /* PLATFORM(video): draw a shape layer. */ movpackf(replayshapes[0]);
             camera_button_tick[cam_idg] = -1;
             camera_button_col_cache[cam_idg] = -1;
             fmtframestr(&resbuftext, globalgamesettings.game_recordedframes + elaptm1, 1);
@@ -2018,7 +2018,7 @@ void doreplay(I16 mode, I16 frame_index, I16 frame_offset)
             camera_mode_view[cam_idg] = cammd;
             camera_button_col_cache[cam_idg] = -1;
             /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
-            /* PLATFORM(video): draw a shape layer. */ shape2d_blit_rle(replayshapes[cammd + 1]);
+            /* PLATFORM(video): draw a shape layer. */ movpackf(replayshapes[cammd + 1]);
             if (game_camera_buttons_count[cammd] < camera_button_index)
                 camera_button_index = game_camera_buttons_count[cammd];
             if (view_camera_choice[cam_idg] > 6)
@@ -2051,21 +2051,21 @@ void doreplay(I16 mode, I16 frame_index, I16 frame_offset)
             msdrawopaquechk();
             if (view_camera_choice[cam_idg] != -1) {
                 /* PLATFORM(video): draw a shape layer. */ if (camera_buttons_state_per_view[view_camera_choice[cam_idg] * 2 + cam_idg] != 0)
-                    shape2d_blit_rle(replayshapes[view_camera_choice[cam_idg] + 14]);
+                    movpackf(replayshapes[view_camera_choice[cam_idg] + 14]);
                 /* PLATFORM(video): draw a shape layer. */ else
-                    shape2d_blit_rle(replayshapes[view_camera_choice[cam_idg] + 5]);
+                    movpackf(replayshapes[view_camera_choice[cam_idg] + 5]);
                 view_camera_choice[cam_idg] = -1;
             }
             for (button = 0; button < 7; button++) {
                 if (camera_buttons_pressed[button] == 0 && camera_buttons_state_per_view[button * 2 + cam_idg] != camera_buttons_pressed[button]) {
-                    /* PLATFORM(video): draw a shape layer. */ shape2d_blit_rle(replayshapes[button + 5]);
+                    /* PLATFORM(video): draw a shape layer. */ movpackf(replayshapes[button + 5]);
                     camera_buttons_state_per_view[button * 2 + cam_idg] = 0;
                 }
             }
             for (button = 0; button < 7; button++) {
                 if (camera_buttons_pressed[button] != 0) {
                     camera_buttons_state_per_view[button * 2 + cam_idg] = 1;
-                    /* PLATFORM(video): draw a shape layer. */ shape2d_blit_rle(replayshapes[button + 14]);
+                    /* PLATFORM(video): draw a shape layer. */ movpackf(replayshapes[button + 14]);
                     camera_buttons_state_per_view[button * 2 + cam_idg] = 1;
                 }
             }
@@ -2138,7 +2138,7 @@ void doreplay(I16 mode, I16 frame_index, I16 frame_offset)
                 doreplay(2, 4, 0);
             doreplay(1, core.game_frame, core.game_frame);
             modifier = 0;
-            /* PLATFORM(input_kb): read a key state. */ if (kb_get_key_state(0x1D) != 0 || (camera_button_index == 8 && (kbjoyflags & 0x30) != 0))
+            /* PLATFORM(input_kb): read a key state. */ if (keystate(0x1D) != 0 || (camera_button_index == 8 && (kbjoyflags & 0x30) != 0))
                 modifier = 1;
             if (modifier != 0) {
                 switch (key_code) {
@@ -2276,7 +2276,7 @@ pause_menu:
                         g_rplmodui = 0;
                         doreplay(2, 3, 0);
                         inrepflg = 0;
-                        /* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ mouse_minmax_position(mouse_enabled);
+                        /* PLATFORM(input_mouse): set or restore the mouse coordinate range. */ initmousedrive(mouse_enabled);
                         /* PLATFORM(input_joy): wait for joystick input. */ /* PLATFORM(timer): wait for input using the timer interval. */ /* PLATFORM(video): update pointer display while waiting for input. */ clear_keyboardbuffer();
                         kbormouse = 0;
                         break;
@@ -2344,7 +2344,7 @@ pause_menu:
                                 /* PLATFORM(file): build a file path. */ makename(replay_file, ReplayName, ".rpl", buf_g_path);
                                 write_state = 1;
                                 g_is_busy = 1;
-                                /* PLATFORM(file): check whether a file exists. */ if (file_find(buf_g_path) != 0) {
+                                /* PLATFORM(file): check whether a file exists. */ if (findfirst(buf_g_path) != 0) {
                                     /* PLATFORM(input_joy): collect dialog joystick input. */
                                     /* PLATFORM(timer): wait for dialog input using timer ticks. */
                                     /* PLATFORM(video): render a modal dialog. */

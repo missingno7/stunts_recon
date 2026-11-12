@@ -18,33 +18,33 @@ U8 palmap[PALETTE_REMAP_ENTRY_COUNT] = {
 };
 extern I8 *strcpy(I8 *, const I8 *);
 extern I16 stricmp(const I8 *, const I8 *);
-extern void fatal_error(const I8 *, ...);
+extern void abortmessage(const I8 *, ...);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void FAR *mmgr_get_chunk_by_name(const I8 *);
+extern void FAR *checkmodule(const I8 *);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-extern const I8 *file_find(const I8 *);
+extern const I8 *findfirst(const I8 *);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-extern void FAR *file_decomp(const I8 *, I16);
+extern void FAR *loadpacka(const I8 *, I16);
 extern U16S file_get_unflip_size(I8 FAR *);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void FAR *mmgr_alloc_pages(const I8 *, U16S);
+extern void FAR *reservememory(const I8 *, U16S);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 extern void file_unflip_shape2d(U8 FAR *, I8 FAR *);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 extern void file_unflip_shape2d_pes(U8 FAR *, I8 FAR *);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void mmgr_release(void FAR *);
+extern void purgememory(void FAR *);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-extern void FAR *file_load_binary(const I8 *, I16);
+extern void FAR *loadfilea(const I8 *, I16);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 extern U16S file_load_shape2d_expandedsize(void FAR *);
-extern I8 FAR *locate_shape_nofatal(I8 FAR *, const I8 *);
+extern I8 FAR *locateshapez(I8 FAR *, const I8 *);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 extern void file_load_shape2d_palmap_init(U8 FAR *);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 extern void file_load_shape2d_expand(U8 FAR *, I8 FAR *);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern I8 FAR *mmgr_compact_chunk(I8 FAR *);
+extern I8 FAR *packmemory(I8 FAR *);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 extern void file_load_shape2d_palmap_apply(U8 FAR *, U8 []);
 void FAR *file_load_shape2d(I8 *, I16);
@@ -52,7 +52,7 @@ void FAR *file_load_shape2d(I8 *, I16);
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(file): request the shape through the game resource loader. */
-void FAR* file_load_shape2d_fatal(I8* shapename) {
+void FAR* loadshape(I8* shapename) {
     /* PLATFORM(file): request this shape through the shared resource loader. */
 	return file_load_shape2d(shapename, 1);
 }
@@ -61,7 +61,7 @@ void FAR* file_load_shape2d_fatal(I8* shapename) {
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(file): request the shape through the game resource loader. */
-void FAR* file_load_shape2d_nofatal(I8* shapename) {
+void FAR* loadshapez(I8* shapename) {
     /* PLATFORM(file): request this shape through the shared resource loader. */
 	return file_load_shape2d(shapename, 0);
 }
@@ -94,73 +94,73 @@ void FAR* file_load_shape2d(I8* shapename, I16 fatal) {
 			old_suffix_ptr = extension_ptr;
 			strcpy(old_suffix_ptr, shape2d_extension_suffixes[ext_index]);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-			if ((loaded_chunk = mmgr_get_chunk_by_name(file_buffer)) != 0)
+			if ((loaded_chunk = checkmodule(file_buffer)) != 0)
 				return loaded_chunk;
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-			if (file_find(file_buffer))
+			if (findfirst(file_buffer))
 				break;
 		}
 	} else {
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-		if ((loaded_chunk = mmgr_get_chunk_by_name(file_buffer)) != 0)
+		if ((loaded_chunk = checkmodule(file_buffer)) != 0)
 			return loaded_chunk;
 	}
 
 	strcpy(ext, extension_ptr);
 	if (stricmp(ext, ".PVS") == 0) {
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-		loaded_chunk = file_decomp(file_buffer, fatal);
+		loaded_chunk = loadpacka(file_buffer, fatal);
 		if (loaded_chunk) {
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-			work_pages = mmgr_alloc_pages("UNFLIP", file_get_unflip_size(loaded_chunk));
+			work_pages = reservememory("UNFLIP", file_get_unflip_size(loaded_chunk));
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 			file_unflip_shape2d(loaded_chunk, work_pages);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-			mmgr_release(work_pages);
+			purgememory(work_pages);
 		}
 		return loaded_chunk;
 	}
 	if (stricmp(ext, ".XVS") == 0) {
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-		loaded_chunk = file_decomp(file_buffer, fatal);
+		loaded_chunk = loadpacka(file_buffer, fatal);
 		return loaded_chunk;
 	}
 	if (stricmp(ext, ".PES") == 0) {
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-		loaded_chunk = file_decomp(file_buffer, fatal);
+		loaded_chunk = loadpacka(file_buffer, fatal);
 		if (!loaded_chunk)
 			return loaded_chunk;
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-		work_pages = mmgr_alloc_pages("UNFLIP", 1000);
+		work_pages = reservememory("UNFLIP", 1000);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 		file_unflip_shape2d_pes(loaded_chunk, work_pages);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-		mmgr_release(work_pages);
+		purgememory(work_pages);
 	} else if (stricmp(ext, ".ESH") == 0) {
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-		loaded_chunk = file_load_binary(file_buffer, fatal);
+		loaded_chunk = loadfilea(file_buffer, fatal);
 		if (!loaded_chunk)
 			return loaded_chunk;
 	} else {
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-		loaded_chunk = file_load_binary(file_buffer, fatal);
+		loaded_chunk = loadfilea(file_buffer, fatal);
 		return loaded_chunk;
 	}
 
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 	output_size = file_load_shape2d_expandedsize(loaded_chunk);
-	palette_data = locate_shape_nofatal(loaded_chunk, "!MGA");
+	palette_data = locateshapez(loaded_chunk, "!MGA");
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 	if (palette_data) file_load_shape2d_palmap_init((U8 FAR*)(palette_data + SHAPE2D_HEADER_BYTES));
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-	work_pages = mmgr_alloc_pages(file_buffer, output_size);
+	work_pages = reservememory(file_buffer, output_size);
 	*(U32 FAR*)work_pages = output_size * 16UL;
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 	file_load_shape2d_expand(loaded_chunk, work_pages);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-	mmgr_release(loaded_chunk);
+	purgememory(loaded_chunk);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-	loaded_chunk = mmgr_compact_chunk(work_pages);
+	loaded_chunk = packmemory(work_pages);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 	file_load_shape2d_palmap_apply(loaded_chunk, palmap);
 	return loaded_chunk;

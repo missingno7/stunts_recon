@@ -9,7 +9,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_locate_shape_nofatal",
+      "frame": "_locateshapez",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -17,7 +17,7 @@
       "offset": 206,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_locate_shape_nofatal",
+      "target": "_locateshapez",
       "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
@@ -43,7 +43,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_locate_shape_nofatal",
+      "frame": "_locateshapez",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -51,7 +51,7 @@
       "offset": 74,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_locate_shape_nofatal",
+      "target": "_locateshapez",
       "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
@@ -117,7 +117,7 @@
     {
       "end": 157734,
       "name": "nopsub_367E4",
-      "public": "_file_find_shapes_optional",
+      "public": "_locateshapesz",
       "stable_id": "load_267e4",
       "start": 157668,
       "target": {
@@ -155,8 +155,8 @@
       "_file_find_shapes_optional_alt",
       "_locate_shape_fatal",
       "_locate_many_resources",
-      "_locate_shape_nofatal",
-      "_file_find_shapes_optional",
+      "_locateshapez",
+      "_locateshapesz",
       "_locate_sound_fatal"
     ],
     "groups": [
@@ -192,7 +192,7 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_file_find_shapes_optional",
+        "name": "_locateshapesz",
         "offset": 50,
         "segment": "UNIT_TEXT"
       }

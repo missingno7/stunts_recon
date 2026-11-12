@@ -6,7 +6,7 @@
   "binding": {
     "declarations": {
       "externals": [
-        "_file_get_shape2d"
+        "_shapepointer"
       ],
       "groups": [],
       "publics": [
@@ -90,7 +90,7 @@
       "offset": 45,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_file_get_shape2d",
+      "target": "_shapepointer",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -120,7 +120,7 @@
   "kind": "asm",
   "object_declarations": {
     "externals": [
-      "_file_get_shape2d"
+      "_shapepointer"
     ],
     "groups": [],
     "publics": [

@@ -25,8 +25,8 @@ name asm012_133660
 DGROUP group CONST,_BSS,_DATA
 assume ds:DGROUP
 _DATA segment word public 'DATA'
-_kb_readchar_callback dw offset _kb_read_char
-_readchar_callback_seg dw seg _kb_read_char
+_kb_readchar_callback dw offset _normkey
+_readchar_callback_seg dw seg _normkey
 _joystick_enabled db 00h
 _DATA ends
 _BSS segment word public 'BSS'
@@ -35,17 +35,17 @@ CONST segment word public 'CONST'
 CONST ends
 extrn _timer_deadline_ticks:word
 extrn _timer_copy_target_high:word
-extrn _timer_get_counter:far
+extrn _gettick:far
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _joystick_enabled
-public _kb_call_readchar_callback
-public _kb_read_char
-public _kb_checking
-public _kb_set_readchar_callback
-public _kb_get_readchar_callback
+public _testkey
+public _normkey
+public _nextkey
+public _keysub
+public _currentkeysub
 public _flush_stdin
-public _kb_check
+public _purgekey
 public _kb_read_until_deadline
 public _kb_read_with_timeout
 ; -----------------------------------------------------------------------------
@@ -71,11 +71,11 @@ public _kb_read_with_timeout
 ; INPUTDOC Globals written: callback-dependent globals
 ; INPUTDOC Services: Indirect FAR callback initialized to kb_read_char
 ; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
-_kb_call_readchar_callback proc far
+_testkey proc far
 ; INPUTDOC No callback register saves or argument setup; ABI preservation is delegated to the target.
     call    dword ptr ds:[_kb_readchar_callback]
     retf
-_kb_call_readchar_callback endp
+_testkey endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Read a character and dispatch the configured read-character callback.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -101,7 +101,7 @@ _kb_call_readchar_callback endp
 ; INPUTDOC Globals written: transitive INT16 queue dequeue
 ; INPUTDOC Services: INT16 AH=01 then AH=00 when present
 ; INPUTDOC Reachability: Live: initial readchar callback pointer and src/obj_seg008.c:1640.
-_kb_read_char proc far
+_normkey proc far
 
     mov     ah, 1
     int     R5HW_BIOS_KEYBOARD_INT
@@ -118,7 +118,7 @@ readchar_consume_buffered_key:
     xor     ah, ah
 readchar_return_ascii_character:
     retf
-_kb_read_char endp
+_normkey endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Poll keyboard input and update the game input state.
 ; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -144,7 +144,7 @@ _kb_read_char endp
 ; INPUTDOC Globals written:
 ; INPUTDOC Services: INT16 AH=01 only
 ; INPUTDOC Reachability: Live: called by both NumLock wrappers.
-_kb_checking proc far
+_nextkey proc far
     mov ah,1
     int R5HW_BIOS_KEYBOARD_INT ;/* PLATFORM(input_kb): calls the BIOS keyboard service. */
     jnz have_key
@@ -155,7 +155,7 @@ have_key:
     xor ah,ah
 done:
     ret
-_kb_checking endp
+_nextkey endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub kb set readchar callback.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -179,7 +179,7 @@ _kb_checking endp
 ; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
 ; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
-_kb_set_readchar_callback proc far
+_keysub proc far
     push    bp
     mov     bp, sp
     mov     ax, [bp+6]
@@ -188,7 +188,7 @@ _kb_set_readchar_callback proc far
     mov     ds:[_readchar_callback_seg], ax
     pop     bp
     retf
-_kb_set_readchar_callback endp
+_keysub endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub kb get readchar callback.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -212,11 +212,11 @@ _kb_set_readchar_callback endp
 ; INPUTDOC Reachability: Statically unreferenced; no proof against arbitrary external/numeric callers. No reference
 ; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
-_kb_get_readchar_callback proc far
+_currentkeysub proc far
     mov     ax, ds:[_kb_readchar_callback]
     mov     dx, ds:[_readchar_callback_seg]
     retf
-_kb_get_readchar_callback endp
+_currentkeysub endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by flush stdin.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -242,7 +242,7 @@ _kb_get_readchar_callback endp
 ; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
 _flush_stdin proc far
 ; INPUTDOC Despite the name, loops while empty and returns on first key; it does not drain input.
-    call    far ptr _kb_call_readchar_callback
+    call    far ptr _testkey
     cmp     ax, 0
     jz      short _flush_stdin
     retf
@@ -272,7 +272,7 @@ _flush_stdin endp
 ; INPUTDOC Globals written: transitive INT16 queue dequeue
 ; INPUTDOC Services: INT16 AH=01/00 repeated
 ; INPUTDOC Reachability: Retained source callers or a live intra-module call; see report.
-_kb_check proc far
+_purgekey proc far
 
     mov     ah, 1
     int     R5HW_BIOS_KEYBOARD_INT
@@ -285,8 +285,8 @@ kb_check_consume_pending_key:
 ; INPUTDOC Unconditional retry discards every pending key, including normal ASCII.
     int     R5HW_BIOS_KEYBOARD_INT
 ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
-    jmp     short near ptr _kb_check
-_kb_check endp
+    jmp     short near ptr _purgekey
+_purgekey endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 30A77. Its internal flow uses
 ; readchar_poll_deadline_expired, readchar_timeout_return.
@@ -316,11 +316,11 @@ _kb_check endp
 ; INPUTDOC outside its definition/declaration, installed vector or stored pointer was found in active asm/ and src/.
 ; INPUTDOC dead=true uses this bounded static convention, not observed execution.
 _kb_read_until_deadline proc far
-    call    far ptr _kb_call_readchar_callback
+    call    far ptr _testkey
     cmp     ax, 0
 ; INPUTDOC Unsigned high/low comparison against a shared deadline is not timer-wrap-safe.
     jnz     short readchar_timeout_return
-    call    far ptr _timer_get_counter
+    call    far ptr _gettick
     cmp     dx, ds:[_timer_copy_target_high]
     jb      short _kb_read_until_deadline
     ja      short readchar_poll_deadline_expired
@@ -364,16 +364,16 @@ _kb_read_with_timeout proc far
     mov     bp, sp
     sub     sp, 4
 ; INPUTDOC Duration words occupy BP+6/BP+8; local deadline is BP-4/BP-2.
-    call    far ptr _timer_get_counter
+    call    far ptr _gettick
     add     ax, [bp+6]
     adc     dx, [bp+8]
     mov     [bp-4], ax
     mov     [bp-2], dx
 readchar_timeout_poll_loop:
-    call    far ptr _kb_call_readchar_callback
+    call    far ptr _testkey
     cmp     ax, 0
     jnz     short readchar_restore_and_return
-    call    far ptr _timer_get_counter
+    call    far ptr _gettick
     cmp     dx, [bp-2]
     jb      short readchar_timeout_poll_loop
     ja      short readchar_timeout_return_zero

@@ -87,7 +87,7 @@ I16 norm_zone(struct VECTOR* vec);
 void projectp(struct VECTOR* vec, struct POINT2D* outpt);
 void zclipline(struct VECTOR* vec1, struct VECTOR* vec2, struct VECTOR* outvec, I16S i);
 
-I16S mulscl(I16S a1, I16S a2);
+I16S fixedmult(I16S a1, I16S a2);
 
 void mergezones(struct RECTANGLE* r1, struct RECTANGLE* r2, struct RECTANGLE* outrc);
 I8 clipzone(struct RECTANGLE* r1, struct RECTANGLE* r2);
@@ -366,8 +366,8 @@ extern void dodash(I16);
 extern void drawworld(I8 a, struct RECTANGLE* rc);
 extern void doreplay(I16, I16, I16);
 extern void gameintinit(void);
-extern void mouse_minmax_position(I16);
-extern I16 kb_get_char(void);
+extern void initmousedrive(I16);
+extern I16 normkeyi(void);
 extern void mainkey(I16);
 
 extern I16 flagsdown;
@@ -501,7 +501,7 @@ extern void selectcar(struct GAMEINFO* unk, I8* unk2, I8* unk3, U16  unk4);
 extern void run_game(void);
 extern unsigned end_hiscore(void);
 extern unsigned run_option_menu(void);
-extern void security_check(void);
+extern void getprotection(void);
 
 extern void ensure_file_exists(I16 unk);
 
@@ -510,7 +510,7 @@ extern void far* load_voice_file(const I8* filename);
 extern void far* load_sfx_file(const I8* filename);
 extern void far* load_shape2d_nofatal_thunk(const I8* filename);
 extern void far* load_shape2d_res_nofatal_thunk(const I8* filename);
-extern void far* file_load_shape2d_nofatal(I8* shapename);
+extern void far* loadshapez(I8* shapename);
 extern void far* file_load_shape2d_nofatal2(I8* shapename);
 extern void far* init_audio_resources(void far* songptr, void far* voiceptr, const I8* name);
 extern void load_audio_finalize(void far* audiores);
@@ -526,25 +526,25 @@ extern I16 input_do_checking(I16 unk);
 extern void keyboard_exit_handler(void);
 extern void keyboard_shift_checking1(void);
 extern void kb_shift_checking2(void);
-extern void kb_reg_callback(I16 code, void (far* callback)(void));
+extern void interpretsub(I16 code, void (far* callback)(void));
 extern void show_graphic_levels_menu(void);
 extern void do_joystick_resource_text(void);
-extern void do_key_resource_text(void);
+extern void mkeyon(void);
 extern void do_mof_resource_text(void);
-extern void do_pau_restext(void);
+extern void msystempause(void);
 extern void do_dos_resource_text(void);
 extern void do_sonsof_resource_text(void);
-extern I16S get_kb_or_joy_flags(void);
+extern I16S joystate(void);
 
-extern I16S mouse_init(I16S a1, I16S a2);
+extern I16S initmouse(I16S a1, I16S a2);
 
 extern void video_set_mode4(void);
 extern void video_set_mode7(void);
-extern void video_set_mode_13h(void);
+extern void initgraphics(void);
 
 extern void shape3d_load_car_shapes(I8* carid, I8* oppcarid);
 
-extern void load_palandcursor(void);
+extern void loadpalandmouse(void);
 extern void sprite_blit_to_video(struct SPRITE far* sprite);
 
 extern I16S intr0_handler(void);
@@ -552,9 +552,9 @@ extern I16S (far* old_intr0_handler)(void);
 extern void timer_setup_interrupt(void);
 extern U32  timer_get_delta_alt(void);
 
-extern I16S set_criterr_handler(I16S (far* callback)(void));
+extern I16S criterr(I16S (far* callback)(void));
 extern void exit(I16S a1);
-extern void fatal_error(const I8*, ...);
+extern void abortmessage(const I8*, ...);
 extern I16S do_dea_textres(void);
 
 extern void* _memcpy(void*, const void*, unsigned);
@@ -608,7 +608,7 @@ void set_projection(I16 i1, I16 i2, I16 i3, I16 i4);
 I16 intatan(I16 z, I16 y);
 unsigned INIT_OBJECTS_BUFFER(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cliprect, I16 unk);
 void INIT_MATRIX(void);
-void polyinfo_reset(void);
+void INIT_BUFFERS(void);
 void DRAW_OBJECTS(void);
 void settires(struct VECTOR far* wheel_vertices, I16 steering_angle, I16S* base_heights, I16S* cached_angles_and_heights, struct VECTOR* wheel_offsets, struct VECTOR* car_origin);
 
@@ -676,11 +676,11 @@ U8  roadupcheck(U8  a, U8  b);
 I16 drawhorizon(I16 a, struct RECTANGLE* rectptr, I16 e, struct MATRIX* matptr, I16 c, I16 f, I16 g);
 struct RECTANGLE* drawtext(void);
 struct RECTANGLE* crack(I16 frame, I16 top, I16 height);
-struct RECTANGLE* do_sinking(I16 frame, I16 top, I16 height);
+struct RECTANGLE* sink(I16 frame, I16 top, I16 height);
 struct RECTANGLE* shadowtext(I8* str, I16 a, I16 b, I16 c, I16 d);
 void fontsetfontdef2(void far* data);
 void fmtframestr(I8* s, I16 time, I16 c);
-void shapeexpl(I16 a, void far* shp, I16 x, I16 y);
+void scalecfxy(I16 a, void far* shp, I16 x, I16 y);
 void shellsort(I16 n, I16* heap, I16* data);
 
 
@@ -737,7 +737,7 @@ extern void far sprite_copy_wnd_to_1(void);
 extern I16 far get_0(void);
 extern void far clear_rect(I16, I16, I16, I16, I16);
 extern void far sprite_free_window(void far *);
-extern void far mmgr_free(void far *);
+extern void far freememory(void far *);
 
 /* Unused OMF-order alias declaration; accesses use rotpr[1]. */
 extern I16 sky_rotation_page1_alias, frmexcess;
@@ -767,7 +767,7 @@ void far drawworldflipzones(struct RECTANGLE *clipRect)
 	extern I8 g_simprect;
 	extern void far msdrawopaquechk(void);
 	extern void far msdrawtransparentchk(void);
-	extern void far rectsorttop(I8, struct RECTANGLE *, I16 *);
+	extern void far sortzonelist(I8, struct RECTANGLE *, I16 *);
 	extern struct RECTANGLE rectclip[15];
 	extern int rcmapix[45];
 	extern char rect_num3;
@@ -801,7 +801,7 @@ void far drawworldflipzones(struct RECTANGLE *clipRect)
                 g_savrc, clipRect, &rect_num3,
                 rectclip);
             if (rect_num3 != 0) {
-                rectsorttop(rect_num3,
+                sortzonelist(rect_num3,
                     rectclip, rcmapix);
                 /* PLATFORM(video): select the opaque drawing path. */ msdrawopaquechk();
                 i = 0;
@@ -1802,8 +1802,8 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 		if (core.game_inputmode == 0) {
 			if ((tx == idxtrk || tile_east2 == idxtrk) && (trow == tagtrk || drow == tagtrk)) {
 
-				j = mulscl(intcos(g_sgateopn), 0x24);
-				nfences = mulscl(intsin(g_sgateopn), 0x24) + 0x38;
+				j = fixedmult(intcos(g_sgateopn), 0x24);
+				nfences = fixedmult(intsin(g_sgateopn), 0x24) + 0x38;
 
 				vptr = &g_shapes3d[0x98A / sizeof(struct SHAPE3D)].shape3d_verts[8];
 				vptr[0].x = j - 0x24;
@@ -1817,13 +1817,13 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 				vptr[3].z = nfences;
 				 
 				g_curr_tsp->pos.x =
-					mulscl(intsin(st_hdg + 0x200), 0x1B6) +
-					mulscl(intsin(st_hdg + 0x100), 0x24) + 
+					fixedmult(intsin(st_hdg + 0x200), 0x1B6) +
+					fixedmult(intsin(st_hdg + 0x100), 0x24) + 
 					trackctrpos2[idxtrk] - viewpoint.x;
 				g_curr_tsp->pos.y = terheight[g_hillf] - viewpoint.y;
 				g_curr_tsp->pos.z =
-					mulscl(intcos(st_hdg + 0x200), 0x1B6) +
-					mulscl(intcos(st_hdg + 0x100), 0x24) + 
+					fixedmult(intcos(st_hdg + 0x200), 0x1B6) +
+					fixedmult(intcos(st_hdg + 0x100), 0x24) + 
 					row_ctr_zs[tagtrk] - viewpoint.z;
 
 				g_curr_tsp->shapeptr = &g_shapes3d[0x98A / sizeof(struct SHAPE3D)];
@@ -1923,7 +1923,7 @@ draw_done:
 
 			j2 = (core.game_frame >> 2) % 3 ;
 			nfences = ((I32)j << 8) / exwd[j2];
-			shapeexpl(nfences, sdgbmp_v[j2], offset_v.x, offset_v.y);
+			scalecfxy(nfences, sdgbmp_v[j2], offset_v.x, offset_v.y);
 		}
 	}
 
@@ -1951,9 +1951,9 @@ draw_done:
 			}
 		} else if (followed->car_crashBmpFlag == 2) {
 			if (statemgmtcpy != 0) {
-				mergezones(do_sinking(core.game_frame - si, clip->top, clip->bottom - clip->top), tparr, tparr);
+				mergezones(sink(core.game_frame - si, clip->top, clip->bottom - clip->top), tparr, tparr);
 			} else {
-				do_sinking(core.game_frame - si, clip->top, clip->bottom - clip->top);
+				sink(core.game_frame - si, clip->top, clip->bottom - clip->top);
 			}
 		}
 	}
@@ -1997,7 +1997,7 @@ draw_done:
 extern I8 g_simprect;
 extern void far msdrawopaquechk(void);
 extern void far msdrawtransparentchk(void);
-extern void far rectsorttop(I8, struct RECTANGLE *, I16 *);
+extern void far sortzonelist(I8, struct RECTANGLE *, I16 *);
 extern struct RECTANGLE rectclip[15];
 extern I16 rcmapix[45];
 extern I8 rect_num3;
@@ -2232,8 +2232,8 @@ I16 drawhorizon(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
                     temp = 0;
                 else
                     temp = 1;
-                pts[slope].px = pts[temp].px + mulscl(0x3e80, intsin(horizon_angles[slope - 2] + i));
-                pts[slope].py = pts[temp].py + mulscl(0x3e80, intcos(horizon_angles[slope - 2] + i));
+                pts[slope].px = pts[temp].px + fixedmult(0x3e80, intsin(horizon_angles[slope - 2] + i));
+                pts[slope].py = pts[temp].py + fixedmult(0x3e80, intcos(horizon_angles[slope - 2] + i));
             }
             skybox_op_helper(g_skybox_sky_clr, 4, pts[0], pts[1], pts[3], pts[2]);
             skybox_op_helper(ground_skybox, 4, pts[0], pts[1], pts[4], pts[5]);
@@ -2614,7 +2614,7 @@ struct RECTANGLE *drawtext(void)
 
 /* Updates the sinking message animation. Params: frame, top and height. Returns: affected rectangle. State: reads and updates message-rectangle state. */
 /* PLATFORM(video): draws to or configures the display surface. */
-struct RECTANGLE *do_sinking(I16 frame, I16 top, I16 height)
+struct RECTANGLE *sink(I16 frame, I16 top, I16 height)
 {
     register I16 offset;
 
@@ -3008,7 +3008,7 @@ void far initscenery(I8 mode)
 void far removescenery(void)
 {
     /* PLATFORM(memory): release resource memory. */ if (skybox_loaded != 0)
-        mmgr_free(skyres_handle.pointer);
+        freememory(skyres_handle.pointer);
     skybox_loaded = 0;
 }
 
@@ -3026,7 +3026,7 @@ void far loaddrawbits(void)
 
 /* Releases the SD game shape set. Params: none. Returns: none. State: reads the stored resource handle. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
-void far removedrawbits(void) { /* PLATFORM(memory): release resource memory. */ mmgr_free(sdgame2hdl); }
+void far removedrawbits(void) { /* PLATFORM(memory): release resource memory. */ freememory(sdgame2hdl); }
 
 I8 aCarcoun_0[] = "carcoun";
 
@@ -3236,7 +3236,7 @@ I8 far setup_intro(void)
     } else {
         /* PLATFORM(video): release an offscreen sprite surface. */ sprite_free_window(g_wndspr);
     }
-    /* PLATFORM(memory): release resource memory. */ mmgr_free(title3dresValue);
+    /* PLATFORM(memory): release resource memory. */ freememory(title3dresValue);
     return operationResult;
 }
 

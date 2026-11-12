@@ -17,8 +17,8 @@ CONST segment word public 'CONST'
 CONST ends
 DGROUP group CONST,_BSS,_DATA
 assume ds:DGROUP
-extrn _add_exit_handler:far
-extrn _video_clear_color:far
+extrn _addexit:far
+extrn _clearscreen:far
 public _video_add_exithandler
 public _video_on_exit
 S012_TEXT segment word public 'CODE'
@@ -65,7 +65,7 @@ _video_add_exithandler proc far
     push cs
     mov ax, offset _video_on_exit
     push ax
-    call far ptr _add_exit_handler
+    call far ptr _addexit
     add sp, 4
 skip_if_saved_mode_exists:
     retf
@@ -118,7 +118,7 @@ _video_on_exit proc far
     jne skip_color_clear_for_non_cga
     xor ax, ax
     push ax
-    call far ptr _video_clear_color
+    call far ptr _clearscreen
     add sp, 2
 skip_color_clear_for_non_cga:
     mov ah, 0Bh

@@ -7,7 +7,7 @@
 ; INPUTDOC pending key.
 .8086
 INCLUDE include\platform_hw.inc
-extrn _kb_checking:far
+extrn _nextkey:far
 S018_TEXT segment word public 'CODE'
 assume cs:S018_TEXT
 public _keyboard_shift_checking1
@@ -37,7 +37,7 @@ _keyboard_shift_checking1 proc far
  mov es,ax
 ; INPUTDOC 20h is the BDA NumLock toggle bit; this is a write followed by a non-consuming peek.
  or byte ptr es:[17h],20h
- call far ptr _kb_checking
+ call far ptr _nextkey
  ret
 _keyboard_shift_checking1 endp
 S018_TEXT ends

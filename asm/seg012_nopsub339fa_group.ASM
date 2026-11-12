@@ -7,8 +7,8 @@ INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-public _shape2d_and_bitmap_hotspot
-public _putpixel_iconMask
+public _andfxy
+public _andfxya
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 339FA.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -43,7 +43,7 @@ public _putpixel_iconMask
 ; ASMDOC Edge cases: Width=1 takes line 145 word AND after AX=0 then LODSB: AH=0, clearing following destination
 ; byte. Width=0
 ; ASMDOC enters word LOOP with CX=0. Height<=0 still executes one row. No header height-derived span bounds.
-_shape2d_and_bitmap_hotspot proc far
+_andfxy proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -67,7 +67,7 @@ _shape2d_and_bitmap_hotspot proc far
     mov     [bp+local_destination_y], ax
     jmp     short putpixel_iconmask_shared_exit
     even ; word-align the following entry
-_shape2d_and_bitmap_hotspot endp
+_andfxy endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by putpixel iconMask.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -103,7 +103,7 @@ _shape2d_and_bitmap_hotspot endp
 ; ASMDOC Edge cases: Width=1 takes line 145 word AND after AX=0 then LODSB: AH=0, clearing following destination
 ; byte. Width=0
 ; ASMDOC enters word LOOP with CX=0. Height<=0 still executes one row. No header height-derived span bounds.
-_putpixel_iconMask proc far
+_andfxya proc far
     var_6 = word ptr -6
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
@@ -204,6 +204,6 @@ putpixel_iconmask_read_loop_5:
     jg      short putpixel_iconmask_read_loop_5
     jmp     short putpixel_iconmask_draw_loop
     db 0 ; retained zero fill at this boundary
-_putpixel_iconMask endp
+_andfxya endp
 S012_TEXT ends
 end

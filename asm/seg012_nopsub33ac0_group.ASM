@@ -8,9 +8,9 @@ INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-public _shape2d_and_rle_hotspot
-public _shape2d_and_rle_at
-public _shape2d_render_bmp_as_mask
+public _andpackfxy
+public _andpackfxya
+public _andpackf
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 33AC0.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -51,7 +51,7 @@ public _shape2d_render_bmp_as_mask
 ; ASMDOC rows; each exhausted width moves to next CS row-table entry. Width zero still processes one pixel per
 ; row due signed
 ; ASMDOC DEC/JG.
-_shape2d_and_rle_hotspot proc far
+_andpackfxy proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -75,7 +75,7 @@ _shape2d_and_rle_hotspot proc far
     mov     [bp+local_destination_y], ax
     jmp     short render_bmp_as_mask_shared_exit
     even ; word-align the following entry
-_shape2d_and_rle_hotspot endp
+_andpackfxy endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 33AE4.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -115,7 +115,7 @@ _shape2d_and_rle_hotspot endp
 ; ASMDOC rows; each exhausted width moves to next CS row-table entry. Width zero still processes one pixel per
 ; row due signed
 ; ASMDOC DEC/JG.
-_shape2d_and_rle_at proc far
+_andpackfxya proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -137,7 +137,7 @@ _shape2d_and_rle_at proc far
     mov     [bp+local_destination_y], ax
     jmp     short render_bmp_as_mask_shared_exit
     even ; word-align the following entry
-_shape2d_and_rle_at endp
+_andpackfxya endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Render a 2D bitmap shape as a mask.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_shapeofs (word ptr 6);
@@ -178,7 +178,7 @@ _shape2d_and_rle_at endp
 ; ASMDOC rows; each exhausted width moves to next CS row-table entry. Width zero still processes one pixel per
 ; row due signed
 ; ASMDOC DEC/JG.
-_shape2d_render_bmp_as_mask proc far
+_andpackf proc far
     local_row_table_cursor = word ptr -16
     local_source_cursor = word ptr -14
     local_source_width = word ptr -6
@@ -269,6 +269,6 @@ render_bmp_as_mask_read_loop_2:
 bmp_as_mask_when_greater_3:
     loop    render_bmp_as_mask_read_loop_2
     jmp     short render_bmp_as_mask_read_loop
-_shape2d_render_bmp_as_mask endp
+_andpackf endp
 S012_TEXT ends
 end

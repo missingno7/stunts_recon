@@ -4,24 +4,24 @@
 struct SHAPE2D { I16 width,height,s2d_hotspot_x,s2d_hotspot_y,pos_x,pos_y; U8 s2d_plane_color0,s2d_plane_color1_bg,s2d_plane_color2_flip,s2d_plane_color3_flags; };
 extern I8 *mmgr_path_to_name(const I8 *);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void FAR *mmgr_get_chunk_by_name(const I8 *);
+extern void FAR *checkmodule(const I8 *);
     /* PLATFORM(file): load the named shape resource. */
 extern void FAR *file_load_shape2d(I8 *, I16);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern U16S mmgr_get_chunk_size(void FAR *);
+extern U16S modulesize(void FAR *);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void FAR *mmgr_alloc_pages(const I8 *, U16S);
+extern void FAR *reservememory(const I8 *, U16S);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void mmgr_release(void FAR *);
+extern void purgememory(void FAR *);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void FAR *mmgr_compact_chunk(void FAR *);
+extern void FAR *packmemory(void FAR *);
 extern U16S file_get_res_shape_count(void FAR *);
-extern struct SHAPE2D FAR *file_get_shape2d(U8 FAR *, I16);
-extern I32 parse_shape2d_helper(U8 FAR *);
-extern void FAR *parse_shape2d_helper2(I32);
+extern struct SHAPE2D FAR *shapepointer(U8 FAR *, I16);
+extern I32 segtoadr(U8 FAR *);
+extern void FAR *adrtoseg(I32);
 extern I16 parse_shape2d_helper3(I8 FAR *);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void mmgr_resize_memory(void FAR *, U16S);
+extern void resizememory(void FAR *, U16S);
 void FAR *loadandshapepacka(I8 *, I16);
 void shapepack(void FAR *, void FAR *);
 /* Load a shape resource and report failures as fatal.
@@ -49,7 +49,7 @@ void FAR* loadandshapepacka(I8* resname, I16 fatal) {
     void FAR* memchunk;
     {
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-        void FAR* cached = mmgr_get_chunk_by_name(mmgr_path_to_name(resname));
+        void FAR* cached = checkmodule(mmgr_path_to_name(resname));
         if (cached) return cached;
     }
     {
@@ -59,14 +59,14 @@ void FAR* loadandshapepacka(I8* resname, I16 fatal) {
         memchunk = file_load_shape2d(resname, fatal);
         if (!memchunk) return memchunk;
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-        chunksize = mmgr_get_chunk_size(memchunk);
+        chunksize = modulesize(memchunk);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-        pages = mmgr_alloc_pages(resname, chunksize);
+        pages = reservememory(resname, chunksize);
         shapepack(memchunk, pages);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-        mmgr_release(memchunk);
+        purgememory(memchunk);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-        return mmgr_compact_chunk(pages);
+        return packmemory(pages);
     }
 }
 /* Expand each packed shape stream into destination pages and resize the allocation.
@@ -107,10 +107,10 @@ void shapepack(void FAR *memchunk, void FAR *mempages)
     baseaddr = dest;
     for (shape_index = 0; shape_index < index; shape_index++) {
     /* PLATFORM(file): read the current shape descriptor from the loaded resource block. */
-        shape = file_get_shape2d(memchunk, shape_index);
-        page_position = parse_shape2d_helper(dest);
-        dest = parse_shape2d_helper2(page_position);
-        *pagescnt++ = parse_shape2d_helper(dest) - parse_shape2d_helper(baseaddr);
+        shape = shapepointer(memchunk, shape_index);
+        page_position = segtoadr(dest);
+        dest = adrtoseg(page_position);
+        *pagescnt++ = segtoadr(dest) - segtoadr(baseaddr);
         src = (U8 FAR *)shape;
         for (shape_data_num = 0; shape_data_num < 16; shape_data_num++) {
             *dest++ = *src++;
@@ -159,14 +159,14 @@ void shapepack(void FAR *memchunk, void FAR *mempages)
         *dest++ = 0;
     }
 
-    output_size = parse_shape2d_helper(dest) - parse_shape2d_helper(mempages);
+    output_size = segtoadr(dest) - segtoadr(mempages);
     if (output_size & 15) {
         output_size = (output_size >> 4) + 1;
     } else {
         output_size >>= 4;
     }
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-    mmgr_resize_memory(mempages, output_size);
+    resizememory(mempages, output_size);
 }
 
 /* Count the repeated byte run beginning at the source pointer.

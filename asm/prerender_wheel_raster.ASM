@@ -64,9 +64,9 @@ clipline equ _clipline
 slopeline equ _slopeline
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT, ds:DGROUP
-public _prerender_shared_setup
-public _preRender_default
-public _preRender_default_alt
+public _polycmn
+public _drawpolypt
+public _drawpolyp
 public _skybox_op_helper
 public _preRender_wheel_helper4
 public _preRender_helper
@@ -131,7 +131,7 @@ public _sprite_fill_line_records_alt
 ; call in this module.
 ; ASMDOC-GEOMETRY Dead: false. Reachability: src/obj_seg006.c:667 direct polygon call
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_preRender_default label far
+_drawpolypt label far
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by preRender default.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
@@ -141,7 +141,7 @@ _preRender_default label far
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
-preRender_default proc far
+drawpolypt proc far
     local_merge_mode = byte ptr -10
     push    bp
     mov     bp, sp
@@ -150,7 +150,7 @@ preRender_default proc far
     push    di
     mov     [bp+local_merge_mode], 1
     jmp     short pre_default_alt_join_01
-preRender_default endp
+drawpolypt endp
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 ; ASMDOC-GEOMETRY PUBLIC _preRender_default_alt (original line 81)
 ; ASMDOC-GEOMETRY Purpose: Rasterize a cyclic 2D polygon with solid spans; merge mode 0; vertices are a near
@@ -209,7 +209,7 @@ preRender_default endp
 ; ASMDOC-GEOMETRY Dead: false. Reachability: src/preRender_wheel.c:82,104,106 and
 ; src/preRender_sphere_helper.c:16
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_preRender_default_alt label far
+_drawpolyp label far
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by preRender default alt.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
@@ -219,7 +219,7 @@ _preRender_default_alt label far
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; -----------------------------------------------------------------------------
-preRender_default_alt proc far
+drawpolyp proc far
     local_merge_mode = byte ptr -10
     arg_vertices = word ptr 10
     push    bp
@@ -234,8 +234,8 @@ pre_default_alt_join_01:
     mov     ax, offset preRender_line
     mov word ptr imagefunc, ax
     mov     si, [bp+arg_vertices]
-    jmp     short _prerender_shared_setup
-preRender_default_alt endp
+    jmp     short _polycmn
+drawpolyp endp
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 ; ASMDOC-GEOMETRY PUBLIC _skybox_op_helper (original line 108)
 ; ASMDOC-GEOMETRY Purpose: Rasterize a cyclic 2D polygon with solid spans; merge mode 1; vertices are inline
@@ -471,7 +471,7 @@ wheel_raster_join_01:
 ; ASMDOC-GEOMETRY Dead: false. Reachability: Local jumps at asm/prerender_wheel_raster.ASM:106,170; external
 ; near jumps at asm/font_matrix_shape_decode.ASM:186 and asm/graphics_resource_runtime.ASM:1545
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
-_prerender_shared_setup:
+_polycmn:
     mov     [bp+var_vertlineptr], si
     mov     cx, [bp+arg_vertlinecount]
     mov     ax, cx

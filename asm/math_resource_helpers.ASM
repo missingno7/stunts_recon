@@ -62,7 +62,7 @@ S012_TEXT segment word public 'CODE'
 extrn _sprite1:byte
 public 'CODE'
 extrn _sprite1:byte
-public _sprite_copy_both_to_arg
+public _savewindow
 ; -----------------------------------------------------------------------------
 ; Purpose: Copy the two sprite buffers into the supplied destination.
 ; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -88,7 +88,7 @@ public _sprite_copy_both_to_arg
 ; ASMDOC Reachability: live; direct or indirect reference retained.
 ; ASMDOC Notes: State snapshots include descriptor pointers and clipping/window fields; no framebuffer pixel data
 ; ASMDOC is copied. Forward word copy is not arbitrary-overlap memmove.
-_sprite_copy_both_to_arg proc far
+_savewindow proc far
  push bp
  mov bp,sp
  push ds
@@ -108,11 +108,11 @@ _sprite_copy_both_to_arg proc far
  pop ds
  pop bp
  ret
-_sprite_copy_both_to_arg endp
+_savewindow endp
 
 public 'CODE'
 extrn _sprite1:byte
-public _sprite_copy_arg_to_both
+public _restorewindow
 ; -----------------------------------------------------------------------------
 ; Purpose: Copy the supplied sprite image into both sprite buffers.
 ; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -138,7 +138,7 @@ public _sprite_copy_arg_to_both
 ; ASMDOC Reachability: live; direct or indirect reference retained.
 ; ASMDOC Notes: State snapshots include descriptor pointers and clipping/window fields; no framebuffer pixel data
 ; ASMDOC is copied. Forward word copy is not arbitrary-overlap memmove.
-_sprite_copy_arg_to_both proc far
+_restorewindow proc far
  push bp
  mov bp,sp
  push ds
@@ -156,7 +156,7 @@ _sprite_copy_arg_to_both proc far
  pop ds
  pop bp
  ret
-_sprite_copy_arg_to_both endp
+_restorewindow endp
 
 public 'CODE'
 public _file_get_res_shape_count
@@ -196,7 +196,7 @@ _file_get_res_shape_count proc far
 _file_get_res_shape_count endp
 
 public 'CODE'
-public _file_get_shape2d
+public _shapepointer
 ; -----------------------------------------------------------------------------
 ; Purpose: Resolve a shape index to the corresponding 2D shape data.
 ; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -225,7 +225,7 @@ public _file_get_shape2d
 ; ASMDOC Notes: Directory dword is read at ES:[(4*count+4*index+6) mod 65536], omitting supplied far offset SI.
 ; ASMDOC Payload base also omits SI. Therefore ordinary archive formula requires offset zero. Full additions use
 ; ASMDOC carry before normalization; no physical extent check.
-_file_get_shape2d proc far
+_shapepointer proc far
  push bp
  mov bp,sp
  push si
@@ -270,7 +270,7 @@ _file_get_shape2d proc far
  pop si
  pop bp
  ret
-_file_get_shape2d endp
+_shapepointer endp
 
 public 'CODE'
 public _nopsub_326BA
@@ -604,7 +604,7 @@ _thicknessyp proc far
 _thicknessyp endp
 
 public 'CODE'
-public _timer_get_counter
+public _gettick
 ; -----------------------------------------------------------------------------
 ; Purpose: Read the 32-bit timer counter while interrupts are masked.
 ; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -628,13 +628,13 @@ public _timer_get_counter
 ; ASMDOC services: CLI; STI
 ; ASMDOC Reachability: live; direct or indirect reference retained.
 ; ASMDOC Notes: Does not preserve prior interrupt-enable state. Unit is callback ticks; no milliseconds conversion.
-_timer_get_counter proc far
+_gettick proc far
     cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     mov ax, word ptr ds:[_timer_callback_counter]
     mov dx, word ptr ds:[_timer_callback_counter+2]
     sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     ret
-_timer_get_counter endp
+_gettick endp
 
 public 'CODE'
 public _tickcount

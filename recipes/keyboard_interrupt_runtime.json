@@ -169,7 +169,7 @@
       "offset": 104,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_add_exit_handler",
+      "target": "_addexit",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -1018,7 +1018,7 @@
     {
       "end": 133660,
       "name": "kb_get_key_state",
-      "public": "_kb_get_key_state",
+      "public": "_keystate",
       "stable_id": null,
       "start": 133645,
       "target": {
@@ -1029,7 +1029,7 @@
   ],
   "object_declarations": {
     "externals": [
-      "_add_exit_handler"
+      "_addexit"
     ],
     "groups": [
       {
@@ -1049,11 +1049,6 @@
     ],
     "publics": [
       {
-        "name": "_kb_get_key_state",
-        "offset": 507,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_kb_init_interrupt",
         "offset": 0,
         "segment": "S012_TEXT"
@@ -1062,6 +1057,11 @@
         "name": "_kbinput",
         "offset": 146,
         "segment": "_DATA"
+      },
+      {
+        "name": "_keystate",
+        "offset": 507,
+        "segment": "S012_TEXT"
       },
       {
         "name": "_kb_int9_handler",

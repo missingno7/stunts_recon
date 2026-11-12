@@ -76,7 +76,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_add_exit_handler",
+      "frame": "_addexit",
       "frame_index": 2,
       "frame_kind": "external",
       "frame_method": 2,
@@ -84,7 +84,7 @@
       "offset": 32,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_add_exit_handler",
+      "target": "_addexit",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -144,7 +144,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_video_clear_color",
+      "frame": "_clearscreen",
       "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
@@ -152,7 +152,7 @@
       "offset": 81,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_video_clear_color",
+      "target": "_clearscreen",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -209,8 +209,8 @@
   ],
   "object_declarations": {
     "externals": [
-      "_video_clear_color",
-      "_add_exit_handler"
+      "_clearscreen",
+      "_addexit"
     ],
     "groups": [
       {

@@ -67,10 +67,10 @@ dseg ends
 assume cs:S012_TEXT, ds:DGROUP
 extrn _sprite1:byte
 extrn _incnums:byte
-public _sprite_putimage_or_alt
-public _sprite_putimage_or
-public _putpixel_iconFillings
-public _shape2d_or_rle
+public _orcfxy
+public _orcfxya
+public _orfxya
+public _orpackf
 public _sprite_putimage_transparent
 public _release_shape_resources
 public _movtxy
@@ -105,7 +105,7 @@ S012_TEXT segment word public 'CODE'
 ; ASMDOC expected precondition (height zero can still execute one row). Clips using signed 16-bit branches and wrapped
 ; ASMDOC coordinates. Source and destination offsets wrap at 16 bits. Width-one, zero-source-skip path increments row
 ; ASMDOC advance after each row: later destination row strides grow by one. No callbacks, DOS or BIOS calls..
-_sprite_putimage_or_alt proc far
+_orcfxy proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -129,7 +129,7 @@ _sprite_putimage_or_alt proc far
     mov     [bp+local_destination_y], ax
     jmp     short sprite_or_join_01 ; goto _sprite_putimage_or
     even ; word-align the following entry
-_sprite_putimage_or_alt endp
+_orcfxy endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Draw a sprite image using the OR compositing operation.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -158,7 +158,7 @@ _sprite_putimage_or_alt endp
 ; ASMDOC using signed 16-bit branches and wrapped coordinates. Source and destination offsets wrap at 16 bits.
 ; ASMDOC Width-one, zero-source-skip path increments row advance after each row: later destination row strides grow by
 ; ASMDOC one. No callbacks, DOS or BIOS calls..
-_sprite_putimage_or proc far
+_orcfxya proc far
     local_word_count = word ptr -14
     local_source_cursor = word ptr -12
     local_rows_left = word ptr -10
@@ -367,7 +367,7 @@ sprite_or_loop_head_08:
     mov     [bp-4], ax
     jmp     short icon_fill_join_01
     even ; word-align the following entry
-_sprite_putimage_or endp
+_orcfxya endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by putpixel iconFillings.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -395,7 +395,7 @@ _sprite_putimage_or endp
 ; underflow LOOP.
 ; ASMDOC Width one ORs a word after LODSB; AH=0 so the adjacent byte is read/written but unchanged. No clipping or
 ; ASMDOC callbacks..
-_putpixel_iconFillings proc far
+_orfxya proc far
     var_6 = word ptr -6
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
@@ -527,7 +527,7 @@ icon_fill_loop_head_06:
     mov     [bp-4], ax
     jmp     short shape_op4_join_01
     even ; word-align the following entry
-_putpixel_iconFillings endp
+_orfxya endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Process a 2D shape operation variant.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_shapeofs (word ptr 6);
@@ -556,7 +556,7 @@ _putpixel_iconFillings endp
 ; ASMDOC notes: Width resets the per-row remainder; each row reloads its CS row-table entry. Shape height is never
 ; ASMDOC read: only zero packet terminates; no stream/span checks. Negative 80h means 128 literals..
 ; ASMDOC Proposed routine name: _shape2d_or_rle.
-_shape2d_or_rle proc far
+_orpackf proc far
     var_10 = word ptr -16
     var_E = word ptr -14
     var_6 = word ptr -6
@@ -658,7 +658,7 @@ shape_op4_branch_path_04:
     mov     [bp-4], ax
     jmp     short sprite_alpha_join_01
     even ; word-align the following entry
-_shape2d_or_rle endp
+_orpackf endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Draw a sprite image while preserving transparent pixels.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_4 (word ptr 8); arg_6

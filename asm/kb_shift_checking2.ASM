@@ -7,7 +7,7 @@
 ; INPUTDOC key.
 .8086
 INCLUDE include\platform_hw.inc
-extrn _kb_checking:far
+extrn _nextkey:far
 S018_TEXT segment byte public 'CODE'
 assume cs:S018_TEXT
 public _kb_shift_checking2
@@ -37,7 +37,7 @@ _kb_shift_checking2 proc far
  mov es,ax
 ; INPUTDOC DFh clears only the BDA NumLock toggle bit; companion wrapper sets it.
  and byte ptr es:[17h],0DFh
- call far ptr _kb_checking
+ call far ptr _nextkey
  ret
 _kb_shift_checking2 endp
 S018_TEXT ends

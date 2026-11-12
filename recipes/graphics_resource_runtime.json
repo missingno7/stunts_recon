@@ -706,7 +706,7 @@
       "displacement": 0,
       "encoded_addend": "00000000",
       "frame": "_printf",
-      "frame_index": 7,
+      "frame_index": 6,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
@@ -714,7 +714,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_printf",
-      "target_index": 7,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -723,7 +723,7 @@
       "displacement": 0,
       "encoded_addend": "00000000",
       "frame": "_flush_stdin",
-      "frame_index": 3,
+      "frame_index": 2,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
@@ -731,7 +731,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_flush_stdin",
-      "target_index": 3,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -757,7 +757,7 @@
       "displacement": 0,
       "encoded_addend": "00000000",
       "frame": "_printf",
-      "frame_index": 7,
+      "frame_index": 6,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
@@ -765,7 +765,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_printf",
-      "target_index": 7,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -774,7 +774,7 @@
       "displacement": 0,
       "encoded_addend": "00000000",
       "frame": "_abort",
-      "frame_index": 2,
+      "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
@@ -782,7 +782,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_abort",
-      "target_index": 2,
+      "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -986,7 +986,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_timer_elapsed_ticks_low",
-      "target_index": 6,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1003,7 +1003,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_timer_elapsed_ticks_high",
-      "target_index": 8,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1224,7 +1224,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1241,7 +1241,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1292,7 +1292,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1309,7 +1309,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1683,7 +1683,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1938,7 +1938,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1989,7 +1989,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2397,7 +2397,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2431,7 +2431,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2465,7 +2465,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2499,7 +2499,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2533,7 +2533,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2567,7 +2567,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2601,7 +2601,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2618,7 +2618,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2635,7 +2635,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2652,7 +2652,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2669,7 +2669,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2686,7 +2686,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2856,7 +2856,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2890,7 +2890,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2924,7 +2924,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2958,7 +2958,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2992,7 +2992,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3026,7 +3026,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3077,7 +3077,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3094,7 +3094,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3111,7 +3111,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3128,7 +3128,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3213,7 +3213,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3247,7 +3247,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3264,7 +3264,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3281,7 +3281,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3298,7 +3298,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3315,7 +3315,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3349,7 +3349,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3366,7 +3366,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3383,7 +3383,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3417,7 +3417,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3434,7 +3434,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3451,7 +3451,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_sprite1",
-      "target_index": 9,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3672,7 +3672,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_line_pattern_bits",
-      "target_index": 5,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3689,7 +3689,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_prerender_auxiliary_arg",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3698,7 +3698,7 @@
       "displacement": 0,
       "encoded_addend": "0000",
       "frame": "_draw_unknown_lines",
-      "frame_index": 10,
+      "frame_index": 9,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "offset16",
@@ -3706,7 +3706,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_draw_unknown_lines",
-      "target_index": 10,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3765,16 +3765,16 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_prerender_shared_setup",
-      "frame_index": 1,
+      "frame": "_polycmn",
+      "frame_index": 10,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "offset16",
       "offset": 2552,
       "segment": "S012_TEXT",
       "self_relative": true,
-      "target": "_prerender_shared_setup",
-      "target_index": 1,
+      "target": "_polycmn",
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5133,7 +5133,7 @@
   "members": [
     {
       "name": "fatal_error",
-      "public": "_fatal_error",
+      "public": "_abortmessage",
       "stable_id": "load_1ea2a",
       "start": 125482
     },
@@ -5181,13 +5181,13 @@
     },
     {
       "name": "parse_shape2d_helper",
-      "public": "_parse_shape2d_helper",
+      "public": "_segtoadr",
       "stable_id": "load_1f314",
       "start": 127764
     },
     {
       "name": "parse_shape2d_helper2",
-      "public": "_parse_shape2d_helper2",
+      "public": "_adrtoseg",
       "stable_id": null,
       "start": 127796
     },
@@ -5199,13 +5199,13 @@
     },
     {
       "name": "set_criterr_handler",
-      "public": "_set_criterr_handler",
+      "public": "_criterr",
       "stable_id": "load_1f377",
       "start": 127863
     },
     {
       "name": "criterr_exithandler",
-      "public": "_criterr_exithandler",
+      "public": "_resetcriterr",
       "stable_id": "load_1f3bc",
       "start": 127932
     },
@@ -5229,7 +5229,7 @@
     },
     {
       "name": "add_exit_handler",
-      "public": "_add_exit_handler",
+      "public": "_addexit",
       "stable_id": "load_1fe1c",
       "start": 130588
     },
@@ -5241,61 +5241,61 @@
     },
     {
       "name": "call_exitlist2",
-      "public": "_call_exitlist2",
+      "public": "_dsiexit",
       "stable_id": null,
       "start": 130676
     },
     {
       "name": "file_paras",
-      "public": "_file_paras",
+      "public": "_filesizea",
       "stable_id": "load_1fe82",
       "start": 130690
     },
     {
       "name": "file_paras_nofatal",
-      "public": "_file_paras_nofatal",
+      "public": "_filesizez",
       "stable_id": "load_1fe94",
       "start": 130708
     },
     {
       "name": "file_paras_fatal",
-      "public": "_file_paras_fatal",
+      "public": "_filesize",
       "stable_id": "load_1fea5",
       "start": 130725
     },
     {
       "name": "file_decomp_paras",
-      "public": "_file_decomp_paras",
+      "public": "_unpacksizea",
       "stable_id": "load_1ff26",
       "start": 130854
     },
     {
       "name": "file_decomp_paras_nofatal",
-      "public": "_file_decomp_paras_nofatal",
+      "public": "_unpacksizez",
       "stable_id": "load_1ff38",
       "start": 130872
     },
     {
       "name": "file_decomp_paras_fatal",
-      "public": "_file_decomp_paras_fatal",
+      "public": "_unpacksize",
       "stable_id": "load_1ff49",
       "start": 130889
     },
     {
       "name": "file_find",
-      "public": "_file_find",
+      "public": "_findfirst",
       "stable_id": "load_1ffd4",
       "start": 131028
     },
     {
       "name": "file_find_next",
-      "public": "_file_find_next",
+      "public": "_findnext",
       "stable_id": null,
       "start": 131118
     },
     {
       "name": "multiply_and_scale",
-      "public": "_mulscl",
+      "public": "_fixedmult",
       "stable_id": "load_20044",
       "start": 131140
     },
@@ -5318,7 +5318,6 @@
   },
   "object_declarations": {
     "externals": [
-      "_prerender_shared_setup",
       "_abort",
       "_flush_stdin",
       "_prerender_auxiliary_arg",
@@ -5328,6 +5327,7 @@
       "_timer_elapsed_ticks_high",
       "_sprite1",
       "_draw_unknown_lines",
+      "_polycmn",
       "_displaywindow",
       "_imagefunc",
       "_drawcline",
@@ -5355,17 +5355,17 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_file_decomp_paras",
+        "name": "_unpacksizea",
         "offset": 5372,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_file_decomp_paras_fatal",
-        "offset": 5407,
+        "name": "_unpacksizez",
+        "offset": 5390,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_fatal_error",
+        "name": "_abortmessage",
         "offset": 0,
         "segment": "S012_TEXT"
       },
@@ -5375,18 +5375,18 @@
         "segment": "_DATA"
       },
       {
-        "name": "_mulscl",
-        "offset": 5658,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_file_paras_nofatal",
-        "offset": 5226,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_setbiosticks",
         "offset": 180,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_resetcriterr",
+        "offset": 2450,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_addexit",
+        "offset": 5106,
         "segment": "S012_TEXT"
       },
       {
@@ -5400,8 +5400,13 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_file_decomp_paras_nofatal",
-        "offset": 5390,
+        "name": "_dsiexit",
+        "offset": 5194,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_criterr",
+        "offset": 2381,
         "segment": "S012_TEXT"
       },
       {
@@ -5410,18 +5415,8 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_criterr_exithandler",
-        "offset": 2450,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_call_exitlist",
         "offset": 5167,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_set_criterr_handler",
-        "offset": 2381,
         "segment": "S012_TEXT"
       },
       {
@@ -5430,8 +5425,18 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_parse_shape2d_helper",
+        "name": "_adrtoseg",
+        "offset": 2314,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_segtoadr",
         "offset": 2282,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_filesize",
+        "offset": 5243,
         "segment": "S012_TEXT"
       },
       {
@@ -5440,8 +5445,8 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_call_exitlist2",
-        "offset": 5194,
+        "name": "_findnext",
+        "offset": 5636,
         "segment": "S012_TEXT"
       },
       {
@@ -5460,17 +5465,12 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_file_find_next",
-        "offset": 5636,
+        "name": "_filesizea",
+        "offset": 5208,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_parse_shape2d_helper2",
-        "offset": 2314,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_file_find",
+        "name": "_findfirst",
         "offset": 5546,
         "segment": "S012_TEXT"
       },
@@ -5480,23 +5480,23 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_fixedmult",
+        "offset": 5658,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_filesizez",
+        "offset": 5226,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_video_set_mode4",
         "offset": 5684,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_file_paras",
-        "offset": 5208,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_file_paras_fatal",
-        "offset": 5243,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_add_exit_handler",
-        "offset": 5106,
+        "name": "_unpacksize",
+        "offset": 5407,
         "segment": "S012_TEXT"
       },
       {
@@ -5563,7 +5563,7 @@
     "_draw_unknown_lines"
   ],
   "reviewed_near_targets": {
-    "_prerender_shared_setup": {
+    "_polycmn": {
       "source_line": 6552
     }
   },

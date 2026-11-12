@@ -9,7 +9,7 @@
       "displacement": 0,
       "encoded_addend": "0000",
       "frame": "_fontdef_default",
-      "frame_index": 7,
+      "frame_index": 8,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "base16",
@@ -17,7 +17,7 @@
       "segment": "_DATA",
       "self_relative": false,
       "target": "_fontdef_default",
-      "target_index": 7,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -43,7 +43,7 @@
       "displacement": 0,
       "encoded_addend": "0000",
       "frame": "_line_pattern_bits",
-      "frame_index": 2,
+      "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "offset16",
@@ -51,7 +51,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_line_pattern_bits",
-      "target_index": 2,
+      "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -60,7 +60,7 @@
       "displacement": 0,
       "encoded_addend": "0000",
       "frame": "_draw_patterned_lines",
-      "frame_index": 5,
+      "frame_index": 6,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "offset16",
@@ -68,7 +68,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_draw_patterned_lines",
-      "target_index": 5,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -94,7 +94,7 @@
       "displacement": 0,
       "encoded_addend": "0000",
       "frame": "_preRender_line",
-      "frame_index": 4,
+      "frame_index": 5,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "offset16",
@@ -102,7 +102,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_preRender_line",
-      "target_index": 4,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -111,7 +111,7 @@
       "displacement": 0,
       "encoded_addend": "0000",
       "frame": "_imagefunc",
-      "frame_index": 6,
+      "frame_index": 7,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "offset16",
@@ -119,7 +119,7 @@
       "segment": "S012_TEXT",
       "self_relative": false,
       "target": "_imagefunc",
-      "target_index": 6,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -135,8 +135,8 @@
       "offset": 149,
       "segment": "S012_TEXT",
       "self_relative": true,
-      "target": "_prerender_shared_setup",
-      "target_index": 1,
+      "target": "_polycmn",
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -212,16 +212,16 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_file_get_shape2d",
-      "frame_index": 8,
+      "frame": "_shapepointer",
+      "frame_index": 2,
       "frame_kind": "external",
       "frame_method": 2,
       "loc": "pointer32",
       "offset": 746,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_file_get_shape2d",
-      "target_index": 8,
+      "target": "_shapepointer",
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -586,14 +586,14 @@
   },
   "object_declarations": {
     "externals": [
-      "_prerender_shared_setup",
       "_line_pattern_bits",
+      "_shapepointer",
       "_callbackflags2",
+      "_polycmn",
       "_preRender_line",
       "_draw_patterned_lines",
       "_imagefunc",
       "_fontdef_default",
-      "_file_get_shape2d",
       "_spritefunc"
     ],
     "groups": [
@@ -778,7 +778,7 @@
     "_preRender_line"
   ],
   "reviewed_near_targets": {
-    "_prerender_shared_setup": {
+    "_polycmn": {
       "source_line": 6552
     }
   },

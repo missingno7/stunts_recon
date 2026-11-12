@@ -915,7 +915,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_polyinfo_reset",
+      "frame": "_INIT_BUFFERS",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -923,7 +923,7 @@
       "offset": 204,
       "segment": "UNIT_TEXT",
       "self_relative": true,
-      "target": "_polyinfo_reset",
+      "target": "_INIT_BUFFERS",
       "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
@@ -4604,7 +4604,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_insert_newest_poly_in_poly_link",
+      "frame": "_polysort",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -4612,7 +4612,7 @@
       "offset": 4241,
       "segment": "UNIT_TEXT",
       "self_relative": true,
-      "target": "_insert_newest_poly_in_poly_link",
+      "target": "_polysort",
       "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
@@ -5998,7 +5998,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_polyinfo_reset",
+      "frame": "_INIT_BUFFERS",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -6006,7 +6006,7 @@
       "offset": 5262,
       "segment": "UNIT_TEXT",
       "self_relative": true,
-      "target": "_polyinfo_reset",
+      "target": "_INIT_BUFFERS",
       "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
@@ -6049,7 +6049,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_preRender_wheel",
+      "frame": "_solidtire",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -6057,7 +6057,7 @@
       "offset": 5205,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_preRender_wheel",
+      "target": "_solidtire",
       "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
@@ -6270,7 +6270,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_preRender_default",
+      "frame": "_drawpolypt",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -6278,7 +6278,7 @@
       "offset": 4887,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_preRender_default",
+      "target": "_drawpolypt",
       "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
@@ -7382,7 +7382,7 @@
     {
       "end": 85510,
       "name": "polyinfo_reset",
-      "public": "_polyinfo_reset",
+      "public": "_INIT_BUFFERS",
       "stable_id": "load_14de6",
       "start": 85478,
       "target": {
@@ -7415,7 +7415,7 @@
     {
       "end": 89826,
       "name": "insert_newest_poly_in_poly_linked_list_40ED6",
-      "public": "_insert_newest_poly_in_poly_link",
+      "public": "_polysort",
       "stable_id": "load_15e24",
       "start": 89636,
       "target": {
@@ -7591,7 +7591,7 @@
     {
       "end": 93102,
       "name": "rect_array_sort_by_top",
-      "public": "_rectsorttop",
+      "public": "_sortzonelist",
       "stable_id": "load_16b4a",
       "start": 93002,
       "target": {
@@ -7619,30 +7619,30 @@
       "_mat_invert",
       "_projectp",
       "_zclipline",
-      "_polyinfo_reset",
+      "_INIT_BUFFERS",
       "_mmgr_alloc_resbytes",
       "_initnm",
       "_intsin",
       "_makematrix",
       "_intcos",
       "_getoutcode",
-      "_preRender_default",
+      "_drawpolypt",
       "_front_facing",
       "_preRender_patterned",
       "_zonecheck",
       "_sprite_two_color_poly_list",
       "_norm_zone",
       "_preRender_line",
-      "_insert_newest_poly_in_poly_link",
+      "_polysort",
       "_drawcircle",
       "_INIT_MATRIX",
-      "_preRender_wheel",
+      "_solidtire",
       "_lgabs",
       "_putpixel_single_maybe",
       "_shellsort",
       "_g_vid_flg2_set",
       "_vidflg3is_minus1",
-      "_rectsorttop",
+      "_sortzonelist",
       "_g_matrix_yrot",
       "_mergezones",
       "_INIT_PALETTE",
@@ -7706,7 +7706,7 @@
         "segment": "_DATA"
       },
       {
-        "name": "_polyinfo_reset",
+        "name": "_INIT_BUFFERS",
         "offset": 130,
         "segment": "UNIT_TEXT"
       },
@@ -7741,7 +7741,7 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_insert_newest_poly_in_poly_link",
+        "name": "_polysort",
         "offset": 4288,
         "segment": "UNIT_TEXT"
       },
@@ -7756,7 +7756,7 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_rectsorttop",
+        "name": "_sortzonelist",
         "offset": 7654,
         "segment": "UNIT_TEXT"
       },

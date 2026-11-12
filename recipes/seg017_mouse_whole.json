@@ -1046,7 +1046,7 @@
     {
       "displacement": 0,
       "encoded_addend": "0000",
-      "frame": "_mouse_set_minmax",
+      "frame": "_setmousebounds",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -1054,7 +1054,7 @@
       "offset": 148,
       "segment": "UNIT_TEXT",
       "self_relative": true,
-      "target": "_mouse_set_minmax",
+      "target": "_setmousebounds",
       "target_index": 16,
       "target_kind": "external",
       "target_method": 2,
@@ -1414,7 +1414,7 @@
     {
       "end": 158044,
       "name": "mouse_init",
-      "public": "_mouse_init",
+      "public": "_initmouse",
       "stable_id": "load_268d2",
       "start": 157906,
       "target": {
@@ -1425,7 +1425,7 @@
     {
       "end": 158128,
       "name": "mouse_set_minmax",
-      "public": "_mouse_set_minmax",
+      "public": "_setmousebounds",
       "stable_id": "load_2695c",
       "start": 158044,
       "target": {
@@ -1472,7 +1472,7 @@
     {
       "end": 158304,
       "name": "mouse_set_position",
-      "public": "_mouse_set_position",
+      "public": "_setmousepos",
       "stable_id": "load_26a2c",
       "start": 158252,
       "target": {
@@ -1483,7 +1483,7 @@
     {
       "end": 158362,
       "name": "mouse_get_state",
-      "public": "_mouse_get_state",
+      "public": "_getmousepos",
       "stable_id": "load_26a60",
       "start": 158304,
       "target": {
@@ -1494,7 +1494,7 @@
     {
       "end": 158410,
       "name": "nopsub_36A9A",
-      "public": "_mouse_set_horizontal_range",
+      "public": "_setmousex",
       "stable_id": "load_26a9a",
       "start": 158362,
       "target": {
@@ -1505,7 +1505,7 @@
     {
       "end": 158450,
       "name": "nopsub_36ACA",
-      "public": "_mouse_set_vertical_range",
+      "public": "_setmousey",
       "stable_id": "load_26aca",
       "start": 158410,
       "target": {
@@ -1517,21 +1517,21 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_mouse_init",
+      "_initmouse",
       "mouse_get_position",
       "mouse_show_cursor",
       "mouse_hide_cursor",
-      "_mouse_set_position",
-      "_mouse_get_state",
-      "_mouse_set_horizontal_range",
-      "_mouse_set_vertical_range",
+      "_setmousepos",
+      "_getmousepos",
+      "_setmousex",
+      "_setmousey",
       "_msregisterms",
       "_ms_buttons",
       "_cursorxposition",
       "_mouse_api_y",
       "_int86",
       "_mouse_set_pixratio",
-      "_mouse_set_minmax"
+      "_setmousebounds"
     ],
     "groups": [
       {
@@ -1551,7 +1551,7 @@
     ],
     "publics": [
       {
-        "name": "_mouse_init",
+        "name": "_initmouse",
         "offset": 40,
         "segment": "UNIT_TEXT"
       },
@@ -1571,22 +1571,22 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_mouse_set_position",
+        "name": "_setmousepos",
         "offset": 386,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_mouse_get_state",
+        "name": "_getmousepos",
         "offset": 438,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_mouse_set_horizontal_range",
+        "name": "_setmousex",
         "offset": 496,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_mouse_set_vertical_range",
+        "name": "_setmousey",
         "offset": 544,
         "segment": "UNIT_TEXT"
       },
@@ -1611,7 +1611,7 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_mouse_set_minmax",
+        "name": "_setmousebounds",
         "offset": 178,
         "segment": "UNIT_TEXT"
       }

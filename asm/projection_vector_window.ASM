@@ -56,8 +56,8 @@ assume cs:S012_TEXT
 extrn _intcos:far
 extrn _intatan:far
 extrn _intsin:far
-extrn _mmgr_release:far
-extrn _fatal_error:far
+extrn _purgememory:far
+extrn _abortmessage:far
 S012_TEXT segment word public 'CODE'
 public _projectorgp
 public _setprojectpb
@@ -597,7 +597,7 @@ _sprite_free_window proc far
     push    si
     mov     ax, ss
     mov     ds, ax
-    call    far ptr _mmgr_release
+    call    far ptr _purgememory
     add     sp, 4
     pop     di
     pop     si
@@ -611,7 +611,7 @@ window_free_error_path_01:
     mov     ds, ax
     lea     ax, ds:[_window_release_order_error_msg]
     push    ax
-    call    far ptr _fatal_error
+    call    far ptr _abortmessage
 _sprite_free_window endp
 S012_TEXT ends
 end

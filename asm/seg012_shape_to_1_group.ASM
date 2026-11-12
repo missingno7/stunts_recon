@@ -11,8 +11,8 @@ INCLUDE include\platform_hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-public _shape2d_copy_bitmap_hotspot
-public _sprite_shape_to_1
+public _movfxy
+public _movfxya
 public _sprite_shape_to_1_alt
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 33D0C.
@@ -56,7 +56,7 @@ public _sprite_shape_to_1_alt
 ; ASMDOC(font_shapes) word/byte copy path; destination next-row stepping uses sprite1 pitch, not another
 ; line-table lookup.
 ; ASMDOC(font_shapes) MOVS is forward copy, not overlap-safe memmove; no source/destination segment-wrap adjustment.
-_shape2d_copy_bitmap_hotspot proc far
+_movfxy proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -80,7 +80,7 @@ _shape2d_copy_bitmap_hotspot proc far
     mov     [bp+local_destination_y], ax
     jmp     short sprite_shape_to_1_shared_exit
     even ; word-align the following entry
-_shape2d_copy_bitmap_hotspot endp
+_movfxy endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Copy the selected shape into sprite image 1.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack arguments:
@@ -119,7 +119,7 @@ _shape2d_copy_bitmap_hotspot endp
 ; ASMDOC(font_shapes) word/byte copy path; destination next-row stepping uses sprite1 pitch, not another
 ; line-table lookup.
 ; ASMDOC(font_shapes) MOVS is forward copy, not overlap-safe memmove; no source/destination segment-wrap adjustment.
-_sprite_shape_to_1 proc far
+_movfxya proc far
     local_destination_y = word ptr -4
     local_destination_x = word ptr -2
     arg_shape_offset = word ptr 6
@@ -141,7 +141,7 @@ _sprite_shape_to_1 proc far
     mov     [bp+local_destination_y], ax
     jmp     short sprite_shape_to_1_shared_exit
     even ; word-align the following entry
-_sprite_shape_to_1 endp
+_movfxya endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Copy the selected shape into sprite image 1 through the alternate path.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2

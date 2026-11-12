@@ -66,7 +66,7 @@ extrn _flush_stdin:far
 extrn _drawcline:far
 extrn _sprite1:word
 extrn _draw_unknown_lines:far
-extrn _prerender_shared_setup:near
+extrn _polycmn:near
 _DATA segment word public 'DATA'
 ; Octant angles: floor(atan(i/256)*512/pi+0.5), i=0..256.
 ; Nearest integer, positive halves up. 257/257 match; final byte is zero padding (258/258).
@@ -330,7 +330,7 @@ public _prerender_max_line_width
 public _video_mode4_active
 assume cs:S012_TEXT
 assume es:nothing, ss:nothing, ds:DGROUP
-public _fatal_error
+public _abortmessage
 public _intatan
 public _getbiostick
 public _setbiosticks
@@ -338,26 +338,26 @@ public _testbiosticks
 public _waitbios
 public _slopeline
 public _clipline
-public _parse_shape2d_helper
-public _parse_shape2d_helper2
+public _segtoadr
+public _adrtoseg
 public _criterr_interrupt_handler
-public _set_criterr_handler
-public _criterr_exithandler
+public _criterr
+public _resetcriterr
 public _sprite_two_color_poly_list
 public _sprite_two_color_poly_args_alt
 public _preRender_line
-public _add_exit_handler
+public _addexit
 public _call_exitlist
-public _call_exitlist2
-public _file_paras
-public _file_paras_nofatal
-public _file_paras_fatal
-public _file_decomp_paras
-public _file_decomp_paras_nofatal
-public _file_decomp_paras_fatal
-public _file_find
-public _file_find_next
-public _mulscl
+public _dsiexit
+public _filesizea
+public _filesizez
+public _filesize
+public _unpacksizea
+public _unpacksizez
+public _unpacksize
+public _findfirst
+public _findnext
+public _fixedmult
 public _video_set_mode4
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the error or input-control service identified by fatal error.
@@ -390,7 +390,7 @@ public _video_set_mode4
 ; Notes: Second printf reuses the still-present format/arguments after cleanup. Trailing DB 0 follows
 ; nonreturning
 ; abort; not an ordinary return path.
-_fatal_error proc near
+_abortmessage proc near
 ; ASMDOC BLOCK: FAR-frame discard: both return words are removed so printf sees the caller format directly.
     pop     ax
     pop     ax
@@ -409,7 +409,7 @@ fatal_release_arguments:
 fatal_abort:
     call    _abort
     db 0 ; retained zero fill after the nonreturning abort call
-_fatal_error endp
+_abortmessage endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the polar angle for the supplied vector.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_x (word ptr 8); arg_z
@@ -1674,7 +1674,7 @@ _clipline endp
 ; by
 ; src/obj_seg035_group.c.
 ; Notes: Arithmetic only; does not parse a shape or touch video memory.
-_parse_shape2d_helper proc far
+_segtoadr proc far
     arg_pointer_offset = word ptr 6
     arg_pointer_segment = word ptr 8
     push    bp
@@ -1693,7 +1693,7 @@ _parse_shape2d_helper proc far
     adc     dx, 0
     pop     bp
     retf
-_parse_shape2d_helper endp
+_segtoadr endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by parse shape2d helper2.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -1718,7 +1718,7 @@ _parse_shape2d_helper endp
 ; Liveness: live; Live: src/obj_seg035_group.c:112.
 ; Notes: Four mutable INT24 vector/callback words follow its RETF inside its PROC extent, not executed
 ; instructions.
-_parse_shape2d_helper2 proc far
+_adrtoseg proc far
     arg_linear_low = word ptr 6
     arg_linear_high = word ptr 8
     push    bp
@@ -1742,7 +1742,7 @@ saved_int24_vector_offset     dw 0
 saved_int24_vector_segment     dw 0
 criterr_handler_offset     dw 0
 criterr_handler_segment     dw 0
-_parse_shape2d_helper2 endp
+_adrtoseg endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Handle the critical-error interrupt and report its result.
 ; ABI: FAR entry; source return form: IRET; stack arguments: no named stack arguments referenced.
@@ -1821,16 +1821,16 @@ _criterr_interrupt_handler endp
 ; services: Direct IVT read; INT21 AH=25h AL=24h; _add_exit_handler
 ; Liveness: live; Live: src/obj_seg031.c:265 passes do_dea_textres.
 ; Notes: Vector and callback words reside in writable CODE storage; routine is non-reentrant.
-_set_criterr_handler proc far
+_criterr proc far
     arg_callback_offset = word ptr 6
     arg_callback_segment = word ptr 8
     push    bp
     mov     bp, sp
     push    ds
     push    cs
-    mov     ax, offset _criterr_exithandler
+    mov     ax, offset _resetcriterr
     push    ax
-    call far ptr _add_exit_handler
+    call far ptr _addexit
     add     sp, 4
     mov     ax, [bp+arg_callback_offset]
     mov     cs:criterr_handler_offset, ax
@@ -1852,7 +1852,7 @@ _set_criterr_handler proc far
     pop     ds
     pop     bp
     retf
-_set_criterr_handler endp
+_criterr endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Restore the previous critical-error vector at process exit.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -1875,7 +1875,7 @@ _set_criterr_handler endp
 ; services: INT21 AH=25h AL=24h
 ; Liveness: live; Live: its far address is registered by _set_criterr_handler.
 ; Notes: SUB compares segment with offset, not segment|offset against zero: any equal pair skips restoration.
-_criterr_exithandler proc far
+_resetcriterr proc far
     push    ds
 ; ASMDOC BLOCK: Literal subtraction is surprising: equal nonzero segment:offset also skips vector restoration.
     mov     ax, cs:saved_int24_vector_segment
@@ -1889,7 +1889,7 @@ _criterr_exithandler proc far
 criterr_restore_previous_vector:
     pop     ds
     retf
-_criterr_exithandler endp
+_resetcriterr endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Prepare rendering data for the operation identified by preRender unk.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
@@ -1961,7 +1961,7 @@ prerender_setup_shared_core:
     mov     _spritefunc, ax
     mov     ax, offset _preRender_line
     mov     _imagefunc, ax
-    jmp     _prerender_shared_setup
+    jmp     _polycmn
 _sprite_two_color_poly_list endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 2F424.
@@ -2237,7 +2237,7 @@ _preRender_line endp
 ; Notes: 44 bytes = ten registration slots plus one sentinel. A zero-segment insertion can overwrite an
 ; existing empty
 ; slot repeatedly; normal callers use nonzero code segments.
-_add_exit_handler proc far
+_addexit proc far
     arg_callback_offset = word ptr 6
     arg_callback_segment = word ptr 8
     push    bp
@@ -2258,7 +2258,7 @@ exitlist_check_free_slot:
     loop    exitlist_search_callback
     mov     ax, offset DGROUP:_addexiterr
     push    ax
-    call    far ptr _fatal_error
+    call    far ptr _abortmessage
 ; ASMDOC BLOCK: Free-slot insertion clears the following segment as sentinel; label name overflow_error is
 ; misleading.
 exitlist_overflow_error:
@@ -2269,7 +2269,7 @@ exitlist_overflow_error:
 exitlist_return:
     pop     bp
     retf
-_add_exit_handler endp
+_addexit endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Call the registered process exit handlers in reverse order.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -2332,14 +2332,14 @@ _call_exitlist endp
 ; services: _call_exitlist; CRT _exit
 ; Liveness: live; Live: src/obj_seg008.c:1776.
 ; Notes: DB 0 follows the nonreturning call; no RET instruction.
-_call_exitlist2 proc near
+_dsiexit proc near
     call far ptr _call_exitlist
     xor     ax, ax
     push    ax
     call    far ptr _exit
 ; ASMDOC BLOCK: Nonreturning CRT exit is followed by a retained DB 0 byte, not a return instruction.
     db 0 ; retained zero fill after the nonreturning exit call
-_call_exitlist2 endp
+_dsiexit endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the file size rounded up to DOS memory paragraphs.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
@@ -2367,7 +2367,7 @@ _call_exitlist2 endp
 ; Notes: Result truncates to 16 bits. Nonfatal and normal prologues JMP over the fatal prologue into its PROC
 ; extent;
 ; not natural fallthrough.
-_file_paras proc far
+_filesizea proc far
     var_fatal = word ptr -6
     var_length = word ptr -4
     var_filehandle = word ptr -2
@@ -2383,7 +2383,7 @@ _file_paras proc far
     mov     [bp+var_fatal], ax
     jmp     short file_paras_body
     nop ; retained code pad; EVEN is illegal in a BYTE-aligned segment
-_file_paras endp
+_filesizea endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the file size in DOS paragraphs without fatal error handling.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
@@ -2411,7 +2411,7 @@ _file_paras endp
 ; Notes: Result truncates to 16 bits. Nonfatal and normal prologues JMP over the fatal prologue into its PROC
 ; extent;
 ; not natural fallthrough.
-_file_paras_nofatal proc far
+_filesizez proc far
     local_fatal_policy = word ptr -6
     push    bp
     mov     bp, sp
@@ -2422,7 +2422,7 @@ _file_paras_nofatal proc far
     mov     [bp+local_fatal_policy], 0
     jmp     short file_paras_body
     nop ; retained code pad; EVEN is illegal in a BYTE-aligned segment
-_file_paras_nofatal endp
+_filesizez endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Return the file size in DOS paragraphs with fatal error handling.
 ; ABI: NEAR entry; source return form: RETF mnemonic for NEAR entry; stack arguments: arg_fatal (word ptr 8);
@@ -2454,7 +2454,7 @@ _file_paras_nofatal endp
 ; extent;
 ; not natural fallthrough.
 ; ASMDOC BLOCK: Declared NEAR is misleading: shared arguments start at BP+6 and all normal exits execute RETF.
-_file_paras_fatal proc near
+_filesize proc near
     var_fatal = word ptr -6
      s = byte ptr 0
     push    bp
@@ -2491,7 +2491,7 @@ file_paras_open_error:
     mov     ds, bx
     push    [bp+arg_filename]
     push    ax
-    call    far ptr _fatal_error
+    call    far ptr _abortmessage
 file_paras_file_opened:
     mov     [bp+var_filehandle], ax
     mov     bx, ax
@@ -2531,7 +2531,7 @@ file_paras_count_from_bytes:
     mov     sp, bp
     pop     bp
     retf
-_file_paras_fatal endp
+_filesize endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file decomp paras.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
@@ -2559,7 +2559,7 @@ _file_paras_fatal endp
 ; returned AX
 ; truncates beyond 65535 paragraphs. Short read is recognized by AX != 4, not CF. Initial MOV DX,filename is
 ; duplicated.
-_file_decomp_paras proc far
+_unpacksizea proc far
     var_fatal = word ptr -8
     var_6 = byte ptr -6
     var_5 = word ptr -5
@@ -2576,7 +2576,7 @@ _file_decomp_paras proc far
     mov     [bp+var_fatal], ax
     jmp     short file_decomp_paras_body
     nop ; retained code pad; EVEN is illegal in a BYTE-aligned segment
-_file_decomp_paras endp
+_unpacksizea endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file decomp paras nofatal.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
@@ -2606,7 +2606,7 @@ _file_decomp_paras endp
 ; returned AX
 ; truncates beyond 65535 paragraphs. Short read is recognized by AX != 4, not CF. Initial MOV DX,filename is
 ; duplicated.
-_file_decomp_paras_nofatal proc far
+_unpacksizez proc far
     var_fatal = word ptr -8
     push    bp
     mov     bp, sp
@@ -2617,7 +2617,7 @@ _file_decomp_paras_nofatal proc far
     mov     [bp+var_fatal], 0
     jmp     short file_decomp_paras_body
     nop ; retained code pad; EVEN is illegal in a BYTE-aligned segment
-_file_decomp_paras_nofatal endp
+_unpacksizez endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file decomp paras fatal.
 ; ABI: NEAR entry; source return form: RETF mnemonic for NEAR entry; stack arguments: arg_fatal (word ptr 8);
@@ -2652,7 +2652,7 @@ _file_decomp_paras_nofatal endp
 ; duplicated.
 ; ASMDOC BLOCK: Declared NEAR is misleading here too: entry must use a FAR frame; sibling prologues jump into
 ; body.
-_file_decomp_paras_fatal proc near
+_unpacksize proc near
     var_fatal = word ptr -8
      s = byte ptr 0
     push    bp
@@ -2742,8 +2742,8 @@ decomp_report_fatal_error:
     push    [bp+arg_filename]
     push    ax
 decomp_call_fatal_handler:
-    call    far ptr _fatal_error
-_file_decomp_paras_fatal endp
+    call    far ptr _abortmessage
+_unpacksize endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Search for the first file matching the DOS search pattern.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6).
@@ -2776,7 +2776,7 @@ _file_decomp_paras_fatal endp
 ; Liveness: live; Live: src/obj_seg000 etc and shape/file loaders.
 ; Notes: DTA begins at a 30-byte block; its filename field deliberately continues into adjacent _foundfilepath
 ; storage. Does not restore former DOS DTA.
-_file_find proc far
+_findfirst proc far
     arg_filename = word ptr 6
     push    bp
     mov     bp, sp
@@ -2830,7 +2830,7 @@ file_find_return:
 _file_find_err:
     xor     ax, ax
     jmp     short file_find_return
-_file_find endp
+_findfirst endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Continue the current DOS file search.
 ; ABI: FAR entry; source return form: no return opcode in this extent (tail/shared-code exit); stack
@@ -2858,7 +2858,7 @@ _file_find endp
 ; Notes: Jumps backward into _file_find_ok/_file_find_err and returns through their epilogue, using the
 ; identical
 ; saved frame. DB 0 is unreachable padding.
-_file_find_next proc far
+_findnext proc far
     push    bp
     mov     bp, sp
     push    ds
@@ -2873,7 +2873,7 @@ _file_find_next proc far
     jb      short _file_find_err
     jmp     short _file_find_ok
     db 0 ; retained zero fill at this boundary
-_file_find_next endp
+_findnext endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Multiply two values and apply the fixed-point scaling shift.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: arg_0 (word ptr 6); arg_2
@@ -2899,7 +2899,7 @@ _file_find_next endp
 ; accepted C
 ; callers.
 ; Notes: Two full SHL/RCL pairs, then SHL AX / ADC DX,0 for rounding. The third shift does not double DX.
-_mulscl proc far
+_fixedmult proc far
     arg_left_factor = word ptr 6
     arg_right_factor = word ptr 8
     push    bp
@@ -2917,7 +2917,7 @@ _mulscl proc far
     mov     ax, dx
     pop     bp
     retf
-_mulscl endp
+_fixedmult endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Configure the MCGA mode-4 display and clear its text page.
 ; ABI: FAR entry; source return form: RETF mnemonic for FAR entry; stack arguments: no named stack arguments

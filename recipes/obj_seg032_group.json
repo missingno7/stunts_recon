@@ -962,7 +962,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_kb_call_readchar_callback",
+      "frame": "_testkey",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -970,7 +970,7 @@
       "offset": 202,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_kb_call_readchar_callback",
+      "target": "_testkey",
       "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
@@ -1874,7 +1874,7 @@
       "end": 174070,
       "local_symbol": false,
       "name": "read_line",
-      "public": "_read_line",
+      "public": "_get_pstring",
       "stable_id": "load_2a4b6",
       "start": 173238,
       "target": {
@@ -1916,11 +1916,11 @@
       "_read_line_helper",
       "_read_line_helper2",
       "_testbiosticks",
-      "_kb_call_readchar_callback",
+      "_testkey",
       "_setticks",
       "_setbiosticks",
       "_testticks",
-      "_read_line",
+      "_get_pstring",
       "_line_input_font_header",
       "_strlen",
       "_textnpixels",
@@ -1955,7 +1955,7 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_read_line",
+        "name": "_get_pstring",
         "offset": 0,
         "segment": "UNIT_TEXT"
       }

@@ -18,8 +18,8 @@ extrn _loadandshapepack:far
 extrn _loadandshapepackz:far
 extrn _loadandshapepacka:far
 extrn _shapepack:far
-extrn _file_load_shape2d_fatal:far
-extrn _file_load_shape2d_nofatal:far
+extrn _loadshape:far
+extrn _loadshapez:far
 extrn _file_load_shape2d:far
 public _file_load_shape2d_res_fatal_thunk
 public _load_shape2d_res_nofatal_thunk
@@ -226,7 +226,7 @@ _parse_shape2d_thunk endp
 ; ASMDOC Public name from existing plan: _file_load_shape2d_fatal_thunk (unchanged).
 _file_load_shape2d_fatal_thunk proc far
 
-    jmp     _file_load_shape2d_fatal
+    jmp     _loadshape
 _file_load_shape2d_fatal_thunk endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Call the shape loader with fatal-error handling disabled.
@@ -266,7 +266,7 @@ _file_load_shape2d_fatal_thunk endp
 ; ASMDOC Public name from existing plan: _load_shape2d_nofatal_thunk (unchanged).
 _load_shape2d_nofatal_thunk proc far
 
-    jmp     _file_load_shape2d_nofatal
+    jmp     _loadshapez
 _load_shape2d_nofatal_thunk endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Forward to the shared 2D shape loader.

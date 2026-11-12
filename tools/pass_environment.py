@@ -127,7 +127,12 @@ def dosbox_compile_commands(profile, config, flags):
     env = pass_environment(config)
     require(drive != 'E', 'Pinned pass drive collides with the work drive')
     mounts = [f'mount {drive.lower()} "{root}" -ro']
-    commands = ['e:', 'set PATH=' + env['dos_directory'], 'set TEMP=' + env['temp']]
+    # TMP as well as TEMP: the pinned runner sets both (tools/compiler.py), and CL takes
+    # the passes' temporary-file prefix from TMP.  Without it whole seg000, which sits at
+    # the passes' near-heap limit, loses end_hiscore's dead `pop si` under DOSBox-X as soon
+    # as its identifiers get a few characters shorter.
+    commands = ['e:', 'set PATH=' + env['dos_directory'], 'set TEMP=' + env['temp'],
+                'set TMP=' + env['temp']]
     return mounts, commands, env['dos_directory'] + '\\' + config['executable']
 
 

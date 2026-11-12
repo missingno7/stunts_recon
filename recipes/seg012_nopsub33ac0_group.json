@@ -57,7 +57,7 @@
     {
       "end": 146148,
       "name": "nopsub_33AC0",
-      "public": "_shape2d_and_rle_hotspot",
+      "public": "_andpackfxy",
       "stable_id": "load_23ac0",
       "start": 146112,
       "target": {
@@ -68,7 +68,7 @@
     {
       "end": 146178,
       "name": "nopsub_33AE4",
-      "public": "_shape2d_and_rle_at",
+      "public": "_andpackfxya",
       "stable_id": "load_23ae4",
       "start": 146148,
       "target": {
@@ -79,7 +79,7 @@
     {
       "end": 146328,
       "name": "shape2d_render_bmp_as_mask",
-      "public": "_shape2d_render_bmp_as_mask",
+      "public": "_andpackf",
       "stable_id": "load_23b02",
       "start": 146178,
       "target": {
@@ -95,18 +95,18 @@
     "groups": [],
     "publics": [
       {
-        "name": "_shape2d_and_rle_hotspot",
-        "offset": 0,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_shape2d_and_rle_at",
+        "name": "_andpackfxya",
         "offset": 36,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_shape2d_render_bmp_as_mask",
+        "name": "_andpackf",
         "offset": 66,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_andpackfxy",
+        "offset": 0,
         "segment": "S012_TEXT"
       }
     ],

@@ -8,7 +8,7 @@
 INCLUDE include\platform_hw.inc
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-extrn _file_get_shape2d:far
+extrn _shapepointer:far
 public _file_load_shape2d_expand
 ; -----------------------------------------------------------------------------
 ; Purpose: Perform the resource-file operation identified by file load shape2d expand.
@@ -107,7 +107,7 @@ shape_expand_continue_path_2:
     push    [bp+arg_memchunkoff]
     mov     ax, ss
     mov     ds, ax
-    call    _file_get_shape2d
+    call    _shapepointer
     add     sp, 6
     mov     ds, dx
     mov     si, ax
@@ -154,7 +154,7 @@ shape_expand_when_condition:
     push    [bp+arg_mempagesoff]
     mov     ax, ss
     mov     ds, ax
-    call    _file_get_shape2d
+    call    _shapepointer
 shape_expand_continue_path_3:
     add     sp, 6
 shape_expand_continue_path_4:

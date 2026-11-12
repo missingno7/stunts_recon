@@ -705,7 +705,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_fatal_error",
+      "frame": "_abortmessage",
       "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
@@ -713,7 +713,7 @@
       "offset": 580,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_fatal_error",
+      "target": "_abortmessage",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -824,7 +824,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_fatal_error",
+      "frame": "_abortmessage",
       "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
@@ -832,7 +832,7 @@
       "offset": 639,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_fatal_error",
+      "target": "_abortmessage",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -1215,7 +1215,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_fatal_error",
+      "frame": "_abortmessage",
       "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
@@ -1223,7 +1223,7 @@
       "offset": 1062,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_fatal_error",
+      "target": "_abortmessage",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -1929,7 +1929,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_fatal_error",
+      "frame": "_abortmessage",
       "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
@@ -1937,7 +1937,7 @@
       "offset": 1663,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_fatal_error",
+      "target": "_abortmessage",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -2048,7 +2048,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_fatal_error",
+      "frame": "_abortmessage",
       "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
@@ -2056,7 +2056,7 @@
       "offset": 1716,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_fatal_error",
+      "target": "_abortmessage",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -2347,7 +2347,7 @@
     {
       "end": 135422,
       "name": "mmgr_alloc_a000",
-      "public": "_mmgr_alloc_a000",
+      "public": "_initmemory",
       "stable_id": "load_210f1",
       "start": 135409,
       "target": {
@@ -2369,7 +2369,7 @@
     {
       "end": 135511,
       "name": "nopsub_3111D",
-      "public": "_mmgr_alloc_dos_heap",
+      "public": "_initmemsize",
       "stable_id": "load_2111d",
       "start": 135453,
       "target": {
@@ -2413,7 +2413,7 @@
     {
       "end": 135637,
       "name": "mmgr_copy_paras",
-      "public": "_mmgr_copy_paras",
+      "public": "_posblockmove",
       "stable_id": "load_2118d",
       "start": 135565,
       "target": {
@@ -2424,7 +2424,7 @@
     {
       "end": 135720,
       "name": "copy_paras_reverse",
-      "public": "_copy_paras_reverse",
+      "public": "_negblockmove",
       "stable_id": "load_211d5",
       "start": 135637,
       "target": {
@@ -2446,7 +2446,7 @@
     {
       "end": 135933,
       "name": "mmgr_alloc_pages",
-      "public": "_mmgr_alloc_pages",
+      "public": "_reservememory",
       "stable_id": "load_21248",
       "start": 135752,
       "target": {
@@ -2468,7 +2468,7 @@
     {
       "end": 136233,
       "name": "mmgr_get_chunk_by_name",
-      "public": "_mmgr_get_chunk_by_name",
+      "public": "_checkmodule",
       "stable_id": "load_2136a",
       "start": 136042,
       "target": {
@@ -2479,7 +2479,7 @@
     {
       "end": 136316,
       "name": "nopsub_31429",
-      "public": "_mmgr_has_high_resource",
+      "public": "_ifmodule",
       "stable_id": "load_21429",
       "start": 136233,
       "target": {
@@ -2490,7 +2490,7 @@
     {
       "end": 136485,
       "name": "mmgr_free",
-      "public": "_mmgr_free",
+      "public": "_freememory",
       "stable_id": "load_2147c",
       "start": 136316,
       "target": {
@@ -2501,7 +2501,7 @@
     {
       "end": 136769,
       "name": "nopsub_31525",
-      "public": "_mmgr_move_chunk_to_high",
+      "public": "_freetotop",
       "stable_id": "load_21525",
       "start": 136485,
       "target": {
@@ -2512,7 +2512,7 @@
     {
       "end": 136828,
       "name": "mmgr_release",
-      "public": "_mmgr_release",
+      "public": "_purgememory",
       "stable_id": "load_21641",
       "start": 136769,
       "target": {
@@ -2523,7 +2523,7 @@
     {
       "end": 136866,
       "name": "mmgr_get_chunk_size",
-      "public": "_mmgr_get_chunk_size",
+      "public": "_modulesize",
       "stable_id": "load_2167c",
       "start": 136828,
       "target": {
@@ -2534,7 +2534,7 @@
     {
       "end": 137010,
       "name": "mmgr_resize_memory",
-      "public": "_mmgr_resize_memory",
+      "public": "_resizememory",
       "stable_id": "load_216a2",
       "start": 136866,
       "target": {
@@ -2545,7 +2545,7 @@
     {
       "end": 137138,
       "name": "mmgr_op_unk",
-      "public": "_mmgr_compact_chunk",
+      "public": "_packmemory",
       "stable_id": null,
       "start": 137010,
       "target": {
@@ -2556,7 +2556,7 @@
   ],
   "object_declarations": {
     "externals": [
-      "_fatal_error"
+      "_abortmessage"
     ],
     "groups": [
       {
@@ -2574,18 +2574,23 @@
     ],
     "publics": [
       {
-        "name": "_mmgr_has_high_resource",
-        "offset": 943,
+        "name": "_initmemsize",
+        "offset": 163,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_mmgr_get_chunk_by_name",
-        "offset": 752,
+        "name": "_purgememory",
+        "offset": 1479,
         "segment": "S012_TEXT"
       },
       {
         "name": "_mmgr_alloc_resmem",
         "offset": 0,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_negblockmove",
+        "offset": 347,
         "segment": "S012_TEXT"
       },
       {
@@ -2604,38 +2609,23 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_mmgr_release",
-        "offset": 1479,
+        "name": "_posblockmove",
+        "offset": 275,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_mmgr_move_chunk_to_high",
-        "offset": 1195,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_mmgr_compact_chunk",
-        "offset": 1720,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_copy_paras_reverse",
-        "offset": 347,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_mmgr_resize_memory",
+        "name": "_resizememory",
         "offset": 1576,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_mmgr_alloc_dos_heap",
-        "offset": 163,
+        "name": "_reservememory",
+        "offset": 462,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_mmgr_get_chunk_size",
-        "offset": 1538,
+        "name": "_ifmodule",
+        "offset": 943,
         "segment": "S012_TEXT"
       },
       {
@@ -2647,11 +2637,6 @@
         "name": "_nomemerr",
         "offset": 0,
         "segment": "_DATA"
-      },
-      {
-        "name": "_mmgr_alloc_a000",
-        "offset": 119,
-        "segment": "S012_TEXT"
       },
       {
         "name": "_unlockedmemory",
@@ -2669,8 +2654,8 @@
         "segment": "_DATA"
       },
       {
-        "name": "_mmgr_free",
-        "offset": 1026,
+        "name": "_freetotop",
+        "offset": 1195,
         "segment": "S012_TEXT"
       },
       {
@@ -2679,18 +2664,33 @@
         "segment": "_DATA"
       },
       {
-        "name": "_mmgr_copy_paras",
-        "offset": 275,
+        "name": "_packmemory",
+        "offset": 1720,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_mmgr_alloc_pages",
-        "offset": 462,
+        "name": "_freememory",
+        "offset": 1026,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_modulesize",
+        "offset": 1538,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_initmemory",
+        "offset": 119,
         "segment": "S012_TEXT"
       },
       {
         "name": "_poolmemory",
         "offset": 221,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_checkmodule",
+        "offset": 752,
         "segment": "S012_TEXT"
       }
     ],

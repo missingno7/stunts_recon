@@ -8,7 +8,7 @@ struct SHAPE2D {
     I16 x; I16 y; I8 s2d_plane_color0, s2d_plane_color1_bg, s2d_plane_color2_flip, s2d_plane_color3_flags;
 };
 extern I16 FAR file_get_res_shape_count(void FAR *memchunk);
-extern struct SHAPE2D FAR * FAR file_get_shape2d(U8 FAR *memchunk, I16 index);
+extern struct SHAPE2D FAR * FAR shapepointer(U8 FAR *memchunk, I16 index);
 /* Sum each shape header and expanded pixel span, then return the paragraph count.
  * Params and return follow the declared C signature. */
 I16 FAR file_load_shape2d_expandedsize(void FAR *memchunk) {
@@ -19,7 +19,7 @@ I16 FAR file_load_shape2d_expandedsize(void FAR *memchunk) {
     shapecount = file_get_res_shape_count(memchunk);
     size = shapecount * 8 + sizeof(struct SHAPE2D);
     for (i = 0; i < shapecount; ++i) {
-        memshape = file_get_shape2d((U8 FAR *)memchunk, i);
+        memshape = shapepointer((U8 FAR *)memchunk, i);
         pixels = (memshape->width * memshape->height) << 3;
         size += pixels;
         size += sizeof(struct SHAPE2D);

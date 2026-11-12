@@ -6,9 +6,9 @@
 INCLUDE include\platform_hw.inc
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
-extrn _video_clear_color:far
+extrn _clearscreen:far
 extrn _video_add_exithandler:far
-public _video_set_mode_13h
+public _initgraphics
 ; -----------------------------------------------------------------------------
 ; Purpose: Enter MCGA mode 13h and install the associated cleanup handlers.
 ; ABI: FAR entry; source return form: RET mnemonic for FAR entry; stack arguments: no named stack arguments
@@ -36,7 +36,7 @@ public _video_set_mode_13h
 ; ASMDOC[timers] reachability: Startup calls this routine. Existing filename already resolves placeholder owner id;
 ; ASMDOC[timers]   retain video_set_mode_13h filename.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
-_video_set_mode_13h proc far
+_initgraphics proc far
 ; ASMDOC[timers] Block: Capture startup video state before changing equipment flags or invoking BIOS mode setup.
  call far ptr _video_add_exithandler
  mov ax,40h
@@ -56,9 +56,9 @@ _video_set_mode_13h proc far
  xor ax,ax
  push ax
  push ax
- call far ptr _video_clear_color
+ call far ptr _clearscreen
  add sp,4
  ret
-_video_set_mode_13h endp
+_initgraphics endp
 S012_TEXT ends
 end

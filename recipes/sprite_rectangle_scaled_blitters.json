@@ -419,7 +419,7 @@
     },
     {
       "name": "sub_35E08",
-      "public": "_shape2d_scale_blit_hotspot",
+      "public": "_scalefxy",
       "start": 155144
     }
   ],
@@ -476,13 +476,13 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_xorrectc",
-        "offset": 0,
+        "name": "_scalefxy",
+        "offset": 658,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_shape2d_scale_blit_hotspot",
-        "offset": 658,
+        "name": "_xorrectc",
+        "offset": 0,
         "segment": "S012_TEXT"
       },
       {

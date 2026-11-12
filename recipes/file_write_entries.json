@@ -25,7 +25,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_fatal_error",
+      "frame": "_abortmessage",
       "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
@@ -33,7 +33,7 @@
       "offset": 160,
       "segment": "S012_TEXT",
       "self_relative": false,
-      "target": "_fatal_error",
+      "target": "_abortmessage",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -63,7 +63,7 @@
     {
       "end": 140555,
       "name": "file_write_nofatal",
-      "public": "_file_write_nofatal",
+      "public": "_savefile",
       "stable_id": "load_224fa",
       "start": 140538,
       "target": {
@@ -85,7 +85,7 @@
   ],
   "object_declarations": {
     "externals": [
-      "_fatal_error"
+      "_abortmessage"
     ],
     "groups": [
       {
@@ -110,7 +110,7 @@
         "segment": "_DATA"
       },
       {
-        "name": "_file_write_nofatal",
+        "name": "_savefile",
         "offset": 0,
         "segment": "S012_TEXT"
       },
@@ -190,7 +190,7 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "public": "_file_write_nofatal",
+  "public": "_savefile",
   "secondary_dgroup_segments": {
     "_DATA": {
       "dgroup_offset": 19570,

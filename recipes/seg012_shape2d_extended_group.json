@@ -250,7 +250,7 @@
     {
       "end": 146914,
       "name": "nopsub_33DBE",
-      "public": "_shape2d_blit_rle_hotspot",
+      "public": "_movpackfxy",
       "stable_id": "load_23dbe",
       "start": 146878,
       "target": {
@@ -272,7 +272,7 @@
     {
       "end": 147088,
       "name": "shape2d_op_unk",
-      "public": "_shape2d_blit_rle",
+      "public": "_movpackf",
       "stable_id": null,
       "start": 146944,
       "target": {
@@ -283,7 +283,7 @@
     {
       "end": 147124,
       "name": "nopsub_33E90",
-      "public": "_shape2d_blit_rle_clip_hotspot",
+      "public": "_movpackcfxy",
       "stable_id": "load_23e90",
       "start": 147088,
       "target": {
@@ -294,7 +294,7 @@
     {
       "end": 147154,
       "name": "shape2d_op_unk2",
-      "public": "_shape2d_blit_rle_clipped_at",
+      "public": "_movpackcfxya",
       "stable_id": "load_23eb4",
       "start": 147124,
       "target": {
@@ -305,7 +305,7 @@
     {
       "end": 147552,
       "name": "shape2d_op_unk3",
-      "public": "_shape2d_blit_rle_clipped",
+      "public": "_movpackcf",
       "stable_id": null,
       "start": 147154,
       "target": {
@@ -321,18 +321,13 @@
     "groups": [],
     "publics": [
       {
-        "name": "_shape2d_blit_rle_clip_hotspot",
+        "name": "_movpackcfxy",
         "offset": 210,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_shape2d_blit_rle_clipped",
-        "offset": 276,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_shape2d_blit_rle_hotspot",
-        "offset": 0,
+        "name": "_movpackcfxya",
+        "offset": 246,
         "segment": "S012_TEXT"
       },
       {
@@ -341,13 +336,18 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_shape2d_blit_rle_clipped_at",
-        "offset": 246,
+        "name": "_movpackf",
+        "offset": 66,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_shape2d_blit_rle",
-        "offset": 66,
+        "name": "_movpackcf",
+        "offset": 276,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_movpackfxy",
+        "offset": 0,
         "segment": "S012_TEXT"
       }
     ],

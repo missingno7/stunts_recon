@@ -74,7 +74,7 @@
     {
       "end": 146736,
       "name": "nopsub_33D0C",
-      "public": "_shape2d_copy_bitmap_hotspot",
+      "public": "_movfxy",
       "stable_id": "load_23d0c",
       "start": 146700,
       "target": {
@@ -85,7 +85,7 @@
     {
       "end": 146766,
       "name": "sprite_shape_to_1",
-      "public": "_sprite_shape_to_1",
+      "public": "_movfxya",
       "stable_id": "load_23d30",
       "start": 146736,
       "target": {
@@ -112,13 +112,13 @@
     "groups": [],
     "publics": [
       {
-        "name": "_sprite_shape_to_1",
-        "offset": 36,
+        "name": "_movfxy",
+        "offset": 0,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_shape2d_copy_bitmap_hotspot",
-        "offset": 0,
+        "name": "_movfxya",
+        "offset": 36,
         "segment": "S012_TEXT"
       },
       {

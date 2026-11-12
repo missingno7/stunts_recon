@@ -45,8 +45,8 @@ aWindowdefOutOfRowTableSpa db 'windowdef - OUT OF ROW TABLE SPACE', 0Dh, 0
 _DATA ends
 DGROUP group DSEG, _DATA
 assume es:nothing, ss:nothing, ds:DSEG
-extrn _fatal_error:far
-extrn _mmgr_alloc_pages:far
+extrn _abortmessage:far
+extrn _reservememory:far
 extrn _sprite1:byte
 extrn _sprite2:byte
 extrn _line_pattern_bits:word
@@ -248,7 +248,7 @@ sprite_make_wnd proc far
     push    ax
     mov     ax, offset DGROUP:aMcgaWindow; "MCGA WINDOW"
     push    ax
-    call    _mmgr_alloc_pages
+    call    _reservememory
     add     sp, 4
     mov     [bp+local_shape_segment], dx
     mov     ds, dx
@@ -311,7 +311,7 @@ make_window_error_path_01:
     mov     ds, ax
     mov     ax, offset DGROUP:aWindowdefOutOfRowTableSpa; "windowdef - OUT OF ROW TABLE SPACE\r"
     push    ax
-    call    far ptr _fatal_error
+    call    far ptr _abortmessage
     even ; word-align the following entry
 ; ASMDOC PUBLIC DATA, not entry point: next_wnd_def stores next free CS offset. PUBLIC wnd_defs below is a 3600-byte
 ; ASMDOC descriptor/row arena ending at following public code label.

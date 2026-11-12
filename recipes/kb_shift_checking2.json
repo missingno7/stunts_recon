@@ -6,7 +6,7 @@
   "binding": {
     "declarations": {
       "externals": [
-        "_kb_checking"
+        "_nextkey"
       ],
       "groups": [],
       "publics": [
@@ -49,7 +49,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_kb_checking",
+      "frame": "_nextkey",
       "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
@@ -57,7 +57,7 @@
       "offset": 12,
       "segment": "S018_TEXT",
       "self_relative": false,
-      "target": "_kb_checking",
+      "target": "_nextkey",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -82,7 +82,7 @@
   "kind": "asm",
   "object_declarations": {
     "externals": [
-      "_kb_checking"
+      "_nextkey"
     ],
     "groups": [],
     "publics": [

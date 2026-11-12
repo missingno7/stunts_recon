@@ -8,15 +8,15 @@ void locate_many_resources(I8 FAR *data, I8 *names, I8 FAR **result) {
     /* PLATFORM(file): resolve a resource name in the loaded asset block. */
     while (*names != 0) { *result++ = locate_shape_fatal(data, names); names += 4; }
 }
-extern I8 FAR * FAR locate_shape_nofatal(I8 FAR *data, I8 *name);
+extern I8 FAR * FAR locateshapez(I8 FAR *data, I8 *name);
 /* Resolve packed shape names without fatal error handling.
  * Params and return follow the declared C signature. */
 /* PLATFORM(file): resolve shape names in the loaded resource block. */
-void FAR file_find_shapes_optional(I8 FAR *data, I8 *names, I8 FAR **results) {
+void FAR locateshapesz(I8 FAR *data, I8 *names, I8 FAR **results) {
     I16 index = 0;
     while (*names != 0) {
     /* PLATFORM(file): resolve a resource name in the loaded asset block. */
-        results[index++] = locate_shape_nofatal(data, names);
+        results[index++] = locateshapez(data, names);
         names += 4;
     }
 }
@@ -39,7 +39,7 @@ void FAR file_find_shapes_optional_alt(I8 FAR *data, I8 *names, I8 FAR **results
     I16 index = 0;
     while (*names != 0) {
     /* PLATFORM(file): resolve a resource name in the loaded asset block. */
-        results[index++] = locate_shape_nofatal(data, names);
+        results[index++] = locateshapez(data, names);
         names += 4;
     }
 }

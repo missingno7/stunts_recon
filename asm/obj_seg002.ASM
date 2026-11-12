@@ -21,7 +21,7 @@ S002_TEXT segment byte public 'CODE'
     assume cs:S002_TEXT
     assume es:nothing, ss:nothing, ds:DGROUP
     public _calcrpm
-    public _math_sign_word
+    public _sgn
     public _nopsub_19DFF
     public _nopsub_19E09
     public _nopsub_19E13
@@ -104,7 +104,7 @@ _calcrpm endp
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: dead in current static source/reference plan.
 ; ASMDOC Evidence: asm/obj_seg002.ASM:71
-_math_sign_word proc far
+_sgn proc far
     arg_value = word ptr 6
 
     push    bp
@@ -135,7 +135,7 @@ return_nonpositive_result:
     pop     bp
 sign_word_nonpositive_return:
     retf
-_math_sign_word endp
+_sgn endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the legacy internal helper nopsub 19DFF. Its internal flow uses int61_set_frame,
 ; int61_load_argument.

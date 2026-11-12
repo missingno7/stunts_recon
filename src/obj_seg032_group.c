@@ -29,7 +29,7 @@ extern void FAR read_line_helper2(void);
     /* PLATFORM(input_kb): poll the game input-abort state. */
 extern I16 FAR testbiosticks(void);
     /* PLATFORM(input_kb): read the next DOS keyboard callback value. */
-extern I16 FAR kb_call_readchar_callback(void);
+extern I16 FAR testkey(void);
     /* PLATFORM(timer): reset the game timer countdown for this input wait. */
 extern void FAR setticks(I16 offset, I16 segment);
     /* PLATFORM(timer): set the cursor-blink timer interval. */
@@ -43,7 +43,7 @@ extern I16 FAR testticks(void);
 /* PLATFORM(input_kb): poll the keyboard and abort callback for edit keys. */
 /* PLATFORM(video): copy the render surface before drawing line edits. */
 /* PLATFORM(timer): refresh cursor blink timing while waiting for input. */
-I16 FAR read_line(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
+I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
                   I16 maxWidth, I16 x, I16 y,
                   I16 (FAR *readCallback)(void), I16 timerOffset, I16 timerSegment)
 {
@@ -89,7 +89,7 @@ I16 FAR read_line(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
     else
     {
     /* PLATFORM(input_kb): read the next DOS keyboard callback value. */
-      while ((inputKey = kb_call_readchar_callback()) == 0) {
+      while ((inputKey = testkey()) == 0) {
     /* PLATFORM(input_kb): poll the game input-abort state. */
         if (testbiosticks() != 0) { inputKey = 0; break; }
         readCallback();

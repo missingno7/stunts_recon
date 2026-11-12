@@ -24,7 +24,7 @@ _BSS ends
 CONST segment word public 'CONST'
 CONST ends
 extrn _timer_callback_counter:dword
-extrn _timer_get_counter:far
+extrn _gettick:far
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 public _elapsedticks
@@ -134,7 +134,7 @@ _setticks proc far
     mov     bp, sp
 ; ASMDOC[timers] Block: Store current+duration as shared deadline, modulo 2^32. This is not a caller-provided
 ; ASMDOC[timers]   destination pointer.
-    call    _timer_get_counter
+    call    _gettick
     add     ax, [bp+arg_ticksl]
     adc     dx, [bp+arg_ticksh]
     mov     word ptr _timer_deadline_ticks, ax
@@ -167,7 +167,7 @@ _setticks endp
 ; ASMDOC[timers]   return frame.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
 _waitticks proc far
-    call    _timer_get_counter
+    call    _gettick
 ; ASMDOC[timers] Block: Unsigned lexicographic high/low comparison against shared dword; incoming DX is not an
 ; ASMDOC[timers]   argument.
     cmp     dx, word ptr _timer_copy_target_high
@@ -203,7 +203,7 @@ _waitticks endp
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
 _testticks proc far
 ; ASMDOC[timers] Block: Return AX Boolean for full unsigned counter>=deadline; flags are path-dependent.
- call far ptr _timer_get_counter
+ call far ptr _gettick
  cmp dx,word ptr ds:[_timer_copy_target_high]
  jb zero_result
  ja one_result
@@ -244,7 +244,7 @@ _timedwait proc far
     push bp
     mov bp, sp
     sub sp, 4
-    call far ptr _timer_get_counter
+    call far ptr _gettick
     add ax, [bp+6]
     adc dx, [bp+8]
     mov [bp-4], ax
@@ -252,7 +252,7 @@ _timedwait proc far
 ; ASMDOC[timers] Block: Private stack deadline at BP-4:BP-2 avoids modifying the shared deadline. Ordinary unsigned
 ; ASMDOC[timers]   compare is not wrap-distance logic.
 wait_for_counter:
-    call far ptr _timer_get_counter
+    call far ptr _gettick
     cmp dx, [bp-2]
     jb wait_for_counter
     ja counter_reached

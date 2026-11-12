@@ -334,7 +334,7 @@
     },
     {
       "name": "nopsub_34736",
-      "public": "_shape2d_capture_bitmap_hotspot",
+      "public": "_readfxy",
       "stable_id": "load_24736",
       "start": 149302
     },
@@ -352,7 +352,7 @@
     },
     {
       "name": "shape_op_explosion",
-      "public": "_shapeexpl",
+      "public": "_scalecfxy",
       "stable_id": null,
       "start": 149468
     },
@@ -364,7 +364,7 @@
     },
     {
       "name": "set_fontdefseg",
-      "public": "_set_fontdefseg",
+      "public": "_setfont",
       "stable_id": null,
       "start": 150396
     }
@@ -426,11 +426,6 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_shape2d_capture_bitmap_hotspot",
-        "offset": 122,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_sprite1",
         "offset": 644,
         "segment": "S012_TEXT"
@@ -441,17 +436,22 @@
         "segment": "S012_TEXT"
       },
       {
+        "name": "_readfxy",
+        "offset": 122,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_setfont",
+        "offset": 1216,
+        "segment": "S012_TEXT"
+      },
+      {
         "name": "_font_setup_unknown",
         "offset": 1104,
         "segment": "S012_TEXT"
       },
       {
-        "name": "_set_fontdefseg",
-        "offset": 1216,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_shapeexpl",
+        "name": "_scalecfxy",
         "offset": 288,
         "segment": "S012_TEXT"
       }

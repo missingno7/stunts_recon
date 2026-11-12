@@ -346,7 +346,7 @@
     {
       "end": 140846,
       "name": "sprite_copy_both_to_arg",
-      "public": "_sprite_copy_both_to_arg",
+      "public": "_savewindow",
       "stable_id": "load_2260e",
       "start": 140814,
       "target": {
@@ -357,7 +357,7 @@
     {
       "end": 140874,
       "name": "sprite_copy_arg_to_both",
-      "public": "_sprite_copy_arg_to_both",
+      "public": "_restorewindow",
       "stable_id": "load_2262e",
       "start": 140846,
       "target": {
@@ -379,7 +379,7 @@
     {
       "end": 140986,
       "name": "file_get_shape2d",
-      "public": "_file_get_shape2d",
+      "public": "_shapepointer",
       "stable_id": "load_2265b",
       "start": 140891,
       "target": {
@@ -478,7 +478,7 @@
     {
       "end": 141186,
       "name": "timer_get_counter",
-      "public": "_timer_get_counter",
+      "public": "_gettick",
       "stable_id": "load_22778",
       "start": 141176,
       "target": {
@@ -538,8 +538,8 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_timer_get_counter",
-        "offset": 362,
+        "name": "_shapepointer",
+        "offset": 77,
         "segment": "S012_TEXT"
       },
       {
@@ -553,18 +553,18 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_sprite_copy_arg_to_both",
-        "offset": 32,
-        "segment": "S012_TEXT"
-      },
-      {
-        "name": "_sprite_copy_both_to_arg",
-        "offset": 0,
+        "name": "_gettick",
+        "offset": 362,
         "segment": "S012_TEXT"
       },
       {
         "name": "_file_get_res_shape_count",
         "offset": 60,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_restorewindow",
+        "offset": 32,
         "segment": "S012_TEXT"
       },
       {
@@ -583,11 +583,6 @@
         "segment": "S012_TEXT"
       },
       {
-        "name": "_file_get_shape2d",
-        "offset": 77,
-        "segment": "S012_TEXT"
-      },
-      {
         "name": "_scalethicknessxp",
         "offset": 312,
         "segment": "S012_TEXT"
@@ -595,6 +590,11 @@
       {
         "name": "_scalethicknessyp",
         "offset": 323,
+        "segment": "S012_TEXT"
+      },
+      {
+        "name": "_savewindow",
+        "offset": 0,
         "segment": "S012_TEXT"
       }
     ],

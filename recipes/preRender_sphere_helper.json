@@ -3,9 +3,9 @@
     "declarations": {
       "externals": [
         "__acrtused",
-        "_preRender_sphere_helper2",
-        "_preRender_default_alt",
-        "_preRender_sphere_helper"
+        "_ellipseh",
+        "_drawpolyp",
+        "_solidellipseh"
       ],
       "groups": [
         {
@@ -25,7 +25,7 @@
       ],
       "publics": [
         {
-          "name": "_preRender_sphere_helper",
+          "name": "_solidellipseh",
           "offset": 0,
           "segment": "UNIT_TEXT"
         }
@@ -108,7 +108,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_preRender_default_alt",
+      "frame": "_drawpolyp",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -116,7 +116,7 @@
       "offset": 34,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_preRender_default_alt",
+      "target": "_drawpolyp",
       "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
@@ -125,7 +125,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_preRender_sphere_helper2",
+      "frame": "_ellipseh",
       "frame_index": 0,
       "frame_kind": "target",
       "frame_method": 5,
@@ -133,7 +133,7 @@
       "offset": 15,
       "segment": "UNIT_TEXT",
       "self_relative": false,
-      "target": "_preRender_sphere_helper2",
+      "target": "_ellipseh",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -162,7 +162,7 @@
     }
   ],
   "profile": "msc510-medium",
-  "public": "_preRender_sphere_helper",
+  "public": "_solidellipseh",
   "source": "src/preRender_sphere_helper.c",
   "stable_id": "load_26bbe",
   "start": 158654,
