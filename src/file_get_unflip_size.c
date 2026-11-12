@@ -1,9 +1,10 @@
+#include "memory.h"
+#include "sprite2d.h"
 #include "stunts_types.h"
 /* READABILITY: Compute the largest unflipped shape allocation in paragraph units. */
 
-#define SHAPE_UNFLIP_BUFFER_OVERHEAD_BYTES 0x20
-#define DOS_PARAGRAPH_SHIFT 4
 /* PORT: Resource headers use MSC 16-bit int layout; assert these field offsets in a host port. */
+/* Local 14-byte prefix; the complete shape record has two further flag bytes. */
 struct SHAPE2D {
     I16 s2d_width;
     I16 s2d_height;

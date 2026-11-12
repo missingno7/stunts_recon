@@ -1,0 +1,13 @@
+/* DOS paragraph allocation and resource heap geometry. */
+#ifndef STUNTS_MEMORY_H_INCLUDED
+#define STUNTS_MEMORY_H_INCLUDED
+
+#define DOS_PARAGRAPH_BYTES 16UL /* U32, 16 */
+#define DOS_PARAGRAPH_BYTES_I16 16 /* I16, 16 */
+#define DOS_PARAGRAPH_OFFSET_MASK 15 /* I16, 15 */
+#define DOS_PARAGRAPH_SHIFT 4 /* I16, 4 */
+#define SHAPE_SHARED_MIN_FREE_BYTES 65000L /* I32, 65000 */
+#define TRACK_ARENA_BYTES 0x6BF3 /* I16, 27635 */
+#define TRACK_ARENA_REPLAY_PATH_OFFSET 0x75B /* I16, 1883 */
+
+#endif /* STUNTS_MEMORY_H_INCLUDED */

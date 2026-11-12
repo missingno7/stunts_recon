@@ -38,9 +38,8 @@
 	//int x2, y2;
 };
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct VECTOR {
-	I16S x, y, z;
-};
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
+#include "vec3.h"
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct VECTORLONG {
 	I32 lx, ly, lz;
@@ -63,10 +62,12 @@
 };
 
 
+/* Local math imports preserve the original communal LINK ordering. */
 I16S intsin(U16S  s);
 I16S intcos(U16S  s);
 
 I16 intatan(I16 z, I16 y);
+/* Local signed radius view; the shared math API returns an unsigned word. */
 I16 inthypot(I16 z, I16 y);
 I16 int3dhypot(struct VECTOR* vec);
 

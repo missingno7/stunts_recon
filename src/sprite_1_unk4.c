@@ -1,7 +1,7 @@
+#include "sprite2d.h"
+#include "video.h"
 #include "stunts_types.h"
 /* READABILITY: Draw the four one-pixel edges of an axis-aligned rectangle through the sprite renderer. */
-#define RECTANGLE_EDGE_THICKNESS_PIXELS 1
-extern void FAR sprite1_unknown2(I16 x, I16 y, I16 width, I16 height, I16 color);
 /* Draw the top, bottom, left, and right edges of a rectangle.
  * Params and return follow the declared C signature. */
 /* PLATFORM(video): draw rectangle edges through the sprite renderer. */

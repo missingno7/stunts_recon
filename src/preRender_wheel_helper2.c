@@ -1,11 +1,10 @@
 #include "stunts_types.h"
 /* READABILITY: Interpolate the wheel section corners, then derive the paired point rings. */
 
-#define WHEEL_RING_POINT_COUNT 16
-struct Point { I16 x, y; };
+
+#include "shapes3d.h"
+/* Local three-point wheel view; other units expose a larger rectangle. */
 struct WheelRect { struct Point p0, p1, p2; };
-extern I16 FAR fixedmult(I16 delta, I16 scale);
-extern void FAR ellipse(struct Point *source, struct Point *output);
 /* Interpolate the two wheel-section endpoint vectors and generate their point rings.
  * Params and return follow the declared C signature. */
 void ring(struct WheelRect *rect, struct Point *output, I16 scale)

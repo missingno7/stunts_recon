@@ -1,6 +1,9 @@
+#include "resource.h"
+#include "ui.h"
+#include "video.h"
 #include "stunts_types.h"
 /* READABILITY: Construct an audio resource path and define the initialized palette, material, and UI color tables owned by this module. */
-char audiofiletmp[128];
+char audiofiletmp[UI_AUDIOFILETMP_CAPACITY];
 extern I8 *strrchr(const I8 *string, I16 ch);
 extern I8 *strcpy(I8 *destination, const I8 *source);
 extern I8 *strcat(I8 *destination, const I8 *source);
@@ -12,25 +15,25 @@ I8 *audio_make_filename(I8 *filename, I8 *extension, I8 *prefix)
 {
     I8 *slash;
     strcpy(audiofiletmp, filename);
-    slash = strrchr(audiofiletmp, 0x5c);
+    slash = strrchr(audiofiletmp, DOS_PATH_SEPARATOR);
     if (slash != 0)
         *++slash = 0;
     else
         audiofiletmp[0] = 0;
     strcat(audiofiletmp, prefix);
-    slash = strrchr(filename, 0x5c);
+    slash = strrchr(filename, DOS_PATH_SEPARATOR);
     if (slash != 0)
         strcat(audiofiletmp, ++slash);
     else
         strcat(audiofiletmp, filename);
-    if (audiofiletmp[strlen(audiofiletmp) - 4] != 0x2e || strlen(audiofiletmp) <= 4) {
+    if (audiofiletmp[strlen(audiofiletmp) - FILE_EXTENSION_SUFFIX_BYTES] != FILE_EXTENSION_DOT || strlen(audiofiletmp) <= FILE_EXTENSION_SUFFIX_BYTES) {
         strcat(audiofiletmp, ".");
         strcat(audiofiletmp, extension);
     }
     return audiofiletmp;
 }
 
-U16S one_through_fourteen_table[14] = {
+U16S one_through_fourteen_table[UI_ONE_THROUGH_FOURTEEN_TABLE_CAPACITY] = {
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
 };
 I16 dlg_colour = 15;
@@ -62,7 +65,7 @@ I16 camera_select_fill_color = 1;
 I16 camera_select_outline_color = 4;
 I16 performGraphColor = 1;
 I16 dialog_frame_color = 4;
-U16S SDPAL_mcgacol1[129] = {
+U16S SDPAL_mcgacol1[VIDEO_MATERIAL_TABLE_COUNT] = {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
     12, 13, 14, 15, 108, 116, 15, 28, 29, 14, 28, 31,
     14, 200, 198, 196, 112, 114, 116, 194, 197, 200, 146, 37,
@@ -75,7 +78,7 @@ U16S SDPAL_mcgacol1[129] = {
     60, 77, 46, 61, 45, 202, 190, 186, 183, 180, 0, 28,
     30, 16, 20, 68, 54, 39, 43, 12, 17
 };
-U16S SDPAL_mcgatype[129] = {
+U16S SDPAL_mcgatype[VIDEO_MATERIAL_TABLE_COUNT] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
@@ -88,7 +91,7 @@ U16S SDPAL_mcgatype[129] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
     1, 1, 1, 1, 1, 1, 1, 0, 0
 };
-U16S SDPAL_mcgadither[129] = {
+U16S SDPAL_mcgadither[VIDEO_MATERIAL_TABLE_COUNT] = {
     0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
     0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
     0xFFFF, 0xFFFF, 0x0000, 0xFFFF, 0xFFFF, 0xFFFF, 0x77DD, 0xDD77,

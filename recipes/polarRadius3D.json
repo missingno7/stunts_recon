@@ -248,9 +248,19 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
+      "path": "include/math3d.h",
+      "sha256": "f87ae92b2fb84a6e1bdcf1ee3f6618325c6731937f08f2fa921f105268a1a817",
+      "size": 2625
+    },
+    {
       "path": "include/stunts_types.h",
       "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
       "size": 1091
+    },
+    {
+      "path": "include/vec3.h",
+      "sha256": "cbd94805557c2937228598d52eec59dbf495dc79b41229fab6d15ef7158bbc3a",
+      "size": 172
     }
   ],
   "profile": "msc510-medium",

@@ -30,7 +30,8 @@
     U16S  game_recordedframes;
 };
 /* PORT: Layout uses MSC /Zp and target scalar widths. */struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
-/* PORT: Layout uses MSC /Zp and target scalar widths. */struct VECTOR { I16 x, y, z; };
+/* PORT: Layout uses MSC /Zp and target scalar widths. */
+#include "vec3.h"
 /* PORT: Layout uses MSC /Zp and target scalar widths. */struct VECTORLONG { I32 x, y, z; };
 /* PORT: Layout uses MSC /Zp and target scalar widths. */struct POINT2D { I16 x, y; };
 /* PORT: Layout uses MSC /Zp and target scalar widths. */struct RECTANGLE { I16 left, right, top, bottom; };
@@ -174,6 +175,7 @@ extern I16 far mouse_timer_sprite_unknown(I16 selection, I16 *x1, I16 *x2,
                                       I16 *y1, I16 *y2, I16 left, I16 right);
 extern void far nullsub_1(void);
 extern void far nullsub_2(void far *, I16);
+/* Local math import preserves the original communal LINK ordering. */
 extern I16 far intatan(I16, I16);
 extern void far print_highscore_entry(I16 rowIndex, I8 *stringOffsets);
 extern I16 far print_int_as_string_maybe(I8 *text, I16 value, I16 mode, I16 width);
@@ -285,7 +287,7 @@ void far *fntndat;
 extern U16S  rate_frame;
 struct GAMESTATE_SNAPSHOT race_stats;
 char buf_g_path[94];
-extern struct SHAPE3D g_shapes3d[125];
+extern struct SHAPE3D g_shapes3d[130];
 struct GAMEINFO globalgamesettings;
 char textstr[40];
 char g_gsnashape_data[5];

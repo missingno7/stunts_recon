@@ -322,6 +322,11 @@
       "path": "include/platform_hw.inc",
       "sha256": "8961b57e4f26d730398c81f883947e5a9836f03b8817bf9fd3637a9a94e52d76",
       "size": 1927
+    },
+    {
+      "path": "include/video.inc",
+      "sha256": "4747261fd0ef2b075f41e86416f783acccf00441d4fc8e4bf00bb91b746db36a",
+      "size": 136
     }
   ],
   "kind": "asm",

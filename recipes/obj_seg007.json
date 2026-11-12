@@ -2325,15 +2325,30 @@
   "original_frame_load_address": 93088,
   "preprocessor_closure": [
     {
+      "path": "include/audio.h",
+      "sha256": "8e43ec5da02f720e42c6c41892610f5bdc16792ec42502071a67dbb6ee35bc68",
+      "size": 12748
+    },
+    {
+      "path": "include/resource.h",
+      "sha256": "3fafa12cfa876195a622667b9e229ba996312da734411b2b352a6b16ca8ad3aa",
+      "size": 1903
+    },
+    {
+      "path": "include/types.h",
+      "sha256": "b2534b0d8a3a3cca3fcccb36039a5daccae51153b9c3bc41baa00d2c7fc34172",
+      "size": 238
+    },
+    {
       "letters": "tl",
-      "line": 179,
+      "line": 155,
       "path": "<source>",
       "pragma": "optimize",
       "state": "on"
     },
     {
       "letters": "tl",
-      "line": 281,
+      "line": 257,
       "path": "<source>",
       "pragma": "optimize",
       "state": "off"

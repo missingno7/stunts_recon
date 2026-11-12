@@ -5,11 +5,13 @@
 #include "stunts_types.h"
 /* Scratch whole-object candidate in target member order. */ /* PORT: plain char signedness follows the pinned MSC target. */
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
-struct VECTOR { I16S x; I16S y; I16S z; };
+
+#include "math3d.h"
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct SHAPE3D { U16S  numverts; struct VECTOR far *shape3d_verts; U16S  numprimitives; U8  numpaints; U8  reserved; void far *primitives; void far *cull1; void far *cull2; };
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
-struct TRKOBJINFO { U8  noOfBlocks,entry,exitPoint,entryType,exitType,arrowType; I16S arrowOrient; I16S *cameraDataOffset; union { struct { U8  opponent1,opponent2; } opponent; U16S  cameraOffsetOverride; } cameraOverlay; U8  opponent3,opponentSpeedCode; };
+/* The DOS near pointer aliases the camera word; six records have relocated Amiga pointers. */
+struct TRKOBJINFO { U8  noOfBlocks,entry,exitPoint,entryType,exitType,arrowType; I16S arrowOrient; I16S *cameraDataOffset; union { struct { U8  opponent1,opponent2; } opponent; U16S  cameraOffsetOverride; I16S *dataPointer; } cameraOverlay; U8  opponent3,opponentSpeedCode; };
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 struct TRACKOBJECT { struct TRKOBJINFO *info; I16S rotation; struct SHAPE3D *shape,*lowShape; U8  overlay; I8 surface,ignoreZ,multiTile,physicalModel,unknown; };
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
@@ -32,8 +34,8 @@ int z_ctr_pos[30];
 extern U8  far *td14tb;
 extern U8  far *td15p_9;
 extern struct TRACKOBJECT trklst[215];
-extern I16 far intsin(I16),far intcos(I16),far fixedmult(I16,I16);
-extern I16 far inthypot(I16,I16),far intatan(I16,I16);
+
+
 short pl_i;
 short road_num;
 short wall_wallelement;
@@ -1677,8 +1679,8 @@ I16 compiletrack(void)
       blk = objInfo + prevBlock;
       if (prev_reversed_dir != 0)
       {
-        if (blk->cameraOverlay.cameraOffsetOverride != 0)
-          camData = (struct VECTOR *) blk->cameraOverlay.cameraOffsetOverride;
+        if (blk->cameraOverlay.dataPointer != 0)
+          camData = (struct VECTOR *) blk->cameraOverlay.dataPointer;
         else
           camData = (struct VECTOR *) blk->cameraDataOffset;
       }
@@ -1832,8 +1834,8 @@ I16 compiletrack(void)
       sub = td_18_ref[sampleIdx] & 0x0f;
       conn = td_18_ref[sampleIdx] & 0x10;
       blk = trklst[elem_idx].info;
-      if (conn != 0 && blk[sub].cameraOverlay.cameraOffsetOverride != 0)
-        camData = (struct VECTOR *) blk[sub].cameraOverlay.cameraOffsetOverride;
+      if (conn != 0 && blk[sub].cameraOverlay.dataPointer != 0)
+        camData = (struct VECTOR *) blk[sub].cameraOverlay.dataPointer;
       else
         camData = (struct VECTOR *) blk[sub].cameraDataOffset;
       cur_pos = camData[blk[sub].arrowType * 2];

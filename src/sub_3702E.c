@@ -1,7 +1,6 @@
+#include "video.h"
 #include "stunts_types.h"
 /* READABILITY: Draw the four one-pixel edges of an axis-aligned rectangle through the filled-rectangle renderer. */
-#define RECTANGLE_EDGE_THICKNESS_PIXELS 1
-extern void FAR xorrectc(I16, I16, I16, I16, I16);
 
 /* Draw the four one-pixel edges of an axis-aligned rectangle.
  * Params and return follow the declared C signature. */

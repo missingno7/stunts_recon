@@ -1,5 +1,6 @@
 /* READABILITY: Define far plane and vector state initialized in the far-data contribution. */
-struct VECTOR { int x, y, z; };
+
+#include "vec3.h"
 struct MATRIX { int m[9]; };
 struct PLANE {
     int plane_yz;

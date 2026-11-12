@@ -397,7 +397,7 @@
           "name": "_audiofiletmp",
           "size": 128,
           "size_basis": {
-            "declaration": "char audiofiletmp[128];",
+            "declaration": "char audiofiletmp[UI_AUDIOFILETMP_CAPACITY];",
             "kind": "declared-type"
           }
         },

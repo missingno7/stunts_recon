@@ -17,9 +17,10 @@
    transformed_primitive_paint = transprimitivepaintjob, backlightovr8 = backlights_paint_override,
    projected_point_table = polyvertpointptrtab, primitive_type_table = primtypetab, inverse_power_of_two_table = invpow2tbl. */
 struct RECTANGLE { I16 left, right, top, bottom; };
-struct VECTOR { I16 x, y, z; };
+
+#include "math3d.h"
 struct POINT2D { I16 x, y; };
-struct MATRIX { I16 vals[9]; };
+
 /* PORT: This in-memory record uses MSC medium-model far pointers and default 2-byte packing; verify field offsets before host serialization. */
 struct SHAPE3D {
     U16 numverts;
@@ -52,21 +53,21 @@ struct POLYINFO {
 };
 
 extern I16 far abs(I16);
-extern I16 far intatan(I16, I16);
-extern unsigned far inthypot(I16, I16);
-extern I16 far int3dhypot(struct VECTOR*);
+
+
+
 extern I16 far thicknessxp(I16, I16);
-extern void far xformy(struct MATRIX*, I16);
-extern void far xformx(struct MATRIX*, I16);
-extern void far xformz(struct MATRIX*, I16);
-extern void far mat_vec(struct VECTOR*, struct MATRIX*, struct VECTOR*);
-extern void far transmult(struct MATRIX*, struct MATRIX*, struct MATRIX*);
-extern void far mat_invert(struct MATRIX*, struct MATRIX*);
-extern void far projectp(struct VECTOR*, struct POINT2D*);
-extern void far zclipline(struct VECTOR*, struct VECTOR*, struct VECTOR*, I16);
+
+
+
+
+
+
+
+
 extern void far* far mmgr_alloc_resbytes(I8*, I32);
-extern I16 far intsin(unsigned);
-extern I16 far intcos(unsigned);
+
+
 extern void far drawpolypt(I16, I16, struct POINT2D*);
 extern void far preRender_patterned(I16, I16, I16, struct POINT2D*);
 extern void far sprite_two_color_poly_list(I16, I16, I16, I16, struct POINT2D*);
@@ -126,11 +127,11 @@ static struct POINT2D* projected_point_ptr_table[11];
 
 void INIT_BUFFERS(void);
 void initnm(void);
-struct MATRIX* makematrix(I16, I16, I16, I16);
+
 unsigned getoutcode(struct POINT2D*);
 I8 front_facing(struct POINT2D far*);
 void zonecheck(struct POINT2D*, struct RECTANGLE*);
-norm_zone(struct VECTOR*);
+
 unsigned polysort(unsigned, unsigned);
 
 void INIT_MATRIX(void)

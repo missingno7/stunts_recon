@@ -1,3 +1,4 @@
+INCLUDE include/video.inc
 ; ASMDOC Module review: Existing name is descriptive; preserve its mixed span, capture, scaled-shape, data, and
 ; font extent.
 ; ASMDOC Scope: code-derived contracts below supersede broad legacy summaries without deleting them. No instructions,
@@ -602,15 +603,21 @@ shape_explode_branch_path_06:
 ; ASMDOC PUBLIC DATA _sprite1/_sprite2 (30 bytes each), followed by 200 row offsets y*320. These words live
 ; inside PROC extent
 ; ASMDOC but are never executed by normal shapeexpl paths.
-_sprite1 dw 0, 0A000h, 0, 0, 0, offset lineoffsets, 0, 320, 0, 200, 320, 0, 320, 0, 320
+_sprite1 dw 0, 0A000h, 0, 0, 0, offset lineoffsets
+    dw 0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, PLATFORM_SCREEN_HEIGHT_PIXELS
+    dw PLATFORM_SCREEN_WIDTH_PIXELS, 0, PLATFORM_SCREEN_WIDTH_PIXELS
+    dw 0, PLATFORM_SCREEN_WIDTH_PIXELS
 ; /* PLATFORM(video): selects a video-memory segment. */
-_sprite2 dw 0, 0A000h, 0, 0, 0, offset lineoffsets, 0, 320, 0, 200, 320, 0, 320, 0, 320
+_sprite2 dw 0, 0A000h, 0, 0, 0, offset lineoffsets
+    dw 0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, PLATFORM_SCREEN_HEIGHT_PIXELS
+    dw PLATFORM_SCREEN_WIDTH_PIXELS, 0, PLATFORM_SCREEN_WIDTH_PIXELS
+    dw 0, PLATFORM_SCREEN_WIDTH_PIXELS
 ; /* PLATFORM(video): selects a video-memory segment. */
 ; Scanline offsets = 320*y, y=0..199; exact. Verified 200/200, no exceptions.
 lineoffsets label word
 row_number = 0
-    REPT 200
-    dw row_number * 320
+    REPT PLATFORM_SCREEN_HEIGHT_PIXELS
+    dw row_number * PLATFORM_SCREEN_WIDTH_PIXELS
 row_number = row_number + 1
     ENDM
 _scalecfxy endp

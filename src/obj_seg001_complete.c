@@ -33,9 +33,8 @@ struct RECTANGLE {
 };
 
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
-struct VECTOR {
-	I16S x, y, z;
-};
+
+#include "vec3.h"
 
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
 struct VECTORLONG {
@@ -60,10 +59,12 @@ struct PLANE {
 };
 
 
+/* Local math imports preserve communal LINK ordering; communal order is load-bearing. */
 I16S intsin(U16S  s);
 I16S intcos(U16S  s);
 
 I16 intatan(I16 z, I16 y);
+/* Local signed radius view; the shared math API returns an unsigned word. */
 I16 inthypot(I16 z, I16 y);
 I16 int3dhypot(struct VECTOR* vec);
 

@@ -24827,6 +24827,11 @@
       "path": "include/stunts_types.h",
       "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
       "size": 1091
+    },
+    {
+      "path": "include/vec3.h",
+      "sha256": "cbd94805557c2937228598d52eec59dbf495dc79b41229fab6d15ef7158bbc3a",
+      "size": 172
     }
   ],
   "profile": "msc510-medium",

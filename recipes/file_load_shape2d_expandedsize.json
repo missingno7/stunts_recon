@@ -283,6 +283,16 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
+      "path": "include/memory.h",
+      "sha256": "45238612e723f29f120cea3a4dcbd73cd0e824ca61feb5db09b5d9a15485b4f0",
+      "size": 539
+    },
+    {
+      "path": "include/resource.h",
+      "sha256": "3fafa12cfa876195a622667b9e229ba996312da734411b2b352a6b16ca8ad3aa",
+      "size": 1903
+    },
+    {
       "path": "include/stunts_types.h",
       "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
       "size": 1091
