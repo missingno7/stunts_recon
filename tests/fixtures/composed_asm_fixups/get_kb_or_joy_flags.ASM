@@ -8,8 +8,8 @@ DSEG ends
 extrn get_joy_flags:far
 _TEXT segment word public 'CODE'
 assume cs:_TEXT
-public _get_kb_or_joy_flags
-_get_kb_or_joy_flags proc far
+public _joystate
+_joystate proc far
     xor     ax, ax
     xor     bx, bx
     mov     bl, kbscancodes
@@ -68,6 +68,6 @@ loc_305BE:
 locret_305C7:
     retf
 
-_get_kb_or_joy_flags endp
+_joystate endp
 _TEXT ends
 end

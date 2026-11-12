@@ -4,10 +4,9 @@
     "/I."
   ],
   "binding": {
-    "mode": "asm-external-far-call-self-base16-v1",
     "declarations": {
       "externals": [
-        "_timer_reg_callback"
+        "_addtimer"
       ],
       "groups": [],
       "publics": [
@@ -35,15 +34,16 @@
           "use_32bit_offset": false
         }
       ]
-    }
+    },
+    "mode": "asm-external-far-call-self-base16-v1"
   },
   "end": 93141,
   "evidence": {
-    "repository": "restunts",
     "commit": "5c38f258f482e7d28f1ccce73da8992dccbbee89",
-    "path": "src/restunts/asmorig/seg007.asm",
+    "line_end": 99,
     "line_start": 70,
-    "line_end": 99
+    "path": "src/restunts/asmorig/seg007.asm",
+    "repository": "restunts"
   },
   "expected_fixups": [
     {
@@ -74,7 +74,7 @@
       "offset": 32,
       "segment": "_TEXT",
       "self_relative": false,
-      "target": "_timer_reg_callback",
+      "target": "_addtimer",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -98,7 +98,7 @@
   "kind": "asm",
   "object_declarations": {
     "externals": [
-      "_timer_reg_callback"
+      "_addtimer"
     ],
     "groups": [],
     "publics": [
@@ -135,7 +135,7 @@
   "stable_id": "load_16bae",
   "start": 93102,
   "target": {
-    "size": 39,
-    "sha256": "f3cd98f56d9d2582e338b5d2d47f8c8ab4d192282677e8b6a18390791dc7cb2d"
+    "sha256": "f3cd98f56d9d2582e338b5d2d47f8c8ab4d192282677e8b6a18390791dc7cb2d",
+    "size": 39
   }
 }

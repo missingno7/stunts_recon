@@ -91,13 +91,15 @@ class PassEnvironment(unittest.TestCase):
         dosbox = PE.measure_dosbox('msc510-medium', probe)
         self.assertEqual({k: v['pass_paragraphs'] for k, v in player.items()}, pinned['runner'])
         self.assertEqual({k: v['pass_paragraphs'] for k, v in dosbox.items()}, pinned['independent_runner'])
-        # C2 (the pass whose output depends on the host strings) is identical;
-        # C1/C3 differ only by the copied environment block size.
-        self.assertEqual(player['C2']['pass_paragraphs'], dosbox['C2']['pass_paragraphs'])
-        self.assertEqual(player['C2']['psp'], dosbox['C2']['psp'])
+        # Explicit TMP=. grows DOSBox-X's environment by one paragraph.
+        # C2 now starts one paragraph later; C1/C3 retain their extra
+        # copied-environment sizes relative to C2.
+        self.assertEqual(player['C2']['pass_paragraphs'] - dosbox['C2']['pass_paragraphs'], 1)
+        self.assertEqual(dosbox['C2']['psp'] - player['C2']['psp'], 1)
         for name in ('C1', 'C3'):
             self.assertEqual(player[name]['arena_end'], dosbox[name]['arena_end'])
-            self.assertLessEqual(player[name]['pass_paragraphs'] - dosbox[name]['pass_paragraphs'], 4)
+            self.assertEqual(player[name]['pass_paragraphs'] - dosbox[name]['pass_paragraphs'],
+                             {'C1': 5, 'C3': 3}[name])
             self.assertEqual(dosbox[name]['psp'] - dosbox['C2']['psp'],
                              dosbox[name]['env_paragraphs'] - dosbox['C2']['env_paragraphs'])
 

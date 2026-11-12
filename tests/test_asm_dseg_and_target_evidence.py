@@ -38,12 +38,12 @@ _TEXT ends
 end
 """
 FAR_SOURCE = b""".8086
-extrn _copy_paras_reverse:far
+extrn _negblockmove:far
 _TEXT segment word public 'CODE'
 assume cs:_TEXT
 public _synthetic
 _synthetic proc far
- call _copy_paras_reverse
+ call _negblockmove
  retf
 _synthetic endp
 _TEXT ends
@@ -159,7 +159,7 @@ class Integ17Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             resolve_recipe_symbols(wrong,self.image,self.relocations)
 
-        alias='_prerender_shared_setup'
+        alias='_polycmn'
         alias_obj=copy.deepcopy(self.label_obj)
         alias_recipe=copy.deepcopy(self.label_recipe)
         alias_obj.externals=[alias if name=='_loc_3180A' else name

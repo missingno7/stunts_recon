@@ -12,13 +12,13 @@ _FRAME_CALLBACK_OBJECT = bytes.fromhex(
     'c70600000000b80000ba000052509a0000000083c404c606000000cb')
 _FRAME_CALLBACK_FIXUPS = [
     (24, 'offset16', 2, '_byte_442E4', 5),
-    (15, 'pointer32', 4, '_timer_reg_callback', 3),
+    (15, 'pointer32', 4, '_addtimer', 3),
     (10, 'base16', 2, '_gameint', 2),
     (7, 'loader-offset16', 2, '_gameint', 2),
     (2, 'offset16', 2, '_word_46468', 4),
 ]
 _FRAME_CALLBACK_EXTERNALS = [
-    '__acrtused', '_gameint', '_timer_reg_callback',
+    '__acrtused', '_gameint', '_addtimer',
     '_word_46468', '_byte_442E4', '_gameintinit',
 ]
 _FRAME_CALLBACK_SEGMENTS = [
@@ -33,7 +33,7 @@ _FRAME_CALLBACK_SEGMENTS = [
 _FRAME_CALLBACK_SYMBOLS = {
     '_gameint': {'kind': 'far-code', 'frame_load_address': 0x11b70,
                         'load_address': 0x12596},
-    '_timer_reg_callback': {'kind': 'far-code', 'frame_load_address': 0x1ea20,
+    '_addtimer': {'kind': 'far-code', 'frame_load_address': 0x1ea20,
                             'load_address': 0x202aa},
     '_word_46468': {'group': 'DGROUP', 'frame_load_address': 0x2b770,
                     'load_address': 0x36468, 'allowed_addends': [0, 1]},

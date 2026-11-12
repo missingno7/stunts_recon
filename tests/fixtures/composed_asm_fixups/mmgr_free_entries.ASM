@@ -20,15 +20,15 @@ extrn _resendptr1:word
 extrn _resendptr2:word
 extrn _resptr1:word
 extrn _resptr2:word
-extrn _fatal_error:far
-extrn _copy_paras_reverse:far
-extrn _mmgr_copy_paras:far
+extrn _abortmessage:far
+extrn _negblockmove:far
+extrn _posblockmove:far
 _TEXT segment word public 'CODE'
-public _mmgr_free
+public _freememory
 public _nopsub_31525
-public _mmgr_release
-public _mmgr_get_chunk_size
-_mmgr_free proc far
+public _purgememory
+public _modulesize
+_freememory proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -51,7 +51,7 @@ loc_31498:
     push    [bp+arg_2]
     mov     ax, offset _aMemoryManagerB
     push    ax
-    call    far ptr _fatal_error
+    call    far ptr _abortmessage
 loc_314A4:
     mov     [bp+arg_2], 0
     mov     [si+MEMCHUNK.resunk], 0
@@ -87,7 +87,7 @@ loc_314F9:
     mov     byte ptr [bx+di+MEMCHUNK.resname], al
     inc     bx
     loop    loc_314F9
-    call    far ptr _copy_paras_reverse
+    call    far ptr _negblockmove
     add     sp, 6
 loc_31508:
     cmp     si, _resptr2
@@ -104,7 +104,7 @@ loc_3151B:
     pop     si
     pop     bp
     retf
-_mmgr_free endp
+_freememory endp
 _nopsub_31525 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -184,7 +184,7 @@ loc_315CE:
     loop    loc_315CE
     sub     di, 0Ch
     sub     bx, 0Ch
-    call    far ptr _mmgr_copy_paras
+    call    far ptr _posblockmove
     add     sp, 6
 loc_315E4:
     add     di, 12h
@@ -211,7 +211,7 @@ loc_31613:
     mov     [bx+di], al
     inc     bx
     loop    loc_31613
-    call    far ptr _copy_paras_reverse
+    call    far ptr _negblockmove
     add     sp, 6
 loc_31622:
     cmp     si, _resptr2
@@ -230,7 +230,7 @@ loc_31635:
     pop     bp
     retf
 _nopsub_31525 endp
-_mmgr_release proc far
+_purgememory proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_2 = word ptr 8
@@ -264,8 +264,8 @@ loc_31678:
     pop     si
     pop     bp
     retf
-_mmgr_release endp
-_mmgr_get_chunk_size proc far
+_purgememory endp
+_modulesize proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_2 = word ptr 8
@@ -291,6 +291,6 @@ loc_3169B:
     pop     si
     pop     bp
     retf
-_mmgr_get_chunk_size endp
+_modulesize endp
 _TEXT ends
 end

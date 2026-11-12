@@ -13,12 +13,12 @@ extrn aLocatesound4_4sSoundNotF:byte
 dseg ends
 DGROUP group _DATA, CONST, _BSS
 assume cs:_TEXT, ds:dseg
-extrn _fatal_error:far
+extrn _abortmessage:far
 _TEXT segment word public 'CODE'
-public _locate_shape_nofatal
+public _locateshapez
 public _locate_shape_fatal
 public _locate_sound_fatal
-_locate_shape_nofatal proc far
+_locateshapez proc far
      s = byte ptr 0
      r = byte ptr 2
 
@@ -30,7 +30,7 @@ _locate_shape_nofatal proc far
     xor     dx, dx
     jmp     short _alt_locate_resource
     db 144
-_locate_shape_nofatal endp
+_locateshapez endp
 _locate_shape_fatal proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -112,7 +112,7 @@ loc_3100F:
     mov     ds, ax
     push    [bp+arg_4]
     push    dx
-    call    far ptr _fatal_error
+    call    far ptr _abortmessage
     int     20h             ; DOS - PROGRAM TERMINATION
 loc_3101F:
     xor     ax, ax

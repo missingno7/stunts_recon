@@ -1,56 +1,9 @@
 {
-  "id": "locate_entries",
-  "kind": "asm",
-  "source": "tests/fixtures/composed_asm_fixups/locate_entries.ASM",
-  "profile": "masm510-game",
-  "include_closure": [],
   "assembler_flags": [
     "/Mx",
     "/I."
   ],
-  "start": 135058,
   "end": 135290,
-  "target": {
-    "size": 232,
-    "sha256": "555949dcf6adb9243d33f1000c35a572a443fd4ecd8464b23c420a2028eb2560"
-  },
-  "members": [
-    {
-      "name": "locate_shape_nofatal",
-      "stable_id": "load_20f92",
-      "start": 135058,
-      "end": 135069,
-      "public": "_locate_shape_nofatal",
-      "target": {
-        "size": 11,
-        "sha256": "2ace478ba340ce8bdd0b708ac3db7f0650def671978bd121fd00bb8f8567c6dc"
-      }
-    },
-    {
-      "name": "locate_shape_fatal",
-      "stable_id": "load_20f9d",
-      "start": 135069,
-      "end": 135081,
-      "public": "_locate_shape_fatal",
-      "target": {
-        "size": 12,
-        "sha256": "84326676de46d67a05d869aa68934cf58d50e80478cc5bd6b5eea4713caba4a1"
-      }
-    },
-    {
-      "name": "locate_sound_fatal",
-      "stable_id": "load_20fa9",
-      "start": 135081,
-      "end": 135290,
-      "public": "_locate_sound_fatal",
-      "target": {
-        "size": 209,
-        "sha256": "d6be8c5f43d953f1ffb892c3bcc6b78d8cb4fbab74b56cebf339948c554b2292"
-      }
-    }
-  ],
-  "object_segment": "_TEXT",
-  "public": "_locate_shape_nofatal",
   "expected_fixups": [
     {
       "displacement": 0,
@@ -123,7 +76,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_fatal_error",
+      "frame": "_abortmessage",
       "frame_index": 2,
       "frame_kind": "external",
       "frame_method": 2,
@@ -131,7 +84,7 @@
       "offset": 135,
       "segment": "_TEXT",
       "self_relative": false,
-      "target": "_fatal_error",
+      "target": "_abortmessage",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -140,22 +93,101 @@
   ],
   "expected_relocations": [
     {
-      "segment": 8192,
+      "load_offset": 135098,
       "offset": 4026,
-      "load_offset": 135098
+      "segment": 8192
     },
     {
-      "segment": 8192,
+      "load_offset": 135184,
       "offset": 4112,
-      "load_offset": 135184
+      "segment": 8192
     },
     {
-      "segment": 8192,
+      "load_offset": 135195,
       "offset": 4123,
-      "load_offset": 135195
+      "segment": 8192
+    }
+  ],
+  "external_binding": {
+    "mode": "external-far-call-dgroup-offset16-v1"
+  },
+  "id": "locate_entries",
+  "include_closure": [],
+  "kind": "asm",
+  "members": [
+    {
+      "end": 135069,
+      "name": "locate_shape_nofatal",
+      "public": "_locateshapez",
+      "stable_id": "load_20f92",
+      "start": 135058,
+      "target": {
+        "sha256": "2ace478ba340ce8bdd0b708ac3db7f0650def671978bd121fd00bb8f8567c6dc",
+        "size": 11
+      }
+    },
+    {
+      "end": 135081,
+      "name": "locate_shape_fatal",
+      "public": "_locate_shape_fatal",
+      "stable_id": "load_20f9d",
+      "start": 135069,
+      "target": {
+        "sha256": "84326676de46d67a05d869aa68934cf58d50e80478cc5bd6b5eea4713caba4a1",
+        "size": 12
+      }
+    },
+    {
+      "end": 135290,
+      "name": "locate_sound_fatal",
+      "public": "_locate_sound_fatal",
+      "stable_id": "load_20fa9",
+      "start": 135081,
+      "target": {
+        "sha256": "d6be8c5f43d953f1ffb892c3bcc6b78d8cb4fbab74b56cebf339948c554b2292",
+        "size": 209
+      }
     }
   ],
   "object_declarations": {
+    "externals": [
+      "aLocateshape4_4sShapeNotF",
+      "_abortmessage",
+      "aLocatesound4_4sSoundNotF"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          2,
+          3,
+          4
+        ],
+        "segments": [
+          "_DATA",
+          "CONST",
+          "_BSS"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_locate_shape_fatal",
+        "offset": 11,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_locate_sound_fatal",
+        "offset": 23,
+        "segment": "_TEXT"
+      },
+      {
+        "name": "_locateshapez",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
     "segments": [
       {
         "acbp": 72,
@@ -237,49 +269,17 @@
         "overlay_index": 1,
         "use_32bit_offset": false
       }
-    ],
-    "groups": [
-      {
-        "index": 1,
-        "name": "DGROUP",
-        "segment_indices": [
-          2,
-          3,
-          4
-        ],
-        "segments": [
-          "_DATA",
-          "CONST",
-          "_BSS"
-        ]
-      }
-    ],
-    "publics": [
-      {
-        "name": "_locate_shape_fatal",
-        "offset": 11,
-        "segment": "_TEXT"
-      },
-      {
-        "name": "_locate_sound_fatal",
-        "offset": 23,
-        "segment": "_TEXT"
-      },
-      {
-        "name": "_locate_shape_nofatal",
-        "offset": 0,
-        "segment": "_TEXT"
-      }
-    ],
-    "externals": [
-      "aLocateshape4_4sShapeNotF",
-      "_fatal_error",
-      "aLocatesound4_4sSoundNotF"
     ]
   },
-  "secondary_dgroup_segments": {},
+  "object_segment": "_TEXT",
   "original_frame_load_address": 125472,
-  "external_binding": {
-    "mode": "external-far-call-dgroup-offset16-v1"
+  "profile": "masm510-game",
+  "public": "_locateshapez",
+  "secondary_dgroup_segments": {},
+  "source": "tests/fixtures/composed_asm_fixups/locate_entries.ASM",
+  "start": 135058,
+  "target": {
+    "sha256": "555949dcf6adb9243d33f1000c35a572a443fd4ecd8464b23c420a2028eb2560",
+    "size": 232
   }
 }

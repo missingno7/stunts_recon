@@ -15,13 +15,13 @@ from common import read_json
 KB_INSIDE = b""".8086
 S018_TEXT segment word public 'CODE'
 assume cs:S018_TEXT
-extrn _kb_checking:far
+extrn _nextkey:far
 public _kb_shift_checking1
 _kb_shift_checking1 proc far
  mov ax,40h
  mov es,ax
  or byte ptr es:[17h],20h
- call far ptr _kb_checking
+ call far ptr _nextkey
  ret
 _kb_shift_checking1 endp
 S018_TEXT ends
@@ -51,14 +51,14 @@ class LinkFaithfulAsmTests(unittest.TestCase):
 
     def test_source_lint_finds_in_segment_far_extern(self):
         from link_frames import in_segment_far_externs, lint_source
-        self.assertEqual([x[2] for x in in_segment_far_externs(KB_INSIDE.decode())], ['_kb_checking'])
+        self.assertEqual([x[2] for x in in_segment_far_externs(KB_INSIDE.decode())], ['_nextkey'])
         self.assertEqual(in_segment_far_externs(_outside(KB_INSIDE).decode()), [])
-        self.assertEqual([x[2] for x in lint_source(KB_INSIDE.decode(), self.recipe)], ['_kb_checking'])
+        self.assertEqual([x[2] for x in lint_source(KB_INSIDE.decode(), self.recipe)], ['_nextkey'])
 
     def test_cross_frame_f0_far_call_is_refused(self):
         from link_frames import check_asm_object
         self.assertEqual(self.inside.linker_fixups[0]['frame_method'], 0)
-        with self.assertRaisesRegex(ValueError, 'declare `extrn _kb_checking:far` outside'):
+        with self.assertRaisesRegex(ValueError, 'declare `extrn _nextkey:far` outside'):
             check_asm_object(self.inside, self.recipe)
 
     def test_external_frame_far_call_is_link_faithful(self):

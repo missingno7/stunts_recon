@@ -3,6 +3,69 @@
     "/Mx",
     "/I."
   ],
+  "binding": {
+    "declarations": {
+      "externals": [
+        "kbinput",
+        "get_joy_flags",
+        "kbscancodes"
+      ],
+      "groups": [
+        {
+          "index": 1,
+          "name": "DGROUP",
+          "segment_indices": [
+            1
+          ],
+          "segments": [
+            "DSEG"
+          ]
+        }
+      ],
+      "publics": [
+        {
+          "name": "_joystate",
+          "offset": 0,
+          "segment": "_TEXT"
+        }
+      ],
+      "segments": [
+        {
+          "acbp": 40,
+          "alignment": "byte",
+          "alignment_code": 1,
+          "big": false,
+          "class": "STUNTSD",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 1,
+          "length": 0,
+          "name": "DSEG",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        },
+        {
+          "acbp": 72,
+          "alignment": "word",
+          "alignment_code": 2,
+          "big": false,
+          "class": "CODE",
+          "combine": "public",
+          "combine_code": 2,
+          "frame": null,
+          "index": 2,
+          "length": 144,
+          "name": "_TEXT",
+          "offset": null,
+          "overlay_index": 1,
+          "use_32bit_offset": false
+        }
+      ]
+    },
+    "mode": "external-far-call-dgroup-offset16-v1"
+  },
   "end": 132552,
   "expected_fixups": [
     {
@@ -365,15 +428,39 @@
   ],
   "expected_relocations": [
     {
-      "segment": 8192,
+      "load_offset": 132549,
       "offset": 1477,
-      "load_offset": 132549
+      "segment": 8192
     }
   ],
   "id": "get_kb_or_joy_flags",
   "include_closure": [],
   "kind": "asm",
   "object_declarations": {
+    "externals": [
+      "kbinput",
+      "get_joy_flags",
+      "kbscancodes"
+    ],
+    "groups": [
+      {
+        "index": 1,
+        "name": "DGROUP",
+        "segment_indices": [
+          1
+        ],
+        "segments": [
+          "DSEG"
+        ]
+      }
+    ],
+    "publics": [
+      {
+        "name": "_joystate",
+        "offset": 0,
+        "segment": "_TEXT"
+      }
+    ],
     "segments": [
       {
         "acbp": 40,
@@ -407,104 +494,17 @@
         "overlay_index": 1,
         "use_32bit_offset": false
       }
-    ],
-    "groups": [
-      {
-        "index": 1,
-        "name": "DGROUP",
-        "segment_indices": [
-          1
-        ],
-        "segments": [
-          "DSEG"
-        ]
-      }
-    ],
-    "publics": [
-      {
-        "name": "_get_kb_or_joy_flags",
-        "offset": 0,
-        "segment": "_TEXT"
-      }
-    ],
-    "externals": [
-      "kbinput",
-      "get_joy_flags",
-      "kbscancodes"
     ]
   },
   "object_segment": "_TEXT",
+  "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "public": "_get_kb_or_joy_flags",
+  "public": "_joystate",
   "source": "tests/fixtures/composed_asm_fixups/get_kb_or_joy_flags.ASM",
   "stable_id": "load_20538",
   "start": 132408,
   "target": {
     "sha256": "26ac770ed7803ed39383bdafeff4b7198f759098417a069382d85b4e377fc778",
     "size": 144
-  },
-  "binding": {
-    "mode": "external-far-call-dgroup-offset16-v1",
-    "declarations": {
-      "segments": [
-        {
-          "acbp": 40,
-          "alignment": "byte",
-          "alignment_code": 1,
-          "big": false,
-          "class": "STUNTSD",
-          "combine": "public",
-          "combine_code": 2,
-          "frame": null,
-          "index": 1,
-          "length": 0,
-          "name": "DSEG",
-          "offset": null,
-          "overlay_index": 1,
-          "use_32bit_offset": false
-        },
-        {
-          "acbp": 72,
-          "alignment": "word",
-          "alignment_code": 2,
-          "big": false,
-          "class": "CODE",
-          "combine": "public",
-          "combine_code": 2,
-          "frame": null,
-          "index": 2,
-          "length": 144,
-          "name": "_TEXT",
-          "offset": null,
-          "overlay_index": 1,
-          "use_32bit_offset": false
-        }
-      ],
-      "groups": [
-        {
-          "index": 1,
-          "name": "DGROUP",
-          "segment_indices": [
-            1
-          ],
-          "segments": [
-            "DSEG"
-          ]
-        }
-      ],
-      "publics": [
-        {
-          "name": "_get_kb_or_joy_flags",
-          "offset": 0,
-          "segment": "_TEXT"
-        }
-      ],
-      "externals": [
-        "kbinput",
-        "get_joy_flags",
-        "kbscancodes"
-      ]
-    }
-  },
-  "original_frame_load_address": 125472
+  }
 }

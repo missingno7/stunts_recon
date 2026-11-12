@@ -112,7 +112,9 @@ class WholeModules(unittest.TestCase):
                  'kb_get_char','get_kb_or_joy_flags','nopsub_305C8','get_joy_flags','sub_307B4',
                  'sub_307D2','sub_307E3','nopsub_307FA']
         rows = {f['name']:f for f in self.inventory['functions'] if f['name'] in names}
-        members = [{'name':n, 'public':'_'+n, 'start':rows[n]['start'],
+        publics = {'kb_parse_key': '_interpretkey', 'kb_reg_callback': '_interpretsub',
+                   'kb_get_char': '_normkeyi', 'get_kb_or_joy_flags': '_joystate'}
+        members = [{'name':n, 'public':publics.get(n, '_'+n), 'start':rows[n]['start'],
                     'stable_id':rows[n].get('stable_id')} for n in names]
         module_proof = {'kind':'asm-module-extent-v1',
                         'start_boundary':{'kind':'zero-fill-after-return'},
@@ -129,7 +131,7 @@ class WholeModules(unittest.TestCase):
     def test_module_start_needs_zero_fill_or_frame_change(self):
         recipe = self.module_132056()
         recipe['start'] = recipe['members'][0]['start'] = 132100
-        recipe['members'][0].update(name='kb_parse_key', public='_kb_parse_key')
+        recipe['members'][0].update(name='kb_parse_key', public='_interpretkey')
         recipe['members'] = recipe['members'][:1] + recipe['members'][2:]
         with self.assertRaisesRegex(ValueError, 'zero fill'):
             checked_module(recipe, self.image)
@@ -203,8 +205,8 @@ class MasmTruncation(unittest.TestCase):
         self.assertIn('_nopsub_kb_get_readchar_callbac',
                       expected_publics('nopsub_kb_get_readchar_callback', 'asm'))
         self.assertEqual(expected_publics('nopsub_kb_get_readchar_callback', 'c'),
-                         {'_nopsub_kb_get_readchar_callback', '_kb_get_readchar_callback'})
-        self.assertEqual(expected_publics('kb_check', 'asm'), {'_kb_check'})
+                         {'_nopsub_kb_get_readchar_callback', '_currentkeysub'})
+        self.assertEqual(expected_publics('kb_check', 'asm'), {'_kb_check', '_purgekey'})
 
     def test_truncated_code_alias_needs_review(self):
         image, relocations = Oracle.load()

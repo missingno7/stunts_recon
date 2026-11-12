@@ -59,7 +59,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_fatal_error",
+      "frame": "_abortmessage",
       "frame_index": 1,
       "frame_kind": "external",
       "frame_method": 2,
@@ -67,7 +67,7 @@
       "offset": 36,
       "segment": "_TEXT",
       "self_relative": false,
-      "target": "_fatal_error",
+      "target": "_abortmessage",
       "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
@@ -161,7 +161,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_copy_paras_reverse",
+      "frame": "_negblockmove",
       "frame_index": 2,
       "frame_kind": "external",
       "frame_method": 2,
@@ -169,7 +169,7 @@
       "offset": 133,
       "segment": "_TEXT",
       "self_relative": false,
-      "target": "_copy_paras_reverse",
+      "target": "_negblockmove",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -416,7 +416,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_mmgr_copy_paras",
+      "frame": "_posblockmove",
       "frame_index": 6,
       "frame_kind": "external",
       "frame_method": 2,
@@ -424,7 +424,7 @@
       "offset": 353,
       "segment": "_TEXT",
       "self_relative": false,
-      "target": "_mmgr_copy_paras",
+      "target": "_posblockmove",
       "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
@@ -450,7 +450,7 @@
     {
       "displacement": 0,
       "encoded_addend": "00000000",
-      "frame": "_copy_paras_reverse",
+      "frame": "_negblockmove",
       "frame_index": 2,
       "frame_kind": "external",
       "frame_method": 2,
@@ -458,7 +458,7 @@
       "offset": 415,
       "segment": "_TEXT",
       "self_relative": false,
-      "target": "_copy_paras_reverse",
+      "target": "_negblockmove",
       "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
@@ -667,7 +667,7 @@
     {
       "end": 136485,
       "name": "mmgr_free",
-      "public": "_mmgr_free",
+      "public": "_freememory",
       "stable_id": "load_2147c",
       "start": 136316,
       "target": {
@@ -678,7 +678,7 @@
     {
       "end": 136769,
       "name": "nopsub_31525",
-      "public": "_mmgr_move_chunk_to_high",
+      "public": "_freetotop",
       "stable_id": "load_21525",
       "start": 136485,
       "target": {
@@ -689,7 +689,7 @@
     {
       "end": 136828,
       "name": "mmgr_release",
-      "public": "_mmgr_release",
+      "public": "_purgememory",
       "stable_id": "load_21641",
       "start": 136769,
       "target": {
@@ -700,7 +700,7 @@
     {
       "end": 136866,
       "name": "mmgr_get_chunk_size",
-      "public": "_mmgr_get_chunk_size",
+      "public": "_modulesize",
       "stable_id": "load_2167c",
       "start": 136828,
       "target": {
@@ -711,12 +711,12 @@
   ],
   "object_declarations": {
     "externals": [
-      "_fatal_error",
-      "_copy_paras_reverse",
+      "_abortmessage",
+      "_negblockmove",
       "_resptr1",
       "_resptr2",
       "_blknotfound",
-      "_mmgr_copy_paras",
+      "_posblockmove",
       "_resendptr1",
       "_resendptr2"
     ],
@@ -738,22 +738,22 @@
     ],
     "publics": [
       {
-        "name": "_mmgr_move_chunk_to_high",
+        "name": "_freetotop",
         "offset": 169,
         "segment": "_TEXT"
       },
       {
-        "name": "_mmgr_release",
+        "name": "_purgememory",
         "offset": 453,
         "segment": "_TEXT"
       },
       {
-        "name": "_mmgr_get_chunk_size",
+        "name": "_modulesize",
         "offset": 512,
         "segment": "_TEXT"
       },
       {
-        "name": "_mmgr_free",
+        "name": "_freememory",
         "offset": 0,
         "segment": "_TEXT"
       }
@@ -828,7 +828,7 @@
   "object_segment": "_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "public": "_mmgr_free",
+  "public": "_freememory",
   "secondary_dgroup_segments": {},
   "source": "tests/fixtures/composed_asm_fixups/mmgr_free_entries.ASM",
   "start": 136316,

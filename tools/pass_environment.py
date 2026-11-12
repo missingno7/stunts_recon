@@ -9,15 +9,17 @@ symbol table (FACT-tu-extern-count-limits-cse).  Near that budget, code
 generation changes: whole seg000 keeps end_hiscore's dead `pop si` only
 with a pass directory string of at least six characters.  Free conventional
 memory above the passes' needs had no observable effect (see the integ27
-report), but it is pinned as well so that both hosts provide the same pass
-memory.
+report), but it is pinned separately for each host. With TEMP=. and TMP=.
+on both hosts, DOSBox-X has one fewer paragraph per pass than before TMP
+was set explicitly. MSC 5.10 measures C1/C2/C3 at 40154/40158/40156
+paragraphs there; MS-DOS Player remains at 40159 for all three passes.
 
 The profile therefore pins:
   * `pass_environment.dos_directory`: the DOS-visible pass directory, which
     MS-DOS Player derives from the host path (upper-cased) and DOSBox-X
     reproduces with a hash-verified read-only mirror mounted at the same
     drive and path;
-  * `pass_environment.temp`: TEMP (`.`, giving `-il .\\NNNNNN`);
+  * `pass_environment.temp`: TEMP and TMP (`.`, giving `-il .\\NNNNNN`);
   * `runner.pass_memory_paragraphs` / `independent_runner.pass_memory_paragraphs`:
     paragraphs from each pass's PSP to the end of the free arena, measured by
     `tools/probes/memprobe.c` substituted for one pass with CL's `-Bn` option.

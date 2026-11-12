@@ -1,7 +1,7 @@
 .8086
 _TEXT segment word public 'CODE'
 assume cs:_TEXT
-extrn _timer_reg_callback:far
+extrn _addtimer:far
 public _audio_add_driver_timer
 _audio_add_driver_timer proc far
     mov bx,6364h
@@ -17,7 +17,7 @@ check_slot:
     mov dx,seg _TEXT
     push dx
     push ax
-    call far ptr _timer_reg_callback
+    call far ptr _addtimer
     pop bx
     pop bx
     retf

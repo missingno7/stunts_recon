@@ -502,7 +502,7 @@ def resolve_recipe_symbols(recipe, image, relocations):
         return resolve_code_symbols(names,image,relocations)
     if mode == 'external-far-call-code-pointer-v1':
         require(recipe['id']=='remove_frame_callback' and
-                names=={'_timedwait','_timer_remove_callback','_gameint'},
+                names=={'_timedwait','_deltimer','_gameint'},
                 'Unreviewed code-pointer-only candidate')
         return {**resolve_code_symbols(names-{'_gameint'},image,relocations),
                 '_gameint':resolve_callback_pointer(image,relocations)}
@@ -538,11 +538,11 @@ def resolve_recipe_symbols(recipe, image, relocations):
         return {**resolve_code_symbols(code,image,relocations),
                 **resolve_cs_symbols(data,image,relocations)}
     if mode=='external-frame-callback-v1':
-        require(names == {'_byte_442E4', '_word_46468', '_timer_reg_callback',
+        require(names == {'_byte_442E4', '_word_46468', '_addtimer',
                           '_gameint'}, 'Callback binding external set changed')
         from data_symbols import resolve_symbols
         return {**resolve_symbols({'_byte_442E4', '_word_46468'}, image, relocations),
-                **resolve_code_symbols({'_timer_reg_callback'}, image, relocations),
+                **resolve_code_symbols({'_addtimer'}, image, relocations),
                 '_gameint': resolve_callback_pointer(image, relocations)}
     from data_symbols import resolve_symbols, check_folded_recipe
     result = resolve_symbols(names,image,relocations)

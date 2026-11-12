@@ -86,14 +86,14 @@ class EvidenceTests(unittest.TestCase):
 
 
     def test_code_aliases_require_independent_relocated_anchors(self):
-        symbol = resolve_code_symbols({'_kb_call_readchar_callback'},
+        symbol = resolve_code_symbols({'_testkey'},
                                       self.image, self.relocations)
-        self.assertEqual(symbol['_kb_call_readchar_callback'],
+        self.assertEqual(symbol['_testkey'],
                          {'kind': 'far-code', 'frame_load_address': 125472,
                           'load_address': 133660})
         without_second = [row for row in self.relocations if row['load_offset'] != 133754]
         with self.assertRaises(ValueError):
-            resolve_code_symbols({'_kb_call_readchar_callback'}, self.image, without_second)
+            resolve_code_symbols({'_testkey'}, self.image, without_second)
 
     def test_reviewed_code_aliases_resolve_from_current_evidence(self):
         layout = read_json(ROOT / 'layout/code-symbols.json')

@@ -166,12 +166,12 @@ class AsmContributionTests(unittest.TestCase):
             bind_contribution(obj,{**recipe,'original_frame_load_address':0},symbols)
 
     def test_masm_cs_table_binding_and_extent(self):
-        source = b'''_TEXT segment word public 'CODE'\nassume cs:_TEXT\nextrn sprite1:byte\npublic _sprite_copy_both_to_arg\n_sprite_copy_both_to_arg proc far\n lea si,sprite1\n ret\n_sprite_copy_both_to_arg endp\n_TEXT ends\nend\n'''
+        source = b'''_TEXT segment word public 'CODE'\nassume cs:_TEXT\nextrn sprite1:byte\npublic _savewindow\n_savewindow proc far\n lea si,sprite1\n ret\n_savewindow endp\n_TEXT ends\nend\n'''
         obj, _ = assemble_source(source,'masm510-game')
         declarations={'segments':obj.segment_defs,'groups':obj.groups,
                       'publics':obj.publics,'externals':obj.externals}
         recipe={'kind':'asm','start':140814,'end':140814+obj.segment_length('_TEXT'),
-                'object_segment':'_TEXT','public':'_sprite_copy_both_to_arg',
+                'object_segment':'_TEXT','public':'_savewindow',
                 'original_frame_load_address':125472,
                 'expected_fixups':obj.linker_fixups,'expected_relocations':[],
                 'binding':{'mode':'asm-external-cs-offset16-v1','declarations':declarations}}
@@ -182,7 +182,7 @@ class AsmContributionTests(unittest.TestCase):
         bad=copy.deepcopy(symbols)
         bad['sprite1']['load_address']=bad['sprite1']['island_end']
         with self.assertRaises(ValueError):
-            bind_asm_cs_data(obj,'_TEXT','_sprite_copy_both_to_arg',len(payload),
+            bind_asm_cs_data(obj,'_TEXT','_savewindow',len(payload),
                              obj.linker_fixups,declarations,bad,125472,[])
 
     def test_asm_owned_dgroup_data_and_manifest_parent(self):

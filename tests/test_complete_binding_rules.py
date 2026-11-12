@@ -24,7 +24,7 @@ class IntegrationRules(unittest.TestCase):
         cls.relocations = cls.oracle[2]['unpacked_mz']['relocations']
 
     def test_single_anchor_alias_and_rejections(self):
-        for name in ('_file_find_next', '_file_load_shape2d_nofatal_thunk',
+        for name in ('_findnext', '_file_load_shape2d_nofatal_thunk',
                      '_unlockedmemory'):
             self.assertEqual(resolve_code_symbols([name], self.image, self.relocations)[name]['kind'],
                              'far-code')
@@ -34,7 +34,7 @@ class IntegrationRules(unittest.TestCase):
             def altered(path):
                 data = original(path)
                 if str(path).endswith('code-symbols.json'):
-                    entry = data['symbols']['_file_find_next']
+                    entry = data['symbols']['_findnext']
                     if mutation == 'hash':
                         entry['mapped_target']['sha256'] = '0'*64
                     elif mutation == 'call':
@@ -44,9 +44,9 @@ class IntegrationRules(unittest.TestCase):
                 return data
             with self.subTest(mutation=mutation), patch('code_symbols.read_json', side_effect=altered):
                 with self.assertRaises(ValueError):
-                    resolve_code_symbols(['_file_find_next'], self.image, self.relocations)
+                    resolve_code_symbols(['_findnext'], self.image, self.relocations)
         with self.assertRaises(ValueError):
-            resolve_code_symbols(['_file_find_next'], self.image, [])
+            resolve_code_symbols(['_findnext'], self.image, [])
 
     def test_two_far_calls_mixed_with_data_and_order(self):
         source = (b'extern unsigned char flags[]; long product(long a,long b,long c,long d) '

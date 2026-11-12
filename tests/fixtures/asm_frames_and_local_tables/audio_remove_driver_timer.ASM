@@ -2,7 +2,7 @@
 _TEXT segment word public 'CODE'
 assume cs:_TEXT
 extrn _sub_374DE:far
-extrn _timer_remove_callback:far
+extrn _deltimer:far
 public _audio_remove_driver_timer
 _audio_remove_driver_timer proc far
     push si
@@ -24,7 +24,7 @@ check_slot:
     mov dx,seg _TEXT
     push dx
     push ax
-    call far ptr _timer_remove_callback
+    call far ptr _deltimer
     pop bx
     pop bx
     pop si
