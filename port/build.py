@@ -109,10 +109,10 @@ def adapt_host_idle_waits(source: str, text: str) -> str:
         ])
     elif source == "src/obj_seg032_group.c":
         changes.extend([
-            ("      while ((inputKey = kb_call_readchar_callback()) == 0) {",
+            ("      while ((inputKey = testkey()) == 0) {",
              "      for (;;) {\n"
              "        uint32_t port_activity = port_guest_activity_snapshot();\n"
-             "        inputKey = kb_call_readchar_callback();\n"
+             "        inputKey = testkey();\n"
              "        if (inputKey != 0) break;"),
             ("        readCallback();\n      }",
              "        readCallback();\n"
@@ -237,24 +237,24 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
     declarations.HOST_OVERRIDES.update({
         "norm_zone": "extern I16 norm_zone(struct VECTOR *);",
         "file_load_shape2d_fatal_thunk": "extern void *file_load_shape2d_fatal_thunk(char *);",
-        "mmgr_get_chunk_size": "extern uint16_t mmgr_get_chunk_size(void *);",
-        "locate_shape_nofatal": "extern void *locate_shape_nofatal(void *, const char *);",
+        "modulesize": "extern uint16_t modulesize(void *);",
+        "locateshapez": "extern void *locateshapez(void *, const char *);",
         "fluffyload": "extern void *fluffyload(char *);",
         "file_load_resource": "extern void *file_load_resource(I16, const char *);",
-        "file_find": "extern char *file_find(const char *);",
+        "findfirst": "extern char *findfirst(const char *);",
         "locate_shape_alt": "extern char *locate_shape_alt(char *, char *);",
-        "file_load_binary_nofatal": "extern void *file_load_binary_nofatal(const char *);",
-        "mmgr_compact_chunk": "extern void *mmgr_compact_chunk(void *);",
-        "parse_shape2d_helper": "extern int32_t parse_shape2d_helper(uint8_t *);",
-        "file_read_nofatal": "extern void *file_read_nofatal(const char *, void *);",
-        "file_read_fatal": "extern void *file_read_fatal(const char *, void *);",
+        "loadfilez": "extern void *loadfilez(const char *);",
+        "packmemory": "extern void *packmemory(void *);",
+        "segtoadr": "extern int32_t segtoadr(uint8_t *);",
+        "loadfileatz": "extern void *loadfileatz(const char *, void *);",
+        "loadfileat": "extern void *loadfileat(const char *, void *);",
         "read_file_with_retry": "extern void *read_file_with_retry(I16, char *, void *);",
         "mcgatranslation": "extern void mcgatranslation(const uint8_t *);",
         "mcgatransrange": "extern void mcgatransrange(uint16_t, uint16_t, const uint8_t *);",
         "file_combine_and_find": "extern char *file_combine_and_find(char *, char *, char *);",
         "textpixels": "extern I16 textpixels(const char *);",
-        "shape2d_or_rle": "extern void shape2d_or_rle(const struct SHAPE2D *);",
-        "shape2d_render_bmp_as_mask": "extern void shape2d_render_bmp_as_mask(const struct SHAPE2D *);",
+        "orpackf": "extern void orpackf(const struct SHAPE2D *);",
+        "andpackf": "extern void andpackf(const struct SHAPE2D *);",
         "audio_set_chunk_callback": "extern void audio_set_chunk_callback(U16, void (*)(I16));",
         "do_fileselect_dialog": "extern I16 do_fileselect_dialog(char *, char *, char *, char *);",
     })
@@ -322,7 +322,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                 "        if (port_input_test_auto_protection_enabled())\n"
                 "            port_input_type_test_text(resbuftext);\n"
                 "        call_read_line(userInput, textLength, points[0].x, points[0].y, 30000);")
-            original = "void far security_check(I16 selection)\n{"
+            original = "void far getprotection(I16 selection)\n{"
             if transformed.count(original) != 1:
                 raise RuntimeError("Could not locate the manual-word config boundary")
             transformed = transformed.replace(original, original +
@@ -587,8 +587,8 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             if transformed.count(old) != 1:
                 raise RuntimeError("Could not locate split-word file read ABI")
             transformed = transformed.replace(old, "read_file_with_retry(I16 type, char *first, void *second)")
-            transformed = transformed.replace("file_read_nofatal(first, second, third)",
-                                              "file_read_nofatal(first, second)")
+            transformed = transformed.replace("loadfileatz(first, second, third)",
+                                              "loadfileatz(first, second)")
         transformed = transformed.replace("((int16_t (*)())call_read_line)", "port_call_read_line")
         if source == "src/obj_seg003.c":
             transformed = adapt_scene_table_indices(transformed)

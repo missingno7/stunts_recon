@@ -5746,8 +5746,8 @@
     },
     {
       "owner_id": "file_write_entries",
-      "routine": "file_write_nofatal",
-      "public_symbol": "_file_write_nofatal",
+      "routine": "savefile",
+      "public_symbol": "_savefile",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -5830,8 +5830,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "add_exit_handler",
-      "public_symbol": "_add_exit_handler",
+      "routine": "addexit",
+      "public_symbol": "_addexit",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -5886,8 +5886,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "call_exitlist2",
-      "public_symbol": "_call_exitlist2",
+      "routine": "dsiexit",
+      "public_symbol": "_dsiexit",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "NEAR",
@@ -5914,8 +5914,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "criterr_exithandler",
-      "public_symbol": "_criterr_exithandler",
+      "routine": "resetcriterr",
+      "public_symbol": "_resetcriterr",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -5970,8 +5970,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "fatal_error",
-      "public_symbol": "_fatal_error",
+      "routine": "abortmessage",
+      "public_symbol": "_abortmessage",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "NEAR",
@@ -5998,8 +5998,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "file_decomp_paras",
-      "public_symbol": "_file_decomp_paras",
+      "routine": "unpacksizea",
+      "public_symbol": "_unpacksizea",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6026,8 +6026,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "file_decomp_paras_fatal",
-      "public_symbol": "_file_decomp_paras_fatal",
+      "routine": "unpacksize",
+      "public_symbol": "_unpacksize",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "NEAR",
@@ -6054,8 +6054,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "file_decomp_paras_nofatal",
-      "public_symbol": "_file_decomp_paras_nofatal",
+      "routine": "unpacksizez",
+      "public_symbol": "_unpacksizez",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6082,8 +6082,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "file_find",
-      "public_symbol": "_file_find",
+      "routine": "findfirst",
+      "public_symbol": "_findfirst",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6110,8 +6110,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "file_find_next",
-      "public_symbol": "_file_find_next",
+      "routine": "findnext",
+      "public_symbol": "_findnext",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6138,8 +6138,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "file_paras",
-      "public_symbol": "_file_paras",
+      "routine": "filesizea",
+      "public_symbol": "_filesizea",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6166,8 +6166,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "file_paras_fatal",
-      "public_symbol": "_file_paras_fatal",
+      "routine": "filesize",
+      "public_symbol": "_filesize",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "NEAR",
@@ -6194,8 +6194,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "file_paras_nofatal",
-      "public_symbol": "_file_paras_nofatal",
+      "routine": "filesizez",
+      "public_symbol": "_filesizez",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6222,8 +6222,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "parse_shape2d_helper",
-      "public_symbol": "_parse_shape2d_helper",
+      "routine": "segtoadr",
+      "public_symbol": "_segtoadr",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6250,8 +6250,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "parse_shape2d_helper2",
-      "public_symbol": "_parse_shape2d_helper2",
+      "routine": "adrtoseg",
+      "public_symbol": "_adrtoseg",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6306,8 +6306,8 @@
     },
     {
       "owner_id": "graphics_resource_runtime",
-      "routine": "set_criterr_handler",
-      "public_symbol": "_set_criterr_handler",
+      "routine": "criterr",
+      "public_symbol": "_criterr",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6447,8 +6447,8 @@
     },
     {
       "owner_id": "input_keyboard_joystick_services",
-      "routine": "get_kb_or_joy_flags",
-      "public_symbol": "_get_kb_or_joy_flags",
+      "routine": "joystate",
+      "public_symbol": "_joystate",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6475,8 +6475,8 @@
     },
     {
       "owner_id": "input_keyboard_joystick_services",
-      "routine": "kb_get_char",
-      "public_symbol": "_kb_get_char",
+      "routine": "normkeyi",
+      "public_symbol": "_normkeyi",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6503,8 +6503,8 @@
     },
     {
       "owner_id": "input_keyboard_joystick_services",
-      "routine": "kb_parse_key",
-      "public_symbol": "_kb_parse_key",
+      "routine": "interpretkey",
+      "public_symbol": "_interpretkey",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6531,8 +6531,8 @@
     },
     {
       "owner_id": "input_keyboard_joystick_services",
-      "routine": "kb_reg_callback",
-      "public_symbol": "_kb_reg_callback",
+      "routine": "interpretsub",
+      "public_symbol": "_interpretsub",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6559,8 +6559,8 @@
     },
     {
       "owner_id": "input_keyboard_joystick_services",
-      "routine": "kb_clear_key_callback",
-      "public_symbol": "_kb_clear_key_callback",
+      "routine": "interpretclear",
+      "public_symbol": "_interpretclear",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6615,8 +6615,8 @@
     },
     {
       "owner_id": "input_keyboard_joystick_services",
-      "routine": "input_get_action_buttons",
-      "public_symbol": "_input_get_action_buttons",
+      "routine": "joybuttons",
+      "public_symbol": "_joybuttons",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6728,7 +6728,7 @@
     {
       "owner_id": "input_keyboard_joystick_services",
       "routine": "sub_307D2",
-      "public_symbol": "_joystick_flags_to_index",
+      "public_symbol": "_convertjoy",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6811,8 +6811,8 @@
     },
     {
       "owner_id": "keyboard_input_callbacks",
-      "routine": "kb_call_readchar_callback",
-      "public_symbol": "_kb_call_readchar_callback",
+      "routine": "testkey",
+      "public_symbol": "_testkey",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6839,8 +6839,8 @@
     },
     {
       "owner_id": "keyboard_input_callbacks",
-      "routine": "kb_check",
-      "public_symbol": "_kb_check",
+      "routine": "purgekey",
+      "public_symbol": "_purgekey",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6867,8 +6867,8 @@
     },
     {
       "owner_id": "keyboard_input_callbacks",
-      "routine": "kb_checking",
-      "public_symbol": "_kb_checking",
+      "routine": "nextkey",
+      "public_symbol": "_nextkey",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6895,8 +6895,8 @@
     },
     {
       "owner_id": "keyboard_input_callbacks",
-      "routine": "kb_read_char",
-      "public_symbol": "_kb_read_char",
+      "routine": "normkey",
+      "public_symbol": "_normkey",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -6979,7 +6979,7 @@
     },
     {
       "owner_id": "keyboard_input_callbacks",
-      "routine": "kb_get_readchar_callback",
+      "routine": "currentkeysub",
       "public_symbol": "_nopsub_kb_get_readchar_callbac",
       "category": "PLATFORM",
       "source_family": "A",
@@ -7005,8 +7005,8 @@
     },
     {
       "owner_id": "keyboard_input_callbacks",
-      "routine": "kb_get_readchar_callback",
-      "public_symbol": "_kb_get_readchar_callback",
+      "routine": "currentkeysub",
+      "public_symbol": "_currentkeysub",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -7032,7 +7032,7 @@
     },
     {
       "owner_id": "keyboard_input_callbacks",
-      "routine": "kb_set_readchar_callback",
+      "routine": "keysub",
       "public_symbol": "_nopsub_kb_set_readchar_callbac",
       "category": "PLATFORM",
       "source_family": "A",
@@ -7058,8 +7058,8 @@
     },
     {
       "owner_id": "keyboard_input_callbacks",
-      "routine": "kb_set_readchar_callback",
-      "public_symbol": "_kb_set_readchar_callback",
+      "routine": "keysub",
+      "public_symbol": "_keysub",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -7113,8 +7113,8 @@
     },
     {
       "owner_id": "keyboard_interrupt_runtime",
-      "routine": "kb_get_key_state",
-      "public_symbol": "_kb_get_key_state",
+      "routine": "keystate",
+      "public_symbol": "_keystate",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -7252,8 +7252,8 @@
     },
     {
       "owner_id": "math_resource_helpers",
-      "routine": "file_get_shape2d",
-      "public_symbol": "_file_get_shape2d",
+      "routine": "shapepointer",
+      "public_symbol": "_shapepointer",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -7279,8 +7279,8 @@
     },
     {
       "owner_id": "math_resource_helpers",
-      "routine": "timer_get_counter",
-      "public_symbol": "_timer_get_counter",
+      "routine": "gettick",
+      "public_symbol": "_gettick",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -7608,8 +7608,8 @@
     },
     {
       "owner_id": "resource_file_io_decompression",
-      "routine": "file_decomp",
-      "public_symbol": "_file_decomp",
+      "routine": "loadpacka",
+      "public_symbol": "_loadpacka",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -7636,8 +7636,8 @@
     },
     {
       "owner_id": "resource_file_io_decompression",
-      "routine": "file_decomp_fatal",
-      "public_symbol": "_file_decomp_fatal",
+      "routine": "loadpack",
+      "public_symbol": "_loadpack",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -7664,8 +7664,8 @@
     },
     {
       "owner_id": "resource_file_io_decompression",
-      "routine": "file_decomp_nofatal",
-      "public_symbol": "_file_decomp_nofatal",
+      "routine": "loadpackz",
+      "public_symbol": "_loadpackz",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -7776,8 +7776,8 @@
     },
     {
       "owner_id": "resource_file_io_decompression",
-      "routine": "file_load_binary",
-      "public_symbol": "_file_load_binary",
+      "routine": "loadfilea",
+      "public_symbol": "_loadfilea",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -7804,8 +7804,8 @@
     },
     {
       "owner_id": "resource_file_io_decompression",
-      "routine": "file_load_binary_nofatal",
-      "public_symbol": "_file_load_binary_nofatal",
+      "routine": "loadfilez",
+      "public_symbol": "_loadfilez",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -7832,8 +7832,8 @@
     },
     {
       "owner_id": "resource_file_io_decompression",
-      "routine": "file_read",
-      "public_symbol": "_file_read",
+      "routine": "loadfileata",
+      "public_symbol": "_loadfileata",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -7860,8 +7860,8 @@
     },
     {
       "owner_id": "resource_file_io_decompression",
-      "routine": "file_read_fatal",
-      "public_symbol": "_file_read_fatal",
+      "routine": "loadfileat",
+      "public_symbol": "_loadfileat",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -7883,13 +7883,13 @@
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
       ],
       "source_inventory_notes": [
-        "Read file data through DOS handles and invoke fatal_error on failure."
+        "Read file data through DOS handles and invoke abortmessage on failure."
       ]
     },
     {
       "owner_id": "resource_file_io_decompression",
-      "routine": "file_read_nofatal",
-      "public_symbol": "_file_read_nofatal",
+      "routine": "loadfileatz",
+      "public_symbol": "_loadfileatz",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -7911,7 +7911,7 @@
         "layout/manifest.json:resource_file_io_decompression _DATA [0x2fe02,0x2fe88)"
       ],
       "source_inventory_notes": [
-        "Read file data through DOS handles and return failure without invoking fatal_error."
+        "Read file data through DOS handles and return failure without invoking abortmessage."
       ]
     },
     {
@@ -7944,8 +7944,8 @@
     },
     {
       "owner_id": "resource_file_io_decompression",
-      "routine": "locate_shape_nofatal",
-      "public_symbol": "_locate_shape_nofatal",
+      "routine": "locateshapez",
+      "public_symbol": "_locateshapez",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8000,8 +8000,8 @@
     },
     {
       "owner_id": "resource_memory_manager",
-      "routine": "copy_paras_reverse",
-      "public_symbol": "_copy_paras_reverse",
+      "routine": "negblockmove",
+      "public_symbol": "_negblockmove",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8028,8 +8028,8 @@
     },
     {
       "owner_id": "resource_memory_manager",
-      "routine": "mmgr_alloc_a000",
-      "public_symbol": "_mmgr_alloc_a000",
+      "routine": "initmemory",
+      "public_symbol": "_initmemory",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8056,8 +8056,8 @@
     },
     {
       "owner_id": "resource_memory_manager",
-      "routine": "mmgr_alloc_pages",
-      "public_symbol": "_mmgr_alloc_pages",
+      "routine": "reservememory",
+      "public_symbol": "_reservememory",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8112,8 +8112,8 @@
     },
     {
       "owner_id": "resource_memory_manager",
-      "routine": "mmgr_copy_paras",
-      "public_symbol": "_mmgr_copy_paras",
+      "routine": "posblockmove",
+      "public_symbol": "_posblockmove",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8168,8 +8168,8 @@
     },
     {
       "owner_id": "resource_memory_manager",
-      "routine": "mmgr_free",
-      "public_symbol": "_mmgr_free",
+      "routine": "freememory",
+      "public_symbol": "_freememory",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8196,8 +8196,8 @@
     },
     {
       "owner_id": "resource_memory_manager",
-      "routine": "mmgr_get_chunk_by_name",
-      "public_symbol": "_mmgr_get_chunk_by_name",
+      "routine": "checkmodule",
+      "public_symbol": "_checkmodule",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8224,8 +8224,8 @@
     },
     {
       "owner_id": "resource_memory_manager",
-      "routine": "mmgr_get_chunk_size",
-      "public_symbol": "_mmgr_get_chunk_size",
+      "routine": "modulesize",
+      "public_symbol": "_modulesize",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8280,8 +8280,8 @@
     },
     {
       "owner_id": "resource_memory_manager",
-      "routine": "mmgr_compact_chunk",
-      "public_symbol": "_mmgr_compact_chunk",
+      "routine": "packmemory",
+      "public_symbol": "_packmemory",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8336,8 +8336,8 @@
     },
     {
       "owner_id": "resource_memory_manager",
-      "routine": "mmgr_release",
-      "public_symbol": "_mmgr_release",
+      "routine": "purgememory",
+      "public_symbol": "_purgememory",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8364,8 +8364,8 @@
     },
     {
       "owner_id": "resource_memory_manager",
-      "routine": "mmgr_resize_memory",
-      "public_symbol": "_mmgr_resize_memory",
+      "routine": "resizememory",
+      "public_symbol": "_resizememory",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8420,8 +8420,8 @@
     },
     {
       "owner_id": "resource_memory_manager",
-      "routine": "mmgr_alloc_dos_heap",
-      "public_symbol": "_mmgr_alloc_dos_heap",
+      "routine": "initmemsize",
+      "public_symbol": "_initmemsize",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8504,8 +8504,8 @@
     },
     {
       "owner_id": "resource_memory_manager",
-      "routine": "mmgr_has_high_resource",
-      "public_symbol": "_mmgr_has_high_resource",
+      "routine": "ifmodule",
+      "public_symbol": "_ifmodule",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8532,8 +8532,8 @@
     },
     {
       "owner_id": "resource_memory_manager",
-      "routine": "mmgr_move_chunk_to_high",
-      "public_symbol": "_mmgr_move_chunk_to_high",
+      "routine": "freetotop",
+      "public_symbol": "_freetotop",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8869,8 +8869,8 @@
     },
     {
       "owner_id": "timer_video_interrupt_runtime",
-      "routine": "compare_ds_ss",
-      "public_symbol": "_compare_ds_ss",
+      "routine": "sseqds",
+      "public_symbol": "_sseqds",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -8983,8 +8983,8 @@
     },
     {
       "owner_id": "timer_video_interrupt_runtime",
-      "routine": "timer_reg_callback",
-      "public_symbol": "_timer_reg_callback",
+      "routine": "addtimer",
+      "public_symbol": "_addtimer",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -9011,8 +9011,8 @@
     },
     {
       "owner_id": "timer_video_interrupt_runtime",
-      "routine": "timer_remove_callback",
-      "public_symbol": "_timer_remove_callback",
+      "routine": "deltimer",
+      "public_symbol": "_deltimer",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -9456,8 +9456,8 @@
     },
     {
       "owner_id": "line_sprite_shape_render",
-      "routine": "shape2d_capture_bitmap_hotspot",
-      "public_symbol": "_shape2d_capture_bitmap_hotspot",
+      "routine": "readfxy",
+      "public_symbol": "_readfxy",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -9483,8 +9483,8 @@
     },
     {
       "owner_id": "line_sprite_shape_render",
-      "routine": "set_fontdefseg",
-      "public_symbol": "_set_fontdefseg",
+      "routine": "setfont",
+      "public_symbol": "_setfont",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -9511,7 +9511,7 @@
     {
       "owner_id": "line_sprite_shape_render",
       "routine": "shape_op_explosion",
-      "public_symbol": "_shapeexpl",
+      "public_symbol": "_scalecfxy",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -9520,7 +9520,7 @@
         "end": 150284,
         "size": 816
       },
-      "semantics": "Implement the sprite or 2D-shape operation identified by shapeexpl..",
+      "semantics": "Implement the sprite or 2D-shape operation identified by scalecfxy..",
       "platform_dependency": "Annotated video service access in procedure body.",
       "faithful_port_replacement": "Use SDL3 display/palette/event APIs at hardware edges; preserve indexed-pixel, clipping, transparency and span rules on the SDL3 surface.",
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
@@ -9532,7 +9532,7 @@
         "layout/manifest.json:line_sprite_shape_render [0x246bc,0x24b88)"
       ],
       "source_inventory_notes": [
-        "Implement the sprite or 2D-shape operation identified by shapeexpl."
+        "Implement the sprite or 2D-shape operation identified by scalecfxy."
       ]
     },
     {
@@ -9591,8 +9591,8 @@
     },
     {
       "owner_id": "math_resource_helpers",
-      "routine": "sprite_copy_both_to_arg",
-      "public_symbol": "_sprite_copy_both_to_arg",
+      "routine": "savewindow",
+      "public_symbol": "_savewindow",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -9618,8 +9618,8 @@
     },
     {
       "owner_id": "math_resource_helpers",
-      "routine": "sprite_copy_arg_to_both",
-      "public_symbol": "_sprite_copy_arg_to_both",
+      "routine": "restorewindow",
+      "public_symbol": "_restorewindow",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -9699,8 +9699,8 @@
     },
     {
       "owner_id": "load_23816",
-      "routine": "video_set_mode_13h",
-      "public_symbol": "_video_set_mode_13h",
+      "routine": "initgraphics",
+      "public_symbol": "_initgraphics",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "FAR",
@@ -9835,8 +9835,8 @@
     },
     {
       "owner_id": "prerender_wheel_raster",
-      "routine": "prerender_shared_setup",
-      "public_symbol": "prerender_shared_setup",
+      "routine": "polycmn",
+      "public_symbol": "polycmn",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public label; exact ABI/boundary not cross-verified",
@@ -9918,8 +9918,8 @@
     },
     {
       "owner_id": "seg012_nopsub339fa_group",
-      "routine": "shape2d_and_bitmap_hotspot",
-      "public_symbol": "_shape2d_and_bitmap_hotspot",
+      "routine": "andfxy",
+      "public_symbol": "_andfxy",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -9945,8 +9945,8 @@
     },
     {
       "owner_id": "seg012_nopsub339fa_group",
-      "routine": "putpixel_iconMask",
-      "public_symbol": "_putpixel_iconMask",
+      "routine": "andfxya",
+      "public_symbol": "_andfxya",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -9972,8 +9972,8 @@
     },
     {
       "owner_id": "seg012_nopsub33ac0_group",
-      "routine": "shape2d_and_rle_hotspot",
-      "public_symbol": "_shape2d_and_rle_hotspot",
+      "routine": "andpackfxy",
+      "public_symbol": "_andpackfxy",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -9999,8 +9999,8 @@
     },
     {
       "owner_id": "seg012_nopsub33ac0_group",
-      "routine": "shape2d_and_rle_at",
-      "public_symbol": "_shape2d_and_rle_at",
+      "routine": "andpackfxya",
+      "public_symbol": "_andpackfxya",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10026,8 +10026,8 @@
     },
     {
       "owner_id": "seg012_nopsub33ac0_group",
-      "routine": "shape2d_render_bmp_as_mask",
-      "public_symbol": "_shape2d_render_bmp_as_mask",
+      "routine": "andpackf",
+      "public_symbol": "_andpackf",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10053,8 +10053,8 @@
     },
     {
       "owner_id": "seg012_putimage_and_group",
-      "routine": "sprite_putimage_and",
-      "public_symbol": "_sprite_putimage_and",
+      "routine": "andcfxya",
+      "public_symbol": "_andcfxya",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10080,8 +10080,8 @@
     },
     {
       "owner_id": "seg012_putimage_and_group",
-      "routine": "sprite_putimage_and_alt2",
-      "public_symbol": "_sprite_putimage_and_alt2",
+      "routine": "andcfxy",
+      "public_symbol": "_andcfxy",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10188,8 +10188,8 @@
     },
     {
       "owner_id": "seg012_shape2d_extended_group",
-      "routine": "shape2d_blit_rle_hotspot",
-      "public_symbol": "_shape2d_blit_rle_hotspot",
+      "routine": "movpackfxy",
+      "public_symbol": "_movpackfxy",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10215,8 +10215,8 @@
     },
     {
       "owner_id": "seg012_shape2d_extended_group",
-      "routine": "shape2d_blit_rle_clip_hotspot",
-      "public_symbol": "_shape2d_blit_rle_clip_hotspot",
+      "routine": "movpackcfxy",
+      "public_symbol": "_movpackcfxy",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10242,8 +10242,8 @@
     },
     {
       "owner_id": "seg012_shape2d_extended_group",
-      "routine": "shape2d_blit_rle",
-      "public_symbol": "_shape2d_blit_rle",
+      "routine": "movpackf",
+      "public_symbol": "_movpackf",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10269,8 +10269,8 @@
     },
     {
       "owner_id": "seg012_shape2d_extended_group",
-      "routine": "shape2d_blit_rle_clipped_at",
-      "public_symbol": "_shape2d_blit_rle_clipped_at",
+      "routine": "movpackcfxya",
+      "public_symbol": "_movpackcfxya",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10296,8 +10296,8 @@
     },
     {
       "owner_id": "seg012_shape2d_extended_group",
-      "routine": "shape2d_blit_rle_clipped",
-      "public_symbol": "_shape2d_blit_rle_clipped",
+      "routine": "movpackcf",
+      "public_symbol": "_movpackcf",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10350,8 +10350,8 @@
     },
     {
       "owner_id": "seg012_shape_to_1_group",
-      "routine": "shape2d_copy_bitmap_hotspot",
-      "public_symbol": "_shape2d_copy_bitmap_hotspot",
+      "routine": "movfxy",
+      "public_symbol": "_movfxy",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10377,8 +10377,8 @@
     },
     {
       "owner_id": "seg012_shape_to_1_group",
-      "routine": "sprite_shape_to_1",
-      "public_symbol": "_sprite_shape_to_1",
+      "routine": "movfxya",
+      "public_symbol": "_movfxya",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10519,7 +10519,7 @@
       "entry_abi": "public label; exact ABI/boundary not cross-verified",
       "target_extent": null,
       "target_entry_address": null,
-      "semantics": "Public code label into _shape2d_scale_blit_hotspot; parent procedure: Implement the legacy internal helper sub 35E08. Its internal flow uses allocate_sprite_scale_locals, prepare_sprite_dimensions.",
+      "semantics": "Public code label into _scalefxy; parent procedure: Implement the legacy internal helper sub 35E08. Its internal flow uses allocate_sprite_scale_locals, prepare_sprite_dimensions.",
       "platform_dependency": [
         "segmented far-pointer or segment-relative memory convention"
       ],
@@ -10653,8 +10653,8 @@
     },
     {
       "owner_id": "sprite_rectangle_scaled_blitters",
-      "routine": "shape2d_scale_blit_hotspot",
-      "public_symbol": "_shape2d_scale_blit_hotspot",
+      "routine": "scalefxy",
+      "public_symbol": "_scalefxy",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10681,8 +10681,8 @@
     },
     {
       "owner_id": "sprite_shape_video_ops",
-      "routine": "putpixel_iconFillings",
-      "public_symbol": "_putpixel_iconFillings",
+      "routine": "orfxya",
+      "public_symbol": "_orfxya",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10709,8 +10709,8 @@
     },
     {
       "owner_id": "sprite_shape_video_ops",
-      "routine": "shape2d_or_rle",
-      "public_symbol": "_shape2d_or_rle",
+      "routine": "orpackf",
+      "public_symbol": "_orpackf",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10737,8 +10737,8 @@
     },
     {
       "owner_id": "sprite_shape_video_ops",
-      "routine": "sprite_putimage_or",
-      "public_symbol": "_sprite_putimage_or",
+      "routine": "orcfxya",
+      "public_symbol": "_orcfxya",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10765,8 +10765,8 @@
     },
     {
       "owner_id": "sprite_shape_video_ops",
-      "routine": "sprite_putimage_or_alt",
-      "public_symbol": "_sprite_putimage_or_alt",
+      "routine": "orcfxy",
+      "public_symbol": "_orcfxy",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10933,8 +10933,8 @@
     },
     {
       "owner_id": "vector_sphere_sprite_ops",
-      "routine": "sprite_set_window_bounds",
-      "public_symbol": "_sprite_set_window_bounds",
+      "routine": "clippixwindow",
+      "public_symbol": "_clippixwindow",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10987,8 +10987,8 @@
     },
     {
       "owner_id": "vector_sphere_sprite_ops",
-      "routine": "video_clear_color",
-      "public_symbol": "_video_clear_color",
+      "routine": "clearscreen",
+      "public_symbol": "_clearscreen",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -11151,7 +11151,7 @@
     {
       "owner_id": "graphics_resource_runtime",
       "routine": "multiply_and_scale",
-      "public_symbol": "_mulscl",
+      "public_symbol": "_fixedmult",
       "category": "PORTABLE_ALGORITHM",
       "source_family": "C",
       "entry_abi": "FAR",
@@ -11538,8 +11538,8 @@
     },
     {
       "owner_id": "obj_seg002",
-      "routine": "math_sign_word",
-      "public_symbol": "_math_sign_word",
+      "routine": "sgn",
+      "public_symbol": "_sgn",
       "category": "PORTABLE_ALGORITHM",
       "source_family": "C",
       "entry_abi": "FAR",
@@ -11650,8 +11650,8 @@
     },
     {
       "owner_id": "prerender_wheel_raster",
-      "routine": "preRender_default",
-      "public_symbol": "_preRender_default",
+      "routine": "drawpolypt",
+      "public_symbol": "_drawpolypt",
       "category": "PLATFORM",
       "source_family": "C",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -11678,8 +11678,8 @@
     },
     {
       "owner_id": "prerender_wheel_raster",
-      "routine": "preRender_default_alt",
-      "public_symbol": "_preRender_default_alt",
+      "routine": "drawpolyp",
+      "public_symbol": "_drawpolyp",
       "category": "PLATFORM",
       "source_family": "C",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",

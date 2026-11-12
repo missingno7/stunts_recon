@@ -30,13 +30,13 @@ int port_memory_extent(const void *pointer, size_t *remaining_out)
     return 0;
 }
 
-void *mmgr_alloc_pages(const char *name, uint16_t paragraphs)
+void *reservememory(const char *name, uint16_t paragraphs)
 {
     (void)name;
     return calloc((size_t)paragraphs, 16u);
 }
 
-void mmgr_free(void *pointer)
+void freememory(void *pointer)
 {
     free(pointer);
 }
@@ -141,7 +141,7 @@ static int run_dump(int argc, char **argv)
                 return 2;
             for (i = 0; i < count * 2; ++i)
                 coordinates[i] = parse_i16(argv[arg++]);
-            preRender_default_alt(color, count, coordinates);
+            drawpolyp(color, count, coordinates);
         } else if (strcmp(operation, "skybox") == 0) {
             color = parse_i16(argv[arg++]);
             count = parse_i16(argv[arg++]);
@@ -161,7 +161,7 @@ static int run_dump(int argc, char **argv)
                 return 2;
             for (i = 0; i < count * 2; ++i)
                 coordinates[i] = parse_i16(argv[arg++]);
-            preRender_default(color, count, coordinates);
+            drawpolypt(color, count, coordinates);
         }
         return write_output(output_path, test_video,
                             PORT_SCREEN_WIDTH * PORT_SCREEN_HEIGHT) ? 0 : 3;

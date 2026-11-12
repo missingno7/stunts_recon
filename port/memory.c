@@ -385,7 +385,7 @@ int port_memory_resize(void *pointer, size_t size)
     return 1;
 }
 
-void *mmgr_alloc_pages(const char *name, uint16_t paragraphs)
+void *reservememory(const char *name, uint16_t paragraphs)
 {
     return port_memory_alloc((size_t)paragraphs * 16u, name, NULL);
 }
@@ -395,22 +395,22 @@ void *mmgr_alloc_farmem(uint32_t bytes)
     return port_memory_alloc((size_t)bytes, "farmem", NULL);
 }
 
-void mmgr_alloc_a000(void)
+void initmemory(void)
 {
     /* The A000 segment is the VGA window at DOS linear address 0xA0000. */
 }
 
-void mmgr_free(void *pointer)
+void freememory(void *pointer)
 {
     port_memory_free(pointer);
 }
 
-void mmgr_release(void *pointer)
+void purgememory(void *pointer)
 {
     port_memory_free(pointer);
 }
 
-uint16_t mmgr_get_chunk_size(void *pointer)
+uint16_t modulesize(void *pointer)
 {
     size_t extent;
     size_t paragraphs;
@@ -420,13 +420,13 @@ uint16_t mmgr_get_chunk_size(void *pointer)
     return paragraphs > 0xFFFFu ? 0xFFFFu : (uint16_t)paragraphs;
 }
 
-void mmgr_resize_memory(void *pointer, uint16_t paragraphs)
+void resizememory(void *pointer, uint16_t paragraphs)
 {
     if (!port_memory_resize(pointer, (size_t)paragraphs * 16u))
         port_guest_unwind("memory block resize exceeded its reserved segment span");
 }
 
-void *mmgr_compact_chunk(void *pointer)
+void *packmemory(void *pointer)
 {
     return pointer;
 }
@@ -458,7 +458,7 @@ char *mmgr_path_to_name(const char *path)
     return (char *)base;
 }
 
-void *mmgr_get_chunk_by_name(const char *name)
+void *checkmodule(const char *name)
 {
     char wanted[32];
     size_t i;

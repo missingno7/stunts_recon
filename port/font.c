@@ -50,7 +50,7 @@ static int font_glyph(const uint8_t *font, uint8_t character,
     return 1;
 }
 
-void set_fontdefseg(const void *font)
+void setfont(const void *font)
 {
     size_t extent;
     if (font == NULL)

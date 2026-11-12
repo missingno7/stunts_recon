@@ -31,7 +31,7 @@ is already 32-bit, the DLL loads directly through `ctypes`.
 
 The passing calls cover `sprite_blit_dither_phase`, `xorrectc`, `drawrect`,
 both raw icon mask/fill operations, both signed-run shape mask/fill operations,
-`clear_rect`, and `mulscl`. Every renderer case compares all 65,536 bytes at
+`clear_rect`, and `fixedmult`. Every renderer case compares all 65,536 bytes at
 A000:0000 after starting with the same framebuffer contents. The negative
 example flips one byte of the port result and confirms the comparator reports
 the first byte and the differing-byte count.
@@ -50,7 +50,7 @@ C passes stack locals to helpers as near pointers. Explicit `ss` and `sp`
 registers override the call stack location, including argument and return-frame
 placement. A separate stack is appropriate only for a case whose ABI permits it.
 
-For example, this adds a `mulscl` vector in fewer than twenty lines:
+For example, this adds a `fixedmult` vector in fewer than twenty lines:
 
 ```python
 from tools.porting.diffharness import CallResult, DiffHarness, RoutineCase
@@ -58,7 +58,7 @@ from pathlib import Path
 
 left, right = -12345, 4567
 case = RoutineCase(
-    "mulscl vector", "mulscl", args=[left & 0xffff, right], call="far",
+    "fixedmult vector", "fixedmult", args=[left & 0xffff, right], call="far",
     result_registers=("ax",),
     port_call=lambda port, _: CallResult(
         {"ax": port.call_mulscl(left, right)}, 0, {}, 0, "cdecl"))

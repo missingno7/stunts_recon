@@ -184,7 +184,7 @@ class PortLibrary:
 
     def call_mulscl(self, left: int, right: int) -> int:
         if self.dll is None:
-            return int(self._worker_call("mulscl", left=left, right=right)["ax"])
+            return int(self._worker_call("fixedmult", left=left, right=right)["ax"])
         return int(self._mulscl(left, right)) & 0xFFFF
 
     def call_draw_filled_rect(self, *args: int) -> None:

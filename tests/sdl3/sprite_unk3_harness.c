@@ -85,14 +85,14 @@ void port_video_transition_advance(PortVideoTransition *transition, uint32_t wor
     transition->work_units += work;
 }
 
-void *mmgr_alloc_pages(const char *name, uint16_t paragraphs)
+void *reservememory(const char *name, uint16_t paragraphs)
 {
     (void)name;
     (void)paragraphs;
     return NULL;
 }
 
-void mmgr_free(void *pointer)
+void freememory(void *pointer)
 {
     (void)pointer;
 }

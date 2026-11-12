@@ -214,7 +214,7 @@ I16S intcos(U16S angle)
 {
     return angle == 0 ? 256 : (angle == 0x200 ? -256 : 0);
 }
-I16S mulscl(I16S value, I16S scale)
+I16S fixedmult(I16S value, I16S scale)
 {
     return (I16S)(((int32_t)value * (int32_t)scale) / 256);
 }

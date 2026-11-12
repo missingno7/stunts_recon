@@ -76,9 +76,9 @@ int port_memory_extent(const void *pointer, size_t *remaining_out)
     return 0;
 }
 
-void mmgr_release(void *pointer) { free(pointer); }
-void timer_reg_callback(void (*callback)(void)) { (void)callback; ++s_timer_registered; }
-void timer_remove_callback(void (*callback)(void)) { (void)callback; ++s_timer_removed; }
+void purgememory(void *pointer) { free(pointer); }
+void addtimer(void (*callback)(void)) { (void)callback; ++s_timer_registered; }
+void deltimer(void (*callback)(void)) { (void)callback; ++s_timer_removed; }
 void audiodriver_timer(void) {}
 void reset_audio_driver_state(void) {}
 int port_audio_sdl_start(void) { return 0; }

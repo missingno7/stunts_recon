@@ -12,7 +12,7 @@ typedef void (*PortExitHandler)(void);
 enum { PORT_EXIT_HANDLER_CAPACITY = 10 };
 static PortExitHandler s_exit_handlers[PORT_EXIT_HANDLER_CAPACITY + 1];
 
-int16_t add_exit_handler(PortExitHandler callback)
+int16_t addexit(PortExitHandler callback)
 {
     unsigned i;
     uint16_t original_offset;
@@ -36,7 +36,7 @@ int16_t add_exit_handler(PortExitHandler callback)
     /* The original overflow branch calls the game's fatal service and does
        not return. Keep a return value only for host adapters whose fatal
        service unexpectedly returns. */
-    fatal_error("EXIT LIST OVERFLOW");
+    abortmessage("EXIT LIST OVERFLOW");
     return -1;
 }
 
@@ -69,7 +69,7 @@ void port_guest_exit(int status)
     port_guest_check_stop();
 }
 
-void call_exitlist2(void)
+void dsiexit(void)
 {
     port_guest_exit(0);
 }

@@ -174,8 +174,8 @@
       "id": "polygon-raster-entries",
       "status": "differential-oracle",
       "routines": [
-        "preRender_default",
-        "preRender_default_alt",
+        "drawpolypt",
+        "drawpolyp",
         "preRender_patterned",
         "sprite_two_color_poly_list",
         "preRender_wheel_helper4"
@@ -205,10 +205,10 @@
       "id": "sprite-boolean-blits",
       "status": "differential-oracle",
       "routines": [
-        "sprite_putimage_and",
+        "andcfxya",
         "sprite_putimage_and_alt",
-        "sprite_putimage_and_alt2",
-        "sprite_putimage_or_alt"
+        "andcfxy",
+        "orcfxy"
       ],
       "tests": [
         "tests/test_sdl3_sprite_boolean_semantics.py::test_all_entries_match_locked_machine_on_random_clips_and_word_boundaries"
@@ -309,7 +309,7 @@
       "routines": [
         "read_line_helper",
         "read_line_helper2",
-        "set_fontdefseg",
+        "setfont",
         "font_set_unk",
         "font_draw_text"
       ],
@@ -481,10 +481,10 @@
       "routines": [
         "file_unflip_shape2d",
         "shapepack",
-        "shape2d_blit_rle",
-        "shape2d_blit_rle_clipped",
-        "shape2d_or_rle",
-        "shape2d_render_bmp_as_mask"
+        "movpackf",
+        "movpackcf",
+        "orpackf",
+        "andpackf"
       ],
       "tests": [
         "tests/test_sdl3_dashboard_assets.py::test_frozen_mode3_dashboard_loader_and_mainclip_match_locked_dos"
@@ -522,7 +522,7 @@
         "release_shape_resources",
         "mcgatranslation",
         "mcgatransrange",
-        "file_decomp"
+        "loadpacka"
       ],
       "tests": [
         "tests/test_sdl3_resource.py::test_blitters_spans_and_allocation_lifetimes",
@@ -556,9 +556,9 @@
       "status": "static/layout",
       "routines": [
         "port_timer_pump",
-        "timer_get_counter",
-        "timer_reg_callback",
-        "timer_remove_callback",
+        "gettick",
+        "addtimer",
+        "deltimer",
         "testticks",
         "testbiosticks",
         "port_guest_wait_for_activity"

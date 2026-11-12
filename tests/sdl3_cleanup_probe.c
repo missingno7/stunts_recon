@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 
-extern int16_t add_exit_handler(void (*callback)(void));
+extern int16_t addexit(void (*callback)(void));
 extern void call_exitlist(void);
-extern void call_exitlist2(void);
+extern void dsiexit(void);
 extern void port_guest_exit(int status);
 extern void debug_printf_text(const char *format, ...);
 
@@ -19,7 +19,7 @@ static unsigned s_exit_status_count;
 static char s_stop_reasons[2][64];
 static int s_exit_statuses[2];
 
-void fatal_error(const char *format, ...)
+void abortmessage(const char *format, ...)
 {
     if (format == NULL || strcmp(format, "EXIT LIST OVERFLOW") != 0)
         s_overflow_count = 1000;
@@ -94,14 +94,14 @@ int main(void)
     unsigned i;
 
     for (i = 0; i < 10; ++i) {
-        (void)add_exit_handler(callbacks[i]);
+        (void)addexit(callbacks[i]);
         if (i == 0)
-            (void)add_exit_handler(callbacks[i]);
+            (void)addexit(callbacks[i]);
     }
-    if (!check(add_exit_handler(NULL) == 0,
+    if (!check(addexit(NULL) == 0,
                "null callback should not consume an exit slot"))
         return 1;
-    if (!check(add_exit_handler(handler10) == -1 && s_overflow_count == 1,
+    if (!check(addexit(handler10) == -1 && s_overflow_count == 1,
                "the eleventh distinct callback should overflow"))
         return 2;
 
@@ -115,7 +115,7 @@ int main(void)
                "dispatch should preserve registrations for a later call"))
         return 4;
 
-    call_exitlist2();
+    dsiexit();
     if (!check(s_used == 30 &&
                memcmp(s_sequence + 20, "9876543210", 10) == 0 &&
                s_stop_request_count == 1 && s_stop_check_count == 1 &&

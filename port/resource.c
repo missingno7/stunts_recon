@@ -520,22 +520,22 @@ static void *read_binary_resource(const char *name, int fatal)
     return data;
 }
 
-void *file_load_binary_nofatal(const char *name)
+void *loadfilez(const char *name)
 {
     return read_binary_resource(name, 0);
 }
 
-void *file_load_binary(const char *name, int fatal)
+void *loadfilea(const char *name, int fatal)
 {
     return read_binary_resource(name, fatal != 0);
 }
 
 void *file_load_binary_nofatal_thunk(const char *name)
 {
-    return file_load_binary_nofatal(name);
+    return loadfilez(name);
 }
 
-void *file_decomp(const char *name, int fatal)
+void *loadpacka(const char *name, int fatal)
 {
     size_t source_size = 0;
     size_t decoded_size = 0;
@@ -569,21 +569,21 @@ void *file_decomp(const char *name, int fatal)
     return managed;
 }
 
-void *file_decomp_nofatal(const char *name)
+void *loadpackz(const char *name)
 {
-    return file_decomp(name, 0);
+    return loadpacka(name, 0);
 }
 
 void *file_load_shape2d_fatal_thunk(char *name)
 {
-    extern void *file_load_shape2d_fatal(char *);
-    return file_load_shape2d_fatal(name);
+    extern void *loadshape(char *);
+    return loadshape(name);
 }
 
 void *load_shape2d_nofatal_thunk(char *name)
 {
-    extern void *file_load_shape2d_nofatal(char *);
-    return file_load_shape2d_nofatal(name);
+    extern void *loadshapez(char *);
+    return loadshapez(name);
 }
 
 void *load_shape2d_res_nofatal_thunk(char *name)
@@ -619,7 +619,7 @@ uint16_t file_get_res_shape_count(void *archive)
     return count;
 }
 
-void *file_get_shape2d(uint8_t *archive, int index)
+void *shapepointer(uint8_t *archive, int index)
 {
     size_t extent;
     size_t payload;
@@ -884,7 +884,7 @@ void release_shape_resources(void *shape_pointer)
     publish_transparent_blit(destination, "release_shape_resources");
 }
 
-void shapeexpl(int16_t scale, void *shape_pointer, int16_t x, int16_t y)
+void scalecfxy(int16_t scale, void *shape_pointer, int16_t x, int16_t y)
 {
     uint8_t *shape = (uint8_t *)shape_pointer;
     size_t source_extent;
@@ -1137,7 +1137,7 @@ static int shape_name_equal(const uint8_t *stored, const char *requested)
     return 1;
 }
 
-void *locate_shape_nofatal(uint8_t *archive, const char *name)
+void *locateshapez(uint8_t *archive, const char *name)
 {
     uint16_t count;
     uint16_t i;
@@ -1172,7 +1172,7 @@ void *locate_shape_nofatal(uint8_t *archive, const char *name)
 
 void *locate_shape_fatal(uint8_t *archive, char *name)
 {
-    void *shape = locate_shape_nofatal(archive, name);
+    void *shape = locateshapez(archive, name);
     if (shape == NULL) {
         char requested[5] = { 0, 0, 0, 0, 0 };
         char detail[96];
@@ -1199,7 +1199,7 @@ void *locate_shape_fatal(uint8_t *archive, char *name)
 
 void *locate_sound_fatal(uint8_t *archive, char *name)
 {
-    void *sound = locate_shape_nofatal(archive, name);
+    void *sound = locateshapez(archive, name);
     if (sound == NULL) {
         char requested[5] = { 0, 0, 0, 0, 0 };
         char detail[96];
@@ -1212,7 +1212,7 @@ void *locate_sound_fatal(uint8_t *archive, char *name)
     return sound;
 }
 
-char *file_find(const char *name)
+char *findfirst(const char *name)
 {
     static char found[1024];
     if (name == NULL || !port_fs_find(name, found, sizeof(found)))
@@ -1345,12 +1345,12 @@ void file_unflip_shape2d_pes(uint8_t *archive, uint8_t *scratch)
 /* 16-bit MSC pointers returned as a host span are deliberately resolved only
    inside registered game allocations. These helpers implement the accepted
    ASM's paragraph-to-byte position calculations without segment casts. */
-int32_t parse_shape2d_helper(uint8_t *pointer)
+int32_t segtoadr(uint8_t *pointer)
 {
     return (int32_t)(uintptr_t)pointer;
 }
 
-void *parse_shape2d_helper2(int32_t pointer)
+void *adrtoseg(int32_t pointer)
 {
     return (void *)(uintptr_t)(uint32_t)pointer;
 }

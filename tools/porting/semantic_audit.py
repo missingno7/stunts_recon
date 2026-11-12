@@ -73,10 +73,10 @@ def prepare(work, gcc):
 
 PROTOTYPES = {
     "port_call_read_line": "int16_t (*)(char *, int16_t, int16_t, int16_t, int32_t)",
-    "file_read_nofatal": "void *(*)(const char *, void *)",
-    "file_read_fatal": "void *(*)(const char *, void *)",
-    "file_find": "char *(*)(const char *)",
-    "mmgr_compact_chunk": "void *(*)(void *)",
+    "loadfileatz": "void *(*)(const char *, void *)",
+    "loadfileat": "void *(*)(const char *, void *)",
+    "findfirst": "char *(*)(const char *)",
+    "packmemory": "void *(*)(void *)",
     "audio_set_chunk_callback": "void (*)(uint16_t, void (*)(int16_t))",
     "norm_zone": "int16_t (*)(struct VECTOR *)",
 }

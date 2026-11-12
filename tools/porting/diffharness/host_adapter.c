@@ -5,10 +5,10 @@
 extern PortSprite sprite2;
 extern void clear_rect(int16_t, int16_t, int16_t, int16_t, int16_t);
 extern void drawrect(int16_t, int16_t, int16_t, int16_t, int16_t);
-extern void putpixel_iconFillings(const PortShape2D *, int16_t, int16_t);
-extern void putpixel_iconMask(const PortShape2D *, int16_t, int16_t);
-extern void shape2d_or_rle(const PortShape2D *);
-extern void shape2d_render_bmp_as_mask(const PortShape2D *);
+extern void orfxya(const PortShape2D *, int16_t, int16_t);
+extern void andfxya(const PortShape2D *, int16_t, int16_t);
+extern void orpackf(const PortShape2D *);
+extern void andpackf(const PortShape2D *);
 
 static PortSprite s_default_sprite2;
 
@@ -40,7 +40,7 @@ __declspec(dllexport) int dh_call_sprite_1_unk3(const uint8_t *pixels,
     if (pixels == NULL || width == 0 || height == 0 || count > 0xFFF0u)
         return 0;
     paragraphs = (uint16_t)((bytes + 15u) >> 4);
-    shape = (PortShape2D *)mmgr_alloc_pages("DIFFHARNESS", paragraphs);
+    shape = (PortShape2D *)reservememory("DIFFHARNESS", paragraphs);
     if (shape == NULL)
         return 0;
     memset(shape, 0, bytes);
@@ -50,7 +50,7 @@ __declspec(dllexport) int dh_call_sprite_1_unk3(const uint8_t *pixels,
     shape->pos_y = y;
     memcpy((uint8_t *)shape + sizeof(*shape), pixels, count);
     sprite_blit_dither_phase(shape, (int16_t)phase);
-    mmgr_free(shape);
+    freememory(shape);
     return 1;
 }
 
@@ -81,7 +81,7 @@ static PortShape2D *dh_alloc_shape(uint16_t width, uint16_t height,
     if (pixels == NULL || bytes > 0xFFF0u || total > 0xFFF0u)
         return NULL;
     paragraphs = (uint16_t)((total + 15u) >> 4);
-    shape = (PortShape2D *)mmgr_alloc_pages("DIFFHARNESS AUX", paragraphs);
+    shape = (PortShape2D *)reservememory("DIFFHARNESS AUX", paragraphs);
     if (shape == NULL)
         return NULL;
     memset(shape, 0, total);
@@ -105,10 +105,10 @@ __declspec(dllexport) int dh_call_icon_combine(const uint8_t *pixels,
     if (shape == NULL)
         return 0;
     if (use_and)
-        putpixel_iconMask(shape, x, y);
+        andfxya(shape, x, y);
     else
-        putpixel_iconFillings(shape, x, y);
-    mmgr_free(shape);
+        orfxya(shape, x, y);
+    freememory(shape);
     return 1;
 }
 
@@ -124,10 +124,10 @@ __declspec(dllexport) int dh_call_shape2d_runs(const uint8_t *encoded,
     if (shape == NULL)
         return 0;
     if (use_and)
-        shape2d_render_bmp_as_mask(shape);
+        andpackf(shape);
     else
-        shape2d_or_rle(shape);
-    mmgr_free(shape);
+        orpackf(shape);
+    freememory(shape);
     return 1;
 }
 
@@ -158,7 +158,7 @@ __declspec(dllexport) int dh_call_clear_rect(const uint8_t *source_pixels,
 
 __declspec(dllexport) int16_t dh_call_mulscl(int16_t left, int16_t right)
 {
-    return mulscl(left, right);
+    return fixedmult(left, right);
 }
 
 __declspec(dllexport) uint32_t dh_read_frame(uint8_t *output,

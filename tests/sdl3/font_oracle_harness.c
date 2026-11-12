@@ -51,13 +51,13 @@ int port_memory_extent(const void *pointer, size_t *remaining_out)
     return 1;
 }
 
-void *mmgr_alloc_pages(const char *name, uint16_t paragraphs)
+void *reservememory(const char *name, uint16_t paragraphs)
 {
     (void)name;
     return calloc((size_t)paragraphs, 16u);
 }
 
-void mmgr_free(void *pointer)
+void freememory(void *pointer)
 {
     free(pointer);
 }
@@ -95,7 +95,7 @@ void *port_far_resolve(PortFarPtr pointer, size_t extent)
     return NULL;
 }
 
-int16_t mulscl(int16_t left, int16_t right)
+int16_t fixedmult(int16_t left, int16_t right)
 {
     (void)left;
     (void)right;
@@ -187,7 +187,7 @@ int main(void)
     port_sprite_init();
     sprset1size((int16_t)clip_left, (int16_t)clip_right,
                 (int16_t)clip_top, (int16_t)clip_bottom);
-    set_fontdefseg(font);
+    setfont(font);
     font_setup_unknown(foreground, background);
     switch (operation) {
     case 0u:

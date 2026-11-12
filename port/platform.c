@@ -10,7 +10,7 @@
    The i686 Windows host uses a flat data/stack selector model, so observing
    the real selectors preserves that adapter behavior without introducing a
    game-specific success path. */
-int16_t compare_ds_ss(void)
+int16_t sseqds(void)
 {
 #if defined(__i386__) && defined(__GNUC__)
     uint16_t data_segment;
@@ -92,7 +92,7 @@ int int86(int interrupt_number, void *input, void *output)
     return 0;
 }
 
-int16_t set_criterr_handler(int16_t (*handler)(void))
+int16_t criterr(int16_t (*handler)(void))
 {
     (void)handler;
     return 0;
@@ -179,7 +179,7 @@ void port_audio_dispatch(uint8_t entry_offset, const void *packet, size_t bytes)
     }
 }
 
-void fatal_error(const char *format, ...)
+void abortmessage(const char *format, ...)
 {
     char message[256];
     va_list args;

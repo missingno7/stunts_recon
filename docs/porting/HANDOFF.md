@@ -41,7 +41,7 @@ the working directory. Its default is:
 ```
 
 Set `manual_word_check` to `true` and restart to restore the original manual
-question and answer dialog. The modern `security_check` entry bypass sets the
+question and answer dialog. The modern `getprotection` entry bypass sets the
 original success flag while retaining the caller's question RNG draw. Frozen
 sources and the historical oracle are unchanged. Existing files, including
 unknown fields, are preserved byte for byte; malformed or unavailable files
@@ -101,7 +101,7 @@ provides the recorded simulation states, while the capture identifies the view.
 ## Idle CPU use
 
 The native guest previously retained the DOS polling loops at full host speed.
-Thread sampling found `select -> input_checking -> get_kb_or_joy_flags`
+Thread sampling found `select -> input_checking -> joystate`
 as the idle-menu hotspot; the race loop also spun after catching its timer
 position. Modern overlays now yield at stable UI backedges (main, track,
 car and opponent menus, modal dialogs, line entry and the track editor),

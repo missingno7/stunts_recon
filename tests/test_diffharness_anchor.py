@@ -21,12 +21,12 @@ class DiffHarnessAnchorTests(unittest.TestCase):
         self.assertEqual(oracle.load_image[131869:131881].hex(),
                          "33c08cd38cda3bda750140cb")
         runner = RealModeRunner(oracle)
-        result = runner.call(RoutineCase("shared stack", "compare_ds_ss"))
+        result = runner.call(RoutineCase("shared stack", "sseqds"))
         self.assertEqual(result.registers["ax"], 1)
         self.assertEqual(result.registers["ss"], result.registers["ds"])
         # Arguments/return sentinel must be placed at an overridden SS:SP,
         # rather than requiring a second manual stack write by the caller.
-        result = runner.call(RoutineCase("explicit stack", "compare_ds_ss",
+        result = runner.call(RoutineCase("explicit stack", "sseqds",
                                          registers={"ss": 0x8F00, "sp": 0xE000}))
         self.assertEqual(result.registers["ax"], 0)
         self.assertEqual(result.registers["sp"], 0xE004)

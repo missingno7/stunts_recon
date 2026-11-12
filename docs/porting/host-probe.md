@@ -112,7 +112,7 @@ Accepted C sources: 38
   - ? 136 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **pointer size assumptions:** compiler diagnostic; 4 distinct warning/error lines
   - `src\obj_seg000.c:511:10: warning: pointer targets in assignment from 'uint8_t *' {aka 'unsigned char *'} to 'char *' differ in signedness [-Wpointer-sign]`
-  - `src\obj_seg000.c:552:87: warning: pointer targets in passing argument 2 of 'file_read_fatal' differ in signedness [-Wpointer-sign]`
+  - `src\obj_seg000.c:552:87: warning: pointer targets in passing argument 2 of 'loadfileat' differ in signedness [-Wpointer-sign]`
   - `src\obj_seg000.c:761:92: warning: passing argument 3 of 'locate_many_resources' from incompatible pointer type [-Wincompatible-pointer-types]`
   - ? 1 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **far pointer normalization:** segmented pointer qualifier is erased to a flat host pointer
@@ -161,7 +161,7 @@ Accepted C sources: 38
   - `src\obj_seg003.c:790:28: warning: conversion from 'int' to 'int16_t' {aka 'short int'} may change value [-Wconversion]`
   - ? 250 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **pointer size assumptions:** compiler diagnostic; 7 distinct warning/error lines
-  - `src\obj_seg003.c:803:31: warning: passing argument 3 of 'rectsorttop' from incompatible pointer type [-Wincompatible-pointer-types]`
+  - `src\obj_seg003.c:803:31: warning: passing argument 3 of 'sortzonelist' from incompatible pointer type [-Wincompatible-pointer-types]`
   - `src\obj_seg003.c:1726:145: warning: passing argument 3 of 'settires' from incompatible pointer type [-Wincompatible-pointer-types]`
   - `src\obj_seg003.c:1779:147: warning: passing argument 3 of 'settires' from incompatible pointer type [-Wincompatible-pointer-types]`
   - ? 4 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
@@ -272,9 +272,9 @@ Accepted C sources: 38
   - `src\obj_seg008.c:24:12: warning: mismatch in argument 2 type of built-in function 'strcat'; expected 'const char *' [-Wbuiltin-declaration-mismatch]`
   - ? 190 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **pointer size assumptions:** compiler diagnostic; 15 distinct warning/error lines
-  - `src\obj_seg008.c:820:21: warning: passing argument 1 of 'mouse_get_state' from incompatible pointer type [-Wincompatible-pointer-types]`
-  - `src\obj_seg008.c:820:33: warning: passing argument 2 of 'mouse_get_state' from incompatible pointer type [-Wincompatible-pointer-types]`
-  - `src\obj_seg008.c:820:45: warning: passing argument 3 of 'mouse_get_state' from incompatible pointer type [-Wincompatible-pointer-types]`
+  - `src\obj_seg008.c:820:21: warning: passing argument 1 of 'getmousepos' from incompatible pointer type [-Wincompatible-pointer-types]`
+  - `src\obj_seg008.c:820:33: warning: passing argument 2 of 'getmousepos' from incompatible pointer type [-Wincompatible-pointer-types]`
+  - `src\obj_seg008.c:820:45: warning: passing argument 3 of 'getmousepos' from incompatible pointer type [-Wincompatible-pointer-types]`
   - ? 12 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **far pointer normalization:** segmented pointer qualifier is erased to a flat host pointer; 12 distinct warning/error lines
   - `src\obj_seg008.c:1431:43: warning: passing argument 2 of 'file_load_resource' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]`
@@ -321,7 +321,7 @@ Accepted C sources: 38
 - Existing tags: PLATFORM(file)@6,8,14,18,26 (+3)
 - **other compiler diagnostic:** compiler diagnostic; 4 distinct warning/error lines
   - `src\obj_seg016_group.c:7:6: warning: no previous prototype for 'locate_many_resources' [-Wmissing-prototypes]`
-  - `src\obj_seg016_group.c:15:10: warning: no previous prototype for 'file_find_shapes_optional' [-Wmissing-prototypes]`
+  - `src\obj_seg016_group.c:15:10: warning: no previous prototype for 'locateshapesz' [-Wmissing-prototypes]`
   - `src\obj_seg016_group.c:27:10: warning: no previous prototype for 'file_find_sounds_required' [-Wmissing-prototypes]`
   - ? 1 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - Tagging follow-up: the screened hazards have matching source PORT tags
@@ -416,7 +416,7 @@ Accepted C sources: 38
 - **segment arithmetic:** explicit segment/offset helper or spelling
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 3 distinct warning/error lines
-  - `src\obj_seg032_group.c:46:9: warning: no previous prototype for 'read_line' [-Wmissing-prototypes]`
+  - `src\obj_seg032_group.c:46:9: warning: no previous prototype for 'get_pstring' [-Wmissing-prototypes]`
   - `src\obj_seg032_group.c:124:125: warning: suggest parentheses around '&&' within '||' [-Wparentheses]`
   - `src\obj_seg032_group.c:124:170: warning: suggest parentheses around '&&' within '||' [-Wparentheses]`
 - Tagging follow-up: add/review `PORT:` coverage for implicit int widths; add/review `PORT:` coverage for segment arithmetic; add/review `PORT:` coverage for struct packing
@@ -452,7 +452,7 @@ Accepted C sources: 38
 - Compile: syntax `ok`, object `ok`; distinct diagnostics: 1 warnings, 0 errors.
 - Existing tags: PLATFORM(video)@10,15
 - **other compiler diagnostic:** compiler diagnostic; 1 distinct warning/error lines
-  - `src\preRender_sphere_helper.c:11:6: warning: no previous prototype for 'preRender_sphere_helper' [-Wmissing-prototypes]`
+  - `src\preRender_sphere_helper.c:11:6: warning: no previous prototype for 'solidellipseh' [-Wmissing-prototypes]`
 - Tagging follow-up: the screened hazards have matching source PORT tags
 
 ### `src/preRender_sphere_helper2.c`
@@ -462,7 +462,7 @@ Accepted C sources: 38
 - **signed shift:** shift expression; inspect signed operands and overflow assumptions
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 1 distinct warning/error lines
-  - `src\preRender_sphere_helper2.c:10:10: warning: no previous prototype for 'preRender_sphere_helper2' [-Wmissing-prototypes]`
+  - `src\preRender_sphere_helper2.c:10:10: warning: no previous prototype for 'ellipseh' [-Wmissing-prototypes]`
 - Tagging follow-up: add/review `PORT:` coverage for struct packing
 
 ### `src/preRender_wheel.c`
@@ -471,7 +471,7 @@ Accepted C sources: 38
 - Existing tags: PLATFORM(video)@17,36,44,81,103 (+1)
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 1 distinct warning/error lines
-  - `src\preRender_wheel.c:18:10: warning: no previous prototype for 'preRender_wheel' [-Wmissing-prototypes]`
+  - `src\preRender_wheel.c:18:10: warning: no previous prototype for 'solidtire' [-Wmissing-prototypes]`
 - Tagging follow-up: add/review `PORT:` coverage for struct packing
 
 ### `src/preRender_wheel_helper.c`
@@ -480,7 +480,7 @@ Accepted C sources: 38
 - Existing tags: none
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 1 distinct warning/error lines
-  - `src\preRender_wheel_helper.c:11:10: warning: no previous prototype for 'preRender_wheel_helper' [-Wmissing-prototypes]`
+  - `src\preRender_wheel_helper.c:11:10: warning: no previous prototype for 'tire' [-Wmissing-prototypes]`
 - Tagging follow-up: add/review `PORT:` coverage for struct packing
 
 ### `src/preRender_wheel_helper2.c`
@@ -489,7 +489,7 @@ Accepted C sources: 38
 - Existing tags: none
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 1 distinct warning/error lines
-  - `src\preRender_wheel_helper2.c:11:6: warning: no previous prototype for 'preRender_wheel_helper2' [-Wmissing-prototypes]`
+  - `src\preRender_wheel_helper2.c:11:6: warning: no previous prototype for 'ring' [-Wmissing-prototypes]`
 - Tagging follow-up: add/review `PORT:` coverage for struct packing
 
 ### `src/preRender_wheel_helper3.c`
@@ -499,7 +499,7 @@ Accepted C sources: 38
 - **signed shift:** shift expression; inspect signed operands and overflow assumptions
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 1 distinct warning/error lines
-  - `src\preRender_wheel_helper3.c:12:6: warning: no previous prototype for 'preRender_wheel_helper3' [-Wmissing-prototypes]`
+  - `src\preRender_wheel_helper3.c:12:6: warning: no previous prototype for 'ellipse' [-Wmissing-prototypes]`
 - Tagging follow-up: add/review `PORT:` coverage for struct packing
 
 ### `src/seg017_mouse_whole.c`
@@ -515,9 +515,9 @@ Accepted C sources: 38
 - **signed shift:** shift expression; inspect signed operands and overflow assumptions
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 8 distinct warning/error lines
-  - `src\seg017_mouse_whole.c:44:9: warning: no previous prototype for 'mouse_init' [-Wmissing-prototypes]`
-  - `src\seg017_mouse_whole.c:130:10: warning: no previous prototype for 'mouse_set_position' [-Wmissing-prototypes]`
-  - `src\seg017_mouse_whole.c:145:10: warning: no previous prototype for 'mouse_get_state' [-Wmissing-prototypes]`
+  - `src\seg017_mouse_whole.c:44:9: warning: no previous prototype for 'initmouse' [-Wmissing-prototypes]`
+  - `src\seg017_mouse_whole.c:130:10: warning: no previous prototype for 'setmousepos' [-Wmissing-prototypes]`
+  - `src\seg017_mouse_whole.c:145:10: warning: no previous prototype for 'getmousepos' [-Wmissing-prototypes]`
   - ? 5 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - Tagging follow-up: add/review `PORT:` coverage for int86/port I/O; add/review `PORT:` coverage for signed shift
 
@@ -548,8 +548,8 @@ Accepted C sources: 38
 - Compile: syntax `ok`, object `ok`; distinct diagnostics: 2 warnings, 0 errors.
 - Existing tags: PLATFORM(memory)@22,29,35,46,73 (+9); PLATFORM(file)@24,26,31,33,37 (+22)
 - **other compiler diagnostic:** compiler diagnostic; 2 distinct warning/error lines
-  - `src\seg034_shape2d_group.c:55:11: warning: no previous prototype for 'file_load_shape2d_fatal' [-Wmissing-prototypes]`
-  - `src\seg034_shape2d_group.c:64:11: warning: no previous prototype for 'file_load_shape2d_nofatal' [-Wmissing-prototypes]`
+  - `src\seg034_shape2d_group.c:55:11: warning: no previous prototype for 'loadshape' [-Wmissing-prototypes]`
+  - `src\seg034_shape2d_group.c:64:11: warning: no previous prototype for 'loadshapez' [-Wmissing-prototypes]`
 - Tagging follow-up: the screened hazards have matching source PORT tags
 
 ### `src/sprite_1_unk4.c`

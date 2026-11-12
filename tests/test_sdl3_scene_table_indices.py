@@ -68,7 +68,7 @@ class SceneTableIndexTests(unittest.TestCase):
                 'struct SHAPE3D { unsigned short marker; };\n'
                 'extern struct SHAPE3D g_shapes3d[130];\n'
                 'extern struct TRACKOBJECT trklst[215], scene2[19], scene3[13];\n'
-                'static void fatal_error(const I8 *s, ...) { (void)s; exit(99); }\n' +
+                'static void abortmessage(const I8 *s, ...) { (void)s; exit(99); }\n' +
                 TRACK_TABLE_LOOKUP + r'''
 static int model(struct SHAPE3D *p) { return p ? (int)(p - g_shapes3d) : -1; }
 int main(void) {

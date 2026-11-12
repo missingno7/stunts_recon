@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-void *file_read_nofatal(const char *filename, void *destination);
-const char *file_find_next(void);
+void *loadfileatz(const char *filename, void *destination);
+const char *findnext(void);
 int file_write_fatal(const char *filename, const void *source,
                      unsigned long length);
 
@@ -40,7 +40,7 @@ void port_memory_free(void *pointer)
     free(pointer);
 }
 
-void fatal_error(const char *format, ...)
+void abortmessage(const char *format, ...)
 {
     (void)format;
     ++s_fatal_count;
@@ -153,18 +153,18 @@ int main(int argc, char **argv)
     port_runtime_set_asset_root(asset_root);
     s_bounded = read_buffer;
     s_bounded_size = sizeof(read_buffer);
-    ok &= check(file_read_nofatal("alpha.txt", read_buffer) == read_buffer,
+    ok &= check(loadfileatz("alpha.txt", read_buffer) == read_buffer,
                 "case-insensitive nofatal read returns original pointer");
     ok &= check(memcmp(read_buffer, asset_data, sizeof(asset_data)) == 0,
                 "read returns complete asset bytes");
-    ok &= check(file_read_nofatal("casedir\\mixed.rpl", read_buffer) == read_buffer,
+    ok &= check(loadfileatz("casedir\\mixed.rpl", read_buffer) == read_buffer,
                 "DOS separators and case-insensitive nested lookup");
-    ok &= check(file_read_nofatal("missing.rpl", read_buffer) == NULL,
+    ok &= check(loadfileatz("missing.rpl", read_buffer) == NULL,
                 "nofatal read reports a missing file");
     ok &= check(port_fs_exists("longtrack.trk") && port_fs_exists("short.track"),
                 "literal opens still reach explicit native long filenames");
     ok &= check(port_fs_find("*.TRK", first, sizeof(first)) &&
-                strcmp(first, "TRACK01.TRK") == 0 && file_find_next() == NULL,
+                strcmp(first, "TRACK01.TRK") == 0 && findnext() == NULL,
                 "wildcard results fit the DOS 8.3 filename buffer");
     ok &= check(port_fs_find("track01.trk", first, sizeof(first)) &&
                 strcmp(first, "TRACK01.TRK") == 0,
@@ -185,10 +185,10 @@ int main(int argc, char **argv)
                 "asset-root traversal is rejected");
     ok &= check(port_fs_exists("DUP.HIG"), "saved file is visible to reads");
     memset(read_buffer, 0, sizeof(read_buffer));
-    ok &= check(file_read_nofatal("DUP.HIG", read_buffer) == read_buffer &&
+    ok &= check(loadfileatz("DUP.HIG", read_buffer) == read_buffer &&
                 memcmp(read_buffer, saved_override, sizeof(saved_override)) == 0,
                 "saved file shadows an immutable asset case-insensitively");
-    ok &= check(file_read_nofatal("large.rpl", read_buffer) == read_buffer &&
+    ok &= check(loadfileatz("large.rpl", read_buffer) == read_buffer &&
                 memcmp(read_buffer, large_data, sizeof(large_data)) == 0,
                 "large saved file round-trips all chunked bytes");
     ok &= check(read_host_file(duplicate_asset_path, read_buffer,
@@ -202,7 +202,7 @@ int main(int argc, char **argv)
 
     s_bounded = read_buffer;
     s_bounded_size = sizeof(exact_extent_data);
-    ok &= check(file_read_nofatal("nested/new.rpl", read_buffer) == read_buffer &&
+    ok &= check(loadfileatz("nested/new.rpl", read_buffer) == read_buffer &&
                 memcmp(read_buffer, exact_extent_data, sizeof(exact_extent_data)) == 0,
                 "bounded read accepts a file that exactly fills its destination");
     s_bounded_size = sizeof(read_buffer);
@@ -210,7 +210,7 @@ int main(int argc, char **argv)
     ok &= check(port_fs_find("*.HIG", first, sizeof(first)),
                 "wildcard search finds the first save-or-asset entry");
     memcpy(listed[count++], first, strlen(first) + 1u);
-    while ((found = file_find_next()) != NULL && count < 4) {
+    while ((found = findnext()) != NULL && count < 4) {
         ok &= check(found == first, "find-next reuses the first-result path buffer");
         memcpy(listed[count++], found, strlen(found) + 1u);
     }
@@ -227,18 +227,18 @@ int main(int argc, char **argv)
         ok &= check(saw_duplicate && saw_unique,
                     "search includes the saved override and unsaved asset once each");
     }
-    ok &= check(file_find_next() == NULL, "find-next ends after the last result");
+    ok &= check(findnext() == NULL, "find-next ends after the last result");
     ok &= check(!port_fs_find("missing-*.rpl", first, sizeof(first)) &&
-                file_find_next() == NULL,
+                findnext() == NULL,
                 "failed first search invalidates prior enumeration");
 
     s_bounded_size = 8u;
     memset(read_buffer, 0xA5, sizeof(read_buffer));
-    ok &= check(file_read_nofatal("large.rpl", read_buffer) == NULL,
+    ok &= check(loadfileatz("large.rpl", read_buffer) == NULL,
                 "bounded read rejects a file larger than its destination");
     ok &= check(read_buffer[8] == 0xA5,
                 "bounded read never writes beyond managed destination");
-    file_read_fatal("missing.rpl", read_buffer);
+    loadfileat("missing.rpl", read_buffer);
     ok &= check(s_fatal_count == 1u, "fatal read reports errors through fatal_error");
 
     s_bounded = NULL;

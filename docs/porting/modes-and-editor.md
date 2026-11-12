@@ -83,7 +83,7 @@ Separately, `compiletrack` validates the horizontal and vertical terrain-connect
 
 The track-menu load button opens `do_fileselect_dialog(..., ".trk", ...)`, builds the path, reads into `td14tb`, and returns to the 3D preview (`src/obj_seg000.c:1013-1025`). Inside the editor, the load palette action first asks about dirty edits, then opens the same `.trk` selector; on success it reads the block, calls `compiletrack`, resets the cursor to the sampled start, and clears the dirty flag (`src/obj_seg009.c:686-706`).
 
-Save opens `fsavereq` for a `.trk` name, checks an existing file with `file_find` and an overwrite dialog, then writes `td14tb` for exactly `0x70A` bytes. Successful save initializes that track's `.HIG` using `highscore_write_a(1)` and clears `mapDirty`; write errors show resource `ser` and allow retry (`src/obj_seg009.c:707-742`). New/template selection clears the first `0x384` object bytes, copies the selected 901-byte terrain template into `td15p_9`, blanks the track name, and marks it dirty (`:672-685`). Exit checks `mapDirty`; the dialog's save choice jumps into the same writer (`:742-747`).
+Save opens `fsavereq` for a `.trk` name, checks an existing file with `findfirst` and an overwrite dialog, then writes `td14tb` for exactly `0x70A` bytes. Successful save initializes that track's `.HIG` using `highscore_write_a(1)` and clears `mapDirty`; write errors show resource `ser` and allow retry (`src/obj_seg009.c:707-742`). New/template selection clears the first `0x384` object bytes, copies the selected 901-byte terrain template into `td15p_9`, blanks the track name, and marks it dirty (`:672-685`). Exit checks `mapDirty`; the dialog's save choice jumps into the same writer (`:742-747`).
 
 ## Other non-race modes
 

@@ -550,7 +550,7 @@ int port_fs_find(const char *pattern, char *found, size_t capacity)
     return 1;
 }
 
-const char *file_find_next(void)
+const char *findnext(void)
 {
     if (!s_find_state.active)
         return NULL;
@@ -686,7 +686,7 @@ static int read_file_to_host(const char *filename, void *destination)
 
 /* The source ABI is `file_read_nofatal(filename, far_destination)`. The SDL
    guest's far pointer has already been normalized to this host pointer. */
-void *file_read_nofatal(const char *filename, void *destination)
+void *loadfileatz(const char *filename, void *destination)
 {
     return read_file_to_host(filename, destination) ? destination : NULL;
 }
@@ -733,7 +733,7 @@ int file_write_fatal(const char *filename, const void *source,
     if (failed) {
         if (file != NULL)
             (void)SDL_RemovePath(absolute);
-        fatal_error("%s FILE ERROR", filename != NULL ? filename : "(null)");
+        abortmessage("%s FILE ERROR", filename != NULL ? filename : "(null)");
         return -1;
     }
     return 0;
@@ -780,10 +780,10 @@ void port_fs_close(int handle)
 /* Translates asm/resource_file_io_decompression.ASM:_file_read_fatal. DOS reads in 0x4000-byte
    chunks, advancing the destination segment by 0x400 paragraphs each time.
    The host pointer is already normalized by the port's far-memory model. */
-void *file_read_fatal(const char *filename, void *destination)
+void *loadfileat(const char *filename, void *destination)
 {
     if (!read_file_to_host(filename, destination))
-        fatal_error("%s FILE ERROR", filename != NULL ? filename : "(null)");
+        abortmessage("%s FILE ERROR", filename != NULL ? filename : "(null)");
     return destination;
 }
 

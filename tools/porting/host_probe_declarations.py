@@ -34,7 +34,7 @@ ALIASES = {
 OVERRIDES = {
     # Independently supported by typeinfer callee/callsite evidence and active definitions.
     "timer_get_delta_alt": "int16_t far timer_get_delta_alt(void);",
-    "security_check": "void far security_check(int16_t selection);",
+    "getprotection": "void far getprotection(int16_t selection);",
     "sprite_blit_to_video": "int16_t far sprite_blit_to_video(struct SPRITE far *sprite, int16_t mode);",
     # Target callers supply one far pointer (4 bytes) plus one selector word (2 bytes).
     "nullsub_2": "void far nullsub_2(void far *resource, int16_t selector);",

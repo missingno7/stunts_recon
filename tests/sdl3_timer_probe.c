@@ -50,7 +50,7 @@ static void callback_f(void) { s_events[s_event_count++] = 'F'; }
 static void callback_remove_b(void)
 {
     s_events[s_event_count++] = 'R';
-    timer_remove_callback(callback_b);
+    deltimer(callback_b);
 }
 static void callback_wait_tick(void)
 {
@@ -149,16 +149,16 @@ int main(void)
         return 2;
     }
     timer_setup_interrupt();
-    timer_reg_callback(callback_a);
-    timer_reg_callback(callback_b);
-    timer_reg_callback(callback_c);
+    addtimer(callback_a);
+    addtimer(callback_b);
+    addtimer(callback_c);
     raw_irq(2);
     foreign = SDL_CreateThread(foreign_pump, "foreign-pump", NULL);
     if (foreign == NULL) return 2;
     SDL_WaitThread(foreign, NULL);
     ok &= check(s_event_count == 0,
                 "a foreign thread cannot run game callbacks");
-    ok &= check(timer_get_counter() == 2,
+    ok &= check(gettick() == 2,
                 "each eligible raw IRQ advances the callback counter");
     ok &= check(s_event_count == 6 &&
                 s_events[0] == 'A' && s_events[1] == 'B' && s_events[2] == 'C' &&
@@ -168,26 +168,26 @@ int main(void)
     input_pushed = 1;
     raw_irq(2);
     port_timer_pump();
-    ok &= check(timer_get_counter() == 2 && s_event_count == 6,
+    ok &= check(gettick() == 2 && s_event_count == 6,
                 "input_pushed suppresses both callback count and dispatch");
     input_pushed = 0;
 
-    timer_remove_callback(callback_a);
-    timer_remove_callback(callback_b);
-    timer_remove_callback(callback_c);
+    deltimer(callback_a);
+    deltimer(callback_b);
+    deltimer(callback_c);
     s_event_count = 0;
-    timer_reg_callback(callback_remove_b);
-    timer_reg_callback(callback_b);
-    timer_reg_callback(callback_c);
+    addtimer(callback_remove_b);
+    addtimer(callback_b);
+    addtimer(callback_c);
     raw_irq(1);
     port_timer_pump();
     ok &= check(s_event_count == 2 && s_events[0] == 'R' && s_events[1] == 'C',
                 "ISR reads live slots after a callback removes the next slot");
-    timer_remove_callback(callback_remove_b);
-    timer_remove_callback(callback_c);
+    deltimer(callback_remove_b);
+    deltimer(callback_c);
 
     s_event_count = 0;
-    timer_reg_callback(callback_wait_tick);
+    addtimer(callback_wait_tick);
     raw_irq(1);
     foreign = SDL_CreateThread(feed_nested_tick, "nested-irq", NULL);
     if (foreign == NULL) return 2;
@@ -196,34 +196,34 @@ int main(void)
     ok &= check(s_event_count == 2 && s_events[0] == 'W' &&
                 s_events[1] == 'w',
                 "nested IRQ advances wait counter without reentering callback");
-    timer_remove_callback(callback_wait_tick);
+    deltimer(callback_wait_tick);
 
-    timer_reg_callback(callback_a);
-    timer_reg_callback(callback_b);
-    timer_reg_callback(callback_c);
-    timer_reg_callback(callback_d);
-    timer_reg_callback(callback_e);
+    addtimer(callback_a);
+    addtimer(callback_b);
+    addtimer(callback_c);
+    addtimer(callback_d);
+    addtimer(callback_e);
     if (setjmp(s_full_table) == 0) {
         s_expect_full_table = 1;
-        timer_reg_callback(callback_f);
+        addtimer(callback_f);
         ok &= check(0, "sixth callback must be rejected");
     }
     s_expect_full_table = 0;
-    timer_remove_callback(callback_a);
-    timer_remove_callback(callback_b);
-    timer_remove_callback(callback_c);
-    timer_remove_callback(callback_d);
-    timer_remove_callback(callback_e);
+    deltimer(callback_a);
+    deltimer(callback_b);
+    deltimer(callback_c);
+    deltimer(callback_d);
+    deltimer(callback_e);
 
     port_timer_test_seed_counter(0xfffffffeu);
     port_timer_copy_counter_words(4, 0);
     ok &= check(testticks() == 1,
                 "DOS unsigned counter comparison treats wrapped target as passed");
     raw_irq(1);
-    ok &= check(timer_get_counter() == 0xffffffffu,
+    ok &= check(gettick() == 0xffffffffu,
                 "callback counter wraps at 32 bits");
     raw_irq(1);
-    ok &= check(timer_get_counter() == 0,
+    ok &= check(gettick() == 0,
                 "callback counter carries through 32-bit wrap");
 
     SDL_SetAtomicInt(&s_elapsed_tick_count, 0x00020000);
@@ -241,7 +241,7 @@ int main(void)
        producer before comparing counters so there is no scheduling race. */
     port_timer_start();
     timer_setup_interrupt();
-    timer_reg_callback(callback_a);
+    addtimer(callback_a);
     s_event_count = 0;
     SDL_DelayNS(75000000u);
     SDL_SetAtomicInt(&s_running, 0);
@@ -255,7 +255,7 @@ int main(void)
         ok &= check(s_event_count == 0 && SDL_GetAtomicInt(&s_callback_counter) == 0,
                     "clock thread never enters guest callback code");
         port_timer_pump();
-        ok &= check(s_event_count == raw && timer_get_counter() == raw,
+        ok &= check(s_event_count == raw && gettick() == raw,
                     "guest pump delivers every pending raw callback tick");
     }
     port_timer_stop();

@@ -49,7 +49,7 @@ static size_t s_compressed_asset_size;
 
 /* seg034's PVS path calls file_find only to select an extension. The test
    supplies the matching frozen asset bytes through port_fs_load below. */
-const char *__wrap_file_find(const char *path)
+const char *__wrap_findfirst(const char *path)
 {
     return path;
 }
@@ -150,12 +150,12 @@ __declspec(dllexport) int dh_load_dashboard_archive(
         return 0;
     if (!port_memory_extent(archive, &archive_size) ||
         archive_size > output_capacity) {
-        mmgr_release(archive);
+        purgememory(archive);
         return 0;
     }
     memcpy(output, archive, archive_size);
     result = (int)archive_size;
-    mmgr_release(archive);
+    purgememory(archive);
     return result;
 }
 
@@ -182,7 +182,7 @@ __declspec(dllexport) int dh_render_loaded_dashboard_shape(
         return 0;
 
     paragraphs = (uint16_t)((shape_size + 15u) >> 4);
-    shape = (PortShape2D *)mmgr_alloc_pages("DASHBOARD ASSET TEST",
+    shape = (PortShape2D *)reservememory("DASHBOARD ASSET TEST",
                                              paragraphs);
     if (shape == NULL)
         return 0;
@@ -195,27 +195,27 @@ __declspec(dllexport) int dh_render_loaded_dashboard_shape(
 
         if (target_width == 0 || target_height == 0 ||
             (uint32_t)target_width * target_height > 0xFFF0u) {
-            mmgr_free(shape);
+            freememory(shape);
             return 0;
         }
         target_bytes = (uint32_t)target_width * target_height;
         if (output_capacity < target_bytes) {
-            mmgr_free(shape);
+            freememory(shape);
             return 0;
         }
         target = sprite_make_window(target_width, target_height, 0);
         if (target == NULL) {
-            mmgr_free(shape);
+            freememory(shape);
             return 0;
         }
         target_pixels = (uint8_t *)target->sprite_bitmapptr +
                         sizeof(PortShape2D);
         memset(target_pixels, 0x35, target_bytes);
         sprite_setup1_from_arg_pointer(target);
-        shape2d_blit_rle_clipped_at(shape, x, y);
+        movpackcfxya(shape, x, y);
         memcpy(output, target_pixels, target_bytes);
         sprite_free_window(target);
-        mmgr_free(shape);
+        freememory(shape);
         return (int)target_bytes;
     }
 
@@ -226,17 +226,17 @@ __declspec(dllexport) int dh_render_loaded_dashboard_shape(
 
         if (target_width == 0 || target_height == 0 ||
             (uint32_t)target_width * target_height > 0xFFF0u) {
-            mmgr_free(shape);
+            freememory(shape);
             return 0;
         }
         target_bytes = (uint32_t)target_width * target_height;
         if (output_capacity < target_bytes) {
-            mmgr_free(shape);
+            freememory(shape);
             return 0;
         }
         target = sprite_make_window(target_width, target_height, 15);
         if (target == NULL) {
-            mmgr_free(shape);
+            freememory(shape);
             return 0;
         }
         target_pixels = (uint8_t *)target->sprite_bitmapptr +
@@ -245,14 +245,14 @@ __declspec(dllexport) int dh_render_loaded_dashboard_shape(
         shape2d_blit_rle_at(shape, x, y);
         memcpy(output, target_pixels, target_bytes);
         sprite_free_window(target);
-        mmgr_free(shape);
+        freememory(shape);
         return (int)target_bytes;
     }
 
     {
         PortSprite *active = NULL;
         if (!port_sprite_active_view(NULL, NULL, &active) || active == NULL) {
-            mmgr_free(shape);
+            freememory(shape);
             return 0;
         }
         active->words2[0] = (uint16_t)clip_left;
@@ -263,18 +263,18 @@ __declspec(dllexport) int dh_render_loaded_dashboard_shape(
 
     output_size = PORT_VIDEO_MEMORY_BYTES;
     if (output_capacity < output_size) {
-        mmgr_free(shape);
+        freememory(shape);
         return 0;
     }
     if (operation == 0)
-        shape2d_blit_rle_clipped(shape);
+        movpackcf(shape);
     else if (operation == 1)
-        shape2d_blit_rle(shape);
+        movpackf(shape);
     else if (operation == 4)
-        shape2d_or_rle(shape);
+        orpackf(shape);
     else
-        shape2d_render_bmp_as_mask(shape);
+        andpackf(shape);
     memcpy(output, port_video_pixels(), output_size);
-    mmgr_free(shape);
+    freememory(shape);
     return (int)output_size;
 }

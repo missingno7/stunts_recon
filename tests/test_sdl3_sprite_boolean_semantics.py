@@ -317,13 +317,13 @@ int main(void)
         for (row = 0; row < active_height; ++row)
             s_lines[row] = (uint16_t)(row * pitch);
         switch (operation) {
-        case 0: sprite_putimage_and(shape, (int16_t)get_u16(metadata),
+        case 0: andcfxya(shape, (int16_t)get_u16(metadata),
                                     (int16_t)get_u16(metadata + 2)); break;
         case 1: sprite_putimage_and_alt(shape, (int16_t)get_u16(metadata),
                                         (int16_t)get_u16(metadata + 2)); break;
-        case 2: sprite_putimage_and_alt2(shape, (int16_t)get_u16(metadata),
+        case 2: andcfxy(shape, (int16_t)get_u16(metadata),
                                          (int16_t)get_u16(metadata + 2)); break;
-        case 3: sprite_putimage_or_alt(shape, (int16_t)get_u16(metadata),
+        case 3: orcfxy(shape, (int16_t)get_u16(metadata),
                                        (int16_t)get_u16(metadata + 2)); break;
         default: return 15;
         }
@@ -430,10 +430,10 @@ class Sdl3SpriteBooleanSemanticsTests(unittest.TestCase):
         cls.image = locked_image()
         source = (ROOT / "port" / "sprite.c").read_text(encoding="utf-8")
         actual_functions = "\n\n".join(extract_function(source, name) for name in (
-            "draw_opaque", "compose_boolean", "sprite_putimage_and",
+            "draw_opaque", "compose_boolean", "andcfxya",
             "sprite_putimage_and_alt", "sprite_header_relative",
-            "sprite_putimage_and_alt2",
-            "sprite_putimage_or_alt",
+            "andcfxy",
+            "orcfxy",
         ))
         cls.temporary = tempfile.TemporaryDirectory(prefix="sdl3-sprite-boolean-")
         cls.executable = Path(cls.temporary.name) / "sprite_boolean_harness.exe"

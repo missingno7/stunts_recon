@@ -421,9 +421,9 @@ void port_guest_unwind(const char *reason)
 void port_stub_fail(const char *symbol) { port_guest_unwind(symbol); }
 int port_memory_extent(const void *pointer, size_t *remaining_out)
 { (void)pointer; (void)remaining_out; return 0; }
-void *mmgr_alloc_pages(const char *name, uint16_t paragraphs)
+void *reservememory(const char *name, uint16_t paragraphs)
 { (void)name; (void)paragraphs; return 0; }
-void mmgr_free(void *pointer) { (void)pointer; }
+void freememory(void *pointer) { (void)pointer; }
 int port_far_from_host(const void *pointer, PortFarPtr *address_out,
                        size_t *remaining_out)
 { (void)pointer; (void)address_out; (void)remaining_out; return 0; }

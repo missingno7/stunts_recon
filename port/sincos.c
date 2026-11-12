@@ -57,7 +57,7 @@ int16_t intcos(uint16_t angle)
     return intsin((uint16_t)(angle + 0x100u));
 }
 
-int16_t mulscl(int16_t left, int16_t right)
+int16_t fixedmult(int16_t left, int16_t right)
 {
     uint32_t product = (uint32_t)((int32_t)left * (int32_t)right);
     uint16_t low = (uint16_t)product;

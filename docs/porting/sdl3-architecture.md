@@ -58,7 +58,7 @@ framebuffer; its first 64,000 bytes are the visible 320x200 surface.
 Paragraph allocation is 16-byte aligned and bounded;
 resource blocks that do not fit use handle space. `farmalloc`-style requests
 and the game memory-manager API return mapped host views only inside the port
-adapter. `mmgr_free` releases the same registered allocation. M0 implements
+adapter. `freememory` releases the same registered allocation. M0 implements
 the address representation, bounded resolver, and allocator catalog; it does
 not claim that all source-level pointer fields have been migrated to tagged
 values yet.

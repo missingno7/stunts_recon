@@ -152,7 +152,7 @@
       }
     },
     {
-      "function": "set_criterr_handler",
+      "function": "criterr",
       "address": "0x01F377",
       "image_load_offset": "0x01F377",
       "image_end_exclusive": "0x01F3BC",
@@ -207,7 +207,7 @@
       }
     },
     {
-      "function": "criterr_exithandler",
+      "function": "resetcriterr",
       "address": "0x01F3BC",
       "image_load_offset": "0x01F3BC",
       "image_end_exclusive": "0x01F3DA",
@@ -313,7 +313,7 @@
       }
     },
     {
-      "function": "file_paras",
+      "function": "filesizea",
       "address": "0x01FE82",
       "image_load_offset": "0x01FE82",
       "image_end_exclusive": "0x01FE94",
@@ -326,11 +326,11 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "file_decomp_fatal",
+          "function": "loadpack",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "file_load_binary_nofatal",
+          "function": "loadfilez",
           "confidence": "source_semantic_only"
         }
       ],
@@ -355,7 +355,7 @@
       }
     },
     {
-      "function": "file_paras_nofatal",
+      "function": "filesizez",
       "address": "0x01FE94",
       "image_load_offset": "0x01FE94",
       "image_end_exclusive": "0x01FEA5",
@@ -388,7 +388,7 @@
       }
     },
     {
-      "function": "file_paras_fatal",
+      "function": "filesize",
       "address": "0x01FEA5",
       "image_load_offset": "0x01FEA5",
       "image_end_exclusive": "0x01FF26",
@@ -396,7 +396,7 @@
       "image_segment": "seg012",
       "subsystem": "dos.file",
       "interface": "INT 21h AH=3Dh/42h/3Eh",
-      "semantics": "Opens read-only, seeks EOF then BOF (AX=4200h,CX:DX=0), closes, returns ceil(size/16); errors call fatal_error.",
+      "semantics": "Opens read-only, seeks EOF then BOF (AX=4200h,CX:DX=0), closes, returns ceil(size/16); errors call abortmessage.",
       "replacement_contract": "Use host metadata; preserve fatal path and paragraph rounding.",
       "confidence": "high",
       "indexed_callers": [],
@@ -421,7 +421,7 @@
       }
     },
     {
-      "function": "file_decomp_paras",
+      "function": "unpacksizea",
       "address": "0x01FF26",
       "image_load_offset": "0x01FF26",
       "image_end_exclusive": "0x01FF38",
@@ -434,7 +434,7 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "file_decomp_fatal",
+          "function": "loadpack",
           "confidence": "source_semantic_only"
         }
       ],
@@ -459,7 +459,7 @@
       }
     },
     {
-      "function": "file_decomp_paras_nofatal",
+      "function": "unpacksizez",
       "address": "0x01FF38",
       "image_load_offset": "0x01FF38",
       "image_end_exclusive": "0x01FF49",
@@ -492,7 +492,7 @@
       }
     },
     {
-      "function": "file_decomp_paras_fatal",
+      "function": "unpacksize",
       "address": "0x01FF49",
       "image_load_offset": "0x01FF49",
       "image_end_exclusive": "0x01FFD4",
@@ -525,7 +525,7 @@
       }
     },
     {
-      "function": "file_find",
+      "function": "findfirst",
       "address": "0x01FFD4",
       "image_load_offset": "0x01FFD4",
       "image_end_exclusive": "0x02002E",
@@ -591,7 +591,7 @@
       }
     },
     {
-      "function": "file_find_next",
+      "function": "findnext",
       "address": "0x02002E",
       "image_load_offset": "0x02002E",
       "image_end_exclusive": "0x020044",
@@ -631,7 +631,7 @@
       }
     },
     {
-      "function": "file_read",
+      "function": "loadfileata",
       "address": "0x020AD0",
       "image_load_offset": "0x020AD0",
       "image_end_exclusive": "0x020AE0",
@@ -644,11 +644,11 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "file_decomp_fatal",
+          "function": "loadpack",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "file_load_binary_nofatal",
+          "function": "loadfilez",
           "confidence": "source_semantic_only"
         }
       ],
@@ -673,7 +673,7 @@
       }
     },
     {
-      "function": "file_read_nofatal",
+      "function": "loadfileatz",
       "address": "0x020AE0",
       "image_load_offset": "0x020AE0",
       "image_end_exclusive": "0x020AEF",
@@ -717,7 +717,7 @@
       }
     },
     {
-      "function": "file_read_fatal",
+      "function": "loadfileat",
       "address": "0x020AEF",
       "image_load_offset": "0x020AEF",
       "image_end_exclusive": "0x020B62",
@@ -772,7 +772,7 @@
       }
     },
     {
-      "function": "file_write_nofatal",
+      "function": "savefile",
       "address": "0x0224FA",
       "image_load_offset": "0x0224FA",
       "image_end_exclusive": "0x02250B",
@@ -812,7 +812,7 @@
       "image_segment": "seg012",
       "subsystem": "dos.file",
       "interface": "INT 21h AH=3Ch/40h/3Eh/41h",
-      "semantics": "Fatal wrapper for 16 KiB far-source writes; deletes partial output before fatal_error.",
+      "semantics": "Fatal wrapper for 16 KiB far-source writes; deletes partial output before abortmessage.",
       "replacement_contract": "Use host file APIs with matching overwrite, cleanup and fatal behavior.",
       "confidence": "high",
       "indexed_callers": [
@@ -978,7 +978,7 @@
       "confidence": "high machine behavior; boundary intent needs callers",
       "indexed_callers": [
         {
-          "function": "mmgr_alloc_a000",
+          "function": "initmemory",
           "confidence": "source_semantic_only"
         },
         {
@@ -1009,7 +1009,7 @@
       }
     },
     {
-      "function": "mmgr_alloc_dos_heap",
+      "function": "initmemsize",
       "address": "0x02111D",
       "image_load_offset": "0x02111D",
       "image_end_exclusive": "0x021157",
@@ -1206,15 +1206,15 @@
       "confidence": "high runtime offsets; C storage extent uncertain",
       "indexed_callers": [
         {
-          "function": "mouse_get_state",
+          "function": "getmousepos",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "mouse_init",
+          "function": "initmouse",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "mouse_set_minmax",
+          "function": "setmousebounds",
           "confidence": "source_semantic_only"
         },
         {
@@ -1222,15 +1222,15 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "mouse_set_position",
+          "function": "setmousepos",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "mouse_set_horizontal_range",
+          "function": "setmousex",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "mouse_set_vertical_range",
+          "function": "setmousey",
           "confidence": "source_semantic_only"
         }
       ],
@@ -1373,7 +1373,7 @@
       "image_segment": "seg012",
       "subsystem": "dos.runtime",
       "interface": "INT 20h fallback",
-      "semantics": "Searches resource table for four-character sound id and computes far address; after fatal_error, INT 20h terminates if it returns.",
+      "semantics": "Searches resource table for four-character sound id and computes far address; after abortmessage, INT 20h terminates if it returns.",
       "replacement_contract": "Resolve resource id and raise/return explicit fatal resource error; do not depend on INT 20h.",
       "confidence": "high for fallback; path is indirect",
       "indexed_callers": [
@@ -1404,7 +1404,7 @@
       }
     },
     {
-      "function": "input_get_action_buttons",
+      "function": "joybuttons",
       "address": "0x0205C8",
       "image_load_offset": "0x0205C8",
       "image_end_exclusive": "0x0205FC",
@@ -1454,7 +1454,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "get_kb_or_joy_flags",
+          "function": "joystate",
           "confidence": "source_semantic_only"
         },
         {
@@ -1493,7 +1493,7 @@
       }
     },
     {
-      "function": "kb_parse_key",
+      "function": "interpretkey",
       "address": "0x020404",
       "image_load_offset": "0x020404",
       "image_end_exclusive": "0x02045E",
@@ -1506,7 +1506,7 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "kb_get_char",
+          "function": "normkeyi",
           "confidence": "source_semantic_only"
         },
         {
@@ -1568,7 +1568,7 @@
       }
     },
     {
-      "function": "kb_get_char",
+      "function": "normkeyi",
       "address": "0x020519",
       "image_load_offset": "0x020519",
       "image_end_exclusive": "0x020538",
@@ -1576,7 +1576,7 @@
       "image_segment": "seg012",
       "subsystem": "input.keyboard",
       "interface": "INT 16h AH=01h/00h",
-      "semantics": "Checks BIOS keyboard and consumes key AX if present, then calls kb_parse_key.",
+      "semantics": "Checks BIOS keyboard and consumes key AX if present, then calls interpretkey.",
       "replacement_contract": "Preserve ASCII/scan mapping and consume semantics.",
       "confidence": "high",
       "indexed_callers": [
@@ -1788,7 +1788,7 @@
       }
     },
     {
-      "function": "kb_read_char",
+      "function": "normkey",
       "address": "0x020A21",
       "image_load_offset": "0x020A21",
       "image_end_exclusive": "0x020A35",
@@ -1827,7 +1827,7 @@
       }
     },
     {
-      "function": "kb_checking",
+      "function": "nextkey",
       "address": "0x020A35",
       "image_load_offset": "0x020A35",
       "image_end_exclusive": "0x020A44",
@@ -1869,7 +1869,7 @@
       }
     },
     {
-      "function": "kb_check",
+      "function": "purgekey",
       "address": "0x020A68",
       "image_load_offset": "0x020A68",
       "image_end_exclusive": "0x020A77",
@@ -1921,7 +1921,7 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "mouse_init",
+          "function": "initmouse",
           "confidence": "source_semantic_only"
         }
       ],
@@ -1947,7 +1947,7 @@
       }
     },
     {
-      "function": "mouse_init",
+      "function": "initmouse",
       "address": "0x0268D2",
       "image_load_offset": "0x0268D2",
       "image_end_exclusive": "0x02695C",
@@ -2005,7 +2005,7 @@
       "blocker_class": 8
     },
     {
-      "function": "mouse_set_minmax",
+      "function": "setmousebounds",
       "address": "0x02695C",
       "image_load_offset": "0x02695C",
       "image_end_exclusive": "0x0269B0",
@@ -2018,11 +2018,11 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "mouse_init",
+          "function": "initmouse",
           "confidence": "source_semantic_only"
         },
         {
-          "function": "mouse_minmax_position",
+          "function": "initmousedrive",
           "confidence": "source_semantic_only"
         }
       ],
@@ -2155,7 +2155,7 @@
       }
     },
     {
-      "function": "mouse_set_position",
+      "function": "setmousepos",
       "address": "0x026A2C",
       "image_load_offset": "0x026A2C",
       "image_end_exclusive": "0x026A60",
@@ -2168,7 +2168,7 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "mouse_minmax_position",
+          "function": "initmousedrive",
           "confidence": "source_semantic_only"
         }
       ],
@@ -2199,7 +2199,7 @@
       }
     },
     {
-      "function": "mouse_get_state",
+      "function": "getmousepos",
       "address": "0x026A60",
       "image_load_offset": "0x026A60",
       "image_end_exclusive": "0x026A9A",
@@ -2254,7 +2254,7 @@
       }
     },
     {
-      "function": "mouse_set_horizontal_range",
+      "function": "setmousex",
       "address": "0x026A9A",
       "image_load_offset": "0x026A9A",
       "image_end_exclusive": "0x026ACA",
@@ -2262,7 +2262,7 @@
       "image_segment": "seg017",
       "subsystem": "input.mouse",
       "interface": "INT 33h AX=7",
-      "semantics": "Sets X limits after shifting args right by mouse scale, opposite mouse_set_minmax left shift.",
+      "semantics": "Sets X limits after shifting args right by mouse scale, opposite setmousebounds left shift.",
       "replacement_contract": "Resolve this asymmetry before unifying the range API.",
       "confidence": "uncertain: inconsistent scale direction",
       "indexed_callers": [],
@@ -2288,7 +2288,7 @@
       "blocker_class": 8
     },
     {
-      "function": "mouse_set_vertical_range",
+      "function": "setmousey",
       "address": "0x026ACA",
       "image_load_offset": "0x026ACA",
       "image_end_exclusive": "0x026AF2",
@@ -2532,7 +2532,7 @@
       }
     },
     {
-      "function": "timer_reg_callback",
+      "function": "addtimer",
       "address": "0x0202AA",
       "image_load_offset": "0x0202AA",
       "image_end_exclusive": "0x0202DE",
@@ -2586,7 +2586,7 @@
       }
     },
     {
-      "function": "timer_remove_callback",
+      "function": "deltimer",
       "address": "0x0202DE",
       "image_load_offset": "0x0202DE",
       "image_end_exclusive": "0x02031D",
@@ -2672,7 +2672,7 @@
       }
     },
     {
-      "function": "timer_get_counter",
+      "function": "gettick",
       "address": "0x022778",
       "image_load_offset": "0x022778",
       "image_end_exclusive": "0x022782",
@@ -2822,7 +2822,7 @@
       }
     },
     {
-      "function": "mmgr_alloc_a000",
+      "function": "initmemory",
       "address": "0x0210F1",
       "image_load_offset": "0x0210F1",
       "image_end_exclusive": "0x0210FE",
@@ -2899,7 +2899,7 @@
       }
     },
     {
-      "function": "video_clear_color",
+      "function": "clearscreen",
       "address": "0x0232A8",
       "image_load_offset": "0x0232A8",
       "image_end_exclusive": "0x0232C0",
@@ -2920,7 +2920,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "video_set_mode_13h",
+          "function": "initgraphics",
           "confidence": "source_semantic_only"
         }
       ],
@@ -3106,7 +3106,7 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "video_set_mode_13h",
+          "function": "initgraphics",
           "confidence": "source_semantic_only"
         }
       ],
@@ -3164,7 +3164,7 @@
       }
     },
     {
-      "function": "video_set_mode_13h",
+      "function": "initgraphics",
       "address": "0x023816",
       "image_load_offset": "0x023816",
       "image_end_exclusive": "0x023848",
@@ -3232,7 +3232,7 @@
       "confidence": "high call contract; bit depth adapter-dependent",
       "indexed_callers": [
         {
-          "function": "load_palandcursor",
+          "function": "loadpalandmouse",
           "confidence": "source_semantic_only"
         }
       ],
@@ -3565,7 +3565,7 @@
       }
     },
     {
-      "function": "sprite_set_window_bounds",
+      "function": "clippixwindow",
       "address": "0x02320E",
       "image_load_offset": "0x02320E",
       "image_end_exclusive": "0x02327F",
@@ -3611,7 +3611,7 @@
       "confidence": "high",
       "indexed_callers": [
         {
-          "function": "do_sinking",
+          "function": "sink",
           "confidence": "source_semantic_only"
         },
         {
@@ -3936,7 +3936,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "security_check",
+          "function": "getprotection",
           "confidence": "source_semantic_only"
         }
       ],
@@ -3965,7 +3965,7 @@
       }
     },
     {
-      "function": "sprite_putimage_and",
+      "function": "andcfxya",
       "address": "0x023890",
       "image_load_offset": "0x023890",
       "image_end_exclusive": "0x0239FA",
@@ -4014,7 +4014,7 @@
       }
     },
     {
-      "function": "putpixel_iconMask",
+      "function": "andfxya",
       "address": "0x023A1E",
       "image_load_offset": "0x023A1E",
       "image_end_exclusive": "0x023AC0",
@@ -4060,7 +4060,7 @@
       }
     },
     {
-      "function": "shape2d_render_bmp_as_mask",
+      "function": "andpackf",
       "address": "0x023B02",
       "image_load_offset": "0x023B02",
       "image_end_exclusive": "0x023B98",
@@ -4224,7 +4224,7 @@
       }
     },
     {
-      "function": "shape2d_blit_rle",
+      "function": "movpackf",
       "address": "0x023E00",
       "image_load_offset": "0x023E00",
       "image_end_exclusive": "0x023E90",
@@ -4270,7 +4270,7 @@
       }
     },
     {
-      "function": "shape2d_blit_rle_clipped",
+      "function": "movpackcf",
       "address": "0x023ED2",
       "image_load_offset": "0x023ED2",
       "image_end_exclusive": "0x024060",
@@ -4311,7 +4311,7 @@
       }
     },
     {
-      "function": "sprite_putimage_or",
+      "function": "orcfxya",
       "address": "0x024084",
       "image_load_offset": "0x024084",
       "image_end_exclusive": "0x024212",
@@ -4368,7 +4368,7 @@
       }
     },
     {
-      "function": "putpixel_iconFillings",
+      "function": "orfxya",
       "address": "0x024212",
       "image_load_offset": "0x024212",
       "image_end_exclusive": "0x0242F6",
@@ -4414,7 +4414,7 @@
       }
     },
     {
-      "function": "shape2d_or_rle",
+      "function": "orpackf",
       "address": "0x0242F6",
       "image_load_offset": "0x0242F6",
       "image_end_exclusive": "0x0243B0",
@@ -4769,7 +4769,7 @@
           "confidence": "source_semantic_only"
         },
         {
-          "function": "load_palandcursor",
+          "function": "loadpalandmouse",
           "confidence": "source_semantic_only"
         },
         {
@@ -4983,7 +4983,7 @@
       }
     },
     {
-      "function": "shape2d_scale_blit_hotspot",
+      "function": "scalefxy",
       "address": "0x025E08",
       "image_load_offset": "0x025E08",
       "image_end_exclusive": "0x025F48",
@@ -5064,7 +5064,7 @@
   "not_found": [
     {
       "topic": "EXE self-reading",
-      "finding": "No routine opening/reading the executable itself identified. security_check at 0x0044CF reads misc/string resources, not the EXE.",
+      "finding": "No routine opening/reading the executable itself identified. getprotection at 0x0044CF reads misc/string resources, not the EXE.",
       "confidence": "medium; raw gaps remain",
       "evidence": [
         "evidence/functions.json#functions[name=security_check]",
@@ -5159,7 +5159,7 @@
       "finding": "Linear decode IN AX,5Dh; source body has no I/O instruction at that location."
     },
     {
-      "at": "0x0226F4 sin_fast; 0x02365C drawrect; 0x0241F0 sprite_putimage_or; 0x0242B6 putpixel_iconFillings; 0x0244E6 sprite_putimage_transparent; 0x02469C sub_345BC; 0x024A2F shape_op_explosion; 0x025D35-0x025D37 sub_35C4E",
+      "at": "0x0226F4 sin_fast; 0x02365C drawrect; 0x0241F0 orcfxya; 0x0242B6 orfxya; 0x0244E6 sprite_putimage_transparent; 0x02469C sub_345BC; 0x024A2F shape_op_explosion; 0x025D35-0x025D37 sub_35C4E",
       "finding": "Linear decoder emits port/string/INT1-like instructions in code/data mixtures or ordinary drawing bodies. Do not treat those as I/O without a confirmed instruction boundary and source operation."
     }
   ],

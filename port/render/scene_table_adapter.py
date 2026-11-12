@@ -11,7 +11,7 @@ static struct TRACKOBJECT *port_track_object_at(unsigned index)
     if (index < 215u) return &trklst[index];
     if (index < 234u) return &scene2[index - 215u];
     if (index < 247u) return &scene3[index - 234u];
-    fatal_error((const I8 *)"Invalid DOS track-object index: %u", index);
+    abortmessage((const I8 *)"Invalid DOS track-object index: %u", index);
     return 0;
 }
 '''

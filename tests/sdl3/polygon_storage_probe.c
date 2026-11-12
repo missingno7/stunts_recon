@@ -22,7 +22,7 @@ int main(int argc, char **argv)
     (void)argv;
 
     polyinfoptr = arena;
-    polyinfo_reset();
+    INIT_BUFFERS();
     if (polyinfoptr != arena || poly_link_list[POLYINFO_CAPACITY] != -1)
         return 1;
     if (polygonnumber != 0 || polyinfo_offset != 0 ||
@@ -37,13 +37,13 @@ int main(int argc, char **argv)
     records[2].depth = 150;
 
     poly_info_ptrs[0] = &records[0];
-    if (insert_newest_poly_in_poly_linked_list_40ED6(100, 1) != 0)
+    if (polysort(100, 1) != 0)
         return 3;
     poly_info_ptrs[1] = &records[1];
-    if (insert_newest_poly_in_poly_linked_list_40ED6(20, 1) != 0)
+    if (polysort(20, 1) != 0)
         return 4;
     poly_info_ptrs[2] = &records[2];
-    if (insert_newest_poly_in_poly_linked_list_40ED6(150, 1) != 0)
+    if (polysort(150, 1) != 0)
         return 5;
 
     if (polyinfoptr != arena || polygonnumber != 3 ||
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
         poly_link_list[1] != -1 || facenodeiterator != 1)
         return 7;
 
-    polyinfo_reset();
+    INIT_BUFFERS();
     if (polyinfoptr != arena || poly_link_list[POLYINFO_CAPACITY] != -1 ||
         polygonnumber != 0 || polyinfo_offset != 0)
         return 8;

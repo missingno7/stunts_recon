@@ -75,7 +75,7 @@ def _shape(width: int, height: int, x: int, y: int, pixels: bytes) -> bytes:
 def mulscl_case() -> RoutineCase:
     left, right = -12345, 4567
     return RoutineCase(
-        "mulscl signed fixed-point multiply", "mulscl",
+        "fixedmult signed fixed-point multiply", "fixedmult",
         args=[left & 0xFFFF, right & 0xFFFF], call="far",
         result_registers=("ax",),
         port_call=lambda lib, _case: CallResult(
@@ -128,7 +128,7 @@ def icon_combine_case(use_and: bool, width: int = 7) -> RoutineCase:
     height, x, y = 5, 67, 43
     pixels = _source(width, height)
     initial = _frame()
-    routine = "putpixel_iconMask" if use_and else "putpixel_iconFillings"
+    routine = "andfxya" if use_and else "orfxya"
     writes = _sprite_machine_state(routine)
     writes += [MemoryWrite(0xA000, 0, initial),
                MemoryWrite(SPRITE_SOURCE_SEGMENT, SPRITE_SOURCE_OFFSET,
@@ -157,7 +157,7 @@ def shape2d_runs_case(use_and: bool) -> RoutineCase:
     width, height, x, y = 9, 5, 72, 52
     encoded = _rle_source()
     initial = _frame()
-    routine = "shape2d_render_bmp_as_mask" if use_and else "shape2d_or_rle"
+    routine = "andpackf" if use_and else "orpackf"
     writes = _sprite_machine_state(routine)
     writes += [MemoryWrite(0xA000, 0, initial),
                MemoryWrite(SPRITE_SOURCE_SEGMENT, SPRITE_SOURCE_OFFSET,

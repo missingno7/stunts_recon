@@ -207,7 +207,7 @@ void timer_setup_interrupt(void)
     port_timer_mark_game_enabled(1);
 }
 
-void timer_reg_callback(void (*callback)(void))
+void addtimer(void (*callback)(void))
 {
     unsigned i;
     if (callback == NULL)
@@ -222,7 +222,7 @@ void timer_reg_callback(void (*callback)(void))
     port_guest_unwind("No room left on timer interrupt routine list");
 }
 
-void timer_remove_callback(void (*callback)(void))
+void deltimer(void (*callback)(void))
 {
     unsigned i;
     if (callback == NULL)
@@ -251,7 +251,7 @@ uint32_t elapsedticks(void)
     return delta;
 }
 
-uint32_t timer_get_counter(void)
+uint32_t gettick(void)
 {
     port_timer_pump();
     return (uint32_t)SDL_GetAtomicInt(&s_callback_counter);
@@ -266,8 +266,8 @@ void port_timer_test_seed_counter(uint32_t counter)
 
 void timedwait(uint32_t ticks)
 {
-    uint32_t target = timer_get_counter() + ticks;
-    while (timer_get_counter() < target) {
+    uint32_t target = gettick() + ticks;
+    while (gettick() < target) {
         port_guest_check_stop();
         SDL_DelayNS(1000000u);
     }
@@ -275,7 +275,7 @@ void timedwait(uint32_t ticks)
 
 void setticks(int32_t ticks)
 {
-    s_copy_deadline = timer_get_counter() + (uint32_t)ticks;
+    s_copy_deadline = gettick() + (uint32_t)ticks;
 }
 
 /* Both the split-word line editor and audio driver waits use the callback
@@ -283,12 +283,12 @@ void setticks(int32_t ticks)
 void port_timer_copy_counter_words(uint16_t ticks_low, uint16_t ticks_high)
 {
     uint32_t ticks = (uint32_t)ticks_low | ((uint32_t)ticks_high << 16);
-    s_copy_deadline = timer_get_counter() + ticks;
+    s_copy_deadline = gettick() + ticks;
 }
 
 int16_t testticks(void)
 {
-    return (int16_t)(timer_get_counter() >= s_copy_deadline);
+    return (int16_t)(gettick() >= s_copy_deadline);
 }
 
 /* C host translations of asm/graphics_resource_runtime.ASM:_set_add_value,
@@ -323,7 +323,7 @@ void waitbios(int32_t ticks)
 
 void waitticks(void)
 {
-    while (timer_get_counter() < s_copy_deadline) {
+    while (gettick() < s_copy_deadline) {
         port_guest_check_stop();
         SDL_DelayNS(1000000u);
     }

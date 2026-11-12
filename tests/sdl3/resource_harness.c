@@ -100,12 +100,12 @@ int port_fs_find(const char *pattern, char *found, size_t capacity)
     (void)capacity;
     return 0;
 }
-void *file_load_shape2d_fatal(char *name)
+void *loadshape(char *name)
 {
     (void)name;
     return NULL;
 }
-void *file_load_shape2d_nofatal(char *name)
+void *loadshapez(char *name)
 {
     (void)name;
     return NULL;
@@ -314,7 +314,7 @@ static void test_scaled_blit(void)
     uint8_t *shape;
     clear_surface();
     shape = make_shape(4, 4, 0, 0, 0, 0, pixels);
-    shapeexpl(128, shape, 4, 3);
+    scalecfxy(128, shape, 4, 3);
     assert(surface[3u * 64u + 4u] == 6);
     assert(surface[3u * 64u + 5u] == 8);
     assert(surface[4u * 64u + 4u] == 14);
@@ -322,7 +322,7 @@ static void test_scaled_blit(void)
 
     clear_surface();
     shape = make_shape(4, 4, 2, 2, 0, 0, pixels);
-    shapeexpl(128, shape, 0, 0);
+    scalecfxy(128, shape, 0, 0);
     assert(surface[0] == 16);
     assert(surface[1] == 0);
     assert(surface[64] == 0);
@@ -337,20 +337,20 @@ static void test_resource_ownership_and_validation(void)
     resource_file_size = sizeof(archive);
     memcpy(resource_file_data, archive, sizeof(archive));
     before = free_count;
-    assert(file_load_binary_nofatal(resource_file_name) == resource_file_data);
+    assert(loadfilez(resource_file_name) == resource_file_data);
     assert(free_count == before);
 
     resource_file_name = "bad.3sh";
     resource_file_size = 17;
     memcpy(resource_file_data, archive, resource_file_size);
     before = free_count;
-    assert(file_load_binary_nofatal(resource_file_name) == NULL);
+    assert(loadfilez(resource_file_name) == NULL);
     assert(free_count == before + 1u);
 
     make_rle_p3s(archive, sizeof(archive));
     resource_file_name = "empty.p3s";
     before = free_count;
-    assert(file_decomp(resource_file_name, 0) == managed_resource_data);
+    assert(loadpacka(resource_file_name, 0) == managed_resource_data);
     assert(free_count == before + 1u);
     assert(managed_allocation_count == 1u);
 
@@ -358,7 +358,7 @@ static void test_resource_ownership_and_validation(void)
     make_rle_p3s(archive, 17);
     resource_file_name = "bad.p3s";
     before = free_count;
-    assert(file_decomp(resource_file_name, 0) == NULL);
+    assert(loadpacka(resource_file_name, 0) == NULL);
     assert(free_count == before + 1u);
     assert(managed_allocation_count == 1u);
 }
@@ -389,12 +389,12 @@ static int emit_blit_image_set(const char *path)
 
     clear_surface();
     shape = make_shape(4, 4, 0, 0, 0, 0, scaled_pixels);
-    shapeexpl(128, shape, 4, 3);
+    scalecfxy(128, shape, 4, 3);
     memcpy(image_set + 2u * sizeof(surface), surface, sizeof(surface));
 
     clear_surface();
     shape = make_shape(4, 4, 2, 2, 0, 0, scaled_pixels);
-    shapeexpl(128, shape, 0, 0);
+    scalecfxy(128, shape, 0, 0);
     memcpy(image_set + 3u * sizeof(surface), surface, sizeof(surface));
 
     output = fopen(path, "wb");

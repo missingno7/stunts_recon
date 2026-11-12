@@ -35,7 +35,7 @@ def main():
         reset_frame(request["initial"])
     if op == "frame":
         response["frame"] = frame()
-    elif op == "mulscl":
+    elif op == "fixedmult":
         fn = dll.dh_call_mulscl
         fn.argtypes = [ctypes.c_int16, ctypes.c_int16]
         fn.restype = ctypes.c_int16

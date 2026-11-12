@@ -559,7 +559,7 @@ void port_video_shutdown(void)
 }
 
 /* Implemented platform seams reached by initialize_main in M0. */
-void video_set_mode_13h(void) { }
+void initgraphics(void) { }
 void video_set_mode4(void) { }
 
 void vgapalette(uint16_t first, uint16_t count, uint8_t *rgb6)

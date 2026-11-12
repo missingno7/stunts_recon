@@ -201,7 +201,7 @@ PortSprite *sprite_make_window(uint16_t width, uint16_t height, uint16_t color)
     pixels = (uint32_t)width * height;
     /* asm/patterned_lines_windows.ASM: ((width*height + 16) >> 4) + 1 paragraphs. */
     paragraphs = ((pixels + 16u) >> 4) + 1u;
-    shape = (PortShape2D *)mmgr_alloc_pages("MCGA WINDOW",
+    shape = (PortShape2D *)reservememory("MCGA WINDOW",
                                              (uint16_t)paragraphs);
     if (shape == NULL)
         port_guest_unwind("MCGA window allocation failed");
@@ -210,7 +210,7 @@ PortSprite *sprite_make_window(uint16_t width, uint16_t height, uint16_t color)
     shape->height = height;
     window->line_offsets = (uint16_t *)malloc((size_t)height * sizeof(uint16_t));
     if (window->line_offsets == NULL) {
-        mmgr_free(shape);
+        freememory(shape);
         port_guest_unwind("MCGA window row table allocation failed");
     }
     for (i = 0; i < height; ++i)
@@ -233,7 +233,7 @@ void sprite_free_window(void *pointer)
     PortWindow *window = find_window((const PortSprite *)pointer);
     if (window == NULL)
         return;
-    mmgr_free(window->sprite.sprite_bitmapptr);
+    freememory(window->sprite.sprite_bitmapptr);
     free(window->line_offsets);
     memset(window, 0, sizeof(*window));
 }
@@ -263,7 +263,7 @@ void sprite_copy_2_to_1_2(void)
     displaywindow();
 }
 
-void sprite_copy_arg_to_both(const PortSprite *sprites)
+void restorewindow(const PortSprite *sprites)
 {
     if (sprites == NULL)
         port_guest_unwind("null paired sprite state");
@@ -272,7 +272,7 @@ void sprite_copy_arg_to_both(const PortSprite *sprites)
     sprite2 = sprites[1];
 }
 
-void sprite_copy_both_to_arg(PortSprite *sprites)
+void savewindow(PortSprite *sprites)
 {
     if (sprites == NULL)
         port_guest_unwind("null paired sprite destination");
@@ -583,7 +583,7 @@ static void compose_boolean(const PortShape2D *shape, int x, int y, int use_and)
     }
 }
 
-void sprite_putimage_and(const PortShape2D *shape, int16_t x, int16_t y)
+void andcfxya(const PortShape2D *shape, int16_t x, int16_t y)
 {
     if (shape != NULL)
         compose_boolean(shape, x, y, 1);
@@ -603,27 +603,27 @@ static int16_t sprite_header_relative(int16_t coordinate, uint16_t origin)
     return (int16_t)(bits < 0x8000u ? (int32_t)bits : (int32_t)bits - 0x10000);
 }
 
-void sprite_putimage_and_alt2(const PortShape2D *shape, int16_t x, int16_t y)
+void andcfxy(const PortShape2D *shape, int16_t x, int16_t y)
 {
     if (shape != NULL)
         compose_boolean(shape, sprite_header_relative(x, shape->s2d_hotspot_x),
                         sprite_header_relative(y, shape->s2d_hotspot_y), 1);
 }
 
-void sprite_putimage_or(const PortShape2D *shape, int16_t x, int16_t y)
+void orcfxya(const PortShape2D *shape, int16_t x, int16_t y)
 {
     if (shape != NULL)
         compose_boolean(shape, x, y, 0);
 }
 
-void sprite_putimage_or_alt(const PortShape2D *shape, int16_t x, int16_t y)
+void orcfxy(const PortShape2D *shape, int16_t x, int16_t y)
 {
     if (shape != NULL)
         compose_boolean(shape, sprite_header_relative(x, shape->s2d_hotspot_x),
                         sprite_header_relative(y, shape->s2d_hotspot_y), 0);
 }
 
-void sprite_shape_to_1(const PortShape2D *shape, int16_t x, int16_t y)
+void movfxya(const PortShape2D *shape, int16_t x, int16_t y)
 {
     draw_opaque(shape, x, y);
 }
@@ -704,7 +704,7 @@ static void shape2d_draw_runs(const PortShape2D *shape,
         port_video_publish(publication_reason);
 }
 
-void shape2d_blit_rle(const PortShape2D *shape)
+void movpackf(const PortShape2D *shape)
 {
     if (shape != NULL)
         shape2d_draw_runs(shape, shape->pos_x, shape->pos_y,
@@ -725,7 +725,7 @@ void shape2d_blit_rle_at(const PortShape2D *shape, int16_t x, int16_t y)
    literal bytes. The sign selects the loop form. The
    shape's declared width/height establish source coordinates, while DOS
    clip bounds select destination writes. */
-void shape2d_blit_rle_clipped(const PortShape2D *shape)
+void movpackcf(const PortShape2D *shape)
 {
     size_t source_extent;
     size_t destination_extent;
@@ -799,7 +799,7 @@ void shape2d_blit_rle_clipped(const PortShape2D *shape)
    shape2d_op_unk3 (seg012:0x54B2). Positive signed run counts repeat the
    following colour byte; negative counts copy the following literal bytes.
    Decode every source row even when clipping hides its left or right edge. */
-void shape2d_blit_rle_clipped_at(const PortShape2D *shape, int16_t x, int16_t y)
+void movpackcfxya(const PortShape2D *shape, int16_t x, int16_t y)
 {
     size_t source_extent;
     size_t destination_extent;
@@ -1929,13 +1929,13 @@ static void raster_polygon(int16_t color, int16_t point_count,
 /* _preRender_default (seg012:217B2) and its alternate share
    _prerender_shared_setup; both select the filled-line callback and the
    clipped line callback. */
-void preRender_default(int16_t color, int16_t point_count,
+void drawpolypt(int16_t color, int16_t point_count,
                        const int16_t *points)
 {
     raster_polygon(color, point_count, points, RASTER_FILL_SOLID, 1);
 }
 
-void preRender_default_alt(int16_t color, int16_t point_count,
+void drawpolyp(int16_t color, int16_t point_count,
                            const int16_t *points)
 {
     raster_polygon(color, point_count, points, RASTER_FILL_SOLID, 0);
@@ -1994,34 +1994,34 @@ static void sphere_build_ring(const int16_t source[6], int16_t output[64])
     } while (0)
     SPHERE_STORE_POINT(0, start_x, start_y);
     SPHERE_STORE_POINT(8, end_x, end_y);
-    SPHERE_STORE_POINT(4, mulscl((int16_t)(start_x + end_x), 0x2d41),
-                       mulscl((int16_t)(start_y + end_y), 0x2d41));
-    SPHERE_STORE_POINT(2, mulscl((int16_t)(start_x + end_half_x), 0x393e),
-                       mulscl((int16_t)(start_y + end_half_y), 0x393e));
-    SPHERE_STORE_POINT(6, mulscl((int16_t)(end_x + start_half_x), 0x393e),
-                       mulscl((int16_t)(end_y + start_half_y), 0x393e));
-    SPHERE_STORE_POINT(1, mulscl((int16_t)(start_x + end_quarter_x), 0x3e17),
-                       mulscl((int16_t)(start_y + end_quarter_y), 0x3e17));
-    SPHERE_STORE_POINT(7, mulscl((int16_t)(end_x + start_quarter_x), 0x3e17),
-                       mulscl((int16_t)(end_y + start_quarter_y), 0x3e17));
-    SPHERE_STORE_POINT(3, mulscl((int16_t)(start_x + end_three_quarters_x), 0x3333),
-                       mulscl((int16_t)(start_y + end_three_quarters_y), 0x3333));
-    SPHERE_STORE_POINT(5, mulscl((int16_t)(end_x + start_three_quarters_x), 0x3333),
-                       mulscl((int16_t)(end_y + start_three_quarters_y), 0x3333));
-    SPHERE_STORE_POINT(12, mulscl((int16_t)(end_x - start_x), 0x2d41),
-                        mulscl((int16_t)(end_y - start_y), 0x2d41));
-    SPHERE_STORE_POINT(14, mulscl((int16_t)(end_half_x - start_x), 0x393e),
-                        mulscl((int16_t)(end_half_y - start_y), 0x393e));
-    SPHERE_STORE_POINT(10, mulscl((int16_t)(end_x - start_half_x), 0x393e),
-                        mulscl((int16_t)(end_y - start_half_y), 0x393e));
-    SPHERE_STORE_POINT(15, mulscl((int16_t)(end_quarter_x - start_x), 0x3e17),
-                        mulscl((int16_t)(end_quarter_y - start_y), 0x3e17));
-    SPHERE_STORE_POINT(9, mulscl((int16_t)(end_x - start_quarter_x), 0x3e17),
-                       mulscl((int16_t)(end_y - start_quarter_y), 0x3e17));
-    SPHERE_STORE_POINT(13, mulscl((int16_t)(end_three_quarters_x - start_x), 0x3333),
-                        mulscl((int16_t)(end_three_quarters_y - start_y), 0x3333));
-    SPHERE_STORE_POINT(11, mulscl((int16_t)(end_x - start_three_quarters_x), 0x3333),
-                        mulscl((int16_t)(end_y - start_three_quarters_y), 0x3333));
+    SPHERE_STORE_POINT(4, fixedmult((int16_t)(start_x + end_x), 0x2d41),
+                       fixedmult((int16_t)(start_y + end_y), 0x2d41));
+    SPHERE_STORE_POINT(2, fixedmult((int16_t)(start_x + end_half_x), 0x393e),
+                       fixedmult((int16_t)(start_y + end_half_y), 0x393e));
+    SPHERE_STORE_POINT(6, fixedmult((int16_t)(end_x + start_half_x), 0x393e),
+                       fixedmult((int16_t)(end_y + start_half_y), 0x393e));
+    SPHERE_STORE_POINT(1, fixedmult((int16_t)(start_x + end_quarter_x), 0x3e17),
+                       fixedmult((int16_t)(start_y + end_quarter_y), 0x3e17));
+    SPHERE_STORE_POINT(7, fixedmult((int16_t)(end_x + start_quarter_x), 0x3e17),
+                       fixedmult((int16_t)(end_y + start_quarter_y), 0x3e17));
+    SPHERE_STORE_POINT(3, fixedmult((int16_t)(start_x + end_three_quarters_x), 0x3333),
+                       fixedmult((int16_t)(start_y + end_three_quarters_y), 0x3333));
+    SPHERE_STORE_POINT(5, fixedmult((int16_t)(end_x + start_three_quarters_x), 0x3333),
+                       fixedmult((int16_t)(end_y + start_three_quarters_y), 0x3333));
+    SPHERE_STORE_POINT(12, fixedmult((int16_t)(end_x - start_x), 0x2d41),
+                        fixedmult((int16_t)(end_y - start_y), 0x2d41));
+    SPHERE_STORE_POINT(14, fixedmult((int16_t)(end_half_x - start_x), 0x393e),
+                        fixedmult((int16_t)(end_half_y - start_y), 0x393e));
+    SPHERE_STORE_POINT(10, fixedmult((int16_t)(end_x - start_half_x), 0x393e),
+                        fixedmult((int16_t)(end_y - start_half_y), 0x393e));
+    SPHERE_STORE_POINT(15, fixedmult((int16_t)(end_quarter_x - start_x), 0x3e17),
+                        fixedmult((int16_t)(end_quarter_y - start_y), 0x3e17));
+    SPHERE_STORE_POINT(9, fixedmult((int16_t)(end_x - start_quarter_x), 0x3e17),
+                       fixedmult((int16_t)(end_y - start_quarter_y), 0x3e17));
+    SPHERE_STORE_POINT(13, fixedmult((int16_t)(end_three_quarters_x - start_x), 0x3333),
+                        fixedmult((int16_t)(end_three_quarters_y - start_y), 0x3333));
+    SPHERE_STORE_POINT(11, fixedmult((int16_t)(end_x - start_three_quarters_x), 0x3333),
+                        fixedmult((int16_t)(end_y - start_three_quarters_y), 0x3333));
 
     for (index = 0; index < 16; ++index) {
         output[(index + 16) * 2] = (int16_t)(source[0] - output[index * 2]);

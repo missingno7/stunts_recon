@@ -41,7 +41,7 @@ def polygon_storage_excerpt(overlay: str) -> str:
         if len(matches) != 1:
             raise AssertionError(f"Expected one PORT_BUILD declaration: {pattern}")
         parts.append(matches[0].group())
-    for name in ("polyinfo_reset", "insert_newest_poly_in_poly_linked_list_40ED6"):
+    for name in ("INIT_BUFFERS", "polysort"):
         start = re.search(
             rf"(?m)^(?:extern )?(?:void|U16) {name}\([^;\n]*\)\s*\{{",
             overlay,

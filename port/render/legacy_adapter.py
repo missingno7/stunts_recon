@@ -19,7 +19,7 @@ def adapt_render_stream(source: str) -> str:
             "            info->type == 3 ? mat_copy_clr_lst_ptr[materialIndex + 1] : 0,\n"
             "            info->type == 3 ? mat_copy_clr_lst_ptr[materialIndex + 2] : 0);\n"
             "        switch (info->type)")
-    replace("    polyinfo_reset();\n}", "    port_camera_scene_end(material_patlistptr_copy, matpatlistcopypointer2,\n        mat_copy_clr_lst_ptr, g_mat_clrlist_copy_2_ptr);\n    port_render_world_end();\n    polyinfo_reset();\n}")
+    replace("    INIT_BUFFERS();\n}", "    port_camera_scene_end(material_patlistptr_copy, matpatlistcopypointer2,\n        mat_copy_clr_lst_ptr, g_mat_clrlist_copy_2_ptr);\n    port_render_world_end();\n    INIT_BUFFERS();\n}")
     return '#include "render/renderer.h"\n#include "render/renderer_ui.h"\n#include "render/renderer_camera_scene.h"\n' + source
 
 

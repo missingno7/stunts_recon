@@ -562,9 +562,9 @@ void port_input_shutdown(void)
 
 /* Port replacement for asm/keyboard_input_callbacks.ASM's lcall [0x468c].
    The host's BIOS-key queue is the configured DOS reader callback target. */
-int16_t kb_call_readchar_callback(void)
+int16_t testkey(void)
 {
-    return kb_read_char();
+    return normkey();
 }
 
 /* The legacy service peeks at the BIOS queue, waits until a key is available,
@@ -572,13 +572,13 @@ int16_t kb_call_readchar_callback(void)
    stop the guest instead of stranding SDL teardown in SDL_WaitThread. */
 void flush_stdin(void)
 {
-    while (kb_call_readchar_callback() == 0) {
+    while (testkey() == 0) {
         port_guest_check_stop();
         SDL_DelayNS(1000000u);
     }
 }
 
-void kb_reg_callback(uint16_t key, void (*callback)(void))
+void interpretsub(uint16_t key, void (*callback)(void))
 {
     unsigned i;
     if (callback == NULL)
@@ -624,7 +624,7 @@ static int dispatch_key_callback(uint16_t bios_key)
     return 0;
 }
 
-int16_t kb_get_char(void)
+int16_t normkeyi(void)
 {
     int found;
     port_guest_check_stop();
@@ -638,7 +638,7 @@ int16_t kb_get_char(void)
     return ascii != 0 ? (int16_t)ascii : (int16_t)(key & 0xFF00u);
 }
 
-int16_t kb_read_char(void)
+int16_t normkey(void)
 {
     int found;
     port_guest_check_stop();
@@ -650,7 +650,7 @@ int16_t kb_read_char(void)
     return ascii != 0 ? (int16_t)ascii : (int16_t)(key & 0xFF00u);
 }
 
-int16_t kb_check(void)
+int16_t purgekey(void)
 {
     port_guest_check_stop();
     input_lock();
@@ -660,7 +660,7 @@ int16_t kb_check(void)
     return 0;
 }
 
-int16_t kb_get_key_state(int16_t scan_code)
+int16_t keystate(int16_t scan_code)
 {
     port_guest_check_stop();
     return (int16_t)port_input_key_state((uint16_t)scan_code);
@@ -672,7 +672,7 @@ int16_t get_joy_flags(void)
     return 0;
 }
 
-int16_t joystick_flags_to_index(int16_t flags)
+int16_t convertjoy(int16_t flags)
 {
     /* Exact 16-entry conversion table from
        asm/input_keyboard_joystick_services.ASM. */
@@ -739,7 +739,7 @@ void kb_shift_checking1(void)
     keyboard_shift_checking1();
 }
 
-int16_t get_kb_or_joy_flags(void)
+int16_t joystate(void)
 {
     static const uint8_t scans[10] = {
         0x39, 0x1C, 0x47, 0x48, 0x49,

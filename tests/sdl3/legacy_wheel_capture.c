@@ -15,7 +15,7 @@ typedef struct Face {
 static Face faces[19];
 static size_t face_count;
 
-void preRender_wheel(WheelRect *, int16_t, int16_t, int16_t, int16_t);
+void solidtire(WheelRect *, int16_t, int16_t, int16_t, int16_t);
 
 static void save_face(int16_t color, int count, const int16_t *xy)
 {
@@ -34,7 +34,7 @@ static void save_face(int16_t color, int count, const int16_t *xy)
     }
 }
 
-void preRender_default_alt(int16_t color, int16_t count, int8_t *points)
+void drawpolyp(int16_t color, int16_t count, int8_t *points)
 {
     save_face(color, count, (const int16_t *)points);
 }
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     rect.y2 = (int16_t)strtol(argv[7], NULL, 0);
     rect.x3 = (int16_t)strtol(argv[8], NULL, 0);
     rect.y3 = (int16_t)strtol(argv[9], NULL, 0);
-    preRender_wheel(&rect, 0x2500,
+    solidtire(&rect, 0x2500,
         (int16_t)strtol(argv[10], NULL, 0),
         (int16_t)strtol(argv[11], NULL, 0),
         (int16_t)strtol(argv[12], NULL, 0));

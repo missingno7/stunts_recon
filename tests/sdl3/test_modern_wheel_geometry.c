@@ -26,7 +26,7 @@ typedef struct LegacyWheelRect {
 
 static Capture *legacy_capture;
 
-void preRender_wheel(LegacyWheelRect *rect, int16_t count, int16_t color,
+void solidtire(LegacyWheelRect *rect, int16_t count, int16_t color,
                      int16_t style_a, int16_t style_b);
 
 static void capture_polygon(void *user, const ModernWheelPoint *points,
@@ -48,7 +48,7 @@ static void capture_polygon(void *user, const ModernWheelPoint *points,
 }
 
 /* These two hooks capture the real recovered preRender_wheel.c submissions. */
-void preRender_default_alt(int16_t color, int16_t point_count, int8_t *points)
+void drawpolyp(int16_t color, int16_t point_count, int8_t *points)
 {
     const int16_t *xy = (const int16_t *)points;
     Capture *capture = (Capture *)legacy_capture;
@@ -199,7 +199,7 @@ static void run_legacy_comparison(const int16_t values[8], double *max_error,
     source[3] = (ModernWheelPoint){values[6], values[7]};
 
     legacy_capture = &legacy;
-    preRender_wheel(&rect, 0x2500, 41, 52, 63);
+    solidtire(&rect, 0x2500, 41, 52, 63);
     legacy_capture = NULL;
     assert_true(legacy.face_count == 19,
                 "faithful helper emits 16 quads, 2 side faces and 1 ring");

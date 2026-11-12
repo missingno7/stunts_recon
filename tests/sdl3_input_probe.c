@@ -9,7 +9,7 @@
 extern void flush_stdin(void);
 extern void keyboard_shift_checking1(void);
 extern int8_t replay_axis_value(void);
-extern int16_t joystick_flags_to_index(int16_t);
+extern int16_t convertjoy(int16_t);
 extern void reset_joystick_selection(void);
 extern int16_t get_joy_flags(void);
 extern uint8_t joystick_enabled;
@@ -134,10 +134,10 @@ int main(void)
         };
         unsigned flags;
         for (flags = 0; flags < 16; ++flags)
-            ok &= check(joystick_flags_to_index((int16_t)flags) ==
+            ok &= check(convertjoy((int16_t)flags) ==
                             expected_indices[flags],
                         "joystick flags use the original 16-entry direction table");
-        ok &= check(joystick_flags_to_index((int16_t)0x10) == 0,
+        ok &= check(convertjoy((int16_t)0x10) == 0,
                     "joystick direction lookup masks flags to the low nibble");
     }
 
@@ -169,35 +169,35 @@ int main(void)
     ok &= check(!port_input_key_state(0x48) &&
                 !port_input_key_state(0xE048),
                 "focus loss releases held keyboard state");
-    ok &= check(kb_read_char() == 0x4800,
+    ok &= check(normkey() == 0x4800,
                 "extended arrow remains in the BIOS character queue");
 
     kb_init_interrupt();
     keyboard_shift_checking1();
     port_input_handle_event(SDL_EVENT_KEY_DOWN, SDL_SCANCODE_KP_8, 0);
-    ok &= check(kb_read_char() == '8', "Num Lock keypad 8 returns ASCII 8");
+    ok &= check(normkey() == '8', "Num Lock keypad 8 returns ASCII 8");
     port_input_handle_event(SDL_EVENT_KEY_UP, SDL_SCANCODE_KP_8, 0);
     kb_shift_checking2();
     port_input_handle_event(SDL_EVENT_KEY_DOWN, SDL_SCANCODE_KP_8, 0);
-    ok &= check(kb_read_char() == 0x4800,
+    ok &= check(normkey() == 0x4800,
                 "keypad 8 without Num Lock returns its navigation scan");
     port_input_handle_event(SDL_EVENT_KEY_UP, SDL_SCANCODE_KP_8, 0);
 
     kb_init_interrupt();
     port_input_handle_event(SDL_EVENT_KEY_DOWN, SDL_SCANCODE_LSHIFT, 0);
     port_input_handle_event(SDL_EVENT_KEY_DOWN, SDL_SCANCODE_A, 0);
-    ok &= check(kb_read_char() == 'A', "left Shift produces uppercase BIOS ASCII");
+    ok &= check(normkey() == 'A', "left Shift produces uppercase BIOS ASCII");
     port_input_handle_event(SDL_EVENT_KEY_UP, SDL_SCANCODE_A, 0);
     port_input_handle_event(SDL_EVENT_KEY_UP, SDL_SCANCODE_LSHIFT, 0);
     port_input_handle_event(SDL_EVENT_KEY_DOWN, SDL_SCANCODE_RCTRL, 0);
     port_input_handle_event(SDL_EVENT_KEY_DOWN, SDL_SCANCODE_A, 0);
-    ok &= check(kb_read_char() == 1, "right Ctrl produces Ctrl-A");
+    ok &= check(normkey() == 1, "right Ctrl produces Ctrl-A");
     port_input_handle_event(SDL_EVENT_KEY_UP, SDL_SCANCODE_A, 0);
     port_input_handle_event(SDL_EVENT_KEY_UP, SDL_SCANCODE_RCTRL, 0);
 
-    kb_reg_callback('x', count_callback);
+    interpretsub('x', count_callback);
     port_input_handle_event(SDL_EVENT_KEY_DOWN, SDL_SCANCODE_X, 0);
-    ok &= check(kb_get_char() == 0 && s_callback_count == 1,
+    ok &= check(normkeyi() == 0 && s_callback_count == 1,
                 "registered character callback is dispatched once");
     port_input_handle_event(SDL_EVENT_KEY_UP, SDL_SCANCODE_X, 0);
 
@@ -216,7 +216,7 @@ int main(void)
         SDL_DelayNS(10000000u);
         port_input_handle_event(SDL_EVENT_KEY_DOWN, SDL_SCANCODE_RETURN, 0);
         SDL_WaitThread(thread, &thread_result);
-        ok &= check(thread_result == 0 && kb_read_char() == 0,
+        ok &= check(thread_result == 0 && normkey() == 0,
                     "flush_stdin waits for then consumes one key");
         ok &= check(s_stop_checks != 0,
                     "flush_stdin reaches the cooperative stop checkpoint");

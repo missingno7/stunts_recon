@@ -59,8 +59,8 @@ extern unsigned char sfx_audio_vol;
 extern void audiodriver_timer(void);
 extern void reset_audio_driver_state(void);
 extern void audiodrv_atexit(void);
-extern void timer_reg_callback(void (*callback)(void));
-extern void timer_remove_callback(void (*callback)(void));
+extern void addtimer(void (*callback)(void));
+extern void deltimer(void (*callback)(void));
 extern char g_drvaudiocode[14];
 
 static void audio_lock(void)
@@ -561,7 +561,7 @@ int port_audio_backend_load(const char *driver_name)
         audio_song_ready = 0;
         audioflag6 = 1;
         reset_audio_driver_state();
-        timer_reg_callback(audiodriver_timer);
+        addtimer(audiodriver_timer);
         s_timer_registered = 1;
         output_active = port_audio_sdl_start();
         audio_lock();
@@ -604,7 +604,7 @@ int port_audio_backend_load(const char *driver_name)
         audio_song_ready = 0;
         audioflag6 = 1;
         reset_audio_driver_state();
-        timer_reg_callback(audiodriver_timer);
+        addtimer(audiodriver_timer);
         s_timer_registered = 1;
         output_active = port_audio_sdl_start();
         audio_lock();
@@ -619,7 +619,7 @@ int port_audio_backend_load(const char *driver_name)
     }
 
     if (image != NULL)
-        mmgr_release(image);
+        purgememory(image);
     audio_lock();
     s_driver_image = NULL;
     s_driver_image_size = 0;
@@ -685,7 +685,7 @@ void port_audio_shutdown(void)
     uint8_t *image;
     void *binary;
     if (s_timer_registered) {
-        timer_remove_callback(audiodriver_timer);
+        deltimer(audiodriver_timer);
         s_timer_registered = 0;
     }
     /* Stop/join the SDL callback before taking the state lock it uses. */
@@ -710,9 +710,9 @@ void port_audio_shutdown(void)
     audio_driver_extension_mode = 0;
     audio_unlock();
     if (image != NULL)
-        mmgr_release(image);
+        purgememory(image);
     else if (binary != NULL)
-        mmgr_release(binary);
+        purgememory(binary);
 }
 
 /* Original audio_stop_unknown only restores the DOS INT 8 vector when that

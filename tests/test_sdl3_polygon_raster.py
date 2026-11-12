@@ -46,7 +46,7 @@ class Sdl3FlatPolygonTests(unittest.TestCase):
 
         flat_points = (0, 127, 319, 127, 319, 127, 0, 127)
         cases = (
-            ("preRender_default", "default", (197,), "default 197", flat_points),
+            ("drawpolypt", "default", (197,), "default 197", flat_points),
             ("preRender_patterned", "pattern", (0xFFFF, 197),
              "pattern 0xffff 197", flat_points),
             ("preRender_patterned", "pattern", (0xAA55, 197),
@@ -59,28 +59,28 @@ class Sdl3FlatPolygonTests(unittest.TestCase):
              "unknown 0xaa55 29 31", flat_points),
             ("sprite_two_color_poly_list", "unknown", (0x0000, 29, 31),
              "unknown 0x0000 29 31", flat_points),
-            ("preRender_default_alt", "alt", (39,), "alt 39", (
+            ("drawpolyp", "alt", (39,), "alt 39", (
                 197, 36, 196, 37, 196, 38, 195, 39, 195, 42, 195, 45,
                 196, 45, 196, 45, 197, 46, 197, 44, 196, 44, 196, 44,
                 196, 44, 196, 42, 196, 40, 196, 40, 196, 38, 197, 38,
             )),
-            ("preRender_default_alt", "alt", (39,), "alt 39", (
+            ("drawpolyp", "alt", (39,), "alt 39", (
                 197, 36, 198, 37, 198, 37, 199, 37, 199, 40, 199, 43,
                 198, 44, 198, 45, 197, 46, 197, 44, 198, 44, 198, 42,
                 198, 42, 198, 40, 198, 38, 198, 38, 198, 38, 197, 38,
             )),
-            ("preRender_default_alt", "alt", (39,), "alt 39", (
+            ("drawpolyp", "alt", (39,), "alt 39", (
                 171, 51, 172, 52, 173, 53, 173, 56, 173, 60, 172, 62,
                 171, 63, 169, 66, 167, 67, 168, 63, 169, 63, 170, 62,
                 170, 60, 171, 59, 171, 57, 171, 55, 170, 55, 170, 55,
             )),
-            ("preRender_default_alt", "alt", (39,), "alt 39", (
+            ("drawpolyp", "alt", (39,), "alt 39", (
                 105, 20, 103, 22, 108, 24, 105, 26, 102, 24, 107, 22,
             )),
-            ("preRender_default", "default", (39,), "default 39", (
+            ("drawpolypt", "default", (39,), "default 39", (
                 100, 20, 90, 23, 110, 27, 100, 30,
             )),
-            ("preRender_default_alt", "alt", (39,), "alt 39", (
+            ("drawpolyp", "alt", (39,), "alt 39", (
                 100, 20, 90, 23, 110, 27, 100, 30,
             )),
             # Countach car0, object yaw 0x100: frozen wheel callbacks 46/48.
@@ -91,7 +91,7 @@ class Sdl3FlatPolygonTests(unittest.TestCase):
             ("preRender_wheel_helper4", "wheel", (38,), "wheel 38", (
                 213, 54, 215, 53, 213, 52, 211, 53,
             )),
-            ("preRender_default_alt", "alt", (38,), "alt 38", (
+            ("drawpolyp", "alt", (38,), "alt 38", (
                 207, 55, 211, 54, 209, 53, 205, 54,
             )),
             ("preRender_patterned", "pattern", (0x0000, 197),
@@ -99,13 +99,13 @@ class Sdl3FlatPolygonTests(unittest.TestCase):
             ("sprite_two_color_poly_list", "unknown", (0xAA55, 29, 31),
              "unknown 0xaa55 29 31", (100, 20, 100, 22, 100, 30, 100, 25)),
             # Clipped Audi/LM002 overlays isolated from the stock pose sweep.
-            ("preRender_default", "default", (64,), "default 64", (
+            ("drawpolypt", "default", (64,), "default 64", (
                 -12, 46, -12, 43, 1, 38, -2, 46,
             )),
-            ("preRender_default", "default", (14,), "default 14", (
+            ("drawpolypt", "default", (14,), "default 14", (
                 319, 26, 320, 20, 323, 19, 323, 25,
             )),
-            ("preRender_default", "default", (44,), "default 44", (
+            ("drawpolypt", "default", (44,), "default 44", (
                 -20, 18, -18, 3, -4, 7, 2, 22,
             )),
         )
@@ -119,8 +119,8 @@ class Sdl3FlatPolygonTests(unittest.TestCase):
                         points = (160, 64 + 2 * dy, 160 + sign * dx, 64 + dy, 160, 64)
                         if topology == 4:
                             points += (160 - sign * dx, 64 + dy)
-                        for entry, operation in (("preRender_default", "default"),
-                                                 ("preRender_default_alt", "alt")):
+                        for entry, operation in (("drawpolypt", "default"),
+                                                 ("drawpolyp", "alt")):
                             sweep.append((entry, operation, (38,), f"{operation} 38", points))
         self.assertEqual(len(sweep), 528)
         borders = []
@@ -132,8 +132,8 @@ class Sdl3FlatPolygonTests(unittest.TestCase):
                             points = (cx, cy + 2 * dy, cx + sign * dx, cy + dy, cx, cy)
                             if topology == 4:
                                 points += (cx - sign * dx, cy + dy)
-                            for entry, operation in (("preRender_default", "default"),
-                                                     ("preRender_default_alt", "alt")):
+                            for entry, operation in (("drawpolypt", "default"),
+                                                     ("drawpolyp", "alt")):
                                 borders.append((entry, operation, (38,), f"{operation} 38", points))
         self.assertEqual(len(borders), 736)
         cases += tuple(sweep)
@@ -176,7 +176,7 @@ class Sdl3FlatPolygonTests(unittest.TestCase):
                     point_offset, stack_offset = 0xD000, 0xF000
                     if operation == "wheel":
                         call_args = [attributes[0], len(points) // 2, *points]
-                    elif mode == "preRender_default":
+                    elif mode == "drawpolypt":
                         call_args = [attributes[0], len(points) // 2, point_offset]
                     elif mode == "preRender_patterned":
                         call_args = [*attributes, len(points) // 2, point_offset]

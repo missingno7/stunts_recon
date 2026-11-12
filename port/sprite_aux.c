@@ -264,12 +264,12 @@ static void icon_combine(const PortShape2D *shape, int16_t x, int16_t y,
                              &destination);
 }
 
-void putpixel_iconFillings(const PortShape2D *shape, int16_t x, int16_t y)
+void orfxya(const PortShape2D *shape, int16_t x, int16_t y)
 {
     icon_combine(shape, x, y, 0);
 }
 
-void putpixel_iconMask(const PortShape2D *shape, int16_t x, int16_t y)
+void andfxya(const PortShape2D *shape, int16_t x, int16_t y)
 {
     icon_combine(shape, x, y, 1);
 }
@@ -355,12 +355,12 @@ static void shape2d_combine_runs(const PortShape2D *shape, int use_and,
     publish_screen_write(operation, &destination);
 }
 
-void shape2d_or_rle(const PortShape2D *shape)
+void orpackf(const PortShape2D *shape)
 {
     shape2d_combine_runs(shape, 0, "shape2d_op_unk4");
 }
 
-void shape2d_render_bmp_as_mask(const PortShape2D *shape)
+void andpackf(const PortShape2D *shape)
 {
     shape2d_combine_runs(shape, 1, "shape2d_render_bmp_as_mask");
 }

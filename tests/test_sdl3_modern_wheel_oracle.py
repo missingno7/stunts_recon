@@ -131,8 +131,8 @@ def make_sprite_writes(routine, data_symbols, dgroup):
 
 
 def call_full_wheel(runner, symbols, data_symbols, points):
-    routine = symbols.resolve("preRender_wheel")
-    raster = symbols.resolve("preRender_default_alt")
+    routine = symbols.resolve("solidtire")
+    raster = symbols.resolve("drawpolyp")
     dgroup = dgroup_segment(0x1000)
     rect_offset, stack_offset = 0xD000, 0xF000
     stack = [0, 0x7000, rect_offset, 0x2500, *COLORS]
@@ -145,7 +145,7 @@ def call_full_wheel(runner, symbols, data_symbols, points):
                                 *(value & 0xFFFF for value in stack))),
     ]
     case = RoutineCase(
-        "modern-wheel-full", "preRender_wheel",
+        "modern-wheel-full", "solidtire",
         args=(rect_offset, 0x2500, *COLORS), call="far",
         registers={"ds": dgroup, "ss": dgroup, "sp": stack_offset},
         memory=writes,
@@ -157,7 +157,7 @@ def call_full_wheel(runner, symbols, data_symbols, points):
 def call_face(runner, symbols, data_symbols, face):
     index, color, points = face
     operation = ("preRender_wheel_helper4" if index < 16
-                 else "preRender_default_alt")
+                 else "drawpolyp")
     routine = symbols.resolve(operation)
     dgroup = dgroup_segment(0x1000)
     point_offset, stack_offset = 0xD000, 0xF000

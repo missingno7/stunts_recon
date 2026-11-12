@@ -22,7 +22,7 @@
 #define CUSTOM_FONTS 3u
 
 extern unsigned char fontdef_default[1408];
-extern void set_fontdefseg(const void *font);
+extern void setfont(const void *font);
 extern void font_setup_unknown(unsigned short foreground,
                                unsigned short background);
 extern void port_sprite_init(void);
@@ -82,15 +82,15 @@ void port_timer_copy_counter_words(unsigned short ticks_low,
     (void)ticks_low; (void)ticks_high;
 }
 
-void *mmgr_alloc_pages(const char *name, uint16_t paragraphs)
+void *reservememory(const char *name, uint16_t paragraphs)
 {
     (void)name;
     return calloc((size_t)paragraphs, 16u);
 }
 
-void mmgr_free(void *pointer) { free(pointer); }
+void freememory(void *pointer) { free(pointer); }
 
-int16_t mulscl(int16_t left, int16_t right)
+int16_t fixedmult(int16_t left, int16_t right)
 {
     (void)left; (void)right;
     return 0;
@@ -122,7 +122,7 @@ void port_video_transition_advance(PortVideoTransition *transition,
 
 void setbiosticks(int32_t ticks) { (void)ticks; }
 
-int16_t kb_call_readchar_callback(void) { return 0; }
+int16_t testkey(void) { return 0; }
 uint32_t port_guest_activity_snapshot(void) { return 0; }
 void port_guest_wait_for_activity(uint32_t observed) { (void)observed; }
 int16_t testbiosticks(void) { return 0; }
@@ -243,7 +243,7 @@ int main(void)
             return 8;
 
         if (select_font != 0u)
-            set_fontdefseg(font);
+            setfont(font);
         font_setup_unknown(foreground, background);
         if (line_height != 0xFFFFu) {
             font[18] = (unsigned char)line_height;
