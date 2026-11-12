@@ -3,9 +3,9 @@
     "declarations": {
       "externals": [
         "__acrtused",
+        "_file_get_unflip_size",
         "_file_get_res_shape_count",
-        "_shapepointer",
-        "_file_get_unflip_size"
+        "_shapepointer"
       ],
       "groups": [
         {
@@ -113,7 +113,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_shapepointer",
-      "target_index": 3,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -130,7 +130,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_get_res_shape_count",
-      "target_index": 2,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -153,9 +153,9 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
+      "_file_get_unflip_size",
       "_file_get_res_shape_count",
-      "_shapepointer",
-      "_file_get_unflip_size"
+      "_shapepointer"
     ],
     "groups": [
       {
@@ -253,6 +253,11 @@
       "path": "include/memory.h",
       "sha256": "45238612e723f29f120cea3a4dcbd73cd0e824ca61feb5db09b5d9a15485b4f0",
       "size": 539
+    },
+    {
+      "path": "include/resapi.h",
+      "sha256": "54c35d6d3f1da8be628078c3b1b61026dd72f336e37f3c79b56be7389e61b6f0",
+      "size": 1686
     },
     {
       "path": "include/sprite2d.h",

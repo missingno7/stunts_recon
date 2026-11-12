@@ -1,3 +1,5 @@
+
+#include "font.h"
 /* READABILITY: Define the built-in default font record, glyph-offset table, and bitmap bytes. */
 /* Default font definition block: far data segment selected through fontdefseg. */
 unsigned char far fontdef_default[1408] = {

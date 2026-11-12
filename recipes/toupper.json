@@ -11,9 +11,24 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
+      "path": "include/chartab.h",
+      "sha256": "540ec3660be1ea671e4cc3adedf22983325debf32bd0f08c0465ad6ad1eed6c7",
+      "size": 120
+    },
+    {
+      "path": "include/font.h",
+      "sha256": "6764a13f5316d6a2e05f61bd6ec789ec690155f0086a213350083e183ebb8c8f",
+      "size": 90
+    },
+    {
       "path": "include/stunts_types.h",
       "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
       "size": 1091
+    },
+    {
+      "path": "include/text.h",
+      "sha256": "2cfcc414d2605d4ec72b0610e1e5e6cb9b10d55e16327b365be6e5d9eb36c7f1",
+      "size": 2076
     }
   ],
   "profile": "msc510-medium",

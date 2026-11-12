@@ -1,3 +1,4 @@
+
 #include "sprite2d.h"
 #include "video.h"
 #include "stunts_types.h"
@@ -5,6 +6,7 @@
 /* Draw the top, bottom, left, and right edges of a rectangle.
  * Params and return follow the declared C signature. */
 /* PLATFORM(video): draw rectangle edges through the sprite renderer. */
+/* Local view: sprite_draw_rect_outline; parameters[4] is signed word; another unit uses unsigned word. */
 void FAR sprite_draw_rect_outline(I16 x1, I16 y1, I16 x2, I16 y2, I16 color)
 {
     I16 width;

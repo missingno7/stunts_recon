@@ -31,75 +31,72 @@
  * hill_offs[9][2] (pair table, see comment); fence pair lists by their pinned labels; plane state kept separate. */ /* PORT: plain char signedness follows the pinned MSC target. */
 
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct RECTANGLE {
-	I16 left, right;
-	I16 top, bottom;
-	//int x1, y1;
-	//int x2, y2;
-};
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
+#include "geom2d.h"
+
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
 #include "vec3.h"
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct VECTORLONG {
-	I32 lx, ly, lz;
-};
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
+#include "vec3l.h"
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct POINT2D {
+
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: POINT2D; struct[0].name is px; another unit uses x. */
+struct POINT2D {
 	I16 px, py;
 };
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct MATRIX {
-	I16 vals[9];
-};
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
+#include "matrix.h"
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct PLANE {
-	I16 plane_yz;
-	I16 plane_xy;
-	struct VECTOR plane_origin;
-	struct VECTOR plane_normal;
-	struct MATRIX plane_rotation;
-};
+
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
+#include "plane.h"
+
 
 
 /* Local math imports preserve the original communal LINK ordering. */
-I16S intsin(U16S  s);
-I16S intcos(U16S  s);
 
-I16 intatan(I16 z, I16 y);
+
+
+
 /* Local signed radius view; the shared math API returns an unsigned word. */
+/* Local view: inthypot; return is signed word; another unit uses unsigned word. */
 I16 inthypot(I16 z, I16 y);
-I16 int3dhypot(struct VECTOR* vec);
 
-unsigned getoutcode(struct POINT2D* pt);
 
-void mat_vec(struct VECTOR* invec, struct MATRIX* mat, struct VECTOR* outvec);
-void mat_mul_vector2(struct VECTOR* invec, struct MATRIX far* mat, struct VECTOR* outvec);
-void transmult(struct MATRIX* rmat, struct MATRIX* lmat, struct MATRIX* outmat);
-void mat_invert(struct MATRIX* inmat, struct MATRIX* outmat);
-void xformx(struct MATRIX* outmat, I16 angle);
-void xformy(struct MATRIX* outmat, I16 angle);
-void xformz(struct MATRIX* outmat, I16 angle);
-struct MATRIX* makematrix(I16 z, I16 x, I16 y, I16 unk);
 
-void zonecheck(struct POINT2D* pt, struct RECTANGLE* rc);
 
-I16 norm_zone(struct VECTOR* vec);
-void projectp(struct VECTOR* vec, struct POINT2D* outpt);
-void zclipline(struct VECTOR* vec1, struct VECTOR* vec2, struct VECTOR* outvec, I16S i);
 
-I16S fixedmult(I16S a1, I16S a2);
 
-void mergezones(struct RECTANGLE* r1, struct RECTANGLE* r2, struct RECTANGLE* outrc);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Local view: clipzone; return is signed byte; another unit uses signed word. */
 I8 clipzone(struct RECTANGLE* r1, struct RECTANGLE* r2);
 
-void move_on_plane(void);
-I16 plane_distance(I16 index, I16 b, I16 c, I16 d);
 
 
 
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct GAMEINFO {
+
+
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: GAMEINFO; struct[8].type is unsigned word; another unit uses signed byte. */
+struct GAMEINFO {
 	I8 game_playercarid[4];
 	I8 game_playermaterial;
 	I8 game_playertransmission;
@@ -112,7 +109,8 @@ I16 plane_distance(I16 index, I16 b, I16 c, I16 d);
 	U16S  game_recordedframes;
 };
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct CARSTATE {
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: CARSTATE; struct[54].type is signed byte; another unit uses unsigned byte. */
+struct CARSTATE {
 	struct VECTORLONG car_posWorld1;
 	struct VECTORLONG car_posWorld2;
 	struct VECTOR car_rotate; // applying the (x, y, z) vector notation to rotation
@@ -177,7 +175,8 @@ I16 plane_distance(I16 index, I16 b, I16 c, I16 d);
 	I8 car_audio_flags; // is initialized?
 };
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct GAMESTATE {
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: GAMESTATE; struct[9].type is unsigned word; another unit uses signed word. */
+struct GAMESTATE {
 	I32 game_debris_x[24]; // x
 	I32 game_debris_y[24]; // y
 	I32 game_debris_z[24]; // z
@@ -226,7 +225,8 @@ I16 plane_distance(I16 index, I16 b, I16 c, I16 d);
 	I8 field_45F;
 };
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct SIMD {
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: SIMD; struct.count is 30; another unit uses 29. */
+struct SIMD {
 	I8 num_gears;
 	I8 simd_unk;
 	I16S car_mass;
@@ -259,7 +259,8 @@ I16 plane_distance(I16 index, I16 b, I16 c, I16 d);
 	I16S far* aerorestable;
 };
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct TRKOBJINFO {
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: TRKOBJINFO; struct.count is 12; another unit uses 11. */
+struct TRKOBJINFO {
 	I8  si_noOfBlocks;      // How many shapeInfo pieces compose the element. Arbitrary for the first piece, 0 for the following ones.
 	I8  si_entryPoint;      // Connectivity of the track element regarding tiles.
 	I8  si_exitPoint;
@@ -274,306 +275,352 @@ I16 plane_distance(I16 index, I16 b, I16 c, I16 d);
 	I8  si_oppSpedCode;
 };
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct TRACKOBJECT {
-	struct TRKOBJINFO* ss_trkObjInfoPtr; // offset (0003B770)
-	I16S ss_rotY;           // Horizontal orientation of the element.
-	struct SHAPE3D* ss_shapePtr;       // offset (0003B770)
-	struct SHAPE3D* ss_loShapePtr;     // offset (0003B770)
-	U8   ss_ssOvelay;       // Renders additional sceneShapes over the current one.
-	I8  ss_surfaceType;    // Paintjob. FF will induce alternating paintjobs.
-	I8  ss_ignoreZBias;    // Appears to be Z-bias override flag, mostly used for roads and corners.
-	I8  ss_multiTileFlag;  // 0 = one-tile, 1 = two-tile vertical, 2 = two-tile horizontal, 3 = four-tile.
-	I8  ss_physicalModel;  // sets the physical model in build_track_object
-	I8  scene_unk5;        // always zero.
-};
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
+#include "trkobj.h"
 
 
-extern struct GAMEINFO globalgamesettings;
-extern struct GAMEINFO gmconfigbackup;
 
-extern struct GAMESTATE core;
-extern struct SIMD simdp7;
-extern struct SIMD ophys_7;
 
-extern I16S pixel_scales;
+
+
+
+
+
+
+
+/* Local view: g_vid_flg2_set; type is signed word; another unit uses unsigned word. */
 extern I16S g_vid_flg2_set;
+/* Local view: vidflg3is_minus1; type is signed word; another unit uses unsigned word. */
 extern I16S vidflg3is_minus1;
-extern I16S vidflg4_is1;
+
+/* Local view: g_videoflg5; type is signed byte; another unit uses unsigned byte. */
 extern I8 g_videoflg5;
+/* Local view: g_vid_flag6; type is signed word; another unit uses unsigned byte. */
 extern I16S g_vid_flag6;
 
-extern U8  timeraud;
-extern U8  slomodiv8;
+
+
+/* Local view: elaptm1; type is unsigned word; another unit uses signed word. */
 extern U16S  elaptm1;
-extern U16S  tmr2;
-extern U8  sigframe;
-extern U8  g_rpl_init;
+
+
+
+/* Local view: gm_playmode; type is unsigned byte; another unit uses signed byte. */
 extern U8  gm_playmode; // 0 = playing, 1 = paused, 2 = replay
-extern I16S g_sgateopn;
 
-extern I16S elapsed_time1; // current frame?
-extern I16S g_cvxintvl; // fps * 30
-extern short frmcs_time; // 100 / fps
+
+ // current frame?
+ // fps * 30
+ // 100 / fps
+/* Local view: st_hdg; type is signed word; another unit uses unsigned word. */
 extern I16S st_hdg;
+/* Local view: table_lookup; pointer is void; another unit uses signed byte. */
 extern void* table_lookup;
+/* Local view: steerWhlRespTable_10fps; type is near pointer; another unit uses array[None]. */
 extern void* steerWhlRespTable_10fps;
+/* Local view: steerWhlRespTable_20fps; type is near pointer; another unit uses array[None]. */
 extern void* steerWhlRespTable_20fps;
-extern I8 idxtrk, tagtrk;
-extern I8 g_hillf;
-extern I16S terheight[];
 
-extern struct RECTANGLE boundglassrect;
-extern I16S bitmapdash;
-extern int runrndx;
-extern I8 replaybar_toggle;
-extern I8 inrepflg;
-extern I8 cammd;
-extern I8 g_rplmodui;
-extern I8 gm_saved_rpl_mode;
-extern I8 numid;
-extern I8 g_rplbfask;
-extern I8 on_off_dash;
-extern I8 cam_idg;
-extern I8 pen_flag_count;
-extern I16 replayrst;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Local view: popupact; type is signed word; another unit uses signed byte. */
 extern I16 popupact;
+/* Local view: mouse_enabled; type is signed byte; another unit uses unsigned byte. */
 extern I8 mouse_enabled;
+/* Local view: joystick_enabled; type is signed byte; another unit uses unsigned byte. */
 extern I8 joystick_enabled;
-extern void far* gamerptrs;
-extern void far* dasm_shp_7;
-extern I16 input_pushed;
-extern I8 dashbtogglesaved;
-extern I8 g_replaybarcpytgl;
-extern I8 is_in_rplcopy;
-extern char follow_op;
-extern I8 opp_follow_flag_backup;
-extern I16 roofbmphgt_saved;
-extern I8 mode_flag;
-extern I8 g_rplybarenable;
-extern I16 dashbmpy_copy;
-extern I16 rplbarabovehgt;
-extern I8 g_viewinx[];
-extern I16 dastseg;
-extern I16 dasty;
-extern I16 g_dastbmpbuf;
-extern I16 dashbmy9;
-extern I16 rfy5;
-extern struct RECTANGLE* rectp;
 
-extern void moveplayer(I8);
-extern void moveopponent(void);
-extern void myupdatesfx(void);
-extern void dodash(I16);
-extern void drawworld(I8 a, struct RECTANGLE* rc);
-extern void doreplay(I16, I16, I16);
-extern void gameintinit(void);
-extern void initmousedrive(I16);
-extern I16 normkeyi(void);
+
+/* Local view: input_pushed; type is signed word; another unit uses unsigned word. */
+extern I16 input_pushed;
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Local view: g_dastbmpbuf; type is signed word; another unit uses far pointer. */
+extern I16 g_dastbmpbuf;
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Local view: mainkey; return is void; another unit uses signed byte. */
 extern void mainkey(I16);
 
+/* Local view: flagsdown; type is signed word; another unit uses unsigned byte. */
 extern I16 flagsdown;
-extern I16 msecoordx;
-extern I16 pos_y_ms;
-extern I16 performGraphColor;
+
+
+
+/* Local view: resbuftext; type is signed byte; another unit uses array[80]. */
 extern I8 resbuftext;
-extern I16 waitm_ms;
 
+
+/* Local view: fntndat; local font import avoids introducing view-state declarations before their original block scopes. */
 extern void far* fntndat;
-extern void far* def_fntadr;
-extern void far* main_data_file_addr;
-extern struct GAMESTATE far* cvxs_a;
-extern I16 lnoffsets[];
-extern I16 gterrtrk[];
-extern I16 r_zp[];
-extern I16 row_ctr_zs[];
-extern I16 postable[];
-extern I16 z_ctr_pos[];
-extern I16 xcols[];
-extern I16 trackctrpos2[];
-extern I16S far* g_td01_track_filecpy; //trackdata1;
-extern I16S far* trackdata_penalty_related; //trackdata2;
-extern I8 far* td3;
-extern I16S far* track04_plyraero; //trackdata4;
-extern I16S far* trackdata_05_opp_aerotbl; //trackdata5;
-extern I8 far* td6_ptr_b;
-extern I8 far* trackdat7;
-extern I16 far* g_td08d; //trackdata8;
-extern struct VECTOR far* trkptrpath;
-extern int far* td10checkptr;// trackdata10;
-extern I8 far* hscore_trk11_ptr; //trackdata11;
-extern I8 far* savedptr_ms;
-extern I8 far* td13_replay_hdr; //trackdata13;
-extern U8  far* td14tb; //trackdata14;
-extern U8  far* td15p_9; //trackdata15;
-extern I8 far* g_tdreplay16buf; //trackdata16;
-extern I8 far* road_trk; //trackdata17;
-extern I8 far* td_18_ref;
-extern U8  far* td19hdl;
-extern I8 far* coursedataappend_address; //trackdata20;
-extern I8 far* g_column_of_trkdata21_pth; //trackdata21;
-extern I8 far* tdfrompathrow22; //trackdata22;
-extern U8  far* trkd23adr; // indexes into trkObjectList
-extern I8 kbormouse;
-extern I8 pass_check_flag;
-extern I8 g_is_busy;
-extern I8 buf_g_path[];
-extern I8 track_file[];
-extern I8 menutimeout;
-extern U16S  dialog_frame_color;
-extern I8 replay_file[];
-extern I8 endhsdemo;
-extern I8 aMain[];
-extern I8 aMisc_1[];
-extern I8 aFontdef_fnt[];
-extern I8 aFontn_fnt[];
-extern I8 aTrakdata[];
-extern I8 aDefault_0[];
-extern I8 aCvx[];
-extern I8 aTedit__0[];
-extern I8 aSlct[];
-extern I8 aSkidms_0[];
-extern I8 aSkidslct[];
-extern I8 aDos[];
 
+/* Local view: main_data_file_addr; pointer is void; another unit uses signed byte. */
+extern void far* main_data_file_addr;
+/* Local view: cvxs_a; segment is far; another unit uses huge. */
+extern struct GAMESTATE far* cvxs_a;
+
+
+
+
+
+
+
+
+ //trackdata1;
+ //trackdata2;
+/* Local view: td3; pointer is signed byte; another unit uses signed word. */
+extern I8 far* td3;
+ //trackdata4;
+ //trackdata5;
+/* Local view: td6_ptr_b; pointer is signed byte; another unit uses unsigned word. */
+extern I8 far* td6_ptr_b;
+/* Local view: trackdat7; pointer is signed byte; another unit uses unsigned word. */
+extern I8 far* trackdat7;
+/* Local view: g_td08d; pointer is signed word; another unit uses unsigned word. */
+extern I16 far* g_td08d; //trackdata8;
+/* Local view: trkptrpath; pointer is struct VECTOR; another unit uses signed word. */
+extern struct VECTOR far* trkptrpath;
+/* Local view: td10checkptr; pointer is signed word; another unit uses struct VECTOR. */
+extern int far* td10checkptr;// trackdata10;
+/* Local view: hscore_trk11_ptr; pointer is signed byte; another unit uses struct HighScoreRecord. */
+extern I8 far* hscore_trk11_ptr; //trackdata11;
+/* Local view: savedptr_ms; pointer is signed byte; another unit uses struct SPRITE. */
+extern I8 far* savedptr_ms;
+ //trackdata13;
+/* Local view: td14tb; pointer is unsigned byte; another unit uses signed byte. */
+extern U8  far* td14tb; //trackdata14;
+ //trackdata15;
+ //trackdata16;
+/* Local view: road_trk; pointer is signed byte; another unit uses unsigned byte. */
+extern I8 far* road_trk; //trackdata17;
+/* Local view: td_18_ref; pointer is signed byte; another unit uses unsigned byte. */
+extern I8 far* td_18_ref;
+
+ //trackdata20;
+/* Local view: g_column_of_trkdata21_pth; pointer is signed byte; another unit uses unsigned byte. */
+extern I8 far* g_column_of_trkdata21_pth; //trackdata21;
+/* Local view: tdfrompathrow22; pointer is signed byte; another unit uses unsigned byte. */
+extern I8 far* tdfrompathrow22; //trackdata22;
+ // indexes into trkObjectList
+
+
+/* Local view: g_is_busy; type is signed byte; another unit uses unsigned byte. */
+extern I8 g_is_busy;
+
+
+/* Local view: menutimeout; type is signed byte; another unit uses unsigned byte. */
+extern I8 menutimeout;
+/* Local view: dialog_frame_color; type is unsigned word; another unit uses signed word. */
+extern U16S  dialog_frame_color;
+
+/* Local view: endhsdemo; type is signed byte; another unit uses unsigned byte. */
+extern I8 endhsdemo;
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Local view: rate_frame; type is unsigned word; another unit uses signed word. */
 extern U16S  rate_frame;
-extern U16S  frm_rate2;
-extern U16S  slow_video_mode_state;
-extern unsigned short statemgmtcpy;
+
+
+
+/* Local view: renderlevel; type is unsigned byte; another unit uses signed byte. */
 extern U8  renderlevel;
 
-extern U16S  pspofs;
-extern U16S  pspseg;
-extern unsigned resmem_end_seg;
-extern unsigned resmem_base_seg;
 
-extern struct MEMCHUNK* resptr1;
-extern struct MEMCHUNK* resptr2;
-extern struct MEMCHUNK* resendptr1;
-extern struct MEMCHUNK* resendptr2;
-extern U16S  resmaxsize;
 
-extern U32  timer_callback_counter;
-extern U32  last_timer_callback_counter;
-extern U32  timer_deadline_ticks;
 
-extern U8  randomseeds[];
-extern const I8 noblkerr[];
-extern const I8 nomemerr[];
-extern const I8 blknotfound[];
-extern const I8 exmemerr[];
-extern const I8 expanderr[];
-extern const I8 aSFileError[];
-extern const I8 aSFileError_0[];
-extern const I8 aSFileError_1[];
-extern const I8 aSInvalidPackTy[];
-extern const I8 aLocateshape4_4sShapeNotF[];
-extern const I8 aLocatesound4_4sSoundNotF[];
-extern I8 audiodriverstring[];
 
-extern U16S  idx_time_gm;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Local view: is_audioloaded; type is signed word; another unit uses signed byte. */
 extern I16S is_audioloaded;
-extern void far* musicfile;
-extern void far* openvfile;
-extern I8 textrespfxchr; // = 'e'
-extern I8* shapeexts[];
-extern U8  palmap[];
 
+
+ // = 'e'
+
+
+
+/* Local view: material_clrlist_ptr; pointer is struct MATERIALCLRLIST; another unit uses signed word. */
 extern struct MATERIALCLRLIST *material_clrlist_ptr;
-extern I16* mat_copy_clr_lst_ptr;
-extern I16* material_clrlist2_ptr;
-extern I16* g_mat_clrlist_copy_2_ptr;
-extern I16* material_patlist_ptr;
-extern I16* material_patlistptr_copy;
-extern I16* material_patlist2_ptr;
-extern I16* matpatlistcopypointer2;
-extern U16S  video_cnstval;
 
+
+
+
+
+
+
+
+
+/* Local view: gettlistpoint; return is signed word; another unit uses signed byte. */
 extern I16S gettlistpoint(I16S car_trackdata3_index, struct VECTOR* car_vec_unk3, I16S field_CE, I16S* unk);
-extern void fontsetfontdef(void);
-extern void INIT_MATRIX(void);
+
+
+/* Local view: run_intro_looped; return is unsigned word; another unit uses signed word. */
 extern U16S  run_intro_looped(void);
+/* Local view: messagebox; return is unsigned word; another unit uses signed word. */
 extern U16S  messagebox(I16 unk1, I16 unk2, void far* textresptr, U16S  unk3, U16S  unk4, I16 arg, void* unk5, I16 unk6);
-extern I8 select(void);
-extern I8 setup_track(void);
-extern void teditmain(I16 unk);
-extern void run_opponent_menu(void);
-extern void loading(void);
+
+
+
+
+
+/* Local view: selectcar; parameters[0].pointer is struct GAMEINFO; another unit uses signed byte. */
 extern void selectcar(struct GAMEINFO* unk, I8* unk2, I8* unk3, U16  unk4);
-extern void run_game(void);
+
+/* Local view: end_hiscore; return is unsigned word; another unit uses signed byte. */
 extern unsigned end_hiscore(void);
+/* Local view: run_option_menu; return is unsigned word; another unit uses signed byte. */
 extern unsigned run_option_menu(void);
+/* Local view: getprotection; parameters.count is 0; another unit uses 1. */
 extern void getprotection(void);
 
-extern void ensure_file_exists(I16 unk);
 
-extern void far* load_song_file(const I8* filename);
-extern void far* load_voice_file(const I8* filename);
-extern void far* load_sfx_file(const I8* filename);
-extern void far* load_shape2d_nofatal_thunk(const I8* filename);
-extern void far* load_shape2d_res_nofatal_thunk(const I8* filename);
-extern void far* loadshapez(I8* shapename);
-extern void far* file_load_shape2d_nofatal2(I8* shapename);
-extern void far* init_audio_resources(void far* songptr, void far* voiceptr, const I8* name);
-extern void load_audio_finalize(void far* audiores);
-extern I16S audio_load_driver(I8* driver, I16S a2, I16S a3);
-extern void audio_unload(void);
-extern I16S audio_toggle_flag2(void);
-extern I16S audio_toggle_flag6(void);
-extern void audio_stop_unknown(void);
-extern void audiodrv_atexit(void);
 
-extern void clear_keyboardbuffer(void);
-extern I16 input_do_checking(I16 unk);
-extern void keyboard_exit_handler(void);
-extern void keyboard_shift_checking1(void);
-extern void kb_shift_checking2(void);
-extern void interpretsub(I16 code, void (far* callback)(void));
-extern void show_graphic_levels_menu(void);
-extern void do_joystick_resource_text(void);
-extern void mkeyon(void);
-extern void do_mof_resource_text(void);
-extern void msystempause(void);
-extern void do_dos_resource_text(void);
-extern void do_sonsof_resource_text(void);
-extern I16S joystate(void);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Local view: initmouse; parameters[0] is signed word; another unit uses unsigned word. */
 extern I16S initmouse(I16S a1, I16S a2);
 
-extern void video_set_mode4(void);
-extern void video_set_mode7(void);
-extern void initgraphics(void);
 
-extern void shape3d_load_car_shapes(I8* carid, I8* oppcarid);
 
-extern void loadpalandmouse(void);
+
+
+
+
+
+/* Local view: sprite_blit_to_video; return is void; another unit uses signed word. */
 extern void sprite_blit_to_video(struct SPRITE far* sprite);
 
-extern I16S intr0_handler(void);
-extern I16S (far* old_intr0_handler)(void);
-extern void timer_setup_interrupt(void);
+
+
+
+/* Local view: timer_get_delta_alt; return is unsigned long; another unit uses signed word. */
 extern U32  timer_get_delta_alt(void);
 
-extern I16S criterr(I16S (far* callback)(void));
-extern void exit(I16S a1);
+
+
+/* Local view: abortmessage; parameters.count is 2; another unit uses 1. */
 extern void abortmessage(const I8*, ...);
-extern I16S do_dea_textres(void);
 
+
+/* Local view: _memcpy; return is near pointer; another unit uses void. */
 extern void* _memcpy(void*, const void*, unsigned);
-extern I8* _strcpy(I8* dest, const I8* src);
-extern I8* _strcat(I8* dest, const I8* src);
-extern I16 _strcmp(const I8* dest, const I8* src);
-extern I16 _stricmp(const I8* dest, const I8* src);
-extern unsigned _strlen(const I8* str);
-extern void far* __fmemcpy(void far*, const void far*, unsigned);
-extern unsigned _abs(unsigned);
-extern I16 _rand(void);
-extern void _srand(U16 );
 
 
 
 
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct SHAPE3D {
+
+
+
+
+
+
+
+
+
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: SHAPE3D; struct.count is 7; another unit uses 8. */
+struct SHAPE3D {
 	U16S  shape3d_numverts;
 	struct VECTOR far* shape3d_verts;
 	U16S  shape3d_numprimitives;
@@ -583,14 +630,12 @@ extern void _srand(U16 );
 	I8 far* shape3d_cull2;
 };
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct SHAPE3DHEADER {
-	U8  header_numverts;
-	U8  header_numprimitives;
-	U8  header_numpaints;
-	U8  header_reserved;
-};
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
+#include "shapehdr.h"
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct TRANSFORMEDSHAPE3D {
+
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: TRANSFORMEDSHAPE3D; struct[4].type is unsigned word; another unit uses signed word. */
+struct TRANSFORMEDSHAPE3D {
 	struct VECTOR pos;
 	struct SHAPE3D* shapeptr;
 	struct RECTANGLE* rectptr;
@@ -601,184 +646,256 @@ extern void _srand(U16 );
 };
 
 
+/* Local view: shape3d_load_all; return is signed word; another unit uses void. */
 I16 shape3d_load_all(void);
-void shape3d_free_all(void);
-void makeobjdef(I8 far* shapeptr, struct SHAPE3D* gameshape);
+
+
+/* Local view: ADD_OBJECT_TO_BUFFER; return is signed byte; another unit uses unsigned word. */
 I8 ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D* arg_transshapeptr);
-void set_projection(I16 i1, I16 i2, I16 i3, I16 i4);
-I16 intatan(I16 z, I16 y);
+
+
+/* Local view: INIT_OBJECTS_BUFFER; return is unsigned word; another unit uses signed word. */
 unsigned INIT_OBJECTS_BUFFER(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cliprect, I16 unk);
-void INIT_MATRIX(void);
-void INIT_BUFFERS(void);
-void DRAW_OBJECTS(void);
+
+
+
+/* Local view: settires; parameters[5].pointer is struct VECTOR; another unit uses signed word. */
 void settires(struct VECTOR far* wheel_vertices, I16 steering_angle, I16S* base_heights, I16S* cached_angles_and_heights, struct VECTOR* wheel_offsets, struct VECTOR* car_origin);
 
 
-extern struct RECTANGLE* active_ui_dirty_rect;
-extern struct RECTANGLE rclist[];
-extern struct RECTANGLE g_savrc[];
-extern struct RECTANGLE tparr[];
-extern struct RECTANGLE empty_rectangle;
-extern struct VECTOR tvec2;
-extern struct VECTOR pln_rot_output;
-extern I16 g_planidx2;
-extern I16 pln_rotate_z, car_roty_pln, car_rotate_xc, frwhl_angadjusted;
-extern struct MATRIX wkmatx;
-extern I16 camlen;
-extern I16 custom_elev_angle;
-extern I16 custom_azim_angle;
-extern I16 viewyshift;
-extern I8 detthrlevel[];
-extern I8 paint_cycle[];
-extern unsigned g_clocks;
-extern I16 fence_offsets[];
-extern I8* headingzones[];
-extern struct SHAPE3D* fence_shapes[];
-extern I16 hgthgt;
-extern I16 pl_i;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Local view: test_pln; type is signed byte; another unit uses unsigned byte. */
 extern I8 test_pln;
-extern struct TRANSFORMEDSHAPE3D cur_shps[29];
+
 //extern struct TRANSFORMEDSHAPE3D transshapeunk;
-extern struct TRANSFORMEDSHAPE3D* g_curr_tsp;
+
+/* Local view: trklst; of is struct TRACKOBJECT; another unit uses struct track_object. */
 extern struct TRACKOBJECT trklst[215]; // 215 entries
-extern U8  fence_codes[];
 
-extern I8 fence_off_1[];         /* Fence offset pairs are grouped by the 1-, 2-, 3-, and 4-entry extents. */
-extern I8 fence_off_2[];
-extern I8 fence_off_4[];
-extern I8 fence_off_3[];
-extern I16 shape_rot[];
-extern I16 hill_offs[9][2];      /* hill (x,z) offsets: 1,2,2,4 pairs at pairs 0,1,3,5; exactly fills [0x3C0A2,0x3C0C6) */
-extern I16 hill_offs_b[];
-extern I16 hill_offs_c[];
-extern I16 hill_offs_d[];
+
+         /* Fence offset pairs are grouped by the 1-, 2-, 3-, and 4-entry extents. */
+
+
+
+
+      /* hill (x,z) offsets: 1,2,2,4 pairs at pairs 0,1,3,5; exactly fills [0x3C0A2,0x3C0C6) */
+
+
+
+/* Local view: scene2; array is None; another unit uses 19. */
 extern struct TRACKOBJECT scene2[];
+/* Local view: scene3; array is None; another unit uses 13. */
 extern struct TRACKOBJECT scene3[];
-extern struct SHAPE3D g_shapes3d[130];
-extern struct VECTOR pos_pt;
-extern struct VECTOR pts_set[6];
-extern I16S ywhlang[];
-extern struct VECTOR ctrmesh;
-extern struct VECTOR veco[6];
-extern I16S buf_obase[];
+
+
+
+
+
+
+
+/* Local view: backlightovr8; type is signed byte; another unit uses unsigned byte. */
 extern char backlightovr8;
-extern I16 g_tdist[];
-extern I16 tsix[];
-extern I8 tshapearrarg2[];
-extern short exwd[3];
-extern struct SHAPE2D far *sdgbmp_v[5];
-extern void far* fntled_res;
+
+
+
+
+
+
+/* Local view: dlg_colour; type is signed word; another unit uses unsigned word. */
 extern I16 dlg_colour;
-extern char g_ts_num;
 
-void getpinfo(struct VECTOR* a, struct VECTOR* b);
-void transformed_shape_add_for_sort(I16 zadjust, I8 sort_group_id);
+
+
+
+/* Local view: roadupcheck; parameters[0] is unsigned byte; another unit uses unsigned word. */
 U8  roadupcheck(U8  a, U8  b);
-I16 drawhorizon(I16 a, struct RECTANGLE* rectptr, I16 e, struct MATRIX* matptr, I16 c, I16 f, I16 g);
-struct RECTANGLE* drawtext(void);
-struct RECTANGLE* crack(I16 frame, I16 top, I16 height);
-struct RECTANGLE* sink(I16 frame, I16 top, I16 height);
+
+
+
+
+/* Local view: shadowtext; return is near pointer; another unit uses void. */
 struct RECTANGLE* shadowtext(I8* str, I16 a, I16 b, I16 c, I16 d);
-void fontsetfontdef2(void far* data);
+
+/* Local view: fmtframestr; parameters[1] is signed word; another unit uses unsigned word. */
 void fmtframestr(I8* s, I16 time, I16 c);
-void scalecfxy(I16 a, void far* shp, I16 x, I16 y);
-void shellsort(I16 n, I16* heap, I16* data);
 
 
-extern struct RECTANGLE game_rect_txt_in, rect_ingame_text2, rect_ingame_text3, rect_ingame_text4;
-extern I8 aDm1[], aDm2[], aPre[], aSe1[], aSe2[], aWww[], aOpp[], aPen[], aRpl_0[], aOpp_0[];
+
+
+
+
+/* Local view: locate_text_resource; parameters[0].pointer is void; another unit uses signed byte. */
 extern I8 far * far locate_text_resource(void far *data, I8 *name);
-extern void strcpyfar(I8 *destination, I8 far *source);
-extern I16 far mycenter(I8 *name);
-extern void sprite_putimage_transparent(void far *shape, I16 x, I16 y);
+
+
+
+/* Local view: strlen; return is unsigned word; another unit uses signed word. */
 extern unsigned strlen(I8 *s);
-extern I16 g_penaltytm;
-extern int g_skyboxwat_clr;
-extern void preRender_line(I16 x1, I16 y1, I16 x2, I16 y2, I16 color);
+
+
+
+/* Local view: locate_shape_alt; return.pointer is signed byte; another unit uses void. */
 extern I8 far *locate_shape_alt(I8 far *data, I8 *name);
-extern I16 sky_hgt_world, maxscnh;
-extern U16S  scene_1ht, scene_2ht, scene_3ht, scene_4ht;
-extern I16 g_skybox_sky_clr, ground_skybox;
-extern struct SHAPE2D far *skypics[4];
+
+
+
+
+/* Local view: sprite_putimage_and_alt; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
 extern void sprite_putimage_and_alt(void far *shape, I16 x, I16 y);
-extern struct RECTANGLE trackpreview_cliprect;
-extern I16S horizon_angles[];
-extern I16 camera_aim_z, camera_pos_z, camera_aim_x, camera_pos_x, camera_aim_y, camera_pos_y;
-extern struct VECTOR track_prev_vec;
-extern unsigned clipline(unsigned, unsigned, unsigned, unsigned, I16 *);
-void far skybox_op_helper(unsigned color, unsigned count, struct POINT2D p1, struct POINT2D p2, struct POINT2D p3, struct POINT2D p4);
-void far skybox_op_helper2(struct RECTANGLE *rectptr, I16 x, I16 horizon);
-void draw_track_preview(void);
 
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct SPRITE { void far *image; U16S  words[13]; };
 
-extern struct SHAPE3D intro_alt, logo_title, brav;
+
+
+
+
+
+
+
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: SHAPE2D; struct.count is 6; another unit uses 10. */
+struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
+#include "primrec.h"
+
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
+#include "resrec.h"
+
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: SPRITE; struct.count is 2; another unit uses 14. */
+struct SPRITE { void far *image; U16S  words[13]; };
+#include "audapi.h"
+#include "auddrv.h"
+#include "car.h"
+#include "dlgapi.h"
+#include "dlgcolor.h"
+#include "gameapi.h"
+#include "gfxapi.h"
+#include "input.h"
+#include "mathapi.h"
+#include "memapi.h"
+#include "render.h"
+#include "replay.h"
+#include "resapi.h"
+#include "shape2d.h"
+#include "timer.h"
+#include "trig.h"
+/* Local view: skybox_loaded; type is unsigned byte; another unit uses signed byte. */
+extern unsigned char skybox_loaded;
+/* Local view: initscenery; parameters[0] is signed byte; another unit uses unsigned byte. */
+extern void far initscenery(I8);
+#include "skybox.h"
+#include "mathops.h"
+#include "text.h"
+#include "track.h"
+
+
+
+/* Local view: loadedresourceptr; pointer is signed byte; another unit uses void. */
 extern I8 far *loadedresourceptr;
-/* Unused OMF-order declarations; the containing storage is tparr[15]. */
-extern I16 dirty_rect_right_alias, dirty_rect_top_alias, dirty_rect_bottom_alias;
-extern I16 intro_colorvalue, intro_color_max;
+
+
+
+/* Local view: fluffyload; return.pointer is void; another unit uses signed byte. */
 extern void far *fluffyload(I8 *);
+/* Local view: locate_many_resources; parameters[2].pointer.pointer is signed byte; another unit uses void. */
 extern void far locate_many_resources(void far *, I8 *, I8 far **);
+/* Local view: sprite_make_window; return.pointer is void; another unit uses struct SPRITE. */
 extern void far *sprite_make_window(I16, I16, I16);
-extern I16 far get_kevinrandom(void);
+
+/* Local view: file_load_resource_file; return.pointer is signed byte; another unit uses void. */
 extern I8 far *file_load_resource_file(I8 *);
+/* Local view: setup_aero_trackdata; parameters[0].pointer is signed byte; another unit uses void. */
 extern void far setup_aero_trackdata(I8 far *, I16);
+/* Local view: closeresource; parameters[0].pointer is signed byte; another unit uses void. */
 extern void far closeresource(I8 far *);
-extern void far initlogo(void);
+
+/* Local view: elapsedticks; return is signed word; another unit uses unsigned long. */
 extern I16 far elapsedticks(void);
-extern void far movelogo(void);
-extern void far setup_mcgawnd2(void);
-extern void far setup_mcgawnd1(void);
-extern void far sprite_copy_wnd_to_1(void);
-extern I16 far get_0(void);
-extern void far clear_rect(I16, I16, I16, I16, I16);
+
+
+
+
+
+
+/* Local view: sprite_free_window; parameters[0].pointer is void; another unit uses struct SPRITE. */
 extern void far sprite_free_window(void far *);
+/* Local view: freememory; return is void; another unit uses far pointer. */
 extern void far freememory(void far *);
 
-/* Unused OMF-order alias declaration; accesses use rotpr[1]. */
-extern I16 sky_rotation_page1_alias, frmexcess;
-extern int spdneedlegaugeclr;
-extern U8  skybox_loaded, scene_idx;
-extern struct RECTANGLE rc0_cpy;
-extern struct RECTANGLE intro_cliprect;
-extern union FARRESOURCE skyres_handle;
+
+
+
+
+
+
+
+
+/* Local view: TerName; array is None; another unit uses 5. */
 extern I8 TerName[];
+/* Local view: file_load_shape2d_fatal_thunk; return.pointer is void; another unit uses unsigned byte. */
 extern void far *file_load_shape2d_fatal_thunk(I8 *);
-extern char far *sdgame2hdl;
-extern void far *file_load_resource(I16, I8 *);
-extern void far loaddrawbits(void);
-extern void far removedrawbits(void);
-extern void far initdrawworld(void);
-extern void far drawworldflipzones(struct RECTANGLE *);
-extern void far initscenery(I8);
-extern void far removescenery(void);
-extern I8 far setup_intro(void);
-extern void far drawlogo(I16, I16, I16, I16, I16, I16, I16, struct VECTOR *, struct POINT2D *, I16 *, struct RECTANGLE, struct RECTANGLE *, struct RECTANGLE *);
+
+
+
+
+
+
+
+
+
+
 
 
 /* Copies a clipped window region. Params: clip rectangle. Returns: none. State: reads the active window sprite and clip state. */
 /* PLATFORM(video): draws to or configures the display surface. */
 void far drawworldflipzones(struct RECTANGLE *clipRect)
 {
+	/* Local view: g_simprect; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 	extern I8 g_simprect;
-	extern void far msdrawopaquechk(void);
-	extern void far msdrawtransparentchk(void);
-	extern void far sortzonelist(I8, struct RECTANGLE *, I16 *);
+	
+	
+	
+	/* Local view: rectclip; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 	extern struct RECTANGLE rectclip[15];
+	/* Local view: rcmapix; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 	extern int rcmapix[45];
+	/* Local view: rect_num3; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 	extern char rect_num3;
+	/* Local view: rects_updt; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 	extern char rects_updt[15];
+	/* Local view: makezonelist; parameters[0] is signed byte; another unit uses unsigned byte. */
 	extern void far makezonelist(I8, I8 *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, I8 *, struct RECTANGLE *);
-	extern void far sprcopy2to12(void);
+	
+	/* Local view: sprputimage; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
 	extern void far sprputimage(void far *);
+	/* Local view: sprset1size; parameters[0] is unsigned word; another unit uses signed word. */
 	extern void sprset1size(U16S  left, U16S  right, U16S  top, U16S  height);
+	/* Local view: g_wndspr; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 	extern struct SPRITE far *g_wndspr;
+	/* Local view: rotpr; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 	extern I16 rotpr[];
+	/* Local view: prevcamrot; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 	extern int prevcamrot;
     register I16 i;
     struct RECTANGLE *currentRect;
@@ -837,6 +954,7 @@ draw_rect_check:
 
 /* Resets saved clip rectangles for the current drawing mode. Params: none. Returns: none. State: reads clip state and updates rectangle buffers. */ void far initdrawworld(void)
 {
+	/* Local view: full_screen_rectangle; block externs preserve external fixups to the later initialized public; a file declaration changes them to _DATA fixups. */
 	extern struct RECTANGLE full_screen_rectangle;
     register I16 i;
 
@@ -852,8 +970,11 @@ draw_rect_check:
 /* Updates the visible game frame. Params: page and clip rectangle. Returns: none. State: reads frame, scene, camera and sprite globals; updates render lists. */
 /* PLATFORM(video): draws to or configures the display surface. */
 void drawworld(I8 page, struct RECTANGLE* clip) {
+	/* Local view: sprset1size; parameters[0] is unsigned word; another unit uses signed word. */
 	extern void sprset1size(U16S  left, U16S  right, U16S  top, U16S  height);
+	/* Local view: rotpr; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 	extern I16 rotpr[];
+	/* Local view: prevcamrot; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 	extern I16 prevcamrot;
 	I8 skipped[24];
 	U8  terrain_list[24];
@@ -1995,21 +2116,33 @@ draw_done:
 
 }
 
+/* Local view: g_simprect; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 extern I8 g_simprect;
-extern void far msdrawopaquechk(void);
-extern void far msdrawtransparentchk(void);
-extern void far sortzonelist(I8, struct RECTANGLE *, I16 *);
+
+
+
+/* Local view: rectclip; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 extern struct RECTANGLE rectclip[15];
+/* Local view: rcmapix; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 extern I16 rcmapix[45];
+/* Local view: rect_num3; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 extern I8 rect_num3;
+/* Local view: rects_updt; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 extern I8 rects_updt[15];
+/* Local view: full_screen_rectangle; block externs preserve external fixups to the later initialized public; a file declaration changes them to _DATA fixups. */
 extern struct RECTANGLE full_screen_rectangle;
+/* Local view: makezonelist; parameters[0] is signed byte; another unit uses unsigned byte. */
 extern void far makezonelist(I8, I8 *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, I8 *, struct RECTANGLE *);
-extern void far sprcopy2to12(void);
+
+/* Local view: sprputimage; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
 extern void far sprputimage(void far *);
+/* Local view: sprset1size; parameters[0] is unsigned word; another unit uses signed word. */
 extern void sprset1size(U16S  left, U16S  right, U16S  top, U16S  height);
+/* Local view: g_wndspr; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 extern struct SPRITE far *g_wndspr;
+/* Local view: rotpr; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 extern I16 rotpr[];
+/* Local view: prevcamrot; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 extern I16 prevcamrot;
 
 /* Draws the sky and ground bands. Params: clip rectangle, x offset and horizon. Returns: none. State: reads skybox images, heights and colors. */
@@ -2634,7 +2767,9 @@ struct RECTANGLE *sink(I16 frame, I16 top, I16 height)
     return &game_rect_txt_in;
 }
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
+#include "gamerec.h"
+
 I16 fence_offsets[8] = { 30, 200, 320, 400, 530, 700, 880, 960 };
 struct SHAPE3D *fence_shapes[8] = {
     &g_shapes3d[48],
@@ -2856,6 +2991,7 @@ static struct LOOKAHEAD_TILE hzoneWN[23] = {
 };
 
 I8 *headingzones[8] = { (I8 *)hzoneNE, (I8 *)hzoneEN, (I8 *)hzoneES, (I8 *)hzoneSE, (I8 *)hzoneSW, (I8 *)hzoneWS, (I8 *)hzoneWN, (I8 *)hzoneNW };
+/* Local view: full_screen_rectangle; block externs preserve external fixups to the later initialized public; a file declaration changes them to _DATA fixups. */
 struct RECTANGLE full_screen_rectangle = { 0, 320, 0, 200 };
 I8 detthrlevel[6] = { 2, 2, 1, 0, 0, 0 };
 I16 hill_offs[9][2] = {
@@ -2965,6 +3101,7 @@ static char init_crak_resource_names[2][5] = { "crak", "cinf" };
 
 /* Loads the selected skybox. Params: skybox mode. Returns: none. State: updates the skybox resource handle and loaded-state flag. */
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
+/* Local view: initscenery; parameters[0] is signed byte; another unit uses unsigned byte. */
 void far initscenery(I8 mode)
 {
     register I16 skyHeight;
@@ -3359,6 +3496,7 @@ struct RECTANGLE intro_cliprect = { 0, 320, 0, 200 };
 I16 intro_colorvalue = 1;
 
 /* Communals defined by this module (tentative definitions). */
+/* Local view: td10checkptr; pointer is signed word; another unit uses struct VECTOR. */
 I16 far* td10checkptr;
 struct TRANSFORMEDSHAPE3D cur_shps[29];
 I16 runrndx;
@@ -3368,23 +3506,28 @@ struct SHAPE3D logo_title;
 U16S  statemgmtcpy;
 I16S frmcs_time;
 void far* gamerptrs;
+/* Local view: rotpr; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 int rotpr[2];
 struct RECTANGLE tparr[15];
 int ground_skybox;
 struct SHAPE3D brav;
 I16 spdneedlegaugeclr;
 int frmexcess;
+/* Local view: rectclip; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 struct RECTANGLE rectclip[15];
 int maxscnh;
 int g_tdist[29];
+/* Local view: backlightovr8; type is signed byte; another unit uses unsigned byte. */
 I8 backlightovr8;
 unsigned short scene_1ht;
 unsigned short scene_2ht;
 unsigned short scene_3ht;
 unsigned short scene_4ht;
+/* Local view: rects_updt; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 I8 rects_updt[15];
 struct RECTANGLE rclist[15];
 int g_skybox_sky_clr;
+/* Local view: rcmapix; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 I16 rcmapix[45];
 I16S exwd[3];
 struct RECTANGLE rc0_cpy;
@@ -3394,14 +3537,17 @@ I8 g_ts_num;
 struct SHAPE2D far *skypics[4];
 struct SHAPE2D far *sdgbmp_v[5];
 int tsix[29];
+/* Local view: rect_num3; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 I8 rect_num3;
 unsigned char scene_idx;
 union FARRESOURCE skyres_handle;
 struct RECTANGLE game_rect_txt_in;
+/* Local view: prevcamrot; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 I16 prevcamrot;
 I8 far *sdgame2hdl;
 I8 follow_op;
 I16 g_skyboxwat_clr;
 struct TRANSFORMEDSHAPE3D * g_curr_tsp;
 struct MATRIX wkmatx;
+/* Local view: cliprects_spare4; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 short cliprects_spare4[120];

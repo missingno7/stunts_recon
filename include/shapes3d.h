@@ -2,8 +2,7 @@
 #ifndef SHAPES3D_H
 #define SHAPES3D_H
 #include "math3d.h"
-struct Point { I16 x, y; };
-typedef struct Point Point;
+#include "point.h"
 extern void FAR ellipse(struct Point *, struct Point *);
 extern void FAR ellipseh(struct Point *, struct Point *);
 #define WHEEL_RING_POINT_COUNT 16

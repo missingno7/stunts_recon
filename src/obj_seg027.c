@@ -15,119 +15,113 @@ static U8 saved_effect_chunk_volumes[24];
 
 /* PORT: Packed audio records depend on 16-bit far-pointer width and MSC field packing. */
 #pragma pack(1)
-struct AUDIOCHUNK {                 /* 0x4C bytes */
-    I8 FAR *event_pos;                 /* 00 */
-    U8 call_depth;            /* 04 */
-    I8 FAR *restart_pos;                /* 05 */
-    U8 return_stack_tail[12];        /* 09 */
-    U8 active_voices;            /* 15 */
-    U8 max_voices;            /* 16 */
-    U8 unk17;            /* 17 */
-    I32 event_delay;                     /* 18 */
-    U8 unk1C;            /* 1C */
-    U8 unk1D;            /* 1D */
-    I32 sample_data;                     /* 1E */
-    U8 velocity;            /* 22 */
-    U8 index;            /* 23 */
-    U8 priority;         /* 24 */
-    U8 sustain_mode;            /* 25 */
-    I16 pitch_bend;                      /* 26 */
-    U8 volume;           /* 28 */
-    U8 driver_parameter_29;            /* 29 */
-    U8 unk2A;            /* 2A */
-    U8 driver_parameter_2b;            /* 2B */
-    U8 driver_parameter_2c;            /* 2C */
-    U8 unk2D;            /* 2D */
-    I8 FAR *sample_table;                /* 2E */
-    U8 loop_depth;            /* 32 */
-    U8 loop_state[20];        /* 33 */
-    U8 channel_number;            /* 47 */
-    I32 end_callback;                     /* 48 */
-};
+#include "audrec.h"
+
 #pragma pack()
 /* READABILITY: Load and drive the DOS audio module, schedule its timer callback, and resolve audio resources. */
 
-struct AUDIOVOICE {                 /* 0x2E bytes */
-    U8 resource_index;            /* 00 */
-    U8 state;            /* 01 */
-    U8 priority;            /* 02 */
-    U8 driver_note_pitch[5];         /* 03 */
-    I32 position;                  /* 08 */
-    I32 length;                    /* 0C */
-    I32 sample_data;                     /* 10 */
-    U8 envelope_modulation_state[22];        /* 14 */
-    I16 owner_chunk;                      /* 2A */
-    U8 channel_number;            /* 2C */
-    U8 unk2D;            /* 2D */
-};
 
+
+/* Local view: audiochunktable; array is 24; another unit uses None. */
 struct AUDIOCHUNK audiochunktable[24];
+/* Local view: snd_voices_tbl; array is 16; another unit uses None. */
 struct AUDIOVOICE snd_voices_tbl[16];
-extern U8 saved_music_chunk_volumes[];
-extern U8 saved_effect_chunk_volumes[];
+
+
 unsigned char block_audio_num;
 unsigned char audioblock[24];
 unsigned char g_audchnkvalue[24];
 unsigned char sfx_audio_vol;
 unsigned char g_musicvolumesetting;
-extern U8 g_audiodrvvoices_count;
+
 unsigned char audiochnk_actflags[24];
+/* Local view: snd_sample_rate_phase, mus_samplelimit; type is signed word; another unit uses unsigned word. */
 extern I16 snd_sample_rate_phase, mus_samplelimit;
 char g_drvaudiocode[14];
+/* Local view: kick_res; pointer is void; another unit uses signed byte. */
 void far *kick_res;
+/* Local view: g_snaresnd; pointer is void; another unit uses signed byte. */
 void far *g_snaresnd;
+/* Local view: tommsampleresource; pointer is void; another unit uses signed byte. */
 void far *tommsampleresource;
+/* Local view: ride_audio_sound_res; pointer is void; another unit uses signed byte. */
 void far *ride_audio_sound_res;
+/* Local view: audio_opp_res; pointer is void; another unit uses signed byte. */
 void far *audio_opp_res;
+/* Local view: chhtsample; pointer is void; another unit uses signed byte. */
 void far *chhtsample;
+/* Local view: resource_sound_hit; pointer is void; another unit uses signed byte. */
 void far *resource_sound_hit;
 
 
+/* Local view: audioresource_find; return.pointer is void; another unit uses signed byte. */
 void FAR * FAR audioresource_find(void FAR *resource, I8 *name);
+/* Local view: audio_set_chunk_volume; parameters[1] is unsigned byte; another unit uses signed word. */
 void FAR audio_set_chunk_volume(I16 index, U8 value);
-void FAR audio_driver_func1E(I16 first, I16 last);
-void FAR reset_audio_event_state(void);
-I8 * FAR audio_make_filename(I8 *name, I8 *ext, I8 *kind);
+
+
+
     /* PLATFORM(file): load or decompress the named audio resource. */
-void FAR * FAR loadfilez(I8 *name);
+
     /* PLATFORM(file): load or decompress the named audio resource. */
-void FAR * FAR loadpackz(I8 *name);
+
     /* PLATFORM(memory): release storage through the game memory manager. */
-void FAR purgememory(void FAR *ptr);
+
+/* Local view: abortmessage; parameters.count is 2; another unit uses 1. */
 void FAR abortmessage(I8 *format, ...);
-void FAR addexit(void (FAR *handler)(void));
+
     /* PLATFORM(timer): use or register the game timer service. */
-void FAR addtimer(void (FAR *callback)(void));
+
     /* PLATFORM(timer): use or register the game timer service. */
-void FAR deltimer(void (FAR *callback)(void));
-void FAR audiodriver_timer(void);
+
+
     /* PLATFORM(timer): use or register the game timer service. */
+/* Local view: setticks; parameters.count is 1; another unit uses 2. */
 void FAR setticks(I32 ticks);
     /* PLATFORM(timer): use or register the game timer service. */
-void FAR waitticks(void);
+
     /* PLATFORM(file): resolve an audio resource entry in the loaded bundle. */
+/* Local view: locateshapez; return.pointer is void; another unit uses signed byte. */
 void FAR * FAR locateshapez(void FAR *shapes, I8 *name);
+/* Local view: audioresource_get_chunk_index; parameters[2].pointer is signed byte; another unit uses unsigned byte. */
 I16 FAR audioresource_get_chunk_index(I16 start, I16 count, I8 *name, I8 FAR *names);
+/* Local view: audioresource_compare_chunknames; parameters[1].pointer is signed byte; another unit uses unsigned byte. */
 I16 FAR audioresource_compare_chunknames(I16 flag, I8 FAR *name1, I8 FAR *name2, I16 length);
+/* Local view: audioresource_copy_n_bytes; parameters[1].pointer is unsigned byte; another unit uses signed byte. */
 void FAR audioresource_copy_n_bytes(U8 FAR *src, U8 FAR *dst, I16 count);
+/* Local view: debug_printf_text; parameters[1] is ...; another unit uses signed word. */
 void FAR debug_printf_text(I8 *format, ...);
-void FAR flush_stdin(void);
+
+/* Local view: strlen; return is unsigned word; another unit uses signed word. */
 U16 strlen(const I8 *s);
 
-void FAR audio_map_song_instruments(void FAR *song, void FAR *voice);
-void FAR audio_map_song_tracks(void FAR *song);
-void FAR audioresource_copy_4_bytes(U8 FAR *dst, U8 FAR *src);
-U32 FAR audioresource_get_dword(U32 FAR *p);
-U16 FAR audioresource_get_word(U16 FAR *p);
-void FAR audio_init_chunk(I16 first, I16 last, void FAR *res, I16 offset, U8 volume, U8 priority);
-I16 FAR audio_check_flag(void FAR *res, I16 chunk, U8 priority, U16 volume);
-void FAR audio_init_chunk2(I16 chunk);
-void FAR reset_audio_chunks(void);
-void FAR set_all_audio_chunk_volume(I16 value);
-void FAR reset_audio_driver_state(void);
-void FAR audiodrv_atexit(void);
 
-typedef void (FAR *DRVPROC)();
+/* Local view: audio_map_song_tracks; parameters[0].pointer is void; another unit uses unsigned byte. */
+void FAR audio_map_song_tracks(void FAR *song);
+
+/* Local view: audioresource_get_dword; parameters[0].pointer is unsigned long; another unit uses unsigned byte. */
+U32 FAR audioresource_get_dword(U32 FAR *p);
+/* Local view: audioresource_get_word; parameters[0].pointer is unsigned word; another unit uses unsigned byte. */
+U16 FAR audioresource_get_word(U16 FAR *p);
+/* Local view: audio_init_chunk; parameters.count is 6; another unit uses 7. */
+void FAR audio_init_chunk(I16 first, I16 last, void FAR *res, I16 offset, U8 volume, U8 priority);
+/* Local view: audio_check_flag; parameters[2] is unsigned byte; another unit uses signed word. */
+I16 FAR audio_check_flag(void FAR *res, I16 chunk, U8 priority, U16 volume);
+
+
+
+
+
+
+
+/* Local view: timer registration uses an ordinary far callback; the entry definition uses _loadds. */
+extern void far audiodriver_timer(void);
+#include "audapi.h"
+#include "game.h"
+#include "memapi.h"
+#include "resapi.h"
+#include "timer.h"
+
 
 void FAR * FAR init_audio_resources(void FAR *song, void FAR *voice, I8 *name)
 {
@@ -150,6 +144,7 @@ void FAR * FAR init_audio_resources(void FAR *song, void FAR *voice, I8 *name)
     return hdrptr;
 }
 
+/* Local view: audiodriverbinary; pointer is void; another unit uses signed byte. */
 void FAR *audiodriverbinary = 0;
 U16 audio_bit_masks[17] = {
     0x0001, 0x0002, 0x0004, 0x0008, 0x0010, 0x0020, 0x0040, 0x0080,
@@ -162,6 +157,7 @@ U8 audioflag6 = 1;
 U8 audio_driver_mode = 0;
 U8 audio_driver_extension_mode = 0;
 U8 audio_driver_volume_command[4] = { 0x10, 0x00, 0x16, 0x00 };
+/* Local view: audio_update_lock; type is signed word; another unit uses unsigned word. */
 I16 audio_update_lock = 1;
 I16 audio_load_error_policy = 0;
 
@@ -194,6 +190,7 @@ void FAR load_audio_finalize(void FAR *song)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(audio): dispatch the prepared volume command into the DOS sound driver. */
+/* Local view: audio_pause_playback; return is void; another unit uses signed word. */
 void FAR audio_pause_playback(void)
 {
     struct AUDIOVOICE *channel;
@@ -275,12 +272,13 @@ I16 FAR audio_music_is_idle(void)
     return 1;
 }
 
-I16 FAR audio_check_flag2(void FAR *res, I16 chunk, U8 priority);
+
 I16 FAR audio_play_resource_default(void FAR *res)
 {
     return audio_check_flag2(res, -1, 0x40);
 }
 
+/* Local view: reserve_audio_chunk; parameters[1] is unsigned byte; another unit uses signed word. */
 I16 FAR reserve_audio_chunk(I16 chunk, U8 priority)
 {
     I16 i;
@@ -316,6 +314,7 @@ I16 FAR audio_check_flag2(void FAR *res, I16 chunk, U8 priority)
     return audio_check_flag(res, chunk, priority, sfx_audio_vol);
 }
 
+/* Local view: audio_check_flag; parameters[2] is unsigned byte; another unit uses signed word. */
 I16 FAR audio_check_flag(void FAR *res, I16 chunk, U8 priority, U16 volume)
 {
     I16 i;
@@ -674,6 +673,7 @@ void FAR * FAR audio_load_sample_bank(I8 *filename)
     return result;
 }
 
+/* Local view: audio_init_chunk; parameters.count is 6; another unit uses 7. */
 void FAR audio_init_chunk(I16 first, I16 last, void FAR *res, I16 offset, U8 volume, U8 priority)
 {
     struct AUDIOCHUNK *chunk;
@@ -810,6 +810,7 @@ void FAR reset_audio_driver_state(void)
     audio_update_lock = 0;
 }
 
+/* Local view: audio_map_song_tracks; parameters[0].pointer is unsigned byte; another unit uses void. */
 void FAR audio_map_song_tracks(U8 FAR *song)
 {
     I16 ok_idx;
@@ -895,8 +896,10 @@ void FAR audio_map_song_tracks(U8 FAR *song)
     }
 }
 
+/* Local view: audioresource_get_dword; parameters[0].pointer is unsigned long; another unit uses unsigned byte. */
 U32 FAR audioresource_get_dword(U32 FAR *p) { U32 value; value = *p; return value; }
 
+/* Local view: audioresource_get_word; parameters[0].pointer is unsigned word; another unit uses unsigned byte. */
 U16 FAR audioresource_get_word(U16 FAR *p) { U16 value; value = *p; return value; }
 
 void FAR audioresource_copy_4_bytes(U8 FAR *dst, U8 FAR *src)

@@ -3,8 +3,8 @@
     "declarations": {
       "externals": [
         "__acrtused",
-        "_xorrectc",
-        "_xorbox"
+        "_xorbox",
+        "_xorrectc"
       ],
       "groups": [
         {
@@ -122,7 +122,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_xorrectc",
-      "target_index": 2,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -139,7 +139,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_xorrectc",
-      "target_index": 2,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -156,7 +156,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_xorrectc",
-      "target_index": 2,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -173,7 +173,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_xorrectc",
-      "target_index": 2,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -206,9 +206,34 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
+      "path": "include/audeng.h",
+      "sha256": "9cd04ff48bb7830e929eeef0e13a533fb5548a6d68e43a50e10438b7c230bd73",
+      "size": 240
+    },
+    {
+      "path": "include/game.h",
+      "sha256": "0bf7bc4afb9b518f5702334334695ab123f2e69c7c02dd895a65b1ed10e8761f",
+      "size": 94
+    },
+    {
+      "path": "include/gameapi.h",
+      "sha256": "101ef3f85a177f759df8ec6a1ab8d836b0d67cf653ba8c96b279cc01dd70a4e8",
+      "size": 11031
+    },
+    {
+      "path": "include/geom2d.h",
+      "sha256": "2938bb58c7180ac1095c0efa64d0e9b7e1099eab96e8310945cc1cac41253465",
+      "size": 421
+    },
+    {
       "path": "include/platform_hw.h",
       "sha256": "e3863a97e9a936f227221b474f085abbd3eb2deb5df33993f7ad00c75baaa9bc",
       "size": 6111
+    },
+    {
+      "path": "include/replay.h",
+      "sha256": "7e3c91591ec83a1bedfedcb2f6ece698e24f2eb902c6fc7cde7a27f22922882d",
+      "size": 466
     },
     {
       "path": "include/stunts_types.h",
@@ -219,6 +244,47 @@
       "path": "include/video.h",
       "sha256": "6e35382e1e5cc46df34378e61a6acf6db50dbf60b61752bc745434ce9a4a2f3b",
       "size": 1056
+    },
+    {
+      "path": "include/viewstat.h",
+      "sha256": "a59d13683da45f7e1cc415d8855bad44143d07d95d6806a53cc94321cfda5fe5",
+      "size": 485
+    },
+    {
+      "line": 7,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 12,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 7,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 12,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
     }
   ],
   "profile": "msc510-medium",

@@ -349,7 +349,7 @@
           "name": "_g_plyr_snd_state",
           "size": 1,
           "size_basis": {
-            "declaration": "char g_plyr_snd_state;",
+            "declaration": "I8 g_plyr_snd_state;",
             "kind": "declared-type"
           }
         },
@@ -361,7 +361,7 @@
           "name": "_runrndx",
           "size": 2,
           "size_basis": {
-            "declaration": "int runrndx;",
+            "declaration": "I16 runrndx;",
             "kind": "declared-type"
           }
         },
@@ -373,7 +373,7 @@
           "name": "_audiooppflag",
           "size": 1,
           "size_basis": {
-            "declaration": "char audiooppflag;",
+            "declaration": "I8 audiooppflag;",
             "kind": "declared-type"
           }
         },
@@ -385,7 +385,7 @@
           "name": "_wallanchor_z",
           "size": 2,
           "size_basis": {
-            "declaration": "int wallanchor_z;",
+            "declaration": "I16 wallanchor_z;",
             "kind": "declared-type"
           }
         },
@@ -433,7 +433,7 @@
           "name": "_trackdata_penalty_related",
           "size": 4,
           "size_basis": {
-            "declaration": "short far* trackdata_penalty_related;",
+            "declaration": "I16S far* trackdata_penalty_related;",
             "kind": "declared-type"
           }
         },
@@ -626,7 +626,7 @@
           "name": "_g_player_sound_id",
           "size": 2,
           "size_basis": {
-            "declaration": "int g_player_sound_id;",
+            "declaration": "I16 g_player_sound_id;",
             "kind": "declared-type"
           }
         },
@@ -674,7 +674,7 @@
           "name": "_op_eng_sound_id",
           "size": 2,
           "size_basis": {
-            "declaration": "int op_eng_sound_id;",
+            "declaration": "I16 op_eng_sound_id;",
             "kind": "declared-type"
           }
         },
@@ -853,7 +853,7 @@
           "name": "_rotxvehicle",
           "size": 2,
           "size_basis": {
-            "declaration": "int rotxvehicle;",
+            "declaration": "I16 rotxvehicle;",
             "kind": "declared-type"
           }
         },
@@ -1117,7 +1117,7 @@
           "name": "_statemgmtcpy",
           "size": 2,
           "size_basis": {
-            "declaration": "unsigned short statemgmtcpy;",
+            "declaration": "U16S  statemgmtcpy;",
             "kind": "declared-type"
           }
         },
@@ -1129,7 +1129,7 @@
           "name": "_yrotrotveh",
           "size": 2,
           "size_basis": {
-            "declaration": "int yrotrotveh;",
+            "declaration": "I16 yrotrotveh;",
             "kind": "declared-type"
           }
         },
@@ -1165,7 +1165,7 @@
           "name": "_anglerotate_car",
           "size": 2,
           "size_basis": {
-            "declaration": "int anglerotate_car;",
+            "declaration": "I16 anglerotate_car;",
             "kind": "declared-type"
           }
         },
@@ -1189,7 +1189,7 @@
           "name": "_g_hillf",
           "size": 1,
           "size_basis": {
-            "declaration": "char g_hillf;",
+            "declaration": "I8 g_hillf;",
             "kind": "declared-type"
           }
         },
@@ -1201,7 +1201,7 @@
           "name": "_frmcs_time",
           "size": 2,
           "size_basis": {
-            "declaration": "short frmcs_time;",
+            "declaration": "I16S frmcs_time;",
             "kind": "declared-type"
           }
         },
@@ -1225,7 +1225,7 @@
           "name": "_pen_flag_count",
           "size": 1,
           "size_basis": {
-            "declaration": "char pen_flag_count;",
+            "declaration": "I8 pen_flag_count;",
             "kind": "declared-type"
           }
         },
@@ -1261,7 +1261,7 @@
           "name": "_centerpos",
           "size": 4,
           "size_basis": {
-            "declaration": "long centerpos;",
+            "declaration": "I32 centerpos;",
             "kind": "declared-type"
           }
         },
@@ -1285,7 +1285,7 @@
           "name": "_veh_position",
           "size": 4,
           "size_basis": {
-            "declaration": "long veh_position;",
+            "declaration": "I32 veh_position;",
             "kind": "declared-type"
           }
         },
@@ -1297,7 +1297,7 @@
           "name": "_veh_z",
           "size": 4,
           "size_basis": {
-            "declaration": "long veh_z;",
+            "declaration": "I32 veh_z;",
             "kind": "declared-type"
           }
         },
@@ -1418,7 +1418,7 @@
           "name": "_sndposrecord",
           "size": 2,
           "size_basis": {
-            "declaration": "short sndposrecord;",
+            "declaration": "I16S sndposrecord;",
             "kind": "declared-type"
           }
         },
@@ -1826,7 +1826,7 @@
           "name": "_track04_plyraero",
           "size": 4,
           "size_basis": {
-            "declaration": "short far* track04_plyraero;",
+            "declaration": "I16S far* track04_plyraero;",
             "kind": "declared-type"
           }
         },
@@ -1886,7 +1886,7 @@
           "name": "_trackdata_05_opp_aerotbl",
           "size": 4,
           "size_basis": {
-            "declaration": "short far* trackdata_05_opp_aerotbl;",
+            "declaration": "I16S far* trackdata_05_opp_aerotbl;",
             "kind": "declared-type"
           }
         },
@@ -1922,7 +1922,7 @@
           "name": "_spdneedlegaugeclr",
           "size": 2,
           "size_basis": {
-            "declaration": "int spdneedlegaugeclr;",
+            "declaration": "I16 spdneedlegaugeclr;",
             "kind": "declared-type"
           }
         },
@@ -1994,7 +1994,7 @@
           "name": "_g_sgateopn",
           "size": 2,
           "size_basis": {
-            "declaration": "short g_sgateopn;",
+            "declaration": "I16S g_sgateopn;",
             "kind": "declared-type"
           }
         },
@@ -2067,7 +2067,7 @@
           "name": "_pln_rotate_z",
           "size": 2,
           "size_basis": {
-            "declaration": "int pln_rotate_z;",
+            "declaration": "I16 pln_rotate_z;",
             "kind": "declared-type"
           }
         },
@@ -2079,7 +2079,7 @@
           "name": "_car_roty_pln",
           "size": 2,
           "size_basis": {
-            "declaration": "int car_roty_pln;",
+            "declaration": "I16 car_roty_pln;",
             "kind": "declared-type"
           }
         },
@@ -2091,7 +2091,7 @@
           "name": "_car_rotate_xc",
           "size": 2,
           "size_basis": {
-            "declaration": "int car_rotate_xc;",
+            "declaration": "I16 car_rotate_xc;",
             "kind": "declared-type"
           }
         },
@@ -2103,7 +2103,7 @@
           "name": "_frwhl_angadjusted",
           "size": 2,
           "size_basis": {
-            "declaration": "int frwhl_angadjusted;",
+            "declaration": "I16 frwhl_angadjusted;",
             "kind": "declared-type"
           }
         },
@@ -2115,7 +2115,7 @@
           "name": "_g_planidx2",
           "size": 2,
           "size_basis": {
-            "declaration": "int g_planidx2;",
+            "declaration": "I16 g_planidx2;",
             "kind": "declared-type"
           }
         },
@@ -2640,7 +2640,7 @@
           "name": "_exwd",
           "size": 6,
           "size_basis": {
-            "declaration": "short exwd[3];",
+            "declaration": "I16S exwd[3];",
             "kind": "declared-type"
           }
         },
@@ -2772,7 +2772,7 @@
           "name": "_sndpendingstate",
           "size": 1,
           "size_basis": {
-            "declaration": "char sndpendingstate;",
+            "declaration": "I8 sndpendingstate;",
             "kind": "declared-type"
           }
         },
@@ -2882,7 +2882,7 @@
           "name": "_nextpos_normalip",
           "size": 2,
           "size_basis": {
-            "declaration": "int nextpos_normalip;",
+            "declaration": "I16 nextpos_normalip;",
             "kind": "declared-type"
           }
         },
@@ -2894,7 +2894,7 @@
           "name": "_g_cvxintvl",
           "size": 2,
           "size_basis": {
-            "declaration": "short g_cvxintvl;",
+            "declaration": "I16S g_cvxintvl;",
             "kind": "declared-type"
           }
         },
@@ -3087,7 +3087,7 @@
           "name": "_g_ts_num",
           "size": 1,
           "size_basis": {
-            "declaration": "char g_ts_num;",
+            "declaration": "I8 g_ts_num;",
             "kind": "declared-type"
           }
         },
@@ -3147,7 +3147,7 @@
           "name": "_wall_facingang",
           "size": 2,
           "size_basis": {
-            "declaration": "int wall_facingang;",
+            "declaration": "I16 wall_facingang;",
             "kind": "declared-type"
           }
         },
@@ -3530,7 +3530,7 @@
           "name": "_g_penaltytm",
           "size": 2,
           "size_basis": {
-            "declaration": "int g_penaltytm;",
+            "declaration": "I16 g_penaltytm;",
             "kind": "declared-type"
           }
         },
@@ -3613,7 +3613,7 @@
           "name": "_sdgame2hdl",
           "size": 4,
           "size_basis": {
-            "declaration": "char far *sdgame2hdl;",
+            "declaration": "I8 far *sdgame2hdl;",
             "kind": "declared-type"
           }
         },
@@ -3637,7 +3637,7 @@
           "name": "_follow_op",
           "size": 1,
           "size_basis": {
-            "declaration": "char follow_op;",
+            "declaration": "I8 follow_op;",
             "kind": "declared-type"
           }
         },
@@ -3649,7 +3649,7 @@
           "name": "_g_skyboxwat_clr",
           "size": 2,
           "size_basis": {
-            "declaration": "int g_skyboxwat_clr;",
+            "declaration": "I16 g_skyboxwat_clr;",
             "kind": "declared-type"
           }
         },

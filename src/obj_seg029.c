@@ -1,10 +1,14 @@
+
+#include "font.h"
 #include "stunts_types.h"
 /* READABILITY: Compare audio chunk names, find a chunk-table index, locate resource bytes, and copy them. */
-extern I16 FAR cap(I16 value);
+
+/* Local view: audioresource_get_dword; parameters[0].pointer is signed byte; another unit uses unsigned long. */
 extern U32 FAR audioresource_get_dword(I8 FAR *address);
 
 /* Compare up to count bytes of two names, optionally using case-sensitive matching.
  * Params and return follow the declared C signature. */
+/* Local view: audioresource_compare_chunknames; parameters[1].pointer is unsigned byte; another unit uses signed byte. */
 I16 FAR audioresource_compare_chunknames(I16 caseSensitive, U8 FAR *chunkName,
                                          U8 FAR *foundName, I16 count)
 {
@@ -26,6 +30,7 @@ I16 FAR audioresource_compare_chunknames(I16 caseSensitive, U8 FAR *chunkName,
 
 /* Scan four-byte resource names at the given stride and return the matching entry index.
  * Params and return follow the declared C signature. */
+/* Local view: audioresource_get_chunk_index; parameters[2].pointer is unsigned byte; another unit uses signed byte. */
 I16 FAR audioresource_get_chunk_index(I16 stride, I16 numChunks, U8 *chunkName,
                                       I8 FAR *chunkNames)
 {
@@ -46,6 +51,7 @@ I16 FAR audioresource_get_chunk_index(I16 stride, I16 numChunks, U8 *chunkName,
 
 /* Find a named entry in a packed audio resource and return its far data pointer.
  * Params and return follow the declared C signature. */
+/* Local view: audioresource_find; return.pointer is signed byte; another unit uses void. */
 I8 FAR * FAR audioresource_find(I8 HUGE *resource, U8 *chunkName)
 {
     U16 num;
@@ -68,6 +74,7 @@ I8 FAR * FAR audioresource_find(I8 HUGE *resource, U8 *chunkName)
 
 /* Copy size bytes from the far source span into the far destination span.
  * Params and return follow the declared C signature. */
+/* Local view: audioresource_copy_n_bytes; parameters[1].pointer is signed byte; another unit uses unsigned byte. */
 void FAR audioresource_copy_n_bytes(U8 FAR *src, I8 FAR *dst, I16 size)
 {
     I16 i;

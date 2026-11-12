@@ -23,7 +23,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intsin",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -40,7 +40,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intcos",
-      "target_index": 3,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -57,7 +57,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intsin",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -74,7 +74,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intcos",
-      "target_index": 3,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -91,7 +91,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intsin",
-      "target_index": 4,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -108,7 +108,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intcos",
-      "target_index": 3,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -189,11 +189,11 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_xformz",
       "_intcos",
       "_intsin",
       "_xformx",
-      "_xformy"
+      "_xformy",
+      "_xformz"
     ],
     "groups": [
       {
@@ -213,11 +213,6 @@
     ],
     "publics": [
       {
-        "name": "_xformz",
-        "offset": 174,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_xformx",
         "offset": 0,
         "segment": "UNIT_TEXT"
@@ -225,6 +220,11 @@
       {
         "name": "_xformy",
         "offset": 86,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_xformz",
+        "offset": 174,
         "segment": "UNIT_TEXT"
       }
     ],
@@ -298,9 +298,25 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
+      "path": "include/mathops.h",
+      "sha256": "5243e71efb8602194982241a51000afcd41e7eb0aa4dfc9c48210f3a13e3aed6",
+      "size": 932
+    },
+    {
+      "path": "include/mathrec.h",
+      "sha256": "ecb6ad6c91130a11de246ad3d72759212889e4a82a4abbfc0307e1d63b5375e3",
+      "size": 278
+    },
+    {
       "path": "include/stunts_types.h",
       "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
       "size": 1091
+    },
+    {
+      "line": 5,
+      "path": "include/mathrec.h",
+      "pragma": "pack",
+      "value": null
     }
   ],
   "profile": "msc510-medium",

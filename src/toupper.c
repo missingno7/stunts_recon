@@ -1,3 +1,5 @@
+
+#include "font.h"
 #include "stunts_types.h"
 /* READABILITY: Convert an ASCII lowercase letter to uppercase; leave all other integer values unchanged. */
 /* Return an uppercase ASCII letter, leaving non-lowercase values unchanged.

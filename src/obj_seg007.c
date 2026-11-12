@@ -12,29 +12,43 @@
 static struct AudioTimer audio_timer_table[AUDIO_ENGINE_TIMER_COUNT];
 static int audio_timer_count;
 static char id_buffer[RESOURCE_ID_STRING_BYTES];
-extern unsigned char audioflag6;
-extern unsigned char audio_driver_mode;
+/* MSC 6 /Zi: only called interfaces precede the public definitions; other API types shift PUBLIC type indices. */
 
-extern int far sseqds(void);
-extern void far addtimer(void (far *callback)(void));
-extern void far deltimer(void (far *callback)(void));
-extern void far release_audio_chunk(int handle);
-extern void far reset_audio_voice_length(int channel);
+#include "auddrv.h"
+#include "radius2d.h"
+#include "tmrhook.h"
+
+
+
+
+
+
+
+
+/* Local view: locate_shape_fatal; return.pointer is unsigned byte; another unit uses struct SHAPE2D. */
 extern u8 far * far locate_shape_fatal(void far *lookup, char *name);
-extern void far * far init_audio_resources(void far *resource, void far *lookup, char *name);
+
+/* Local view: reserve_audio_chunk; parameters[1] is signed word; another unit uses unsigned byte. */
 extern int far reserve_audio_chunk(int a, int b);
+/* Local view: abortmessage; parameters.count is 1; another unit uses 2. */
 extern void far abortmessage(char *message);
+/* Local view: start_audio_voice_sample; parameters[1].pointer is unsigned byte; another unit uses signed byte. */
 extern void far start_audio_voice_sample(int handle, u8 far *shape);
+/* Local view: send_audio_stop_event; MSC 6 /Zi requires the original ordinary far entry type; the shared entry uses _loadds. */
 extern short far send_audio_stop_event(u16 rate, int handle);
+/* Local view: audio_set_chunk_volume; parameters[1] is signed word; another unit uses unsigned byte. */
 extern void far audio_set_chunk_volume(int handle, int value);
+/* Local view: set_audio_voice_value; MSC 6 /Zi requires the original ordinary far entry type; the shared entry uses _loadds. */
 extern void far set_audio_voice_value(int channel, int rate);
-extern void far audio_init_chunk2(int channel);
-extern int far audio_chunk_is_unavailable(int channel);
-extern int far polarRadius2D(int x, int y);
+
+
+
+/* Local view: audio_check_flag; parameters[2] is signed word; another unit uses unsigned byte. */
 extern int far audio_check_flag(void far *resource, int a, int b, int c);
+/* Local view: debug_printf_text; parameters[1] is signed word; another unit uses .... */
 extern void far debug_printf_text(char *format, int value);
 
-void far audio_driver_timer(void);
+
 
 void far audio_add_driver_timer(void)
 { /* PURPOSE: Clear audio timer slots and register the audio update callback. Params: none. Returns: void. Globals: reads audio_timer_table; writes audio_timer_count. */ /* PLATFORM(timer): registers, removes, or reads the game timer. */
@@ -70,6 +84,7 @@ char * far pad_id(u32 far *id)
     return id_buffer;
 }
 
+/* Local view: audio_init_engine; parameters[1].pointer is unsigned byte; another unit uses void. */
 int far audio_init_engine(int unused, u8 huge *blob, void far *lookup, void far *resource)
 { /* PURPOSE: Copy an audio payload, resolve its resources, and allocate a timer slot. Params: unused, blob, lookup, resource. Returns: int. Globals: reads audio_timer_table; writes audio_timer_table. */ /* PLATFORM(file): uses file and resource services. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */
     int slot;

@@ -251,14 +251,49 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
+      "path": "include/geom2d.h",
+      "sha256": "2938bb58c7180ac1095c0efa64d0e9b7e1099eab96e8310945cc1cac41253465",
+      "size": 421
+    },
+    {
       "path": "include/math3d.h",
-      "sha256": "f87ae92b2fb84a6e1bdcf1ee3f6618325c6731937f08f2fa921f105268a1a817",
-      "size": 2625
+      "sha256": "4115a40f9f2cd62dbb5a9e56a5c13b5524b7bc7d60f5865d7604ccf2a2acc84d",
+      "size": 1720
+    },
+    {
+      "path": "include/mathops.h",
+      "sha256": "5243e71efb8602194982241a51000afcd41e7eb0aa4dfc9c48210f3a13e3aed6",
+      "size": 932
+    },
+    {
+      "path": "include/matrix.h",
+      "sha256": "746768e36b1cd75d79999103dc38512e04c3e7dc6f180d2fb96a5dcd621bdbf7",
+      "size": 113
+    },
+    {
+      "path": "include/point.h",
+      "sha256": "14dc1976a2ef56548965ae0436ffa20c3a546f6a9c771f96d6dda1228af1031a",
+      "size": 135
+    },
+    {
+      "path": "include/prim3d.h",
+      "sha256": "18ae050c00e4e0144daadd37e0d874d276b43e1cec7d9096ea31da45ae53b4a5",
+      "size": 97
+    },
+    {
+      "path": "include/radius.h",
+      "sha256": "a051111337630b9570be4817cd39c795d87d05ac19ddfa90b2cca1742d504c7f",
+      "size": 186
+    },
+    {
+      "path": "include/render.h",
+      "sha256": "05e41a1af95a36e31737f34ba4957076eca4efe9a674ac55ee5abbba7ce602c9",
+      "size": 2799
     },
     {
       "path": "include/shapes3d.h",
-      "sha256": "49b87cdb4cae370277a5cbfe9f0d5c66c700302907bac67cf4446ffdd5a19b33",
-      "size": 7839
+      "sha256": "9ccffc801232ab6abc6d497c294fb35f36e4f14985cf3514020dd9471432fed5",
+      "size": 7653
     },
     {
       "path": "include/stunts_types.h",
@@ -266,9 +301,37 @@
       "size": 1091
     },
     {
+      "path": "include/trig.h",
+      "sha256": "2a2359136e27f0fd67b3393be3601be6136a8e7dc3296c55ddeac3bcf229eac9",
+      "size": 137
+    },
+    {
       "path": "include/vec3.h",
       "sha256": "cbd94805557c2937228598d52eec59dbf495dc79b41229fab6d15ef7158bbc3a",
       "size": 172
+    },
+    {
+      "path": "include/viewstat.h",
+      "sha256": "a59d13683da45f7e1cc415d8855bad44143d07d95d6806a53cc94321cfda5fe5",
+      "size": 485
+    },
+    {
+      "line": 7,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 12,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
     }
   ],
   "profile": "msc510-medium",

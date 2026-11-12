@@ -1,3 +1,10 @@
+
+#include "font.h"
+#include "game.h"
+#include "gfxapi.h"
+#include "memapi.h"
+#include "resapi.h"
+#include "shape2d.h"
 #include "stunts_types.h"
 /* READABILITY: Find, decompress, unflip, expand, and palette-map shape resources in the game memory manager. */
 
@@ -16,38 +23,43 @@ U8 palmap[PALETTE_REMAP_ENTRY_COUNT] = {
     0, 1, 2, 3, 4, 5, 6, 7,
     8, 9, 10, 11, 12, 13, 14, 15
 };
-extern I8 *strcpy(I8 *, const I8 *);
-extern I16 stricmp(const I8 *, const I8 *);
+
+
+/* Local view: abortmessage; parameters.count is 2; another unit uses 1. */
 extern void abortmessage(const I8 *, ...);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void FAR *checkmodule(const I8 *);
+
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
+/* Local view: findfirst; return is near pointer; another unit uses signed word. */
 extern const I8 *findfirst(const I8 *);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-extern void FAR *loadpacka(const I8 *, I16);
-extern U16S file_get_unflip_size(I8 FAR *);
+
+
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void FAR *reservememory(const I8 *, U16S);
+
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-extern void file_unflip_shape2d(U8 FAR *, I8 FAR *);
+
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-extern void file_unflip_shape2d_pes(U8 FAR *, I8 FAR *);
+
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void purgememory(void FAR *);
+
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-extern void FAR *loadfilea(const I8 *, I16);
+
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
+/* Local view: file_load_shape2d_expandedsize; return is unsigned word; another unit uses signed word. */
 extern U16S file_load_shape2d_expandedsize(void FAR *);
+/* Local view: locateshapez; parameters is [{'pointer': 'i8', 'qualifiers': [], 'segment': 'far'}, {'pointer': 'i8', 'qualifiers': [], 'segment': 'near'}]; another unit uses None. */
 extern I8 FAR *locateshapez(I8 FAR *, const I8 *);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-extern void file_load_shape2d_palmap_init(U8 FAR *);
+
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-extern void file_load_shape2d_expand(U8 FAR *, I8 FAR *);
+
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
+/* Local view: packmemory; return.pointer is signed byte; another unit uses void. */
 extern I8 FAR *packmemory(I8 FAR *);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-extern void file_load_shape2d_palmap_apply(U8 FAR *, U8 []);
-void FAR *file_load_shape2d(I8 *, I16);
+
+
 /* Load a shape resource with fatal-error reporting enabled.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */

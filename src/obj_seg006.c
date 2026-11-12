@@ -16,47 +16,28 @@
    transformed_shape_bounds = transshaperectptr, transformed_primitive_cursor = transshapeprimptr,
    transformed_primitive_paint = transprimitivepaintjob, backlightovr8 = backlights_paint_override,
    projected_point_table = polyvertpointptrtab, primitive_type_table = primtypetab, inverse_power_of_two_table = invpow2tbl. */
-struct RECTANGLE { I16 left, right, top, bottom; };
+#include "geom2d.h"
+
 
 #include "math3d.h"
-struct POINT2D { I16 x, y; };
+#include "point2d.h"
+
 
 /* PORT: This in-memory record uses MSC medium-model far pointers and default 2-byte packing; verify field offsets before host serialization. */
-struct SHAPE3D {
-    U16 numverts;
-    struct VECTOR far* verts;
-    U16 numprimitives;
-    I8 numpaints;
-    I8 reserved;
-    U8  far* primitives;
-    I32 far* cull1;
-    I32 far* cull2;
-};
+#include "shape3d.h"
+
 /* PORT: This record contains a near pointer; MSC pointer width and default 2-byte packing determine its offsets. */
-struct TRANSFORMEDSHAPE3D {
-    struct VECTOR pos;
-    struct SHAPE3D* shapeptr;
-    struct RECTANGLE* rectptr;
-    struct VECTOR rotvec;
-    I16 unk;
-    U8  ts_flags;
-    U8  material;
-};
+#include "xformrec.h"
+
 /* PORT: This record is a 16-bit packed renderer structure; preserve MSC field alignment and signed widths. */
-struct POLYINFO {
-    I16 depth;
-    U8  material;
-    I8 numpoints;
-    I8 type;
-    I8 reserved;
-    struct POINT2D points[10];
-};
+#include "polyinfo.h"
 
-extern I16 far abs(I16);
-
-
-
-extern I16 far thicknessxp(I16, I16);
+#include "game.h"
+#include "gfxapi.h"
+#include "mathapi.h"
+#include "mathops.h"
+#include "prim3d.h"
+#include "shape2d.h"
 
 
 
@@ -65,24 +46,34 @@ extern I16 far thicknessxp(I16, I16);
 
 
 
+
+
+
+
+
+
+
+/* Local view: mmgr_alloc_resbytes; parameters[1] is signed long; another unit uses unsigned long. */
 extern void far* far mmgr_alloc_resbytes(I8*, I32);
 
 
+/* Local view: drawpolypt; parameters[2].pointer is struct POINT2D; another unit uses signed word. */
 extern void far drawpolypt(I16, I16, struct POINT2D*);
-extern void far preRender_patterned(I16, I16, I16, struct POINT2D*);
-extern void far sprite_two_color_poly_list(I16, I16, I16, I16, struct POINT2D*);
-extern void far preRender_line(I16, I16, I16, I16, I16);
-extern void far drawcircle(I16, I16, I16, I16);
+
+
+
+
+/* Local view: solidtire; parameters[0].pointer is struct POINT2D; another unit uses struct WheelRect. */
 extern void far solidtire(struct POINT2D*, I16, I16, I16, I16);
-extern void far putpixel_single_maybe(I16, I16, I16);
+
 
 static struct MATRIX mat_no_turn, mat_quarter_turn, mat_half_turn, mat_three_quarters_turn;
 struct MATRIX g_matrix_yrot;
 struct MATRIX matrix_x_rotation;
 struct MATRIX g_rot_mat_z;
 struct MATRIX matrotation_tmp;
-extern unsigned mat_y_rot_angle;
-extern struct MATRIX wkmatx;
+
+
 static struct RECTANGLE selection_rect;
 static I16 half_scale_flag;
 int * mat_copy_clr_lst_ptr;
@@ -94,6 +85,7 @@ unsigned short video_cnstval;
 static I32 vector_angle_cos, vector_angle_sin, vector_angle_sin2, vector_angle_cos2;
 static I8 shape3d_unused[576];
 
+/* Local view: polygonnumber; type is unsigned word; another unit uses signed word. */
 unsigned polygonnumber;
 static unsigned polyinfo_offset;
 static I16 poly_list_insert_result;
@@ -118,21 +110,22 @@ static U8  obj_flags;
 unsigned char transformed_vert_count;
 static struct RECTANGLE* current_rect;
 static I8 current_paintjob;
+/* Local view: backlightovr8; type is signed byte; another unit uses unsigned byte. */
 extern I8 backlightovr8;
 char g_vector_bitix;
-extern I32 inverse_power_of_two_table[];
-extern U8  NP[];
-extern U8  PT[];
+
+
+
 static struct POINT2D* projected_point_ptr_table[11];
 
-void INIT_BUFFERS(void);
-void initnm(void);
 
-unsigned getoutcode(struct POINT2D*);
-I8 front_facing(struct POINT2D far*);
-void zonecheck(struct POINT2D*, struct RECTANGLE*);
 
-unsigned polysort(unsigned, unsigned);
+
+
+
+
+
+
 
 void INIT_MATRIX(void)
 { /* PURPOSE: Allocate the polygon information pool and initialize cached rotations. Params: none. Returns: void. Globals: reads mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn; writes mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn, polyinfoptr. */ /* PLATFORM(memory): allocates or releases game-managed memory. */
@@ -162,6 +155,7 @@ void INIT_BUFFERS(void)
     facenodeiterator = POLYINFO_CAPACITY;
 }
 
+/* Local view: INIT_OBJECTS_BUFFER; return is unsigned word; another unit uses signed word. */
 unsigned INIT_OBJECTS_BUFFER(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cliprect, I16 unk)
 { /* PURPOSE: Build the requested view rotations and return the camera-facing angle. Params: angZ, angX, angY, cliprect, unk. Returns: unsigned. Globals: reads none; writes half_scale_flag, selection_rect, wkmatx. */
     struct MATRIX* matptr;
@@ -179,6 +173,7 @@ unsigned INIT_OBJECTS_BUFFER(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cli
     return intatan(vec2.x, vec2.z) & ANGLE_TURN_MASK;
 }
 
+/* Local view: ADD_OBJECT_TO_BUFFER; return is unsigned word; another unit uses void. */
 unsigned ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D* ts)
 { /* PURPOSE: Transform a 3D shape, clip its primitives, and append visible polygons. Params: ts. Returns: unsigned. Globals: reads the shape, transform, material and clip state; writes projected-vertex, polygon-list and clipping scratch state. */
     U8  ptype;
@@ -839,15 +834,20 @@ void initnm(void) { /* PURPOSE: Cache the sine and cosine values used by view-ve
 I32 lgabs(I32 value) { /* PURPOSE: Return the magnitude of a signed long value. Params: value. Returns: long. Globals: none. */ if (value < 0) return -value; return value; }
 
 
+/* Local view: g_vid_flg2_set; type is signed word; another unit uses unsigned word. */
 short g_vid_flg2_set;
+/* Local view: vidflg3is_minus1; type is signed word; another unit uses unsigned word. */
 short vidflg3is_minus1;
+/* Local view: abortmessage; parameters.count is 1; another unit uses 2. */
 extern void abortmessage(I8 *);
-void mergezones(struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *);
+
+/* Local view: clipzone; return is signed byte; another unit uses signed word. */
 I8 clipzone(struct RECTANGLE *, struct RECTANGLE *);
-I8 zoneoverlap(struct RECTANGLE *, struct RECTANGLE *);
-I8 zoneinside(struct RECTANGLE *, struct RECTANGLE *);
-I8 zoneadjacent(struct RECTANGLE *, struct RECTANGLE *);
-void addzone(I8 *, struct RECTANGLE *, struct RECTANGLE *);
+
+
+
+
+/* Local view: makezonelist; parameters[0] is unsigned byte; another unit uses signed byte. */
 void makezonelist(U8 , I8 *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, I8 *, struct RECTANGLE *);
 
 void mergezones(struct RECTANGLE *r1, struct RECTANGLE *r2, struct RECTANGLE *out)
@@ -861,6 +861,7 @@ void mergezones(struct RECTANGLE *r1, struct RECTANGLE *r2, struct RECTANGLE *ou
     }
 }
 
+/* Local view: clipzone; return is signed byte; another unit uses signed word. */
 I8 clipzone(struct RECTANGLE *r1, struct RECTANGLE *r2)
 { /* PURPOSE: Clip the first rectangle to the second and report an empty intersection. Params: r1, r2. Returns: char. Globals: none. */
     if (r1->right < r1->left) return 1;
@@ -1025,6 +1026,7 @@ I8 zoneadjacent(struct RECTANGLE* r1, struct RECTANGLE* r2) { /* PURPOSE: Test w
  return 0;
 }
 
+/* Local view: makezonelist; parameters[0] is unsigned byte; another unit uses signed byte. */
 void makezonelist(U8  arg_rectcount, I8* arg_rectarray_indices, 
 	struct RECTANGLE* arg_rectarray1, struct RECTANGLE* arg_rectarray2, 
 	struct RECTANGLE* arg_rectptr, I8* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr) 
@@ -1077,7 +1079,7 @@ void makezonelist(U8  arg_rectcount, I8* arg_rectarray_indices,
 
 }
 
-void shellsort(I16, I16*, I16*);
+
 
 void sortzonelist(I8 arg_array_length, struct RECTANGLE* arg_rect_array, I16* arg_array_indices) { /* PURPOSE: Sort rectangle indices by their top coordinate. Params: arg_array_length, arg_rect_array, arg_array_indices. Returns: void. Globals: none. */
     register I16 sortIndex;

@@ -5,6 +5,7 @@
 
 /* PORT: Resource headers use MSC 16-bit int layout; assert these field offsets in a host port. */
 /* Local 14-byte prefix; the complete shape record has two further flag bytes. */
+/* Local view: SHAPE2D; struct.count is 8; another unit uses 6. */
 struct SHAPE2D {
     I16 s2d_width;
     I16 s2d_height;
@@ -15,7 +16,11 @@ struct SHAPE2D {
     U8 s2d_plane_color0;
     U8 s2d_plane_color1_bg;
 };
+#include "resapi.h"
+
+/* Local view: file_get_res_shape_count; return is signed word; another unit uses unsigned word. */
 extern I16 FAR file_get_res_shape_count(I8 FAR *memchunk);
+/* Local view: shapepointer; parameters[0].pointer is signed byte; another unit uses unsigned byte. */
 extern struct SHAPE2D FAR * FAR shapepointer(I8 FAR *memchunk, I16 index);
 
 /* Find the largest pixel area among a resource?s shapes and return its paragraph allocation size.

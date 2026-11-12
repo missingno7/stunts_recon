@@ -1,114 +1,85 @@
 #include "stunts_types.h"
 /* READABILITY: Translate parsed music and sound events into DOS audio-driver voice operations. */
-struct AudioEvent {
-    U32 delta;
-    U8 command;
-    U8 param;
-    U32 value;
-    U8 length;
-};
+#include "audrec.h"
+
 
 /* PORT: Runtime audio records contain 16-bit far pointers; host pointer width changes their layout. */
-struct AudioChunk {
-    I8 FAR *pos;
-    U8 depth;
-    I8 FAR *stack[4];
-    U8 activeVoices;
-    U8 maxVoices;
-    U8 reserved17;
-    U32 delay;
-    U8 reserved1c[2];
-    I8 FAR *data;
-    U8 velocity;
-    U8 resourceType;
-    U8 priority;
-    U8 modeValue;
-    U16S pitch_bend;
-    U8 volume;
-    U8 driver_parameter_span[5];
-    I8 FAR *FAR *samples;
-    U8 loopDepth;
-    I8 FAR *loopPos[4];
-    U8 loopCount[4];
-    U8 channelNumber;
-    void (FAR *callback)(I16);
-};
 
-struct AudioVoice {
-    U8 resourceIndex, active, priority, driver_note_pitch[5];
-    U32 position, remaining;
-    I8 FAR *data;
-    I16S envelope_value;
-    U8 envelope_state, reserved17;
-    U16S modulation_delay, modulation_duration;
-    I16S modulation_offset;
-    U16S pulse_delay, pulse_duration;
-    U8 pulse_value, reserved23;
-    U16S modulation_step;
-    U8 modulation_direction, modulation_step_delay, pulse_step_delay, pulse_table_index;
-    struct AudioChunk *resource;
-    U8 channelNumber, reserved2d;
-};
 
-struct AudioSample {
-    U8 sample_header[0x1e];
-    I16S level1e, level20, level22, level24, level26;
-    U8 loopMode, loopCount;
-    U8 modulation_timing[4];
-    U16S limit2e;
-    U8 modulation_step_span[4];
-    U8 loopFlags, pulsePresent;
-    U8 pulse_timing[4];
-    U8 pulseCount;
-    U8 pulseTable[8];
-};
 
+
+
+#include "audapi.h"
+#include "auddrv.h"
+#include "audtick.h"
+#include "audvoice.h"
+#include "game.h"
+#include "timer.h"
+
+
+/* Local view: audiodriverbinary; pointer is signed byte; another unit uses void. */
 extern I8 FAR *audiodriverbinary;
+/* Local view: audio_update_lock; type is unsigned word; another unit uses signed word. */
 extern U16S audio_update_lock;
-extern U16S audio_timer_reentry_lock;
-extern U8 audio_song_ready;
-extern U8 audioflag2;
-extern U8 audio_pause_in_progress;
+
+
+
+
+/* Local view: snd_sample_rate_phase; type is unsigned word; another unit uses signed word. */
 unsigned short snd_sample_rate_phase;
+/* Local view: mus_samplelimit; type is unsigned word; another unit uses signed word. */
 unsigned short mus_samplelimit;
-extern U8 block_audio_num;
+
+/* Local view: audiochunktable; array is None; another unit uses 24. */
 extern struct AudioChunk audiochunktable[];
+/* Local view: snd_voices_tbl; array is None; another unit uses 16. */
 extern struct AudioVoice snd_voices_tbl[];
 unsigned char g_audiodrvvoices_count;
-extern U8 audio_driver_mode;
-extern U8 audioblock[];
-extern U8 g_audchnkvalue[];
-extern U8 g_musicvolumesetting;
+
+
+
+
 static U8 audio_resource_buffer[260];
 static struct AudioEvent audio_event_read_buffer;
 static struct AudioEvent audioevent;
 static struct AudioEvent audio_event_send_buffer;
-extern U16S audio_bit_masks[];
+
+/* Local view: kick_res; pointer is signed byte; another unit uses void. */
 extern I8 FAR *kick_res;
+/* Local view: g_snaresnd; pointer is signed byte; another unit uses void. */
 extern I8 FAR *g_snaresnd;
+/* Local view: ride_audio_sound_res; pointer is signed byte; another unit uses void. */
 extern I8 FAR *ride_audio_sound_res;
+/* Local view: audio_opp_res; pointer is signed byte; another unit uses void. */
 extern I8 FAR *audio_opp_res;
+/* Local view: chhtsample; pointer is signed byte; another unit uses void. */
 extern I8 FAR *chhtsample;
+/* Local view: resource_sound_hit; pointer is signed byte; another unit uses void. */
 extern I8 FAR *resource_sound_hit;
+/* Local view: tommsampleresource; pointer is signed byte; another unit uses void. */
 extern I8 FAR *tommsampleresource;
+/* Local view: audioresource_get_dword; parameters[0].pointer is unsigned byte; another unit uses unsigned long. */
 extern U32 FAR audioresource_get_dword(U8 FAR *);
+/* Local view: audioresource_get_word; parameters[0].pointer is unsigned byte; another unit uses unsigned word. */
 extern U16S FAR audioresource_get_word(U8 FAR *);
+/* Local view: audio_init_chunk; parameters.count is 7; another unit uses 6. */
 extern void FAR audio_init_chunk(I16, I16, I16, I16, I16, I16, I16);
 
-void FAR _loadds reset_audio_event_state(void);
-void FAR _loadds process_music_audio_chunks(void);
-void FAR _loadds update_audio_voice_state(void);
-void FAR _loadds process_effect_audio_chunks(void);
-void FAR _loadds process_audio_chunk_event(I16 chunkIndex);
-I8 FAR * FAR _loadds find_audio_chunk_data(U8 index, struct AudioChunk *chunk);
-void FAR _loadds apply_audio_voice_event(I16 voiceIndex, U8 type, I16 value);
-void FAR _loadds set_audio_voice_parameter(I16 voiceIndex, I16 value);
+
+
+
+
+
+
+
+
+/* Local view: audio_set_chunk_volume; parameters[1] is unsigned byte; another unit uses signed word. */
 void FAR _loadds audio_set_chunk_volume(I16 voiceIndex, U8 type);
-I16 FAR _loadds process_audio_event(struct AudioEvent *event, I16 chunkIndex);
-I16 FAR _loadds select_audio_voice_slot(I8 FAR *sample, struct AudioChunk *chunk);
-void FAR _loadds read_audio_event(struct AudioEvent *event, U8 FAR *stream);
-void FAR _loadds clear_audio_voice(struct AudioVoice *voice);
-void FAR _loadds audio_driver_func1E(I16 first, I16 last);
+
+
+
+
+
 
 void FAR _loadds audiodriver_timer(void)
 {
@@ -330,6 +301,7 @@ void FAR _loadds set_audio_voice_parameter(I16 voiceIndex, I16 value)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(audio): route channel parameter updates to the DOS sound driver. */
+/* Local view: audio_set_chunk_volume; parameters[1] is unsigned byte; another unit uses signed word. */
 void FAR _loadds audio_set_chunk_volume(I16 voiceIndex, U8 type)
 {
     struct AudioChunk *audioChunk;
@@ -361,6 +333,7 @@ void FAR _loadds audio_set_chunk_volume(I16 voiceIndex, U8 type)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(audio): start sample playback through the DOS sound driver. */
+/* Local view: start_audio_voice_sample; parameters[1].pointer is signed byte; another unit uses unsigned byte. */
 void FAR _loadds start_audio_voice_sample(I16 voiceIndex, I8 FAR *voiceData)
 {
     struct AudioChunk *chunk;

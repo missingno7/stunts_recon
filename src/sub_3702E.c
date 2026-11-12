@@ -1,3 +1,5 @@
+
+#include "game.h"
 #include "video.h"
 #include "stunts_types.h"
 /* READABILITY: Draw the four one-pixel edges of an axis-aligned rectangle through the filled-rectangle renderer. */

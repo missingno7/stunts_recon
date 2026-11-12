@@ -47,7 +47,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_timer",
-      "target_index": 20,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -64,7 +64,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_timer",
-      "target_index": 20,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -149,7 +149,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_timer",
-      "target_index": 20,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -166,7 +166,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_timer",
-      "target_index": 20,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -200,7 +200,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_release_audio_chunk",
-      "target_index": 34,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -336,7 +336,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_reserve_audio_chunk",
-      "target_index": 1,
+      "target_index": 39,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -353,7 +353,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_init_audio_resources",
-      "target_index": 39,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -370,7 +370,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pad_id",
-      "target_index": 29,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -387,7 +387,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_init_audio_resources",
-      "target_index": 39,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -404,7 +404,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pad_id",
-      "target_index": 29,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -421,7 +421,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_init_audio_resources",
-      "target_index": 39,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -438,7 +438,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pad_id",
-      "target_index": 29,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -455,7 +455,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_init_audio_resources",
-      "target_index": 39,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -472,7 +472,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pad_id",
-      "target_index": 29,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -489,7 +489,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_init_audio_resources",
-      "target_index": 39,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -506,7 +506,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pad_id",
-      "target_index": 29,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -523,7 +523,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_init_audio_resources",
-      "target_index": 39,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -540,7 +540,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pad_id",
-      "target_index": 29,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -557,7 +557,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_init_audio_resources",
-      "target_index": 39,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -574,7 +574,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pad_id",
-      "target_index": 29,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -591,7 +591,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_init_audio_resources",
-      "target_index": 39,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -608,7 +608,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pad_id",
-      "target_index": 29,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -642,7 +642,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pad_id",
-      "target_index": 29,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -659,7 +659,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__AHINCR",
-      "target_index": 25,
+      "target_index": 20,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -727,7 +727,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_abortmessage",
-      "target_index": 2,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -761,7 +761,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_set_chunk_volume",
-      "target_index": 7,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -778,7 +778,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_send_audio_stop_event",
-      "target_index": 5,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -795,7 +795,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_start_audio_voice_sample",
-      "target_index": 3,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -829,7 +829,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_reset_audio_voice_length",
-      "target_index": 35,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -863,7 +863,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_op_unk",
-      "target_index": 6,
+      "target_index": 1,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -880,7 +880,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_chunk_is_unavailable",
-      "target_index": 13,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -897,7 +897,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_init_chunk2",
-      "target_index": 11,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -914,7 +914,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_set_audio_voice_value",
-      "target_index": 9,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -931,7 +931,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_set_chunk_volume",
-      "target_index": 7,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -948,7 +948,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_set_chunk_volume",
-      "target_index": 7,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -965,7 +965,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_set_chunk_volume",
-      "target_index": 7,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -982,7 +982,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioflag6",
-      "target_index": 27,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1016,7 +1016,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_mode",
-      "target_index": 28,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1067,7 +1067,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sseqds",
-      "target_index": 30,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1118,7 +1118,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_polarRadius2D",
-      "target_index": 15,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1135,7 +1135,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_polarRadius2D",
-      "target_index": 15,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1152,7 +1152,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_polarRadius2D",
-      "target_index": 15,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1169,7 +1169,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_polarRadius2D",
-      "target_index": 15,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1203,7 +1203,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_debug_printf_text",
-      "target_index": 19,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1237,7 +1237,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_check_flag",
-      "target_index": 17,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1271,7 +1271,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_function2",
-      "target_index": 12,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1288,7 +1288,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_check_flag",
-      "target_index": 17,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1322,7 +1322,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_function2",
-      "target_index": 12,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1339,7 +1339,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_check_flag",
-      "target_index": 17,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1373,7 +1373,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_check_flag",
-      "target_index": 17,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1407,7 +1407,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_function2",
-      "target_index": 12,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1424,7 +1424,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_check_flag",
-      "target_index": 17,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1458,7 +1458,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_check_flag",
-      "target_index": 17,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1492,7 +1492,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_check_flag",
-      "target_index": 17,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1509,7 +1509,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_init_chunk2",
-      "target_index": 11,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1543,7 +1543,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_check_flag",
-      "target_index": 17,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1560,7 +1560,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_init_chunk2",
-      "target_index": 11,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1611,7 +1611,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_init_chunk2",
-      "target_index": 11,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1645,7 +1645,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_chunk_is_unavailable",
-      "target_index": 13,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2101,45 +2101,45 @@
   ],
   "object_declarations": {
     "externals": [
-      "_reserve_audio_chunk",
+      "_audio_op_unk",
+      "_nopsub_2726C",
       "_abortmessage",
       "_start_audio_voice_sample",
-      "_nopsub_27220",
-      "_send_audio_stop_event",
-      "_audio_op_unk",
-      "_audio_set_chunk_volume",
-      "_nopsub_2726C",
-      "_set_audio_voice_value",
       "_nopsub_272B0",
-      "_audio_init_chunk2",
       "_audio_function2",
-      "_audio_chunk_is_unavailable",
+      "_send_audio_stop_event",
       "_audio_function2_wrap",
-      "_polarRadius2D",
+      "_audio_set_chunk_volume",
       "_audio_op_unk3",
-      "_audio_check_flag",
+      "_set_audio_voice_value",
       "_audio_op_unk4",
-      "_debug_printf_text",
-      "_audio_driver_timer",
-      "_audio_add_driver_timer",
+      "_audio_check_flag",
       "_audio_op_unk5",
-      "_audio_remove_driver_timer",
+      "_debug_printf_text",
       "_audio_op_unk6",
-      "__AHINCR",
       "_audio_op_unk7",
+      "_pad_id",
+      "_nopsub_27489",
+      "__AHINCR",
+      "_audio_op_unk2",
       "_audioflag6",
       "_audio_driver_mode",
-      "_pad_id",
+      "_audio_init_engine",
       "_sseqds",
-      "_nopsub_27489",
-      "_addtimer",
-      "_deltimer",
       "_release_audio_chunk",
       "_reset_audio_voice_length",
-      "_audio_op_unk2",
-      "_audio_init_engine",
+      "_init_audio_resources",
+      "_audio_init_chunk2",
+      "_audio_chunk_is_unavailable",
+      "_polarRadius2D",
+      "_addtimer",
+      "_deltimer",
+      "_audio_add_driver_timer",
+      "_audio_driver_timer",
+      "_audio_remove_driver_timer",
+      "_nopsub_27220",
       "_locate_shape_fatal",
-      "_init_audio_resources"
+      "_reserve_audio_chunk"
     ],
     "groups": [
       {
@@ -2158,11 +2158,6 @@
       }
     ],
     "publics": [
-      {
-        "name": "_nopsub_27220",
-        "offset": 1650,
-        "segment": "UNIT_TEXT"
-      },
       {
         "name": "_audio_op_unk",
         "offset": 838,
@@ -2204,23 +2199,8 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_audio_driver_timer",
-        "offset": 1013,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_audio_add_driver_timer",
-        "offset": 0,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_audio_op_unk5",
         "offset": 2050,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_audio_remove_driver_timer",
-        "offset": 39,
         "segment": "UNIT_TEXT"
       },
       {
@@ -2251,6 +2231,26 @@
       {
         "name": "_audio_init_engine",
         "offset": 142,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_audio_add_driver_timer",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_audio_driver_timer",
+        "offset": 1013,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_audio_remove_driver_timer",
+        "offset": 39,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_nopsub_27220",
+        "offset": 1650,
         "segment": "UNIT_TEXT"
       }
     ],
@@ -2325,14 +2325,29 @@
   "original_frame_load_address": 93088,
   "preprocessor_closure": [
     {
+      "path": "include/auddrv.h",
+      "sha256": "4a2681f4f662dd55e7992643e4db580501012c03b48689fdd695c1582740665e",
+      "size": 457
+    },
+    {
       "path": "include/audio.h",
       "sha256": "8e43ec5da02f720e42c6c41892610f5bdc16792ec42502071a67dbb6ee35bc68",
       "size": 12748
     },
     {
+      "path": "include/radius2d.h",
+      "sha256": "097d90d5382c47225c46504009b67e05ba91fb87371aa84b351d101f8693077e",
+      "size": 120
+    },
+    {
       "path": "include/resource.h",
       "sha256": "3fafa12cfa876195a622667b9e229ba996312da734411b2b352a6b16ca8ad3aa",
       "size": 1903
+    },
+    {
+      "path": "include/tmrhook.h",
+      "sha256": "6a8d07a53b511e2e8c6cba9570a986acfef3713ebf7fdca3021cc3355fecc63e",
+      "size": 349
     },
     {
       "path": "include/types.h",
@@ -2341,14 +2356,14 @@
     },
     {
       "letters": "tl",
-      "line": 155,
+      "line": 170,
       "path": "<source>",
       "pragma": "optimize",
       "state": "on"
     },
     {
       "letters": "tl",
-      "line": 257,
+      "line": 272,
       "path": "<source>",
       "pragma": "optimize",
       "state": "off"

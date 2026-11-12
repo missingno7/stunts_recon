@@ -105,6 +105,11 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
+      "path": "include/input.h",
+      "sha256": "6b3b573371ebc39e1b1b973e7e4d574e227122a673267f21f64fc4736c87e942",
+      "size": 1640
+    },
+    {
       "path": "include/stunts_types.h",
       "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
       "size": 1091

@@ -51,13 +51,13 @@
     ],
     "publics": [
       {
-        "name": "_plan_memres",
-        "offset": 0,
+        "name": "_unk_3B1E2",
+        "offset": 34,
         "segment": "UNIT5_DATA"
       },
       {
-        "name": "_unk_3B1E2",
-        "offset": 34,
+        "name": "_plan_memres",
+        "offset": 0,
         "segment": "UNIT5_DATA"
       }
     ],
@@ -147,6 +147,36 @@
   "object_segment": "UNIT5_DATA",
   "preprocessor_closure": [
     {
+      "path": "include/audeng.h",
+      "sha256": "9cd04ff48bb7830e929eeef0e13a533fb5548a6d68e43a50e10438b7c230bd73",
+      "size": 240
+    },
+    {
+      "path": "include/game.h",
+      "sha256": "0bf7bc4afb9b518f5702334334695ab123f2e69c7c02dd895a65b1ed10e8761f",
+      "size": 94
+    },
+    {
+      "path": "include/gameapi.h",
+      "sha256": "101ef3f85a177f759df8ec6a1ab8d836b0d67cf653ba8c96b279cc01dd70a4e8",
+      "size": 11031
+    },
+    {
+      "path": "include/geom2d.h",
+      "sha256": "2938bb58c7180ac1095c0efa64d0e9b7e1099eab96e8310945cc1cac41253465",
+      "size": 421
+    },
+    {
+      "path": "include/plane.h",
+      "sha256": "3cac97191ebde6524620a80a8ce4936b6a8339ddbc8de4759306df0e3c9324ae",
+      "size": 339
+    },
+    {
+      "path": "include/replay.h",
+      "sha256": "7e3c91591ec83a1bedfedcb2f6ece698e24f2eb902c6fc7cde7a27f22922882d",
+      "size": 466
+    },
+    {
       "path": "include/stunts_types.h",
       "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
       "size": 1091
@@ -155,6 +185,53 @@
       "path": "include/vec3.h",
       "sha256": "cbd94805557c2937228598d52eec59dbf495dc79b41229fab6d15ef7158bbc3a",
       "size": 172
+    },
+    {
+      "path": "include/viewstat.h",
+      "sha256": "a59d13683da45f7e1cc415d8855bad44143d07d95d6806a53cc94321cfda5fe5",
+      "size": 485
+    },
+    {
+      "line": 8,
+      "path": "include/plane.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 7,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 12,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 7,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 12,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
     }
   ],
   "profile": "msc510-medium",

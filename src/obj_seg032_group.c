@@ -1,41 +1,46 @@
 #include "stunts_types.h"
 #include "platform_hw.h"
 /* READABILITY: Implement the shared line editor, including key polling, cursor drawing, and text-width handling. */
-struct SCREEN_RECT {
-    I16S foreground;
-    I16S background;
-    I16S font_header_middle[7];
-    I16S line_height;
-};
+#include "fontrec.h"
+
+#include "font.h"
+#include "game.h"
+#include "input.h"
+#include "sprite2d.h"
+#include "timer.h"
+#include "video.h"
+
 
 static I8 *line_input_text_buffer;
 static I16S line_input_cursor_vertical, line_edit_x, line_edit_y;
 static I16S cursor_flash_state, line_text_max_width, line_input_cursor_slot;
-extern struct SCREEN_RECT FAR *line_input_font_header;
 
+
+/* Local view: strlen; return is signed word; another unit uses unsigned word. */
 extern I16 strlen(I8 *text);
     /* PLATFORM(video): measure or draw the current line-edit display. */
-extern I16 FAR textnpixels(I8 *text, I16 count);
-extern I16 FAR textpixels(I8 *text);
+
+
     /* PLATFORM(video): measure or draw the current line-edit display. */
-extern void FAR xorrectc(I16 x, I16 y, I16 width, I16 height, I16 right);
+
     /* PLATFORM(video): measure or draw the current line-edit display. */
-extern void FAR movtxy(I8 *text, I16 x, I16 y);
+
     /* PLATFORM(video): measure or draw the current line-edit display. */
-extern void FAR sprite1_unknown2(I16 x, I16 y, I16 width, I16 height, I16 right);
-extern void FAR displaywindow(void);
-extern void FAR read_line_helper(void);
-extern void FAR read_line_helper2(void);
+
+
+
+
     /* PLATFORM(input_kb): poll the game input-abort state. */
-extern I16 FAR testbiosticks(void);
+
     /* PLATFORM(input_kb): read the next DOS keyboard callback value. */
-extern I16 FAR testkey(void);
+
     /* PLATFORM(timer): reset the game timer countdown for this input wait. */
+/* Local view: setticks; parameters.count is 2; another unit uses 1. */
 extern void FAR setticks(I16 offset, I16 segment);
     /* PLATFORM(timer): set the cursor-blink timer interval. */
-extern void FAR setbiosticks(I32 ticks);
+
     /* PLATFORM(timer): check whether the timer countdown expired. */
-extern I16 FAR testticks(void);
+
 
 /* Edit a bounded text buffer using keyboard input, blink timing, and the line-rendering helpers.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
@@ -43,6 +48,7 @@ extern I16 FAR testticks(void);
 /* PLATFORM(input_kb): poll the keyboard and abort callback for edit keys. */
 /* PLATFORM(video): copy the render surface before drawing line edits. */
 /* PLATFORM(timer): refresh cursor blink timing while waiting for input. */
+/* Local view: get_pstring; parameters[0] is signed byte; another unit uses signed word. */
 I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
                   I16 maxWidth, I16 x, I16 y,
                   I16 (FAR *readCallback)(void), I16 timerOffset, I16 timerSegment)

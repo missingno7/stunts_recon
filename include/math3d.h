@@ -2,26 +2,12 @@
 #ifndef MATH3D_H
 #define MATH3D_H
 #include "vec3.h"
-struct MATRIX { I16 vals[9]; };
+#include "matrix.h"
 struct POINT2D;
-extern I16S FAR intsin(U16S);
-extern I16S FAR intcos(U16S);
-extern I16 FAR fixedmult(I16, I16);
+#include "trig.h"
+#include "mathops.h"
+#include "radius.h"
 /* norm_zone widens this result by zero extension in the locked code. */
-extern U16 FAR inthypot(I16, I16);
-extern I16 FAR intatan(I16, I16);
-extern I16 FAR int3dhypot(struct VECTOR *);
-extern void FAR mat_vec(struct VECTOR *, struct MATRIX *, struct VECTOR *);
-extern void FAR mat_mul_vector2(struct VECTOR *, struct MATRIX FAR *, struct VECTOR *);
-extern void FAR transmult(struct MATRIX *, struct MATRIX *, struct MATRIX *);
-extern void FAR mat_invert(struct MATRIX *, struct MATRIX *);
-extern void FAR xformx(struct MATRIX *, I16);
-extern void FAR xformy(struct MATRIX *, I16);
-extern void FAR xformz(struct MATRIX *, I16);
-extern struct MATRIX * FAR makematrix(I16, I16, I16, I16);
-extern I16 FAR norm_zone(struct VECTOR *);
-extern void FAR projectp(struct VECTOR *, struct POINT2D *);
-extern void FAR zclipline(struct VECTOR *, struct VECTOR *, struct VECTOR *, I16S);
 
 /* Named values with reviewed widths and meanings. */
 #define ANGLE_EIGHTH_TURN 0x80 /* I16, 128 */

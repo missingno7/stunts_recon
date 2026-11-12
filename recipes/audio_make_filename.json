@@ -3,9 +3,9 @@
     "declarations": {
       "externals": [
         "__acrtused",
-        "_audiofiletmp",
+        "_audio_make_filename",
         "_strrchr",
-        "_audio_make_filename"
+        "_audiofiletmp"
       ],
       "groups": [
         {
@@ -25,8 +25,53 @@
       ],
       "publics": [
         {
-          "name": "_SDPAL_mcgadither",
-          "offset": 604,
+          "name": "_intro_text_style_c",
+          "offset": 50,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_color_d",
+          "offset": 52,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_audio_make_filename",
+          "offset": 0,
+          "segment": "UNIT_TEXT"
+        },
+        {
+          "name": "_intro_text_style_d",
+          "offset": 54,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_color_e",
+          "offset": 56,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_one_through_fourteen_table",
+          "offset": 2,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_style_e",
+          "offset": 58,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_color_f",
+          "offset": 60,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_style_f",
+          "offset": 62,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_dialog_frame_color",
+          "offset": 86,
           "segment": "_DATA"
         },
         {
@@ -50,103 +95,18 @@
           "segment": "_DATA"
         },
         {
-          "name": "_audio_make_filename",
-          "offset": 0,
-          "segment": "UNIT_TEXT"
-        },
-        {
-          "name": "_one_through_fourteen_table",
-          "offset": 2,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_dlg_colour",
-          "offset": 30,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_intro_color_max",
-          "offset": 32,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_menu_hover_color_a",
-          "offset": 34,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_menu_hover_color_b",
-          "offset": 36,
-          "segment": "_DATA"
-        },
-        {
           "name": "_animation_outline_color",
           "offset": 38,
           "segment": "_DATA"
         },
         {
-          "name": "_intro_text_color_a",
-          "offset": 40,
+          "name": "_camera_select_fill_color",
+          "offset": 80,
           "segment": "_DATA"
         },
         {
-          "name": "_intro_text_style_a",
-          "offset": 42,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_intro_text_color_b",
-          "offset": 44,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_intro_text_style_b",
-          "offset": 46,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_intro_text_color_c",
-          "offset": 48,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_intro_text_style_c",
-          "offset": 50,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_intro_text_color_d",
-          "offset": 52,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_intro_text_style_d",
-          "offset": 54,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_intro_text_color_e",
-          "offset": 56,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_intro_text_style_e",
-          "offset": 58,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_intro_text_color_f",
-          "offset": 60,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_intro_text_style_f",
-          "offset": 62,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_palette_window_line_color",
-          "offset": 64,
+          "name": "_camera_select_outline_color",
+          "offset": 82,
           "segment": "_DATA"
         },
         {
@@ -155,13 +115,38 @@
           "segment": "_DATA"
         },
         {
+          "name": "_palette_window_line_color",
+          "offset": 64,
+          "segment": "_DATA"
+        },
+        {
           "name": "_palette_window_line_style",
           "offset": 68,
           "segment": "_DATA"
         },
         {
-          "name": "_text_cursor_outline_color",
-          "offset": 70,
+          "name": "_SDPAL_mcgacol1",
+          "offset": 88,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_SDPAL_mcgadither",
+          "offset": 604,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_SDPAL_mcgatype",
+          "offset": 346,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_color_max",
+          "offset": 32,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_performGraphColor",
+          "offset": 84,
           "segment": "_DATA"
         },
         {
@@ -180,38 +165,53 @@
           "segment": "_DATA"
         },
         {
+          "name": "_dlg_colour",
+          "offset": 30,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_color_a",
+          "offset": 40,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_intro_text_style_a",
+          "offset": 42,
+          "segment": "_DATA"
+        },
+        {
           "name": "_menu_clear_color",
           "offset": 78,
           "segment": "_DATA"
         },
         {
-          "name": "_camera_select_fill_color",
-          "offset": 80,
+          "name": "_menu_hover_color_a",
+          "offset": 34,
           "segment": "_DATA"
         },
         {
-          "name": "_camera_select_outline_color",
-          "offset": 82,
+          "name": "_intro_text_color_b",
+          "offset": 44,
           "segment": "_DATA"
         },
         {
-          "name": "_performGraphColor",
-          "offset": 84,
+          "name": "_text_cursor_outline_color",
+          "offset": 70,
           "segment": "_DATA"
         },
         {
-          "name": "_dialog_frame_color",
-          "offset": 86,
+          "name": "_menu_hover_color_b",
+          "offset": 36,
           "segment": "_DATA"
         },
         {
-          "name": "_SDPAL_mcgacol1",
-          "offset": 88,
+          "name": "_intro_text_style_b",
+          "offset": 46,
           "segment": "_DATA"
         },
         {
-          "name": "_SDPAL_mcgatype",
-          "offset": 346,
+          "name": "_intro_text_color_c",
+          "offset": 48,
           "segment": "_DATA"
         }
       ],
@@ -382,7 +382,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiofiletmp",
-      "target_index": 2,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -399,7 +399,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiofiletmp",
-      "target_index": 2,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -416,7 +416,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiofiletmp",
-      "target_index": 2,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -450,7 +450,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiofiletmp",
-      "target_index": 2,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -467,7 +467,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiofiletmp",
-      "target_index": 2,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -484,7 +484,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiofiletmp",
-      "target_index": 2,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -501,7 +501,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiofiletmp",
-      "target_index": 2,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -518,7 +518,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiofiletmp",
-      "target_index": 2,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -552,7 +552,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiofiletmp",
-      "target_index": 2,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -569,7 +569,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiofiletmp",
-      "target_index": 2,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -603,7 +603,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiofiletmp",
-      "target_index": 2,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -620,7 +620,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiofiletmp",
-      "target_index": 2,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -653,9 +653,9 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_audiofiletmp",
+      "_audio_make_filename",
       "_strrchr",
-      "_audio_make_filename"
+      "_audiofiletmp"
     ],
     "groups": [
       {
@@ -675,8 +675,53 @@
     ],
     "publics": [
       {
-        "name": "_SDPAL_mcgadither",
-        "offset": 604,
+        "name": "_intro_text_style_c",
+        "offset": 50,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_color_d",
+        "offset": 52,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_audio_make_filename",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_intro_text_style_d",
+        "offset": 54,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_color_e",
+        "offset": 56,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_one_through_fourteen_table",
+        "offset": 2,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_style_e",
+        "offset": 58,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_color_f",
+        "offset": 60,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_style_f",
+        "offset": 62,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_dialog_frame_color",
+        "offset": 86,
         "segment": "_DATA"
       },
       {
@@ -700,103 +745,18 @@
         "segment": "_DATA"
       },
       {
-        "name": "_audio_make_filename",
-        "offset": 0,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_one_through_fourteen_table",
-        "offset": 2,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_dlg_colour",
-        "offset": 30,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_intro_color_max",
-        "offset": 32,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_menu_hover_color_a",
-        "offset": 34,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_menu_hover_color_b",
-        "offset": 36,
-        "segment": "_DATA"
-      },
-      {
         "name": "_animation_outline_color",
         "offset": 38,
         "segment": "_DATA"
       },
       {
-        "name": "_intro_text_color_a",
-        "offset": 40,
+        "name": "_camera_select_fill_color",
+        "offset": 80,
         "segment": "_DATA"
       },
       {
-        "name": "_intro_text_style_a",
-        "offset": 42,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_intro_text_color_b",
-        "offset": 44,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_intro_text_style_b",
-        "offset": 46,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_intro_text_color_c",
-        "offset": 48,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_intro_text_style_c",
-        "offset": 50,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_intro_text_color_d",
-        "offset": 52,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_intro_text_style_d",
-        "offset": 54,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_intro_text_color_e",
-        "offset": 56,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_intro_text_style_e",
-        "offset": 58,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_intro_text_color_f",
-        "offset": 60,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_intro_text_style_f",
-        "offset": 62,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_palette_window_line_color",
-        "offset": 64,
+        "name": "_camera_select_outline_color",
+        "offset": 82,
         "segment": "_DATA"
       },
       {
@@ -805,13 +765,38 @@
         "segment": "_DATA"
       },
       {
+        "name": "_palette_window_line_color",
+        "offset": 64,
+        "segment": "_DATA"
+      },
+      {
         "name": "_palette_window_line_style",
         "offset": 68,
         "segment": "_DATA"
       },
       {
-        "name": "_text_cursor_outline_color",
-        "offset": 70,
+        "name": "_SDPAL_mcgacol1",
+        "offset": 88,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_SDPAL_mcgadither",
+        "offset": 604,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_SDPAL_mcgatype",
+        "offset": 346,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_color_max",
+        "offset": 32,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_performGraphColor",
+        "offset": 84,
         "segment": "_DATA"
       },
       {
@@ -830,38 +815,53 @@
         "segment": "_DATA"
       },
       {
+        "name": "_dlg_colour",
+        "offset": 30,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_color_a",
+        "offset": 40,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_intro_text_style_a",
+        "offset": 42,
+        "segment": "_DATA"
+      },
+      {
         "name": "_menu_clear_color",
         "offset": 78,
         "segment": "_DATA"
       },
       {
-        "name": "_camera_select_fill_color",
-        "offset": 80,
+        "name": "_menu_hover_color_a",
+        "offset": 34,
         "segment": "_DATA"
       },
       {
-        "name": "_camera_select_outline_color",
-        "offset": 82,
+        "name": "_intro_text_color_b",
+        "offset": 44,
         "segment": "_DATA"
       },
       {
-        "name": "_performGraphColor",
-        "offset": 84,
+        "name": "_text_cursor_outline_color",
+        "offset": 70,
         "segment": "_DATA"
       },
       {
-        "name": "_dialog_frame_color",
-        "offset": 86,
+        "name": "_menu_hover_color_b",
+        "offset": 36,
         "segment": "_DATA"
       },
       {
-        "name": "_SDPAL_mcgacol1",
-        "offset": 88,
+        "name": "_intro_text_style_b",
+        "offset": 46,
         "segment": "_DATA"
       },
       {
-        "name": "_SDPAL_mcgatype",
-        "offset": 346,
+        "name": "_intro_text_color_c",
+        "offset": 48,
         "segment": "_DATA"
       }
     ],
@@ -935,6 +935,56 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
+      "path": "include/audapi.h",
+      "sha256": "537f4c01ad0bc68422122c115acce177e068053d18a0bf066956b7eeb6b589c7",
+      "size": 4348
+    },
+    {
+      "path": "include/auddrv.h",
+      "sha256": "4a2681f4f662dd55e7992643e4db580501012c03b48689fdd695c1582740665e",
+      "size": 457
+    },
+    {
+      "path": "include/audvoice.h",
+      "sha256": "0f86f905ee2881bb198e4c7e97336e1811cbbd3634027641c2cab8ab1f7027d6",
+      "size": 233
+    },
+    {
+      "path": "include/chartab.h",
+      "sha256": "540ec3660be1ea671e4cc3adedf22983325debf32bd0f08c0465ad6ad1eed6c7",
+      "size": 120
+    },
+    {
+      "path": "include/dialog.h",
+      "sha256": "a7ed94fffb221c0713f567c1f19b2c1906ba8947090b24c472b341907bd38539",
+      "size": 97
+    },
+    {
+      "path": "include/dlgapi.h",
+      "sha256": "cf7150306b1a1d5145c76b02c9989c0b426c99016a20f98571c1f7aa3f22667b",
+      "size": 3480
+    },
+    {
+      "path": "include/dlgcolor.h",
+      "sha256": "093900cd4ec04d772a9bf9dfe70d09e7226a5166b77092746b3f71a2d9b25e77",
+      "size": 122
+    },
+    {
+      "path": "include/font.h",
+      "sha256": "6764a13f5316d6a2e05f61bd6ec789ec690155f0086a213350083e183ebb8c8f",
+      "size": 90
+    },
+    {
+      "path": "include/geom2d.h",
+      "sha256": "2938bb58c7180ac1095c0efa64d0e9b7e1099eab96e8310945cc1cac41253465",
+      "size": 421
+    },
+    {
+      "path": "include/gfxapi.h",
+      "sha256": "b966458208d94c62a09d8430ef62b76a89bc0c0782aff562e28b1f42b3f561ef",
+      "size": 1231
+    },
+    {
       "path": "include/platform_hw.h",
       "sha256": "e3863a97e9a936f227221b474f085abbd3eb2deb5df33993f7ad00c75baaa9bc",
       "size": 6111
@@ -950,14 +1000,47 @@
       "size": 1091
     },
     {
+      "path": "include/text.h",
+      "sha256": "2cfcc414d2605d4ec72b0610e1e5e6cb9b10d55e16327b365be6e5d9eb36c7f1",
+      "size": 2076
+    },
+    {
       "path": "include/ui.h",
       "sha256": "9012b503c13efc49c0ed80eb0db08484d0ae02cf24cb769371fb374b5a6eb0d2",
       "size": 28764
     },
     {
+      "path": "include/uiapi.h",
+      "sha256": "5f58af358736623f4548a30e8eeb25a8e0ce4e22d85a532de2fb3ad71c5c2035",
+      "size": 95
+    },
+    {
       "path": "include/video.h",
       "sha256": "6e35382e1e5cc46df34378e61a6acf6db50dbf60b61752bc745434ce9a4a2f3b",
       "size": 1056
+    },
+    {
+      "path": "include/viewstat.h",
+      "sha256": "a59d13683da45f7e1cc415d8855bad44143d07d95d6806a53cc94321cfda5fe5",
+      "size": 485
+    },
+    {
+      "line": 7,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 12,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
     }
   ],
   "profile": "msc510-medium",

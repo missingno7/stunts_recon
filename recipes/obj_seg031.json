@@ -35,7 +35,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_timer_get_delta_alt",
-      "target_index": 66,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -52,7 +52,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_zonecheck",
-      "target_index": 69,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -69,7 +69,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_timer_get_delta_alt",
-      "target_index": 66,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -86,7 +86,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_clear_1_color",
-      "target_index": 68,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -103,7 +103,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_zonecheck",
-      "target_index": 69,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -120,7 +120,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprset1size",
-      "target_index": 65,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -137,7 +137,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_timer_get_delta_alt",
-      "target_index": 66,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -154,7 +154,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_clear_1_color",
-      "target_index": 68,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -171,7 +171,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_timer_get_delta_alt",
-      "target_index": 66,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -188,7 +188,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprset1size",
-      "target_index": 65,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -205,7 +205,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_displaywindow",
-      "target_index": 64,
+      "target_index": 42,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -222,7 +222,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_loadpalandmouse",
-      "target_index": 60,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -239,7 +239,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_criterr",
-      "target_index": 59,
+      "target_index": 39,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -256,7 +256,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_dea_textres",
-      "target_index": 38,
+      "target_index": 40,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -273,7 +273,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_dea_textres",
-      "target_index": 38,
+      "target_index": 40,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -290,7 +290,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_toggle_flag6",
-      "target_index": 56,
+      "target_index": 54,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -307,7 +307,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_toggle_flag2",
-      "target_index": 55,
+      "target_index": 51,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -324,7 +324,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_exit",
-      "target_index": 54,
+      "target_index": 60,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -341,7 +341,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_stop_unknown",
-      "target_index": 52,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -358,7 +358,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_load_driver",
-      "target_index": 50,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -392,7 +392,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_initmouse",
-      "target_index": 49,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -409,7 +409,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_copy_2_to_1_clear",
-      "target_index": 46,
+      "target_index": 55,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -426,7 +426,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_timer_setup_interrupt",
-      "target_index": 45,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -443,7 +443,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_video_set_mode4",
-      "target_index": 43,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -460,7 +460,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_initgraphics",
-      "target_index": 41,
+      "target_index": 79,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -579,7 +579,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textrespfxchr",
-      "target_index": 15,
+      "target_index": 33,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -596,7 +596,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_vid_flag6",
-      "target_index": 14,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -613,7 +613,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_videoflg5",
-      "target_index": 13,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -630,7 +630,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_initmemory",
-      "target_index": 39,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -647,7 +647,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_vidflg4_is1",
-      "target_index": 12,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -664,7 +664,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_vidflg3is_minus1",
-      "target_index": 10,
+      "target_index": 70,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -681,7 +681,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_vid_flg2_set",
-      "target_index": 9,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -698,7 +698,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pixel_scales",
-      "target_index": 8,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -715,7 +715,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 29,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -732,7 +732,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_dos_resource_text",
-      "target_index": 35,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -749,7 +749,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_dos_resource_text",
-      "target_index": 35,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -766,7 +766,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 29,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -783,7 +783,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_sonsof_resource_text",
-      "target_index": 37,
+      "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -800,7 +800,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_sonsof_resource_text",
-      "target_index": 37,
+      "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -817,7 +817,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 29,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -834,7 +834,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_dos_resource_text",
-      "target_index": 35,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -851,7 +851,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_dos_resource_text",
-      "target_index": 35,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -868,7 +868,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 29,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -885,7 +885,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msystempause",
-      "target_index": 34,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -902,7 +902,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msystempause",
-      "target_index": 34,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -919,7 +919,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 29,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -936,7 +936,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msystempause",
-      "target_index": 34,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -953,7 +953,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msystempause",
-      "target_index": 34,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -970,7 +970,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 29,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -987,7 +987,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_mof_resource_text",
-      "target_index": 33,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1004,7 +1004,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_mof_resource_text",
-      "target_index": 33,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1021,7 +1021,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 29,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1038,7 +1038,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mkeyon",
-      "target_index": 32,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1055,7 +1055,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mkeyon",
-      "target_index": 32,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1072,7 +1072,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 29,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1089,7 +1089,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_joystick_resource_text",
-      "target_index": 31,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1106,7 +1106,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_joystick_resource_text",
-      "target_index": 31,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1123,7 +1123,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 29,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1140,7 +1140,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_show_graphic_levels_menu",
-      "target_index": 30,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1157,7 +1157,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_show_graphic_levels_menu",
-      "target_index": 30,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1174,7 +1174,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_testkey",
-      "target_index": 28,
+      "target_index": 59,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1191,7 +1191,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kb_shift_checking2",
-      "target_index": 27,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1208,7 +1208,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kb_init_interrupt",
-      "target_index": 26,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1225,7 +1225,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_findnext",
-      "target_index": 71,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1242,7 +1242,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_findfirst",
-      "target_index": 61,
+      "target_index": 49,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1259,7 +1259,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makename",
-      "target_index": 57,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1276,7 +1276,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_load_shape2d_nofatal_thunk",
-      "target_index": 44,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1293,7 +1293,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_modulesize",
-      "target_index": 58,
+      "target_index": 62,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1310,7 +1310,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_unlockedmemory",
-      "target_index": 51,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1327,7 +1327,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_reservememory",
-      "target_index": 42,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1344,7 +1344,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFldiv",
-      "target_index": 40,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1361,7 +1361,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprcopy2to12",
-      "target_index": 4,
+      "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1378,7 +1378,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_freememory",
-      "target_index": 81,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1395,7 +1395,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 3,
+      "target_index": 21,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1412,7 +1412,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 79,
+      "target_index": 14,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1446,7 +1446,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_setup1_from_arg_pointer",
-      "target_index": 2,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1463,7 +1463,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_ptr_cursor",
-      "target_index": 6,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1480,7 +1480,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_ptr_cursor",
-      "target_index": 6,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1497,7 +1497,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 3,
+      "target_index": 21,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1514,7 +1514,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 79,
+      "target_index": 14,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1548,7 +1548,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_setup1_from_arg_pointer",
-      "target_index": 2,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1565,7 +1565,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_spritepointermini",
-      "target_index": 5,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1582,7 +1582,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_spritepointermini",
-      "target_index": 5,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1599,7 +1599,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_shape2d_fatal_thunk",
-      "target_index": 77,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1633,7 +1633,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_unk_sprite_ptr",
-      "target_index": 7,
+      "target_index": 24,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1650,7 +1650,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_unk_sprite_ptr",
-      "target_index": 7,
+      "target_index": 24,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1667,7 +1667,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 82,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1684,7 +1684,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_vid_flg2_set",
-      "target_index": 9,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1701,7 +1701,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_ptr_cursor",
-      "target_index": 6,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1718,7 +1718,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_ptr_cursor",
-      "target_index": 6,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1735,7 +1735,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 82,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1752,7 +1752,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_spritepointermini",
-      "target_index": 5,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1769,7 +1769,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_spritepointermini",
-      "target_index": 5,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1786,7 +1786,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 82,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1803,7 +1803,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_freememory",
-      "target_index": 81,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1820,7 +1820,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_vid_flg2_set",
-      "target_index": 9,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1837,7 +1837,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 79,
+      "target_index": 14,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1871,7 +1871,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_vgapalette",
-      "target_index": 80,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1888,7 +1888,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 79,
+      "target_index": 14,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1922,7 +1922,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_shape2d_fatal_thunk",
-      "target_index": 77,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1956,7 +1956,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rand",
-      "target_index": 74,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1973,7 +1973,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_get_kevinrandom",
-      "target_index": 76,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1990,7 +1990,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_get_kevinrandom",
-      "target_index": 76,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2007,7 +2007,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rand",
-      "target_index": 74,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2024,7 +2024,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_vsyncstate",
-      "target_index": 73,
+      "target_index": 57,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2041,7 +2041,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_vsyncstate",
-      "target_index": 73,
+      "target_index": 57,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2058,7 +2058,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_INIT_PALETTE",
-      "target_index": 70,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2075,7 +2075,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_material_clrlist_ptr",
-      "target_index": 25,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2092,7 +2092,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_material_color_table_pointer",
-      "target_index": 24,
+      "target_index": 80,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2109,7 +2109,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_material_pattern_table_pointer",
-      "target_index": 23,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2126,7 +2126,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_material_pattern2_table_ptr",
-      "target_index": 22,
+      "target_index": 77,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2143,7 +2143,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_seedrandom",
-      "target_index": 63,
+      "target_index": 44,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2177,7 +2177,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_slow_video_mode_state",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2194,7 +2194,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rate_frame",
-      "target_index": 19,
+      "target_index": 74,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2211,7 +2211,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 18,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2228,7 +2228,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_renderlevel",
-      "target_index": 21,
+      "target_index": 75,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2245,7 +2245,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_renderlevel",
-      "target_index": 21,
+      "target_index": 75,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2262,7 +2262,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_slow_video_mode_state",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2279,7 +2279,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_renderlevel",
-      "target_index": 21,
+      "target_index": 75,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2296,7 +2296,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_renderlevel",
-      "target_index": 21,
+      "target_index": 75,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2313,7 +2313,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_renderlevel",
-      "target_index": 21,
+      "target_index": 75,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2330,7 +2330,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 18,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2347,7 +2347,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 18,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2364,7 +2364,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_slow_video_mode_state",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2381,7 +2381,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_slow_video_mode_state",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2916,87 +2916,87 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
+      "_initmouse",
+      "_sprset1size",
+      "_initialize_main",
+      "_file_find_next_alt",
+      "_timer_setup_interrupt",
+      "_timer_get_delta_alt",
+      "_vgapalette",
+      "_pixel_scales",
+      "_sprite_clear_1_color",
+      "_initmemory",
+      "_video_set_mode4",
+      "_file_load_shape2d_fatal_thunk",
+      "_locate_shape_fatal",
+      "_interpretsub",
+      "__ctype",
+      "_freememory",
+      "_sprite_make_window",
       "_sprite_setup1_from_arg_pointer",
+      "_statemgmtcpy",
       "_movfxya",
-      "_sprcopy2to12",
       "_spritepointermini",
       "_mouse_ptr_cursor",
       "_mouse_unk_sprite_ptr",
-      "_pixel_scales",
-      "_g_vid_flg2_set",
-      "_vidflg3is_minus1",
-      "_initialize_main",
+      "_makename",
       "_vidflg4_is1",
-      "_g_videoflg5",
-      "_g_vid_flag6",
+      "_mkeyon",
+      "_nullsub_1",
+      "_msystempause",
+      "_file_load_shape2d_nofatal2",
+      "_audio_load_driver",
+      "_rand",
       "_textrespfxchr",
-      "__ctype",
-      "_slow_video_mode_state",
-      "_frm_rate2",
-      "_rate_frame",
-      "_statemgmtcpy",
-      "_renderlevel",
-      "_material_pattern2_table_ptr",
-      "_material_pattern_table_pointer",
-      "_material_color_table_pointer",
-      "_material_clrlist_ptr",
+      "_load_shape2d_nofatal_thunk",
       "_kb_init_interrupt",
       "_kb_shift_checking2",
-      "_testkey",
-      "_interpretsub",
       "_show_graphic_levels_menu",
-      "_do_joystick_resource_text",
-      "_mkeyon",
-      "_do_mof_resource_text",
-      "_msystempause",
-      "_do_dos_resource_text",
-      "_get_0",
-      "_do_sonsof_resource_text",
-      "_do_dea_textres",
-      "_initmemory",
       "__aFldiv",
-      "_initgraphics",
-      "_reservememory",
-      "_video_set_mode4",
-      "_load_shape2d_nofatal_thunk",
-      "_timer_setup_interrupt",
-      "_sprite_copy_2_to_1_clear",
-      "_file_load_shape2d_nofatal2",
-      "_mmgr_alloc_resbytes",
-      "_initmouse",
-      "_audio_load_driver",
-      "_unlockedmemory",
-      "_audio_stop_unknown",
-      "_availmem",
-      "_exit",
-      "_audio_toggle_flag2",
-      "_audio_toggle_flag6",
-      "_makename",
-      "_modulesize",
       "_criterr",
+      "_do_dea_textres",
       "_loadpalandmouse",
-      "_findfirst",
-      "_modsize",
-      "_seedrandom",
       "_displaywindow",
-      "_sprset1size",
-      "_timer_get_delta_alt",
-      "_file_combine_and_find",
-      "_sprite_clear_1_color",
-      "_zonecheck",
-      "_INIT_PALETTE",
-      "_findnext",
-      "_file_find_next_alt",
+      "_do_dos_resource_text",
+      "_seedrandom",
+      "_do_joystick_resource_text",
+      "_do_mof_resource_text",
+      "_sprcopy2to12",
+      "_audio_stop_unknown",
+      "_findfirst",
+      "_unlockedmemory",
+      "_audio_toggle_flag2",
+      "_do_sonsof_resource_text",
+      "_mmgr_alloc_resbytes",
+      "_audio_toggle_flag6",
+      "_sprite_copy_2_to_1_clear",
+      "_availmem",
       "_vsyncstate",
-      "_rand",
-      "_nullsub_1",
-      "_get_kevinrandom",
-      "_file_load_shape2d_fatal_thunk",
+      "_file_combine_and_find",
+      "_testkey",
+      "_exit",
+      "_zonecheck",
+      "_modulesize",
+      "_findnext",
+      "_modsize",
       "_nullsub_2",
-      "_locate_shape_fatal",
-      "_vgapalette",
-      "_freememory",
-      "_sprite_make_window"
+      "_reservememory",
+      "_get_0",
+      "_g_vid_flg2_set",
+      "_get_kevinrandom",
+      "_vidflg3is_minus1",
+      "_g_videoflg5",
+      "_g_vid_flag6",
+      "_frm_rate2",
+      "_rate_frame",
+      "_renderlevel",
+      "_slow_video_mode_state",
+      "_material_pattern2_table_ptr",
+      "_material_pattern_table_pointer",
+      "_initgraphics",
+      "_material_color_table_pointer",
+      "_material_clrlist_ptr",
+      "_INIT_PALETTE"
     ],
     "groups": [
       {
@@ -3021,18 +3021,33 @@
         "segment": "UNIT_TEXT"
       },
       {
+        "name": "_file_find_next_alt",
+        "offset": 56,
+        "segment": "UNIT_TEXT"
+      },
+      {
         "name": "_audiodriverstring",
         "offset": 0,
         "segment": "_DATA"
       },
       {
-        "name": "_get_0",
-        "offset": 1608,
+        "name": "_nullsub_1",
+        "offset": 62,
         "segment": "UNIT_TEXT"
       },
       {
         "name": "_file_load_shape2d_nofatal2",
         "offset": 0,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_loadpalandmouse",
+        "offset": 1196,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_seedrandom",
+        "offset": 1096,
         "segment": "UNIT_TEXT"
       },
       {
@@ -3046,8 +3061,8 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_loadpalandmouse",
-        "offset": 1196,
+        "name": "_file_combine_and_find",
+        "offset": 16,
         "segment": "UNIT_TEXT"
       },
       {
@@ -3056,28 +3071,13 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_seedrandom",
-        "offset": 1096,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_file_combine_and_find",
-        "offset": 16,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_file_find_next_alt",
-        "offset": 56,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_nullsub_1",
-        "offset": 62,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_nullsub_2",
         "offset": 64,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_get_0",
+        "offset": 1608,
         "segment": "UNIT_TEXT"
       }
     ],
@@ -3173,14 +3173,229 @@
   },
   "preprocessor_closure": [
     {
+      "path": "include/audapi.h",
+      "sha256": "537f4c01ad0bc68422122c115acce177e068053d18a0bf066956b7eeb6b589c7",
+      "size": 4348
+    },
+    {
+      "path": "include/auddrv.h",
+      "sha256": "4a2681f4f662dd55e7992643e4db580501012c03b48689fdd695c1582740665e",
+      "size": 457
+    },
+    {
+      "path": "include/audeng.h",
+      "sha256": "9cd04ff48bb7830e929eeef0e13a533fb5548a6d68e43a50e10438b7c230bd73",
+      "size": 240
+    },
+    {
+      "path": "include/audvoice.h",
+      "sha256": "0f86f905ee2881bb198e4c7e97336e1811cbbd3634027641c2cab8ab1f7027d6",
+      "size": 233
+    },
+    {
+      "path": "include/chartab.h",
+      "sha256": "540ec3660be1ea671e4cc3adedf22983325debf32bd0f08c0465ad6ad1eed6c7",
+      "size": 120
+    },
+    {
+      "path": "include/dialog.h",
+      "sha256": "a7ed94fffb221c0713f567c1f19b2c1906ba8947090b24c472b341907bd38539",
+      "size": 97
+    },
+    {
+      "path": "include/dlgapi.h",
+      "sha256": "cf7150306b1a1d5145c76b02c9989c0b426c99016a20f98571c1f7aa3f22667b",
+      "size": 3480
+    },
+    {
+      "path": "include/dlgcolor.h",
+      "sha256": "093900cd4ec04d772a9bf9dfe70d09e7226a5166b77092746b3f71a2d9b25e77",
+      "size": 122
+    },
+    {
+      "path": "include/font.h",
+      "sha256": "6764a13f5316d6a2e05f61bd6ec789ec690155f0086a213350083e183ebb8c8f",
+      "size": 90
+    },
+    {
+      "path": "include/game.h",
+      "sha256": "0bf7bc4afb9b518f5702334334695ab123f2e69c7c02dd895a65b1ed10e8761f",
+      "size": 94
+    },
+    {
+      "path": "include/gameapi.h",
+      "sha256": "101ef3f85a177f759df8ec6a1ab8d836b0d67cf653ba8c96b279cc01dd70a4e8",
+      "size": 11031
+    },
+    {
+      "path": "include/geom2d.h",
+      "sha256": "2938bb58c7180ac1095c0efa64d0e9b7e1099eab96e8310945cc1cac41253465",
+      "size": 421
+    },
+    {
+      "path": "include/gfxapi.h",
+      "sha256": "b966458208d94c62a09d8430ef62b76a89bc0c0782aff562e28b1f42b3f561ef",
+      "size": 1231
+    },
+    {
+      "path": "include/input.h",
+      "sha256": "6b3b573371ebc39e1b1b973e7e4d574e227122a673267f21f64fc4736c87e942",
+      "size": 1640
+    },
+    {
+      "path": "include/memapi.h",
+      "sha256": "015c002488a2d0a3d8abb1793b1865accc1dc3731dceaf50bb8092cbca56c280",
+      "size": 506
+    },
+    {
       "path": "include/platform_hw.h",
       "sha256": "e3863a97e9a936f227221b474f085abbd3eb2deb5df33993f7ad00c75baaa9bc",
       "size": 6111
     },
     {
+      "path": "include/prim3d.h",
+      "sha256": "18ae050c00e4e0144daadd37e0d874d276b43e1cec7d9096ea31da45ae53b4a5",
+      "size": 97
+    },
+    {
+      "path": "include/render.h",
+      "sha256": "05e41a1af95a36e31737f34ba4957076eca4efe9a674ac55ee5abbba7ce602c9",
+      "size": 2799
+    },
+    {
+      "path": "include/replay.h",
+      "sha256": "7e3c91591ec83a1bedfedcb2f6ece698e24f2eb902c6fc7cde7a27f22922882d",
+      "size": 466
+    },
+    {
+      "path": "include/resapi.h",
+      "sha256": "54c35d6d3f1da8be628078c3b1b61026dd72f336e37f3c79b56be7389e61b6f0",
+      "size": 1686
+    },
+    {
+      "path": "include/shape2d.h",
+      "sha256": "44aab7b2f37c2e235e0e93d98988d92f09516d4a6b5842440bb29644cc62cc21",
+      "size": 1915
+    },
+    {
       "path": "include/stunts_types.h",
       "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
       "size": 1091
+    },
+    {
+      "path": "include/text.h",
+      "sha256": "2cfcc414d2605d4ec72b0610e1e5e6cb9b10d55e16327b365be6e5d9eb36c7f1",
+      "size": 2076
+    },
+    {
+      "path": "include/timer.h",
+      "sha256": "afb6a3a38b772243bbde097b06ca5041a500d03e031666906b1a135305da1bcf",
+      "size": 593
+    },
+    {
+      "path": "include/tmrhook.h",
+      "sha256": "6a8d07a53b511e2e8c6cba9570a986acfef3713ebf7fdca3021cc3355fecc63e",
+      "size": 349
+    },
+    {
+      "path": "include/uiapi.h",
+      "sha256": "5f58af358736623f4548a30e8eeb25a8e0ce4e22d85a532de2fb3ad71c5c2035",
+      "size": 95
+    },
+    {
+      "path": "include/viewstat.h",
+      "sha256": "a59d13683da45f7e1cc415d8855bad44143d07d95d6806a53cc94321cfda5fe5",
+      "size": 485
+    },
+    {
+      "line": 7,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 12,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 7,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 12,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 7,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 12,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 7,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 12,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 7,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 12,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
     }
   ],
   "profile": "msc510-medium",

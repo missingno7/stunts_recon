@@ -3,8 +3,8 @@
     "declarations": {
       "externals": [
         "__acrtused",
-        "_ring",
-        "_tire"
+        "_tire",
+        "_ring"
       ],
       "groups": [
         {
@@ -122,7 +122,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ring",
-      "target_index": 2,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -140,9 +140,63 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
+      "path": "include/geom2d.h",
+      "sha256": "2938bb58c7180ac1095c0efa64d0e9b7e1099eab96e8310945cc1cac41253465",
+      "size": 421
+    },
+    {
+      "path": "include/point.h",
+      "sha256": "14dc1976a2ef56548965ae0436ffa20c3a546f6a9c771f96d6dda1228af1031a",
+      "size": 135
+    },
+    {
+      "path": "include/prim3d.h",
+      "sha256": "18ae050c00e4e0144daadd37e0d874d276b43e1cec7d9096ea31da45ae53b4a5",
+      "size": 97
+    },
+    {
+      "path": "include/render.h",
+      "sha256": "05e41a1af95a36e31737f34ba4957076eca4efe9a674ac55ee5abbba7ce602c9",
+      "size": 2799
+    },
+    {
       "path": "include/stunts_types.h",
       "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
       "size": 1091
+    },
+    {
+      "path": "include/viewstat.h",
+      "sha256": "a59d13683da45f7e1cc415d8855bad44143d07d95d6806a53cc94321cfda5fe5",
+      "size": 485
+    },
+    {
+      "path": "include/wheel.h",
+      "sha256": "754fb4cc33dff5ee255e458e9d6c8f108c7495b46173caf0c11a553531f48a5c",
+      "size": 302
+    },
+    {
+      "line": 4,
+      "path": "include/wheel.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 7,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 12,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/geom2d.h",
+      "pragma": "pack",
+      "value": null
     }
   ],
   "profile": "msc510-medium",

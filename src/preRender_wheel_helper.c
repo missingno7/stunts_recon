@@ -3,11 +3,15 @@
 
 #define WHEEL_RING_POINT_COUNT 16
 #define WHEEL_OUTER_RING_OFFSET 32
-struct WheelRect { I16 left, top, section_p1_x, section_p1_y, section_p2_x, section_p2_y, x, y; };
-struct Point { I16 x, y; };
-extern void FAR ring(struct WheelRect *, struct Point *, I16);
+#include "wheel.h"
+#include "point.h"
+
+#include "prim3d.h"
+
+
 /* Generate wheel section rings and copy a translated ring using the rectangle origin delta.
  * Params and return follow the declared C signature. */
+/* Local view: tire; parameters[1].pointer is struct Point; another unit uses signed word. */
 void FAR tire(struct WheelRect *rect, struct Point *coords, I16 count)
 {
     I16 dx, dy;

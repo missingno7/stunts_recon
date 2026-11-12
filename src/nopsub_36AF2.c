@@ -1,3 +1,5 @@
+
+#include "input.h"
 #include "stunts_types.h"
 /* READABILITY: Preserve the original empty far-call entry. */
 /* Retain an intentionally empty far entry point.

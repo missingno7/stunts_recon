@@ -1,3 +1,5 @@
+
+#include "mathapi.h"
 #include "stunts_types.h"
 /* READABILITY: Sort the heap keys in descending order while applying each swap to the paired data array. */
 /* Sort heap keys descending and apply the same swaps to the associated data.

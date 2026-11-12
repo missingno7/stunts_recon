@@ -1,29 +1,38 @@
 #include "stunts_types.h"
 /* READABILITY: Cache or load shape resources, parse their run-length encoded image data, and size the resulting pages. */
 /* PORT: Resource headers use MSC 16-bit int layout; assert these field offsets in a host port. */
+/* Local view: SHAPE2D; struct.count is 10; another unit uses 6. */
 struct SHAPE2D { I16 width,height,s2d_hotspot_x,s2d_hotspot_y,pos_x,pos_y; U8 s2d_plane_color0,s2d_plane_color1_bg,s2d_plane_color2_flip,s2d_plane_color3_flags; };
-extern I8 *mmgr_path_to_name(const I8 *);
+#include "game.h"
+#include "memapi.h"
+#include "shape2d.h"
+
+
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void FAR *checkmodule(const I8 *);
+
     /* PLATFORM(file): load the named shape resource. */
-extern void FAR *file_load_shape2d(I8 *, I16);
+
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
+/* Local view: modulesize; parameters[0].pointer is void; another unit uses signed byte. */
 extern U16S modulesize(void FAR *);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void FAR *reservememory(const I8 *, U16S);
+
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void purgememory(void FAR *);
+
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
+/* Local view: packmemory; return.pointer is void; another unit uses signed byte. */
 extern void FAR *packmemory(void FAR *);
+/* Local view: file_get_res_shape_count; return is unsigned word; another unit uses signed word. */
 extern U16S file_get_res_shape_count(void FAR *);
+/* Local view: shapepointer; parameters[0].pointer is unsigned byte; another unit uses signed byte. */
 extern struct SHAPE2D FAR *shapepointer(U8 FAR *, I16);
-extern I32 segtoadr(U8 FAR *);
-extern void FAR *adrtoseg(I32);
-extern I16 parse_shape2d_helper3(I8 FAR *);
+
+
+
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-extern void resizememory(void FAR *, U16S);
-void FAR *loadandshapepacka(I8 *, I16);
-void shapepack(void FAR *, void FAR *);
+
+
+
 /* Load a shape resource and report failures as fatal.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */

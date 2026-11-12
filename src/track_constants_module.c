@@ -362,12 +362,8 @@ unsigned char shapedata42_10[1236] = {
   0, 0, 78, 1,
 };
 
-struct track_object_info {
-  unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
-  short arrow_orientation;
-  unsigned char *camera_data;
-  unsigned char opponent1, opponent2, opponent3, opponent_speed_code;
-};
+#include "trackrec.h"
+
 struct track_object_info shapeinfos[120] = {
   {1, 11, 1, 0, 0, 13, 0, shapedata42_7 + 336, 0, 0, 0, 15},
   {1, 4, 8, 0, 0, 13, 256, shapedata42_7 + 336, 0, 0, 0, 15},
@@ -491,15 +487,13 @@ struct track_object_info shapeinfos[120] = {
   {1, 6, 9, 0, 1, 29, 256, shapedata42_10 + 606, 0, 0, 0, 12},
 };
 
+/* Local view: SHAPE3D; struct.count is 1; another unit uses 7. */
 struct SHAPE3D { unsigned char opaque_layout[22]; };
-extern struct SHAPE3D g_shapes3d[130];
-struct track_object {
-  struct track_object_info *info;
-  short rotation_y;
-  struct SHAPE3D *shape;
-  struct SHAPE3D *low_detail_shape;
-  unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
-};
+
+#include "track.h"
+
+
+/* Local view: trklst; array is 215; another unit uses None. */
 struct track_object trklst[215] = {
   {0, 0, &g_shapes3d[30], &g_shapes3d[30], 0, 0, 0, 0, 64, 0},
   {&shapeinfos[2], 0, &g_shapes3d[12], &g_shapes3d[13], 4, 0, 0, 0, 0, 0},
@@ -718,13 +712,8 @@ struct track_object trklst[215] = {
   {0, 0, &g_shapes3d[106], &g_shapes3d[107], 0, 0, 0, 0, 255, 0},
 };
 
-struct scene_shape {
-  unsigned short opaque_first_word;
-  short rotation_y;
-  struct SHAPE3D *shape;
-  struct SHAPE3D *low_detail_shape;
-  unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
-};
+
+/* Local view: scene2; array is 19; another unit uses None. */
 struct scene_shape scene2[19] = {
   {0, 0, &g_shapes3d[108], &g_shapes3d[109], 0, 0, 0, 0, 255, 0},
   {0, 0, &g_shapes3d[45], &g_shapes3d[45], 0, 0, 1, 0, 255, 0},
@@ -746,6 +735,7 @@ struct scene_shape scene2[19] = {
   {0, 512, &g_shapes3d[40], &g_shapes3d[40], 0, 0, 1, 0, 255, 0},
   {0, 256, &g_shapes3d[40], &g_shapes3d[40], 0, 0, 1, 0, 255, 0},
 };
+/* Local view: scene3; array is 13; another unit uses None. */
 struct scene_shape scene3[13] = {
   {0, 0, &g_shapes3d[112], &g_shapes3d[112], 0, 0, 1, 0, 255, 0},
   {0, 0, &g_shapes3d[113], &g_shapes3d[113], 0, 0, 1, 0, 255, 0},
@@ -796,10 +786,13 @@ short highEntrXInnBounds0[7] = {
 short highEntrXOutBounds0[7] = {
   120, 168, 216, 264, 312, 360, 360,
 };
+/* Local view: shape_template_points_a; array is 6; another unit uses None. */
 unsigned char shape_template_points_a[6] = {
   0, 0, 0, 0, 0, 0,
 };
-struct coord_pair { short x, z; };
+#include "geom2d.h"
+
+/* Local view: shape_template_points_b; array is 12; another unit uses None. */
 struct coord_pair shape_template_points_b[12] = {
   {-120, 0},
   {-281, -120},
@@ -814,21 +807,25 @@ struct coord_pair shape_template_points_b[12] = {
   {281, 120},
   {0, 231},
 };
+/* Local view: shape_template_points_c; array is 3; another unit uses None. */
 struct coord_pair shape_template_points_c[3] = {
   {-60, 0},
   {-512, 60},
   {0, 512},
 };
+/* Local view: shape_template_points_d; array is 3; another unit uses None. */
 struct coord_pair shape_template_points_d[3] = {
   {-392, 0},
   {0, -632},
   {0, 0},
 };
+/* Local view: shape_template_points_e; array is 3; another unit uses None. */
 struct coord_pair shape_template_points_e[3] = {
   {392, 0},
   {0, 632},
   {0, 0},
 };
+/* Local view: shape_template_points_f; array is 6; another unit uses None. */
 struct coord_pair shape_template_points_f[6] = {
   {23, 0},
   {-255, 97},
@@ -839,10 +836,9 @@ struct coord_pair shape_template_points_f[6] = {
 };
 char aGame1[6] = "game1";
 char aGame2[6] = "game2";
-struct car_exp_name_table {
-  char entry[15][5];
-  char trailing_zero;
-};
+#include "carrec.h"
+
+/* Local view: aCar0; type is struct car_exp_name_table; another unit uses array[None]. */
 struct car_exp_name_table aCar0 = {
   {
     "car0", /* aCar0 */
@@ -864,6 +860,7 @@ struct car_exp_name_table aCar0 = {
   0,
 };
 char aStxxx[6] = "stxxx";
+/* Local view: car_wheel_offsets; array is 8; another unit uses 4. */
 unsigned char car_wheel_offsets[8] = {
   0, 0, 0, 0, 0, 0, 0, 0,
 };

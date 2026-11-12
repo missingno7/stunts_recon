@@ -30,6 +30,7 @@
 #define ROAD_TILE_SHAPE_COUNT 4
 #include "stunts_types.h"
 /* PORT: Resource records contain far pointers and depend on MSC default 2-byte packing; never use the host layout as the file layout. */
+/* Local view: SHAPE2D; struct.count is 8; another unit uses 6. */
 struct SHAPE2D {
     I16 s2d_width;
     I16 s2d_height;
@@ -40,25 +41,17 @@ struct SHAPE2D {
     U8  s2d_plane_color0;
     U8  s2d_plane_color1_bg;
 };
+/* Local view: SPRITE; struct.count is 3; another unit uses 2. */
 struct SPRITE {
     struct SHAPE2D far *sprite_bitmapptr;
     U16S  sprite_unk1;
     U16S  sprite_unk2;
 };
 /* PORT: Track records use 16-bit near pointers and MSC default structure alignment; keep verified offsets. */
-struct TRACKOBJECT {
-    struct TRKOBJINFO *ss_trkObjInfoPtr;
-    I16S ss_rotY;
-    struct SHAPE3D *ss_shapePtr;
-    struct SHAPE3D *ss_loShapePtr;
-    U8  ss_ssOvelay;
-    I8 ss_surfaceType;
-    I8 ss_ignoreZBias;
-    I8 ss_multiTileFlag;
-    I8 ss_physicalModel;
-    I8 scene_unk5;
-};
+#include "trkobj.h"
+
 /* PORT: Game-info records are byte/word layouts from the original 16-bit executable; preserve packing and widths. */
+/* Local view: GAMEINFO; struct[8].type is unsigned word; another unit uses signed byte. */
 struct GAMEINFO {
     I8 game_playercarid[4];
     I8 game_playermaterial;
@@ -71,94 +64,147 @@ struct GAMEINFO {
     U16S  game_framespersec;
     U16S  game_recordedframes;
 };
+#include "font.h"
+#include "game.h"
+#include "gfxapi.h"
+#include "input.h"
+#include "prim3d.h"
+#include "resapi.h"
+#include "shape2d.h"
+#include "track.h"
+#include "uiapi.h"
 
+
+/* Local view: trklst; array is None; another unit uses 215. */
 extern struct TRACKOBJECT trklst[];
-extern struct GAMEINFO globalgamesettings;
+
 static U8  far *terrain_tile_shapes[TERRAIN_SHAPE_COUNT];
 static struct SHAPE2D far *track_editor_cursors[TRACK_EDITOR_CURSOR_COUNT];
 static struct SHAPE2D far *road_tile_shapes[ROAD_TILE_SHAPE_COUNT];
 static U8  far *piece_mask_shapes[TRACK_PIECE_SHAPE_COUNT];
 static U8  far *piece_fill_shapes[TRACK_PIECE_SHAPE_COUNT];
 static U8  far *palette_piece_layout;
-extern struct SPRITE far *g_wndspr;
+
+/* Local view: td14tb; pointer is unsigned byte; another unit uses signed byte. */
 unsigned char far *td14tb;
 unsigned char far *td15p_9;
+/* Local view: g_column_of_trkdata21_pth; pointer is unsigned byte; another unit uses signed byte. */
 extern U8  far *g_column_of_trkdata21_pth;
+/* Local view: tdfrompathrow22; pointer is unsigned byte; another unit uses signed byte. */
 extern U8  far *tdfrompathrow22;
+/* Local view: main_data_file_addr; pointer is unsigned byte; another unit uses signed byte. */
 extern U8  far *main_data_file_addr;
 int gterrtrk[30];
 int lnoffsets[30];
+/* Local view: resbuftext; array is None; another unit uses 80. */
 extern I8 resbuftext[];
 unsigned char sampled_trk_column;
-extern U8  g_cur_track_row;
-extern I16 pixel_scales;
-extern I16 performGraphColor;
+
+
+
+/* Local view: dialog_frame_color; type is signed word; another unit uses unsigned word. */
 extern I16 dialog_frame_color;
+/* Local view: dlg_colour; type is signed word; another unit uses unsigned word. */
 extern I16 dlg_colour;
-extern I16 palette_window_line_color, palette_window_fill_color, palette_window_line_style;
-extern I16 text_cursor_outline_color;
-extern I16 menu_button_color_a, menu_button_color_b, menu_button_color_c;
-extern I16 g_trackpiecescounter;
-extern I16 msecoordx, pos_y_ms;
+
+
+
+
+
+/* Local view: flagsdown; type is unsigned byte; another unit uses signed word. */
 extern U8  flagsdown;
-extern I8 buf_g_path[];
-extern I8 track_file[];
+
+
+/* Local view: g_is_busy; type is unsigned byte; another unit uses signed byte. */
 extern U8  g_is_busy;
 
+/* Local view: file_load_shape2d_fatal_thunk; return.pointer is unsigned byte; another unit uses void. */
 extern U8  far * far file_load_shape2d_fatal_thunk(I8 *name);
+/* Local view: locate_many_resources; parameters[0].pointer is unsigned byte; another unit uses void. */
 extern void far locate_many_resources(U8  far *data, I8 *names, I8 far **result);
+/* Local view: file_load_resource_file; return.pointer is unsigned byte; another unit uses void. */
 extern U8  far * far file_load_resource_file(I8 *name);
+/* Local view: locate_shape_alt; return.pointer is unsigned byte; another unit uses void. */
 extern U8  far * far locate_shape_alt(U8  far *data, I8 *name);
+/* Local view: locate_shape_fatal; return.pointer is unsigned byte; another unit uses struct SHAPE2D. */
 extern U8  far * far locate_shape_fatal(U8  far *data, I8 *name);
+/* Local view: locate_text_resource; parameters[0].pointer is unsigned byte; another unit uses signed byte. */
 extern I8 far * far locate_text_resource(U8  far *data, I8 *name);
+/* Local view: sprite_make_window; return.pointer is struct SPRITE; another unit uses void. */
 extern struct SPRITE far * far sprite_make_window(I16 width, I16 height, I16 flags);
-extern void far sprite_copy_wnd_to_1_clear(void);
-extern void far draw3dbutton();
-extern void far sprite_draw_beveled_frame();
-extern void far sprite_copy_wnd_to_1(void);
+
+
+
+
+/* Local view: sprset1size; parameters[0] is signed word; another unit uses unsigned word. */
 extern void far sprset1size(I16 left, I16 right, I16 top, I16 bottom);
+/* Local view: sprite_setup1_from_arg_pointer; parameters[0].pointer is struct SPRITE; another unit uses void. */
 extern void far sprite_setup1_from_arg_pointer(struct SPRITE far *sprite);
-extern I16 far doslider();
+
+/* Local view: sprite_blit_to_video; return is void; another unit uses signed word. */
 extern void far sprite_blit_to_video(struct SPRITE far *sprite, I16 mode);
-extern void far preRender_line(I16 x1, I16 y1, I16 x2, I16 y2, I16 color);
-extern void far sprcopy2to12(void);
+
+
+/* Local view: movfxya; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
 extern void far movfxya(void far *shape, I16 x, I16 y);
+/* Local view: sprite_clear_shape_alt; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
 extern void far sprite_clear_shape_alt(void far *shape, I16 x, I16 y);
+/* Local view: sprite_putimage_and_alt; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
 extern void far sprite_putimage_and_alt(void far *shape, I16 x, I16 y);
+/* Local view: andcfxya; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
 extern void far andcfxya(void far *shape, I16 x, I16 y);
+/* Local view: orcfxya; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
 extern void far orcfxya(void far *shape, I16 x, I16 y);
-extern void far andfxya(void far *shape, I16 x, I16 y);
-extern void far orfxya(void far *shape, I16 x, I16 y);
-extern void far msdrawopaquechk(void);
-extern void far msdrawtransparentchk(void);
+
+
+
+
+/* Local view: font_setup_unknown; parameters[0] is signed word; another unit uses unsigned word. */
 extern void far font_setup_unknown(I16 colour, I16 mode);
-extern void far strcpyfar(I8 *destination, I8 far *source);
-extern I16 far textpixels(I8 *name);
-extern void far movtxy(I8 *text, I16 x, I16 y);
+
+
+
+/* Local view: drawrect; return is void; another unit uses signed word. */
 extern void far drawrect(I16 x, I16 y, I16 width, I16 height, I16 color);
+/* Local view: messagebox; return is signed word; another unit uses unsigned word. */
 extern I16 far messagebox();
+/* Local view: timer_get_delta_alt; return is signed word; another unit uses unsigned long. */
 extern I16 far timer_get_delta_alt(void);
-extern I16 far input_checking(I16 delta);
+
+/* Local view: mousecursor; return is signed byte; another unit uses signed word. */
 extern I8 far mousecursor(I16 count, I16 *x1, I16 *x2, I16 *y1, I16 *y2);
+/* Local view: timedwait; return is void; another unit uses unsigned long. */
 extern void far timedwait(I32 ticks);
+/* Local view: compiletrack; return is signed byte; another unit uses signed word. */
 extern I8 far compiletrack(void);
-extern void far clear_keyboardbuffer(void);
+
+/* Local view: do_fileselect_dialog; parameters[3].pointer is signed byte; another unit uses void. */
 extern I8 far do_fileselect_dialog(I8 *dir, I8 *name, I8 *ext, I8 far *title);
+/* Local view: fsavereq; parameters[2].pointer is signed byte; another unit uses void. */
 extern I8 far fsavereq(I8 *dir, I8 *name, I8 far *title);
-extern void far makename(I8 *dir, I8 *name, I8 *ext, I8 *dst);
-extern void far loadfileat(I8 *path, U8  far *buffer);
+
+
+/* Local view: file_write_fatal; parameters[1].pointer is unsigned byte; another unit uses struct HighScoreRecord. */
 extern I16 far file_write_fatal(I8 *path, U8  far *buffer, I32 size);
+/* Local view: findfirst; return is signed word; another unit uses near pointer. */
 extern I16 far findfirst(I8 *query);
+/* Local view: highscore_write_a; return is void; another unit uses signed byte. */
 extern void far highscore_write_a(I16 mode);
-extern void far xorbox(I16 x1, I16 y1, I16 x2, I16 y2, I16 color);
+
+/* Local view: sprite_free_window; parameters[0].pointer is struct SPRITE; another unit uses void. */
 extern void far sprite_free_window(struct SPRITE far *sprite);
+/* Local view: closeresource; parameters[0].pointer is unsigned byte; another unit uses void. */
 extern void far closeresource(U8  far *data);
+/* Local view: freememory; parameters[0].pointer is unsigned byte; another unit uses void. */
 extern void far freememory(U8  far *data);
+/* Local view: roadupcheck; parameters[0] is unsigned word; another unit uses unsigned byte. */
 extern U8  far roadupcheck(U16  terrain, U16  element);
 
-I8 checktracksyntax();
-void trackoverlapcheck();
+
+
+/* Local view: drawpiecebox; parameters is None; another unit uses ['u8']. */
 void drawpiecebox();
+/* Local view: drawtrackbox; parameters is None; another unit uses ['u8', 'u8', {'pointer': 'u8', 'qualifiers': [], 'segment': 'near'}, {'pointer': 'u8', 'qualifiers': [], 'segment': 'near'}]. */
 void drawtrackbox();
 
 I8 aEokenseieemseedewwefuenpestej[] = "eokenseieemseedewwefuenpestejsejdeteewaefteat";
@@ -928,6 +974,7 @@ save:
     freememory(sdtBuffer) /* PLATFORM(memory): release the resource through game memory management. */;
 }
 
+/* Local view: drawpiecebox; parameters is ['u8']; another unit uses None. */
 void drawpiecebox(U8  mode)
 { /* PURPOSE: Draw the six-by-six terrain and track-piece icon grid. Params: mode. Returns: void. Globals: reads palette_piece_layout, piece_fill_shapes, piece_mask_shapes, terrain_tile_shapes, trklst; writes none. */ /* PLATFORM(video): draws pixels, sprites, or text. */
     U8  iconIndex;
@@ -969,6 +1016,7 @@ void drawpiecebox(U8  mode)
     }
 }
 
+/* Local view: drawtrackbox; parameters is ['u8', 'u8', {'pointer': 'u8', 'qualifiers': [], 'segment': 'near'}, {'pointer': 'u8', 'qualifiers': [], 'segment': 'near'}]; another unit uses None. */
 void drawtrackbox(U8  rowBase, U8  columnBase, U8  *lastElement, U8  *lastTerrain)
 { /* PURPOSE: Draw the cached twelve-by-eleven track map preview. Params: rowBase, columnBase, lastElement, lastTerrain. Returns: void. Globals: reads gterrtrk, lnoffsets, piece_fill_shapes, piece_mask_shapes, td14tb, td15p_9, terrain_tile_shapes, trklst; writes none. */ /* PLATFORM(video): draws pixels, sprites, or text. */
     U16  rowIndex;

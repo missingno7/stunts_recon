@@ -18,7 +18,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapez",
-      "target_index": 6,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -52,7 +52,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapez",
-      "target_index": 6,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -151,12 +151,12 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_file_find_sounds_required",
       "_file_find_shapes_optional_alt",
+      "_locateshapesz",
       "_locate_shape_fatal",
       "_locate_many_resources",
+      "_file_find_sounds_required",
       "_locateshapez",
-      "_locateshapesz",
       "_locate_sound_fatal"
     ],
     "groups": [
@@ -177,13 +177,13 @@
     ],
     "publics": [
       {
-        "name": "_file_find_sounds_required",
-        "offset": 116,
+        "name": "_file_find_shapes_optional_alt",
+        "offset": 182,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_file_find_shapes_optional_alt",
-        "offset": 182,
+        "name": "_locateshapesz",
+        "offset": 50,
         "segment": "UNIT_TEXT"
       },
       {
@@ -192,8 +192,8 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_locateshapesz",
-        "offset": 50,
+        "name": "_file_find_sounds_required",
+        "offset": 116,
         "segment": "UNIT_TEXT"
       }
     ],
@@ -266,6 +266,26 @@
   },
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
+    {
+      "path": "include/audapi.h",
+      "sha256": "537f4c01ad0bc68422122c115acce177e068053d18a0bf066956b7eeb6b589c7",
+      "size": 4348
+    },
+    {
+      "path": "include/auddrv.h",
+      "sha256": "4a2681f4f662dd55e7992643e4db580501012c03b48689fdd695c1582740665e",
+      "size": 457
+    },
+    {
+      "path": "include/audvoice.h",
+      "sha256": "0f86f905ee2881bb198e4c7e97336e1811cbbd3634027641c2cab8ab1f7027d6",
+      "size": 233
+    },
+    {
+      "path": "include/resapi.h",
+      "sha256": "54c35d6d3f1da8be628078c3b1b61026dd72f336e37f3c79b56be7389e61b6f0",
+      "size": 1686
+    },
     {
       "path": "include/stunts_types.h",
       "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",

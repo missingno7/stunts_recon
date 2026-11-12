@@ -2,9 +2,15 @@
 /* READABILITY: Write fixed-point X, Y, and Z rotation matrices using the fast sine and cosine helpers. */
 
 #define MATRIX_IDENTITY_Q14 0x4000 /* Q14 representation of 1.0. */
-struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
+#include "mathrec.h"
+
+/* Local view: MATRIX; struct[0].name is m; another unit uses vals. */
 struct MATRIX { struct MAT3 m; };
+#include "mathops.h"
+
+/* Local view: intcos; parameters[0] is signed word; another unit uses unsigned word. */
 extern I16S intcos(I16);
+/* Local view: intsin; parameters[0] is signed word; another unit uses unsigned word. */
 extern I16S intsin(I16);
 
 /* Write a fixed-point X-axis rotation matrix.

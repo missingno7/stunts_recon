@@ -4,7 +4,10 @@
 
 #include "shapes3d.h"
 /* Local three-point wheel view; other units expose a larger rectangle. */
+/* Local view: WheelRect; struct.count is 3; another unit uses 8. */
 struct WheelRect { struct Point p0, p1, p2; };
+#include "prim3d.h"
+
 /* Interpolate the two wheel-section endpoint vectors and generate their point rings.
  * Params and return follow the declared C signature. */
 void ring(struct WheelRect *rect, struct Point *output, I16 scale)
