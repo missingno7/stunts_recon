@@ -1,6 +1,6 @@
 ; ASMDOC-GEOMETRY Module: projection_vector_window. Name already identifies the mixed projection/vector/window
 ; contents; preserve one module.
-; ASMDOC-GEOMETRY Original source: asm/projection_vector_window.ASM; contracts below use ORIGINAL line
+; ASMDOC-GEOMETRY Original source: asm/project.ASM; contracts below use ORIGINAL line
 ; references.
 ; ASMDOC-GEOMETRY Code exports: _nopsub_322C0, _nopsub_322DF, _set_projection, _vector_to_point,
 ; _sprite_free_window
@@ -243,8 +243,8 @@ _setprojectpb endp
 ; ASMDOC-GEOMETRY Service/call: _polang FAR only for zero y angle
 ; ASMDOC-GEOMETRY Detail: Degree conversion computes unsigned ((angle<<11)/360)>>1; DIV overflow occurs before
 ; the final right shift.
-; ASMDOC-GEOMETRY Dead: false. Reachability: src/obj_seg000.c:1013,1531; src/obj_seg003.c:3094;
-; src/obj_seg005.c:820
+; ASMDOC-GEOMETRY Dead: false. Reachability: src/frontend.c:1013,1531; src/render.c:3094;
+; src/race.c:820
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _set_projection proc far
     arg_horizontal_degrees = word ptr 6
@@ -397,8 +397,8 @@ _set_projection endp
 ; ASMDOC-GEOMETRY Global read: _projection_y_scale
 ; ASMDOC-GEOMETRY Detail: NEG of -32768 retains 0x8000 and unsigned MUL consumes it as 32768. Do not replace
 ; with unrestricted host signed arithmetic.
-; ASMDOC-GEOMETRY Dead: false. Reachability: src/obj_seg003.c:2106-2107,2259,2359,3335;
-; src/obj_seg006.c:293,348,383,400 and others
+; ASMDOC-GEOMETRY Dead: false. Reachability: src/render.c:2106-2107,2259,2359,3335;
+; src/polygon.c:293,348,383,400 and others
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _projectp proc far
     projection_invalid_coordinate = byte ptr -32768
@@ -570,8 +570,8 @@ _projectp endp
 ; ASMDOC-GEOMETRY Detail: Saves/restores caller DS/SI/DI/BP on success; ES is not restored. ES memory reads
 ; are heap descriptor access, not direct video-memory access.
 ; ASMDOC-GEOMETRY Detail: The LIFO extent uses bitmap height, not current clipped bottom stored in the sprite.
-; ASMDOC-GEOMETRY Dead: false. Reachability: Many direct calls: src/obj_seg000.c:687,697,964 etc.;
-; obj_seg003.c:3237; obj_seg005.c:1710-1712; obj_seg008.c:201; obj_seg009.c:922-926
+; ASMDOC-GEOMETRY Dead: false. Reachability: Many direct calls: src/frontend.c:687,697,964 etc.;
+; render.c:3237; race.c:1710-1712; uires.c:201; trackedt.c:922-926
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _sprite_free_window proc far
     push    bp

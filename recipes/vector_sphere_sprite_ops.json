@@ -651,7 +651,7 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "source": "asm/vector_sphere_sprite_ops.ASM",
+  "source": "asm/vecspr.ASM",
   "stable_id": "multi_asm012_143366",
   "start": 143366,
   "subsumed_owners": [

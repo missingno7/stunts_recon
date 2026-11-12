@@ -96,7 +96,7 @@ _andfxy endp
 ; ASMDOC width/height/pixels.
 ; ASMDOC Globals written: sprite1 backing pixels; width=1 additionally clears next pixel of each row.
 ; ASMDOC Services: none.
-; ASMDOC Dead: false. Reachability: Direct callers src/obj_seg009.c:403,963,1029.
+; ASMDOC Dead: false. Reachability: Direct callers src/trackedt.c:403,963,1029.
 ; ASMDOC Shared tail: Both entries save DS/SI/DI/BP and jump to putpixel_iconmask_shared_exit (91); common
 ; epilogue at 123
 ; ASMDOC restores them. Unlabeled header-origin prologue 79 is not reached.

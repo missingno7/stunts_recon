@@ -317,7 +317,7 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "source": "asm/seg012_draw_unknown_lines_group.ASM",
+  "source": "asm/linedisp.ASM",
   "stable_id": "multi_seg012_draw_unknown_lines_group",
   "start": 144176,
   "subsumed_owners": [],

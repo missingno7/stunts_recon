@@ -781,7 +781,7 @@
   ],
   "profile": "msc510-medium",
   "public": "_ellipseh",
-  "source": "src/preRender_sphere_helper2.c",
+  "source": "src/sphhelp2.c",
   "stable_id": "load_26412",
   "start": 156690,
   "target": {

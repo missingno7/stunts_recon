@@ -56,7 +56,7 @@ class AsmContributionTests(unittest.TestCase):
 
     def test_asm_rejects_external_source_closure(self):
         for source in (b'include include\\missing_file.inc\n',
-                       b'include include\\..\\src\\obj_seg000.c\n',
+                       b'include include\\..\\src\\frontend.c\n',
                        b'includelib external.lib\n', b'org 100h\n', b'\xff'):
             with self.subTest(source=source), self.assertRaises(ValueError):
                 asm_source(source)

@@ -285,7 +285,7 @@
   ],
   "profile": "msc510-medium",
   "public": "_int3dhypot",
-  "source": "src/polarRadius3D.c",
+  "source": "src/polarrad.c",
   "stable_id": "load_1ea08",
   "start": 125448,
   "target": {

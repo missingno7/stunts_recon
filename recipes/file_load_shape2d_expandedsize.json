@@ -300,7 +300,7 @@
   ],
   "profile": "msc510-medium",
   "public": "_file_load_shape2d_expandedsize",
-  "source": "src/file_load_shape2d_expandedsize.c",
+  "source": "src/expandsz.c",
   "stable_id": "load_2b12a",
   "start": 176426,
   "target": {

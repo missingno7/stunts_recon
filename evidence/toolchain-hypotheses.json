@@ -325,7 +325,7 @@
       "hypothesis": "Unreferenced initialized-data blocks (shapes 5,124 B; track constants 9,560 B) are data-only object modules; the image cannot distinguish MSC C initializers from MASM db/dw (both bind byte-exactly with the same offset16 pointer fixups).",
       "status": "NON_DISCRIMINATING",
       "scope": "TU-specific",
-      "evidence": "datamod: shapes_pointer_tu.c (120 near-pointer FIXUPPs) and shapes_symbolic.ASM both link to the 5,124 oracle bytes; trackdata: track_constants_module.c 9,560 B, 767 fixups, pinned LINK 3.65 fixture exact. integ20: shapes subspan is strictly contained in the track module (no code operand anchors a shapes public) -> one module; track_constants_module accepted as MATCHING_C_DATA (9,560 B).",
+      "evidence": "datamod: shapes_pointer_tu.c (120 near-pointer FIXUPPs) and shapes_symbolic.ASM both link to the 5,124 oracle bytes; trackdata: trkconst.c 9,560 B, 767 fixups, pinned LINK 3.65 fixture exact. integ20: shapes subspan is strictly contained in the track module (no code operand anchors a shapes public) -> one module; track_constants_module accepted as MATCHING_C_DATA (9,560 B).",
       "controls": "pinned LINK fixture; reversing two data-only objects reverses _DATA placement",
       "explains": "data-only raw intervals",
       "fails_or_breaks": "-",

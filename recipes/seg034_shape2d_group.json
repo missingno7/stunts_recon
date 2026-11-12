@@ -1286,7 +1286,7 @@
       }
     }
   },
-  "source": "src/seg034_shape2d_group.c",
+  "source": "src/shp2file.c",
   "stable_id": "multi_seg034_shape2d_group",
   "start": 174550,
   "subsumed_data_owners": [

@@ -1353,7 +1353,7 @@
       }
     }
   },
-  "source": "asm/timer_video_interrupt_runtime.ASM",
+  "source": "asm/timerint.ASM",
   "stable_id": "multi_asm012_131254",
   "start": 131254,
   "subsumed_owners": [

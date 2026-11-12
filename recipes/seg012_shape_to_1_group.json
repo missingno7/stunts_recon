@@ -149,7 +149,7 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "source": "asm/seg012_shape_to_1_group.ASM",
+  "source": "asm/shpcopy.ASM",
   "stable_id": "multi_seg012_shape_to_1_group",
   "start": 146700,
   "subsumed_owners": [],

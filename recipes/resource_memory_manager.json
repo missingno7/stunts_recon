@@ -2759,7 +2759,7 @@
       }
     }
   },
-  "source": "asm/resource_memory_manager.ASM",
+  "source": "asm/memmgr.ASM",
   "start": 135290,
   "subsumed_owners": [
     "mmgr_alloc_nop3111d_group",

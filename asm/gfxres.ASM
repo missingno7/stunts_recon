@@ -384,7 +384,7 @@ public _video_set_mode4
 ; globals_read: _sprite2 (via descriptor copy); _exitlistfuncs; format and variadic argument memory
 ; globals_written: _sprite1 (via descriptor copy); stdout/stdin and cleanup-owned state
 ; services: CRT _printf, _flush_stdin, _abort; registered far cleanup callbacks
-; Liveness: live; Live: explicit FAR calls throughout resource, memory and file modules; src/obj_seg007.c:145
+; Liveness: live; Live: explicit FAR calls throughout resource, memory and file modules; src/audioeng.c:145
 ; and
 ; audio error paths.
 ; Notes: Second printf reuses the still-present format/arguments after cleanup. Trailing DB 0 follows
@@ -433,9 +433,9 @@ _abortmessage endp
 ; globals_read: _atantable; CS:line_angle_quadrant_dispatch
 ; globals_written: none.
 ; services: none.
-; Liveness: live; Live: src/obj_seg000.c:1632 and numerous vehicle/camera calls; timer and projection ASM call
+; Liveness: live; Live: src/frontend.c:1632 and numerous vehicle/camera calls; timer and projection ASM call
 ; _polang.
-; Evidence: asm/graphics_resource_runtime.ASM:259
+; Evidence: asm/gfxres.ASM:259
 _intatan proc far
     arg_z = word ptr 6
     arg_x = word ptr 8
@@ -539,7 +539,7 @@ _intatan endp
 ; globals_written: none.
 ; services: CLI/STI
 ; Liveness: live; Live: same-module deadline setters, testers and wait loops.
-; Evidence: asm/graphics_resource_runtime.ASM:348
+; Evidence: asm/gfxres.ASM:348
 _getbiostick proc far
     cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
     mov     ax, _timer_elapsed_ticks_low
@@ -568,7 +568,7 @@ _getbiostick endp
 ; globals_read: _timer_elapsed_ticks_low; _timer_elapsed_ticks_high
 ; globals_written: input_deadline_tick_low; input_deadline_tick_high
 ; services: CLI/STI through timer snapshot
-; Liveness: live; Live: src/obj_seg032_group.c line editor calls it.
+; Liveness: live; Live: src/lineedit.c line editor calls it.
 ; Notes: An unexported wait loop at line 384 is after RETF and has no inbound source reference; it is not part
 ; of the
 ; callable setter path.
@@ -620,7 +620,7 @@ _setbiosticks endp
 ; input_deadline_tick_high
 ; globals_written: none.
 ; services: CLI/STI through snapshot
-; Liveness: live; Live: src/obj_seg032_group.c:94; no keyboard/joystick access.
+; Liveness: live; Live: src/lineedit.c:94; no keyboard/joystick access.
 ; Notes: Independent unsigned word comparisons, not a lexicographic 32-bit comparison. Public name is retained
 ; because
 ; the provided name plan does not rename it.
@@ -655,7 +655,7 @@ _testbiosticks endp
 ; globals_read: _timer_elapsed_ticks_low; _timer_elapsed_ticks_high
 ; globals_written: none.
 ; services: CLI/STI per snapshot
-; Liveness: live; Live: src/obj_seg008.c:373 calls with 8L.
+; Liveness: live; Live: src/uires.c:373 calls with 8L.
 ; Notes: Both unsigned comparisons must pass even if high has already exceeded the target; no input polling or
 ; abort
 ; service occurs.
@@ -1715,7 +1715,7 @@ _segtoadr endp
 ; globals_read: none.
 ; globals_written: none.
 ; services: none.
-; Liveness: live; Live: src/obj_seg035_group.c:112.
+; Liveness: live; Live: src/shp2res.c:112.
 ; Notes: Four mutable INT24 vector/callback words follow its RETF inside its PROC extent, not executed
 ; instructions.
 _adrtoseg proc far
@@ -1819,7 +1819,7 @@ _criterr_interrupt_handler endp
 ; DOS INT24
 ; vector
 ; services: Direct IVT read; INT21 AH=25h AL=24h; _add_exit_handler
-; Liveness: live; Live: src/obj_seg031.c:265 passes do_dea_textres.
+; Liveness: live; Live: src/startup.c:265 passes do_dea_textres.
 ; Notes: Vector and callback words reside in writable CODE storage; routine is non-reentrant.
 _criterr proc far
     arg_callback_offset = word ptr 6
@@ -1919,7 +1919,7 @@ _resetcriterr endp
 ; _imagefunc (near
 ; callback offset); caller first two argument words; active sprite pixels through callbacks
 ; services: No direct hardware; indexed destination may be video memory
-; Liveness: live; Live: src/obj_seg006.c:674.
+; Liveness: live; Live: src/polygon.c:674.
 ; Notes: Mode byte [BP-10]=0 for inline-alt entry; normal list entry sets 1. An unlabelled, unreferenced list-
 ; mode-0
 ; prologue follows line 1524; private preRender_unk_mode_1 at 1575 uses inline list with mode=1 and is also
@@ -2176,7 +2176,7 @@ preRender_unk_mode_1 endp
 ; globals_written: active sprite destination pixels
 ; services: No direct hardware; pixel destination can be video memory
 ; Liveness: live; Live: many C line callers and _imagefunc callback set by two-color polygon setup.
-; Evidence: asm/graphics_resource_runtime.ASM:2824
+; Evidence: asm/gfxres.ASM:2824
 _preRender_line proc far
     local_line_descriptor = byte ptr -28
     arg_startX = word ptr 6
@@ -2322,7 +2322,7 @@ _call_exitlist endp
 ; ASMDOC CONTRACT _call_exitlist2 / _call_exitlist2
 ; Dispatch cleanup callbacks then terminate with CRT exit status zero.
 ; Convention: Declared NEAR; accepts no arguments and never returns, so FAR callers also work
-; (src/obj_seg008.c).
+; (src/uires.c).
 ; inputs: DS:DGROUP; no parameters.
 ; outputs: Does not return; _exit(0).
 ; preserves: none.
@@ -2330,7 +2330,7 @@ _call_exitlist endp
 ; globals_read: _exitlistfuncs
 ; globals_written: callback-owned state and process termination
 ; services: _call_exitlist; CRT _exit
-; Liveness: live; Live: src/obj_seg008.c:1776.
+; Liveness: live; Live: src/uires.c:1776.
 ; Notes: DB 0 follows the nonreturning call; no RET instruction.
 _dsiexit proc near
     call far ptr _call_exitlist
@@ -2895,7 +2895,7 @@ _findnext endp
 ; globals_read: none.
 ; globals_written: none.
 ; services: none.
-; Liveness: live; Live: src/obj_seg001_complete.c:944 and src/preRender_sphere_helper2.c:38, among many
+; Liveness: live; Live: src/carsim.c:944 and src/sphhelp2.c:38, among many
 ; accepted C
 ; callers.
 ; Notes: Two full SHL/RCL pairs, then SHL AX / ADC DX,0 for rounding. The third shift does not double DX.
@@ -2941,7 +2941,7 @@ _fixedmult endp
 ; globals_read: BDA 0040:0010 equipment word; video_mode4_register_values
 ; globals_written: _video_mode4_active; BDA 0040:0010 equipment bits; B800:0000..7fff; display registers
 ; services: INT10 AH=0 AL=4; OUT 03BFh,03B8h,03B4h/03B5h
-; Liveness: live; Live: src/obj_seg031.c:236.
+; Liveness: live; Live: src/startup.c:236.
 ; Notes: Hardware constants denote monochrome CRTC/control ports; not VGA palette setup. Clears 0x4000 WORDS,
 ; not a 4
 ; KiB text page.

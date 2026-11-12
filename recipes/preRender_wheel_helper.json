@@ -201,7 +201,7 @@
   ],
   "profile": "msc510-medium",
   "public": "_tire",
-  "source": "src/preRender_wheel_helper.c",
+  "source": "src/whlhelp.c",
   "stable_id": "load_26ec0",
   "start": 159424,
   "target": {

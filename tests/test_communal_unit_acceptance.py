@@ -167,7 +167,7 @@ class NamesAndBasisTests(unittest.TestCase):
         self.assertTrue(cu.check_names([item('__bufxx', 215782, 'pinned-member')], manifest))
 
     def test_size_basis_forms(self):
-        src = 'src/seg033_mcgawnd.c'
+        src = 'src/mcgawnd.c'
         declared = {'_a': [('o', 40, src)], '_b': [('o', 6, src)], '_c': [('o', 2, src)]}
         text = 'struct SPRITE far *mcgawnd_window_sprite;'
         items = [

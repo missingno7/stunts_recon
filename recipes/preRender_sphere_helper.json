@@ -201,7 +201,7 @@
   ],
   "profile": "msc510-medium",
   "public": "_solidellipseh",
-  "source": "src/preRender_sphere_helper.c",
+  "source": "src/sphhelp.c",
   "stable_id": "load_26bbe",
   "start": 158654,
   "target": {

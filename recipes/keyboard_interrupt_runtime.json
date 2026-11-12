@@ -1176,7 +1176,7 @@
       }
     }
   },
-  "source": "asm/keyboard_interrupt_runtime.ASM",
+  "source": "asm/kbint.ASM",
   "stable_id": "multi_asm012_133138",
   "start": 133138,
   "subsumed_owners": [

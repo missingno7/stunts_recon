@@ -289,7 +289,7 @@
   ],
   "profile": "msc510-medium",
   "public": "_xorbox",
-  "source": "src/sub_3702E.c",
+  "source": "src/rectout.c",
   "stable_id": "load_2702e",
   "start": 159790,
   "target": {

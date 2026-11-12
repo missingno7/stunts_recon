@@ -548,7 +548,7 @@
       }
     }
   },
-  "source": "asm/sprite_rectangle_scaled_blitters.ASM",
+  "source": "asm/scalblit.ASM",
   "stable_id": "multi_asm012_154486",
   "start": 154486,
   "subsumed_owners": [

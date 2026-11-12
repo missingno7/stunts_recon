@@ -682,7 +682,7 @@
       }
     }
   },
-  "source": "asm/math_resource_helpers.ASM",
+  "source": "asm/mathres.ASM",
   "start": 140814,
   "subsumed_data_owners": [
     "sincos:_DATA"

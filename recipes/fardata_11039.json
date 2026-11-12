@@ -154,7 +154,7 @@
     "_fontdef_default": 1408
   },
   "required_pointer_sites": [],
-  "source": "src/fardata_11039.c",
+  "source": "src/deffont.c",
   "start": 176624,
   "subsumed_data_owners": [],
   "target": {

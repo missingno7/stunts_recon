@@ -31,7 +31,7 @@ public _kb_shift_checking2
 ; INPUTDOC Globals read: BDA 0040:0017; transitive INT16 queue
 ; INPUTDOC Globals written: BDA 0040:0017 := old AND DFh
 ; INPUTDOC Services: kb_checking -> INT16 AH=01
-; INPUTDOC Reachability: Live: src/obj_seg031.c:156.
+; INPUTDOC Reachability: Live: src/startup.c:156.
 _kb_shift_checking2 proc far
  mov ax,40h
  mov es,ax

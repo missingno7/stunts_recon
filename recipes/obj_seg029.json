@@ -329,7 +329,7 @@
     }
   ],
   "profile": "msc510-medium",
-  "source": "src/obj_seg029.c",
+  "source": "src/audiochk.c",
   "sparse_zero": {
     "UNIT_TEXT": {
       "declared_length": 505,

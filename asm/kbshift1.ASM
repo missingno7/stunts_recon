@@ -31,7 +31,7 @@ public _keyboard_shift_checking1
 ; INPUTDOC Globals read: BDA 0040:0017; transitive INT16 queue
 ; INPUTDOC Globals written: BDA 0040:0017 := old OR20h
 ; INPUTDOC Services: kb_checking -> INT16 AH=01
-; INPUTDOC Reachability: Live: src/obj_seg000.c:665.
+; INPUTDOC Reachability: Live: src/frontend.c:665.
 _keyboard_shift_checking1 proc far
  mov ax,40h
  mov es,ax

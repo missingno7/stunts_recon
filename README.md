@@ -159,7 +159,7 @@ python tools/stage_link.py --solution build/commfit/out/solution.json --tag TAG
 Declaration/header changes have a separate proof from `--cosmetic`:
 
 ```powershell
-python tools/promote.py --declarations src/polarRadius3D.c build/workers/NAME/unit.c --header include/vec3.h=build/workers/NAME/vec3.h --verify-only
+python tools/promote.py --declarations src/polarrad.c build/workers/NAME/unit.c --header include/vec3.h=build/workers/NAME/vec3.h --verify-only
 # Omit --verify-only to publish the same proven source/header/recipe transaction.
 ```
 

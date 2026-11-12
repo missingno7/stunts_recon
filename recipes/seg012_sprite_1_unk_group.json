@@ -336,7 +336,7 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "source": "asm/seg012_sprite_1_unk_group.ASM",
+  "source": "asm/sprrects.ASM",
   "stable_id": "multi_seg012_sprite_1_unk_group",
   "start": 144760,
   "subsumed_owners": [],

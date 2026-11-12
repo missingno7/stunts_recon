@@ -3418,7 +3418,7 @@
       }
     }
   },
-  "source": "src/obj_seg031.c",
+  "source": "src/startup.c",
   "stable_id": "obj_seg031",
   "start": 171540,
   "subsumed_data_owners": [],

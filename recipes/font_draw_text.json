@@ -309,7 +309,7 @@
     "integ37: font header fields. With DS = _fontdefseg the reads/writes at DS:0..DS:14h are font-header fields; the reconstruction had bound them to DGROUP labels inside chksum.asm's NULL segment (word_3B770.., aMsRunTimeLibraryCop..). They are now the numeric font-header offsets; the code bytes are identical (DGROUP offset16 FIXUPPs carry no MZ relocation) and the object no longer declares those EXTDEFs.",
     "integ38: a MASM FONTHDR STRUC names the font-header fields read and written at DS = _fontdefseg (fh_fgcolor 00h, fh_bgcolor 02h, fh_left 04h, fh_x 08h, fh_y 0Ah, fh_rowbytes 0Ch, fh_height 0Eh, fh_advance 10h, fh_lineheight 12h, fh_proportional 14h, fh_glyphs 16h: the 256-word glyph offset table after the 0Bh header words); the object is byte-identical."
   ],
-  "source": "asm/font_draw_text.ASM",
+  "source": "asm/fontdraw.ASM",
   "stable_id": "load_23742",
   "start": 145218,
   "target": {

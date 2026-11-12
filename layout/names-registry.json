@@ -764,7 +764,7 @@
       "name": "drawpolyp"
     },
     "137226": {
-      "basis": "N2: asm/prerender_wheel_raster.ASM:103-107,143-170; shared prerender entry imported by graphics_resource_runtime.",
+      "basis": "N2: asm/whlrast.ASM:103-107,143-170; shared prerender entry imported by graphics_resource_runtime.",
       "inventory_name": "loc_3180A",
       "kind": "code",
       "name": "polycmn"
@@ -2204,13 +2204,13 @@
       "name": "timer_callback_busy"
     },
     "194702": {
-      "basis": "N1: input_push_status sets this flag and input_pop_status clears it; accepted timer callback code skips dispatch while nonzero (N1/REPORT.md; asm/timer_video_interrupt_runtime.ASM:505).",
+      "basis": "N1: input_push_status sets this flag and input_pop_status clears it; accepted timer callback code skips dispatch while nonzero (N1/REPORT.md; asm/timerint.ASM:505).",
       "inventory_name": "word_3F88E",
       "kind": "data",
       "name": "input_pushed"
     },
     "196096": {
-      "basis": "N2: src/obj_seg008.c:1618,1650-1652 and asm/keyboard_input_callbacks.ASM; selected consistently across accepted C and ASM users.",
+      "basis": "N2: src/uires.c:1618,1650-1652 and asm/kbcalls.ASM; selected consistently across accepted C and ASM users.",
       "inventory_name": "byte_3FE00",
       "kind": "data",
       "name": "joystick_enabled"

@@ -34,7 +34,7 @@ public _putpixel_single_maybe
 ; ASMDOC offsets.
 ; ASMDOC Globals written: sprite1 backing pixel on accepted path.
 ; ASMDOC Services: none.
-; ASMDOC Dead: false. Reachability: Direct callers asm/vector_sphere_sprite_ops.ASM:143 and src/obj_seg006.c:690.
+; ASMDOC Dead: false. Reachability: Direct callers asm/vecspr.ASM:143 and src/polygon.c:690.
 ; ASMDOC Edge cases: RET spelling is inside PROC FAR (MASM far return), not evidence of a near ABI. Unlabeled
 ; unchecked prologue
 ; ASMDOC at lines 35..38 is skipped by normal control flow; accepted path jumps to write_pixel at 39.

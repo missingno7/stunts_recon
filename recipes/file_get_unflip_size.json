@@ -272,7 +272,7 @@
   ],
   "profile": "msc510-medium",
   "public": "_file_get_unflip_size",
-  "source": "src/file_get_unflip_size.c",
+  "source": "src/unflipsz.c",
   "stable_id": "load_2b0ba",
   "start": 176314,
   "target": {

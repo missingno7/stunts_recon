@@ -539,7 +539,7 @@
       "source_line": 18566
     }
   },
-  "source": "asm/line_sprite_shape_render.ASM",
+  "source": "asm/linerend.ASM",
   "stable_id": "multi_asm012_149180",
   "start": 149180,
   "subsumed_owners": [

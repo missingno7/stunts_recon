@@ -1,6 +1,6 @@
 {
  "schema": "msc510-static-flush-fixtures-v1",
- "source": "s005bss (e1-e8) and integ37 (e9-e10): pinned MSC 5.10 /AM /O /Gs compiles; `items` is the source order of file-scope statics and function definitions (block statics in declaration order); observed offsets come from the object's own _BSS FIXUPPs; seg005 is the published complete static set (src/obj_seg005.c, _BSS [200042,200332))",
+ "source": "s005bss (e1-e8) and integ37 (e9-e10): pinned MSC 5.10 /AM /O /Gs compiles; `items` is the source order of file-scope statics and function definitions (block statics in declaration order); observed offsets come from the object's own _BSS FIXUPPs; seg005 is the published complete static set (src/race.c, _BSS [200042,200332))",
  "fixtures": [
   {
    "fixture": "e1",

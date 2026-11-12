@@ -323,7 +323,7 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "source": "asm/file_load_shape2d_thunks.ASM",
+  "source": "asm/shpthunk.ASM",
   "stable_id": "multi_file_load_shape2d_thunks",
   "start": 145480,
   "subsumed_owners": [],

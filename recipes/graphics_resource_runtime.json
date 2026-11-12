@@ -5578,7 +5578,7 @@
       }
     }
   },
-  "source": "asm/graphics_resource_runtime.ASM",
+  "source": "asm/gfxres.ASM",
   "stable_id": "multi_asm012_125482",
   "start": 125482,
   "subsumed_owners": [

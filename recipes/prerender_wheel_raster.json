@@ -2411,7 +2411,7 @@
       }
     }
   },
-  "source": "asm/prerender_wheel_raster.ASM",
+  "source": "asm/whlrast.ASM",
   "stable_id": "multi_asm012_137138",
   "start": 137138,
   "subsumed_owners": [

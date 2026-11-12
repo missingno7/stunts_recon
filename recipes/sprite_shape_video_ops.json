@@ -1024,7 +1024,7 @@
       }
     }
   },
-  "source": "asm/sprite_shape_video_ops.ASM",
+  "source": "asm/sprvideo.ASM",
   "stable_id": "multi_asm012_144064_late",
   "start": 147552,
   "subsumed_data_owners": [

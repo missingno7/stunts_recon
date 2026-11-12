@@ -282,7 +282,7 @@ _initmemsize endp
 ; ASMDOC globals_written: none directly identified
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: dead in current static source/reference plan.
-; ASMDOC Evidence: asm/resource_memory_manager.ASM:191
+; ASMDOC Evidence: asm/memmgr.ASM:191
 _poolmemory proc far
 
     mov     bx, _resendptr1
@@ -313,7 +313,7 @@ _poolmemory endp
 ; ASMDOC globals_written: none directly identified
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: dead in current static source/reference plan.
-; ASMDOC Evidence: asm/resource_memory_manager.ASM:207
+; ASMDOC Evidence: asm/memmgr.ASM:207
 _lockedmemory proc far
 
     mov     bx, _resptr2
@@ -345,7 +345,7 @@ _lockedmemory endp
 ; ASMDOC globals_written: none directly identified
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: live; direct or indirect reference retained.
-; ASMDOC Evidence: asm/resource_memory_manager.ASM:223
+; ASMDOC Evidence: asm/memmgr.ASM:223
 _unlockedmemory proc far
 
     mov     bx, _resendptr2

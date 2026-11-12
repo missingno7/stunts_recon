@@ -733,7 +733,7 @@
   "review_notes": [
     "unused original local: parse_shape2d declares `long baseOff;` that is never referenced; the target frame has an untouched 4-byte slot at BP-0x22 not explained by a register home, compiler temporary or struct member (supervisor RULING, integ25 item 4)"
   ],
-  "source": "src/obj_seg035_group.c",
+  "source": "src/shp2res.c",
   "stable_id": "group_obj_seg035",
   "start": 175320,
   "subsumed_owners": [

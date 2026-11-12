@@ -133,7 +133,7 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "source": "asm/seg012_nopsub339fa_group.ASM",
+  "source": "asm/iconmask.ASM",
   "stable_id": "multi_seg012_nopsub339fa_group",
   "start": 145914,
   "subsumed_owners": [],

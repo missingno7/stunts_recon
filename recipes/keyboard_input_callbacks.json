@@ -545,7 +545,7 @@
       }
     }
   },
-  "source": "asm/keyboard_input_callbacks.ASM",
+  "source": "asm/kbcalls.ASM",
   "stable_id": "multi_asm012_133660",
   "start": 133660,
   "subsumed_owners": [

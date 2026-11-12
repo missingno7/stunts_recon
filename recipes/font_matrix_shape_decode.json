@@ -805,7 +805,7 @@
       "_fontdef_default"
     ]
   },
-  "source": "asm/font_matrix_shape_decode.ASM",
+  "source": "asm/fontmat.ASM",
   "stable_id": "multi_asm012_141362",
   "start": 141362,
   "subsumed_owners": [

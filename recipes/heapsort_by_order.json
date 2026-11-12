@@ -34,7 +34,7 @@
   ],
   "profile": "msc510-medium",
   "public": "_shellsort",
-  "source": "src/heapsort_by_order.c",
+  "source": "src/heapsort.c",
   "stable_id": "load_26be8",
   "start": 158696,
   "target": {

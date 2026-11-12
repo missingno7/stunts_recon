@@ -117,7 +117,7 @@ public _keystate
 ; INPUTDOC Globals written: old_kb_intr_ofs/seg; old_kb_intr_bios_ofs/seg; IVT INT09/INT16; _kbinput[90]; transitive
 ; INPUTDOC exit-handler registry
 ; INPUTDOC Services: IN/OUT PIC mask 21h (temporarily masks IRQ0/1); add_exit_handler(FAR keyboard_exit_handler)
-; INPUTDOC Reachability: Live: src/obj_seg031.c:154; installs two public interrupt entries and saves a public exit
+; INPUTDOC Reachability: Live: src/startup.c:154; installs two public interrupt entries and saves a public exit
 ; INPUTDOC callback.
 _kb_init_interrupt proc far
     push di
@@ -185,7 +185,7 @@ _kb_init_interrupt endp
 ; INPUTDOC Globals read: old_kb_intr_ofs/seg; old_kb_intr_bios_ofs/seg; BDA 0000:0417
 ; INPUTDOC Globals written: IVT INT09/INT16 if old_kb_intr_ofs !=0; BDA 0000:0417 := old & F0h
 ; INPUTDOC Services: IN/OUT PIC mask 21h
-; INPUTDOC Reachability: Live: registered in kb_init_interrupt:105-108 and called in src/obj_seg000.c:664.
+; INPUTDOC Reachability: Live: registered in kb_init_interrupt:105-108 and called in src/frontend.c:664.
 _keyboard_exit_handler proc far
     in al, R5HW_PIC_MASTER_MASK_PORT ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
     mov ah, al

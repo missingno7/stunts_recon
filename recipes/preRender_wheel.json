@@ -313,7 +313,7 @@
   ],
   "profile": "msc510-medium",
   "public": "_solidtire",
-  "source": "src/preRender_wheel.c",
+  "source": "src/wheel.c",
   "stable_id": "load_26c7e",
   "start": 158846,
   "target": {

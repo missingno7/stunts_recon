@@ -115,7 +115,7 @@
   "original_frame_load_address": 158448,
   "profile": "masm510-game",
   "public": "_keyboard_shift_checking1",
-  "source": "asm/kb_shift_checking1.ASM",
+  "source": "asm/kbshift1.ASM",
   "stable_id": "load_26af4",
   "start": 158452,
   "target": {

@@ -120,7 +120,7 @@
   "review": [
     "integ29: standalone MSC object. seg008 loads this entry as the relocated far pointer 26AF:0002 (MOV AX,2 / MOV DX,26AFh at 102605), so it lies in a segment framed 0x26AF, not in seg017 (frame 0x268A). Its two bytes are exactly the pinned MSC 5.10 emission of an empty far function (RETF plus the word-alignment 90). C is the default classification; no positive ASM evidence."
   ],
-  "source": "src/nopsub_36AF2.c",
+  "source": "src/mousehk.c",
   "stable_id": "load_26af2",
   "start": 158450,
   "target": {

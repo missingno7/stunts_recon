@@ -194,7 +194,7 @@
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
   "public": "_putpixel_single_maybe",
-  "source": "asm/putpixel_single_maybe.ASM",
+  "source": "asm/putpixel.ASM",
   "stable_id": "asm_load_25b26",
   "start": 154406,
   "target": {

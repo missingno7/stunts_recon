@@ -94,7 +94,7 @@ public _displaywindow
 ; ASMDOC word; alternating low/high row masks).
 ; ASMDOC Globals written: _line_pattern_bits; sprite1 backing pixels; caller stack argument slots +06/+08/+0C.
 ; ASMDOC Services: none.
-; ASMDOC Dead: false. Reachability: Address taken in asm/font_matrix_shape_decode.ASM:182 and installed in
+; ASMDOC Dead: false. Reachability: Address taken in asm/fontmat.ASM:182 and installed in
 ; _spritefunc; indirect
 ; ASMDOC span callback, so lack of direct CALL does not imply dead.
 ; ASMDOC Edge cases: No initial row-count test: zero or negative count still processes one row. Signed
@@ -203,7 +203,7 @@ draw_patterned_lines endp
 ; ASMDOC Services: _mmgr_alloc_pages (far; returns segment DX, AX=0; preserves ES/DS/SI/DI/BP); _fatal_error on
 ; allocation/arena
 ; ASMDOC exhaustion; nonreturning required.
-; ASMDOC Dead: false. Reachability: Many direct C callers, e.g. src/obj_seg000.c:685 and src/seg033_mcgawnd.c:27.
+; ASMDOC Dead: false. Reachability: Many direct C callers, e.g. src/frontend.c:685 and src/mcgawnd.c:27.
 ; ASMDOC Edge cases: Uses signed IMUL but only low AX, adds 10h modulo 16 bits, logical shift right 4 then INC
 ; for paragraph
 ; ASMDOC count. Arena reservation is 2*(15+height) modulo 16 bits and rejects end >= following code. Height zero
@@ -338,8 +338,8 @@ sprite_make_wnd endp
 ; ASMDOC Globals read: caller far descriptor (30 bytes).
 ; ASMDOC Globals written: _sprite1 descriptor (30 bytes).
 ; ASMDOC Services: none.
-; ASMDOC Dead: false. Reachability: Direct callers src/obj_seg000.c:2540, src/obj_seg005.c:1512 and internal call at
-; ASMDOC patterned_lines_windows.ASM:3895.
+; ASMDOC Dead: false. Reachability: Direct callers src/frontend.c:2540, src/race.c:1512 and internal call at
+; ASMDOC patlines.ASM:3895.
 ; ASMDOC End of CS window arena and start of callable descriptor-copy entry; reserving through this address is
 ; rejected.
 _sprite_setup1_from_arg_pointer label far
@@ -388,7 +388,7 @@ sprite_set_1_from_argptr endp
 ; ASMDOC Globals read: _sprite2 descriptor.
 ; ASMDOC Globals written: _sprite1 descriptor.
 ; ASMDOC Services: sprite_set_1_from_argptr / _sprite_setup1_from_arg_pointer.
-; ASMDOC Dead: false. Reachability: Direct callers src/obj_seg005.c:1515 and asm/graphics_resource_runtime.ASM:237.
+; ASMDOC Dead: false. Reachability: Direct callers src/race.c:1515 and asm/gfxres.ASM:237.
 _displaywindow label far
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the sprite or 2D-shape operation identified by sprite copy 2 to 1.

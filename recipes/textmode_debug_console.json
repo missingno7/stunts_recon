@@ -893,7 +893,7 @@
       }
     }
   },
-  "source": "asm/textmode_debug_console.ASM",
+  "source": "asm/textcon.ASM",
   "start": 139610,
   "subsumed_owners": [
     "load_2215a",

@@ -222,7 +222,7 @@
   ],
   "profile": "msc510-medium",
   "public": "_sprite_draw_rect_outline",
-  "source": "src/sprite_1_unk4.c",
+  "source": "src/sprrect.c",
   "stable_id": "load_261bc",
   "start": 156092,
   "target": {

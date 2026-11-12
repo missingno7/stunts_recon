@@ -920,7 +920,7 @@
       }
     }
   },
-  "source": "asm/obj_seg002.ASM",
+  "source": "asm/rpmrand.ASM",
   "stable_id": "multi_obj_seg002",
   "start": 40390,
   "subsumed_owners": [],

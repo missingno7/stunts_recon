@@ -60,7 +60,7 @@ SPRITE ends
 ; record.
 ; ASMDOC Globals written: sprite1 backing pixels.
 ; ASMDOC Services: none.
-; ASMDOC Dead: false. Reachability: Direct caller preRender_line, asm/graphics_resource_runtime.ASM:2852; caller
+; ASMDOC Dead: false. Reachability: Direct caller preRender_line, asm/gfxres.ASM:2852; caller
 ; rejects <=0
 ; ASMDOC record count.
 ; ASMDOC Edge cases: Indirect JMP table at 71 has ten unchecked near targets. LOOP modes with count 0 wrap to

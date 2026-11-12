@@ -320,7 +320,7 @@
     }
   ],
   "profile": "msc510-medium",
-  "source": "src/seg024_matrot.c",
+  "source": "src/matrot.c",
   "stable_id": "multi_seg024_matrot",
   "start": 159530,
   "subsumed_owners": [],

@@ -235,7 +235,7 @@ _interpretkey endp
 ; INPUTDOC Globals read: _callbacks[64] offset/segment slots
 ; INPUTDOC Globals written: _callbacks when free segment=0; _callbackflags or _callbackflags2
 ; INPUTDOC Services:
-; INPUTDOC Reachability: Live: src/obj_seg031.c:161-177 registers nine key bindings.
+; INPUTDOC Reachability: Live: src/startup.c:161-177 registers nine key bindings.
 _interpretsub proc far
     arg_encoded_key = word ptr 6
     arg_callback_offset = word ptr 8

@@ -987,7 +987,7 @@
       }
     }
   },
-  "source": "asm/resource_file_io_decompression.ASM",
+  "source": "asm/fileio.ASM",
   "start": 133840,
   "subsumed_owners": [
     "file_read",
