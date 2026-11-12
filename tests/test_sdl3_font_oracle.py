@@ -76,15 +76,28 @@ def compiler_environment(compiler: Path) -> dict[str, str]:
     return environment
 
 
+def prepare_font_data(worker: Path) -> None:
+    """Keep the locked font bytes, using the probe's native API declarations."""
+    from project_headers import expand_project_headers
+    from host_probe_modes import legacy_target_widths, transformed_source
+
+    source = "src/fardata_11039.c"
+    expanded = expand_project_headers((ROOT / source).read_text(encoding="latin-1"), ROOT)
+    adapted, _ = transformed_source(source, expanded, {}, {}, set())
+    (worker / "font_data.c").write_text(legacy_target_widths(adapted), encoding="latin-1")
+
+
 def compile_host_probe() -> tuple[Path, dict[str, str]]:
     compiler = host_compiler()
     worker = ROOT / "build" / "workers" / "font_oracle" / f"run_{os.getpid()}"
     worker.mkdir(parents=True, exist_ok=True)
+    prepare_font_data(worker)
     executable = worker / "font_oracle_harness.exe"
     command = [
         str(compiler), "-std=gnu11", "-O2", "-ffunction-sections",
         "-fdata-sections", "-DPORT_BUILD=1",
         "-include", str(ROOT / "tools" / "porting" / "host" / "compat.h"),
+        "-I", str(worker),
         "-I", str(ROOT / "port"),
         "-I", str(ROOT / "tools" / "porting" / "port_include"),
         "-I", str(ROOT / "tools" / "porting" / "host" / "include"),

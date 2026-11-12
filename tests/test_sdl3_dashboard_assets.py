@@ -642,8 +642,10 @@ def build_asset_dll(directory: Path, gcc: Path) -> Path:
             # Resolve reconstruction headers before host include directories;
             # e.g. port/memory.h is a different API from include/memory.h.
             from project_headers import expand_project_headers
+            from host_probe_modes import legacy_target_widths
             prepared = directory / ("expanded_" + source.name)
-            prepared.write_text(expand_project_headers(source.read_text(encoding="latin-1"), ROOT),
+            prepared.write_text(legacy_target_widths(expand_project_headers(
+                source.read_text(encoding="latin-1"), ROOT)),
                                 encoding="latin-1")
             source = prepared
         obj = directory / f"dashboard_native_{index:02d}.o"

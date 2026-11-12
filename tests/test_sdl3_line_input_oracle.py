@@ -28,6 +28,7 @@ try:
     from test_sdl3_font_oracle import (
         VIDEO_BYTES, compiler_environment, font_default_from_oracle,
         frame_seed, host_compiler, load_runtime_fonts, read_source_default_font,
+        prepare_font_data,
     )
 except ImportError as error:  # pragma: no cover - pinned toolchain dependencies
     RealModeRunner = MemoryRegion = MemoryWrite = RoutineCase = None
@@ -89,6 +90,7 @@ def compile_host_probe(overlay: Path) -> tuple[Path, dict[str, str]]:
     compiler = host_compiler()
     worker = ROOT / "build" / "workers" / "line_cursor_oracle" / f"run_{os.getpid()}"
     worker.mkdir(parents=True, exist_ok=True)
+    prepare_font_data(worker)
     executable = worker / "line_input_oracle_harness.exe"
     translated = worker / "obj_seg032_group_oracle.c"
     helper_object = worker / "obj_seg032_group_oracle.o"
@@ -134,6 +136,7 @@ U16 port_line_input_get_slot(void)
     ]
     driver_command = [
         *common,
+        "-I", str(worker),
         "-I", str(ROOT / "port"),
         "-I", str(ROOT / "tools" / "porting" / "port_include"),
         "-I", str(ROOT / "tools" / "porting" / "host" / "include"),

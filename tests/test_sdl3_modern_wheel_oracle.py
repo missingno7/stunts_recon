@@ -57,6 +57,18 @@ def compiler_path():
 
 
 def compile_helper(compiler, output, *sources, include_render=False):
+    from tools.porting.project_headers import expand_project_headers
+    from tools.porting.host_probe_modes import legacy_target_widths
+
+    prepared_sources = []
+    for source in sources:
+        if source.parent == ROOT / "src":
+            prepared = output.parent / ("expanded_" + source.name)
+            prepared.write_text(legacy_target_widths(expand_project_headers(
+                source.read_text(encoding="latin-1"), ROOT)), encoding="latin-1")
+            prepared_sources.append(prepared)
+        else:
+            prepared_sources.append(source)
     environment = os.environ.copy()
     environment["PATH"] = os.pathsep.join(filter(None, [
         str(Path(compiler).resolve().parent), environment.get("PATH", "")]))
@@ -66,10 +78,10 @@ def compile_helper(compiler, output, *sources, include_render=False):
                "-DI16=int16_t", "-DI8=int8_t", "-DI8S=int8_t",
                "-DU8=uint8_t", "-DU16=uint16_t", "-DI16S=int16_t",
                "-DU16S=uint16_t", "-DI32=int32_t", "-DU32=uint32_t",
-               "-DFAR=", "-DNEAR=", "-DHUGE="]
+               "-DFAR=", "-DNEAR=", "-DHUGE=", "-Dfar=", "-Dnear=", "-Dhuge="]
     if include_render:
         command += ["-I", str(ROOT / "port" / "render")]
-    command += [str(source) for source in sources] + ["-lm", "-o", str(output)]
+    command += [str(source) for source in prepared_sources] + ["-lm", "-o", str(output)]
     result = subprocess.run(command, cwd=ROOT, env=environment,
                             capture_output=True, text=True, timeout=60)
     if result.returncode:

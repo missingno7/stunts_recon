@@ -211,8 +211,9 @@ def aggregate_spans(text: str, shared_tags: set[str]):
             continue
         end = pos + (1 if pos < len(code) and code[pos] == ";" else 0)
         spans.append((match.start(), end))
-    # Move the shared register typedef into the header once so the source definition cannot clash.
-    for match in re.finditer(r"\btypedef\s+(?:struct|union)\s+MouseRegs\s*\{", code):
+    # The host header owns the register packet. Shared reconstruction headers
+    # may spell its definition and typedef as two separate declarations.
+    for match in re.finditer(r"\b(?:typedef\s+)?(?:struct|union)\s+MouseRegs\s*\{", code):
         brace = code.find("{", match.start())
         depth, pos = 1, brace + 1
         while pos < len(code) and depth:
@@ -222,6 +223,8 @@ def aggregate_spans(text: str, shared_tags: set[str]):
         semi = code.find(";", pos)
         if depth == 0 and semi >= 0:
             spans.append((match.start(), semi + 1))
+    for match in re.finditer(r"\btypedef\s+(?:struct|union)\s+MouseRegs\s+MouseRegs\s*;", code):
+        spans.append((match.start(), match.end()))
     return sorted(set(spans))
 
 

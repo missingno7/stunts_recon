@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../src/fardata_11039.c"
+#include "font_data.c"
 #include "../../port/legacy_views.c"
 #include "../../port/sprite.c"
 #include "../../port/font.c"

@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PORT_INCLUDE = ROOT / "tools" / "porting" / "port_include"
 sys.path.insert(0, str(ROOT / "tools" / "porting"))
 from host_probe_modes import legacy_target_widths  # noqa: E402
+from project_headers import expand_project_headers  # noqa: E402
 from port.game_abi import adapt_aggregate_views  # noqa: E402
 
 
@@ -46,8 +47,8 @@ class Sdl3SceneLayoutTests(unittest.TestCase):
         compiler_env = os.environ.copy()
         compiler_env["PATH"] = str(compiler.parent) + os.pathsep + compiler_env.get("PATH", "")
 
-        historical = (ROOT / "src" / "track_constants_module.c").read_text(
-            encoding="latin-1")
+        historical = expand_project_headers(
+            (ROOT / "src" / "track_constants_module.c").read_text(encoding="latin-1"), ROOT)
         self.assertIn("unsigned short opaque_first_word;", historical)
         scene2 = scene_array(historical, "scene2", 19)
         scene3 = scene_array(historical, "scene3", 13)
