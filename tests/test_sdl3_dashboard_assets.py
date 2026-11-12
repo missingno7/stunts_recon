@@ -581,7 +581,7 @@ def host_source_overlays(directory: Path, gcc: Path) -> list[tuple[Path, Path]]:
         owner = owners.get(source)
         if owner is None:
             raise AssertionError(f"mode-3 loader source is absent from manifest: {source}")
-        original = (ROOT / source).read_text(encoding="latin-1")
+        original = probe.expand_project_headers((ROOT / source).read_text(encoding="latin-1"), ROOT)
         config, local_fns, local_data = probe.local_config(source, original, owner)
         transformed, _ = probe.transformed_source(
             source, original, local_fns, local_data, shared_tags)
@@ -638,6 +638,14 @@ def build_asset_dll(directory: Path, gcc: Path) -> Path:
     ))
     objects: list[Path] = []
     for index, source in enumerate(sources):
+        if source.parent == ROOT / "src":
+            # Resolve reconstruction headers before host include directories;
+            # e.g. port/memory.h is a different API from include/memory.h.
+            from project_headers import expand_project_headers
+            prepared = directory / ("expanded_" + source.name)
+            prepared.write_text(expand_project_headers(source.read_text(encoding="latin-1"), ROOT),
+                                encoding="latin-1")
+            source = prepared
         obj = directory / f"dashboard_native_{index:02d}.o"
         command = [
             str(gcc), "-m32", "-std=gnu11", "-O2", "-DPORT_BUILD=1",

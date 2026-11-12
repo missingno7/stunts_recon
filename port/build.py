@@ -291,7 +291,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
     rows: list[dict[str, object]] = []
     objects: list[Path] = []
     for index, (source, owner) in enumerate(sources.items(), start=1):
-        text = (ROOT / source).read_text(encoding="latin-1")
+        text = probe.expand_project_headers((ROOT / source).read_text(encoding="latin-1"), ROOT)
         config, local_fns, local_data = probe.local_config(source, text, owner)
         if source == "src/obj_seg006.c":
             cfg = config.read_text(encoding="latin-1")

@@ -15,6 +15,7 @@ PORT = ROOT / "tools/porting/port_include"
 HOST = ROOT / "tools/porting/host"
 sys.path.insert(0, str(ROOT / "tools/porting"))
 import host_probe_declarations as declarations  # noqa: E402
+from project_headers import expand_project_headers  # noqa: E402
 from host_probe_declarations import (  # noqa: E402
     TYPE_PREFIX, ALIASES, cdecls, source_parser_text, mask_comments,
     top_level_spans, function_headers, render_type, collect_sources,
@@ -323,6 +324,9 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
     if source == "src/obj_seg003.c":
         out = out.replace("((I16)statemgmtcpy) = ((I16)slow_video_mode_state);",
                           "statemgmtcpy = (I16)slow_video_mode_state; /* PORT_BUILD: replace target lvalue cast. */")
+    if source == "src/obj_seg004.c":
+        # Keep the host's DOS offset word until its camera adapter resolves it.
+        out = out.replace("cameraOverlay.dataPointer", "cameraOverlay.cameraOffsetOverride")
     if source == "src/obj_seg008.c":
         out = re.sub(r"\bU32\s+(?:far\s+)?timer_get_delta_alt\s*\(",
                      "I16 far timer_get_delta_alt(", out)
@@ -498,7 +502,7 @@ def run_port_mode(root: Path, gcc: Path, mode: str) -> int:
     for i, (source, owner) in enumerate(sources.items(), start=1):
         if time.monotonic() >= deadline:
             raise SystemExit(f"total probe exceeded {TOTAL_LIMIT}s")
-        text = (ROOT / source).read_text(encoding="latin-1")
+        text = expand_project_headers((ROOT / source).read_text(encoding="latin-1"), ROOT)
         cfg, local_fns, local_data = local_config(source, text, owner)
         transformed, removed = transformed_source(source, text, local_fns, local_data, shared_tags)
         overlay = WORK / "overlay" / source
