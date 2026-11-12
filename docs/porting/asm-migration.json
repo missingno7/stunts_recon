@@ -2328,9 +2328,9 @@
       "public_routine_count": 1,
       "evidence": [
         "layout/manifest.json:load_232c0 [0x232c0,0x23330)",
-        "recipes/sprite_clear_1_color.json",
+        "recipes/clearwindow.json",
         "asm/sprclear.ASM",
-        "sprite_clear_1_color",
+        "clearwindow",
         "mixed-family summary from renderer inventory"
       ]
     },
@@ -2448,9 +2448,9 @@
       "public_routine_count": 1,
       "evidence": [
         "layout/manifest.json:load_23742 [0x23742,0x23816)",
-        "recipes/font_draw_text.json",
+        "recipes/fortextxy.json",
         "asm/fontdraw.ASM",
-        "font_draw_text",
+        "fortextxy",
         "mixed-family summary from renderer inventory"
       ]
     },
@@ -2830,9 +2830,9 @@
       "public_routine_count": 1,
       "evidence": [
         "layout/manifest.json:asm_load_25b26 [0x25b26,0x25b76)",
-        "recipes/putpixel_single_maybe.json",
+        "recipes/writepixelc.json",
         "asm/putpixel.ASM",
-        "putpixel_single_maybe",
+        "writepixelc",
         "mixed-family summary from renderer inventory"
       ]
     },
@@ -5718,8 +5718,8 @@
     },
     {
       "owner_id": "file_write_entries",
-      "routine": "file_write_fatal",
-      "public_symbol": "_file_write_fatal",
+      "routine": "savefilez",
+      "public_symbol": "_savefilez",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -7581,7 +7581,7 @@
     {
       "owner_id": "projection_vector_window",
       "routine": "sprite_free_wnd",
-      "public_symbol": "_sprite_free_window",
+      "public_symbol": "_removewindow",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -8841,7 +8841,7 @@
     {
       "owner_id": "timer_video_interrupt_runtime",
       "routine": "audio_stop_unk",
-      "public_symbol": "_audio_stop_unknown",
+      "public_symbol": "_restoretimer",
       "category": "PLATFORM",
       "source_family": "A",
       "entry_abi": "FAR",
@@ -9095,8 +9095,8 @@
     },
     {
       "owner_id": "asm_load_25b26",
-      "routine": "putpixel_single_maybe",
-      "public_symbol": "_putpixel_single_maybe",
+      "routine": "writepixelc",
+      "public_symbol": "_writepixelc",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -9113,7 +9113,7 @@
       "evidence": [
         "asm/putpixel.ASM",
         "asm/putpixel.ASM:15",
-        "recipes/putpixel_single_maybe.json",
+        "recipes/writepixelc.json",
         "layout/manifest.json:asm_load_25b26 [0x25b26,0x25b76)"
       ],
       "source_inventory_notes": [
@@ -9430,7 +9430,7 @@
     {
       "owner_id": "line_sprite_shape_render",
       "routine": "font_set_unk",
-      "public_symbol": "_font_setup_unknown",
+      "public_symbol": "_textcolor",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -9537,8 +9537,8 @@
     },
     {
       "owner_id": "line_sprite_shape_render",
-      "routine": "sprite_clear_shape",
-      "public_symbol": "_sprite_clear_shape",
+      "routine": "readf",
+      "public_symbol": "_readf",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -9564,8 +9564,8 @@
     },
     {
       "owner_id": "line_sprite_shape_render",
-      "routine": "sprite_clear_shape_alt",
-      "public_symbol": "_sprite_clear_shape_alt",
+      "routine": "readfxya",
+      "public_symbol": "_readfxya",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -9645,8 +9645,8 @@
     },
     {
       "owner_id": "load_232c0",
-      "routine": "sprite_clear_1_color",
-      "public_symbol": "_sprite_clear_1_color",
+      "routine": "clearwindow",
+      "public_symbol": "_clearwindow",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -9663,7 +9663,7 @@
       "evidence": [
         "asm/sprclear.ASM",
         "asm/sprclear.ASM:16",
-        "recipes/sprite_clear_1_color.json",
+        "recipes/clearwindow.json",
         "layout/manifest.json:load_232c0 [0x232c0,0x23330)"
       ],
       "source_inventory_notes": [
@@ -9672,8 +9672,8 @@
     },
     {
       "owner_id": "load_23742",
-      "routine": "font_draw_text",
-      "public_symbol": "_font_draw_text",
+      "routine": "fortextxy",
+      "public_symbol": "_fortextxy",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -9690,7 +9690,7 @@
       "evidence": [
         "asm/fontdraw.ASM",
         "asm/fontdraw.ASM:58",
-        "recipes/font_draw_text.json",
+        "recipes/fortextxy.json",
         "layout/manifest.json:load_23742 [0x23742,0x23816)"
       ],
       "source_inventory_notes": [
@@ -10135,7 +10135,7 @@
     {
       "owner_id": "seg012_putimage_shared_group",
       "routine": "sprite_putimage",
-      "public_symbol": "_sprputimage",
+      "public_symbol": "_movcf",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10144,7 +10144,7 @@
         "end": 146700,
         "size": 306
       },
-      "semantics": "Implement the sprite or 2D-shape operation identified by sprputimage..",
+      "semantics": "Implement the sprite or 2D-shape operation identified by movcf..",
       "platform_dependency": "Legacy sprite/window or video boundary; direct hardware is recorded only where PLATFORM tags say so.",
       "faithful_port_replacement": "Use SDL3 display/palette/event APIs at hardware edges; preserve indexed-pixel, clipping, transparency and span rules on the SDL3 surface.",
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
@@ -10156,13 +10156,13 @@
         "layout/manifest.json:seg012_putimage_shared_group [0x23b98,0x23d0c)"
       ],
       "source_inventory_notes": [
-        "Implement the sprite or 2D-shape operation identified by sprputimage."
+        "Implement the sprite or 2D-shape operation identified by movcf."
       ]
     },
     {
       "owner_id": "seg012_putimage_shared_group",
-      "routine": "sprite_putimage_and_alt",
-      "public_symbol": "_sprite_putimage_and_alt",
+      "routine": "movcfxya",
+      "public_symbol": "_movcfxya",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10324,7 +10324,7 @@
     {
       "owner_id": "seg012_shape2d_extended_group",
       "routine": "shape2d_op_unk5",
-      "public_symbol": "_shape2d_blit_rle_at",
+      "public_symbol": "_movpackfxya",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10404,8 +10404,8 @@
     },
     {
       "owner_id": "seg012_shape_to_1_group",
-      "routine": "sprite_shape_to_1_alt",
-      "public_symbol": "_sprite_shape_to_1_alt",
+      "routine": "movf",
+      "public_symbol": "_movf",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10459,7 +10459,7 @@
     {
       "owner_id": "seg012_sprite_1_unk_group",
       "routine": "sprite_1_unk2",
-      "public_symbol": "_sprite1_unknown2",
+      "public_symbol": "_drawrectc",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10793,8 +10793,8 @@
     },
     {
       "owner_id": "sprite_shape_video_ops",
-      "routine": "sprite_putimage_transparent",
-      "public_symbol": "_sprite_putimage_transparent",
+      "routine": "tmaskxcfxya",
+      "public_symbol": "_tmaskxcfxya",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10822,7 +10822,7 @@
     {
       "owner_id": "sprite_shape_video_ops",
       "routine": "sub_34526",
-      "public_symbol": "_release_shape_resources",
+      "public_symbol": "_tmaskxf",
       "category": "PLATFORM",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10961,7 +10961,7 @@
     {
       "owner_id": "vector_sphere_sprite_ops",
       "routine": "sprite_set_1_size",
-      "public_symbol": "_sprset1size",
+      "public_symbol": "_clippix",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "source_family": "B",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",
@@ -10970,7 +10970,7 @@
         "end": 144040,
         "size": 41
       },
-      "semantics": "Implement the sprite or 2D-shape operation identified by sprset1size..",
+      "semantics": "Implement the sprite or 2D-shape operation identified by clippix..",
       "platform_dependency": "Legacy sprite/window or video boundary; direct hardware is recorded only where PLATFORM tags say so.",
       "faithful_port_replacement": "Use SDL3 display/palette/event APIs at hardware edges; preserve indexed-pixel, clipping, transparency and span rules on the SDL3 surface.",
       "translation_before_first_link": "YES if the source-semantic caller lead is retained",
@@ -10982,7 +10982,7 @@
         "layout/manifest.json:vector_sphere_sprite_ops [0x23006,0x232c0)"
       ],
       "source_inventory_notes": [
-        "Implement the sprite or 2D-shape operation identified by sprset1size."
+        "Implement the sprite or 2D-shape operation identified by clippix."
       ]
     },
     {
@@ -11454,8 +11454,8 @@
     },
     {
       "owner_id": "obj_seg002",
-      "routine": "get_kevinrandom",
-      "public_symbol": "_get_kevinrandom",
+      "routine": "myrandom",
+      "public_symbol": "_myrandom",
       "category": "PORTABLE_ALGORITHM",
       "source_family": "C",
       "entry_abi": "FAR",
@@ -11511,7 +11511,7 @@
     {
       "owner_id": "obj_seg002",
       "routine": "init_kevinrandom",
-      "public_symbol": "_initialize_kevin_random",
+      "public_symbol": "_mysetseeds",
       "category": "PORTABLE_ALGORITHM",
       "source_family": "C",
       "entry_abi": "FAR",
@@ -11902,8 +11902,8 @@
     },
     {
       "owner_id": "projection_vector_window",
-      "routine": "set_projection",
-      "public_symbol": "_set_projection",
+      "routine": "setprojectp",
+      "public_symbol": "_setprojectp",
       "category": "PORTABLE_ALGORITHM",
       "source_family": "C",
       "entry_abi": "public entry; ABI follows the accepted source/module calling convention",

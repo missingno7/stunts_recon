@@ -33,7 +33,7 @@ void port_guest_unwind(const char *symbol)
     exit(20);
 }
 
-int16_t call_read_line(char *buffer, int16_t length, int16_t x, int16_t y,
+int16_t instringz(char *buffer, int16_t length, int16_t x, int16_t y,
                        int16_t timeout_low, int16_t timeout_high)
 {
     (void)buffer; (void)length; (void)x; (void)y;
@@ -185,13 +185,13 @@ int main(void)
         return 9;
 
     port_sprite_init();
-    sprset1size((int16_t)clip_left, (int16_t)clip_right,
+    clippix((int16_t)clip_left, (int16_t)clip_right,
                 (int16_t)clip_top, (int16_t)clip_bottom);
     setfont(font);
-    font_setup_unknown(foreground, background);
+    textcolor(foreground, background);
     switch (operation) {
     case 0u:
-        font_draw_text((const char *)text, (int16_t)x, (int16_t)y);
+        fortextxy((const char *)text, (int16_t)x, (int16_t)y);
         break;
     case 1u:
         movtxy((const char *)text, (int16_t)x, (int16_t)y);

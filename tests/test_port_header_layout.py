@@ -24,7 +24,7 @@ class PortHeaderLayoutTests(unittest.TestCase):
         header = (PORT_INCLUDE / "stunts_decls.h").read_text(encoding="utf-8")
         self.assertIn("extern I16 far send_audio_stop_event(U16 rate, I16 handle);", header)
         self.assertIn("extern void far *read_file_with_retry(I16 type, U16 near_name_offset, U16 destination_offset, U16 destination_segment);", header)
-        self.assertIn("extern I16 far call_read_line(I8 *buffer, I16 x, I16 y, I16 width, I16 limit, I16 flags);", header)
+        self.assertIn("extern I16 far instringz(I8 *buffer, I16 x, I16 y, I16 width, I16 limit, I16 flags);", header)
         self.assertIn("extern void far nullsub_2(void far *resource, I16 selector);", header)
         self.assertIn("extern void far * far locate_shape_fatal(void far *data, I8 *name);", header)
 

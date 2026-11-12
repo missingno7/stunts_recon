@@ -101,7 +101,7 @@ provides the recorded simulation states, while the capture identifies the view.
 ## Idle CPU use
 
 The native guest previously retained the DOS polling loops at full host speed.
-Thread sampling found `select -> input_checking -> joystate`
+Thread sampling found `select -> mykey -> joystate`
 as the idle-menu hotspot; the race loop also spun after catching its timer
 position. Modern overlays now yield at stable UI backedges (main, track,
 car and opponent menus, modal dialogs, line entry and the track editor),
@@ -112,7 +112,7 @@ or scripted keyboard/mouse input, focus release and host shutdown. The
 predicate checks both the epoch and undelivered IRQs under the condition
 mutex, including events arriving before the wait. Waiting never reads a
 timer delta or runs a game callback; the original guest polls retain that
-ownership. The shared `input_checking`, VGA status/PRNG polling and frozen
+ownership. The shared `mykey`, VGA status/PRNG polling and frozen
 C/ASM remain intact. An 11 ms timeout bounds shutdown if the clock
 producer fails.
 
@@ -201,7 +201,7 @@ anchors and current synthesis limits.
 - Track-preview coordinate subtraction must wrap to a signed DOS word before
   arithmetic right shift. Nine generated-overlay expressions now reproduce
   the original SUB/SAR sequence, including far rows across the signed boundary.
-- The recovered name `sprite_putimage_and_alt` hid an opaque copy routine.
+- The recovered name `movcfxya` hid an opaque copy routine.
   Its original entry reaches REP MOVSB/MOVSW; applying AND corrupted the sky.
   The host entry now copies pixels as the frozen routine does.
 - Culling doubles its limit with SHL CX,1 before a signed comparison. Keeping
@@ -265,7 +265,7 @@ original CPU calibration selects full-frame drawing, while the native
 calibration selects incremental drawing; both paths must preserve the scene.
 
 The track chooser and Options dialog exposed a separate text translation
-error. `movtxy` had been aliased to the transparent `font_draw_text`.
+error. `movtxy` had been aliased to the transparent `fortextxy`.
 The frozen former routine writes both foreground and background pixels;
 the latter preserves pixels under clear glyph bits. Retaining both paths
 restores erased letters and inverted selections. The same family now preserves

@@ -1,6 +1,6 @@
 #include "port_runtime.h"
 
-/* Data words initialized alongside _set_projection in
+/* Data words initialized alongside _setprojectp in
    asm/project.ASM. These stay 16-bit because the game uses
    word-sized projection coordinates and fixed-point scales. */
 int16_t projection_half_width = 160;
@@ -88,7 +88,7 @@ static uint16_t angle_from_degrees_word(uint16_t degrees)
     uint32_t dividend = (uint32_t)degrees << 11;
     uint32_t quotient = dividend / 360u;
     if (quotient > 0xFFFFu)
-        port_guest_unwind("set_projection 16-bit angle division overflow");
+        port_guest_unwind("setprojectp 16-bit angle division overflow");
     return (uint16_t)(quotient >> 1);
 }
 
@@ -98,13 +98,13 @@ static uint16_t projection_scale(uint16_t angle, uint16_t half_extent)
     uint16_t sine = (uint16_t)intsin(angle);
     uint32_t dividend = (uint32_t)cosine * half_extent;
     if (sine == 0)
-        port_guest_unwind("set_projection divided by zero sine");
+        port_guest_unwind("setprojectp divided by zero sine");
     return (uint16_t)(dividend / sine);
 }
 
-/* Semantic C translation of asm/project.ASM:_set_projection.
-   The current setup_intro caller passes (40, 40, 320, 200). */
-void set_projection(int16_t x_angle, int16_t y_angle,
+/* Semantic C translation of asm/project.ASM:_setprojectp.
+   The current logo caller passes (40, 40, 320, 200). */
+void setprojectp(int16_t x_angle, int16_t y_angle,
                     int16_t width, int16_t height)
 {
     uint16_t x_word = (uint16_t)x_angle;

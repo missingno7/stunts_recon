@@ -100,7 +100,7 @@
       "routines": [
         "INIT_PALETTE",
         "INIT_MATRIX",
-        "set_projection",
+        "setprojectp",
         "INIT_OBJECTS_BUFFER",
         "ADD_OBJECT_TO_BUFFER",
         "DRAW_OBJECTS"
@@ -206,7 +206,7 @@
       "status": "differential-oracle",
       "routines": [
         "andcfxya",
-        "sprite_putimage_and_alt",
+        "movcfxya",
         "andcfxy",
         "orcfxy"
       ],
@@ -266,7 +266,7 @@
       "id": "font-render-and-measure",
       "status": "differential-oracle",
       "routines": [
-        "font_draw_text",
+        "fortextxy",
         "movtxy",
         "textnpixels",
         "textpixels",
@@ -311,7 +311,7 @@
         "read_line_helper2",
         "setfont",
         "font_set_unk",
-        "font_draw_text"
+        "fortextxy"
       ],
       "tests": [
         "tests/test_sdl3_line_input_oracle.py::test_cursor_font_switching_and_helper2_match_full_locked_state",
@@ -350,7 +350,7 @@
       "id": "preview-coordinate-arithmetic",
       "status": "differential-oracle",
       "routines": [
-        "draw_track_preview"
+        "drawblimpworld"
       ],
       "tests": [
         "tests/test_sdl3_preview_arithmetic.py::test_generated_helper_matches_locked_sub_ax_sar_ax"
@@ -361,9 +361,9 @@
         "signed 16-bit wrapped subtraction then arithmetic shift result"
       ],
       "authority": "locked_image_instruction_bytes_live_execution",
-      "claim_limit": "Expression/helper only; no full draw_track_preview output differential.",
+      "claim_limit": "Expression/helper only; no full drawblimpworld output differential.",
       "historical_route": [
-        "src/render.c:draw_track_preview",
+        "src/render.c:drawblimpworld",
         "locked SUB AX,[camera_pos_z]; SAR AX,1 at image offset 0xCDA4"
       ],
       "portable_route": [
@@ -445,7 +445,7 @@
       "id": "sentinel-equality-expressions",
       "status": "static/layout",
       "routines": [
-        "setup_intro",
+        "logo",
         "compiletrack"
       ],
       "tests": [
@@ -461,7 +461,7 @@
       "authority": "locked_image_instruction_bytes_live_execution",
       "claim_limit": "No locked routine execution or intro/track_setup behavioral differential; source anchor and standalone expression only.",
       "historical_route": [
-        "src/render.c:setup_intro",
+        "src/render.c:logo",
         "src/trkscene.c:compiletrack",
         "locked CMP-immediate/branch bytes at offsets 0xDC7D, 0x10CED, 0x10FC6"
       ],
@@ -518,8 +518,8 @@
       "status": "static/layout",
       "routines": [
         "validate_shape3d_archive",
-        "sprite_putimage_transparent",
-        "release_shape_resources",
+        "tmaskxcfxya",
+        "tmaskxf",
         "mcgatranslation",
         "mcgatransrange",
         "loadpacka"
@@ -831,7 +831,7 @@
     "audio_load_driver": "stunts_audio_load_driver_legacy",
     "doshowmouse": "stunts_mouse_draw_transparent",
     "dohidemouse": "stunts_mouse_draw_opaque",
-    "font_set_unk": "font_setup_unknown",
-    "font_set_fontdef2": "fontsetfontdef2"
+    "font_set_unk": "textcolor",
+    "font_set_fontdef2": "mysetfont"
   }
 }

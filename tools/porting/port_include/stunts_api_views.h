@@ -16,7 +16,7 @@ static inline I16 stunts_port_call_read_line_view(I8 *buffer, I16 first, I16 sec
 {
     /* The final I32 is low word then high word in the six-word target definition. */
     U32 words = (U32)final_words;
-    return call_read_line(buffer, first, second, third, (I16)(U16)words,
+    return instringz(buffer, first, second, third, (I16)(U16)words,
                           (I16)(U16)(words >> 16));
 }
 static inline struct SHAPE2D *stunts_port_locate_shape_fatal_shape_view(void *resource, I8 *name)
@@ -31,7 +31,7 @@ static inline I16 stunts_port_call_read_line_view(I8 *buffer, I16 first, I16 sec
 {
     /* Split the legacy caller's final I32 into the definition's last two words. */
     U32 words = (U32)final_words;
-    return call_read_line(buffer, first, second, third, (I16)(U16)words,
+    return instringz(buffer, first, second, third, (I16)(U16)words,
                           (I16)(U16)(words >> 16));
 }
 #endif

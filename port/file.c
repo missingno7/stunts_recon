@@ -694,7 +694,7 @@ void *loadfileatz(const char *filename, void *destination)
 /* Reproduce DOS AH=3Ch/40h/3Eh/41h: overwrite, stream 16 KiB chunks, and
    remove an incomplete file before reporting failure. Paths are relative to
    the separate save root; reads overlay that root ahead of immutable assets. */
-int file_write_fatal(const char *filename, const void *source,
+int savefilez(const char *filename, const void *source,
                      unsigned long length)
 {
     char absolute[PORT_FULL_PATH_BYTES];

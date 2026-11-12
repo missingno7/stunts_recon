@@ -23,7 +23,7 @@
 
 extern unsigned char fontdef_default[1408];
 extern void setfont(const void *font);
-extern void font_setup_unknown(unsigned short foreground,
+extern void textcolor(unsigned short foreground,
                                unsigned short background);
 extern void port_sprite_init(void);
 extern unsigned char *port_video_pixels(void);
@@ -66,7 +66,7 @@ int port_memory_extent(const void *pointer, size_t *remaining_out)
     return 0;
 }
 
-int16_t call_read_line(char *buffer, int16_t max_length, int16_t x,
+int16_t instringz(char *buffer, int16_t max_length, int16_t x,
                        int16_t y, int16_t timeout_low,
                        int16_t timeout_high)
 {
@@ -244,7 +244,7 @@ int main(void)
 
         if (select_font != 0u)
             setfont(font);
-        font_setup_unknown(foreground, background);
+        textcolor(foreground, background);
         if (line_height != 0xFFFFu) {
             font[18] = (unsigned char)line_height;
             font[19] = (unsigned char)(line_height >> 8);

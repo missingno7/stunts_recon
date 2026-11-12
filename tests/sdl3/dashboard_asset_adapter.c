@@ -214,7 +214,7 @@ __declspec(dllexport) int dh_render_loaded_dashboard_shape(
         sprite_setup1_from_arg_pointer(target);
         movpackcfxya(shape, x, y);
         memcpy(output, target_pixels, target_bytes);
-        sprite_free_window(target);
+        removewindow(target);
         freememory(shape);
         return (int)target_bytes;
     }
@@ -242,9 +242,9 @@ __declspec(dllexport) int dh_render_loaded_dashboard_shape(
         target_pixels = (uint8_t *)target->sprite_bitmapptr +
                         sizeof(PortShape2D);
         sprite_setup1_from_arg_pointer(target);
-        shape2d_blit_rle_at(shape, x, y);
+        movpackfxya(shape, x, y);
         memcpy(output, target_pixels, target_bytes);
-        sprite_free_window(target);
+        removewindow(target);
         freememory(shape);
         return (int)target_bytes;
     }

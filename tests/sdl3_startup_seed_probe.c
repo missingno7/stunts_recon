@@ -40,7 +40,7 @@ int main(int argc, char **argv)
         return 5;
     if (port_random_test_rand() != 0x1b04)
         return 6;
-    if (get_kevinrandom() != 0x23)
+    if (myrandom() != 0x23)
         return 7;
     mygetseeds(state);
     if (memcmp(state, expected_post, sizeof(state)) != 0)

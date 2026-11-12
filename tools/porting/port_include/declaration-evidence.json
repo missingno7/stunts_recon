@@ -59,13 +59,13 @@
     "track_object_info"
   ],
   "function_arity_debt": {
-    "update_car_speed": {
+    "doengine": {
       "prototype_arity": 3,
       "source_arities": [
         4
       ],
       "declaration": "fixed target ABI prototype retained; PORT_BUILD call-site adapter required",
-      "machine_evidence": "void far update_car_speed(char, char, long);",
+      "machine_evidence": "void far doengine(char, char, long);",
       "host_probe_action": "source-local calls/declarations need an explicit compatibility view"
     },
     "dohandling": {
@@ -177,14 +177,14 @@
       "machine_evidence": "void far makename(int, int, long);",
       "host_probe_action": "source-local calls/declarations need an explicit compatibility view"
     },
-    "locate_shape_alt": {
+    "getres": {
       "prototype_arity": 2,
       "source_arities": [
         0,
         2
       ],
       "declaration": "fixed target ABI prototype retained; PORT_BUILD call-site adapter required",
-      "machine_evidence": "long far locate_shape_alt(long, int);",
+      "machine_evidence": "long far getres(long, int);",
       "host_probe_action": "source-local calls/declarations need an explicit compatibility view"
     },
     "doslider": {
@@ -217,7 +217,7 @@
       "machine_evidence": "void far hiscore_draw_text(long, int, int, int);",
       "host_probe_action": "source-local calls/declarations need an explicit compatibility view"
     },
-    "call_read_line": {
+    "instringz": {
       "prototype_arity": 4,
       "source_arities": [
         5,
@@ -244,23 +244,23 @@
       "machine_evidence": "void far draw3dbutton(long, long, long, int, int, int, int);",
       "host_probe_action": "source-local calls/declarations need an explicit compatibility view"
     },
-    "print_int_as_string_maybe": {
+    "myitoa": {
       "prototype_arity": 3,
       "source_arities": [
         4
       ],
       "declaration": "fixed target ABI prototype retained; PORT_BUILD call-site adapter required",
-      "machine_evidence": "void far print_int_as_string_maybe(long, int, int);",
+      "machine_evidence": "void far myitoa(long, int, int);",
       "host_probe_action": "source-local calls/declarations need an explicit compatibility view"
     },
-    "file_load_resource": {
+    "myload": {
       "prototype_arity": 2,
       "source_arities": [
         0,
         2
       ],
       "declaration": "fixed target ABI prototype retained; PORT_BUILD call-site adapter required",
-      "machine_evidence": "long far file_load_resource(unsigned int, int);",
+      "machine_evidence": "long far myload(unsigned int, int);",
       "host_probe_action": "source-local calls/declarations need an explicit compatibility view"
     },
     "fluffyload": {
@@ -616,13 +616,13 @@
       "machine_evidence": "void far setfont(int /*unused*/, int);",
       "host_probe_action": "source-local calls/declarations need an explicit compatibility view"
     },
-    "putpixel_single_maybe": {
+    "writepixelc": {
       "prototype_arity": 2,
       "source_arities": [
         3
       ],
       "declaration": "fixed target ABI prototype retained; PORT_BUILD call-site adapter required",
-      "machine_evidence": "int far putpixel_single_maybe(long, int);",
+      "machine_evidence": "int far writepixelc(long, int);",
       "host_probe_action": "source-local calls/declarations need an explicit compatibility view"
     },
     "sprite_draw_rect_outline": {
@@ -699,7 +699,7 @@
       "machine_evidence": null,
       "host_probe_action": "source-local calls/declarations need an explicit compatibility view"
     },
-    "file_load_resource_file": {
+    "openresource": {
       "prototype_arity": 1,
       "source_arities": [
         0,
@@ -1089,8 +1089,8 @@
       "declaration": "extern void audio_stop_unk(void);",
       "machine_prototype": "void far audio_stop_unk(void);"
     },
-    "audio_stop_unknown": {
-      "declaration": "extern void audio_stop_unknown(void);",
+    "restoretimer": {
+      "declaration": "extern void restoretimer(void);",
       "machine_prototype": null
     },
     "audio_toggle_flag2": {
@@ -1177,9 +1177,9 @@
       "declaration": "extern void dsiexit(void);",
       "machine_prototype": "void near dsiexit(void);"
     },
-    "call_read_line": {
-      "declaration": "extern I16 far call_read_line(I8 *buffer, I16 first, I16 second, I16 third, I32 final_words);",
-      "machine_prototype": "I16 far call_read_line(near char *, I16, I16, I16, I32);",
+    "instringz": {
+      "declaration": "extern I16 far instringz(I8 *buffer, I16 first, I16 second, I16 third, I32 final_words);",
+      "machine_prototype": "I16 far instringz(near char *, I16, I16, I16, I32);",
       "machine_contract": "Five source arguments occupy six stack words: near buffer, three 16-bit words, then one 32-bit argument occupying the final two words. The body consumes those final words as its fifth and sixth 16-bit values.",
       "evidence": [
         "evidence/functions.json:load_190bc",
@@ -1260,17 +1260,17 @@
       "declaration": "extern short do_dea_textres(void);",
       "machine_prototype": "int far do_dea_textres(void);"
     },
-    "do_dos_resource_text": {
-      "declaration": "extern void do_dos_resource_text(void);",
+    "mdosexit": {
+      "declaration": "extern void mdosexit(void);",
       "machine_prototype": null
     },
     "do_dos_restext": {
       "declaration": "extern void do_dos_restext(void);",
       "machine_prototype": "void far do_dos_restext(void);"
     },
-    "do_fileselect_dialog": {
-      "declaration": "extern char do_fileselect_dialog(short, short, short, int);",
-      "machine_prototype": "char far do_fileselect_dialog(int, int, int, long);"
+    "floadreq": {
+      "declaration": "extern char floadreq(short, short, short, int);",
+      "machine_prototype": "char far floadreq(int, int, int, long);"
     },
     "do_joy_restext": {
       "declaration": "extern void do_joy_restext(void);",
@@ -1292,16 +1292,16 @@
       "declaration": "extern void memerr(void);",
       "machine_prototype": "void far memerr(void);"
     },
-    "do_mof_resource_text": {
-      "declaration": "extern void do_mof_resource_text(void);",
+    "mmusictog": {
+      "declaration": "extern void mmusictog(void);",
       "machine_prototype": null
     },
     "do_mof_restext": {
       "declaration": "extern void do_mof_restext(void);",
       "machine_prototype": "void far do_mof_restext(void);"
     },
-    "do_mou_resource_text": {
-      "declaration": "extern void do_mou_resource_text(void);",
+    "mmouseon": {
+      "declaration": "extern void mmouseon(void);",
       "machine_prototype": null
     },
     "do_mou_restext": {
@@ -1324,8 +1324,8 @@
       "declaration": "extern void sink(short, short, short);",
       "machine_prototype": "void far sink(int, int, int);"
     },
-    "do_sonsof_resource_text": {
-      "declaration": "extern void do_sonsof_resource_text(void);",
+    "msoundtog": {
+      "declaration": "extern void msoundtog(void);",
       "machine_prototype": null
     },
     "do_sonsof_restext": {
@@ -1384,25 +1384,25 @@
       "declaration": "extern void movtxy(char *, int16_t, int16_t);",
       "machine_prototype": null
     },
-    "draw_track_preview": {
-      "declaration": "extern void draw_track_preview(void);",
-      "machine_prototype": "void far draw_track_preview(void);"
+    "drawblimpworld": {
+      "declaration": "extern void drawblimpworld(void);",
+      "machine_prototype": "void far drawblimpworld(void);"
     },
     "draw_unknown_lines": {
       "declaration": "extern void draw_unknown_lines(int, short, short, char);",
       "machine_prototype": "void far draw_unknown_lines(long, int, int, char);"
     },
-    "end_hiscore": {
-      "declaration": "extern char end_hiscore(void);",
-      "machine_prototype": "char far end_hiscore(void);"
+    "evaluation": {
+      "declaration": "extern char evaluation(void);",
+      "machine_prototype": "char far evaluation(void);"
     },
     "ensure_file_exists": {
       "declaration": "extern void ensure_file_exists(short);",
       "machine_prototype": "void far ensure_file_exists(int);"
     },
-    "enter_hiscore": {
-      "declaration": "extern void enter_hiscore(unsigned short, int, char);",
-      "machine_prototype": "void far enter_hiscore(unsigned int, long, char);"
+    "addhighs": {
+      "declaration": "extern void addhighs(unsigned short, int, char);",
+      "machine_prototype": "void far addhighs(unsigned int, long, char);"
     },
     "exit": {
       "declaration": "extern void exit(int);",
@@ -1468,9 +1468,9 @@
       "declaration": "extern short findnext(void);",
       "machine_prototype": "int far findnext(void);"
     },
-    "file_find_next_alt": {
-      "declaration": "extern short file_find_next_alt(void);",
-      "machine_prototype": "int far file_find_next_alt(void);"
+    "myfindnext": {
+      "declaration": "extern short myfindnext(void);",
+      "machine_prototype": "int far myfindnext(void);"
     },
     "file_get_res_shape_count": {
       "declaration": "extern short file_get_res_shape_count(int);",
@@ -1512,12 +1512,12 @@
       "declaration": "extern int file_load_resfile(short);",
       "machine_prototype": "long far file_load_resfile(int);"
     },
-    "file_load_resource": {
-      "declaration": "extern int file_load_resource(unsigned short, short);",
-      "machine_prototype": "long far file_load_resource(unsigned int, int);"
+    "myload": {
+      "declaration": "extern int myload(unsigned short, short);",
+      "machine_prototype": "long far myload(unsigned int, int);"
     },
-    "file_load_resource_file": {
-      "declaration": "extern void *file_load_resource_file(char *);",
+    "openresource": {
+      "declaration": "extern void *openresource(char *);",
       "machine_prototype": null
     },
     "file_load_shape2d": {
@@ -1620,9 +1620,9 @@
       "declaration": "extern void file_unflip_shape2d_pes(int, int);",
       "machine_prototype": "void far file_unflip_shape2d_pes(long, long);"
     },
-    "file_write_fatal": {
-      "declaration": "extern short file_write_fatal(short, int, int);",
-      "machine_prototype": "int far file_write_fatal(int, long, long);"
+    "savefilez": {
+      "declaration": "extern short savefilez(short, int, int);",
+      "machine_prototype": "int far savefilez(int, long, long);"
     },
     "savefile": {
       "declaration": "extern void savefile(void);",
@@ -1644,13 +1644,13 @@
       "declaration": "extern void flush_stdin(void);",
       "machine_prototype": "void far flush_stdin(void);"
     },
-    "fmtframestr": {
-      "declaration": "extern void fmtframestr(char *, uint16_t, int16_t);",
+    "maketime": {
+      "declaration": "extern void maketime(char *, uint16_t, int16_t);",
       "machine_prototype": null
     },
-    "font_draw_text": {
-      "declaration": "extern void font_draw_text(char *, short, short);",
-      "machine_prototype": "void far font_draw_text(char *, int, int);"
+    "fortextxy": {
+      "declaration": "extern void fortextxy(char *, short, short);",
+      "machine_prototype": "void far fortextxy(char *, int, int);"
     },
     "textnpixels": {
       "declaration": "extern short textnpixels(short, short);",
@@ -1676,16 +1676,16 @@
       "declaration": "extern void font_set_unk(short, short);",
       "machine_prototype": "void far font_set_unk(int, int);"
     },
-    "font_setup_unknown": {
-      "declaration": "extern void font_setup_unknown(int16_t, int16_t);",
+    "textcolor": {
+      "declaration": "extern void textcolor(int16_t, int16_t);",
       "machine_prototype": null
     },
     "fontsetfontdef": {
       "declaration": "extern void fontsetfontdef(void);",
       "machine_prototype": null
     },
-    "fontsetfontdef2": {
-      "declaration": "extern void fontsetfontdef2(void *);",
+    "mysetfont": {
+      "declaration": "extern void mysetfont(void *);",
       "machine_prototype": null
     },
     "format_frame_as_string": {
@@ -1724,17 +1724,17 @@
       "declaration": "extern short joystate(void);",
       "machine_prototype": "int far joystate(void);"
     },
-    "get_kevinrandom": {
-      "declaration": "extern short get_kevinrandom(void);",
-      "machine_prototype": "int far get_kevinrandom(void);"
+    "myrandom": {
+      "declaration": "extern short myrandom(void);",
+      "machine_prototype": "int far myrandom(void);"
     },
     "mygetseeds": {
       "declaration": "extern void mygetseeds(void *);",
       "machine_prototype": "void far mygetseeds(struct ? *);"
     },
-    "get_super_random": {
-      "declaration": "extern short get_super_random(void);",
-      "machine_prototype": "int far get_super_random(void);"
+    "drnd": {
+      "declaration": "extern short drnd(void);",
+      "machine_prototype": "int far drnd(void);"
     },
     "getnum": {
       "declaration": "extern short getnum(short *, char *);",
@@ -1756,17 +1756,17 @@
       "declaration": "extern short highscore_text_unk(void);",
       "machine_prototype": "int far highscore_text_unk(void);"
     },
-    "highscore_text_unknown": {
-      "declaration": "extern void highscore_text_unknown(void);",
+    "drawhighs": {
+      "declaration": "extern void drawhighs(void);",
       "machine_prototype": null
     },
-    "highscore_write_a": {
-      "declaration": "extern char highscore_write_a(short);",
-      "machine_prototype": "char far highscore_write_a(int);"
+    "readhighs": {
+      "declaration": "extern char readhighs(short);",
+      "machine_prototype": "char far readhighs(int);"
     },
-    "highscore_write_b": {
-      "declaration": "extern void highscore_write_b(void);",
-      "machine_prototype": "void far highscore_write_b(void);"
+    "savehighs": {
+      "declaration": "extern void savehighs(void);",
+      "machine_prototype": "void far savehighs(void);"
     },
     "hiscore_draw_text": {
       "declaration": "extern void hiscore_draw_text(int, short, short, short);",
@@ -1820,33 +1820,33 @@
       "declaration": "extern void initialize_div0(void);",
       "machine_prototype": null
     },
-    "initialize_game_state": {
-      "declaration": "extern void initialize_game_state(int16_t);",
+    "initsim": {
+      "declaration": "extern void initsim(int16_t);",
       "machine_prototype": null
     },
-    "initialize_kevin_random": {
-      "declaration": "extern void initialize_kevin_random(char *);",
+    "mysetseeds": {
+      "declaration": "extern void mysetseeds(char *);",
       "machine_prototype": null
     },
-    "initialize_main": {
-      "declaration": "extern void initialize_main(int16_t, char **);",
+    "initmodes": {
+      "declaration": "extern void initmodes(int16_t, char **);",
       "machine_prototype": null
     },
     "INIT_MATRIX": {
       "declaration": "extern void INIT_MATRIX(void);",
       "machine_prototype": null
     },
-    "initialize_unknown": {
-      "declaration": "extern void initialize_unknown(void);",
+    "initworld": {
+      "declaration": "extern void initworld(void);",
       "machine_prototype": null
     },
-    "input_checking": {
-      "declaration": "extern short input_checking(short);",
-      "machine_prototype": "int far input_checking(int);"
+    "mykey": {
+      "declaration": "extern short mykey(short);",
+      "machine_prototype": "int far mykey(int);"
     },
-    "input_do_checking": {
-      "declaration": "extern short input_do_checking(short);",
-      "machine_prototype": "int far input_do_checking(int);"
+    "hurrykey": {
+      "declaration": "extern short hurrykey(short);",
+      "machine_prototype": "int far hurrykey(int);"
     },
     "pullmouse": {
       "declaration": "extern short pullmouse(void);",
@@ -1856,9 +1856,9 @@
       "declaration": "extern void pushmouse(void);",
       "machine_prototype": "void far pushmouse(void);"
     },
-    "input_repeat_check": {
-      "declaration": "extern short input_repeat_check(short);",
-      "machine_prototype": "int far input_repeat_check(int);"
+    "mykeywait": {
+      "declaration": "extern short mykeywait(short);",
+      "machine_prototype": "int far mykeywait(int);"
     },
     "polysort": {
       "declaration": "extern short polysort(short, short);",
@@ -2020,9 +2020,9 @@
       "declaration": "extern void load_song_file(short);",
       "machine_prototype": "void far load_song_file(int);"
     },
-    "load_tracks_menu_shapes": {
-      "declaration": "extern void load_tracks_menu_shapes(void);",
-      "machine_prototype": "void far load_tracks_menu_shapes(void);"
+    "trackedit": {
+      "declaration": "extern void trackedit(void);",
+      "machine_prototype": "void far trackedit(void);"
     },
     "load_voice_file": {
       "declaration": "extern void load_voice_file(short);",
@@ -2032,13 +2032,13 @@
       "declaration": "extern short loc_390C8(void *, void *);",
       "machine_prototype": "int far loc_390C8(struct ? far *, struct ? *);"
     },
-    "locate_many_resources": {
-      "declaration": "extern void locate_many_resources(int, char *, void *);",
-      "machine_prototype": "void far locate_many_resources(long, char *, struct ? *);"
+    "locateshapes": {
+      "declaration": "extern void locateshapes(int, char *, void *);",
+      "machine_prototype": "void far locateshapes(long, char *, struct ? *);"
     },
-    "locate_shape_alt": {
-      "declaration": "extern int locate_shape_alt(int, short);",
-      "machine_prototype": "long far locate_shape_alt(long, int);"
+    "getres": {
+      "declaration": "extern int getres(int, short);",
+      "machine_prototype": "long far getres(long, int);"
     },
     "locate_shape_fatal": {
       "declaration": "extern void far * far locate_shape_fatal(void far *data, I8 *name);",
@@ -2063,8 +2063,8 @@
       "declaration": "extern int locate_text_res(int, void *);",
       "machine_prototype": "long far locate_text_res(long, struct ? *);"
     },
-    "locate_text_resource": {
-      "declaration": "extern char *locate_text_resource(char *, char *);",
+    "getresl": {
+      "declaration": "extern char *getresl(char *, char *);",
       "machine_prototype": null
     },
     "doreplay": {
@@ -2127,9 +2127,9 @@
       "declaration": "extern int reservememory(short, short);",
       "machine_prototype": "long far reservememory(int, int);"
     },
-    "mmgr_alloc_resbytes": {
-      "declaration": "extern int mmgr_alloc_resbytes(short, int);",
-      "machine_prototype": "long far mmgr_alloc_resbytes(int, long);"
+    "resmem": {
+      "declaration": "extern int resmem(short, int);",
+      "machine_prototype": "long far resmem(int, long);"
     },
     "mmgr_alloc_resmem": {
       "declaration": "extern short mmgr_alloc_resmem(short);",
@@ -2243,20 +2243,20 @@
       "declaration": "extern short mouse_timer_sprite_unk(short, short, short, short, short, short, short);",
       "machine_prototype": "int far mouse_timer_sprite_unk(int, int, int, int, int, int, int);"
     },
-    "mouse_timer_sprite_unknown": {
-      "declaration": "extern int16_t mouse_timer_sprite_unknown(int16_t, int16_t *, int16_t *, int16_t *, int16_t *, int16_t, int16_t);",
+    "docursor": {
+      "declaration": "extern int16_t docursor(int16_t, int16_t *, int16_t *, int16_t *, int16_t *, int16_t, int16_t);",
       "machine_prototype": null
     },
     "doslider": {
       "declaration": "extern char doslider(short, short, int, short, short, short, short);",
       "machine_prototype": "char far doslider(int, int, long, int, int, int, int);"
     },
-    "msdrawopaquechk": {
-      "declaration": "extern void msdrawopaquechk(void);",
+    "mouseoff": {
+      "declaration": "extern void mouseoff(void);",
       "machine_prototype": null
     },
-    "msdrawtransparentchk": {
-      "declaration": "extern void msdrawtransparentchk(void);",
+    "mouseon": {
+      "declaration": "extern void mouseon(void);",
       "machine_prototype": null
     },
     "fixedmult": {
@@ -2709,13 +2709,13 @@
       "declaration": "extern void preRender_wheel_helper4(short, short, short, short, short, short, short, short, short, short);",
       "machine_prototype": "void far preRender_wheel_helper4(int, int, int, int /*unused*/, int /*unused*/, int /*unused*/, int /*unused*/, int /*unused*/, int /*unused*/, int /*unused*/);"
     },
-    "print_highscore_entry": {
-      "declaration": "extern void print_highscore_entry(short, void *);",
-      "machine_prototype": "void far print_highscore_entry(int, struct ? *);"
+    "genhline": {
+      "declaration": "extern void genhline(short, void *);",
+      "machine_prototype": "void far genhline(int, struct ? *);"
     },
-    "print_int_as_string_maybe": {
-      "declaration": "extern void print_int_as_string_maybe(int, short, short);",
-      "machine_prototype": "void far print_int_as_string_maybe(long, int, int);"
+    "myitoa": {
+      "declaration": "extern void myitoa(int, short, short);",
+      "machine_prototype": "void far myitoa(long, int, int);"
     },
     "process_audio_chunk_event": {
       "declaration": "extern void process_audio_chunk_event(int16_t);",
@@ -2757,9 +2757,9 @@
       "declaration": "extern short drawcline(void *);",
       "machine_prototype": "int far drawcline(struct ? *);"
     },
-    "putpixel_single_maybe": {
-      "declaration": "extern short putpixel_single_maybe(int, short);",
-      "machine_prototype": "int far putpixel_single_maybe(long, int);"
+    "writepixelc": {
+      "declaration": "extern short writepixelc(int, short);",
+      "machine_prototype": "int far writepixelc(long, int);"
     },
     "putprefix": {
       "declaration": "extern void putprefix(void);",
@@ -2864,8 +2864,8 @@
       "declaration": "extern void release_audio_chunk(int16_t);",
       "machine_prototype": null
     },
-    "release_shape_resources": {
-      "declaration": "extern void release_shape_resources(void *);",
+    "tmaskxf": {
+      "declaration": "extern void tmaskxf(void *);",
       "machine_prototype": null
     },
     "removegameint": {
@@ -2904,8 +2904,8 @@
       "declaration": "extern void reset_audio_voice_length(int16_t);",
       "machine_prototype": null
     },
-    "reset_idle_counters": {
-      "declaration": "extern void reset_idle_counters(void);",
+    "docursorinit": {
+      "declaration": "extern void docursorinit(void);",
       "machine_prototype": null
     },
     "reset_joystick_selection": {
@@ -2944,9 +2944,9 @@
       "declaration": "extern char select(void);",
       "machine_prototype": "char far select(void);"
     },
-    "run_opponent_menu": {
-      "declaration": "extern void run_opponent_menu(void);",
-      "machine_prototype": "void far run_opponent_menu(void);"
+    "selectopponent": {
+      "declaration": "extern void selectopponent(void);",
+      "machine_prototype": "void far selectopponent(void);"
     },
     "run_option_menu": {
       "declaration": "extern char run_option_menu(void);",
@@ -3015,9 +3015,9 @@
       "declaration": "extern void criterr(short, short);",
       "machine_prototype": "void far criterr(int, int);"
     },
-    "set_default_car": {
-      "declaration": "extern void set_default_car(void);",
-      "machine_prototype": "void far set_default_car(void);"
+    "initselections": {
+      "declaration": "extern void initselections(void);",
+      "machine_prototype": "void far initselections(void);"
     },
     "setfont": {
       "declaration": "extern void setfont(short, short);",
@@ -3027,21 +3027,21 @@
       "declaration": "extern void gameintinit(void);",
       "machine_prototype": "void far gameintinit(void);"
     },
-    "set_projection": {
-      "declaration": "extern void set_projection(short, short, unsigned short, unsigned short);",
-      "machine_prototype": "void far set_projection(int, int, unsigned int, unsigned int);"
+    "setprojectp": {
+      "declaration": "extern void setprojectp(short, short, unsigned short, unsigned short);",
+      "machine_prototype": "void far setprojectp(int, int, unsigned int, unsigned int);"
     },
-    "setup_aero_trackdata": {
-      "declaration": "extern void setup_aero_trackdata(int, short);",
-      "machine_prototype": "void far setup_aero_trackdata(long, int);"
+    "getsimdata": {
+      "declaration": "extern void getsimdata(int, short);",
+      "machine_prototype": "void far getsimdata(long, int);"
     },
     "dodash": {
       "declaration": "extern void dodash(short);",
       "machine_prototype": "void far dodash(int);"
     },
-    "setup_intro": {
-      "declaration": "extern char setup_intro(void);",
-      "machine_prototype": "char far setup_intro(void);"
+    "logo": {
+      "declaration": "extern char logo(void);",
+      "machine_prototype": "char far logo(void);"
     },
     "setup_mcgawnd1": {
       "declaration": "extern void setup_mcgawnd1(void);",
@@ -3079,33 +3079,33 @@
       "declaration": "extern void shape2d_op_unk5(int, short, short);",
       "machine_prototype": "void far shape2d_op_unk5(long, int, int);"
     },
-    "shape2d_blit_rle_at": {
-      "declaration": "extern void shape2d_blit_rle_at(void *, int16_t, int16_t);",
+    "movpackfxya": {
+      "declaration": "extern void movpackfxya(void *, int16_t, int16_t);",
       "machine_prototype": null
     },
     "andpackf": {
       "declaration": "extern void andpackf(int);",
       "machine_prototype": "void far andpackf(long);"
     },
-    "shape3d_free_all": {
-      "declaration": "extern void shape3d_free_all(void);",
-      "machine_prototype": "void far shape3d_free_all(void);"
+    "remove_3dpieces": {
+      "declaration": "extern void remove_3dpieces(void);",
+      "machine_prototype": "void far remove_3dpieces(void);"
     },
-    "shape3d_free_car_shapes": {
-      "declaration": "extern short shape3d_free_car_shapes(void);",
-      "machine_prototype": "int far shape3d_free_car_shapes(void);"
+    "remove_3dcars": {
+      "declaration": "extern short remove_3dcars(void);",
+      "machine_prototype": "int far remove_3dcars(void);"
     },
     "makeobjdef": {
       "declaration": "extern short makeobjdef(void *, void *);",
       "machine_prototype": "int far makeobjdef(struct ? far *, struct ? *);"
     },
-    "shape3d_load_all": {
-      "declaration": "extern short shape3d_load_all(void);",
-      "machine_prototype": "int far shape3d_load_all(void);"
+    "init_3dpieces": {
+      "declaration": "extern short init_3dpieces(void);",
+      "machine_prototype": "int far init_3dpieces(void);"
     },
-    "shape3d_load_car_shapes": {
-      "declaration": "extern void shape3d_load_car_shapes(void *, void *);",
-      "machine_prototype": "void far shape3d_load_car_shapes(struct ? *, struct ? *);"
+    "init_3dcars": {
+      "declaration": "extern void init_3dcars(void *, void *);",
+      "machine_prototype": "void far init_3dcars(struct ? *, struct ? *);"
     },
     "shape_op_explosion": {
       "declaration": "extern void shape_op_explosion(unsigned short, int, short, short);",
@@ -3119,9 +3119,9 @@
       "declaration": "extern short messagebox(short, short, int, int, short, short, char);",
       "machine_prototype": "int far messagebox(int, int, long, long, int, int, char);"
     },
-    "show_graphic_levels_menu": {
-      "declaration": "extern void show_graphic_levels_menu(void);",
-      "machine_prototype": "void far show_graphic_levels_menu(void);"
+    "msetrender": {
+      "declaration": "extern void msetrender(void);",
+      "machine_prototype": "void far msetrender(void);"
     },
     "loading": {
       "declaration": "extern short loading(void);",
@@ -3147,16 +3147,16 @@
       "declaration": "extern void skybox_op_helper2(void *, short, short);",
       "machine_prototype": "void far skybox_op_helper2(struct ? *, int, int);"
     },
-    "sprcopy2to12": {
-      "declaration": "extern void sprcopy2to12(void);",
+    "usescreen": {
+      "declaration": "extern void usescreen(void);",
       "machine_prototype": null
     },
     "sprint": {
       "declaration": "extern void sprint(short);",
       "machine_prototype": "void far sprint(int);"
     },
-    "sprite1_unknown2": {
-      "declaration": "extern void sprite1_unknown2(int16_t, int16_t, int16_t, int16_t, int16_t);",
+    "drawrectc": {
+      "declaration": "extern void drawrectc(int16_t, int16_t, int16_t, int16_t, int16_t);",
       "machine_prototype": null
     },
     "drawrect": {
@@ -3179,17 +3179,17 @@
       "declaration": "extern int16_t sprite_blit_to_video(struct SPRITE *sprite, int16_t mode);",
       "machine_prototype": "int far sprite_blit_to_video(struct ? far *, int);"
     },
-    "sprite_clear_1_color": {
-      "declaration": "extern short sprite_clear_1_color(char);",
-      "machine_prototype": "int far sprite_clear_1_color(char);"
+    "clearwindow": {
+      "declaration": "extern short clearwindow(char);",
+      "machine_prototype": "int far clearwindow(char);"
     },
-    "sprite_clear_shape": {
-      "declaration": "extern void sprite_clear_shape(int);",
-      "machine_prototype": "void far sprite_clear_shape(long);"
+    "readf": {
+      "declaration": "extern void readf(int);",
+      "machine_prototype": "void far readf(long);"
     },
-    "sprite_clear_shape_alt": {
-      "declaration": "extern void sprite_clear_shape_alt(int, short, short);",
-      "machine_prototype": "void far sprite_clear_shape_alt(long, int, int);"
+    "readfxya": {
+      "declaration": "extern void readfxya(int, short, short);",
+      "machine_prototype": "void far readfxya(long, int, int);"
     },
     "displaywindow": {
       "declaration": "extern void displaywindow(void);",
@@ -3199,9 +3199,9 @@
       "declaration": "extern short sprite_copy_2_to_1_2(void);",
       "machine_prototype": "int far sprite_copy_2_to_1_2(void);"
     },
-    "sprite_copy_2_to_1_clear": {
-      "declaration": "extern void sprite_copy_2_to_1_clear(void);",
-      "machine_prototype": "void far sprite_copy_2_to_1_clear(void);"
+    "usescreenc": {
+      "declaration": "extern void usescreenc(void);",
+      "machine_prototype": "void far usescreenc(void);"
     },
     "restorewindow": {
       "declaration": "extern short restorewindow(short *);",
@@ -3211,16 +3211,16 @@
       "declaration": "extern void savewindow(short);",
       "machine_prototype": "void far savewindow(int);"
     },
-    "sprite_copy_wnd_to_1": {
-      "declaration": "extern void sprite_copy_wnd_to_1(void);",
-      "machine_prototype": "void far sprite_copy_wnd_to_1(void);"
+    "usebuffer": {
+      "declaration": "extern void usebuffer(void);",
+      "machine_prototype": "void far usebuffer(void);"
     },
-    "sprite_copy_wnd_to_1_clear": {
-      "declaration": "extern void sprite_copy_wnd_to_1_clear(void);",
-      "machine_prototype": "void far sprite_copy_wnd_to_1_clear(void);"
+    "usebufferc": {
+      "declaration": "extern void usebufferc(void);",
+      "machine_prototype": "void far usebufferc(void);"
     },
-    "sprite_free_window": {
-      "declaration": "extern void sprite_free_window(struct SPRITE *);",
+    "removewindow": {
+      "declaration": "extern void removewindow(struct SPRITE *);",
       "machine_prototype": null
     },
     "sprite_free_wnd": {
@@ -3243,9 +3243,9 @@
       "declaration": "extern void andcfxya(int, short, short);",
       "machine_prototype": "void far andcfxya(long, int, int);"
     },
-    "sprite_putimage_and_alt": {
-      "declaration": "extern void sprite_putimage_and_alt(int, short, short);",
-      "machine_prototype": "void far sprite_putimage_and_alt(long, int, int);"
+    "movcfxya": {
+      "declaration": "extern void movcfxya(int, short, short);",
+      "machine_prototype": "void far movcfxya(long, int, int);"
     },
     "andcfxy": {
       "declaration": "extern void andcfxy(int, short, short);",
@@ -3259,9 +3259,9 @@
       "declaration": "extern void orcfxy(int, short, short);",
       "machine_prototype": "void far orcfxy(long, int, int);"
     },
-    "sprite_putimage_transparent": {
-      "declaration": "extern void sprite_putimage_transparent(int, short, short);",
-      "machine_prototype": "void far sprite_putimage_transparent(long, int, int);"
+    "tmaskxcfxya": {
+      "declaration": "extern void tmaskxcfxya(int, short, short);",
+      "machine_prototype": "void far tmaskxcfxya(long, int, int);"
     },
     "sprite_set_1_from_argptr": {
       "declaration": "extern short sprite_set_1_from_argptr(int);",
@@ -3279,16 +3279,16 @@
       "declaration": "extern void movfxya(int, short, short);",
       "machine_prototype": "void far movfxya(long, int, int);"
     },
-    "sprite_shape_to_1_alt": {
-      "declaration": "extern void sprite_shape_to_1_alt(int);",
-      "machine_prototype": "void far sprite_shape_to_1_alt(long);"
+    "movf": {
+      "declaration": "extern void movf(int);",
+      "machine_prototype": "void far movf(long);"
     },
-    "sprputimage": {
-      "declaration": "extern void sprputimage(void *);",
+    "movcf": {
+      "declaration": "extern void movcf(void *);",
       "machine_prototype": null
     },
-    "sprset1size": {
-      "declaration": "extern void sprset1size(uint16_t, uint16_t, uint16_t, uint16_t);",
+    "clippix": {
+      "declaration": "extern void clippix(uint16_t, uint16_t, uint16_t, uint16_t);",
       "machine_prototype": null
     },
     "start": {
@@ -3579,9 +3579,9 @@
       "declaration": "extern short elapsedticks(void);",
       "machine_prototype": "int far elapsedticks(void);"
     },
-    "timer_get_delta_alt": {
-      "declaration": "extern int16_t timer_get_delta_alt(void);",
-      "machine_prototype": "int far timer_get_delta_alt(void);"
+    "elticks": {
+      "declaration": "extern int16_t elticks(void);",
+      "machine_prototype": "int far elticks(void);"
     },
     "timer_intr_callback": {
       "declaration": "extern void timer_intr_callback(void);",
@@ -3671,9 +3671,9 @@
       "declaration": "extern void movehelicopters(void);",
       "machine_prototype": null
     },
-    "update_car_speed": {
-      "declaration": "extern void update_car_speed(char, char, int);",
-      "machine_prototype": "void far update_car_speed(char, char, long);"
+    "doengine": {
+      "declaration": "extern void doengine(char, char, int);",
+      "machine_prototype": "void far doengine(char, char, long);"
     },
     "update_crash_debris": {
       "declaration": "extern void update_crash_debris(void);",
@@ -3766,8 +3766,8 @@
   },
   "unresolved_globals": [],
   "manual_overrides": {
-    "timer_get_delta_alt": {
-      "prototype": "int16_t far timer_get_delta_alt(void);",
+    "elticks": {
+      "prototype": "int16_t far elticks(void);",
       "evidence": "build/workers/X2/typeinfer/decls.json; evidence/toolchain-hypotheses.json; accepted source definitions"
     },
     "getprotection": {

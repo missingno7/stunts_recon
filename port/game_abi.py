@@ -45,7 +45,7 @@ static int16_t port_renderer_double_word(int16_t value)
 
 def adapt_preview_word_arithmetic(source: str) -> str:
     """Retain the preview's SUB AX / SAR AX coordinate calculations."""
-    definition = re.search(r"void draw_track_preview\(void\)\s*\{", source)
+    definition = re.search(r"void drawblimpworld\(void\)\s*\{", source)
     if definition is None:
         raise ValueError("Could not locate the preview definition")
     start = definition.start()

@@ -36,7 +36,7 @@ CODE_START = 0xCDA4
 LOCKED_CODE = bytes.fromhex("2b 06 9c 09 d1 f8")  # SUB AX,[camera_pos_z]; SAR AX,1
 CAMERA_POS_Z_DS_OFFSET = 0x099C
 
-# Nine explicit assignments in draw_track_preview are adapted. The y delta
+# Nine explicit assignments in drawblimpworld are adapted. The y delta
 # from camera_pos_y appears twice with obj_height, once for hill geometry and
 # once for the temporary vector.
 ANCHORS = (
@@ -161,8 +161,8 @@ class Sdl3PreviewArithmeticTests(unittest.TestCase):
             raise AssertionError("A host C compiler is required for preview adapter checks")
         cls.original = SOURCE_PATH.read_text(encoding="latin-1")
         cls.adapted = adapt_preview_word_arithmetic(cls.original)
-        cls.original_preview = extract_function(cls.original, "void draw_track_preview(void)")
-        cls.adapted_preview = extract_function(cls.adapted, "void draw_track_preview(void)")
+        cls.original_preview = extract_function(cls.original, "void drawblimpworld(void)")
+        cls.adapted_preview = extract_function(cls.adapted, "void drawblimpworld(void)")
         cls.helper = extract_function(
             cls.adapted, "static int16_t port_preview_coord_half(int16_t coordinate, int16_t camera)")
 
@@ -174,12 +174,12 @@ class Sdl3PreviewArithmeticTests(unittest.TestCase):
                 self.assertNotIn(old, self.adapted_preview)
         self.assertEqual(len(ANCHORS), 9)
 
-        # Removing the generated helper and restoring only draw_track_preview
+        # Removing the generated helper and restoring only drawblimpworld
         # must reproduce the input byte-for-byte, proving all other source
         # functions and declarations are untouched by this adapter.
         helper_marker = "/* PORT_BUILD: locked preview SUB AX followed by SAR AX,1. */"
         helper_start = self.adapted.index(helper_marker)
-        preview_start = self.adapted.index("void draw_track_preview(void)", helper_start)
+        preview_start = self.adapted.index("void drawblimpworld(void)", helper_start)
         without_helper = self.adapted[:helper_start] + self.adapted[preview_start:]
         self.assertNotEqual(without_helper, self.adapted)
         restored = without_helper.replace(self.adapted_preview, self.original_preview, 1)

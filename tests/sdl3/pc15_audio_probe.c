@@ -270,9 +270,9 @@ static int test_pc15_sample_isr_path(void)
                    "unresolved far pointer is safely silenced"))
             return 0;
 
-    audio_stop_unknown();
+    restoretimer();
     if (!check(port_audio_driver_36(0) == 0,
-               "audio_stop_unknown preserves voice state for the following unload"))
+               "restoretimer preserves voice state for the following unload"))
         return 0;
     port_audio_shutdown();
     free(stream);

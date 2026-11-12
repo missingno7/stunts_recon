@@ -8,7 +8,7 @@
 
 void *loadfileatz(const char *filename, void *destination);
 const char *findnext(void);
-int file_write_fatal(const char *filename, const void *source,
+int savefilez(const char *filename, const void *source,
                      unsigned long length);
 
 static uint8_t *s_bounded;
@@ -172,13 +172,13 @@ int main(int argc, char **argv)
 
     for (index = 0; index < sizeof(large_data); ++index)
         large_data[index] = (uint8_t)(index * 37u + 11u);
-    ok &= check(file_write_fatal("dup.hig", saved_override,
+    ok &= check(savefilez("dup.hig", saved_override,
                                  (unsigned long)sizeof(saved_override)) == 0,
                 "write save into the sibling save root");
-    ok &= check(file_write_fatal("large.rpl", large_data,
+    ok &= check(savefilez("large.rpl", large_data,
                                  (unsigned long)sizeof(large_data)) == 0,
                 "write across multiple 16 KiB DOS chunks");
-    ok &= check(file_write_fatal("nested/new.rpl", exact_extent_data,
+    ok &= check(savefilez("nested/new.rpl", exact_extent_data,
                                  (unsigned long)sizeof(exact_extent_data)) == 0,
                 "create nested save directories");
     ok &= check(!port_fs_exists("../assets/large.rpl"),
@@ -243,7 +243,7 @@ int main(int argc, char **argv)
 
     s_bounded = NULL;
     s_bounded_size = 0;
-    ok &= check(file_write_fatal("../escape.hig", saved_override,
+    ok &= check(savefilez("../escape.hig", saved_override,
                                  (unsigned long)sizeof(saved_override)) == -1,
                 "invalid save path reports a fatal write failure");
     ok &= check(s_fatal_count == 2u, "write failure follows fatal-error path");

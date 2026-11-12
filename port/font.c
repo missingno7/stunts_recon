@@ -69,7 +69,7 @@ void setfont(const void *font)
     port_line_input_select_font(s_font_data);
 }
 
-void font_setup_unknown(uint16_t foreground, uint16_t background)
+void textcolor(uint16_t foreground, uint16_t background)
 {
     const uint8_t *font = font_data();
     if (font == NULL)
@@ -175,7 +175,7 @@ static void render_text(const char *text, int16_t x, int16_t y, int opaque)
     }
 }
 
-void font_draw_text(const char *text, int16_t x, int16_t y)
+void fortextxy(const char *text, int16_t x, int16_t y)
 {
     render_text(text, x, y, 0);
 }

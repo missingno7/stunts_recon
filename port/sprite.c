@@ -228,7 +228,7 @@ void *sprite_make_wnd(uint16_t width, uint16_t height, uint16_t color)
     return sprite_make_window(width, height, color);
 }
 
-void sprite_free_window(void *pointer)
+void removewindow(void *pointer)
 {
     PortWindow *window = find_window((const PortSprite *)pointer);
     if (window == NULL)
@@ -258,7 +258,7 @@ void displaywindow(void)
 
 void sprite_copy_2_to_1_2(void)
 {
-    /* Active C source sprite_copy_2_to_1_2 calls sprcopy2to12, whose accepted
+    /* Active C source sprite_copy_2_to_1_2 calls usescreen, whose accepted
        body selects sprite2 through sprite_setup1_from_arg_pointer. */
     displaywindow();
 }
@@ -281,7 +281,7 @@ void savewindow(PortSprite *sprites)
     sprites[1] = sprite2;
 }
 
-void sprset1size(int16_t left, int16_t right, int16_t top, int16_t bottom)
+void clippix(int16_t left, int16_t right, int16_t top, int16_t bottom)
 {
     int width;
     int height;
@@ -301,7 +301,7 @@ void sprset1size(int16_t left, int16_t right, int16_t top, int16_t bottom)
     s_sprite1.words2[3] = (uint16_t)bottom;
 }
 
-void sprite_clear_1_color(uint8_t color)
+void clearwindow(uint8_t color)
 {
     size_t extent;
     uint8_t *pixels = sprite_pixels(&s_sprite1, &extent);
@@ -326,7 +326,7 @@ void sprite_clear_1_color(uint8_t color)
 /* Translate the 94-byte context `load_2477e` copy loop (instruction
    boundaries verified; no strict recipe). It saves a rectangle from the
    active sprite into a shape bitmap using the shape's DOS x/y origin. */
-void sprite_clear_shape(PortShape2D *shape)
+void readf(PortShape2D *shape)
 {
     size_t source_extent;
     size_t destination_extent;
@@ -370,7 +370,7 @@ void sprite_clear_shape(PortShape2D *shape)
     }
 }
 
-void sprite1_unknown2(int16_t x, int16_t y, int16_t width,
+void drawrectc(int16_t x, int16_t y, int16_t width,
                       int16_t height, int16_t color)
 {
     size_t extent;
@@ -589,7 +589,7 @@ void andcfxya(const PortShape2D *shape, int16_t x, int16_t y)
         compose_boolean(shape, x, y, 1);
 }
 
-void sprite_putimage_and_alt(const PortShape2D *shape, int16_t x, int16_t y)
+void movcfxya(const PortShape2D *shape, int16_t x, int16_t y)
 {
     /* Despite its recovered name, load_23BBC enters the opaque copy core
        (REP MOVSB/MOVSW), not the AND loop used by the other two entries. */
@@ -628,7 +628,7 @@ void movfxya(const PortShape2D *shape, int16_t x, int16_t y)
     draw_opaque(shape, x, y);
 }
 
-void sprite_shape_to_1_alt(const PortShape2D *shape)
+void movf(const PortShape2D *shape)
 {
     if (shape != NULL)
         draw_opaque(shape, shape->pos_x, shape->pos_y);
@@ -713,7 +713,7 @@ void movpackf(const PortShape2D *shape)
 
 /* The 30-byte seg012:0x23DE2 entry loads explicit x/y arguments and jumps
    into the shared run decoder at 0x23E1B. */
-void shape2d_blit_rle_at(const PortShape2D *shape, int16_t x, int16_t y)
+void movpackfxya(const PortShape2D *shape, int16_t x, int16_t y)
 {
     if (shape != NULL)
         shape2d_draw_runs(shape, (uint16_t)x, (uint16_t)y,
@@ -873,7 +873,7 @@ void movpackcfxya(const PortShape2D *shape, int16_t x, int16_t y)
     }
 }
 
-void sprite_clear_shape_alt(PortShape2D *shape, int16_t x, int16_t y)
+void readfxya(PortShape2D *shape, int16_t x, int16_t y)
 {
     size_t source_extent;
     size_t destination_extent;
@@ -932,7 +932,7 @@ void sprite_clear_shape_alt(PortShape2D *shape, int16_t x, int16_t y)
     }
 }
 
-void sprputimage(const PortShape2D *shape)
+void movcf(const PortShape2D *shape)
 {
     if (shape != NULL) {
         draw_opaque(shape, shape->pos_x, shape->pos_y);
@@ -1098,7 +1098,7 @@ void port_sprite_plot_font(int16_t x, int16_t y, uint8_t color)
 /* Host-view adapter for asm/putpixel.ASM. Its four signed
    half-open clip comparisons select the active sprite, then its lineofs[y]
    plus x address and low color byte are reproduced by the common plotter. */
-void putpixel_single_maybe(int16_t x, int16_t y, int16_t color)
+void writepixelc(int16_t x, int16_t y, int16_t color)
 {
     port_sprite_plot_active(x, y, (uint8_t)color);
 }

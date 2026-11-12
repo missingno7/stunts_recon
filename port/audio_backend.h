@@ -23,7 +23,7 @@ size_t port_audio_render_s16(int16_t *output, size_t frames,
                              unsigned sample_rate);
 int port_audio_sdl_start(void);
 void port_audio_sdl_stop(void);
-void audio_stop_unknown(void);
+void restoretimer(void);
 
 uint8_t port_audio_driver_00(void);
 void port_audio_driver_03(void);

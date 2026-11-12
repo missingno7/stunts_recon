@@ -558,7 +558,7 @@ void port_video_shutdown(void)
     s_renderer = NULL;
 }
 
-/* Implemented platform seams reached by initialize_main in M0. */
+/* Implemented platform seams reached by initmodes in M0. */
 void initgraphics(void) { }
 void video_set_mode4(void) { }
 

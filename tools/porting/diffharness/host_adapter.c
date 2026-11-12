@@ -152,7 +152,7 @@ __declspec(dllexport) int dh_call_clear_rect(const uint8_t *source_pixels,
     sprite2 = *source;
     clear_rect(x, y, width, height, destination_offset);
     sprite2 = s_default_sprite2;
-    sprite_free_window(source);
+    removewindow(source);
     return 1;
 }
 

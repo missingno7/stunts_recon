@@ -231,7 +231,7 @@ static void test_transparent_and_release_blits(void)
     uint8_t *shape;
     clear_surface();
     shape = make_shape(2, 2, 0, 0, 3, 2, pixels);
-    sprite_putimage_transparent(shape, -1, 0);
+    tmaskxcfxya(shape, -1, 0);
     assert(surface[0] == 0);
     assert(surface[1] == 0);
     assert(surface[64] == 8);
@@ -243,7 +243,7 @@ static void test_transparent_and_release_blits(void)
     active_sprite.words2[1] = 20;
     active_sprite.words2[2] = 10;
     active_sprite.words2[3] = 12;
-    release_shape_resources(shape);
+    tmaskxf(shape);
     assert(surface[2u * 64u + 3u] == 5);
     assert(surface[2u * 64u + 4u] == 0);
     assert(surface[3u * 64u + 3u] == 7);
@@ -276,7 +276,7 @@ static void test_mutable_incnums_map(void)
     active_sprite.words2[0] = 0;
     active_sprite.words2[1] = 3;
     shape = make_shape(4, 1, 0, 0, 0, 0, clipped_pixels);
-    sprite_putimage_transparent(shape, 0, 0);
+    tmaskxcfxya(shape, 0, 0);
     assert(surface[0] == 42);
     assert(surface[1] == 0);  /* map[6] == transparent sentinel */
     assert(surface[2] == 77); /* map[0xff] is drawable after remapping */
@@ -285,7 +285,7 @@ static void test_mutable_incnums_map(void)
     mcgatransrange(7, (uint16_t)sizeof(partial_map), partial_map);
     clear_surface();
     shape = make_shape(3, 1, 0, 0, 0, 0, partial_pixels);
-    sprite_putimage_transparent(shape, 0, 1);
+    tmaskxcfxya(shape, 0, 1);
     assert(surface[64] == 18);
     assert(surface[65] == 19);
     assert(surface[66] == 42);
@@ -379,12 +379,12 @@ static int emit_blit_image_set(const char *path)
 
     clear_surface();
     shape = make_shape(2, 2, 0, 0, 0, 0, alpha_pixels);
-    sprite_putimage_transparent(shape, -1, 0);
+    tmaskxcfxya(shape, -1, 0);
     memcpy(image_set, surface, sizeof(surface));
 
     clear_surface();
     shape = make_shape(2, 2, 0, 0, 3, 2, alpha_pixels);
-    release_shape_resources(shape);
+    tmaskxf(shape);
     memcpy(image_set + sizeof(surface), surface, sizeof(surface));
 
     clear_surface();

@@ -64,9 +64,9 @@ def adapt_host_idle_waits(source: str, text: str) -> str:
             ("void doreplay(I16 mode, I16 frame_index, I16 frame_offset)\n{",
              "void doreplay(I16 mode, I16 frame_index, I16 frame_offset)\n{\n"
              "    uint32_t port_replay_activity;"),
-            ("        key_code = input_checking(timer_get_delta_alt());",
+            ("        key_code = mykey(elticks());",
              "        port_replay_activity = port_guest_activity_snapshot();\n"
-             "        key_code = input_checking(timer_get_delta_alt());"),
+             "        key_code = mykey(elticks());"),
             # Only the default case is reached with no key; the key cases redraw and continue themselves.
             ("            default:\n                doreplay(1, core.game_frame, core.game_frame);\n"
              "                continue;",
@@ -78,10 +78,10 @@ def adapt_host_idle_waits(source: str, text: str) -> str:
         ])
     elif source == "src/uires.c":
         changes.extend([
-            ("    case 1:\n        do {\n            key = input_checking",
+            ("    case 1:\n        do {\n            key = mykey",
              "    case 1:\n        do {\n"
              "            uint32_t port_activity = port_guest_activity_snapshot();\n"
-             "            key = input_checking"),
+             "            key = mykey"),
             ("        } while (key == 0);",
              "            if (key == 0) port_guest_wait_for_activity(port_activity);\n"
              "        } while (key == 0);"),
@@ -96,9 +96,9 @@ def adapt_host_idle_waits(source: str, text: str) -> str:
         ])
     elif source == "src/trackedt.c":
         changes.extend([
-            ("            stepTime = timer_get_delta_alt()",
+            ("            stepTime = elticks()",
              "            uint32_t port_activity = port_guest_activity_snapshot();\n"
-             "            stepTime = timer_get_delta_alt()"),
+             "            stepTime = elticks()"),
             ("            if (key == 0 && trackStep != 0)\n"
              "                key = 1;\n        } while (key == 0);",
              "            if (key == 0 && trackStep != 0)\n"
@@ -240,9 +240,9 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
         "modulesize": "extern uint16_t modulesize(void *);",
         "locateshapez": "extern void *locateshapez(void *, const char *);",
         "fluffyload": "extern void *fluffyload(char *);",
-        "file_load_resource": "extern void *file_load_resource(I16, const char *);",
+        "myload": "extern void *myload(I16, const char *);",
         "findfirst": "extern char *findfirst(const char *);",
-        "locate_shape_alt": "extern char *locate_shape_alt(char *, char *);",
+        "getres": "extern char *getres(char *, char *);",
         "loadfilez": "extern void *loadfilez(const char *);",
         "packmemory": "extern void *packmemory(void *);",
         "segtoadr": "extern int32_t segtoadr(uint8_t *);",
@@ -256,7 +256,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
         "orpackf": "extern void orpackf(const struct SHAPE2D *);",
         "andpackf": "extern void andpackf(const struct SHAPE2D *);",
         "audio_set_chunk_callback": "extern void audio_set_chunk_callback(U16, void (*)(I16));",
-        "do_fileselect_dialog": "extern I16 do_fileselect_dialog(char *, char *, char *, char *);",
+        "floadreq": "extern I16 floadreq(char *, char *, char *, char *);",
     })
     # Local declaration surveys may omit a service entirely. Apply the same
     # executable ABI to the derived central header as well as each TU config.
@@ -321,7 +321,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             answer_read = (
                 "        if (port_input_test_auto_protection_enabled())\n"
                 "            port_input_type_test_text(resbuftext);\n"
-                "        call_read_line(userInput, textLength, points[0].x, points[0].y, 30000);")
+                "        instringz(userInput, textLength, points[0].x, points[0].y, 30000);")
             original = "void far getprotection(I16 selection)\n{"
             if transformed.count(original) != 1:
                 raise RuntimeError("Could not locate the manual-word config boundary")
@@ -331,10 +331,10 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                 "        !port_input_test_auto_protection_enabled()) {\n"
                 "        pass_check_flag = 1; return;\n    }", 1)
             if transformed.count(
-                    "        call_read_line(userInput, textLength, points[0].x, points[0].y, 30000);") != 1:
+                    "        instringz(userInput, textLength, points[0].x, points[0].y, 30000);") != 1:
                 raise RuntimeError("Could not locate the original protection line-editor call")
             transformed = transformed.replace(
-                "        call_read_line(userInput, textLength, points[0].x, points[0].y, 30000);",
+                "        instringz(userInput, textLength, points[0].x, points[0].y, 30000);",
                 answer_read, 1)
             transformed, count = re.subn(
                 r"(?m)^(\s*)(?:int|I16)\s+main(?=\s*\()",
@@ -346,11 +346,11 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             # The historical near-pointer extension occupied one word. Keep
             # that parameter as a native pointer in the host view, consistently
             # with the .trk/.rpl callers and file_combine_and_find's callee.
-            old = "I16 far do_fileselect_dialog(I8 *path, I8 *selected_name, I16 attributes,"
+            old = "I16 far floadreq(I8 *path, I8 *selected_name, I16 attributes,"
             if transformed.count(old) != 1:
                 raise RuntimeError("Could not locate the file-dialog extension pointer")
             transformed = transformed.replace(
-                old, "I16 far do_fileselect_dialog(I8 *path, I8 *selected_name, I8 *attributes,")
+                old, "I16 far floadreq(I8 *path, I8 *selected_name, I8 *attributes,")
             transformed = transformed.replace(
                 "extern I8 *file_combine_and_find(I8 *, I8 *, I16);",
                 "extern I8 *file_combine_and_find(I8 *, I8 *, I8 *);")
@@ -379,13 +379,13 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                                 "(); port_video_publish(\"" + cursor_draw + "\"); }\n")
 
             match = re.search(
-                r"(?ms)^I16\s+get_super_random\s*\(\s*void\s*\)\s*\{.*?^\}",
+                r"(?ms)^I16\s+drnd\s*\(\s*void\s*\)\s*\{.*?^\}",
                 transformed)
             if match is None:
-                raise RuntimeError("Could not locate get_super_random for the test-seed adapter")
+                raise RuntimeError("Could not locate drnd for the test-seed adapter")
             body = match.group(0)
             if body.count("rand()") != 1:
-                raise RuntimeError("Expected one rand call in get_super_random")
+                raise RuntimeError("Expected one rand call in drnd")
             transformed = (transformed[:match.start()] +
                            body.replace("rand()", "port_random_test_rand()", 1) +
                            transformed[match.end():])
@@ -589,11 +589,11 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             transformed = transformed.replace(old, "read_file_with_retry(I16 type, char *first, void *second)")
             transformed = transformed.replace("loadfileatz(first, second, third)",
                                               "loadfileatz(first, second)")
-        transformed = transformed.replace("((int16_t (*)())call_read_line)", "port_call_read_line")
+        transformed = transformed.replace("((int16_t (*)())instringz)", "port_call_read_line")
         if source == "src/render.c":
             transformed = adapt_scene_table_indices(transformed)
             transformed = adapt_update_frame(transformed)
-        transformed = probe.rewrite_calls(transformed, "call_read_line", "rename:port_call_read_line")
+        transformed = probe.rewrite_calls(transformed, "instringz", "rename:port_call_read_line")
         transformed = "extern int16_t port_call_read_line(char *, int16_t, int16_t, int16_t, int32_t);\n" + transformed
         transformed += host_view_contracts(source)
 

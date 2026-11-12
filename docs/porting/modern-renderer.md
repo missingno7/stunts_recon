@@ -123,7 +123,7 @@ simulation. Scene commands own the widened coordinates, projection and palette
 interpretation. The host never reads game globals. Semantic structs explicitly
 use pack 8 because the generated game's pack-2 ABI otherwise moves double fields.
 
-`set_projection(xangle,yangle,width,height)` takes half-angles in degrees,
+`setprojectp(xangle,yangle,width,height)` takes half-angles in degrees,
 converted by integer floor(degrees*1024/360), and uses recovered fast sin/cos.
 The renderer captures the resulting centers (`projectiondata5/8`) and focal
 scales (`projectiondata9/10`). It evaluates `cx+X*fx/Z, cy-Y*fy/Z` in doubles.

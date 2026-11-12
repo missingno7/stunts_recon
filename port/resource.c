@@ -824,13 +824,13 @@ void mcgatransrange(uint16_t start, uint16_t count, const uint8_t *mapping)
         s_incnums[(size_t)start + i] = mapping[i];
 }
 
-void sprite_putimage_transparent(void *shape_pointer, int16_t x, int16_t y)
+void tmaskxcfxya(void *shape_pointer, int16_t x, int16_t y)
 {
     putimage_transparent_at((uint8_t *)shape_pointer, x, y,
-                            "sprite_putimage_transparent");
+                            "tmaskxcfxya");
 }
 
-void release_shape_resources(void *shape_pointer)
+void tmaskxf(void *shape_pointer)
 {
     uint8_t *shape = (uint8_t *)shape_pointer;
     size_t source_extent;
@@ -881,7 +881,7 @@ void release_shape_resources(void *shape_pointer)
                 destination[destination_at] = color;
         }
     }
-    publish_transparent_blit(destination, "release_shape_resources");
+    publish_transparent_blit(destination, "tmaskxf");
 }
 
 void scalecfxy(int16_t scale, void *shape_pointer, int16_t x, int16_t y)

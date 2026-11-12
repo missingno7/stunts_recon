@@ -188,7 +188,7 @@ The input byte is recorded and replayed as a raw digital-control byte. The curre
 | 5 | shift down |
 | 6–7 | no use found in the audited player-control path; preserve if present |
 
-player_op reads the recorded byte at g_tdreplay16buf[core.game_frame]. It passes the byte to update_car_speed, which consumes input & 3 for accelerate/brake and tests 0x10/0x20 for shifts. Steering is (input >> 2) & 3. The keyboard/joystick path builds those six controls; A/Z set bits 4/5 (accepted src/carsim.c:1794-1823, player_op and update_car_speed; reference c/statecar.c:80-88,410-430, c/state.c:47-49, asmorig/seg012.asm:4010-4068 and asmorig/seg005.asm:1365-1388). The byte is written with the replay header/map as a raw frame sequence (accepted src/race.c:1320-1338).
+player_op reads the recorded byte at g_tdreplay16buf[core.game_frame]. It passes the byte to doengine, which consumes input & 3 for accelerate/brake and tests 0x10/0x20 for shifts. Steering is (input >> 2) & 3. The keyboard/joystick path builds those six controls; A/Z set bits 4/5 (accepted src/carsim.c:1794-1823, player_op and doengine; reference c/statecar.c:80-88,410-430, c/state.c:47-49, asmorig/seg012.asm:4010-4068 and asmorig/seg005.asm:1365-1388). The byte is written with the replay header/map as a raw frame sequence (accepted src/race.c:1320-1338).
 
 In DEFAULT.RPL, all 10,646 frame bytes have bits 6 and 7 clear; the only observed values are combinations of bits 0–5. This sample fact does not make upper bits safe to clear in third-party replays. Mouse-mode analog steering has a side buffer and is not encoded by these six bits (asmorig/seg005.asm:1348-1367).
 

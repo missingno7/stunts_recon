@@ -715,12 +715,12 @@ void port_audio_shutdown(void)
         purgememory(binary);
 }
 
-/* Original audio_stop_unknown only restores the DOS INT 8 vector when that
+/* Original restoretimer only restores the DOS INT 8 vector when that
    vector still belongs to its temporary handler at CS:1909. SDL owns no guest
    interrupt vector, so the corresponding host action is limited to releasing
    the PC15 stream timer state (the following audiodrv_atexit unloads the
    driver and closes the SDL stream). */
-void audio_stop_unknown(void)
+void restoretimer(void)
 {
     audio_lock();
     if (s_backend == PORT_AUDIO_PC15)

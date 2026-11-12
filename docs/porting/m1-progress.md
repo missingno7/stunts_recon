@@ -23,7 +23,7 @@ anchors include `asm/mmgr_alloc_call_group.ASM`,
 `asm/shpcopy.ASM`, `asm/copyblit.ASM`,
 `asm/fontdraw.ASM`, and `asm/font_entries.ASM`.
 
-`sprite_clear_shape` copies the active sprite rectangle at the SHAPE2D x/y
+`readf` copies the active sprite rectangle at the SHAPE2D x/y
 origin into its backing bitmap. Its 94-byte context (`load_2477e`) has verified
 instruction boundaries but no strict recipe or established C owner. A worker
 candidate compiled to 148 bytes; `promote.py --verify-only` rejected it because
@@ -67,7 +67,7 @@ references exactly, including the complete title lettering.
 
 The menu reference already contains its software cursor and magenta button
 outline. `select` initializes button 0 ("Let's Drive"),
-`mouse_timer_sprite_unknown` draws its outline, and `input_checking` draws the
+`docursor` draws its outline, and `mykey` draws the
 cursor via `doshowmouse` after mouse coordinates change. The port
 needed the INT 33h X coordinate to honor `mousehorscale` at the DOS boundary;
 SDL events remain in logical pixels. With the pointer at logical (208,189),

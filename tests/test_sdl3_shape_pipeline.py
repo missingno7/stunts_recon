@@ -252,7 +252,7 @@ def _oracle_render(image: OracleImage, symbols: SymbolMap, chunk: bytes,
 
     # Keep the original cache setup; intercept only its memory-manager boundary
     # and return a fresh, zero-filled paragraph segment for this fixture.
-    allocation = symbols.resolve("mmgr_alloc_resbytes")
+    allocation = symbols.resolve("resmem")
     alloc_cs, alloc_ip = allocation.far_at(machine.load)
     alloc_entry = _linear(alloc_cs, alloc_ip)
     allocation_calls = []
@@ -277,7 +277,7 @@ def _oracle_render(image: OracleImage, symbols: SymbolMap, chunk: bytes,
     if len(allocation_calls) != 1:
         raise AssertionError(f"original initializer made {len(allocation_calls)} pool requests")
     machine.write_ds(0x5762, _pack_far(0, pool_segment))
-    machine.call("set_projection", fixture["projection"])
+    machine.call("setprojectp", fixture["projection"])
     camera = fixture["camera"]
     machine.call("INIT_OBJECTS_BUFFER", (*camera, clip_offset, 1 if fixture["flags"] & 1 else 0))
     machine.call("ADD_OBJECT_TO_BUFFER", (ts_offset,))
@@ -382,7 +382,7 @@ __declspec(dllexport) int renderer_parity_run(
     ts.unk = unk; ts.ts_flags = flags; ts.material = material;
     for (j = 0; j < 0x10000u; ++j) port_video_pixels()[j] = 0;
     port_sprite_init();
-    set_projection(proj_left, proj_top, proj_width, proj_height);
+    setprojectp(proj_left, proj_top, proj_width, proj_height);
     (void)INIT_OBJECTS_BUFFER(z, x, y, &clip, (flags & 1u) != 0u);
     port_render_set_mode("modern");
     port_camera_scene_reference_only(0);
@@ -429,7 +429,7 @@ int port_far_from_host(const void *pointer, PortFarPtr *address_out,
 { (void)pointer; (void)address_out; (void)remaining_out; return 0; }
 void *port_far_resolve(PortFarPtr pointer, size_t extent)
 { (void)pointer; (void)extent; return 0; }
-void *mmgr_alloc_resbytes(char *name, int32_t bytes)
+void *resmem(char *name, int32_t bytes)
 { (void)name; (void)bytes; return 0; }
 '''
 

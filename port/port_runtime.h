@@ -173,39 +173,39 @@ void port_video_shutdown(void);
 void port_sprite_init(void);
 
 PortSprite *sprite_make_window(uint16_t width, uint16_t height, uint16_t color);
-void sprite_free_window(void *window);
+void removewindow(void *window);
 void sprite_setup1_from_arg_pointer(const PortSprite *sprite);
 void sprite_set_1_from_argptr(const PortSprite *sprite);
 void displaywindow(void);
 void sprite_copy_2_to_1_2(void);
 void restorewindow(const PortSprite *sprites);
 void savewindow(PortSprite *sprites);
-void sprite_clear_1_color(uint8_t color);
-void sprite_clear_shape(PortShape2D *shape);
-void sprite1_unknown2(int16_t x, int16_t y, int16_t width,
+void clearwindow(uint8_t color);
+void readf(PortShape2D *shape);
+void drawrectc(int16_t x, int16_t y, int16_t width,
                       int16_t height, int16_t color);
 void xorrectc(int16_t x, int16_t y, int16_t width,
                       int16_t height, int16_t color);
-void sprset1size(int16_t left, int16_t right, int16_t top, int16_t bottom);
+void clippix(int16_t left, int16_t right, int16_t top, int16_t bottom);
 void movfxya(const PortShape2D *shape, int16_t x, int16_t y);
-void sprite_shape_to_1_alt(const PortShape2D *shape);
+void movf(const PortShape2D *shape);
 void movpackf(const PortShape2D *shape);
-void shape2d_blit_rle_at(const PortShape2D *shape, int16_t x, int16_t y);
+void movpackfxya(const PortShape2D *shape, int16_t x, int16_t y);
 int16_t port_parse_shape2d_helper3(const uint8_t *source, uint16_t max_pixels);
 void movpackcfxya(const PortShape2D *shape, int16_t x, int16_t y);
 void movpackcf(const PortShape2D *shape);
-void sprite_clear_shape_alt(PortShape2D *shape, int16_t x, int16_t y);
+void readfxya(PortShape2D *shape, int16_t x, int16_t y);
 void andcfxya(const PortShape2D *shape, int16_t x, int16_t y);
-void sprite_putimage_and_alt(const PortShape2D *shape, int16_t x, int16_t y);
+void movcfxya(const PortShape2D *shape, int16_t x, int16_t y);
 void andcfxy(const PortShape2D *shape, int16_t x, int16_t y);
 void orcfxya(const PortShape2D *shape, int16_t x, int16_t y);
 void orcfxy(const PortShape2D *shape, int16_t x, int16_t y);
-void sprputimage(const PortShape2D *shape);
+void movcf(const PortShape2D *shape);
 void sprite_blit_dither_phase(const PortShape2D *shape, int16_t phase);
 void sprite_blit_to_video(PortSprite *window, uint16_t mode);
 void port_sprite_plot_active(int16_t x, int16_t y, uint8_t color);
 void port_sprite_plot_font(int16_t x, int16_t y, uint8_t color);
-void putpixel_single_maybe(int16_t x, int16_t y, int16_t color);
+void writepixelc(int16_t x, int16_t y, int16_t color);
 void preRender_line(int16_t x1, int16_t y1, int16_t x2, int16_t y2,
                     int16_t color);
 void drawpolypt(int16_t color, int16_t point_count,
@@ -216,8 +216,8 @@ void preRender_wheel_helper4(int16_t color, int16_t point_count, ...);
 
 void setfont(const void *font_data);
 void port_line_input_select_font(const void *font_data);
-void font_setup_unknown(uint16_t foreground, uint16_t background);
-void font_draw_text(const char *text, int16_t x, int16_t y);
+void textcolor(uint16_t foreground, uint16_t background);
+void fortextxy(const char *text, int16_t x, int16_t y);
 void movtxy(const char *text, int16_t x, int16_t y);
 int16_t textnpixels(const char *text, uint16_t count);
 int16_t textpixels(const char *text);
@@ -233,7 +233,7 @@ void zclipline(int16_t *first, int16_t *second, int16_t *output,
 void transmult(const int16_t *right_matrix, const int16_t *left_matrix,
                   int16_t *output_matrix);
 void mat_invert(int16_t *input_matrix, int16_t *output_matrix);
-void set_projection(int16_t x_angle, int16_t y_angle,
+void setprojectp(int16_t x_angle, int16_t y_angle,
                     int16_t width, int16_t height);
 int16_t thicknessxp(int16_t factor, int16_t divisor);
 void mat_vec(const int16_t *input, const int16_t *matrix,
@@ -278,9 +278,9 @@ int port_input_test_auto_protection_enabled(void);
 int port_input_type_test_text(const char *text);
 void port_random_test_set_state(uint32_t state);
 int16_t port_random_test_rand(void);
-void initialize_kevin_random(const uint8_t *seed);
+void mysetseeds(const uint8_t *seed);
 void mygetseeds(uint8_t *seed_out);
-int16_t get_kevinrandom(void);
+int16_t myrandom(void);
 void port_input_mouse_set_x_bounds(int16_t min_x, int16_t max_x);
 void port_input_mouse_set_y_bounds(int16_t min_y, int16_t max_y);
 void kb_init_interrupt(void);

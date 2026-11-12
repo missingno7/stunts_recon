@@ -11,12 +11,12 @@ flowchart TD
     Main[main menu: select]
     TrackMenu[track menu / 3D preview: teditmain]
     TrackLoad[choose and read .TRK]
-    Editor[track editor: load_tracks_menu_shapes]
+    Editor[track editor: trackedit]
     RaceCheck[compiletrack]
     Race[run_game]
-    Results[end_hiscore]
+    Results[evaluation]
     Car[selectcar: player car]
-    Opp[run_opponent_menu]
+    Opp[selectopponent]
     OppCar[selectcar: opponent car]
     Options[run_option_menu]
     ReplayPick[.RPL file selector]
@@ -54,7 +54,7 @@ The editor itself has no `run_game()` edge. It returns to the track preview. The
 
 ## Track preview and editor entry
 
-`teditmain` builds a 3D track preview by loading the sky selected at `td14tb[0x384]`, loading 3D shapes, setting projection, initializing preview state, calling `draw_track_preview`, then freeing shapes and sky (`src/frontend.c:909-925`). It prints the track name and, when the matching `.HIG` has a valid top record, the best entry (`:927-947`). The button labels are resource IDs `bmt`, `bet`, and `bmm` (`:949-956`); behavior is determined by button index, as listed above.
+`teditmain` builds a 3D track preview by loading the sky selected at `td14tb[0x384]`, loading 3D shapes, setting projection, initializing preview state, calling `drawblimpworld`, then freeing shapes and sky (`src/frontend.c:909-925`). It prints the track name and, when the matching `.HIG` has a valid top record, the best entry (`:927-947`). The button labels are resource IDs `bmt`, `bet`, and `bmm` (`:949-956`); behavior is determined by button index, as listed above.
 
 The editor loads `SDTEDIT` shapes and `TEDIT` text/layout data. It resolves 19 terrain shapes, four cursor shapes `crs0..crs3`, four placement-outline shapes `ucr0..ucr3`, the `pbox` palette layout, and `snam`/`mnam`/`tnam` piece-name tables (`src/trackedt.c:204-240`). There are 186 piece mask/fill shape pairs and 186 three-character name keys (`:227-240`, `:438-445`). It creates four size-specific cursor windows from the `crs` dimensions (`:208-215`).
 
@@ -81,9 +81,9 @@ Separately, `compiletrack` validates the horizontal and vertical terrain-connect
 
 ## Load, save, new track, and exit
 
-The track-menu load button opens `do_fileselect_dialog(..., ".trk", ...)`, builds the path, reads into `td14tb`, and returns to the 3D preview (`src/frontend.c:1013-1025`). Inside the editor, the load palette action first asks about dirty edits, then opens the same `.trk` selector; on success it reads the block, calls `compiletrack`, resets the cursor to the sampled start, and clears the dirty flag (`src/trackedt.c:686-706`).
+The track-menu load button opens `floadreq(..., ".trk", ...)`, builds the path, reads into `td14tb`, and returns to the 3D preview (`src/frontend.c:1013-1025`). Inside the editor, the load palette action first asks about dirty edits, then opens the same `.trk` selector; on success it reads the block, calls `compiletrack`, resets the cursor to the sampled start, and clears the dirty flag (`src/trackedt.c:686-706`).
 
-Save opens `fsavereq` for a `.trk` name, checks an existing file with `findfirst` and an overwrite dialog, then writes `td14tb` for exactly `0x70A` bytes. Successful save initializes that track's `.HIG` using `highscore_write_a(1)` and clears `mapDirty`; write errors show resource `ser` and allow retry (`src/trackedt.c:707-742`). New/template selection clears the first `0x384` object bytes, copies the selected 901-byte terrain template into `td15p_9`, blanks the track name, and marks it dirty (`:672-685`). Exit checks `mapDirty`; the dialog's save choice jumps into the same writer (`:742-747`).
+Save opens `fsavereq` for a `.trk` name, checks an existing file with `findfirst` and an overwrite dialog, then writes `td14tb` for exactly `0x70A` bytes. Successful save initializes that track's `.HIG` using `readhighs(1)` and clears `mapDirty`; write errors show resource `ser` and allow retry (`src/trackedt.c:707-742`). New/template selection clears the first `0x384` object bytes, copies the selected 901-byte terrain template into `td15p_9`, blanks the track name, and marks it dirty (`:672-685`). Exit checks `mapDirty`; the dialog's save choice jumps into the same writer (`:742-747`).
 
 ## Other non-race modes
 
@@ -93,17 +93,17 @@ Save opens `fsavereq` for a `.trk` name, checks an existing file with `findfirst
 
 ### Opponent selection
 
-`run_opponent_menu` loads `opp0..opp6`; opponent type 0 means no opponent and 1–6 select opponent profiles (`src/frontend.c:1655-1761`). Its five actions are previous, next, no opponent, select opponent car, and done (`:1713-1727`, `:1785-1839`). The car action is disabled when no opponent is selected. On done, an unset opponent car copies the player's car, chooses the alternate of the player's low material bit, and sets transmission 0; with no opponent it sets the opponent-car sentinel to `0xFF` (`:1818-1831`).
+`selectopponent` loads `opp0..opp6`; opponent type 0 means no opponent and 1–6 select opponent profiles (`src/frontend.c:1655-1761`). Its five actions are previous, next, no opponent, select opponent car, and done (`:1713-1727`, `:1785-1839`). The car action is disabled when no opponent is selected. On done, an unset opponent car copies the player's car, chooses the alternate of the player's low material bit, and sets transmission 0; with no opponent it sets the opponent-car sentinel to `0xFF` (`:1818-1831`).
 
 ### Options and replay selection
 
-`run_option_menu` presents the `mop` dialog and dispatches input-device settings (`mid`, keyboard/joystick/mouse), `do_mof_resource_text`, `do_sonsof_resource_text`, replay load, graphics levels, and DOS text (`src/frontend.c:1863-1944`). Selecting replay opens the `.rpl` file selector and calls `loadreplay`; it returns nonzero to main, which goes on to race setup. Cancel/back returns 0 to the main menu (`:1914-1938`, `:543-546`). The exact user-facing words for the short resource IDs are in packed resources, so this description keeps the IDs and handler names.
+`run_option_menu` presents the `mop` dialog and dispatches input-device settings (`mid`, keyboard/joystick/mouse), `mmusictog`, `msoundtog`, replay load, graphics levels, and DOS text (`src/frontend.c:1863-1944`). Selecting replay opens the `.rpl` file selector and calls `loadreplay`; it returns nonzero to main, which goes on to race setup. Cancel/back returns 0 to the main menu (`:1914-1938`, `:543-546`). The exact user-facing words for the short resource IDs are in packed resources, so this description keeps the IDs and handler names.
 
 The in-game pause dialog in `doreplay` has separate `.rpl` load and save actions. `loadreplay` reads at `td13_replay_hdr`, restores its leading `GAMEINFO`, and leaves the following payload in the contiguous track/replay buffers. The pause load branch calls `compiletrack`, reinitializes game state, and reloads car resources when the replay changed sky/car/opponent settings (`src/race.c:2071-2170`). Save picks a `.rpl` name, handles overwrite confirmation, then calls `savereplay` (`:2171-2197`). The fixed `0x724`-byte prefix is `GAMEINFO` (0x1A bytes) plus the two track blocks (0x70A bytes); the writer copies current settings into that header and appends `game_recordedframes` bytes (`src/frontend.c:477-485`; `src/race.c:1268-1291`).
 
 ### High scores and post-race results
 
-The selected track's `.HIG` file holds seven 52-byte records (`0x16C` bytes total); `highscore_write_a(0)` loads it, and `highscore_write_a(1)` creates blank defaults (`src/frontend.c:1038-1072`). The track preview displays the leading valid row (`:933-947`). `end_hiscore` compares the stored `.TRK` bytes with the current track before allowing a record; a finished time can enter the seven-place table, prompt for a name, and save the sorted table (`:2148-2183`, `:1157-1212`, `:1214-1226`). It also displays race result/speed/jump data and optional opponent animation. Main consumes result 0/1 by continuing its game loop; other results return to the menu (`:594-610`).
+The selected track's `.HIG` file holds seven 52-byte records (`0x16C` bytes total); `readhighs(0)` loads it, and `readhighs(1)` creates blank defaults (`src/frontend.c:1038-1072`). The track preview displays the leading valid row (`:933-947`). `evaluation` compares the stored `.TRK` bytes with the current track before allowing a record; a finished time can enter the seven-place table, prompt for a name, and save the sorted table (`:2148-2183`, `:1157-1212`, `:1214-1226`). It also displays race result/speed/jump data and optional opponent animation. Main consumes result 0/1 by continuing its game loop; other results return to the menu (`:594-610`).
 
 ## Address cross-reference
 
@@ -113,12 +113,12 @@ Absolute load offsets; ends are exclusive. The member extents are inventory/cont
 |---|---:|---|
 | `select` | `seg000:0x0F3C–0x10D0` | `src/frontend.c:815-887` |
 | `teditmain` | `seg000:0x10D0–0x1588` | `src/frontend.c:893-1036` |
-| `highscore_write_a` / text / entry | `seg000:0x1588–0x1A1C` (members `0x1588`, `0x168E`, `0x18D4`) | `src/frontend.c:1038-1155` |
-| `highscore_write_b` | `seg000:0x1BB4–0x1C42` | `src/frontend.c:1214-1226` |
+| `readhighs` / text / entry | `seg000:0x1588–0x1A1C` (members `0x1588`, `0x168E`, `0x18D4`) | `src/frontend.c:1038-1155` |
+| `savehighs` | `seg000:0x1BB4–0x1C42` | `src/frontend.c:1214-1226` |
 | `selectcar` | `seg000:0x1C42–0x293C` | `src/frontend.c:1236-1649` |
-| `run_opponent_menu` | `seg000:0x293C–0x2F4A` | `src/frontend.c:1655-1861` |
+| `selectopponent` | `seg000:0x293C–0x2F4A` | `src/frontend.c:1655-1861` |
 | `run_option_menu` | `seg000:0x2F4A–0x3178` | `src/frontend.c:1863-1944` |
-| `end_hiscore` | `seg000:0x3178–0x44CF` | `src/frontend.c:1957-2512` |
+| `evaluation` | `seg000:0x3178–0x44CF` | `src/frontend.c:1957-2512` |
 | `compiletrack` | `seg004:0x106D4–0x117CA` | `src/trkscene.c:1151-1867` |
 | `loadreplay` / `savereplay` | `seg005:0x12C92–0x12D2E` | `src/race.c:1268-1291` |
 | `doreplay` pause/replay actions | `seg005:0x13B4C–0x14D64` | `src/race.c:1822-2235` |

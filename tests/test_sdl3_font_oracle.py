@@ -44,7 +44,7 @@ OP_SETUP = 2
 OP_FONT_OP = 3
 OP_FONT_OP2 = 4
 RENDER_ENTRY = {
-    OP_FONT_DRAW: "font_draw_text",
+    OP_FONT_DRAW: "fortextxy",
     OP_DRAW_TEXT_AT: "movtxy",
 }
 FIXED_FRAME = bytes(
@@ -187,7 +187,7 @@ class FontOracleHarness:
         )
         self.sprite1_offset = (
             data_symbols["_sprite1"]["load_address"] -
-            symbols.resolve("font_draw_text").code_base
+            symbols.resolve("fortextxy").code_base
         )
         if self.fontdefseg_offset != FONTDEF_SEG_OFFSET:
             raise AssertionError("locked fontdefseg offset changed; re-ground this fixture")
@@ -376,7 +376,7 @@ class Sdl3FontOracleTests(unittest.TestCase):
             ("FONTLED.FNT", False, b"012345\0", 0x09, 0xD7),
         )
         for name, builtin, text, foreground, background in cases:
-            with self.subTest(font=name, path="font_draw_text"):
+            with self.subTest(font=name, path="fortextxy"):
                 output = self.compare_case(
                     f"{name} transparent", OP_FONT_DRAW, self.fonts[name],
                     builtin=builtin, foreground=foreground, background=background,
@@ -434,7 +434,7 @@ class Sdl3FontOracleTests(unittest.TestCase):
         dirty_header_font[1] = 0xA5
         dirty_header_font[3] = 0x5A
         setup_output = self.compare_case(
-            "font_setup_unknown zeroes word high bytes", OP_SETUP,
+            "textcolor zeroes word high bytes", OP_SETUP,
             bytes(dirty_header_font), foreground=0xAB07, background=0xCD02,
         )
         self.assertEqual(setup_output[VIDEO_BYTES:VIDEO_BYTES + 4],

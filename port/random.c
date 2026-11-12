@@ -22,7 +22,7 @@ int16_t port_random_test_rand(void)
     return (int16_t)((s_test_rand_state >> 16) & 0x7fffu);
 }
 
-void initialize_kevin_random(const uint8_t *seed)
+void mysetseeds(const uint8_t *seed)
 {
     if (seed == NULL)
         port_guest_unwind("null six-byte random seed");
@@ -36,9 +36,9 @@ void mygetseeds(uint8_t *seed_out)
     memcpy(seed_out, randomseeds, sizeof(randomseeds));
 }
 
-/* C translation of asm/rpmrand.ASM:get_kevinrandom. Each addition is
+/* C translation of asm/rpmrand.ASM:myrandom. Each addition is
    byte-sized, and the six increment steps propagate a carry across the seed. */
-int16_t get_kevinrandom(void)
+int16_t myrandom(void)
 {
     uint8_t value = randomseeds[5];
     unsigned index;

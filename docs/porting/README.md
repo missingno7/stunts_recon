@@ -39,7 +39,7 @@ These are implementation items rather than unknown historical facts:
 
 - Provide host file, resource and audio dispatch hooks.
 - Resolve stored segment:offset values through a bounded host address-space adapter; retain each segment, offset and complete object extent explicitly.
-- Add port-only TU views/adapters for the three remaining strict-central compiler conflicts (`call_read_line`, `read_file_with_retry`, and `send_audio_stop_event`); preserve the original record-order-sensitive spellings and machine contracts.
+- Add port-only TU views/adapters for the three remaining strict-central compiler conflicts (`instringz`, `read_file_with_retry`, and `send_audio_stop_event`); preserve the original record-order-sensitive spellings and machine contracts.
 - Implement the SDL3 timer, input, audio and indexed-renderer seams from the frozen behavior and state contracts.
 - Emit the [shared runtime trace schema](runtime-oracle.md) from the SDL3 adapter, keeping simulation steps, guest audio publications and host callbacks as separate events.
 

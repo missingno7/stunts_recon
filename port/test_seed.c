@@ -169,7 +169,7 @@ void port_test_random_wait_end(void)
         port_guest_unwind("test random_wait status sequence ended at the wrong read");
         return;
     }
-    initialize_kevin_random(s_kevin_state);
+    mysetseeds(s_kevin_state);
     port_random_test_set_state(s_rand_state);
     port_timer_test_seed_counter(s_timer_counter);
     s_seed_loaded = 0;

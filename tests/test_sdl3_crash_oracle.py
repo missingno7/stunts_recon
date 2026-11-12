@@ -103,8 +103,8 @@ class Sdl3CrashOracleTests(unittest.TestCase):
         struct.pack_into("<H", setup, 6, 1000)  # SIMD.idle_rpm
         struct.pack_into("<H", setup, 12, 8000) # SIMD.max_rpm
         case = RoutineCase(
-            name=f"original update_car_speed(2, 0), speed={speed}, speed2={speed2}",
-            routine="update_car_speed",
+            name=f"original doengine(2, 0), speed={speed}, speed2={speed2}",
+            routine="doengine",
             args=(2, 0, PLAYER_STATE_DS, CAR_SETUP_DS),
             call="far",
             memory=[
@@ -146,7 +146,7 @@ class Sdl3CrashOracleTests(unittest.TestCase):
 
         # player_op tests crash flag, speed2 and speed at these exact DS
         # operands. With crash set, speed2 zero and speed nonzero, its path
-        # passes DS:A6EA + DS:8E76 into update_car_speed with input 2.
+        # passes DS:A6EA + DS:8E76 into doengine with input 2.
         self.assertEqual(self.oracle.load_image[29184:29189],
                          bytes.fromhex("803e3f8f00"))
         self.assertEqual(self.oracle.load_image[29200:29205],
@@ -182,7 +182,7 @@ class Sdl3CrashOracleTests(unittest.TestCase):
 
     def test_crash_braking_can_restore_speed2_from_retained_car_speed(self) -> None:
         # The live trace's 588/0 -> 328/328 transition follows this original
-        # code path. update_car_speed starts from car_speed, applies brake,
+        # code path. doengine starts from car_speed, applies brake,
         # then synchronizes both words when rear wheels exist and their gap is
         # within 20 mph (0x1400). Thus speed2 is not globally monotonic through
         # the final crash frames even with throttle overridden to braking.

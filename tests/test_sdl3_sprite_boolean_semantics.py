@@ -319,7 +319,7 @@ int main(void)
         switch (operation) {
         case 0: andcfxya(shape, (int16_t)get_u16(metadata),
                                     (int16_t)get_u16(metadata + 2)); break;
-        case 1: sprite_putimage_and_alt(shape, (int16_t)get_u16(metadata),
+        case 1: movcfxya(shape, (int16_t)get_u16(metadata),
                                         (int16_t)get_u16(metadata + 2)); break;
         case 2: andcfxy(shape, (int16_t)get_u16(metadata),
                                          (int16_t)get_u16(metadata + 2)); break;
@@ -431,7 +431,7 @@ class Sdl3SpriteBooleanSemanticsTests(unittest.TestCase):
         source = (ROOT / "port" / "sprite.c").read_text(encoding="utf-8")
         actual_functions = "\n\n".join(extract_function(source, name) for name in (
             "draw_opaque", "compose_boolean", "andcfxya",
-            "sprite_putimage_and_alt", "sprite_header_relative",
+            "movcfxya", "sprite_header_relative",
             "andcfxy",
             "orcfxy",
         ))

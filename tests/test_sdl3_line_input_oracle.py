@@ -240,7 +240,7 @@ class LineInputMachine:
         )
         self.sprite1_offset = (
             data_symbols["symbols"]["_sprite1"]["load_address"] -
-            symbols.resolve("font_draw_text").code_base
+            symbols.resolve("fortextxy").code_base
         )
         self.static_offsets = {
             name: data_offset(names, name, self.dgroup_base)
@@ -274,7 +274,7 @@ class LineInputMachine:
         if self.builtin_segment != CODE_LOAD_SEGMENT + 0x2B1F:
             raise AssertionError("locked startup font pointer no longer selects FONTDEF builtin")
 
-        self.sprite_routine = symbols.resolve("font_draw_text")
+        self.sprite_routine = symbols.resolve("fortextxy")
         self.sprite_segment, _ = self.sprite_routine.far_at(CODE_LOAD_SEGMENT)
         descriptor = [0] * 15
         descriptor[1] = VIDEO_SEGMENT

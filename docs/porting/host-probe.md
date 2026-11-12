@@ -113,7 +113,7 @@ Accepted C sources: 38
 - **pointer size assumptions:** compiler diagnostic; 4 distinct warning/error lines
   - `src\frontend.c:511:10: warning: pointer targets in assignment from 'uint8_t *' {aka 'unsigned char *'} to 'char *' differ in signedness [-Wpointer-sign]`
   - `src\frontend.c:552:87: warning: pointer targets in passing argument 2 of 'loadfileat' differ in signedness [-Wpointer-sign]`
-  - `src\frontend.c:761:92: warning: passing argument 3 of 'locate_many_resources' from incompatible pointer type [-Wincompatible-pointer-types]`
+  - `src\frontend.c:761:92: warning: passing argument 3 of 'locateshapes' from incompatible pointer type [-Wincompatible-pointer-types]`
   - ? 1 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **far pointer normalization:** segmented pointer qualifier is erased to a flat host pointer
 - **signed shift:** shift expression; inspect signed operands and overflow assumptions
@@ -206,7 +206,7 @@ Accepted C sources: 38
 - Existing tags: PLATFORM(audio)@638,760,767,901,946 (+23); PLATFORM(file)@639,666,1361,1364,1367 (+24); PLATFORM(input_joy)@640,681,725,761,885 (+34); PLATFORM(input_kb)@641,682,725,759,769 (+27); PLATFORM(input_mouse)@642,683,711,725,759 (+30); PLATFORM(timer)@643,684,762,950,977 (+33); PLATFORM(video)@644,685,763,769,781 (+124); PLATFORM(memory)@1454,1713,1714,1730,1752 (+8); PORT: plain char signedness follows the pinned MSC target.@31; PORT: aggregate field offsets rely on the pinned MSC default /Zp packing.@37,45,50,55 (+11); PORT: negative signed 32-bit world coordinates rely on arithmetic right shift.@1298,1300,1302; PORT: car_speed is unsigned 16-bit Q8 mph; this shift is a zero-fill conversion.@1621
 - **implicit int widths:** bare int/unsigned int spelling (host int is 32-bit; DOS MSC int is 16-bit); 267 distinct warning/error lines
   - `src\race.c:601:13: warning: conflicting types for built-in function 'exit'; expected 'void(int)' [-Wbuiltin-declaration-mismatch]`
-  - `src\race.c:657:19: warning: implicit declaration of function 'get_kevinrandom' [-Wimplicit-function-declaration]`
+  - `src\race.c:657:19: warning: implicit declaration of function 'myrandom' [-Wimplicit-function-declaration]`
   - `src\race.c:657:19: warning: conversion from 'int' to 'int16_t' {aka 'short int'} may change value [-Wconversion]`
   - ? 264 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **far pointer normalization:** segmented pointer qualifier is erased to a flat host pointer
@@ -214,7 +214,7 @@ Accepted C sources: 38
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 7 distinct warning/error lines
   - `src\race.c:61:32: warning: ISO C does not allow extra ';' outside of a function [-Wpedantic]`
-  - `src\race.c:1063:6: warning: no previous prototype for 'initialize_unknown' [-Wmissing-prototypes]`
+  - `src\race.c:1063:6: warning: no previous prototype for 'initworld' [-Wmissing-prototypes]`
   - `src\race.c:1269:10: warning: no previous prototype for 'movehelicopters' [-Wmissing-prototypes]`
   - ? 4 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - Tagging follow-up: the screened hazards have matching source PORT tags
@@ -277,8 +277,8 @@ Accepted C sources: 38
   - `src\uires.c:820:45: warning: passing argument 3 of 'getmousepos' from incompatible pointer type [-Wincompatible-pointer-types]`
   - ? 12 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **far pointer normalization:** segmented pointer qualifier is erased to a flat host pointer; 12 distinct warning/error lines
-  - `src\uires.c:1431:43: warning: passing argument 2 of 'file_load_resource' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]`
-  - `src\uires.c:1432:43: warning: passing argument 2 of 'file_load_resource' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]`
+  - `src\uires.c:1431:43: warning: passing argument 2 of 'myload' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]`
+  - `src\uires.c:1432:43: warning: passing argument 2 of 'myload' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]`
   - `src\uires.c:1433:63: warning: passing argument 3 of 'init_audio_resources' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]`
   - ? 9 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **signed shift:** shift expression; inspect signed operands and overflow assumptions
@@ -301,7 +301,7 @@ Accepted C sources: 38
   - `src\trackedt.c:121:1: warning: function declaration isn't a prototype [-Wstrict-prototypes]`
   - ? 114 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - **pointer size assumptions:** compiler diagnostic; 4 distinct warning/error lines
-  - `src\trackedt.c:239:70: warning: passing argument 3 of 'locate_many_resources' from incompatible pointer type [-Wincompatible-pointer-types]`
+  - `src\trackedt.c:239:70: warning: passing argument 3 of 'locateshapes' from incompatible pointer type [-Wincompatible-pointer-types]`
   - `src\trackedt.c:262:17: warning: pointer targets in assignment from 'uint8_t *' {aka 'unsigned char *'} to 'char *' differ in signedness [-Wpointer-sign]`
   - `src\trackedt.c:268:17: warning: pointer targets in assignment from 'uint8_t *' {aka 'unsigned char *'} to 'char *' differ in signedness [-Wpointer-sign]`
   - ? 1 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
@@ -309,7 +309,7 @@ Accepted C sources: 38
 - **signed shift:** shift expression; inspect signed operands and overflow assumptions
 - **struct packing:** aggregate layout needs host review where it crosses file/API or serialized-data boundaries
 - **other compiler diagnostic:** compiler diagnostic; 5 distinct warning/error lines
-  - `src\trackedt.c:177:6: warning: no previous prototype for 'load_tracks_menu_shapes' [-Wmissing-prototypes]`
+  - `src\trackedt.c:177:6: warning: no previous prototype for 'trackedit' [-Wmissing-prototypes]`
   - `src\trackedt.c:931:6: warning: no previous prototype for 'drawpiecebox' [-Wmissing-prototypes]`
   - `src\trackedt.c:972:6: warning: no previous prototype for 'drawtrackbox' [-Wmissing-prototypes]`
   - ? 2 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
@@ -320,7 +320,7 @@ Accepted C sources: 38
 - Compile: syntax `ok`, object `ok`; distinct diagnostics: 4 warnings, 0 errors.
 - Existing tags: PLATFORM(file)@6,8,14,18,26 (+3)
 - **other compiler diagnostic:** compiler diagnostic; 4 distinct warning/error lines
-  - `src\reslook.c:7:6: warning: no previous prototype for 'locate_many_resources' [-Wmissing-prototypes]`
+  - `src\reslook.c:7:6: warning: no previous prototype for 'locateshapes' [-Wmissing-prototypes]`
   - `src\reslook.c:15:10: warning: no previous prototype for 'locateshapesz' [-Wmissing-prototypes]`
   - `src\reslook.c:27:10: warning: no previous prototype for 'file_find_sounds_required' [-Wmissing-prototypes]`
   - ? 1 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
@@ -402,7 +402,7 @@ Accepted C sources: 38
 - **other compiler diagnostic:** compiler diagnostic; 10 distinct warning/error lines
   - `src\startup.c:16:11: warning: no previous prototype for 'file_load_shape2d_nofatal2' [-Wmissing-prototypes]`
   - `src\startup.c:25:10: warning: no previous prototype for 'file_combine_and_find' [-Wmissing-prototypes]`
-  - `src\startup.c:39:11: warning: no previous prototype for 'file_find_next_alt' [-Wmissing-prototypes]`
+  - `src\startup.c:39:11: warning: no previous prototype for 'myfindnext' [-Wmissing-prototypes]`
   - ? 7 additional categorized diagnostic rows; see `build/porting/host-probe/host/results.json`.
 - Tagging follow-up: add/review `PORT:` coverage for implicit int widths; add/review `PORT:` coverage for far pointer normalization; add/review `PORT:` coverage for signed shift; add/review `PORT:` coverage for struct packing
 

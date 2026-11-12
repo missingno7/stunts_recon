@@ -1282,12 +1282,12 @@ def enum_unit_lifetime_replay(name, typ, owner_subsystem, readers, writers, addr
                 "textrespfxchr", "word_3f88e", "g_audchnkvalue", "vidflg4_is1"}:
         replay_class, preserve = "presentation_or_derived_workspace", False
         reason = "Accepted readers/writers place this value in rendering, menu, resource, or audio setup. It is recomputed or reloaded outside the authoritative GAMESTATE/input checkpoint."
-    elif funcs and all(fn in {"drawworld", "draw_track_preview", "drawworldflipzones", "skybox_op_helper2", "drawhorizon",
-                              "initscenery", "removescenery", "load_tracks_menu_shapes", "dodash",
-                              "shape3d_free_car_shapes", "shape3d_load_car_shapes", "add_object_to_buffer", "init_objects_buffer",
-                              "initnm", "norm_zone", "mouse_timer_sprite_unknown", "get_pstring",
+    elif funcs and all(fn in {"drawworld", "drawblimpworld", "drawworldflipzones", "skybox_op_helper2", "drawhorizon",
+                              "initscenery", "removescenery", "trackedit", "dodash",
+                              "remove_3dcars", "init_3dcars", "add_object_to_buffer", "init_objects_buffer",
+                              "initnm", "norm_zone", "docursor", "get_pstring",
                               "read_line_helper", "read_line_helper2", "do_joystick_resource_text",
-                              "mkeyon", "do_mou_resource_text", "msystempause"} for fn in funcs):
+                              "mkeyon", "mmouseon", "msystempause"} for fn in funcs):
         replay_class, preserve = "presentation_or_derived_workspace", False
         reason = "Every indexed access is in accepted drawing, transformation, menu, or resource-presentation code; the value is not authoritative replay input or checkpoint state."
     elif owner_subsystem in ("simulation", "track_replay") and writers:

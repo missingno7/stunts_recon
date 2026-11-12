@@ -332,7 +332,7 @@ class Sdl3CrashResultsTests(unittest.TestCase):
             self.assertIn(crash_state["speed2"],
                           (0, crash_state["impact_speed"]),
                           f"crash did not capture or suppress impact speed: {crash_state}")
-            # update_car_speed can resynchronize speed2 from the independently
+            # doengine can resynchronize speed2 from the independently
             # braking speed word: the locked 588/0 case becomes 328/328.
             # A global monotonicity assertion would reject original behavior.
             self.assertEqual(crash_states[-1]["speed2"], 0,

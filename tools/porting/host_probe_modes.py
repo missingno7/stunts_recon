@@ -103,7 +103,7 @@ def local_names_and_types(source: str, text: str):
             continue
         expected = len(typ.get("params") or [])
         arities = observed.get(name, set())
-        if name == "call_read_line" or any(n != expected for n in arities):
+        if name == "instringz" or any(n != expected for n in arities):
             linkage = "static " if re.search(r"\bstatic\b", proto) else "extern "
             fn_protos[name] = linkage + render_type(typ["ret"], name + "()", target=False) + ";"
     static_data = set()
@@ -331,12 +331,12 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
         # Keep the host's DOS offset word until its camera adapter resolves it.
         out = out.replace("cameraOverlay.dataPointer", "cameraOverlay.cameraOffsetOverride")
     if source == "src/uires.c":
-        out = re.sub(r"\bU32\s+(?:far\s+)?timer_get_delta_alt\s*\(",
-                     "I16 far timer_get_delta_alt(", out)
+        out = re.sub(r"\bU32\s+(?:far\s+)?elticks\s*\(",
+                     "I16 far elticks(", out)
         # Keep the six-word definition intact; strict mode redirects only its
         # legacy five-argument callers to the API view that splits the final I32.
         mode = "rename:stunts_port_call_read_line_view" if STRICT_CENTRAL else "unprototyped"
-        out = rewrite_calls(out, "call_read_line", mode)
+        out = rewrite_calls(out, "instringz", mode)
     # C does not permit an integer cast as an assignment lvalue. These legacy
     # spellings cast the value-width of globals whose declarations already carry it.
     out = re.sub(r"\(\(\s*((?:I8S|U8|I16S|U16S|I16|U16|I32|U32))\s*\)\s*([A-Za-z_]\w*)\s*\)\s*=(?!=)\s*([^;]+);",
@@ -351,7 +351,7 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
             # These source callers keep typed port views while central declarations
             # describe the proven target stack-word contracts.
             out = rewrite_calls(out, "read_file_with_retry", "rename:stunts_port_read_file_with_retry_view")
-            out = rewrite_calls(out, "call_read_line", "rename:stunts_port_call_read_line_view")
+            out = rewrite_calls(out, "instringz", "rename:stunts_port_call_read_line_view")
             out = rewrite_calls(out, "locate_shape_fatal", "rename:stunts_port_locate_shape_fatal_shape_view")
     if source == "src/toupper.c":
         out = re.sub(r"\bI16\s+cap\s*\(\s*I16\s+ch\s*\)",
@@ -460,6 +460,10 @@ def run_one(source: str, overlay: Path, cfg: Path, index: int):
     common = [str(GCC), *FLAGS, "-DPORT_BUILD=1", "-include", str(HOST / "compat.h"),
               "-include", str(cfg), "-I", str(PORT), "-I", str(HOST / "include"),
               "-I", str(ROOT / "include"), "-I", str(ROOT / "src")]
+    if source == "src/frontend.c":
+        # The main unit carries tentative definitions of shared simulation state;
+        # as under LINK they merge with the definitions the host build already has.
+        common.append("-fcommon")
     runs = []
     for mode in ("syntax", "object"):
         cmd = [*common, "-fsyntax-only", str(overlay)] if mode == "syntax" else [
