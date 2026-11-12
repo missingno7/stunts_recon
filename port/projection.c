@@ -1,7 +1,7 @@
 #include "port_runtime.h"
 
 /* Data words initialized alongside _setprojectp in
-   asm/project.ASM. These stay 16-bit because the game uses
+   lib/project.ASM. These stay 16-bit because the game uses
    word-sized projection coordinates and fixed-point scales. */
 int16_t projection_half_width = 160;
 int16_t projection_half_height = 100;
@@ -102,7 +102,7 @@ static uint16_t projection_scale(uint16_t angle, uint16_t half_extent)
     return (uint16_t)(dividend / sine);
 }
 
-/* Semantic C translation of asm/project.ASM:_setprojectp.
+/* Semantic C translation of lib/project.ASM:_setprojectp.
    The current logo caller passes (40, 40, 320, 200). */
 void setprojectp(int16_t x_angle, int16_t y_angle,
                     int16_t width, int16_t height)
@@ -144,7 +144,7 @@ void setprojectp(int16_t x_angle, int16_t y_angle,
 }
 
 /* Semantic translation of the 14-byte accepted
-   asm/mathres.ASM helper. MUL and DIV both consume
+   lib/mathres.ASM helper. MUL and DIV both consume
    unsigned 16-bit words even though the original C declarations are signed. */
 int16_t thicknessxp(int16_t factor_arg, int16_t divisor_arg)
 {

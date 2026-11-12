@@ -26,7 +26,7 @@ def _c_functions(root: Path):
     )
 
     found = defaultdict(list)
-    paths = sorted((root / "src").rglob("*.c")) + sorted((root / "port").glob("*.c"))
+    paths = sorted((root / "game").rglob("*.c")) + sorted((root / "lib").rglob("*.c")) + sorted((root / "port").glob("*.c"))
     for path in paths:
         text = path.read_text(encoding="latin-1")
         code = mask_comments(text)

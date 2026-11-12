@@ -81,11 +81,11 @@ def assert_build_ready() -> None:
     # Require a complete report and executable newer than gameplay, rendering,
     # file, trace, and audio inputs exercised by this long-running scenario.
     required_inputs = (
-        ROOT / "src" / "trkconst.c",
-        ROOT / "src" / "carsim.c",
-        ROOT / "src" / "render.c",
-        ROOT / "src" / "trkscene.c",
-        ROOT / "src" / "race.c",
+        ROOT / "game" / "trkconst.c",
+        ROOT / "game" / "carsim.c",
+        ROOT / "game" / "render.c",
+        ROOT / "game" / "trkscene.c",
+        ROOT / "game" / "race.c",
         ROOT / "port" / "main.c",
         ROOT / "port" / "game_abi.py",
         ROOT / "port" / "sprite.c",

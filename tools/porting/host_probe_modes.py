@@ -161,7 +161,7 @@ def local_config(source: str, text: str, owner: str):
                 typ = parse_type_declaration(spec.get("declaration", ""), name)
                 if typ and typ.get("k") == "fn":
                     fn_protos[name] = "extern " + render_type(typ["ret"], name + "()", target=False) + ";"
-        if source == "src/frontend.c" and "locate_shape_fatal" in fn_protos:
+        if source == "game/frontend.c" and "locate_shape_fatal" in fn_protos:
             fn_protos["locate_shape_fatal"] = "extern struct SHAPE2D *locate_shape_fatal();"
     lines = ["/* Generated per-TU PORT_BUILD declaration replacement. */",
              "#ifndef PORT_BUILD", "#define PORT_BUILD 1", "#endif"]
@@ -318,19 +318,19 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
     out = text
     for a, b in sorted(set(removals), reverse=True):
         out = out[:a] + "\n#ifndef PORT_BUILD\n" + out[a:b] + "\n#endif /* PORT_BUILD */\n" + out[b:]
-    if source == "src/audioeng.c":
+    if source == "game/audioeng.c":
         out = replace_seg007_asm(out, STRICT_CENTRAL)
         out = re.sub(r"typedef\s+unsigned\s+int\s+u16\s*;", "typedef uint16_t u16;", out)
         out = re.sub(r"typedef\s+unsigned\s+long\s+u32\s*;", "typedef uint32_t u32;", out)
         out = re.sub(r"typedef\s+unsigned\s+char\s+u8\s*;", "typedef uint8_t u8;", out)
         out = '#include "seg007_arith.h"\n' + out
-    if source == "src/render.c":
+    if source == "game/render.c":
         out = out.replace("((I16)statemgmtcpy) = ((I16)slow_video_mode_state);",
                           "statemgmtcpy = (I16)slow_video_mode_state; /* PORT_BUILD: replace target lvalue cast. */")
-    if source == "src/trkscene.c":
+    if source == "game/trkscene.c":
         # Keep the host's DOS offset word until its camera adapter resolves it.
         out = out.replace("cameraOverlay.dataPointer", "cameraOverlay.cameraOffsetOverride")
-    if source == "src/uires.c":
+    if source == "game/uires.c":
         out = re.sub(r"\bU32\s+(?:far\s+)?elticks\s*\(",
                      "I16 far elticks(", out)
         # Keep the six-word definition intact; strict mode redirects only its
@@ -341,10 +341,10 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
     # spellings cast the value-width of globals whose declarations already carry it.
     out = re.sub(r"\(\(\s*((?:I8S|U8|I16S|U16S|I16|U16|I32|U32))\s*\)\s*([A-Za-z_]\w*)\s*\)\s*=(?!=)\s*([^;]+);",
                  lambda m: f"{m.group(2)} = ({m.group(1)})({m.group(3)}); /* PORT_BUILD lvalue cast */", out)
-    if source == "src/startup.c":
+    if source == "lib/startup.c":
         out = re.sub(r"\bvoid\s+(?:far\s+)?nullsub_2\s*\(\s*void\s*\)",
                      "void nullsub_2(void *resource, int16_t selector)", out, count=1)
-    if source == "src/frontend.c":
+    if source == "game/frontend.c":
         out = re.sub(r"\bI16\s+main\s*\(\s*I16\s+argc\s*,\s*I8\s*\*\s*argv\[\s*\]\s*\)",
                      "int main(int argc, I8 *argv[])", out, count=1)
         if STRICT_CENTRAL:
@@ -353,25 +353,25 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
             out = rewrite_calls(out, "read_file_with_retry", "rename:stunts_port_read_file_with_retry_view")
             out = rewrite_calls(out, "instringz", "rename:stunts_port_call_read_line_view")
             out = rewrite_calls(out, "locate_shape_fatal", "rename:stunts_port_locate_shape_fatal_shape_view")
-    if source == "src/toupper.c":
+    if source == "lib/toupper.c":
         out = re.sub(r"\bI16\s+cap\s*\(\s*I16\s+ch\s*\)",
                      "int cap(int ch)", out, count=1)
     if STRICT_CENTRAL:
-        if source == "src/lineedit.c":
+        if source == "lib/lineedit.c":
             out = rewrite_calls(out, "setticks", "rename:stunts_port_timer_copy_counter_split_view")
-        if source == "src/audioply.c":
+        if source == "lib/audioply.c":
             out = rewrite_calls(out, "audio_init_chunk", "rename:stunts_port_audio_init_chunk_7_view")
-        if source == "src/audioeng.c":
+        if source == "game/audioeng.c":
             out = rewrite_calls(out, "send_audio_stop_event", "rename:stunts_port_send_audio_stop_event_value_view")
-        if source == "src/render.c":
+        if source == "game/render.c":
             out = re.sub(r"\bresbuftext\s*=\s*0\s*;", "resbuftext[0] = 0;", out, count=1)
     out = rewrite_calls(out, "nullsub_2", "pad2")
     if STRICT_CENTRAL:
         out = legacy_target_widths(out)
-    if source == "src/frontend.c":
+    if source == "game/frontend.c":
         out = re.sub(r"\bI16\s+main\s*\(\s*I16\s+argc\s*,\s*I8\s*\*\s*argv\[\s*\]\s*\)",
                      "int main(int argc, I8 *argv[])", out, count=1)
-    if source == "src/toupper.c":
+    if source == "lib/toupper.c":
         out = re.sub(r"\bI16\s+cap\s*\(\s*I16\s+ch\s*\)",
                      "int cap(int ch)", out, count=1)
     return out, len(set(removals))
@@ -459,8 +459,8 @@ def run_one(source: str, overlay: Path, cfg: Path, index: int):
     obj.parent.mkdir(parents=True, exist_ok=True)
     common = [str(GCC), *FLAGS, "-DPORT_BUILD=1", "-include", str(HOST / "compat.h"),
               "-include", str(cfg), "-I", str(PORT), "-I", str(HOST / "include"),
-              "-I", str(ROOT / "include"), "-I", str(ROOT / "src")]
-    if source == "src/frontend.c":
+              "-I", str(ROOT / "include"), "-I", str(ROOT / "game"), "-I", str(ROOT / "lib")]
+    if source == "game/frontend.c":
         # The main unit carries tentative definitions of shared simulation state;
         # as under LINK they merge with the definitions the host build already has.
         common.append("-fcommon")

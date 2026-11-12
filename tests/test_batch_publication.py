@@ -89,7 +89,7 @@ class BuildAttributionTests(unittest.TestCase):
             {'id': 'a', 'kind': 'MATCHING_C', 'recipe': 'recipes/a.json', 'start': 0, 'end': 2},
             {'id': 'b', 'kind': 'MATCHING_C', 'recipe': 'recipes/b.json', 'start': 2, 'end': 4},
             {'id': 'c', 'kind': 'MATCHING_C', 'recipe': 'recipes/c.json', 'start': 4, 'end': 6}]}
-        recipes = {o['recipe']: {'start': o['start'], 'end': o['end'], 'source': 'src/'+o['id']+'.c'}
+        recipes = {o['recipe']: {'start': o['start'], 'end': o['end'], 'source': 'game/'+o['id']+'.c'}
                    for o in manifest['owners']}
 
         def probe(recipe, oracle, override):
@@ -97,7 +97,7 @@ class BuildAttributionTests(unittest.TestCase):
                 raise ValueError('bytes differ at ' + recipe['source'])
             return b'xx', {'binding': {}}
         with patch.object(build_exact, 'probe', side_effect=probe):
-            with self.assertRaisesRegex(ValueError, 'src/b.c') as caught:
+            with self.assertRaisesRegex(ValueError, 'game/b.c') as caught:
                 build_exact._compile_owners(manifest, recipes, {}, None)
         self.assertEqual((caught.exception.owner_id, caught.exception.owner_recipe),
                          ('b', 'recipes/b.json'))
@@ -114,7 +114,7 @@ class BatchStageTests(unittest.TestCase):
         def check(name, source, recipe_data, manifest, oracle, image):
             if name in fail_individual:
                 raise ValueError('individual failure ' + name)
-            return ({'id': name}, 'src/'+name+'.c', b'P'*4, {'fast': name}, manifest)
+            return ({'id': name}, 'game/'+name+'.c', b'P'*4, {'fast': name}, manifest)
 
         def ownership(manifest, name, recipe, oracle, image):
             return {'owners': manifest['owners'] + [name]}
@@ -201,7 +201,7 @@ class BatchPublicationTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)
-        for folder in ('build', 'src', 'recipes', 'layout'):
+        for folder in ('build', 'game', 'recipes', 'layout'):
             (self.root / folder).mkdir(parents=True, exist_ok=True)
         (self.root / 'layout/manifest.json').write_bytes(b'old manifest')
         self.candidates = []
@@ -216,7 +216,7 @@ class BatchPublicationTests(unittest.TestCase):
     def publish(self, canonical_build):
         def stage(entries, before, **kwargs):
             for e in entries:
-                e.update(recipe={'id': e['name']}, destination='src/'+e['name']+'.c',
+                e.update(recipe={'id': e['name']}, destination='game/'+e['name']+'.c',
                          payload=b'PP', fast={}, independent={'exact': True})
             return entries, {'owners': ['new']}, {'executable': 'E', 'relocation_count': 1}, {}
         state = {'before': {'layout/manifest.json': 'old'}}
@@ -224,7 +224,7 @@ class BatchPublicationTests(unittest.TestCase):
         def inputs():
             return {p.relative_to(self.root).as_posix(): B.sha(p.read_bytes())
                     for p in self.root.rglob('*') if p.is_file() and
-                    p.parts[len(self.root.parts)] in ('src', 'recipes', 'layout')}
+                    p.parts[len(self.root.parts)] in ('game', 'recipes', 'layout')}
         with ExitStack() as stack:
             for module in (B, transaction):
                 stack.enter_context(patch.object(module, 'ROOT', self.root))
@@ -241,8 +241,8 @@ class BatchPublicationTests(unittest.TestCase):
                     'matching_c_bytes': 1, 'matching_asm_bytes': 0, 'raw_initialized_bytes': 0}
         summary = self.publish(canonical)
         self.assertEqual(summary['status'], 'PROMOTED')
-        self.assertEqual((self.root / 'src/one.c').read_bytes(), b'int one;\n')
-        self.assertEqual((self.root / 'src/two.c').read_bytes(), b'int two;\n')
+        self.assertEqual((self.root / 'game/one.c').read_bytes(), b'int one;\n')
+        self.assertEqual((self.root / 'game/two.c').read_bytes(), b'int two;\n')
         self.assertFalse((self.root / 'build/publication.json').exists())
         self.assertIn(b'"new"', (self.root / 'layout/manifest.json').read_bytes())
 
@@ -251,8 +251,8 @@ class BatchPublicationTests(unittest.TestCase):
             raise ValueError('Full image mismatch')
         with self.assertRaisesRegex(ValueError, 'Full image mismatch'):
             self.publish(canonical)
-        self.assertFalse((self.root / 'src/one.c').exists())
-        self.assertFalse((self.root / 'src/two.c').exists())
+        self.assertFalse((self.root / 'game/one.c').exists())
+        self.assertFalse((self.root / 'game/two.c').exists())
         self.assertEqual((self.root / 'layout/manifest.json').read_bytes(), b'old manifest')
         self.assertFalse((self.root / 'build/publication.json').exists())
 

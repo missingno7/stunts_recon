@@ -34,7 +34,7 @@ class AsmContributionTests(unittest.TestCase):
         cls.obj, _ = assemble_source(VIDEO, 'masm510-game')
         start, end = 143356, 143366
         cls.recipe = {'id':'video_get_status','kind':'asm','start':start,'end':end,
-                      'source':'asm/video_get_status.ASM','profile':'masm510-game',
+                      'source':'lib/video_get_status.ASM','profile':'masm510-game',
                       'include_closure':[], 'assembler_flags':['/Mx','/I.'],
                       'object_segment':'S012_TEXT',
                       'public':'_video_get_status','target':identity(cls.image[start:end]),
@@ -56,7 +56,7 @@ class AsmContributionTests(unittest.TestCase):
 
     def test_asm_rejects_external_source_closure(self):
         for source in (b'include include\\missing_file.inc\n',
-                       b'include include\\..\\src\\frontend.c\n',
+                       b'include include\\..\\game\\frontend.c\n',
                        b'includelib external.lib\n', b'org 100h\n', b'\xff'):
             with self.subTest(source=source), self.assertRaises(ValueError):
                 asm_source(source)

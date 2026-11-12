@@ -45,7 +45,7 @@ class ContextTests(unittest.TestCase):
             write_json(root / 'evidence/functions.json', {'functions': [row], 'anchors': [], 'globals': []})
             write_json(root / 'layout/manifest.json', {'owners': [{'id': 'load_1234', 'kind': 'MATCHING_C',
                        'name': 'fixture', 'start': 10, 'end': 12, 'recipe': 'recipes/fixture.json'}]})
-            write_json(root / 'recipes/fixture.json', {'name': 'fixture', 'source': 'src/active.c',
+            write_json(root / 'recipes/fixture.json', {'name': 'fixture', 'source': 'game/active.c',
                        'profile': 'msc510-medium', 'object_segment': 'UNIT_TEXT', 'public': '_fixture',
                        'target': {'size': 2, 'sha256': 'a' * 64}, 'expected_fixups': [], 'expected_relocations': []})
             write_json(root / 'build/search/one/report.json', {'run_id': 'one', 'created_utc': '2026-01-01',
@@ -110,7 +110,7 @@ class SearchTests(unittest.TestCase):
                 self.assertEqual(frozen.read_bytes(), before)
                 self.assertTrue((root / report['observed_output']['path']).is_file())
                 self.assertEqual(candidate.read_bytes(), before)
-                self.assertFalse((root / 'src').exists())
+                self.assertFalse((root / 'game').exists())
 
     def test_environment_identity_ignores_unrelated_search_history(self):
         with tempfile.TemporaryDirectory() as temp:

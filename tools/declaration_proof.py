@@ -42,8 +42,8 @@ def candidate_changes(target, candidate, headers, files):
                if target in (item['recipe']['source'], *item['owners'])}
     require(len(sources) == 1, 'Select one active owner or canonical source path')
     source = sources.pop()
-    require((source.startswith('src/') and source.endswith('.c')) or
-            (source.startswith('asm/') and source.endswith('.ASM')), 'Select a canonical C or MASM source')
+    require((source.startswith(('game/', 'lib/')) and source.endswith('.c')) or
+            (source.startswith(('game/', 'lib/')) and source.endswith('.ASM')), 'Select a canonical C or MASM source')
     changes = {source: Path(candidate).resolve().read_bytes()}
     for value in headers:
         name, separator, path = value.partition('=')
@@ -65,13 +65,13 @@ def worker(request):
     from declaration_sources import refresh_source_bases
     from declaration_scope import requires_raw_objects
     raw_reasons = requires_raw_objects(files, changes)
-    object_exact = request.get('object_exact') or bool(raw_reasons) or any(p.startswith('asm/') for p in changes)
+    object_exact = request.get('object_exact') or bool(raw_reasons) or any(p.endswith('.ASM') for p in changes)
     engine = ProofEngine(ROOT, files, changes_factory=lambda files, rows: dict(changes),
                          post_compare=refresh_source_bases,
                          comparator=strict_object_compare if object_exact else declaration_compare)
     # Include inactive source recipes too: none may retain stale closure/index
     # metadata for a source or header changed by this transaction.
-    affected_sources = {name for name in changes if name.startswith(('src/', 'asm/'))}
+    affected_sources = {name for name in changes if name.startswith(('game/', 'lib/'))}
     for name, raw in files.items():
         if name.startswith('recipes/') and name.endswith('.json'):
             recipe = json.loads(raw)

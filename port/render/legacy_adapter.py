@@ -24,10 +24,10 @@ def adapt_render_stream(source: str) -> str:
 
 
 def adapt_render_layers(unit: str, source: str) -> str:
-    if unit == "src/render.c":
+    if unit == "game/render.c":
         anchor="void drawworld(I8 page, struct RECTANGLE* clip) {"
         call="port_render_world_arm(); port_camera_scene_begin();"
-    elif unit == "src/frontend.c":
+    elif unit == "game/frontend.c":
         anchor="select(void)\n{"
         call="port_render_world_clear();"
     else:

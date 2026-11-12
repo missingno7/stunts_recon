@@ -9,7 +9,7 @@
 
 /*
  * Faithful C translation of the DOS sprite-window descriptor and row-table
- * setup in asm/patlines.ASM and asm/patlines.ASM. The
+ * setup in lib/patlines.ASM. The
  * 16-bit row-table offsets become host pointers in the PORT_BUILD overlay;
  * pixel storage retains the original 16-byte SHAPE2D header and row-major
  * indexed bytes.
@@ -199,7 +199,7 @@ PortSprite *sprite_make_window(uint16_t width, uint16_t height, uint16_t color)
         port_guest_unwind("MCGA window descriptor table exhausted");
 
     pixels = (uint32_t)width * height;
-    /* asm/patlines.ASM: ((width*height + 16) >> 4) + 1 paragraphs. */
+    /* lib/patlines.ASM: ((width*height + 16) >> 4) + 1 paragraphs. */
     paragraphs = ((pixels + 16u) >> 4) + 1u;
     shape = (PortShape2D *)reservememory("MCGA WINDOW",
                                              (uint16_t)paragraphs);
@@ -386,7 +386,7 @@ void drawrectc(int16_t x, int16_t y, int16_t width,
     uint16_t pitch = s_sprite1.words2[4];
     int row;
     /* Translate the four signed clipping branches in
-       asm/sprrects.ASM before the shared color fill. */
+       lib/sprrects.ASM before the shared color fill. */
     if (pixels == NULL || s_sprite1.lineofs == NULL || pitch == 0 ||
         draw_width <= 0 || draw_height <= 0)
         return;
@@ -432,7 +432,7 @@ static int16_t sub_signed_words(int16_t left, int16_t right)
 }
 
 /* C translation of the accepted `_draw_filled_rect` body in
-   asm/scalblit.ASM:47-165 (see also the accepted
+   lib/scalblit.ASM:47-165 (see also the accepted
    sub_35B76 migration entry, docs/porting/asm-migration.md:368). Preserve its
    left/right/top/absolute-height clipping, row-table addressing and XOR
    color operation; the DOS ES:DI window maps to the active host sprite. */
@@ -941,7 +941,7 @@ void movcf(const PortShape2D *shape)
     }
 }
 
-/* Faithful C translation of asm/sprrects.ASM:
+/* Faithful C translation of lib/sprrects.ASM:
    _sprite_1_unk3 (lines 146-165, 166-291). The 12 table entries select
    interlaced source/destination rows; each lane advances by 12 rows, with a
    phase increment for each destination row. The routine writes directly to
@@ -1095,7 +1095,7 @@ void port_sprite_plot_font(int16_t x, int16_t y, uint8_t color)
     port_ui_store(pixels, offset, color);
 }
 
-/* Host-view adapter for asm/putpixel.ASM. Its four signed
+/* Host-view adapter for lib/putpixel.ASM. Its four signed
    half-open clip comparisons select the active sprite, then its lineofs[y]
    plus x address and low color byte are reproduced by the common plotter. */
 void writepixelc(int16_t x, int16_t y, int16_t color)
@@ -2033,7 +2033,7 @@ static void sphere_build_ring(const int16_t source[6], int16_t output[64])
 #undef SPHERE_STORE_POINT
 }
 
-/* Port of asm/vecspr.ASM:_preRender_sphere. The 39 small
+/* Port of lib/vecspr.ASM:_preRender_sphere. The 39 small
    sphere profiles and the large-sphere 32-point fallback are anchored by the
    corresponding DATA table and preRender_sphere_helper2 C translation. */
 void drawcircle(int16_t center_x, int16_t center_y, int16_t size,

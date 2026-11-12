@@ -36,7 +36,7 @@ void mygetseeds(uint8_t *seed_out)
     memcpy(seed_out, randomseeds, sizeof(randomseeds));
 }
 
-/* C translation of asm/rpmrand.ASM:myrandom. Each addition is
+/* C translation of game/rpmrand.ASM:myrandom. Each addition is
    byte-sized, and the six increment steps propagate a carry across the seed. */
 int16_t myrandom(void)
 {

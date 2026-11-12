@@ -61,7 +61,7 @@ S012_TEXT segment word public 'CODE'
 ; ASMDOC shared palmap
 ; ASMDOC services: Direct FAR JMP _file_load_shape2d_res_fatal; no additional return address; effects are
 ; exactly the named target and its
-; ASMDOC callees; Targets in src/shp2res.c and src/shp2file.c call memory allocation/cache,
+; ASMDOC callees; Targets in lib/shp2res.c and lib/shp2file.c call memory allocation/cache,
 ; filesystem/decompression and
 ; ASMDOC shape codecs as needed; no service is executed locally
 ; ASMDOC dead: True
@@ -102,7 +102,7 @@ _file_load_shape2d_res_fatal_thunk endp
 ; ASMDOC shared palmap
 ; ASMDOC services: Direct FAR JMP _file_load_shape2d_res_nofatal; no additional return address; effects are
 ; exactly the named target and its
-; ASMDOC callees; Targets in src/shp2res.c and src/shp2file.c call memory allocation/cache,
+; ASMDOC callees; Targets in lib/shp2res.c and lib/shp2file.c call memory allocation/cache,
 ; filesystem/decompression and
 ; ASMDOC shape codecs as needed; no service is executed locally
 ; ASMDOC dead: False
@@ -142,7 +142,7 @@ _load_shape2d_res_nofatal_thunk endp
 ; ASMDOC shared palmap
 ; ASMDOC services: Direct FAR JMP _file_load_shape2d_res; no additional return address; effects are exactly the
 ; named target and its callees;
-; ASMDOC Targets in src/shp2res.c and src/shp2file.c call memory allocation/cache,
+; ASMDOC Targets in lib/shp2res.c and lib/shp2file.c call memory allocation/cache,
 ; filesystem/decompression and shape
 ; ASMDOC codecs as needed; no service is executed locally
 ; ASMDOC dead: True
@@ -179,7 +179,7 @@ _file_load_shape2d_res_thunk endp
 ; ASMDOC globals_written: No direct writes; target writes destination archive and resizes its allocation
 ; ASMDOC services: Direct FAR JMP _parse_shape2d; no additional return address; effects are exactly the named
 ; target and its callees; Targets
-; ASMDOC in src/shp2res.c and src/shp2file.c call memory allocation/cache,
+; ASMDOC in lib/shp2res.c and lib/shp2file.c call memory allocation/cache,
 ; filesystem/decompression and shape codecs as
 ; ASMDOC needed; no service is executed locally
 ; ASMDOC dead: True
@@ -219,7 +219,7 @@ _parse_shape2d_thunk endp
 ; ASMDOC shared palmap
 ; ASMDOC services: Direct FAR JMP _file_load_shape2d_fatal; no additional return address; effects are exactly
 ; the named target and its
-; ASMDOC callees; Targets in src/shp2res.c and src/shp2file.c call memory allocation/cache,
+; ASMDOC callees; Targets in lib/shp2res.c and lib/shp2file.c call memory allocation/cache,
 ; filesystem/decompression and
 ; ASMDOC shape codecs as needed; no service is executed locally
 ; ASMDOC dead: False
@@ -259,7 +259,7 @@ _file_load_shape2d_fatal_thunk endp
 ; ASMDOC shared palmap
 ; ASMDOC services: Direct FAR JMP _file_load_shape2d_nofatal; no additional return address; effects are exactly
 ; the named target and its
-; ASMDOC callees; Targets in src/shp2res.c and src/shp2file.c call memory allocation/cache,
+; ASMDOC callees; Targets in lib/shp2res.c and lib/shp2file.c call memory allocation/cache,
 ; filesystem/decompression and
 ; ASMDOC shape codecs as needed; no service is executed locally
 ; ASMDOC dead: False
@@ -299,7 +299,7 @@ _load_shape2d_nofatal_thunk endp
 ; ASMDOC shared palmap
 ; ASMDOC services: Direct FAR JMP _file_load_shape2d; no additional return address; effects are exactly the
 ; named target and its callees;
-; ASMDOC Targets in src/shp2res.c and src/shp2file.c call memory allocation/cache,
+; ASMDOC Targets in lib/shp2res.c and lib/shp2file.c call memory allocation/cache,
 ; filesystem/decompression and shape
 ; ASMDOC codecs as needed; no service is executed locally
 ; ASMDOC dead: True

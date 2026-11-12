@@ -20,17 +20,17 @@ from common import read_json  # noqa: E402
 
 class CosmeticPublicationTests(unittest.TestCase):
     def make_accepted(self, root):
-        (root/'asm').mkdir(parents=True)
+        (root/'lib').mkdir(parents=True)
         (root/'recipes').mkdir()
         (root/'layout').mkdir()
         (root/'build/workers/integ44').mkdir(parents=True)
         accepted = b'PUBLIC _foo\nfoo PROC\n  ret\nfoo ENDP\n'
         candidate = b'PUBLIC _foo\nfoo PROC\nreadable_join:\n  ret\nfoo ENDP\n'
-        (root/'asm/foo.ASM').write_bytes(accepted)
+        (root/'lib/foo.ASM').write_bytes(accepted)
         (root/'build/workers/integ44/foo.ASM').write_bytes(candidate)
         (root/'recipes/foo.json').write_text(json.dumps({
             'id': 'foo', 'start': 0, 'end': 1, 'profile': 'masm510-game',
-            'kind': 'asm', 'source': 'asm/foo.ASM'}), encoding='utf-8')
+            'kind': 'asm', 'source': 'lib/foo.ASM'}), encoding='utf-8')
         (root/'layout/manifest.json').write_text(json.dumps({'owners': [{
             'id': 'foo', 'name': 'foo', 'recipe': 'recipes/foo.json',
             'kind': 'MATCHING_ASM', 'start': 0, 'end': 1}]}), encoding='utf-8')
@@ -63,10 +63,10 @@ class CosmeticPublicationTests(unittest.TestCase):
             old, new, candidate = self.make_accepted(root)
             recipe_before = (root/'recipes/foo.json').read_bytes()
             manifest_before = (root/'layout/manifest.json').read_bytes()
-            state = lambda: {'asm/foo.ASM': sha((root/'asm/foo.ASM').read_bytes())}
+            state = lambda: {'lib/foo.ASM': sha((root/'lib/foo.ASM').read_bytes())}
 
             def fake_check(name, path, source, before):
-                return {'function': name, 'destination': 'asm/foo.ASM', 'recipe': 'recipes/foo.json',
+                return {'function': name, 'destination': 'lib/foo.ASM', 'recipe': 'recipes/foo.json',
                         'kind': 'asm', 'profile': 'masm510-game', 'old_source': identity(old),
                         'new_source': identity(source), 'object': identity(b'full OMF'),
                         'candidate': str(path), 'bytes': len(b'full OMF')}
@@ -93,7 +93,7 @@ class CosmeticPublicationTests(unittest.TestCase):
                 result = promote.cosmetic_promote('foo', candidate)
 
             self.assertEqual(result['status'], 'COSMETIC_PUBLISHED')
-            self.assertEqual((root/'asm/foo.ASM').read_bytes(), new)
+            self.assertEqual((root/'lib/foo.ASM').read_bytes(), new)
             self.assertEqual((root/'recipes/foo.json').read_bytes(), recipe_before)
             self.assertEqual((root/'layout/manifest.json').read_bytes(), manifest_before)
             self.assertEqual(result['old_source'], identity(old))
@@ -109,7 +109,7 @@ class CosmeticPublicationTests(unittest.TestCase):
             entries = [{'name': 'a', 'candidate': str(a)}, {'name': 'b', 'candidate': str(b)}]
 
             def check(name, candidate, source, before):
-                return {'function': name, 'destination': 'asm/'+name+'.ASM',
+                return {'function': name, 'destination': 'lib/'+name+'.ASM',
                         'old_source': identity(b'old '+name.encode()), 'new_source': identity(source),
                         'object': identity(b'OBJ '+name.encode()), 'bytes': 5}
 

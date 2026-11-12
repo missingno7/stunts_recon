@@ -115,7 +115,7 @@ _sprite_fill_two_color_spans_at endp
 ; ASMDOC Globals written: _line_pattern_bits; sprite1 backing pixels; caller stack argument slots +06/+08/+0C.
 ; ASMDOC Services: none.
 ; ASMDOC Dead: false. Reachability: Address taken and installed as _spritefunc by preRender_unk at
-; ASMDOC asm/gfxres.ASM:1541; indirect span callback.
+; ASMDOC lib/gfxres.ASM:1541; indirect span callback.
 ; ASMDOC Edge cases: No initial count check: zero/negative row count processes one row. No clipping. Auxiliary
 ; color copied to DL
 ; ASMDOC each row; primary remains AL throughout.

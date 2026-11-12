@@ -239,7 +239,7 @@ void deltimer(void (*callback)(void))
     }
 }
 
-/* Faithful state update of asm/timerhlp.ASM. Its 32-bit read and
+/* Faithful state update of lib/timerhlp.ASM. Its 32-bit read and
    previous-value store occurred with IRQs masked. The guest pump serializes
    both operations with callback delivery. */
 uint32_t elapsedticks(void)
@@ -279,7 +279,7 @@ void setticks(int32_t ticks)
 }
 
 /* Both the split-word line editor and audio driver waits use the callback
-   counter in asm/timerhlp.ASM. */
+   counter in lib/timerhlp.ASM. */
 void port_timer_copy_counter_words(uint16_t ticks_low, uint16_t ticks_high)
 {
     uint32_t ticks = (uint32_t)ticks_low | ((uint32_t)ticks_high << 16);
@@ -291,7 +291,7 @@ int16_t testticks(void)
     return (int16_t)(gettick() >= s_copy_deadline);
 }
 
-/* C host translations of asm/gfxres.ASM:_set_add_value,
+/* C host translations of lib/gfxres.ASM:_set_add_value,
    _poll_input_abort and _wait_for_input_delay (lines 364-442). These read the
    separate 32-bit elapsed counter, incremented at each fifth raw IRQ. The
    original polling code tests both words independently, including its

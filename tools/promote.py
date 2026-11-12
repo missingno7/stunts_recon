@@ -456,7 +456,7 @@ def default_recipe(name, image, relocations):
     f = found[0]
     require(f.get('stable_id') and f.get('end') is not None, 'No established extent; search remains available')
     return {'id':name, 'stable_id':f['stable_id'], 'start':f['start'], 'end':f['end'],
-            'source':'src/'+name+'.c', 'profile':'msc510-medium', 'object_segment':'UNIT_TEXT',
+            'source':'lib/'+name+'.c', 'profile':'msc510-medium', 'object_segment':'UNIT_TEXT',
             'public':'_'+name, 'target':identity(image[f['start']:f['end']]),
             'expected_fixups':[], 'expected_relocations':[r for r in relocations if f['start']-1 <= r['load_offset'] < f['end']],
             'evidence':f['provenance']}
@@ -493,7 +493,7 @@ def check_candidate(name, source, recipe_data, manifest, oracle, image):
         checked_members(recipe, image)
     else:
         (checked_asm_function if kind == 'asm' else checked_function)(name, recipe, image)
-    destination = ('asm/'+name+'.ASM' if kind == 'asm' else 'src/'+name+'.c')
+    destination = ('lib/'+name+'.ASM' if kind == 'asm' else 'lib/'+name+'.c')
     recipe = {**recipe, 'source':destination}
     if kind == 'asm':
         from assembler import prepare_asm
@@ -582,10 +582,9 @@ def _cosmetic_source_path(value):
         return None
     path = PurePosixPath(value.replace('\\', '/'))
     require(not path.is_absolute() and len(path.parts) == 2 and
-            path.parts[0] in ('asm', 'src') and
-            ((path.parts[0] == 'asm' and path.suffix == '.ASM') or
-             (path.parts[0] == 'src' and path.suffix == '.c')),
-            'Cosmetic source target must be one canonical asm/*.ASM or src/*.c path')
+            path.parts[0] in ('game', 'lib') and
+            path.suffix in ('.ASM', '.c'),
+            'Cosmetic source target must be one canonical game/ or lib/ C or MASM path')
     return path.as_posix()
 
 
@@ -688,8 +687,8 @@ def check_cosmetic(name, candidate, source, before):
             'Cosmetic recipe no longer describes its accepted owner')
     destination = recipe.get('source')
     require(isinstance(destination, str) and
-            ((recipe.get('kind', 'c') == 'asm' and destination.startswith('asm/') and destination.endswith('.ASM')) or
-             (recipe.get('kind', 'c') == 'c' and destination.startswith('src/') and destination.endswith('.c'))),
+            ((recipe.get('kind', 'c') == 'asm' and destination.startswith(('game/', 'lib/')) and destination.endswith('.ASM')) or
+             (recipe.get('kind', 'c') == 'c' and destination.startswith(('game/', 'lib/')) and destination.endswith('.c'))),
             'Cosmetic recipe source path differs from its contribution kind')
     current_path = ROOT/destination
     require(current_path.is_file(), 'Accepted cosmetic source is missing')

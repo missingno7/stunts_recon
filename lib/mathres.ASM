@@ -484,7 +484,7 @@ public _scalethicknessxp
 ; ASMDOC globals_written: none directly identified
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: dead in current static source/reference plan.
-; ASMDOC Evidence: asm/mathres.ASM:561
+; ASMDOC Evidence: lib/mathres.ASM:561
 _scalethicknessxp proc far
     arg_factor = word ptr 6
 
@@ -518,7 +518,7 @@ public _scalethicknessyp
 ; ASMDOC globals_written: none directly identified
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: dead in current static source/reference plan.
-; ASMDOC Evidence: asm/mathres.ASM:583
+; ASMDOC Evidence: lib/mathres.ASM:583
 _scalethicknessyp proc far
     arg_factor = word ptr 6
 

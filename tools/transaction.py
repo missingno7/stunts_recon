@@ -150,7 +150,7 @@ def prepare(changes):
     for relative, data in changes.items():
         path = (ROOT/relative).resolve()
         require(path.is_relative_to(ROOT.resolve()) and relative.split('/')[0] in
-                ('src', 'asm', 'include', 'recipes', 'layout', 'evidence', 'docs'),
+                ('game', 'lib', 'include', 'recipes', 'layout', 'evidence', 'docs'),
                 'Publication path outside canonical state')
         old = file_bytes(path)
         encode = lambda raw: None if raw is None else base64.b64encode(raw).decode('ascii')
@@ -185,7 +185,7 @@ def rollback():
     for row in rows:
         path = (ROOT/row['path']).resolve()
         require(path.is_relative_to(ROOT.resolve()) and row['path'].split('/')[0] in
-                ('src', 'asm', 'include', 'recipes', 'layout', 'evidence', 'docs'),
+                ('game', 'lib', 'include', 'recipes', 'layout', 'evidence', 'docs'),
                 'Recovery path outside canonical state')
         before = None if row['before'] is None else base64.b64decode(row['before'])
         after = None if row['after'] is None else base64.b64decode(row['after'])

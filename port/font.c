@@ -3,9 +3,9 @@
 #include <string.h>
 
 /* Font header/glyph layout and pixel traversal follow the accepted routines
-   asm/fontdraw.ASM, asm/fontmat.ASM, and
-   asm/linerend.ASM. The built-in 1408-byte block comes from
-   src/deffont.c; loaded FNT records are bounded by the game allocator. */
+   lib/fontdraw.ASM, lib/fontmat.ASM, and
+   lib/linerend.ASM. The built-in 1408-byte block comes from
+   lib/deffont.c; loaded FNT records are bounded by the game allocator. */
 #define PORT_FONT_HEADER_BYTES 22u
 #define PORT_FONT_GLYPH_TABLE_BYTES (256u * 2u)
 

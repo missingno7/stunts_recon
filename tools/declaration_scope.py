@@ -122,7 +122,7 @@ def requires_raw_objects(files, changes):
     reasons = []
     changed_headers = {p for p in changes if p.startswith('include/')}
     for path in files:
-        if not path.startswith('src/') or not path.endswith('.c'):
+        if not path.startswith(('game/', 'lib/')) or not path.endswith('.c'):
             continue
         if path not in changes and not changed_headers:
             continue

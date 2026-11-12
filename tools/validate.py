@@ -23,7 +23,7 @@ def compare_baseline(path):
     require(manifest == baseline['manifest'], 'Migration changed accepted ownership')
     require(read_json(ROOT/'layout/oracle.lock.json') == baseline['oracle'], 'Migration changed oracle lock')
     for name, saved in baseline['sources'].items():
-        recipe = read_json(ROOT/saved['recipe']['source'].replace('src/', 'recipes/').replace('.c', '.json'))
+        recipe = read_json(ROOT/('recipes/'+saved['recipe']['id']+'.json'))
         # Descriptive evidence references can move; all binding/build facts stay exact.
         require({k:v for k,v in recipe.items() if k != 'evidence'} ==
                 {k:v for k,v in saved['recipe'].items() if k != 'evidence'}, 'Migration changed accepted recipe: '+name)

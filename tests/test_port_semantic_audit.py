@@ -49,7 +49,7 @@ class PortSemanticAuditTests(unittest.TestCase):
         self.assertTrue(all(f["status"] == "contract_covered" for f in wheel))
 
     def test_old_cross_global_representation_is_rejected(self):
-        row = next(r for r in self.rows if r["source"] == "src/trkscene.c")
+        row = next(r for r in self.rows if r["source"] == "game/trkscene.c")
         file = Path(row["overlay"])
         saved = file.read_bytes()
         try:
@@ -62,7 +62,7 @@ class PortSemanticAuditTests(unittest.TestCase):
 
     def test_changed_scalar_signedness_and_sentinel_extent_fail_compiler_contracts(self):
         gcc = Path(r"C:\msys64\mingw32\bin\gcc.exe")
-        row = next(r for r in self.rows if r["source"] == "src/polygon.c")
+        row = next(r for r in self.rows if r["source"] == "game/polygon.c")
         file = Path(row["overlay"])
         saved = file.read_bytes()
         try:
@@ -110,8 +110,8 @@ for (i=0;i<82;++i) names[i]=0;
         self.assertTrue(any("missing evidence" in e for e in errors))
         fake["tests"] = ["tests/test_port_semantic_audit.py::missing_method"]
         self.assertTrue(any("missing evidence method" in e for e in registry_checks({"contracts": [fake]})))
-        self.assertEqual(scoped_claims({"same_name": [{"source_scope": ["src/render.c"]}]},
-            "same_name", ["src/obj_seg003_prefix.c"]), [])
+        self.assertEqual(scoped_claims({"same_name": [{"source_scope": ["game/render.c"]}]},
+            "same_name", ["game/obj_seg003_prefix.c"]), [])
 
 
 if __name__ == "__main__":

@@ -108,9 +108,9 @@ class CandidateAndHeaderTests(unittest.TestCase):
             candidate = Path(d) / 'unit.c'; candidate.write_bytes(b'int old_function(void) { return 1; }\n')
             header = Path(d) / 'api.h'; header.write_bytes(b'extern int service(void);\n')
             source, changes = declarations.candidate_changes('owner', candidate, ['include/api.h='+str(header)], files)
-            self.assertEqual(source, 'src/owner.c')
+            self.assertEqual(source, 'game/owner.c')
             self.assertEqual(changes, {'include/api.h': header.read_bytes()})
-            for spec in ('include/longfilename.h=', 'include/../api.h=', 'src/api.h='):
+            for spec in ('include/longfilename.h=', 'include/../api.h=', 'game/api.h='):
                 with self.assertRaises(ValueError):
                     declarations.candidate_changes('owner', candidate, [spec+str(header)], files)
             with self.assertRaisesRegex(ValueError, 'Duplicate'):
@@ -167,7 +167,7 @@ class CandidateAndHeaderTests(unittest.TestCase):
                 for n in ('MCGA.HDR', 'EGA.CMN', 'MCGA.DIF', 'MCGA.COD'):
                     (root/'assets'/n).write_bytes(b'fixture')
                 candidate = root/'build/candidate.c'
-                candidate.write_bytes(b'#include "api.h"\n' + files['src/owner.c'])
+                candidate.write_bytes(b'#include "api.h"\n' + files['game/owner.c'])
                 header = root/'build/api.h'; header.write_bytes(b'extern int service(void);\n')
                 before = rename.canonical_files(root)
                 def run(argv, *, cwd, env, log, timeout):
@@ -231,10 +231,10 @@ class SourceCitationTests(unittest.TestCase):
         manifest = {'bss_owners': [{'id': 'c_common', 'communals': [{
             'name': '_buffer', 'address': 100, 'size': 128, 'declarers': ['unit'],
             'size_basis': {'kind': 'declared-type', 'declaration': 'char buffer[128];'}}]}]}
-        files = {'layout/manifest.json': json_bytes(manifest), 'src/unit.c': b'char buffer[128];\n'}
+        files = {'layout/manifest.json': json_bytes(manifest), 'game/unit.c': b'char buffer[128];\n'}
         engine = SimpleNamespace(files=files, recipes={'recipes/unit.json': {
-            'owners': ['unit'], 'recipe': {'source': 'src/unit.c'}}})
-        changes = {'src/unit.c': b'#define CAPACITY 128\nchar buffer[CAPACITY];\n'}
+            'owners': ['unit'], 'recipe': {'source': 'game/unit.c'}}})
+        changes = {'game/unit.c': b'#define CAPACITY 128\nchar buffer[CAPACITY];\n'}
         refresh_source_bases(engine, changes, ['recipes/unit.json'])
         after = json.loads(changes['layout/manifest.json'])
         self.assertEqual(after['bss_owners'][0]['communals'][0]['size_basis']['declaration'], 'char buffer[CAPACITY];')
@@ -262,7 +262,7 @@ class SourceCitationTests(unittest.TestCase):
             for name, raw in files.items():
                 (root/name).parent.mkdir(parents=True, exist_ok=True); (root/name).write_bytes(raw)
             engine = rename.ProofEngine(root, files, compiler=compiler, image=lambda: {},
-                changes_factory=lambda f,r: {'src/owner.c': b'int changed;\n'},
+                changes_factory=lambda f,r: {'game/owner.c': b'int changed;\n'},
                 comparator=declarations.declaration_compare, post_compare=hook)
             with patch('promote._cosmetic_closure', return_value=('preprocessor_closure', [])):
                 result = engine.trial([], whole=True)
@@ -273,8 +273,8 @@ class SourceCitationTests(unittest.TestCase):
 class DeclarationScopeTests(unittest.TestCase):
     def reasons(self, old, new, headers=None, changed_headers=None):
         from declaration_scope import requires_raw_objects
-        files = {'src/unit.c': old.encode(), **(headers or {})}
-        return requires_raw_objects(files, {'src/unit.c': new.encode(), **(changed_headers or {})})
+        files = {'game/unit.c': old.encode(), **(headers or {})}
+        return requires_raw_objects(files, {'game/unit.c': new.encode(), **(changed_headers or {})})
 
     def test_imports_records_comments_and_block_externs_are_declarations(self):
         old = 'extern int target(int);\nint f(int x) { return target(x); }'
@@ -345,12 +345,12 @@ class AssemblyHeaderTests(unittest.TestCase):
             root = Path(d); (root/'include').mkdir(); (root/'recipes').mkdir()
             header = root/'include/video.inc'; header.write_bytes(b'SCREEN_W EQU 320\n')
             candidate = root/'unit.asm'; candidate.write_bytes(b'INCLUDE include/video.inc\nEND\n')
-            files = {'asm/unit.ASM': b'END\n'}
-            active = {'recipes/unit.json': {'owners': ['unit'], 'recipe': {'source': 'asm/unit.ASM'}}}
+            files = {'lib/unit.ASM': b'END\n'}
+            active = {'recipes/unit.json': {'owners': ['unit'], 'recipe': {'source': 'lib/unit.ASM'}}}
             with patch('rename.active_recipes', return_value=active):
                 source, changes = declarations.candidate_changes('unit', candidate,
                     ['include/video.inc='+str(header)], files)
-            self.assertEqual(source, 'asm/unit.ASM')
+            self.assertEqual(source, 'lib/unit.ASM')
             with patch.object(assembler, 'ROOT', root), patch.object(assembler, 'git_tracked', return_value=False):
                 with self.assertRaisesRegex(ValueError, 'not tracked'):
                     assembler.prepare_asm(candidate.read_bytes())

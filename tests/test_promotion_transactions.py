@@ -25,8 +25,8 @@ class PromotionTransactionTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)
         (self.root / 'build').mkdir(parents=True, exist_ok=True)
-        (self.root / 'src').mkdir(parents=True)
-        (self.root / 'asm').mkdir()
+        (self.root / 'game').mkdir(parents=True)
+        (self.root / 'lib').mkdir()
         (self.root / 'recipes').mkdir()
         (self.root / 'layout').mkdir()
         (self.root / 'evidence').mkdir()
@@ -49,7 +49,7 @@ class PromotionTransactionTests(unittest.TestCase):
         source = b'int new_function(void) { return 1; }\n'
         candidate.write_bytes(source)
         recipe = {'id': 'new_function', 'stable_id': 'new_function_id',
-                  'start': 1, 'end': 2, 'source': 'src/new_function.c',
+                  'start': 1, 'end': 2, 'source': 'game/new_function.c',
                   'profile': 'msc510-medium', 'object_segment': 'UNIT_TEXT',
                   'public': '_new_function', 'target': {'size': 1, 'sha256': '0' * 64},
                   'expected_fixups': [], 'expected_relocations': []}
@@ -102,11 +102,11 @@ class PromotionTransactionTests(unittest.TestCase):
         self.assertTrue((self.root / 'build/promotion.lock').exists())
 
     def test_interrupted_multi_file_apply_recovers_from_journal(self):
-        source = self.root / 'src/one.c'
+        source = self.root / 'game/one.c'
         manifest = self.root / 'layout/manifest.json'
         source.write_bytes(b'old source')
         manifest.write_bytes(b'old manifest')
-        changes = {'src/one.c': b'new source',
+        changes = {'game/one.c': b'new source',
                    'recipes/one.json': b'new recipe',
                    'layout/manifest.json': b'new manifest'}
         with self.transaction_root():
@@ -134,11 +134,11 @@ class PromotionTransactionTests(unittest.TestCase):
         self.assertFalse((self.root / 'build/publication.json').exists())
 
     def test_recovery_refuses_to_clobber_a_conflicting_user_edit(self):
-        source = self.root / 'src/one.c'
+        source = self.root / 'game/one.c'
         manifest = self.root / 'layout/manifest.json'
         source.write_bytes(b'old source')
         manifest.write_bytes(b'old manifest')
-        changes = {'src/one.c': b'new source',
+        changes = {'game/one.c': b'new source',
                    'layout/manifest.json': b'new manifest'}
         with self.transaction_root():
             rows = transaction.prepare(changes)
@@ -162,7 +162,7 @@ class PromotionTransactionTests(unittest.TestCase):
             with self.assertRaisesRegex(transaction.SnapshotChanged, 'Retry --verify-only'):
                 promote.promote('new_function', candidate, verify_only=True)
             self.assertEqual(manifest_path.read_bytes(), manifest_before)
-            self.assertFalse((self.root / 'src/new_function.c').exists())
+            self.assertFalse((self.root / 'game/new_function.c').exists())
             self.assertFalse((self.root / 'recipes/new_function.json').exists())
             self.assertFalse((self.root / 'build/acceptance/new_function/report.json').exists())
             self.assertEqual(candidate.read_bytes(), source)
@@ -179,7 +179,7 @@ class PromotionTransactionTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'Candidate source changed'):
                 promote.promote('new_function', candidate, verify_only=True)
             self.assertEqual(manifest_path.read_bytes(), manifest_before)
-            self.assertFalse((self.root / 'src/new_function.c').exists())
+            self.assertFalse((self.root / 'game/new_function.c').exists())
             self.assertFalse((self.root / 'recipes/new_function.json').exists())
             self.assertFalse((self.root / 'build/acceptance/new_function/report.json').exists())
             self.assertEqual(candidate.read_bytes(), b'concurrent candidate edit')
@@ -193,7 +193,7 @@ class PromotionTransactionTests(unittest.TestCase):
             self.assertEqual(result['status'], 'VERIFIED_ONLY')
             self.assertEqual(manifest_path.read_bytes(), manifest_before)
             self.assertEqual(candidate.read_bytes(), source)
-            self.assertFalse((self.root / 'src/new_function.c').exists())
+            self.assertFalse((self.root / 'game/new_function.c').exists())
             self.assertFalse((self.root / 'recipes/new_function.json').exists())
             self.assertTrue((self.root / 'build/acceptance/new_function/report.json').exists())
 
@@ -229,7 +229,7 @@ class PromotionTransactionTests(unittest.TestCase):
             finally:
                 self.release(holder)
             self.assertEqual(result['status'], 'VERIFIED_ONLY')
-            self.assertFalse((self.root / 'src/new_function.c').exists())
+            self.assertFalse((self.root / 'game/new_function.c').exists())
 
     def test_publication_still_requires_the_exclusive_writer_lock(self):
         baseline = {'state': 'stable'}
@@ -242,7 +242,7 @@ class PromotionTransactionTests(unittest.TestCase):
             finally:
                 self.release(holder)
             self.assertEqual(manifest_path.read_bytes(), manifest_before)
-            self.assertFalse((self.root / 'src/new_function.c').exists())
+            self.assertFalse((self.root / 'game/new_function.c').exists())
             self.assertFalse((self.root / 'build/publication.generation').exists())
 
     def test_verify_only_refuses_to_start_during_a_publication(self):
@@ -284,12 +284,12 @@ class PromotionTransactionTests(unittest.TestCase):
                 transaction.lock_free_snapshot(reject, lambda: next(values))
 
     def test_interrupted_journal_blocks_lock_free_readers_until_recovery(self):
-        (self.root / 'src/one.c').write_bytes(b'old')
+        (self.root / 'game/one.c').write_bytes(b'old')
         with self.transaction_root():
             with transaction.exclusive():
                 with self.assertRaises(InterruptedWrite):
                     with transaction.publishing():
-                        transaction.prepare({'src/one.c': b'new'})
+                        transaction.prepare({'game/one.c': b'new'})
                         raise InterruptedWrite('crash after journal')
             self.assertEqual(transaction.read_generation() % 2, 1)
             with self.assertRaises(transaction.SnapshotChanged):
@@ -308,10 +308,10 @@ class PromotionTransactionTests(unittest.TestCase):
             self.assertEqual(transaction.read_generation(), 8)
 
     def test_journaled_owner_rename_deletes_and_recovers_evidence_paths(self):
-        old_source = self.root/'asm/old.ASM'
-        new_source = self.root/'asm/new.ASM'
+        old_source = self.root/'lib/old.ASM'
+        new_source = self.root/'lib/new.ASM'
         old_source.write_bytes(b'complete module')
-        changes = {'asm/old.ASM': None, 'asm/new.ASM': b'complete module',
+        changes = {'lib/old.ASM': None, 'lib/new.ASM': b'complete module',
                    'evidence/owner-map.json': b'{"old":"new"}\n'}
         with self.transaction_root():
             rows = transaction.prepare(changes)

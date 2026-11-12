@@ -56,7 +56,7 @@ def refresh_source_bases(engine, changes, affected):
     for key in affected:
         item = engine.recipes[key]
         path = item['recipe']['source']
-        if path in changes and path.startswith('src/'):
+        if path in changes and path.startswith(('game/', 'lib/')) and path.endswith('.c'):
             current = changes[path].decode('ascii')
             located = []
             for statement in statements(current):

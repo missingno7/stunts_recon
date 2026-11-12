@@ -222,7 +222,7 @@ class SDL3AudioTests(unittest.TestCase):
         voices = audio_bank.parse_archive(vce_path.read_bytes())
         self.assertNotIn("KEYS", {chunk.name.upper() for chunk in voices.chunks})
 
-        overlay_dir = ROOT / "build" / "sdl3" / "host-build" / "overlay" / "src"
+        overlay_dir = ROOT / "build" / "sdl3" / "host-build" / "overlay" / "lib"
         overlay_027 = overlay_dir / "audiores.c"
         overlay_028 = overlay_dir / "audioply.c"
         overlay_029 = overlay_dir / "audiochk.c"

@@ -92,13 +92,13 @@ def invariant_text(source):
     for name, expected in PROTOTYPES.items():
         checks.append(f'_Static_assert(__builtin_types_compatible_p(__typeof__(&{name}), '
                       f'{expected}), "native prototype {name}");')
-    if source == "src/trkscene.c":
+    if source == "game/trkscene.c":
         for name in ("pts_set", "secondveccar", "veccar", "car_dvecs", "veco",
                      "secondoveh", "opponent_pointc", "veh_od"):
             checks.append(f'_Static_assert(sizeof({name}) == 6 * 6, "wheel group {name}");')
         for name in ("pos_pt", "ancv2", "ctrmesh", "g_op_carvector2"):
             checks.append(f'_Static_assert(sizeof({name}) == 6, "wheel origin {name}");')
-    if source == "src/polygon.c":
+    if source == "game/polygon.c":
         checks.extend([
             '_Static_assert(sizeof(poly_link_list) == 401 * 2, "explicit polygon sentinel extent");',
             '_Static_assert(sizeof(inverse_power_of_two_table) == 32 * 4, "reciprocal dword table");',
@@ -122,7 +122,7 @@ def check_contracts(rows, work, gcc):
                    "-include", str(ROOT / "tools/porting/host/compat.h"),
                    "-include", row["config"], "-I", str(work / "include"),
                    "-I", str(ROOT / "port"), "-I", str(ROOT / "tools/porting/host/include"),
-                   "-I", str(ROOT / "include"), "-I", str(ROOT / "src"), str(generated)]
+                   "-I", str(ROOT / "include"), "-I", str(ROOT / "game"), "-I", str(ROOT / "lib"), str(generated)]
         ran = subprocess.run(command, env=env, capture_output=True, text=True,
                              errors="replace", timeout=90)
         errors = [line for line in ran.stderr.splitlines() if "error:" in line]

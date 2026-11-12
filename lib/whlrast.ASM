@@ -1,6 +1,6 @@
 ; ASMDOC-GEOMETRY Module: prerender_wheel_raster. Existing content name remains useful; includes shared
 ; polygon raster workers and alternate record-list entries. No merge or split proposed.
-; ASMDOC-GEOMETRY Original source: asm/whlrast.ASM; contracts below use ORIGINAL line
+; ASMDOC-GEOMETRY Original source: lib/whlrast.ASM; contracts below use ORIGINAL line
 ; references.
 ; ASMDOC-GEOMETRY Code exports: _prerender_shared_setup, _preRender_default, _preRender_default_alt,
 ; _skybox_op_helper, _preRender_wheel_helper4, _preRender_helper, _preRender_helper2, _preRender_helper3,
@@ -129,7 +129,7 @@ public _sprite_fill_line_records_alt
 ; clipped vertical extent must contain at least two rows (SUB end,start; JLE return; INC count).
 ; ASMDOC-GEOMETRY Detail: Near workers use code-resident mode tables; not I/O instructions. No DOS/BIOS/port
 ; call in this module.
-; ASMDOC-GEOMETRY Dead: false. Reachability: src/polygon.c:667 direct polygon call
+; ASMDOC-GEOMETRY Dead: false. Reachability: game/polygon.c:667 direct polygon call
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _drawpolypt label far
 ; -----------------------------------------------------------------------------
@@ -206,8 +206,8 @@ drawpolypt endp
 ; clipped vertical extent must contain at least two rows (SUB end,start; JLE return; INC count).
 ; ASMDOC-GEOMETRY Detail: Near workers use code-resident mode tables; not I/O instructions. No DOS/BIOS/port
 ; call in this module.
-; ASMDOC-GEOMETRY Dead: false. Reachability: src/wheel.c:82,104,106 and
-; src/sphhelp.c:16
+; ASMDOC-GEOMETRY Dead: false. Reachability: lib/wheel.c:82,104,106 and
+; lib/sphhelp.c:16
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _drawpolyp label far
 ; -----------------------------------------------------------------------------
@@ -291,7 +291,7 @@ drawpolyp endp
 ; clipped vertical extent must contain at least two rows (SUB end,start; JLE return; INC count).
 ; ASMDOC-GEOMETRY Detail: Near workers use code-resident mode tables; not I/O instructions. No DOS/BIOS/port
 ; call in this module.
-; ASMDOC-GEOMETRY Dead: false. Reachability: src/render.c:2238-2239 passes four POINT2D values inline
+; ASMDOC-GEOMETRY Dead: false. Reachability: game/render.c:2238-2239 passes four POINT2D values inline
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _skybox_op_helper label far
 ; -----------------------------------------------------------------------------
@@ -368,7 +368,7 @@ skybox_op_helper endp
 ; clipped vertical extent must contain at least two rows (SUB end,start; JLE return; INC count).
 ; ASMDOC-GEOMETRY Detail: Near workers use code-resident mode tables; not I/O instructions. No DOS/BIOS/port
 ; call in this module.
-; ASMDOC-GEOMETRY Dead: false. Reachability: src/wheel.c:37,45 passes four x/y pairs inline
+; ASMDOC-GEOMETRY Dead: false. Reachability: lib/wheel.c:37,45 passes four x/y pairs inline
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _preRender_wheel_helper4 label far
 ; -----------------------------------------------------------------------------
@@ -468,8 +468,8 @@ wheel_raster_join_01:
 ; NO_INDEXED_C_PATH/INDIRECT_OR_LINK_USE_UNRESOLVED.
 ; ASMDOC-GEOMETRY Detail: Neither establishes callback vectors nor allocates its frame; inherited wrapper
 ; frame is mandatory.
-; ASMDOC-GEOMETRY Dead: false. Reachability: Local jumps at asm/whlrast.ASM:106,170; external
-; near jumps at asm/fontmat.ASM:186 and asm/gfxres.ASM:1545
+; ASMDOC-GEOMETRY Dead: false. Reachability: Local jumps at lib/whlrast.ASM:106,170; external
+; near jumps at lib/fontmat.ASM:186 and lib/gfxres.ASM:1545
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _polycmn:
     mov     [bp+var_vertlineptr], si
@@ -713,7 +713,7 @@ preRender_wheel_helper4 endp
 ; ASMDOC-GEOMETRY Detail: Reads _sprite1 left/right-exclusive for sentinel pairs. For clipped top/bottom uses
 ; (left,left-1); for clipped left/right uses (right,right-1).
 ; ASMDOC-GEOMETRY Dead: false. Reachability: Live transitive internal calls from polygon rasterizer;
-; asm/whlrast.ASM:299,305,338 (and dead line-record variant:1383,1407,1432)
+; lib/whlrast.ASM:299,305,338 (and dead line-record variant:1383,1407,1432)
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _preRender_helper label near
 ; -----------------------------------------------------------------------------
@@ -830,7 +830,7 @@ preRender_helper endp
 ; ASMDOC-GEOMETRY Detail: Mode 0,1,9 or nonpositive sample count returns immediately. Modes 2..8 implement
 ; vertical, unit-slope, y-major and x-major fixed-point stepping; rounding adds 0x8000 with carry.
 ; ASMDOC-GEOMETRY Dead: false. Reachability: Live transitive internal calls from polygon rasterizer;
-; asm/whlrast.ASM:299,305,338 (and dead line-record variant:1383,1407,1432)
+; lib/whlrast.ASM:299,305,338 (and dead line-record variant:1383,1407,1432)
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _preRender_helper2 label near
 ; -----------------------------------------------------------------------------
@@ -1005,7 +1005,7 @@ preRender_helper2 endp
 ; ASMDOC-GEOMETRY Detail: For top/bottom clipped rows postamble writes left only; for left/right clipped rows
 ; it writes right=clip_right-1 only.
 ; ASMDOC-GEOMETRY Dead: false. Reachability: Live transitive internal calls from polygon rasterizer;
-; asm/whlrast.ASM:299,305,338 (and dead line-record variant:1383,1407,1432)
+; lib/whlrast.ASM:299,305,338 (and dead line-record variant:1383,1407,1432)
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _preRender_helper3 label near
 ; -----------------------------------------------------------------------------

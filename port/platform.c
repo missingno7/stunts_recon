@@ -37,7 +37,7 @@ int int86(int interrupt_number, void *input, void *output)
         memcpy(&regs, input, sizeof(regs));
 
     if (interrupt_number == 0x15 && regs.ax == 0xC201) {
-        /* BIOS mouse initialization selector used by src/mouse.c. */
+        /* BIOS mouse initialization selector used by lib/mouse.c. */
     } else if (interrupt_number == 0x33) {
         switch (regs.ax) {
         case 0: /* Reset: AX=ffffh if present, BX=button count. */

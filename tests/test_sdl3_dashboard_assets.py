@@ -572,9 +572,9 @@ def host_source_overlays(directory: Path, gcc: Path) -> list[tuple[Path, Path]]:
         (include_root / "declaration-evidence.json").read_text(
             encoding="utf-8")).get("shared_struct_tags", []))
     selected = (
-        "src/shp2file.c",
-        "src/shp2res.c",
-        "src/expandsz.c",
+        "lib/shp2file.c",
+        "lib/shp2res.c",
+        "lib/expandsz.c",
     )
     generated_pairs: list[tuple[Path, Path]] = []
     for index, source in enumerate(selected, 1):
@@ -585,7 +585,7 @@ def host_source_overlays(directory: Path, gcc: Path) -> list[tuple[Path, Path]]:
         config, local_fns, local_data = probe.local_config(source, original, owner)
         transformed, _ = probe.transformed_source(
             source, original, local_fns, local_data, shared_tags)
-        if source == "src/shp2res.c":
+        if source == "lib/shp2res.c":
             transformed = (
                 "extern int16_t port_parse_shape2d_helper3(const uint8_t *, uint16_t);\n"
                 + transformed)
@@ -622,14 +622,14 @@ def build_asset_dll(directory: Path, gcc: Path) -> Path:
         ROOT / "port" / "memory.c",
         ROOT / "port" / "sincos.c",
         ROOT / "port" / "resource.c",
-        ROOT / "src" / "unflipsz.c",
+        ROOT / "lib" / "unflipsz.c",
     ]
     includes = [
         "-include", str(ROOT / "tools" / "porting" / "host" / "compat.h"),
         "-I", str(ROOT / "port"),
         "-I", str(ROOT / "tools" / "porting" / "port_include"),
         "-I", str(ROOT / "tools" / "porting" / "host" / "include"),
-        "-I", str(ROOT / "include"), "-I", str(ROOT / "src"),
+        "-I", str(ROOT / "include"), "-I", str(ROOT / "game"), "-I", str(ROOT / "lib"),
     ]
     env = os.environ.copy()
     env["PATH"] = os.pathsep.join((
@@ -638,7 +638,7 @@ def build_asset_dll(directory: Path, gcc: Path) -> Path:
     ))
     objects: list[Path] = []
     for index, source in enumerate(sources):
-        if source.parent == ROOT / "src":
+        if source.parent in (ROOT / "game", ROOT / "lib"):
             # Resolve reconstruction headers before host include directories;
             # e.g. port/memory.h is a different API from include/memory.h.
             from project_headers import expand_project_headers

@@ -55,7 +55,7 @@ S002_TEXT segment byte public 'CODE'
 ; ASMDOC globals_written: none directly identified
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: live; direct or indirect reference retained.
-; ASMDOC Evidence: asm/rpmrand.ASM:36
+; ASMDOC Evidence: game/rpmrand.ASM:36
 _calcrpm proc far
     arg_currRpm = word ptr 6
     arg_speed = word ptr 8
@@ -103,7 +103,7 @@ _calcrpm endp
 ; ASMDOC globals_written: none directly identified
 ; ASMDOC services: none directly identified
 ; ASMDOC Reachability: dead in current static source/reference plan.
-; ASMDOC Evidence: asm/rpmrand.ASM:71
+; ASMDOC Evidence: game/rpmrand.ASM:71
 _sgn proc far
     arg_value = word ptr 6
 

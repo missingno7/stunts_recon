@@ -78,7 +78,7 @@ class Sdl3PolygonStorageTests(unittest.TestCase):
 
     def test_list_head_and_polygon_pool_have_separate_storage(self) -> None:
         # Exercise the exact port adapter against the immutable historical TU.
-        original = (ROOT / "src" / "polygon.c").read_text(encoding="latin-1")
+        original = (ROOT / "game" / "polygon.c").read_text(encoding="latin-1")
         overlay = adapt_polygon_storage(legacy_target_widths(original))
 
         compiler = Path(r"C:\msys64\mingw32\bin\gcc.exe")

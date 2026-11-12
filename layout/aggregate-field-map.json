@@ -10,7 +10,7 @@
       "access": "globalgamesettings.game_playercarid[1]",
       "address": 215461,
       "alias": "_byte_349A5",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 1,
       "storage": "bss"
@@ -19,7 +19,7 @@
       "access": "globalgamesettings.game_playercarid[2]",
       "address": 215462,
       "alias": "_byte_349A6",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 2,
       "storage": "bss"
@@ -28,7 +28,7 @@
       "access": "globalgamesettings.game_playercarid[3]",
       "address": 215463,
       "alias": "_byte_349A7",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 3,
       "storage": "bss"
@@ -37,7 +37,7 @@
       "access": "globalgamesettings.game_playermaterial",
       "address": 215464,
       "alias": "_byte_349A8",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 4,
       "storage": "bss"
@@ -46,7 +46,7 @@
       "access": "globalgamesettings.game_playertransmission",
       "address": 215465,
       "alias": "_byte_349A9",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 5,
       "storage": "bss"
@@ -55,7 +55,7 @@
       "access": "globalgamesettings.game_opponenttype",
       "address": 215466,
       "alias": "_byte_349AA",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 6,
       "storage": "bss"
@@ -64,7 +64,7 @@
       "access": "globalgamesettings.game_opponentcarid[0]",
       "address": 215467,
       "alias": "_byte_349AB",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 7,
       "storage": "bss"
@@ -73,7 +73,7 @@
       "access": "globalgamesettings.game_opponentcarid[1]",
       "address": 215468,
       "alias": "_byte_349AC",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 8,
       "storage": "bss"
@@ -82,7 +82,7 @@
       "access": "globalgamesettings.game_opponentcarid[2]",
       "address": 215469,
       "alias": "_byte_349AD",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 9,
       "storage": "bss"
@@ -91,7 +91,7 @@
       "access": "globalgamesettings.game_opponentcarid[3]",
       "address": 215470,
       "alias": "_byte_349AE",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 10,
       "storage": "bss"
@@ -100,7 +100,7 @@
       "access": "globalgamesettings.game_opponentmaterial",
       "address": 215471,
       "alias": "_byte_349AF",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 11,
       "storage": "bss"
@@ -109,7 +109,7 @@
       "access": "globalgamesettings.game_opponenttransmission",
       "address": 215472,
       "alias": "_byte_349B0",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 12,
       "storage": "bss"
@@ -118,7 +118,7 @@
       "access": "globalgamesettings.game_trackname[0]",
       "address": 215473,
       "alias": "_byte_349B1",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 13,
       "storage": "bss"
@@ -127,7 +127,7 @@
       "access": "globalgamesettings.game_framespersec",
       "address": 215482,
       "alias": "_byte_349BA",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 22,
       "storage": "bss"
@@ -136,7 +136,7 @@
       "access": "globalgamesettings.game_recordedframes",
       "address": 215484,
       "alias": "_word_349BC",
-      "basis": "GAMEINFO field offsets in src/frontend.c",
+      "basis": "GAMEINFO field offsets in game/frontend.c",
       "container": "_globalgamesettings",
       "offset": 24,
       "storage": "bss"
@@ -145,7 +145,7 @@
       "access": "g_shapes3d[111].shape3d_verts",
       "address": 210760,
       "alias": "_word_33748",
-      "basis": "SHAPE3D is 22 bytes; fields declared in src/trkscene.c",
+      "basis": "SHAPE3D is 22 bytes; fields declared in game/trkscene.c",
       "container": "_g_shapes3d",
       "offset": 2444,
       "storage": "bss"
@@ -154,7 +154,7 @@
       "access": "g_shapes3d[111].shape3d_verts",
       "address": 210762,
       "alias": "_word_3374A",
-      "basis": "SHAPE3D is 22 bytes; fields declared in src/trkscene.c",
+      "basis": "SHAPE3D is 22 bytes; fields declared in game/trkscene.c",
       "container": "_g_shapes3d",
       "offset": 2446,
       "storage": "bss"
@@ -163,7 +163,7 @@
       "access": "g_shapes3d[124].numpaints",
       "address": 211052,
       "alias": "_byte_3386C",
-      "basis": "SHAPE3D is 22 bytes; fields declared in src/trkscene.c",
+      "basis": "SHAPE3D is 22 bytes; fields declared in game/trkscene.c",
       "container": "_g_shapes3d",
       "offset": 2736,
       "storage": "bss"
@@ -172,7 +172,7 @@
       "access": "g_shapes3d[126].shape3d_verts",
       "address": 211090,
       "alias": "_shape126_vertices_alias",
-      "basis": "SHAPE3D is 22 bytes; fields declared in src/trkscene.c",
+      "basis": "SHAPE3D is 22 bytes; fields declared in game/trkscene.c",
       "container": "_g_shapes3d",
       "offset": 2774,
       "storage": "bss"
@@ -181,7 +181,7 @@
       "access": "g_shapes3d[126].shape3d_verts",
       "address": 211092,
       "alias": "_word_33894",
-      "basis": "SHAPE3D is 22 bytes; fields declared in src/trkscene.c",
+      "basis": "SHAPE3D is 22 bytes; fields declared in game/trkscene.c",
       "container": "_g_shapes3d",
       "offset": 2776,
       "storage": "bss"
@@ -190,7 +190,7 @@
       "access": "g_shapes3d[127].shape3d_verts",
       "address": 211112,
       "alias": "_shape127_vertices_alias",
-      "basis": "SHAPE3D is 22 bytes; fields declared in src/trkscene.c",
+      "basis": "SHAPE3D is 22 bytes; fields declared in game/trkscene.c",
       "container": "_g_shapes3d",
       "offset": 2796,
       "storage": "bss"
@@ -199,7 +199,7 @@
       "access": "g_shapes3d[127].shape3d_verts",
       "address": 211114,
       "alias": "_word_338AA",
-      "basis": "SHAPE3D is 22 bytes; fields declared in src/trkscene.c",
+      "basis": "SHAPE3D is 22 bytes; fields declared in game/trkscene.c",
       "container": "_g_shapes3d",
       "offset": 2798,
       "storage": "bss"
@@ -208,7 +208,7 @@
       "access": "rotpr[1]",
       "address": 215550,
       "alias": "_sky_rotation_page1_alias",
-      "basis": "int rotpr[2] in src/render.c; access already present in draw_clip",
+      "basis": "int rotpr[2] in game/render.c; access already present in draw_clip",
       "container": "_rotpr",
       "offset": 2,
       "storage": "bss"
@@ -217,7 +217,7 @@
       "access": "tparr[0].right",
       "address": 215558,
       "alias": "_dirty_rect_right_alias",
-      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/render.c",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in game/render.c",
       "container": "_tparr",
       "offset": 2,
       "storage": "bss"
@@ -226,7 +226,7 @@
       "access": "tparr[0].top",
       "address": 215560,
       "alias": "_dirty_rect_top_alias",
-      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/render.c",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in game/render.c",
       "container": "_tparr",
       "offset": 4,
       "storage": "bss"
@@ -235,7 +235,7 @@
       "access": "tparr[0].bottom",
       "address": 215562,
       "alias": "_dirty_rect_bottom_alias",
-      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/render.c",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in game/render.c",
       "container": "_tparr",
       "offset": 6,
       "storage": "bss"
@@ -244,7 +244,7 @@
       "access": "tparr[1]",
       "address": 215564,
       "alias": "_rect_unk2",
-      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/render.c",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in game/render.c",
       "container": "_tparr",
       "offset": 8,
       "storage": "bss"
@@ -253,7 +253,7 @@
       "access": "tparr[2]",
       "address": 215572,
       "alias": "_rect_unk6",
-      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/render.c",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in game/render.c",
       "container": "_tparr",
       "offset": 16,
       "storage": "bss"
@@ -262,7 +262,7 @@
       "access": "tparr[3]",
       "address": 215580,
       "alias": "_rect_unk12",
-      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/render.c",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in game/render.c",
       "container": "_tparr",
       "offset": 24,
       "storage": "bss"
@@ -271,7 +271,7 @@
       "access": "tparr[4]",
       "address": 215588,
       "alias": "_rect_unk15",
-      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/render.c",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in game/render.c",
       "container": "_tparr",
       "offset": 32,
       "storage": "bss"
@@ -280,7 +280,7 @@
       "access": "tparr[5]",
       "address": 215596,
       "alias": "_rect_skybox",
-      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/render.c",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in game/render.c",
       "container": "_tparr",
       "offset": 40,
       "storage": "bss"
@@ -289,7 +289,7 @@
       "access": "tparr[6]",
       "address": 215604,
       "alias": "_rect_unk11",
-      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/render.c",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in game/render.c",
       "container": "_tparr",
       "offset": 48,
       "storage": "bss"
@@ -298,7 +298,7 @@
       "access": "&tparr[7] /* 8 rectangles through tparr[14] */",
       "address": 215612,
       "alias": "_rect_unk9",
-      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/render.c",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in game/render.c",
       "container": "_tparr",
       "offset": 56,
       "storage": "bss"
@@ -307,7 +307,7 @@
       "access": "tparr[5].left",
       "address": 215596,
       "alias": "_word_34A2C",
-      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/render.c",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in game/render.c",
       "container": "_tparr",
       "offset": 40,
       "storage": "bss"
@@ -316,7 +316,7 @@
       "access": "tparr[5].right",
       "address": 215598,
       "alias": "_word_34A2E",
-      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/render.c",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in game/render.c",
       "container": "_tparr",
       "offset": 42,
       "storage": "bss"
@@ -325,7 +325,7 @@
       "access": "tparr[5].top",
       "address": 215600,
       "alias": "_word_34A30",
-      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/render.c",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in game/render.c",
       "container": "_tparr",
       "offset": 44,
       "storage": "bss"
@@ -334,7 +334,7 @@
       "access": "tparr[5].bottom",
       "address": 215602,
       "alias": "_word_34A32",
-      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in src/render.c",
+      "basis": "struct RECTANGLE is 8 bytes; tparr[15] in game/render.c",
       "container": "_tparr",
       "offset": 46,
       "storage": "bss"
@@ -343,7 +343,7 @@
       "access": "poly_link_list[0]",
       "address": 200406,
       "alias": "_poly_linked_list_40ED6",
-      "basis": "private static int poly_link_list[400] in src/polygon.c; no cross-TU access",
+      "basis": "private static int poly_link_list[400] in game/polygon.c; no cross-TU access",
       "container": "_poly_link_list",
       "offset": 0,
       "storage": "bss"

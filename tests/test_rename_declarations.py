@@ -124,10 +124,10 @@ class CommunalAdditionTests(unittest.TestCase):
                 if status=='bss':image['bss_real_link']['status']='REFUSED'
                 if status=='historical':image['historical']['status']='BUILT_NOT_EXACT'
                 engine=rename.ProofEngine(root,files,compiler,image=lambda:image,
-                    declarations={'src/owner.c':b'long shared;\n'+files['src/owner.c']})
+                    declarations={'game/owner.c':b'long shared;\n'+files['game/owner.c']})
                 result=engine.trial([ROW],whole=True)
                 self.assertEqual(bool(result['failures']),status!='ok')
-                self.assertIn(b'reviewed_function',(root/'src/owner.c').read_bytes())
+                self.assertIn(b'reviewed_function',(root/'game/owner.c').read_bytes())
                 if status=='ok':
                     self.assertEqual(json.loads(engine.current['layout/manifest.json'])['bss_owners'][0]['communals'][0]['declarers'],['other','owner'])
 

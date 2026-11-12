@@ -21,7 +21,7 @@ from unicorn.x86_const import (UC_X86_REG_AX, UC_X86_REG_CX, UC_X86_REG_CS,
 
 class RendererArithmeticTests(unittest.TestCase):
     def test_adapter_changes_only_two_proven_renderer_expressions(self):
-        source = (ROOT / "src/polygon.c").read_text()
+        source = (ROOT / "game/polygon.c").read_text()
         adapted = adapt_renderer_word_arithmetic(source)
         self.assertEqual(adapted.count("port_renderer_double_word(ts->unk)"), 2)
         helper = re.search(r"/\* PORT_BUILD: locked SHL CX,1[^\n]*\*/\n"
@@ -37,7 +37,7 @@ class RendererArithmeticTests(unittest.TestCase):
         for offset in (86103, 86126):
             self.assertEqual(image.load_image[offset:offset + 4], code)
         source = adapt_renderer_word_arithmetic(
-            (ROOT / "src/polygon.c").read_text())
+            (ROOT / "game/polygon.c").read_text())
         helper = re.search(r"static int16_t port_renderer_double_word[^}]+}",
                            source).group()
         edges = (-32768, -32767, -16385, -16384, -1, 0, 1, 16383,

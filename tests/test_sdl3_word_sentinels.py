@@ -36,7 +36,7 @@ class Sdl3WordSentinelTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.sources = {
-            name: (ROOT / "src" / name).read_text(encoding="latin-1")
+            name: (ROOT / "game" / name).read_text(encoding="latin-1")
             for name in ("render.c", "trkscene.c")
         }
         cls.adapted = {

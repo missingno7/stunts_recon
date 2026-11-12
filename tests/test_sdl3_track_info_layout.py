@@ -46,7 +46,7 @@ class Sdl3TrackInfoLayoutTests(unittest.TestCase):
         compiler_env = os.environ.copy()
         compiler_env["PATH"] = str(compiler.parent) + os.pathsep + compiler_env.get("PATH", "")
 
-        historical = (ROOT / "src" / "trkconst.c").read_text(
+        historical = (ROOT / "game" / "trkconst.c").read_text(
             encoding="latin-1")
         info = initialized_array(historical, "struct track_object_info shapeinfos[120]")
         tracks = initialized_array(historical, "struct track_object trklst[215]")

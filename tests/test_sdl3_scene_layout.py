@@ -48,7 +48,7 @@ class Sdl3SceneLayoutTests(unittest.TestCase):
         compiler_env["PATH"] = str(compiler.parent) + os.pathsep + compiler_env.get("PATH", "")
 
         historical = expand_project_headers(
-            (ROOT / "src" / "trkconst.c").read_text(encoding="latin-1"), ROOT)
+            (ROOT / "game" / "trkconst.c").read_text(encoding="latin-1"), ROOT)
         self.assertIn("unsigned short opaque_first_word;", historical)
         scene2 = scene_array(historical, "scene2", 19)
         scene3 = scene_array(historical, "scene3", 13)

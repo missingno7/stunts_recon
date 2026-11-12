@@ -9,7 +9,7 @@ from library import bind_library
 def inputs():
     """Acceptance transaction guard; worker candidates and reports are excluded."""
     result = {}
-    for folder in ['tools', 'tests', 'src', 'asm', 'include', 'recipes', 'layout', 'evidence']:
+    for folder in ['tools', 'tests', 'game', 'lib', 'include', 'recipes', 'layout', 'evidence']:
         for path in sorted((ROOT / folder).rglob('*')):
             if path.is_file() and '__pycache__' not in path.parts:
                 result[path.relative_to(ROOT).as_posix()] = sha(path.read_bytes())
@@ -296,10 +296,10 @@ def _compile_owners(manifest, recipe_overrides, source_overrides, oracle):
         require((recipe['start'],recipe['end'])==(owner['start'],owner['end']),
                 'Recipe ownership mismatch')
         if owner['kind'] in ('MATCHING_ASM','MATCHING_ASM_DATA'):
-            require(recipe.get('kind')=='asm' and recipe['source'].startswith('asm/') and
+            require(recipe.get('kind')=='asm' and recipe['source'].startswith(('game/', 'lib/')) and
                     recipe['source'].endswith('.ASM'), 'Production must consume tracked ASM source')
         else:
-            require(recipe.get('kind','c')=='c' and recipe['source'].startswith('src/'),
+            require(recipe.get('kind','c')=='c' and recipe['source'].startswith(('game/', 'lib/')),
                     'Production must consume recovered C source')
         prefix_owner = owner.get('contribution_form') == 'prefix_of_object'
         require(('prefix_of_object' in recipe) == prefix_owner,

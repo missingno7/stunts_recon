@@ -169,7 +169,7 @@ _andpackfxya endp
 ; ASMDOC x/y.
 ; ASMDOC Globals written: sprite1 backing pixels.
 ; ASMDOC Services: none.
-; ASMDOC Dead: false. Reachability: Direct callers src/race.c:854,1671,1675.
+; ASMDOC Dead: false. Reachability: Direct callers game/race.c:854,1671,1675.
 ; ASMDOC Shared tail: All three compatible frames save DS/SI/DI/BP and join render_bmp_as_mask_shared_exit
 ; (111); common return
 ; ASMDOC restores them.

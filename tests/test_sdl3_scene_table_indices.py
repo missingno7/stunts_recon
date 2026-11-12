@@ -21,7 +21,7 @@ class SceneTableIndexTests(unittest.TestCase):
         self.assertTrue(compiler.is_file(), "i686 GCC is required")
         environment = os.environ.copy()
         environment["PATH"] = str(compiler.parent) + os.pathsep + environment.get("PATH", "")
-        historical = (ROOT / "src/trkconst.c").read_text(encoding="latin-1")
+        historical = (ROOT / "game/trkconst.c").read_text(encoding="latin-1")
         track = re.search(r"struct track_object trklst\[215\] = \{.*?^\};",
                           historical, re.S | re.M).group(0)
         scene2 = scene_array(historical, "scene2", 19)
@@ -31,7 +31,7 @@ class SceneTableIndexTests(unittest.TestCase):
         producer_view = "\n".join(selected_view(header, "trkconst", name)
                                   for name in ("scene_shape", "track_object", "track_object_info"))
         consumer_view = selected_view(header, "render", "TRACKOBJECT")
-        source = (ROOT / "src/render.c").read_text(encoding="utf-8")
+        source = (ROOT / "game/render.c").read_text(encoding="utf-8")
         adapted = adapt_scene_table_indices(source)
         self.assertEqual(adapted.count("port_track_object_at("), 12)
         self.assertNotIn("&trklst[fence_codes[j2]]", adapted)

@@ -34,7 +34,8 @@ def newest_build_input() -> tuple[int, Path]:
                   ROOT / "port" / "dependencies.py",
                   ROOT / "port" / "game_abi.py"]
     for directory, suffixes in ((ROOT / "port", {".c", ".h"}),
-                                (ROOT / "src", {".c", ".h"}),
+                                (ROOT / "game", {".c", ".h"}),
+                                (ROOT / "lib", {".c", ".h"}),
                                 (ROOT / "include", {".h"})):
         if directory.is_dir():
             candidates.extend(path for path in directory.rglob("*")

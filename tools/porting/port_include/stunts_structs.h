@@ -9,7 +9,7 @@
 typedef struct MouseRegs { uint16_t ax, bx, cx, dx, si, di, cflag; } MouseRegs;
 
 #if defined(STUNTS_TU_audiofn)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -44,7 +44,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -63,7 +63,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -76,7 +76,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -106,7 +106,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -119,7 +119,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -135,7 +135,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -153,7 +153,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -176,7 +176,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -197,21 +197,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -237,7 +237,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -250,21 +250,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -282,7 +282,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -306,7 +306,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -324,49 +324,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -379,14 +379,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -400,7 +400,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -410,14 +410,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -429,14 +429,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -451,7 +451,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -463,7 +463,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -490,14 +490,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -514,7 +514,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -528,7 +528,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -540,14 +540,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -562,14 +562,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -582,28 +582,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -613,14 +613,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -633,7 +633,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -646,7 +646,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_audiofn)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -658,7 +658,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -693,7 +693,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -712,7 +712,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -725,7 +725,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -755,7 +755,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -768,7 +768,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -784,7 +784,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -802,7 +802,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -825,7 +825,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -846,21 +846,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/planes.c:2; VECTOR layout. */
+/* lib/planes.c:2; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { int x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -886,7 +886,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -899,21 +899,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -931,7 +931,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -955,7 +955,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -973,49 +973,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/planes.c:3; MATRIX layout. */
+/* lib/planes.c:3; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { int m[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/planes.c:4; PLANE layout. */
+/* lib/planes.c:4; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
     int plane_yz;
@@ -1028,14 +1028,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -1049,7 +1049,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -1059,14 +1059,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -1078,14 +1078,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -1100,7 +1100,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -1112,7 +1112,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -1139,14 +1139,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -1163,7 +1163,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -1177,7 +1177,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -1189,14 +1189,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -1211,14 +1211,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -1231,28 +1231,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -1262,14 +1262,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -1282,7 +1282,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -1295,7 +1295,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_planes)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -1307,7 +1307,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -1342,7 +1342,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -1361,7 +1361,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -1374,7 +1374,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -1404,7 +1404,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -1417,7 +1417,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -1433,7 +1433,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -1451,7 +1451,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -1474,7 +1474,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -1495,21 +1495,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -1535,7 +1535,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -1548,21 +1548,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -1580,7 +1580,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -1604,7 +1604,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -1622,49 +1622,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -1677,14 +1677,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -1698,7 +1698,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -1708,14 +1708,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -1727,14 +1727,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -1749,7 +1749,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -1761,7 +1761,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -1788,14 +1788,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -1812,7 +1812,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -1826,7 +1826,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -1838,14 +1838,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -1860,14 +1860,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -1880,28 +1880,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -1911,14 +1911,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -1931,7 +1931,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -1944,7 +1944,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_deffont)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -1956,7 +1956,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -1991,7 +1991,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -2010,7 +2010,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -2023,7 +2023,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -2053,7 +2053,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -2066,7 +2066,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -2082,7 +2082,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -2100,7 +2100,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -2123,7 +2123,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -2144,21 +2144,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -2184,7 +2184,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -2197,21 +2197,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -2229,7 +2229,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -2253,7 +2253,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -2271,49 +2271,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -2326,14 +2326,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -2347,7 +2347,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -2357,14 +2357,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -2376,7 +2376,7 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/unflipsz.c:7; SHAPE2D layout. */
+/* lib/unflipsz.c:7; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D {
     I16 s2d_width;
@@ -2392,7 +2392,7 @@ struct SHAPE2D {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -2407,7 +2407,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -2419,7 +2419,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -2446,14 +2446,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -2470,7 +2470,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -2484,7 +2484,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -2496,14 +2496,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -2518,14 +2518,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -2538,28 +2538,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -2569,14 +2569,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -2589,7 +2589,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -2602,7 +2602,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_unflipsz)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -2614,7 +2614,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -2649,7 +2649,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -2668,7 +2668,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -2681,7 +2681,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -2711,7 +2711,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -2724,7 +2724,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -2740,7 +2740,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -2758,7 +2758,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -2781,7 +2781,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -2802,21 +2802,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -2842,7 +2842,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -2855,21 +2855,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -2887,7 +2887,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -2911,7 +2911,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -2929,49 +2929,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -2984,14 +2984,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -3005,7 +3005,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -3015,14 +3015,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -3034,7 +3034,7 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/expandsz.c:6; SHAPE2D layout. */
+/* lib/expandsz.c:6; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D {
     I16 width; I16 height; I16 s2d_hotspot_x; I16 s2d_hotspot_y;
@@ -3044,7 +3044,7 @@ struct SHAPE2D {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -3059,7 +3059,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -3071,7 +3071,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -3098,14 +3098,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -3122,7 +3122,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -3136,7 +3136,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -3148,14 +3148,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -3170,14 +3170,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -3190,28 +3190,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -3221,14 +3221,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -3241,7 +3241,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -3254,7 +3254,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_expandsz)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -3266,7 +3266,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -3301,7 +3301,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -3320,7 +3320,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -3333,7 +3333,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -3363,7 +3363,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -3376,7 +3376,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -3392,7 +3392,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -3410,7 +3410,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -3433,7 +3433,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -3454,21 +3454,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -3494,7 +3494,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -3507,21 +3507,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -3539,7 +3539,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -3563,7 +3563,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -3581,49 +3581,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -3636,14 +3636,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -3657,7 +3657,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -3667,14 +3667,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -3686,14 +3686,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -3708,7 +3708,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -3720,7 +3720,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -3747,14 +3747,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -3771,7 +3771,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -3785,7 +3785,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -3797,14 +3797,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -3819,14 +3819,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -3839,28 +3839,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -3870,14 +3870,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -3890,7 +3890,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -3903,7 +3903,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_heapsort)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -3915,7 +3915,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -3950,7 +3950,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -3969,7 +3969,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -3982,7 +3982,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -4012,7 +4012,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -4025,7 +4025,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -4041,7 +4041,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -4059,7 +4059,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -4082,7 +4082,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -4103,21 +4103,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -4143,7 +4143,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -4156,21 +4156,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -4188,7 +4188,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -4212,7 +4212,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -4230,49 +4230,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -4285,14 +4285,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -4306,7 +4306,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -4316,14 +4316,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -4335,14 +4335,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -4357,7 +4357,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -4369,7 +4369,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -4396,14 +4396,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -4420,7 +4420,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -4434,7 +4434,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -4446,14 +4446,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -4468,14 +4468,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -4488,28 +4488,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -4519,14 +4519,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -4539,7 +4539,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -4552,7 +4552,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_mousehk)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -4564,7 +4564,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -4599,7 +4599,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -4618,7 +4618,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -4631,7 +4631,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -4661,7 +4661,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -4674,7 +4674,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -4690,7 +4690,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -4708,7 +4708,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -4731,7 +4731,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -4752,21 +4752,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -4792,7 +4792,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -4805,21 +4805,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -4837,7 +4837,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -4861,7 +4861,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -4879,49 +4879,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -4934,14 +4934,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -4955,7 +4955,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -4965,14 +4965,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -4984,14 +4984,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -5006,7 +5006,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -5018,7 +5018,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -5045,14 +5045,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -5069,7 +5069,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -5083,7 +5083,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -5095,14 +5095,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -5117,14 +5117,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -5137,28 +5137,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -5168,14 +5168,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -5188,7 +5188,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -5201,7 +5201,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_frontend)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -5213,7 +5213,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -5248,7 +5248,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -5267,7 +5267,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -5280,7 +5280,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -5310,7 +5310,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -5323,7 +5323,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -5339,7 +5339,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -5357,7 +5357,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -5380,7 +5380,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -5401,7 +5401,7 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:39; VECTORLONG layout. */
+/* game/carsim.c:39; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG {
 	I32 lx, ly, lz;
@@ -5410,7 +5410,7 @@ struct VECTORLONG {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:34; VECTOR layout. */
+/* game/carsim.c:34; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR {
 	I16S x, y, z;
@@ -5419,7 +5419,7 @@ struct VECTOR {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:112; CARSTATE layout. */
+/* game/carsim.c:112; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
 	struct VECTORLONG car_posWorld1;
@@ -5489,7 +5489,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -5502,21 +5502,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:98; GAMEINFO layout. */
+/* game/carsim.c:98; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
 	I8 game_playercarid[4];
@@ -5534,7 +5534,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:178; GAMESTATE layout. */
+/* game/carsim.c:178; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
 	I32 game_debris_x[24]; 
@@ -5587,7 +5587,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:227; GAMESTATE_SNAPSHOT layout. */
+/* game/carsim.c:227; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
 	I32 game_speed_frame_sum;
@@ -5605,49 +5605,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -5660,7 +5660,7 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:44; POINT2D layout. */
+/* game/carsim.c:44; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D {
 	I16 px, py;
@@ -5669,7 +5669,7 @@ struct POINT2D {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -5683,7 +5683,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -5693,7 +5693,7 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:26; RECTANGLE layout. */
+/* game/carsim.c:26; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE {
 	I16 left, right;
@@ -5705,7 +5705,7 @@ struct RECTANGLE {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -5717,14 +5717,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -5739,7 +5739,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -5751,7 +5751,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:241; SIMD layout. */
+/* game/carsim.c:241; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
 	I8 num_gears;
@@ -5788,14 +5788,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -5812,7 +5812,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -5826,7 +5826,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -5838,14 +5838,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -5860,14 +5860,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -5880,28 +5880,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -5911,14 +5911,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -5931,7 +5931,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -5955,7 +5955,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_carsim)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -5967,7 +5967,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -6002,7 +6002,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -6021,7 +6021,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -6034,7 +6034,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -6064,7 +6064,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -6077,7 +6077,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -6093,7 +6093,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -6111,7 +6111,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -6134,7 +6134,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -6155,7 +6155,7 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:45; VECTORLONG layout. */
+/* game/render.c:45; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG {
 	I32 lx, ly, lz;
@@ -6164,7 +6164,7 @@ struct VECTORLONG {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:41; VECTOR layout. */
+/* game/render.c:41; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR {
 	I16S x, y, z;
@@ -6173,7 +6173,7 @@ struct VECTOR {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:114; CARSTATE layout. */
+/* game/render.c:114; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
 	struct VECTORLONG car_posWorld1;
@@ -6243,7 +6243,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -6256,21 +6256,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:101; GAMEINFO layout. */
+/* game/render.c:101; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
 	I8 game_playercarid[4];
@@ -6288,7 +6288,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:179; GAMESTATE layout. */
+/* game/render.c:179; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
 	I32 game_debris_x[24]; // x
@@ -6342,7 +6342,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -6360,35 +6360,35 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:53; MATRIX layout. */
+/* game/render.c:53; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX {
 	I16 vals[9];
@@ -6397,14 +6397,14 @@ struct MATRIX {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:57; PLANE layout. */
+/* game/render.c:57; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -6417,7 +6417,7 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:49; POINT2D layout. */
+/* game/render.c:49; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D {
 	I16 px, py;
@@ -6426,7 +6426,7 @@ struct POINT2D {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -6440,7 +6440,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -6450,7 +6450,7 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:34; RECTANGLE layout. */
+/* game/render.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE {
 	I16 left, right;
@@ -6462,7 +6462,7 @@ struct RECTANGLE {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -6474,14 +6474,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:713; SHAPE2D layout. */
+/* game/render.c:713; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:575; SHAPE3D layout. */
+/* game/render.c:575; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
 	U16S  shape3d_numverts;
@@ -6496,7 +6496,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -6508,7 +6508,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:228; SIMD layout. */
+/* game/render.c:228; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
 	I8 num_gears;
@@ -6546,14 +6546,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:717; SPRITE layout. */
+/* game/render.c:717; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -6570,7 +6570,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:276; TRACKOBJECT layout. */
+/* game/render.c:276; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
 	struct TRKOBJINFO* ss_trkObjInfoPtr; // offset (0003B770)
@@ -6588,7 +6588,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -6600,14 +6600,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:592; TRANSFORMEDSHAPE3D layout. */
+/* game/render.c:592; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
 	struct VECTOR pos;
@@ -6622,14 +6622,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/render.c:261; TRKOBJINFO layout. */
+/* game/render.c:261; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
 	I8  si_noOfBlocks;      // How many shapeInfo pieces compose the element. Arbitrary for the first piece, 0 for the following ones.
@@ -6649,28 +6649,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -6680,14 +6680,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -6700,7 +6700,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -6724,7 +6724,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_render)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -6736,7 +6736,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -6771,7 +6771,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -6790,7 +6790,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -6803,7 +6803,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -6833,7 +6833,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -6846,7 +6846,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -6862,7 +6862,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -6880,7 +6880,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -6903,7 +6903,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -6924,21 +6924,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/trkscene.c:8; VECTOR layout. */
+/* game/trkscene.c:8; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16S x; I16S y; I16S z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -6964,7 +6964,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -6977,35 +6977,35 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/trkscene.c:22; GAMEINFO layout. */
+/* game/trkscene.c:22; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO { I8 game_playercarid[4],game_playermaterial,game_playertransmission,game_opponenttype,game_opponentcarid[4],game_opponentmaterial,game_opponenttransmission,game_trackname[9]; U16S  game_framespersec,game_recordedframes; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/trkscene.c:18; GAMESTATE layout. */
+/* game/trkscene.c:18; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE { U8  state_prefix_000[0x3f5]; I8 game_inputmode; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -7023,49 +7023,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -7078,14 +7078,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -7099,7 +7099,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -7109,14 +7109,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -7128,21 +7128,21 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/trkscene.c:10; SHAPE3D layout. */
+/* game/trkscene.c:10; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D { U16S  numverts; struct VECTOR far *shape3d_verts; U16S  numprimitives; U8  numpaints; U8  reserved; void far *primitives; void far *cull1; void far *cull2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -7154,7 +7154,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -7181,14 +7181,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -7205,14 +7205,14 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/trkscene.c:14; TRACKOBJECT layout. */
+/* game/trkscene.c:14; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT { struct TRKOBJINFO *info; I16S rotation; struct SHAPE3D *shape,*lowShape; U8  overlay; I8 surface,ignoreZ,multiTile,physicalModel,unknown; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -7224,14 +7224,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -7246,42 +7246,42 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/trkscene.c:12; TRKOBJINFO layout. */
+/* game/trkscene.c:12; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO { U8  noOfBlocks,entry,exitPoint,entryType,exitType,arrowType; I16S arrowOrient; I16S *cameraDataOffset; union { struct { U8  opponent1,opponent2; } opponent; U16S  cameraOffsetOverride; } cameraOverlay; U8  opponent3,opponentSpeedCode; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -7291,14 +7291,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -7311,7 +7311,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -7335,7 +7335,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_trkscene)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -7347,7 +7347,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -7382,7 +7382,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -7401,7 +7401,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -7414,7 +7414,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -7444,7 +7444,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -7457,7 +7457,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -7473,7 +7473,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -7491,7 +7491,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -7514,7 +7514,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -7535,7 +7535,7 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:51; VECTORLONG layout. */
+/* game/race.c:51; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG {
 	I32 lx, ly, lz;
@@ -7544,7 +7544,7 @@ struct VECTORLONG {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:46; VECTOR layout. */
+/* game/race.c:46; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR {
 	I16S x, y, z;
@@ -7553,7 +7553,7 @@ struct VECTOR {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:125; CARSTATE layout. */
+/* game/race.c:125; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
 	struct VECTORLONG car_posWorld1;
@@ -7623,7 +7623,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -7636,21 +7636,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:111; GAMEINFO layout. */
+/* game/race.c:111; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
 	I8 game_playercarid[4];
@@ -7668,7 +7668,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:191; GAMESTATE layout. */
+/* game/race.c:191; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
 	I32 game_debris_x[24]; // x
@@ -7721,7 +7721,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -7739,49 +7739,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:61; MATRIX layout. */
+/* game/race.c:61; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:64; PLANE layout. */
+/* game/race.c:64; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -7794,7 +7794,7 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:56; POINT2D layout. */
+/* game/race.c:56; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D {
 	I16 px, py;
@@ -7803,7 +7803,7 @@ struct POINT2D {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -7817,7 +7817,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -7827,7 +7827,7 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:38; RECTANGLE layout. */
+/* game/race.c:38; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE {
 	I16 left, right;
@@ -7839,7 +7839,7 @@ struct RECTANGLE {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -7851,7 +7851,7 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:1390; SHAPE2D layout. */
+/* game/race.c:1390; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D {
     I16S s2d_width;
@@ -7869,7 +7869,7 @@ struct SHAPE2D {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -7884,7 +7884,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -7896,7 +7896,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:240; SIMD layout. */
+/* game/race.c:240; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
 	I8 num_gears;
@@ -7934,7 +7934,7 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:1403; SPRITE layout. */
+/* game/race.c:1403; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE {
     struct SHAPE2D far *sprite_bitmapptr;
@@ -7956,7 +7956,7 @@ struct SPRITE {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -7973,7 +7973,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:290; TRACKOBJECT layout. */
+/* game/race.c:290; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
 	struct TRKOBJINFO* ss_trkObjInfoPtr; // offset (0003B770)
@@ -7991,7 +7991,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -8003,14 +8003,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -8025,14 +8025,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/race.c:274; TRKOBJINFO layout. */
+/* game/race.c:274; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
 	I8  si_noOfBlocks;      // How many shapeInfo pieces compose the element. Arbitrary for the first piece, 0 for the following ones.
@@ -8052,28 +8052,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -8083,14 +8083,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -8103,7 +8103,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -8116,7 +8116,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_race)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -8128,7 +8128,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -8163,7 +8163,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -8182,7 +8182,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -8195,7 +8195,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -8225,7 +8225,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -8238,7 +8238,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -8254,7 +8254,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -8272,7 +8272,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -8295,7 +8295,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -8316,21 +8316,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/polygon.c:20; VECTOR layout. */
+/* game/polygon.c:20; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -8356,7 +8356,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -8369,21 +8369,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -8401,7 +8401,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -8425,7 +8425,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -8443,49 +8443,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/polygon.c:22; MATRIX layout. */
+/* game/polygon.c:22; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -8498,14 +8498,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/polygon.c:21; POINT2D layout. */
+/* game/polygon.c:21; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -8519,7 +8519,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -8529,14 +8529,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/polygon.c:19; RECTANGLE layout. */
+/* game/polygon.c:19; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -8548,14 +8548,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/polygon.c:24; SHAPE3D layout. */
+/* game/polygon.c:24; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16 numverts;
@@ -8571,7 +8571,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -8583,7 +8583,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -8610,14 +8610,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -8634,7 +8634,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -8648,7 +8648,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -8660,14 +8660,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/polygon.c:35; TRANSFORMEDSHAPE3D layout. */
+/* game/polygon.c:35; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -8682,14 +8682,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -8702,28 +8702,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -8733,14 +8733,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -8753,7 +8753,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -8766,7 +8766,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_polygon)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -8778,7 +8778,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -8813,7 +8813,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -8832,7 +8832,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -8845,7 +8845,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -8875,7 +8875,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -8888,7 +8888,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -8904,7 +8904,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -8922,7 +8922,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -8945,7 +8945,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -8966,21 +8966,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -9006,7 +9006,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -9019,21 +9019,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -9051,7 +9051,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -9075,7 +9075,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -9093,49 +9093,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -9148,14 +9148,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -9169,7 +9169,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -9179,14 +9179,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -9198,14 +9198,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -9220,7 +9220,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -9232,7 +9232,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -9259,14 +9259,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -9283,7 +9283,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -9297,7 +9297,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -9309,14 +9309,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -9331,14 +9331,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -9351,28 +9351,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -9382,14 +9382,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -9402,7 +9402,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -9415,7 +9415,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_audioeng)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -9427,7 +9427,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -9462,7 +9462,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -9481,7 +9481,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -9494,7 +9494,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -9524,7 +9524,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -9537,7 +9537,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -9553,7 +9553,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -9571,7 +9571,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -9594,7 +9594,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -9615,21 +9615,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -9655,7 +9655,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -9668,21 +9668,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -9700,7 +9700,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -9724,7 +9724,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/uires.c:72; GAMESTATE_SNAPSHOT layout. */
+/* game/uires.c:72; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -9742,49 +9742,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -9797,14 +9797,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -9818,7 +9818,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -9828,14 +9828,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -9847,28 +9847,28 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/uires.c:32; SHAPE2D layout. */
+/* game/uires.c:32; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { U16S  words[6]; U8  bytes[4]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/uires.c:53; SHAPE3D layout. */
+/* game/uires.c:53; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D { U16S  numverts; I8 far *verts; U16S  numprimitives; U8  numpaints, reserved; I8 far *primitives; I8 far *cull1; I8 far *cull2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/uires.c:51; SHAPE3DHEADER layout. */
+/* game/uires.c:51; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER { U8  numverts, numprimitives, numpaints, reserved; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -9895,14 +9895,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/uires.c:34; SPRITE layout. */
+/* game/uires.c:34; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { struct SHAPE2D far *sprite_bitmapptr; U16S  words[3]; U16  *lineofs; U16S  words2[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -9919,7 +9919,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -9933,7 +9933,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -9945,14 +9945,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -9967,14 +9967,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -9987,28 +9987,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -10018,14 +10018,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -10038,7 +10038,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -10051,7 +10051,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_uires)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -10063,7 +10063,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -10098,7 +10098,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -10117,7 +10117,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -10130,7 +10130,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -10160,7 +10160,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -10173,7 +10173,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -10189,7 +10189,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -10207,7 +10207,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -10230,7 +10230,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -10251,21 +10251,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -10291,7 +10291,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -10304,21 +10304,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/trackedt.c:62; GAMEINFO layout. */
+/* game/trackedt.c:62; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -10336,7 +10336,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -10360,7 +10360,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -10378,49 +10378,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -10433,14 +10433,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -10454,7 +10454,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -10464,14 +10464,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -10483,7 +10483,7 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/trackedt.c:33; SHAPE2D layout. */
+/* game/trackedt.c:33; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D {
     I16 s2d_width;
@@ -10499,7 +10499,7 @@ struct SHAPE2D {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -10514,7 +10514,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -10526,7 +10526,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -10553,7 +10553,7 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/trackedt.c:43; SPRITE layout. */
+/* game/trackedt.c:43; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE {
     struct SHAPE2D far *sprite_bitmapptr;
@@ -10564,7 +10564,7 @@ struct SPRITE {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -10581,7 +10581,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/trackedt.c:49; TRACKOBJECT layout. */
+/* game/trackedt.c:49; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -10599,7 +10599,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -10611,14 +10611,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -10633,14 +10633,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -10653,28 +10653,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -10684,14 +10684,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -10704,7 +10704,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -10728,7 +10728,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_trackedt)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -10740,7 +10740,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -10775,7 +10775,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -10794,7 +10794,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -10807,7 +10807,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -10837,7 +10837,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -10850,7 +10850,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -10866,7 +10866,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -10884,7 +10884,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -10907,7 +10907,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -10928,21 +10928,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -10968,7 +10968,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -10981,21 +10981,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -11013,7 +11013,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -11037,7 +11037,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -11055,49 +11055,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -11110,14 +11110,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -11131,7 +11131,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -11141,14 +11141,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -11160,14 +11160,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -11182,7 +11182,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -11194,7 +11194,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -11221,14 +11221,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -11245,7 +11245,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -11259,7 +11259,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -11271,14 +11271,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -11293,14 +11293,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -11313,28 +11313,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -11344,14 +11344,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -11364,7 +11364,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -11377,7 +11377,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_reslook)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -11389,7 +11389,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -11424,7 +11424,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -11443,7 +11443,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -11456,7 +11456,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -11486,7 +11486,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -11499,7 +11499,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -11515,7 +11515,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -11533,7 +11533,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -11556,7 +11556,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -11577,21 +11577,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -11617,7 +11617,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -11630,21 +11630,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -11662,7 +11662,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -11686,7 +11686,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -11704,49 +11704,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -11759,14 +11759,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -11780,7 +11780,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -11790,14 +11790,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -11809,14 +11809,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -11831,7 +11831,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -11843,7 +11843,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -11870,14 +11870,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -11894,7 +11894,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -11908,7 +11908,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -11920,14 +11920,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -11942,14 +11942,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -11962,28 +11962,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -11993,14 +11993,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -12013,7 +12013,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -12026,7 +12026,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_audiores)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -12038,7 +12038,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -12073,7 +12073,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -12092,7 +12092,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -12105,7 +12105,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -12135,7 +12135,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -12148,7 +12148,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -12164,7 +12164,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -12182,7 +12182,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -12205,7 +12205,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -12226,21 +12226,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -12266,7 +12266,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -12279,21 +12279,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -12311,7 +12311,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -12335,7 +12335,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -12353,49 +12353,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -12408,14 +12408,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -12429,7 +12429,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -12439,14 +12439,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -12458,14 +12458,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -12480,7 +12480,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -12492,7 +12492,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -12519,14 +12519,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -12543,7 +12543,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -12557,7 +12557,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -12569,14 +12569,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -12591,14 +12591,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -12611,28 +12611,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -12642,14 +12642,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -12662,7 +12662,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -12675,7 +12675,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_audioply)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -12687,7 +12687,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -12722,7 +12722,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -12741,7 +12741,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -12754,7 +12754,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -12784,7 +12784,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -12797,7 +12797,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -12813,7 +12813,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -12831,7 +12831,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -12854,7 +12854,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -12875,21 +12875,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -12915,7 +12915,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -12928,21 +12928,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -12960,7 +12960,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -12984,7 +12984,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -13002,49 +13002,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -13057,14 +13057,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -13078,7 +13078,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -13088,14 +13088,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -13107,14 +13107,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -13129,7 +13129,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -13141,7 +13141,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -13168,14 +13168,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -13192,7 +13192,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -13206,7 +13206,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -13218,14 +13218,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -13240,14 +13240,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -13260,28 +13260,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -13291,14 +13291,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -13311,7 +13311,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -13324,7 +13324,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_audiochk)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -13336,7 +13336,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -13371,7 +13371,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -13390,7 +13390,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -13403,7 +13403,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -13433,7 +13433,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -13446,7 +13446,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -13462,7 +13462,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -13480,7 +13480,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -13503,7 +13503,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -13524,21 +13524,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -13564,7 +13564,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -13577,21 +13577,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -13609,7 +13609,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -13633,7 +13633,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -13651,49 +13651,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -13706,14 +13706,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/startup.c:42; POINT2D layout. */
+/* lib/startup.c:42; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 px, py; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -13727,7 +13727,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -13737,14 +13737,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/startup.c:43; RECTANGLE layout. */
+/* lib/startup.c:43; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -13756,14 +13756,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -13778,7 +13778,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -13790,7 +13790,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -13817,14 +13817,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -13841,7 +13841,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -13855,7 +13855,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -13867,14 +13867,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -13889,14 +13889,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -13909,28 +13909,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -13940,14 +13940,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -13960,7 +13960,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -13973,7 +13973,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_startup)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -13985,7 +13985,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -14020,7 +14020,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -14039,7 +14039,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -14052,7 +14052,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -14082,7 +14082,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -14095,7 +14095,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -14111,7 +14111,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -14129,7 +14129,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -14152,7 +14152,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -14173,21 +14173,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -14213,7 +14213,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -14226,21 +14226,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -14258,7 +14258,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -14282,7 +14282,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -14300,49 +14300,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -14355,14 +14355,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -14376,7 +14376,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -14386,14 +14386,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -14405,14 +14405,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -14427,7 +14427,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -14439,7 +14439,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -14466,14 +14466,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -14490,7 +14490,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -14504,7 +14504,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -14516,14 +14516,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -14538,14 +14538,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -14558,28 +14558,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -14589,14 +14589,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -14609,7 +14609,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -14622,7 +14622,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_lineedit)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -14634,7 +14634,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -14669,7 +14669,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -14688,7 +14688,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -14701,7 +14701,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -14731,7 +14731,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -14744,7 +14744,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -14760,7 +14760,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -14778,7 +14778,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -14801,7 +14801,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -14822,21 +14822,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -14862,7 +14862,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -14875,21 +14875,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -14907,7 +14907,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -14931,7 +14931,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -14949,49 +14949,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -15004,14 +15004,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -15025,7 +15025,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -15035,14 +15035,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -15054,14 +15054,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/shp2res.c:4; SHAPE2D layout. */
+/* lib/shp2res.c:4; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16 width,height,s2d_hotspot_x,s2d_hotspot_y,pos_x,pos_y; U8 s2d_plane_color0,s2d_plane_color1_bg,s2d_plane_color2_flip,s2d_plane_color3_flags; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -15076,7 +15076,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -15088,7 +15088,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -15115,14 +15115,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -15139,7 +15139,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -15153,7 +15153,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -15165,14 +15165,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -15187,14 +15187,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -15207,28 +15207,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -15238,14 +15238,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -15258,7 +15258,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -15271,7 +15271,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_shp2res)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -15283,7 +15283,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -15318,7 +15318,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -15337,7 +15337,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -15350,7 +15350,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -15380,7 +15380,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -15393,7 +15393,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -15409,7 +15409,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -15427,7 +15427,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -15450,7 +15450,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -15471,21 +15471,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/polarrad.c:3; VECTOR layout. */
+/* lib/polarrad.c:3; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -15511,7 +15511,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -15524,21 +15524,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -15556,7 +15556,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -15580,7 +15580,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -15598,49 +15598,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -15653,14 +15653,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -15674,7 +15674,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -15684,14 +15684,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -15703,14 +15703,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -15725,7 +15725,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -15737,7 +15737,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -15764,14 +15764,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -15788,7 +15788,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -15802,7 +15802,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -15814,14 +15814,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -15836,14 +15836,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -15856,28 +15856,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -15887,14 +15887,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -15907,7 +15907,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -15920,7 +15920,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_polarrad)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -15932,7 +15932,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -15967,7 +15967,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -15986,7 +15986,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -15999,7 +15999,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -16029,7 +16029,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -16042,7 +16042,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -16058,7 +16058,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -16076,7 +16076,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -16099,7 +16099,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -16120,21 +16120,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -16160,7 +16160,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -16173,21 +16173,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -16205,7 +16205,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -16229,7 +16229,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -16247,49 +16247,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -16302,14 +16302,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -16323,7 +16323,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -16333,14 +16333,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -16352,14 +16352,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -16374,7 +16374,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -16386,7 +16386,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -16413,14 +16413,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -16437,7 +16437,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -16451,7 +16451,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -16463,14 +16463,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -16485,14 +16485,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -16505,28 +16505,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -16536,14 +16536,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -16556,7 +16556,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -16569,7 +16569,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_sphhelp)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -16581,7 +16581,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -16616,7 +16616,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -16635,7 +16635,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -16648,7 +16648,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -16678,7 +16678,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -16691,7 +16691,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -16707,7 +16707,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -16725,7 +16725,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -16748,7 +16748,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -16769,21 +16769,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -16809,7 +16809,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -16822,21 +16822,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -16854,7 +16854,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -16878,7 +16878,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -16896,49 +16896,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -16951,14 +16951,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -16972,21 +16972,21 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/sphhelp2.c:6; Point layout. */
+/* lib/sphhelp2.c:6; Point layout. */
 #pragma pack(push, 2)
 struct Point { I16 x; I16 y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -16998,14 +16998,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -17020,7 +17020,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -17032,7 +17032,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -17059,14 +17059,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -17083,7 +17083,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -17097,7 +17097,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -17109,14 +17109,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -17131,14 +17131,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -17151,28 +17151,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -17182,14 +17182,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -17202,7 +17202,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -17215,7 +17215,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_sphhelp2)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -17227,7 +17227,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -17262,7 +17262,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -17281,7 +17281,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -17294,7 +17294,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -17324,7 +17324,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -17337,7 +17337,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -17353,7 +17353,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -17371,7 +17371,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -17394,7 +17394,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -17415,21 +17415,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -17455,7 +17455,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -17468,21 +17468,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -17500,7 +17500,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -17524,7 +17524,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -17542,49 +17542,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -17597,14 +17597,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -17618,21 +17618,21 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/wheel.c:10; Point layout. */
+/* lib/wheel.c:10; Point layout. */
 #pragma pack(push, 2)
 struct Point { I16 x; I16 y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -17644,14 +17644,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -17666,7 +17666,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -17678,7 +17678,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -17705,14 +17705,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -17729,7 +17729,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -17743,7 +17743,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -17755,14 +17755,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -17777,14 +17777,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -17797,28 +17797,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/wheel.c:11; WheelRect layout. */
+/* lib/wheel.c:11; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { I16 left, top, section_p1_x, section_p1_y, section_p2_x, section_p2_y, x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -17828,14 +17828,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -17848,7 +17848,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -17861,7 +17861,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_wheel)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -17873,7 +17873,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -17908,7 +17908,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -17927,7 +17927,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -17940,7 +17940,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -17970,7 +17970,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -17983,7 +17983,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -17999,7 +17999,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -18017,7 +18017,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -18040,7 +18040,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -18061,21 +18061,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -18101,7 +18101,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -18114,21 +18114,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -18146,7 +18146,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -18170,7 +18170,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -18188,49 +18188,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -18243,14 +18243,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -18264,21 +18264,21 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/whlhelp.c:7; Point layout. */
+/* lib/whlhelp.c:7; Point layout. */
 #pragma pack(push, 2)
 struct Point { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -18290,14 +18290,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -18312,7 +18312,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -18324,7 +18324,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -18351,14 +18351,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -18375,7 +18375,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -18389,7 +18389,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -18401,14 +18401,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -18423,14 +18423,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -18443,28 +18443,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/whlhelp.c:6; WheelRect layout. */
+/* lib/whlhelp.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { I16 left, top, section_p1_x, section_p1_y, section_p2_x, section_p2_y, x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -18474,14 +18474,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -18494,7 +18494,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -18507,7 +18507,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_whlhelp)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -18519,7 +18519,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -18554,7 +18554,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -18573,7 +18573,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -18586,7 +18586,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -18616,7 +18616,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -18629,7 +18629,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -18645,7 +18645,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -18663,7 +18663,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -18686,7 +18686,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -18707,21 +18707,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -18747,7 +18747,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -18760,21 +18760,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -18792,7 +18792,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -18816,7 +18816,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -18834,49 +18834,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -18889,14 +18889,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -18910,21 +18910,21 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/whlhelp2.c:5; Point layout. */
+/* lib/whlhelp2.c:5; Point layout. */
 #pragma pack(push, 2)
 struct Point { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -18936,14 +18936,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -18958,7 +18958,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -18970,7 +18970,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -18997,14 +18997,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -19021,7 +19021,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -19035,7 +19035,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -19047,14 +19047,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -19069,14 +19069,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -19089,28 +19089,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -19120,14 +19120,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -19140,7 +19140,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -19153,7 +19153,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -19165,7 +19165,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -19200,7 +19200,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -19219,7 +19219,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -19232,7 +19232,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -19262,7 +19262,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -19275,7 +19275,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -19291,7 +19291,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -19309,7 +19309,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -19332,7 +19332,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -19353,21 +19353,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -19393,7 +19393,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -19406,21 +19406,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -19438,7 +19438,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -19462,7 +19462,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -19480,49 +19480,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -19535,14 +19535,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -19556,7 +19556,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -19566,14 +19566,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -19585,14 +19585,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -19607,7 +19607,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -19619,7 +19619,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -19646,14 +19646,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -19670,7 +19670,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -19684,7 +19684,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -19696,14 +19696,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -19718,14 +19718,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -19738,28 +19738,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -19769,14 +19769,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -19789,7 +19789,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -19802,7 +19802,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_whlhelp3)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -19814,7 +19814,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -19849,7 +19849,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -19868,7 +19868,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -19881,7 +19881,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -19911,7 +19911,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -19924,7 +19924,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -19940,7 +19940,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -19958,7 +19958,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -19981,7 +19981,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -20002,21 +20002,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -20042,7 +20042,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -20055,21 +20055,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -20087,7 +20087,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -20111,7 +20111,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -20129,49 +20129,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -20184,14 +20184,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -20205,7 +20205,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -20215,14 +20215,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -20234,14 +20234,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -20256,7 +20256,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -20268,7 +20268,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -20295,14 +20295,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -20319,7 +20319,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -20333,7 +20333,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -20345,14 +20345,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -20367,14 +20367,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -20387,28 +20387,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -20418,14 +20418,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -20438,7 +20438,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -20451,7 +20451,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_mouse)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -20463,7 +20463,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -20498,7 +20498,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -20517,7 +20517,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -20530,7 +20530,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -20560,7 +20560,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -20573,7 +20573,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -20589,7 +20589,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -20607,7 +20607,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -20630,7 +20630,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -20651,21 +20651,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -20691,7 +20691,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -20704,21 +20704,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -20736,7 +20736,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -20760,7 +20760,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -20778,49 +20778,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/matrot.c:6; MATRIX layout. */
+/* lib/matrot.c:6; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { struct MAT3 m; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -20833,14 +20833,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -20854,7 +20854,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -20864,14 +20864,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -20883,14 +20883,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -20905,7 +20905,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -20917,7 +20917,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -20944,14 +20944,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -20968,7 +20968,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -20982,7 +20982,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -20994,14 +20994,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -21016,14 +21016,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -21036,28 +21036,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -21067,14 +21067,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -21087,7 +21087,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -21100,7 +21100,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_matrot)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -21112,7 +21112,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -21147,7 +21147,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -21166,7 +21166,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -21179,7 +21179,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -21209,7 +21209,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -21222,7 +21222,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -21238,7 +21238,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -21256,7 +21256,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -21279,7 +21279,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -21300,21 +21300,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -21340,7 +21340,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -21353,21 +21353,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -21385,7 +21385,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -21409,7 +21409,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -21427,49 +21427,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -21482,14 +21482,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -21503,7 +21503,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -21513,14 +21513,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -21532,14 +21532,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -21554,7 +21554,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -21566,7 +21566,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -21593,7 +21593,7 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/mcgawnd.c:6; SPRITE layout. */
+/* lib/mcgawnd.c:6; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE {
     struct SHAPE2D FAR *sprite_bitmapptr;
@@ -21603,7 +21603,7 @@ struct SPRITE {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -21620,7 +21620,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -21634,7 +21634,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -21646,14 +21646,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -21668,14 +21668,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -21688,28 +21688,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -21719,14 +21719,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -21739,7 +21739,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -21752,7 +21752,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_mcgawnd)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -21764,7 +21764,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -21799,7 +21799,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -21818,7 +21818,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -21831,7 +21831,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -21861,7 +21861,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -21874,7 +21874,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -21890,7 +21890,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -21908,7 +21908,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -21931,7 +21931,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -21952,21 +21952,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -21992,7 +21992,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -22005,21 +22005,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -22037,7 +22037,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -22061,7 +22061,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -22079,49 +22079,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -22134,14 +22134,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -22155,7 +22155,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -22165,14 +22165,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -22184,14 +22184,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -22206,7 +22206,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -22218,7 +22218,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -22245,14 +22245,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -22269,7 +22269,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -22283,7 +22283,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -22295,14 +22295,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -22317,14 +22317,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -22337,28 +22337,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -22368,14 +22368,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -22388,7 +22388,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -22401,7 +22401,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_shp2file)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -22413,7 +22413,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -22448,7 +22448,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -22467,7 +22467,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -22480,7 +22480,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -22510,7 +22510,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -22523,7 +22523,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -22539,7 +22539,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -22557,7 +22557,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -22580,7 +22580,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -22601,21 +22601,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -22641,7 +22641,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -22654,21 +22654,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -22686,7 +22686,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -22710,7 +22710,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -22728,49 +22728,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -22783,14 +22783,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -22804,7 +22804,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -22814,14 +22814,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -22833,14 +22833,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -22855,7 +22855,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -22867,7 +22867,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -22894,14 +22894,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -22918,7 +22918,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -22932,7 +22932,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -22944,14 +22944,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -22966,14 +22966,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -22986,28 +22986,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -23017,14 +23017,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -23037,7 +23037,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -23050,7 +23050,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_sprrect)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -23062,7 +23062,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -23097,7 +23097,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -23116,7 +23116,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -23129,7 +23129,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -23159,7 +23159,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -23172,7 +23172,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -23188,7 +23188,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -23206,7 +23206,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -23229,7 +23229,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -23250,21 +23250,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -23290,7 +23290,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -23303,21 +23303,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -23335,7 +23335,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -23359,7 +23359,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -23377,49 +23377,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -23432,14 +23432,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -23453,7 +23453,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -23463,14 +23463,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -23482,14 +23482,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -23504,7 +23504,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -23516,7 +23516,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -23543,14 +23543,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -23567,7 +23567,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -23581,7 +23581,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -23593,14 +23593,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -23615,14 +23615,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -23635,28 +23635,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -23666,14 +23666,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -23686,7 +23686,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -23699,7 +23699,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_rectout)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -23711,7 +23711,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -23746,7 +23746,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -23765,7 +23765,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -23778,7 +23778,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -23808,7 +23808,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -23821,7 +23821,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -23837,7 +23837,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -23855,7 +23855,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -23878,7 +23878,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -23899,21 +23899,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -23939,7 +23939,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -23952,21 +23952,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -23984,7 +23984,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -24008,7 +24008,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -24026,49 +24026,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -24081,14 +24081,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -24102,7 +24102,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -24112,14 +24112,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -24131,14 +24131,14 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:95; SHAPE3D layout. */
+/* game/frontend.c:95; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D {
     U16  shape3d_numverts;
@@ -24153,7 +24153,7 @@ struct SHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -24165,7 +24165,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -24192,14 +24192,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -24216,7 +24216,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -24230,7 +24230,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -24242,14 +24242,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -24264,14 +24264,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -24284,28 +24284,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -24315,14 +24315,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -24335,7 +24335,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -24348,7 +24348,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_toupper)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -24360,7 +24360,7 @@ struct track_object_info {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/audiores.c:18; AUDIOCHUNK layout. */
+/* lib/audiores.c:18; AUDIOCHUNK layout. */
 #pragma pack(push, 1)
 struct AUDIOCHUNK {                 /* 0x4C bytes */
     I8 FAR *event_pos;                 /* 00 */
@@ -24395,7 +24395,7 @@ struct AUDIOCHUNK {                 /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/audiores.c:50; AUDIOVOICE layout. */
+/* lib/audiores.c:50; AUDIOVOICE layout. */
 #pragma pack(push, 2)
 struct AUDIOVOICE {                 /* 0x2E bytes */
     U8 resource_index;            /* 00 */
@@ -24414,7 +24414,7 @@ struct AUDIOVOICE {                 /* 0x2E bytes */
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/carsim.c:580; AUDIO_CAR_FRAME layout. */
+/* game/carsim.c:580; AUDIO_CAR_FRAME layout. */
 #pragma pack(push, 2)
 struct AUDIO_CAR_FRAME {
     I8 reserved[6];
@@ -24427,7 +24427,7 @@ struct AUDIO_CAR_FRAME {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/audioply.c:12; AudioChunk layout. */
+/* lib/audioply.c:12; AudioChunk layout. */
 #pragma pack(push, 2)
 struct AudioChunk {
     I8 FAR *pos;
@@ -24457,7 +24457,7 @@ struct AudioChunk {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/audioply.c:3; AudioEvent layout. */
+/* lib/audioply.c:3; AudioEvent layout. */
 #pragma pack(push, 2)
 struct AudioEvent {
     U32 delta;
@@ -24470,7 +24470,7 @@ struct AudioEvent {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/audioeng.c:7; AudioPayload layout. */
+/* game/audioeng.c:7; AudioPayload layout. */
 #pragma pack(push, 2)
 struct AudioPayload {           /* 0x30 bytes */
     u16 sample_word;            /* 00 */
@@ -24486,7 +24486,7 @@ struct AudioPayload {           /* 0x30 bytes */
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/audioply.c:53; AudioSample layout. */
+/* lib/audioply.c:53; AudioSample layout. */
 #pragma pack(push, 2)
 struct AudioSample {
     U8 sample_header[0x1e];
@@ -24504,7 +24504,7 @@ struct AudioSample {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/audioeng.c:18; AudioTimer layout. */
+/* game/audioeng.c:18; AudioTimer layout. */
 #pragma pack(push, 2)
 struct AudioTimer {             /* 0x4C bytes */
     u8 active;                  /* 00 */
@@ -24527,7 +24527,7 @@ struct AudioTimer {             /* 0x4C bytes */
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/audioply.c:37; AudioVoice layout. */
+/* lib/audioply.c:37; AudioVoice layout. */
 #pragma pack(push, 2)
 struct AudioVoice {
     U8 resourceIndex, active, priority, driver_note_pitch[5];
@@ -24548,21 +24548,21 @@ struct AudioVoice {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:32; VECTORLONG layout. */
+/* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
 struct VECTORLONG { I32 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:31; VECTOR layout. */
+/* game/frontend.c:31; VECTOR layout. */
 #pragma pack(push, 2)
 struct VECTOR { I16 x, y, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:36; CARSTATE layout. */
+/* game/frontend.c:36; CARSTATE layout. */
 #pragma pack(push, 2)
 struct CARSTATE {
     struct VECTORLONG car_posWorld1, car_posWorld2;
@@ -24588,7 +24588,7 @@ struct CARSTATE {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/race.c:619; ENGINESOUND layout. */
+/* game/race.c:619; ENGINESOUND layout. */
 #pragma pack(push, 2)
 struct ENGINESOUND {
 	I16 es_rate_numerator;
@@ -24601,21 +24601,21 @@ struct ENGINESOUND {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/render.c:715; FARRESOURCE layout. */
+/* game/render.c:715; FARRESOURCE layout. */
 #pragma pack(push, 2)
 union FARRESOURCE { void far *pointer; struct { U16S  offset, segment; } word; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/uires.c:59; FONTDEF_PREFIX layout. */
+/* game/uires.c:59; FONTDEF_PREFIX layout. */
 #pragma pack(push, 2)
 struct FONTDEF_PREFIX { U8  bytes[14]; U16S  value; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:18; GAMEINFO layout. */
+/* game/frontend.c:18; GAMEINFO layout. */
 #pragma pack(push, 2)
 struct GAMEINFO {
     I8 game_playercarid[4];
@@ -24633,7 +24633,7 @@ struct GAMEINFO {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:56; GAMESTATE layout. */
+/* game/frontend.c:56; GAMESTATE layout. */
 #pragma pack(push, 2)
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -24657,7 +24657,7 @@ struct GAMESTATE {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
+/* game/frontend.c:249; GAMESTATE_SNAPSHOT layout. */
 #pragma pack(push, 2)
 struct GAMESTATE_SNAPSHOT {
     I32 game_speed_frame_sum;
@@ -24675,49 +24675,49 @@ struct GAMESTATE_SNAPSHOT {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:30; HighScoreRecord layout. */
+/* game/frontend.c:30; HighScoreRecord layout. */
 #pragma pack(push, 2)
 struct HighScoreRecord { U8  bytes[50]; U16S  marker; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/render.c:2635; LOOKAHEAD_TILE layout. */
+/* game/render.c:2635; LOOKAHEAD_TILE layout. */
 #pragma pack(push, 2)
 struct LOOKAHEAD_TILE { I8 east_delta, south_delta, detail; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/matrot.c:5; MAT3 layout. */
+/* lib/matrot.c:5; MAT3 layout. */
 #pragma pack(push, 2)
 struct MAT3 { I16 _11, _21, _31, _12, _22, _32, _13, _23, _33; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/render.c:714; MATERIALCLRLIST layout. */
+/* game/render.c:714; MATERIALCLRLIST layout. */
 #pragma pack(push, 2)
 struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12_63[0xa4]; I16S water; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/carsim.c:49; MATRIX layout. */
+/* game/carsim.c:49; MATRIX layout. */
 #pragma pack(push, 2)
 struct MATRIX { I16 vals[9]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:113; OPPONENTIMAGE layout. */
+/* game/frontend.c:113; OPPONENTIMAGE layout. */
 #pragma pack(push, 2)
 struct OPPONENTIMAGE { U16  width, height; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/carsim.c:52; PLANE layout. */
+/* game/carsim.c:52; PLANE layout. */
 #pragma pack(push, 2)
 struct PLANE {
 	I16 plane_yz;
@@ -24730,14 +24730,14 @@ struct PLANE {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:33; POINT2D layout. */
+/* game/frontend.c:33; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/polygon.c:45; POLYINFO layout. */
+/* game/polygon.c:45; POLYINFO layout. */
 #pragma pack(push, 2)
 struct POLYINFO {
     I16 depth;
@@ -24751,7 +24751,7 @@ struct POLYINFO {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/whlhelp3.c:5; Point layout. */
+/* lib/whlhelp3.c:5; Point layout. */
 #pragma pack(push, 2)
 typedef struct Point {
     I16 x;
@@ -24761,14 +24761,14 @@ typedef struct Point {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:34; RECTANGLE layout. */
+/* game/frontend.c:34; RECTANGLE layout. */
 #pragma pack(push, 2)
 struct RECTANGLE { I16 left, right, top, bottom; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/lineedit.c:4; SCREEN_RECT layout. */
+/* lib/lineedit.c:4; SCREEN_RECT layout. */
 #pragma pack(push, 2)
 struct SCREEN_RECT {
     I16S foreground;
@@ -24780,21 +24780,21 @@ struct SCREEN_RECT {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:328; SHAPE2D layout. */
+/* game/frontend.c:328; SHAPE2D layout. */
 #pragma pack(push, 2)
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/trkconst.c:494; SHAPE3D layout. */
+/* game/trkconst.c:494; SHAPE3D layout. */
 #pragma pack(push, 2)
 struct SHAPE3D { unsigned char opaque_layout[22]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/render.c:585; SHAPE3DHEADER layout. */
+/* game/render.c:585; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
 struct SHAPE3DHEADER {
 	U8  header_numverts;
@@ -24806,7 +24806,7 @@ struct SHAPE3DHEADER {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:74; SIMD layout. */
+/* game/frontend.c:74; SIMD layout. */
 #pragma pack(push, 2)
 struct SIMD {
     I8 num_gears, simd_unk;
@@ -24833,14 +24833,14 @@ struct SIMD {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:35; SPRITE layout. */
+/* game/frontend.c:35; SPRITE layout. */
 #pragma pack(push, 2)
 struct SPRITE { void far *image; U16S  words[13]; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:331; SecurityDialogResult layout. */
+/* game/frontend.c:331; SecurityDialogResult layout. */
 #pragma pack(push, 2)
 struct SecurityDialogResult {
     I16S first_x;
@@ -24857,7 +24857,7 @@ struct SecurityDialogResult {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/carsim.c:284; TRACKOBJECT layout. */
+/* game/carsim.c:284; TRACKOBJECT layout. */
 #pragma pack(push, 2)
 struct TRACKOBJECT {
     struct TRKOBJINFO *ss_trkObjInfoPtr;
@@ -24871,7 +24871,7 @@ struct TRACKOBJECT {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/carsim.c:587; TRACKRESULT layout. */
+/* game/carsim.c:587; TRACKRESULT layout. */
 #pragma pack(push, 2)
 struct TRACKRESULT {
     struct VECTOR center;
@@ -24883,14 +24883,14 @@ struct TRACKRESULT {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/render.c:716; TRANSFORMEDSHAPE layout. */
+/* game/render.c:716; TRANSFORMEDSHAPE layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE { struct VECTOR pos; struct SHAPE3D *shape; struct RECTANGLE *rect; struct VECTOR rotation; I16 scale; U8  flags, material; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
+/* game/frontend.c:104; TRANSFORMEDSHAPE3D layout. */
 #pragma pack(push, 2)
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;
@@ -24905,14 +24905,14 @@ struct TRANSFORMEDSHAPE3D {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
+/* game/carsim.c:274; TRKOBJINFO_LINK_BYTES layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO_LINK_BYTES { I8 first, second; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/carsim.c:275; TRKOBJINFO layout. */
+/* game/carsim.c:275; TRKOBJINFO layout. */
 #pragma pack(push, 2)
 struct TRKOBJINFO {
     I8 si_noOfBlocks, si_entryPoint, si_exitPoint, si_entryType, si_exitType, si_arrowType;
@@ -24925,28 +24925,28 @@ struct TRKOBJINFO {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/trkscene.c:16; TrackNode layout. */
+/* game/trkscene.c:16; TrackNode layout. */
 #pragma pack(push, 2)
 struct TrackNode { U8  column,row,element,block,connection,terrain,previousColumn,previousRow,previousElement,previousBlock,previousReversed,previousExitType; I16S parent; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/trkscene.c:20; WALLREC layout. */
+/* game/trkscene.c:20; WALLREC layout. */
 #pragma pack(push, 2)
 struct WALLREC { I16S orientation,x,z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/whlhelp2.c:6; WheelRect layout. */
+/* lib/whlhelp2.c:6; WheelRect layout. */
 #pragma pack(push, 2)
 struct WheelRect { struct Point p0, p1, p2; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/trkconst.c:842; car_exp_name_table layout. */
+/* game/trkconst.c:842; car_exp_name_table layout. */
 #pragma pack(push, 2)
 struct car_exp_name_table {
   char entry[15][5];
@@ -24956,14 +24956,14 @@ struct car_exp_name_table {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/trkconst.c:802; coord_pair layout. */
+/* game/trkconst.c:802; coord_pair layout. */
 #pragma pack(push, 2)
 struct coord_pair { short x, z; };
 #pragma pack(pop)
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/trkconst.c:721; scene_shape layout. */
+/* game/trkconst.c:721; scene_shape layout. */
 #pragma pack(push, 2)
 struct scene_shape {
   unsigned short opaque_first_word;
@@ -24976,7 +24976,7 @@ struct scene_shape {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/trkconst.c:496; track_object layout. */
+/* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
   struct track_object_info *info;
@@ -24989,7 +24989,7 @@ struct track_object {
 #endif
 
 #if defined(STUNTS_TU_trkconst)
-/* src/trkconst.c:365; track_object_info layout. */
+/* game/trkconst.c:365; track_object_info layout. */
 #pragma pack(push, 2)
 struct track_object_info {
   unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;
@@ -25455,7 +25455,7 @@ struct track_object_info {
 
 #if defined(STUNTS_INCLUDE_LAYOUT_CATALOG)
 /* Optional namespace-only layout evidence; not part of the port ABI. */
-/* src/render.c:715; size=None; unresolved */
+/* game/render.c:715; size=None; unresolved */
 #pragma pack(push, 2)
 typedef struct stunts_FARRESOURCE_obj_seg003 {
     void far *pointer;
@@ -25463,14 +25463,14 @@ typedef struct stunts_FARRESOURCE_obj_seg003 {
 } stunts_FARRESOURCE_obj_seg003;
 #pragma pack(pop)
 
-/* src/planes.c:3; size=18; compiler-measured */
+/* lib/planes.c:3; size=18; compiler-measured */
 #pragma pack(push, 2)
 typedef struct stunts_MATRIX_fardata_11036 {
     int m[9];
 } stunts_MATRIX_fardata_11036;
 #pragma pack(pop)
 
-/* src/lineedit.c:4; size=None; unresolved */
+/* lib/lineedit.c:4; size=None; unresolved */
 #pragma pack(push, 2)
 typedef struct stunts_SCREEN_RECT_obj_seg032_group {
     I16S width;
@@ -25480,28 +25480,28 @@ typedef struct stunts_SCREEN_RECT_obj_seg032_group {
 } stunts_SCREEN_RECT_obj_seg032_group;
 #pragma pack(pop)
 
-/* src/frontend.c:328; size=None; unresolved */
+/* game/frontend.c:328; size=None; unresolved */
 #pragma pack(push, 2)
 typedef struct stunts_SHAPE2D_obj_seg000 {
     I16S width, height, unk1, unk2, pos_x, pos_y;
 } stunts_SHAPE2D_obj_seg000;
 #pragma pack(pop)
 
-/* src/render.c:713; size=None; unresolved */
+/* game/render.c:713; size=None; unresolved */
 #pragma pack(push, 2)
 typedef struct stunts_SHAPE2D_obj_seg003 {
     I16S width, height, unk1, unk2, pos_x, pos_y;
 } stunts_SHAPE2D_obj_seg003;
 #pragma pack(pop)
 
-/* src/trkconst.c:494; size=22; compiler-measured */
+/* game/trkconst.c:494; size=22; compiler-measured */
 #pragma pack(push, 2)
 typedef struct stunts_SHAPE3D_track_constants_module {
     unsigned char opaque_layout[22];
 } stunts_SHAPE3D_track_constants_module;
 #pragma pack(pop)
 
-/* src/frontend.c:35; size=None; unresolved */
+/* game/frontend.c:35; size=None; unresolved */
 #pragma pack(push, 2)
 typedef struct stunts_SPRITE_obj_seg000 {
     void far *image;
@@ -25509,7 +25509,7 @@ typedef struct stunts_SPRITE_obj_seg000 {
 } stunts_SPRITE_obj_seg000;
 #pragma pack(pop)
 
-/* src/render.c:717; size=None; unresolved */
+/* game/render.c:717; size=None; unresolved */
 #pragma pack(push, 2)
 typedef struct stunts_SPRITE_obj_seg003 {
     void far *image;
@@ -25517,7 +25517,7 @@ typedef struct stunts_SPRITE_obj_seg003 {
 } stunts_SPRITE_obj_seg003;
 #pragma pack(pop)
 
-/* src/trackedt.c:43; size=None; unresolved */
+/* game/trackedt.c:43; size=None; unresolved */
 #pragma pack(push, 2)
 typedef struct stunts_SPRITE_obj_seg009 {
     struct SHAPE2D far *sprite_bitmapptr;
@@ -25526,7 +25526,7 @@ typedef struct stunts_SPRITE_obj_seg009 {
 } stunts_SPRITE_obj_seg009;
 #pragma pack(pop)
 
-/* src/mcgawnd.c:6; size=None; unresolved */
+/* lib/mcgawnd.c:6; size=None; unresolved */
 #pragma pack(push, 2)
 typedef struct stunts_SPRITE_seg033_mcgawnd {
     struct SHAPE2D FAR *sprite_bitmapptr;
@@ -25534,7 +25534,7 @@ typedef struct stunts_SPRITE_seg033_mcgawnd {
 } stunts_SPRITE_seg033_mcgawnd;
 #pragma pack(pop)
 
-/* src/frontend.c:331; size=None; unresolved */
+/* game/frontend.c:331; size=None; unresolved */
 #pragma pack(push, 2)
 typedef struct stunts_SecurityDialogResult_obj_seg000 {
     I16S first_x;
@@ -25549,21 +25549,21 @@ typedef struct stunts_SecurityDialogResult_obj_seg000 {
 } stunts_SecurityDialogResult_obj_seg000;
 #pragma pack(pop)
 
-/* src/carsim.c:34; size=None; unresolved */
+/* game/carsim.c:34; size=None; unresolved */
 #pragma pack(push, 2)
 typedef struct stunts_VECTOR_obj_seg001_complete {
     I16S x, y, z;
 } stunts_VECTOR_obj_seg001_complete;
 #pragma pack(pop)
 
-/* src/render.c:41; size=None; unresolved */
+/* game/render.c:41; size=None; unresolved */
 #pragma pack(push, 2)
 typedef struct stunts_VECTOR_obj_seg003 {
     I16S x, y, z;
 } stunts_VECTOR_obj_seg003;
 #pragma pack(pop)
 
-/* src/trkscene.c:8; size=None; unresolved */
+/* game/trkscene.c:8; size=None; unresolved */
 #pragma pack(push, 2)
 typedef struct stunts_VECTOR_obj_seg004 {
     I16S x;
@@ -25572,28 +25572,28 @@ typedef struct stunts_VECTOR_obj_seg004 {
 } stunts_VECTOR_obj_seg004;
 #pragma pack(pop)
 
-/* src/race.c:46; size=None; unresolved */
+/* game/race.c:46; size=None; unresolved */
 #pragma pack(push, 2)
 typedef struct stunts_VECTOR_obj_seg005 {
     I16S x, y, z;
 } stunts_VECTOR_obj_seg005;
 #pragma pack(pop)
 
-/* src/planes.c:2; size=6; compiler-measured */
+/* lib/planes.c:2; size=6; compiler-measured */
 #pragma pack(push, 2)
 typedef struct stunts_VECTOR_fardata_11036 {
     int x, y, z;
 } stunts_VECTOR_fardata_11036;
 #pragma pack(pop)
 
-/* src/trkscene.c:20; size=None; unresolved */
+/* game/trkscene.c:20; size=None; unresolved */
 #pragma pack(push, 2)
 typedef struct stunts_WALLREC_obj_seg004 {
     I16S orientation,x,z;
 } stunts_WALLREC_obj_seg004;
 #pragma pack(pop)
 
-/* src/trkconst.c:842; size=76; compiler-measured */
+/* game/trkconst.c:842; size=76; compiler-measured */
 #pragma pack(push, 2)
 typedef struct stunts_car_exp_name_table_track_constants_module {
     char entry[15][5];
@@ -25601,14 +25601,14 @@ typedef struct stunts_car_exp_name_table_track_constants_module {
 } stunts_car_exp_name_table_track_constants_module;
 #pragma pack(pop)
 
-/* src/trkconst.c:802; size=4; compiler-measured */
+/* game/trkconst.c:802; size=4; compiler-measured */
 #pragma pack(push, 2)
 typedef struct stunts_coord_pair_track_constants_module {
     short x, z;
 } stunts_coord_pair_track_constants_module;
 #pragma pack(pop)
 
-/* src/trkconst.c:721; size=14; compiler-measured */
+/* game/trkconst.c:721; size=14; compiler-measured */
 #pragma pack(push, 2)
 typedef struct stunts_scene_shape_track_constants_module {
     unsigned short opaque_first_word;
@@ -25619,7 +25619,7 @@ typedef struct stunts_scene_shape_track_constants_module {
 } stunts_scene_shape_track_constants_module;
 #pragma pack(pop)
 
-/* src/trkconst.c:496; size=14; compiler-measured */
+/* game/trkconst.c:496; size=14; compiler-measured */
 #pragma pack(push, 2)
 typedef struct stunts_track_object_track_constants_module {
     struct track_object_info *info;
@@ -25630,7 +25630,7 @@ typedef struct stunts_track_object_track_constants_module {
 } stunts_track_object_track_constants_module;
 #pragma pack(pop)
 
-/* src/trkconst.c:365; size=14; compiler-measured */
+/* game/trkconst.c:365; size=14; compiler-measured */
 #pragma pack(push, 2)
 typedef struct stunts_track_object_info_track_constants_module {
     unsigned char block_count, entry_point, exit_point, entry_type, exit_type, arrow_type;

@@ -14,7 +14,7 @@ import unittest
 
 HERE = Path(__file__).resolve().parent
 ROOT = next(parent for parent in HERE.parents
-            if (parent / "src" / "wheel.c").is_file() and
+            if (parent / "lib" / "wheel.c").is_file() and
             (parent / "assets").is_dir())
 sys.path[:0] = [str(ROOT / "build" / "python"), str(ROOT)]
 from tests.test_sdl3_shape_pipeline import (  # noqa: E402
@@ -62,7 +62,7 @@ def compile_helper(compiler, output, *sources, include_render=False):
 
     prepared_sources = []
     for source in sources:
-        if source.parent == ROOT / "src":
+        if source.parent in (ROOT / "game", ROOT / "lib"):
             prepared = output.parent / ("expanded_" + source.name)
             prepared.write_text(legacy_target_widths(expand_project_headers(
                 source.read_text(encoding="latin-1"), ROOT)), encoding="latin-1")
@@ -203,10 +203,10 @@ class ModernWheelOracleTests(unittest.TestCase):
             geometry_test = temp / "modern_wheel_geometry"
             capture_exe = temp / "legacy_wheel_capture"
             common = (
-                ROOT / "src" / "wheel.c",
-                ROOT / "src" / "whlhelp.c",
-                ROOT / "src" / "whlhelp2.c",
-                ROOT / "src" / "whlhelp3.c",
+                ROOT / "lib" / "wheel.c",
+                ROOT / "lib" / "whlhelp.c",
+                ROOT / "lib" / "whlhelp2.c",
+                ROOT / "lib" / "whlhelp3.c",
                 ROOT / "port" / "sincos.c",
             )
             compile_helper(compiler, geometry_test,

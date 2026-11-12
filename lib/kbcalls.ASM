@@ -100,7 +100,7 @@ _testkey endp
 ; INPUTDOC Globals read: transitive INT16 queue
 ; INPUTDOC Globals written: transitive INT16 queue dequeue
 ; INPUTDOC Services: INT16 AH=01 then AH=00 when present
-; INPUTDOC Reachability: Live: initial readchar callback pointer and src/uires.c:1640.
+; INPUTDOC Reachability: Live: initial readchar callback pointer and game/uires.c:1640.
 _normkey proc far
 
     mov     ah, 1

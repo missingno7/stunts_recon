@@ -77,8 +77,8 @@ public _setfont
 ; ASMDOC Globals read: _sprite1 bitmap segment (+2), CS row-table pointer (+0A) and addressed row offsets.
 ; ASMDOC Globals written: sprite1 backing pixels; caller stack slots +06/+08/+0C.
 ; ASMDOC Services: none.
-; ASMDOC Dead: false. Reachability: Address taken in asm/whlrast.ASM:101 etc.; direct call
-; ASMDOC asm/vecspr.ASM:287.
+; ASMDOC Dead: false. Reachability: Address taken in lib/whlrast.ASM:101 etc.; direct call
+; ASMDOC lib/vecspr.ASM:287.
 ; ASMDOC Edge cases: Zero rows returns without setting DF or ES. Negative nonzero row count draws one row.
 ; Signed nonpositive
 ; ASMDOC (right-left+1) skips pixels.
@@ -249,7 +249,7 @@ _readfxy endp
 ; ASMDOC width/height and selected origin/hotspot fields.
 ; ASMDOC Globals written: destination far shape bitmap (+10h onward); destination shape +08/+0A.
 ; ASMDOC Services: none.
-; ASMDOC Dead: false. Reachability: Direct callers src/frontend.c:1518 and src/uires.c:170.
+; ASMDOC Dead: false. Reachability: Direct callers game/frontend.c:1518 and game/uires.c:170.
 ; ASMDOC Shared tail: All three entries establish compatible BP locals and save DS/SI/DI before joining line
 ; 228; shared epilogue
 ; ASMDOC at 251 restores them. Core switches DS to sprite pixels and ES to caller shape segment. Height <=0
@@ -309,7 +309,7 @@ _readfxya endp
 ; ASMDOC width/height and selected origin/hotspot fields.
 ; ASMDOC Globals written: destination far shape bitmap (+10h onward).
 ; ASMDOC Services: none.
-; ASMDOC Dead: false. Reachability: Direct caller src/frontend.c:863.
+; ASMDOC Dead: false. Reachability: Direct caller game/frontend.c:863.
 ; ASMDOC Shared tail: All three entries establish compatible BP locals and save DS/SI/DI before joining line
 ; 228; shared epilogue
 ; ASMDOC at 251 restores them. Core switches DS to sprite pixels and ES to caller shape segment. Height <=0
@@ -400,9 +400,9 @@ _readf endp
 ; bitmap segment(+2),
 ; ASMDOC CS row-table pointer(+0Ah) via shared blit tail; caller source header and pixels.
 ; ASMDOC Globals written: sprite1 backing pixels; SS:source_row_fraction_accumulator via external tail.
-; ASMDOC Services: _loc_35ED9 near continuation in asm/scalblit.ASM:713 (not CALL;
+; ASMDOC Services: _loc_35ED9 near continuation in lib/scalblit.ASM:713 (not CALL;
 ; consumes this frame).
-; ASMDOC Dead: false. Reachability: Direct caller src/render.c:1926.
+; ASMDOC Dead: false. Reachability: Direct caller game/render.c:1926.
 ; ASMDOC Shared tail: Frame reserves 16h bytes and pushes DS/SI/DI. Tail requires local
 ; ASMDOC
 ; x=-2,y=-4,width=-6,height=-8,sourcewidth=-0A,rowstride=-0C,sourcebase=-0E,step=-10,yfraction=-12,xfraction=-14
@@ -645,7 +645,7 @@ _scalecfxy endp
 ; ASMDOC Globals read: _fontdefseg.
 ; ASMDOC Globals written: current font segment words +00/+02 (not _fontdefseg itself).
 ; ASMDOC Services: none.
-; ASMDOC Dead: false. Reachability: Direct callers src/frontend.c:1035 and port/font.c:72.
+; ASMDOC Dead: false. Reachability: Direct callers game/frontend.c:1035 and port/font.c:72.
 ; ASMDOC Edge cases: Later unlabeled code at 677/686/705 is separate unreachable-from-this-entry font
 ; operations; do not
 ; ASMDOC aggregate their register/global effects into this public entry.
@@ -739,7 +739,7 @@ _textcolor endp
 ; ASMDOC Globals read: none.
 ; ASMDOC Globals written: _fontdefseg.
 ; ASMDOC Services: none.
-; ASMDOC Dead: false. Reachability: Direct caller src/uires.c:1454; port/font.c:53 adapts far segment to
+; ASMDOC Dead: false. Reachability: Direct caller game/uires.c:1454; port/font.c:53 adapts far segment to
 ; host pointer.
 _setfont proc far
     arg_font_segment = word ptr 8

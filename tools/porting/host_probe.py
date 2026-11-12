@@ -146,7 +146,7 @@ def run_one(gcc: Path, source: Path, index: int, out_dir: Path,
     if obj.exists():
         obj.unlink()
     common = [str(gcc), *COMPILER_FLAGS, "-include", str(compat), "-I", str(include_dir),
-              "-I", str(root / "include"), "-I", str(root / "src")]
+              "-I", str(root / "include"), "-I", str(root / "game"), "-I", str(root / "lib")]
     runs = []
     for mode in ("syntax", "object"):
         cmd = [*common, "-fsyntax-only", str(source)] if mode == "syntax" else [

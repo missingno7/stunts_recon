@@ -4,7 +4,7 @@ Read README.md. This tree rebuilds the original MCGA executable byte for byte fr
 
 ## The invariant
 
-The original assets and `layout/oracle.lock.json` are immutable. Everything else may change (sources, recipes, names, tools, docs) as long as `python tools/validate.py` still reports the exact image with its ordered relocations. A change to `src/`, `asm/`, `recipes/` or `layout/` is proven by the gate, never assumed neutral: local identifier names affect MSC stack-slot order and communal names affect link placement.
+The original assets and `layout/oracle.lock.json` are immutable. Everything else may change (sources, recipes, names, tools, docs) as long as `python tools/validate.py` still reports the exact image with its ordered relocations. A change to `game/`, `lib/`, `recipes/` or `layout/` is proven by the gate, never assumed neutral: local identifier names affect MSC stack-slot order and communal names affect link placement.
 
 Never trim objects, mask acceptance mismatches, ignore inconvenient OMF records, embed original machine code as C, patch final binaries, or regenerate expected bytes from candidates. Preserve complete object extents and declarations, every supported fixup, exact ordered relocations, independently grounded bindings and accepted ownership.
 

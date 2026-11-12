@@ -38,8 +38,8 @@ def fixture_model():
             "reconstructed_names": "fixture alias policy",
             "process_pointers": "fixture pointer policy",
             "unknown_units": "fixture unit policy",
-            "scale_ledger": [{"fact": "one tick", "evidence": ["src/probe.c:1"]}],
-            "subsystem_notes": [{"subsystem": "timer_platform", "summary": "timer fixture", "evidence": ["src/probe.c:1"]}],
+            "scale_ledger": [{"fact": "one tick", "evidence": ["game/probe.c:1"]}],
+            "subsystem_notes": [{"subsystem": "timer_platform", "summary": "timer fixture", "evidence": ["game/probe.c:1"]}],
         },
         "data_symbols": [{
             "name": "clock_ticks", "address": 256, "address_hex": "0x00100", "storage": "bss",
@@ -47,22 +47,22 @@ def fixture_model():
             "owner_objects": ["timer_probe"], "units": {"value": "ticks", "confidence": "exact"},
             "lifetime": {"value": "process", "confidence": "exact"},
             "replay_determinism": {"class": "timer_state", "preserve_bit_exactly": False},
-            "readers": [], "writers": [], "evidence": [{"citation": "src/probe.c:1"}],
+            "readers": [], "writers": [], "evidence": [{"citation": "game/probe.c:1"}],
             "coverage": "complete",
         }],
         "supplemental_target_object_extents": [],
         "struct_types": [{
             "tag": "TIMERPROBE", "variants": [{
-                "translation_unit": "timer_probe", "source": "src/probe.c", "line": 1,
+                "translation_unit": "timer_probe", "source": "game/probe.c", "line": 1,
                 "size_bytes": 2, "size_status": "compiler-measured",
-                "evidence": [{"citation": "src/probe.c:1"}, {"citation": "build/search/probe/report.json"}],
+                "evidence": [{"citation": "game/probe.c:1"}, {"citation": "build/search/probe/report.json"}],
             }],
             "instances": [{"name": "clock_ticks", "address": 256}],
             "owner_subsystem": "timer_platform", "readers": [], "writers": [],
             "units": "ticks", "lifetime": "process",
             "replay_determinism": {"class": "timer_state", "preserve_bit_exactly": False},
             "field_semantics": [{"field": "tick", "unit": "ticks", "meaning": "callback count",
-                                 "evidence": [{"citation": "src/probe.c:1"}]}],
+                                 "evidence": [{"citation": "game/probe.c:1"}]}],
         }],
     }
 

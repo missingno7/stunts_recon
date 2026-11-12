@@ -1,6 +1,6 @@
 ; ASMDOC-GEOMETRY Module: vector_sphere_sprite_ops. Existing content name accurately covers the mixed vector,
 ; sphere and sprite primitives; no merge or split.
-; ASMDOC-GEOMETRY Original source: asm/vecspr.ASM; contracts below use ORIGINAL line
+; ASMDOC-GEOMETRY Original source: lib/vecspr.ASM; contracts below use ORIGINAL line
 ; references.
 ; ASMDOC-GEOMETRY Code exports: _nopsub_33006, _vector_op_unk, _preRender_sphere, _nopsub_3320E, _sprset1size,
 ; _clearscreen
@@ -123,8 +123,8 @@ _zclip endp
 ; ASMDOC-GEOMETRY Clobbers: FLAGS
 ; ASMDOC-GEOMETRY Detail: Shared join must preserve the output-Z-before-input-Z ordering. port/matrix.c
 ; explicitly follows this width and alias behavior.
-; ASMDOC-GEOMETRY Dead: false. Reachability: src/carsim.c:1154,1297;
-; src/polygon.c:382,399,441,444
+; ASMDOC-GEOMETRY Dead: false. Reachability: game/carsim.c:1154,1297;
+; game/polygon.c:382,399,441,444
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _zclipline proc far
     var_4 = word ptr -4
@@ -238,7 +238,7 @@ vector_set_base_z:
 ; ASMDOC-GEOMETRY Detail: Horizontal/vertical coordinate arithmetic wraps as 16-bit before signed tests.
 ; ASMDOC-GEOMETRY Detail: Small-profile out-of-horizontal-range branch increments top and removes TWO mirrored
 ; rows; if reached after prior array writes, falling out there returns without drawing accumulated rows.
-; ASMDOC-GEOMETRY Dead: false. Reachability: src/polygon.c:687 sphere primitive dispatcher
+; ASMDOC-GEOMETRY Dead: false. Reachability: game/polygon.c:687 sphere primitive dispatcher
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _drawcircle proc far
     push bp
@@ -552,7 +552,7 @@ _clippixwindow endp
 ; ASMDOC-GEOMETRY Preserves: SS
 ; ASMDOC-GEOMETRY Clobbers: AX
 ; ASMDOC-GEOMETRY Global write: _sprite1+12,+14,+16,+18,+26,+28
-; ASMDOC-GEOMETRY Dead: false. Reachability: Many src/frontend.c callers, including
+; ASMDOC-GEOMETRY Dead: false. Reachability: Many game/frontend.c callers, including
 ; :845,849,861,865,1017,1658; rectangle bounds are right/bottom exclusive in consumers.
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _clippix proc far
@@ -618,8 +618,8 @@ _clippix endp
 ; ASMDOC-GEOMETRY Service/call: Direct graphics-segment ES:DI stores; no BIOS/DOS/port instruction
 ; ASMDOC-GEOMETRY Detail: Zero byte after RETF is padding, not an entrypoint. platform-boundary.md correctly
 ; documents 64000 word writes.
-; ASMDOC-GEOMETRY Dead: false. Reachability: asm/mode13h.ASM:34;
-; asm/vidmode.ASM:79; asm/kbjoy.ASM:70
+; ASMDOC-GEOMETRY Dead: false. Reachability: lib/mode13h.ASM:34;
+; lib/vidmode.ASM:79; lib/kbjoy.ASM:70
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 _clearscreen proc far
     push bp

@@ -75,7 +75,7 @@ class ModernRendererTests(unittest.TestCase):
         compiler = compiler_path()
         if compiler is None:
             self.skipTest("requires GCC")
-        source = (ROOT / "src/render.c").read_text(encoding="latin-1")
+        source = (ROOT / "game/render.c").read_text(encoding="latin-1")
         tables = []
         heading_names = ("hzoneNW", "hzoneNE", "hzoneEN", "hzoneES",
                          "hzoneSE", "hzoneSW", "hzoneWS", "hzoneWN")

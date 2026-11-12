@@ -84,7 +84,7 @@ Run the complete historical toolchain pipeline from the repository root with:
 python tools/histbuild.py
 ```
 
-Each run freshly compiles every accepted C contribution from `src/` with its recipe's pinned CL
+Each run freshly compiles every accepted C contribution from `game/` and `lib/` with its recipe's pinned CL
 profile, assembles the accepted ASM modules with pinned MASM, builds one library, and links with
 LINK 3.65 followed by EXEPACK. It reports `BUILT_EXACT`: the load image, all 2,588 relocations in
 order and the packed executable equal the locked original.
@@ -159,7 +159,7 @@ python tools/stage_link.py --solution build/commfit/out/solution.json --tag TAG
 Declaration/header changes have a separate proof from `--cosmetic`:
 
 ```powershell
-python tools/promote.py --declarations src/polarrad.c build/workers/NAME/unit.c --header include/vec3.h=build/workers/NAME/vec3.h --verify-only
+python tools/promote.py --declarations lib/polarrad.c build/workers/NAME/unit.c --header include/vec3.h=build/workers/NAME/vec3.h --verify-only
 # Omit --verify-only to publish the same proven source/header/recipe transaction.
 ```
 
@@ -195,7 +195,7 @@ python tools/search.py build/workers/NAME/candidate.ASM --function FUNCTION --re
 python tools/promote.py FUNCTION build/workers/NAME/candidate.ASM --recipe build/workers/NAME/candidate.recipe.json --verify-only
 ```
 
-Predict local BP homes with `python tools/slotorder.py --source src/copy_string.c --function copy_string`, or suggest names with `python tools/slotorder.py --names first second third`.
+Predict local BP homes with `python tools/slotorder.py --source lib/shp2res.c --function copy_string`, or suggest names with `python tools/slotorder.py --names first second third`.
 The same helper predicts explicit `register` SI/DI assignment in declaration order with `--registers si:index di:source`; BP homes still follow the independent identifier hash rule. Supply `--other-register-uses` when generated code also saves SI or DI.
 
 For CODE record-cut and ordered relocation diagnostics, run `python tools/cut_simulator.py INPUT.json OUTPUT.json` with ordered members, instruction boundaries, fixups, and relocation sites.
@@ -211,7 +211,7 @@ Run complete validation at acceptance or tooling-change boundaries. Ordinary sou
 
 ## State and proof
 
-`layout/manifest.json` is the sole ownership authority. Its active `recipes/` entries configure complete C contributions from `src/` and ASM contributions from tracked `asm/`; runtime owners carry pinned library/member/record policies directly. `layout/oracle.lock.json`, symbol bindings, reviewed function overlays, and `evidence/` supply independent facts. Reports under `build/` are derived and never confer ownership. Raw BSS debt is one reviewed placeholder per object (`evidence/bss-partition.json`), linked where that object's `_BSS` would be; `tools/communal_order.py`, `tools/msc_static_model.py` and the commfit solver (`tools/commfit.py`, `linkorder.py`, `stage_link.py`, `maxkeep.py`) are diagnostic naming aids only. The LINK c_common communals are accepted only as one whole unit (`tools/communal_unit.py`).
+`layout/manifest.json` is the sole ownership authority. Its active `recipes/` entries configure complete C contributions from `game/` and `lib/` and ASM contributions from tracked `game/` and `lib/`; runtime owners carry pinned library/member/record policies directly. `layout/oracle.lock.json`, symbol bindings, reviewed function overlays, and `evidence/` supply independent facts. Reports under `build/` are derived and never confer ownership. Raw BSS debt is one reviewed placeholder per object (`evidence/bss-partition.json`), linked where that object's `_BSS` would be; `tools/communal_order.py`, `tools/msc_static_model.py` and the commfit solver (`tools/commfit.py`, `linkorder.py`, `stage_link.py`, `maxkeep.py`) are diagnostic naming aids only. The LINK c_common communals are accepted only as one whole unit (`tools/communal_unit.py`).
 
 Promotion freezes the candidate, recompiles it, verifies its full contribution, then recompiles the entire staged hybrid image. It protects existing ownership, complete declarations, fixups, and exact ordered relocation obligations. The single publisher checks stable inputs, journals source/recipe/manifest writes, and freshly verifies the canonical image. `--verify-only` exercises the complete staged gate without changing canonical files. Validation also runs focused negative/isolation/transaction tests and the independent compiler backend.
 

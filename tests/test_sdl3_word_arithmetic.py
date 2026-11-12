@@ -161,7 +161,7 @@ class Sdl3WordArithmeticTests(unittest.TestCase):
         if cls.compiler is None:
             raise AssertionError("A host C compiler is required for the overlay regression")
         cls.image = locked_image()
-        cls.original = (ROOT / "src" / "carsim.c").read_text(
+        cls.original = (ROOT / "game" / "carsim.c").read_text(
             encoding="latin-1")
         cls.overlay = adapt_gameplay_word_arithmetic(cls.original)
         marker = "/* PORT_BUILD: preserve locked 16-bit gameplay arithmetic. */"

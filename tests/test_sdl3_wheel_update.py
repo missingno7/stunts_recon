@@ -74,7 +74,7 @@ class Sdl3WheelUpdateTests(unittest.TestCase):
         for first, second in (("_pos_pt", "_ancv2"), ("_ctrmesh", "_g_op_carvector2")):
             self.assertEqual(data[second]["load_address"] - data[first]["load_address"], 6)
 
-        source = (ROOT / "src/trkscene.c").read_text(encoding="latin-1")
+        source = (ROOT / "game/trkscene.c").read_text(encoding="latin-1")
         start = source.index("void settires(struct VECTOR far *out, I16 angle,")
         end = source.index("\n}\n\nstatic U8  arrowConn0", start) + 2
         body = source[start:end]
@@ -125,7 +125,7 @@ class Sdl3WheelUpdateTests(unittest.TestCase):
     def test_adapter_rejects_missing_function_or_division_anchors(self):
         with self.assertRaises(ValueError):
             adapt_wheel_update_inputs("")
-        source = (ROOT / "src/trkscene.c").read_text(encoding="latin-1")
+        source = (ROOT / "game/trkscene.c").read_text(encoding="latin-1")
         with self.assertRaises(ValueError):
             adapt_wheel_update_inputs(source.replace("y = base[j] / 64;", "y = 0;"))
 

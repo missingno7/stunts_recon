@@ -104,11 +104,11 @@ def assert_build_ready() -> None:
     # A complete report is only useful when it postdates the code paths this
     # smoke test exercises. The report is written after the executable links.
     required_inputs = (
-        ROOT / "src" / "trkconst.c",
-        ROOT / "src" / "render.c",
-        ROOT / "src" / "trkscene.c",
-        ROOT / "src" / "race.c",
-        ROOT / "src" / "carsim.c",
+        ROOT / "game" / "trkconst.c",
+        ROOT / "game" / "render.c",
+        ROOT / "game" / "trkscene.c",
+        ROOT / "game" / "race.c",
+        ROOT / "game" / "carsim.c",
         ROOT / "port" / "main.c",
         ROOT / "port" / "diagnostics.c",
         ROOT / "port" / "config.c",

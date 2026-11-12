@@ -981,7 +981,7 @@ void scalecfxy(int16_t scale, void *shape_pointer, int16_t x, int16_t y)
     publish_transparent_blit(destination, "shapeexpl");
 }
 
-/* Translate asm/shpexpnd.ASM's ESH directory and plane walk.
+/* Translate lib/shpexpnd.ASM's ESH directory and plane walk.
    The packed record format and bit order are also specified by the validated
    tools/porting/format_reference.py:expand_esh parser. */
 void file_load_shape2d_expand(uint8_t *archive, int8_t *output_pointer)
@@ -1083,7 +1083,7 @@ void file_load_shape2d_expand(uint8_t *archive, int8_t *output_pointer)
     output[3] = (uint8_t)((total_size >> 24) & 0xffu);
 }
 
-/* Translate asm/shppal.ASM. SHAPE2D colors produced
+/* Translate lib/shppal.ASM. SHAPE2D colors produced
    by ESH expansion are four-bit indices, matching shp2file.c's
    16-entry palette map. */
 void file_load_shape2d_palmap_apply(uint8_t *archive,

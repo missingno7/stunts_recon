@@ -138,7 +138,7 @@ def read_vlq(buf: bytes, pos: int, end: int, *, max_bytes: int = 5) -> tuple[int
 
 
 def parse_events(buf: bytes, start: int, end: int) -> list[dict[str, object]]:
-    """Decode the stream consumed by src/audioply.c:read_audio_event."""
+    """Decode the stream consumed by lib/audioply.c:read_audio_event."""
     events: list[dict[str, object]] = []
     pos = start
     while pos < end:

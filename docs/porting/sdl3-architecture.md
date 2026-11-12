@@ -5,7 +5,7 @@ for the current implementation and verified runtime coverage.
 
 ## Purpose and boundaries
 
-The port keeps the accepted `src/*.c` gameplay and simulation as the primary
+The port keeps the accepted `game/*.c` and `lib/*.c` gameplay and simulation as the primary
 implementation. The host layer lives under `port/`; generated host overlays,
 objects, executables, runtime asset copies, traces, and stub inventories live
 under ignored `build/sdl3/`. The historical source, recipes, ownership, oracle,
@@ -206,7 +206,7 @@ undefined symbols or the linker reports a concrete non-symbol error.
 
 M0 runs the original `main` entry on a guest worker after SDL, timer, input,
 and the indexed framebuffer have started. The renderer's 15-word sprite
-descriptor setup is translated from `asm/patlines.ASM:3855-3879`
+descriptor setup is translated from `lib/patlines.ASM:3855-3879`
 as an exact 30-byte copy. Startup currently stops at the unresolved
 `file_load_shape2d_fatal_thunk`, called by `init_main.c:256` for the `sdmain`
 shape/palette container. Asset file dispatch works, but this container reader

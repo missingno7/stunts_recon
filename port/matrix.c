@@ -65,7 +65,7 @@ static void matrix_row(const int16_t *input, const int16_t *matrix,
                            (uint16_t)matrix_product_word(matrix[6], input[2]));
 }
 
-/* Semantic C translation of asm/fontmat.ASM::_mat_multiply. The
+/* Semantic C translation of lib/fontmat.ASM::_mat_multiply. The
    row/column write order preserves the guest routine's input/output aliasing. */
 void transmult(const int16_t *right_matrix, const int16_t *left_matrix,
                   int16_t *output_matrix)
@@ -127,7 +127,7 @@ void mat_invert(int16_t *input_matrix, int16_t *output_matrix)
     }
 }
 
-/* C translation of _mat_vec in asm/fontmat.ASM, lines
+/* C translation of _mat_vec in lib/fontmat.ASM, lines
    235-379. Rows are stored to output in order; this preserves the original
    behavior when input and output vectors alias. */
 void mat_vec(const int16_t *input, const int16_t *matrix,

@@ -459,7 +459,7 @@ def _compile_native_dll(temporary: Path) -> Path:
                          dict(declarations.HOST_OVERRIDES))
 
     def append_harness(source: str, overlay: Path, config: Path, index: int):
-        if source == "src/polygon.c":
+        if source == "game/polygon.c":
             generated = overlay.read_text(encoding="latin-1")
             if "port_renderer_double_word(ts->unk)" not in generated:
                 raise AssertionError("fresh production overlay omitted the locked renderer adapter")

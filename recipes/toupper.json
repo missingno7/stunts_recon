@@ -33,7 +33,7 @@
   ],
   "profile": "msc510-medium",
   "public": "_cap",
-  "source": "src/toupper.c",
+  "source": "lib/toupper.c",
   "stable_id": "load_270ba",
   "start": 159930,
   "target": {
