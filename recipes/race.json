@@ -563,7 +563,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_initdrawworld",
-      "target_index": 103,
+      "target_index": 101,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -580,7 +580,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_statemgmtcpy",
-      "target_index": 149,
+      "target_index": 147,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -597,7 +597,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_statemgmtcpy",
-      "target_index": 149,
+      "target_index": 147,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -614,7 +614,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_slow_video_mode_state",
-      "target_index": 90,
+      "target_index": 88,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -648,7 +648,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -920,7 +920,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -937,7 +937,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -988,7 +988,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_hurrykey",
-      "target_index": 154,
+      "target_index": 152,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1005,7 +1005,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gotosim",
-      "target_index": 89,
+      "target_index": 87,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1022,7 +1022,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1039,7 +1039,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gotosim",
-      "target_index": 89,
+      "target_index": 87,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1073,7 +1073,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1090,7 +1090,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_sgateopn",
-      "target_index": 87,
+      "target_index": 85,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1124,7 +1124,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1226,7 +1226,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 81,
+      "target_index": 79,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1311,7 +1311,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 81,
+      "target_index": 79,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1379,7 +1379,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_initmousedrive",
-      "target_index": 143,
+      "target_index": 141,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1464,7 +1464,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_initsim",
-      "target_index": 111,
+      "target_index": 109,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1481,7 +1481,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1498,7 +1498,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 153,
+      "target_index": 151,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1532,7 +1532,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 153,
+      "target_index": 151,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1583,7 +1583,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1600,7 +1600,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1617,7 +1617,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_initsim",
-      "target_index": 111,
+      "target_index": 109,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1651,7 +1651,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1702,7 +1702,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplbfask",
-      "target_index": 70,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1753,7 +1753,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gm_saved_rpl_mode",
-      "target_index": 137,
+      "target_index": 135,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1804,7 +1804,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplmodui",
-      "target_index": 75,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1821,7 +1821,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kbormouse",
-      "target_index": 99,
+      "target_index": 97,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1838,7 +1838,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_memerr",
-      "target_index": 106,
+      "target_index": 104,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1889,7 +1889,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1923,7 +1923,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1957,7 +1957,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1974,7 +1974,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2059,7 +2059,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2076,7 +2076,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2093,7 +2093,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2127,7 +2127,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2161,7 +2161,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_runrndx",
-      "target_index": 133,
+      "target_index": 131,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2178,7 +2178,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_myrandom",
-      "target_index": 79,
+      "target_index": 77,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2195,7 +2195,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_bitmapdash",
-      "target_index": 116,
+      "target_index": 114,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2212,7 +2212,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_boundglassrect",
-      "target_index": 120,
+      "target_index": 118,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2229,7 +2229,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_boundglassrect",
-      "target_index": 120,
+      "target_index": 118,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2263,7 +2263,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_boundglassrect",
-      "target_index": 120,
+      "target_index": 118,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2280,7 +2280,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_viewinx",
-      "target_index": 102,
+      "target_index": 100,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2314,7 +2314,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplybarenable",
-      "target_index": 80,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2348,7 +2348,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplybarenable",
-      "target_index": 80,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2467,7 +2467,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rplbarabovehgt",
-      "target_index": 84,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2484,7 +2484,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rplbarabovehgt",
-      "target_index": 84,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2501,7 +2501,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplybarenable",
-      "target_index": 80,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2569,7 +2569,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplybarenable",
-      "target_index": 80,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2654,7 +2654,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplybarenable",
-      "target_index": 80,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2722,7 +2722,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rplbarabovehgt",
-      "target_index": 84,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2756,7 +2756,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_viewinx",
-      "target_index": 102,
+      "target_index": 100,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2807,7 +2807,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rplbarabovehgt",
-      "target_index": 84,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2824,7 +2824,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_bitmapdash",
-      "target_index": 116,
+      "target_index": 114,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2875,7 +2875,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_boundglassrect",
-      "target_index": 120,
+      "target_index": 118,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2909,7 +2909,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_boundglassrect",
-      "target_index": 120,
+      "target_index": 118,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3028,7 +3028,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rplbarabovehgt",
-      "target_index": 84,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3062,7 +3062,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_bitmapdash",
-      "target_index": 116,
+      "target_index": 114,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3130,7 +3130,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplybarenable",
-      "target_index": 80,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3147,7 +3147,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3300,7 +3300,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3385,7 +3385,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gm_saved_rpl_mode",
-      "target_index": 137,
+      "target_index": 135,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3453,7 +3453,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3572,7 +3572,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gm_saved_rpl_mode",
-      "target_index": 137,
+      "target_index": 135,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3674,7 +3674,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplbfask",
-      "target_index": 70,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3776,7 +3776,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 139,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3793,7 +3793,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3810,7 +3810,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3827,7 +3827,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3878,7 +3878,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_pause_playback",
-      "target_index": 109,
+      "target_index": 107,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3912,7 +3912,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplbfask",
-      "target_index": 70,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3980,7 +3980,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_moveeverything",
-      "target_index": 148,
+      "target_index": 146,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4031,7 +4031,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 139,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4048,7 +4048,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4065,7 +4065,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4082,7 +4082,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4150,7 +4150,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4184,7 +4184,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_remove_driver_timer",
-      "target_index": 138,
+      "target_index": 136,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4218,7 +4218,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4252,7 +4252,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseon",
-      "target_index": 115,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4320,7 +4320,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 112,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4337,7 +4337,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_get_0",
-      "target_index": 69,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4371,7 +4371,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4388,7 +4388,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 153,
+      "target_index": 151,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4422,7 +4422,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 153,
+      "target_index": 151,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4473,7 +4473,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_joystate",
-      "target_index": 140,
+      "target_index": 138,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4677,7 +4677,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4728,7 +4728,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_initmousedrive",
-      "target_index": 143,
+      "target_index": 141,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4847,7 +4847,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_joystate",
-      "target_index": 140,
+      "target_index": 138,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4915,7 +4915,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_initsim",
-      "target_index": 111,
+      "target_index": 109,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4932,7 +4932,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4949,7 +4949,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 153,
+      "target_index": 151,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4983,7 +4983,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 153,
+      "target_index": 151,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5051,7 +5051,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseon",
-      "target_index": 115,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5136,7 +5136,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 112,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5272,7 +5272,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rplbarabovehgt",
-      "target_index": 84,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5323,7 +5323,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_boundglassrect",
-      "target_index": 120,
+      "target_index": 118,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5340,7 +5340,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_orpackf",
-      "target_index": 74,
+      "target_index": 157,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5391,7 +5391,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_andpackf",
-      "target_index": 68,
+      "target_index": 154,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5544,7 +5544,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_statemgmtcpy",
-      "target_index": 149,
+      "target_index": 147,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5612,7 +5612,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_moveeverything",
-      "target_index": 148,
+      "target_index": 146,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5629,7 +5629,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_moveeverything",
-      "target_index": 148,
+      "target_index": 146,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5646,7 +5646,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_slomodiv8",
-      "target_index": 123,
+      "target_index": 121,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5663,7 +5663,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_moveeverything",
-      "target_index": 148,
+      "target_index": 146,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5680,7 +5680,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_slomodiv8",
-      "target_index": 123,
+      "target_index": 121,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5697,7 +5697,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplmodui",
-      "target_index": 75,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5748,7 +5748,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_timeraud",
-      "target_index": 121,
+      "target_index": 119,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5782,7 +5782,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_timeraud",
-      "target_index": 121,
+      "target_index": 119,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5816,7 +5816,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5901,7 +5901,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5918,7 +5918,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplbfask",
-      "target_index": 70,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6003,7 +6003,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_tick_clock",
-      "target_index": 104,
+      "target_index": 102,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6020,7 +6020,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_myupdatesfx1",
-      "target_index": 132,
+      "target_index": 130,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6071,7 +6071,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_tick_clock",
-      "target_index": 104,
+      "target_index": 102,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6105,7 +6105,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sndposrecord",
-      "target_index": 136,
+      "target_index": 134,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6122,7 +6122,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_tick_clock",
-      "target_index": 104,
+      "target_index": 102,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6156,7 +6156,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_tick_clock",
-      "target_index": 104,
+      "target_index": 102,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6173,7 +6173,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_call_proc_flag",
-      "target_index": 128,
+      "target_index": 126,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6190,7 +6190,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_call_proc_flag",
-      "target_index": 128,
+      "target_index": 126,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6207,7 +6207,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_call_proc_flag",
-      "target_index": 128,
+      "target_index": 126,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6241,7 +6241,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_deltimer",
-      "target_index": 127,
+      "target_index": 125,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6309,7 +6309,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_call_proc_flag",
-      "target_index": 128,
+      "target_index": 126,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6326,7 +6326,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_addtimer",
-      "target_index": 125,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6394,7 +6394,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_sgateopn",
-      "target_index": 87,
+      "target_index": 85,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6462,7 +6462,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_slomodiv8",
-      "target_index": 123,
+      "target_index": 121,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6479,7 +6479,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_timeraud",
-      "target_index": 121,
+      "target_index": 119,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6496,7 +6496,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_initsim",
-      "target_index": 111,
+      "target_index": 109,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6513,7 +6513,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6530,7 +6530,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 153,
+      "target_index": 151,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6564,7 +6564,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 153,
+      "target_index": 151,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6649,7 +6649,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6666,7 +6666,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6683,7 +6683,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6700,7 +6700,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6768,7 +6768,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_initmousedrive",
-      "target_index": 143,
+      "target_index": 141,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6836,7 +6836,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6853,7 +6853,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6870,7 +6870,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6955,7 +6955,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clear_keyboardbuffer",
-      "target_index": 135,
+      "target_index": 133,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7023,7 +7023,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_initmousedrive",
-      "target_index": 143,
+      "target_index": 141,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7125,7 +7125,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_hurrykey",
-      "target_index": 154,
+      "target_index": 152,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7142,7 +7142,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseon",
-      "target_index": 115,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7193,7 +7193,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mycenter",
-      "target_index": 122,
+      "target_index": 120,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7227,7 +7227,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 112,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7346,7 +7346,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7363,7 +7363,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7482,7 +7482,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7635,7 +7635,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__AHSHIFT",
-      "target_index": 157,
+      "target_index": 156,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7669,7 +7669,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 155,
+      "target_index": 153,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7703,7 +7703,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__AHSHIFT",
-      "target_index": 157,
+      "target_index": 156,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7737,7 +7737,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 155,
+      "target_index": 153,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7771,7 +7771,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__AHSHIFT",
-      "target_index": 157,
+      "target_index": 156,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7805,7 +7805,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 155,
+      "target_index": 153,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7822,7 +7822,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplbfask",
-      "target_index": 70,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7975,7 +7975,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_keystate",
-      "target_index": 142,
+      "target_index": 140,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7992,7 +7992,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_keystate",
-      "target_index": 142,
+      "target_index": 140,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8009,7 +8009,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_joystate",
-      "target_index": 140,
+      "target_index": 138,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8094,7 +8094,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_joystate",
-      "target_index": 140,
+      "target_index": 138,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8604,7 +8604,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8655,7 +8655,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8706,7 +8706,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_call_proc_flag",
-      "target_index": 128,
+      "target_index": 126,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8740,7 +8740,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapes",
-      "target_index": 94,
+      "target_index": 92,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8825,7 +8825,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapes",
-      "target_index": 94,
+      "target_index": 92,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9063,7 +9063,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9097,7 +9097,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9131,7 +9131,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9165,7 +9165,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9199,7 +9199,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9233,7 +9233,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9267,7 +9267,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9301,7 +9301,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9335,7 +9335,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_savefilez",
-      "target_index": 114,
+      "target_index": 112,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9369,7 +9369,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9386,7 +9386,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9437,7 +9437,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9505,7 +9505,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_buf_g_path",
-      "target_index": 108,
+      "target_index": 106,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9573,7 +9573,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makename",
-      "target_index": 98,
+      "target_index": 96,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9607,7 +9607,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_buf_g_path",
-      "target_index": 108,
+      "target_index": 106,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9709,7 +9709,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trk_sample_count",
-      "target_index": 152,
+      "target_index": 150,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9811,7 +9811,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 81,
+      "target_index": 79,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9862,7 +9862,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 81,
+      "target_index": 79,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9964,7 +9964,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intatan",
-      "target_index": 83,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10134,7 +10134,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcfxya",
-      "target_index": 78,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10202,7 +10202,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rplbarabovehgt",
-      "target_index": 84,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10219,7 +10219,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 112,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10423,7 +10423,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_viewinx",
-      "target_index": 102,
+      "target_index": 100,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10457,7 +10457,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseon",
-      "target_index": 115,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10542,7 +10542,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 93,
+      "target_index": 91,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10627,7 +10627,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 93,
+      "target_index": 91,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10695,7 +10695,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapez",
-      "target_index": 97,
+      "target_index": 95,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10763,7 +10763,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 112,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10831,7 +10831,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 93,
+      "target_index": 91,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10950,7 +10950,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapez",
-      "target_index": 97,
+      "target_index": 95,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11052,7 +11052,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 93,
+      "target_index": 91,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11120,7 +11120,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapez",
-      "target_index": 97,
+      "target_index": 95,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11273,7 +11273,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_setup1_from_arg_pointer",
-      "target_index": 110,
+      "target_index": 108,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11324,7 +11324,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 93,
+      "target_index": 91,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11426,7 +11426,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 113,
+      "target_index": 111,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11511,7 +11511,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 113,
+      "target_index": 111,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11596,7 +11596,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 113,
+      "target_index": 111,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11647,7 +11647,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapes",
-      "target_index": 94,
+      "target_index": 92,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11766,7 +11766,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_orcfxya",
-      "target_index": 92,
+      "target_index": 90,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11919,7 +11919,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movpackfxya",
-      "target_index": 86,
+      "target_index": 84,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11970,7 +11970,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_setup1_from_arg_pointer",
-      "target_index": 110,
+      "target_index": 108,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12055,7 +12055,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcfxya",
-      "target_index": 78,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12191,7 +12191,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 112,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12599,7 +12599,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcfxya",
-      "target_index": 78,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12735,7 +12735,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 112,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12837,7 +12837,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcfxya",
-      "target_index": 78,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12905,7 +12905,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rplbarabovehgt",
-      "target_index": 84,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12922,7 +12922,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 112,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -13262,7 +13262,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_setup1_from_arg_pointer",
-      "target_index": 110,
+      "target_index": 108,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -13415,7 +13415,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13432,7 +13432,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13500,7 +13500,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_freememory",
-      "target_index": 150,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -13551,7 +13551,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_freememory",
-      "target_index": 150,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -13602,7 +13602,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_removewindow",
-      "target_index": 101,
+      "target_index": 99,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -13653,7 +13653,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_removewindow",
-      "target_index": 101,
+      "target_index": 99,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -13704,7 +13704,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_removewindow",
-      "target_index": 101,
+      "target_index": 99,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -13755,7 +13755,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseon",
-      "target_index": 115,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -13908,7 +13908,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_readfxya",
-      "target_index": 96,
+      "target_index": 94,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -14180,7 +14180,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcfxya",
-      "target_index": 78,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -14333,7 +14333,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rplbarabovehgt",
-      "target_index": 84,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14350,7 +14350,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 112,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -14435,7 +14435,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcfxya",
-      "target_index": 78,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -14503,7 +14503,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rplbarabovehgt",
-      "target_index": 84,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14571,7 +14571,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_andpackf",
-      "target_index": 68,
+      "target_index": 154,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -14656,7 +14656,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_orpackf",
-      "target_index": 74,
+      "target_index": 157,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -14707,7 +14707,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_andpackf",
-      "target_index": 68,
+      "target_index": 154,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -14843,7 +14843,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_spdneedlegaugeclr",
-      "target_index": 141,
+      "target_index": 139,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14945,7 +14945,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_spdneedlegaugeclr",
-      "target_index": 141,
+      "target_index": 139,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14962,7 +14962,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_orcfxya",
-      "target_index": 92,
+      "target_index": 90,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -15047,7 +15047,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_orcfxya",
-      "target_index": 92,
+      "target_index": 90,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -15098,7 +15098,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 113,
+      "target_index": 111,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -15115,7 +15115,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_availmem",
-      "target_index": 146,
+      "target_index": 144,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -15149,7 +15149,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_vidflg4_is1",
-      "target_index": 118,
+      "target_index": 116,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15302,7 +15302,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getres",
-      "target_index": 82,
+      "target_index": 80,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -15319,7 +15319,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15336,7 +15336,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15370,7 +15370,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_planlist",
-      "target_index": 130,
+      "target_index": 128,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15387,7 +15387,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_planlist",
-      "target_index": 130,
+      "target_index": 128,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15404,7 +15404,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getres",
-      "target_index": 82,
+      "target_index": 80,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -15421,7 +15421,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15455,7 +15455,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15472,7 +15472,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15659,7 +15659,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_initdrawworld",
-      "target_index": 103,
+      "target_index": 101,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -15676,7 +15676,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_statemgmtcpy",
-      "target_index": 149,
+      "target_index": 147,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15693,7 +15693,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_slow_video_mode_state",
-      "target_index": 90,
+      "target_index": 88,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15778,7 +15778,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_tick_clock",
-      "target_index": 104,
+      "target_index": 102,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15795,7 +15795,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sndposrecord",
-      "target_index": 136,
+      "target_index": 134,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15829,7 +15829,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_op_eng_sound_id",
-      "target_index": 85,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15948,7 +15948,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15982,7 +15982,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_plyr_snd_state",
-      "target_index": 76,
+      "target_index": 74,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15999,7 +15999,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sndpendingstate",
-      "target_index": 77,
+      "target_index": 75,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -16016,7 +16016,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_player_sound_id",
-      "target_index": 73,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -16135,7 +16135,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_add_driver_timer",
-      "target_index": 131,
+      "target_index": 129,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -16424,7 +16424,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -16458,7 +16458,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -16492,7 +16492,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -16526,7 +16526,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -16543,7 +16543,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -16645,7 +16645,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -16679,7 +16679,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -16713,7 +16713,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -16747,7 +16747,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -16883,7 +16883,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 112,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -17206,7 +17206,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -17325,7 +17325,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 112,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -17410,7 +17410,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_viewinx",
-      "target_index": 102,
+      "target_index": 100,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -17427,7 +17427,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_viewinx",
-      "target_index": 102,
+      "target_index": 100,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -17495,7 +17495,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapes",
-      "target_index": 94,
+      "target_index": 92,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -17937,7 +17937,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_freememory",
-      "target_index": 150,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -17988,7 +17988,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_freememory",
-      "target_index": 150,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -18039,7 +18039,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_remove_driver_timer",
-      "target_index": 138,
+      "target_index": 136,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -18056,7 +18056,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_freememory",
-      "target_index": 150,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -18124,7 +18124,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_freememory",
-      "target_index": 150,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -18209,7 +18209,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -18226,7 +18226,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -18294,7 +18294,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_removewindow",
-      "target_index": 101,
+      "target_index": 99,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -18515,7 +18515,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mykey",
-      "target_index": 144,
+      "target_index": 142,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -18634,7 +18634,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -18685,7 +18685,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -18702,7 +18702,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseon",
-      "target_index": 115,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -18719,7 +18719,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_draw_rect_outline",
-      "target_index": 107,
+      "target_index": 105,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -18804,7 +18804,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_camera_select_outline_color",
-      "target_index": 100,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -19467,7 +19467,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 112,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -19535,7 +19535,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_draw_rect_outline",
-      "target_index": 107,
+      "target_index": 105,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -19552,7 +19552,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_camera_select_outline_color",
-      "target_index": 100,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -19620,7 +19620,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_camera_select_fill_color",
-      "target_index": 95,
+      "target_index": 93,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -19688,7 +19688,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 112,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -19773,7 +19773,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 155,
+      "target_index": 153,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -19790,7 +19790,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -19824,7 +19824,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 155,
+      "target_index": 153,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -19841,7 +19841,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -19858,7 +19858,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -19960,7 +19960,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20028,7 +20028,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20045,7 +20045,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 112,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -20113,7 +20113,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20198,7 +20198,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20317,7 +20317,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20589,7 +20589,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20640,7 +20640,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_camlen",
-      "target_index": 91,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20657,7 +20657,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_camlen",
-      "target_index": 91,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20674,7 +20674,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_viewyshift",
-      "target_index": 71,
+      "target_index": 70,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20691,7 +20691,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_viewyshift",
-      "target_index": 71,
+      "target_index": 70,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20708,7 +20708,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20725,7 +20725,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_camlen",
-      "target_index": 91,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20742,7 +20742,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_camlen",
-      "target_index": 91,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20759,7 +20759,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_viewyshift",
-      "target_index": 71,
+      "target_index": 70,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20776,7 +20776,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_viewyshift",
-      "target_index": 71,
+      "target_index": 70,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20793,7 +20793,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20810,7 +20810,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_campitch",
-      "target_index": 126,
+      "target_index": 124,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20827,7 +20827,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_campitch",
-      "target_index": 126,
+      "target_index": 124,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20844,7 +20844,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_campitch",
-      "target_index": 126,
+      "target_index": 124,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20861,7 +20861,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_campitch",
-      "target_index": 126,
+      "target_index": 124,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20878,7 +20878,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_camheading",
-      "target_index": 124,
+      "target_index": 122,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20895,7 +20895,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_camheading",
-      "target_index": 124,
+      "target_index": 122,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -20946,7 +20946,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_keystate",
-      "target_index": 142,
+      "target_index": 140,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -21065,7 +21065,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -21082,7 +21082,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_bitmapdash",
-      "target_index": 116,
+      "target_index": 114,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -21116,7 +21116,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplybarenable",
-      "target_index": 80,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -21184,7 +21184,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplybarenable",
-      "target_index": 80,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -21201,7 +21201,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -21320,7 +21320,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intatan",
-      "target_index": 83,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -21575,7 +21575,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -21609,7 +21609,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_buf_g_path",
-      "target_index": 108,
+      "target_index": 106,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -21643,7 +21643,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makename",
-      "target_index": 98,
+      "target_index": 96,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -21711,7 +21711,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_buf_g_path",
-      "target_index": 108,
+      "target_index": 106,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -21779,7 +21779,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -21796,7 +21796,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 129,
+      "target_index": 127,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -21813,7 +21813,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 129,
+      "target_index": 127,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -21864,7 +21864,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_initsim",
-      "target_index": 111,
+      "target_index": 109,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -21898,7 +21898,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -21983,7 +21983,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22000,7 +22000,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22017,7 +22017,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22034,7 +22034,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22051,7 +22051,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22068,7 +22068,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22085,7 +22085,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22102,7 +22102,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22119,7 +22119,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22187,7 +22187,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22272,7 +22272,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22391,7 +22391,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -22408,7 +22408,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 129,
+      "target_index": 127,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22425,7 +22425,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 129,
+      "target_index": 127,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22493,7 +22493,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kbormouse",
-      "target_index": 99,
+      "target_index": 97,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22510,7 +22510,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clear_keyboardbuffer",
-      "target_index": 135,
+      "target_index": 133,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -22527,7 +22527,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_initmousedrive",
-      "target_index": 143,
+      "target_index": 141,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22561,7 +22561,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22595,7 +22595,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplmodui",
-      "target_index": 75,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22646,7 +22646,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22731,7 +22731,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22799,7 +22799,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 139,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -22816,7 +22816,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -22833,7 +22833,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22850,7 +22850,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -22901,7 +22901,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -23003,7 +23003,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -23037,7 +23037,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_initsim",
-      "target_index": 111,
+      "target_index": 109,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -23054,7 +23054,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -23071,7 +23071,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 153,
+      "target_index": 151,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -23105,7 +23105,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 153,
+      "target_index": 151,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -23122,7 +23122,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clear_keyboardbuffer",
-      "target_index": 135,
+      "target_index": 133,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -23156,7 +23156,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 139,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -23173,7 +23173,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -23190,7 +23190,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -23207,7 +23207,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -23326,7 +23326,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -23343,7 +23343,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_hurrykey",
-      "target_index": 154,
+      "target_index": 152,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -23496,7 +23496,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mycenter",
-      "target_index": 122,
+      "target_index": 120,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -23615,7 +23615,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mycenter",
-      "target_index": 122,
+      "target_index": 120,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -23683,7 +23683,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_statemgmtcpy",
-      "target_index": 149,
+      "target_index": 147,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -23734,7 +23734,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -23751,7 +23751,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -23768,7 +23768,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -23836,7 +23836,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gotosim",
-      "target_index": 89,
+      "target_index": 87,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -23853,7 +23853,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -23870,7 +23870,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -23921,7 +23921,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 155,
+      "target_index": 153,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -23972,7 +23972,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24006,7 +24006,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_hurrykey",
-      "target_index": 154,
+      "target_index": 152,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -24091,7 +24091,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 155,
+      "target_index": 153,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -24142,7 +24142,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24244,7 +24244,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24261,7 +24261,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clear_keyboardbuffer",
-      "target_index": 135,
+      "target_index": 133,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -24414,7 +24414,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msetrender",
-      "target_index": 145,
+      "target_index": 143,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -24431,7 +24431,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24448,7 +24448,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24465,7 +24465,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cammd",
-      "target_index": 105,
+      "target_index": 103,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24516,7 +24516,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 139,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -24533,7 +24533,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -24550,7 +24550,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24567,7 +24567,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24618,7 +24618,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 147,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24703,7 +24703,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 139,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -24720,7 +24720,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -24737,7 +24737,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 129,
+      "target_index": 127,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24754,7 +24754,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 129,
+      "target_index": 127,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24805,7 +24805,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_savereplay",
-      "target_index": 117,
+      "target_index": 115,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24822,7 +24822,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_buf_g_path",
-      "target_index": 108,
+      "target_index": 106,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24856,7 +24856,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 139,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -24873,7 +24873,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -24890,7 +24890,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 129,
+      "target_index": 127,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24907,7 +24907,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 129,
+      "target_index": 127,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -24958,7 +24958,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_findfirst",
-      "target_index": 72,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -25094,7 +25094,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -25111,7 +25111,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplmodui",
-      "target_index": 75,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -25179,7 +25179,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gotosim",
-      "target_index": 89,
+      "target_index": 87,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -25281,7 +25281,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -25383,7 +25383,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_inrepflg",
-      "target_index": 156,
+      "target_index": 155,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -25417,7 +25417,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_rplmodui",
-      "target_index": 75,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -25519,7 +25519,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_hurrykey",
-      "target_index": 154,
+      "target_index": 152,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -25587,7 +25587,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 155,
+      "target_index": 153,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -25672,7 +25672,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gotosim",
-      "target_index": 89,
+      "target_index": 87,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -25740,7 +25740,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mycenter",
-      "target_index": 122,
+      "target_index": 120,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -25859,7 +25859,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mycenter",
-      "target_index": 122,
+      "target_index": 120,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -25927,7 +25927,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_statemgmtcpy",
-      "target_index": 149,
+      "target_index": 147,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -25978,7 +25978,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -25995,7 +25995,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -26012,7 +26012,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gamerptrs",
-      "target_index": 134,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -26080,7 +26080,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 155,
+      "target_index": 153,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -26165,7 +26165,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_hurrykey",
-      "target_index": 154,
+      "target_index": 152,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -26250,7 +26250,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 155,
+      "target_index": 153,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -28227,13 +28227,11 @@
       "_waitm_ms",
       "_drawrect",
       "_resbuftext",
-      "_andpackf",
       "_get_0",
       "_g_rplbfask",
       "_viewyshift",
       "_findfirst",
       "_g_player_sound_id",
-      "_orpackf",
       "_g_rplmodui",
       "_g_plyr_snd_state",
       "_sndpendingstate",
@@ -28315,8 +28313,10 @@
       "_frm_rate2",
       "_hurrykey",
       "__aFlmul",
+      "_andpackf",
       "_inrepflg",
       "__AHSHIFT",
+      "_orpackf",
       "_eng1resourceptr",
       "_dialog_frame_color",
       "_g_wndspr",
@@ -28684,8 +28684,8 @@
     },
     {
       "path": "include/dlgcolor.h",
-      "sha256": "3b2094586933000565f0c7d006f17ca9530157867e9658c2bfb816e5600c5e35",
-      "size": 122
+      "sha256": "e576d5b8d0d8f0301f66b8a5cb19efa54cafc9d65e8230b0eae8eca974b848a1",
+      "size": 147
     },
     {
       "path": "include/files.h",
@@ -28729,8 +28729,8 @@
     },
     {
       "path": "include/mousebuf.h",
-      "sha256": "bae5150a3a5b94c4299dbeafb9a5c52dfbe2c4f155f53724b5ba9620ae6e89a9",
-      "size": 280
+      "sha256": "2bbc6e032953c31f587267f4678377490a7e0025d1895b3266c61c7dd169e951",
+      "size": 257
     },
     {
       "path": "include/radius.h",
@@ -28809,8 +28809,8 @@
     },
     {
       "path": "include/viewstat.h",
-      "sha256": "1a3f6e3c4410393d788f9624ea0028f477543b173689ecdcb024b523816f5b26",
-      "size": 395
+      "sha256": "53294efeade4f735e9e84890c7d6c7ab792e6686c510374ab3de17db1f231210",
+      "size": 412
     },
     {
       "line": 9,

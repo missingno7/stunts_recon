@@ -134,7 +134,7 @@ struct TRKOBJINFO {
 
 #include "trkobj.h"
 #include "video.h"
-/* Local view: elaptm1; timer import follows the scoped clip globals to preserve their LINK order. */
+/* Timer state used by drawworld. */
 extern unsigned short elaptm1;
 #include "game.h"
  // 0 = playing, 1 = paused, 2 = replay
@@ -226,12 +226,21 @@ extern I8 far *openresource(I8 *);
 
 /* Local view: sprite_free_window; parameters[0].pointer is void; another unit uses struct SPRITE. */
 extern void far removewindow(void far *);
+#include "timer.h"
+#include "memory.h"
 
 /* Copies a clipped window region. Params: clip rectangle. Returns: none. State: reads the active window sprite and clip state. */
 /* PLATFORM(video): draws to or configures the display surface. */
 void far drawworldflipzones(struct RECTANGLE *clipRect)
 {
-#include "viewstat.h"
+    extern struct SPRITE far *g_wndspr;
+    extern struct RECTANGLE rectclip[15];
+    extern int rotpr[2];
+    extern int prevcamrot;
+    extern char g_simprect;
+    extern int rcmapix[45];
+    extern char rect_num3;
+    extern char rects_updt[15];
 
     register I16 i;
     struct RECTANGLE *currentRect;
@@ -290,7 +299,7 @@ draw_rect_check:
 
 /* Resets saved clip rectangles for the current drawing mode. Params: none. Returns: none. State: reads clip state and updates rectangle buffers. */ void far initdrawworld(void)
 {
-#include "viewstat.h"
+    extern struct RECTANGLE full_screen_rectangle;
 
     register I16 i;
 
@@ -306,7 +315,8 @@ draw_rect_check:
 /* Updates the visible game frame. Params: page and clip rectangle. Returns: none. State: reads frame, scene, camera and sprite globals; updates render lists. */
 /* PLATFORM(video): draws to or configures the display surface. */
 void drawworld(I8 page, struct RECTANGLE* clip) {
-#include "viewstat.h"
+    extern int rotpr[2];
+    extern int prevcamrot;
 
 	I8 skipped[24];
 	U8  terrain_list[24];
@@ -1447,9 +1457,16 @@ draw_done:
 
 }
 /* The earlier functions keep their block views; later code shares this file view. */
-#include "viewstat.h"
-#include "timer.h"
-#include "memory.h"
+extern struct SPRITE far *g_wndspr;
+extern short cliprects_spare4[120];
+extern struct RECTANGLE rectclip[15];
+extern int rotpr[2];
+extern int prevcamrot;
+extern char g_simprect;
+extern int rcmapix[45];
+extern char rect_num3;
+extern char rects_updt[15];
+extern struct RECTANGLE full_screen_rectangle;
 
 /* Draws the sky and ground bands. Params: clip rectangle, x offset and horizon. Returns: none. State: reads skybox images, heights and colors. */
 /* PLATFORM(video): draws to or configures the display surface. */

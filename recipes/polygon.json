@@ -3151,7 +3151,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_zonecheck",
-      "target_index": 66,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3202,7 +3202,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_zonecheck",
-      "target_index": 66,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3253,7 +3253,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_zonecheck",
-      "target_index": 66,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3304,7 +3304,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_zonecheck",
-      "target_index": 66,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3814,7 +3814,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_zonecheck",
-      "target_index": 66,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3865,7 +3865,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_zonecheck",
-      "target_index": 66,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4052,7 +4052,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 61,
+      "target_index": 62,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4069,7 +4069,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 61,
+      "target_index": 62,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4732,7 +4732,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_backlightovr8",
-      "target_index": 63,
+      "target_index": 64,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4851,7 +4851,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_zonecheck",
-      "target_index": 66,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5004,7 +5004,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_zonecheck",
-      "target_index": 66,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6313,7 +6313,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_zoneinside",
-      "target_index": 67,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6330,7 +6330,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_zoneinside",
-      "target_index": 67,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6381,7 +6381,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_vid_flg2_set",
-      "target_index": 65,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6398,7 +6398,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_vid_flg2_set",
-      "target_index": 65,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6432,7 +6432,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_vid_flg2_set",
-      "target_index": 65,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6449,7 +6449,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_vid_flg2_set",
-      "target_index": 65,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6687,7 +6687,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 61,
+      "target_index": 62,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6738,7 +6738,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 61,
+      "target_index": 62,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6959,7 +6959,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_zoneadjacent",
-      "target_index": 64,
+      "target_index": 65,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7662,6 +7662,7 @@
       "_preRender_patterned",
       "_sprite_two_color_poly_list",
       "_inthypot",
+      "_ADD_OBJECT_TO_BUFFER",
       "__aFlmul",
       "_sortzonelist",
       "_backlightovr8",
@@ -7669,7 +7670,6 @@
       "_g_vid_flg2_set",
       "_zonecheck",
       "_zoneinside",
-      "_ADD_OBJECT_TO_BUFFER",
       "_zoneoverlap",
       "_vidflg3is_minus1"
     ],
@@ -7796,6 +7796,11 @@
         "segment": "UNIT_TEXT"
       },
       {
+        "name": "_ADD_OBJECT_TO_BUFFER",
+        "offset": 314,
+        "segment": "UNIT_TEXT"
+      },
+      {
         "name": "_sortzonelist",
         "offset": 7654,
         "segment": "UNIT_TEXT"
@@ -7813,11 +7818,6 @@
       {
         "name": "_zoneinside",
         "offset": 7224,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_ADD_OBJECT_TO_BUFFER",
-        "offset": 314,
         "segment": "UNIT_TEXT"
       },
       {
@@ -7973,8 +7973,8 @@
     },
     {
       "path": "include/viewstat.h",
-      "sha256": "1a3f6e3c4410393d788f9624ea0028f477543b173689ecdcb024b523816f5b26",
-      "size": 395
+      "sha256": "53294efeade4f735e9e84890c7d6c7ab792e6686c510374ab3de17db1f231210",
+      "size": 412
     },
     {
       "path": "include/xformrec.h",

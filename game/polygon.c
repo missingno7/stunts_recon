@@ -77,6 +77,7 @@ static I8 current_paintjob;
 char g_vector_bitix;
 
 static struct POINT2D* projected_point_ptr_table[11];
+#include "ui.h"
 
 void INIT_MATRIX(void)
 { /* PURPOSE: Allocate the polygon information pool and initialize cached rotations. Params: none. Returns: void. Globals: reads mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn; writes mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn, polyinfoptr. */ /* PLATFORM(memory): allocates or releases game-managed memory. */
@@ -782,7 +783,6 @@ void initnm(void) { /* PURPOSE: Cache the sine and cosine values used by view-ve
 I32 lgabs(I32 value) { /* PURPOSE: Return the magnitude of a signed long value. Params: value. Returns: long. Globals: none. */ if (value < 0) return -value; return value; }
 I16S g_vid_flg2_set;
 I16S vidflg3is_minus1;
-#include "ui.h"
 
 void mergezones(struct RECTANGLE *r1, struct RECTANGLE *r2, struct RECTANGLE *out)
 { /* PURPOSE: Write the smallest rectangle that covers both input rectangles. Params: r1, r2, out. Returns: void. Globals: reads g_vid_flg2_set, vidflg3is_minus1; writes vidflg3is_minus1. */

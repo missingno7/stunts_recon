@@ -10525,13 +10525,13 @@
     },
     {
       "path": "include/chartab.h",
-      "sha256": "012a041c655852d782c217fa89cf89a8d7a243a1f021b59905689d903022c4ce",
-      "size": 100
+      "sha256": "08cf32e58c51b2b367e5230b770d3591ecddf6ade197ad4a809958deba697c09",
+      "size": 134
     },
     {
       "path": "include/dlgcolor.h",
-      "sha256": "3b2094586933000565f0c7d006f17ca9530157867e9658c2bfb816e5600c5e35",
-      "size": 122
+      "sha256": "e576d5b8d0d8f0301f66b8a5cb19efa54cafc9d65e8230b0eae8eca974b848a1",
+      "size": 147
     },
     {
       "path": "include/files.h",
@@ -10620,8 +10620,8 @@
     },
     {
       "path": "include/viewstat.h",
-      "sha256": "1a3f6e3c4410393d788f9624ea0028f477543b173689ecdcb024b523816f5b26",
-      "size": 395
+      "sha256": "53294efeade4f735e9e84890c7d6c7ab792e6686c510374ab3de17db1f231210",
+      "size": 412
     },
     {
       "line": 6,

@@ -274,8 +274,8 @@
     },
     {
       "path": "include/viewstat.h",
-      "sha256": "1a3f6e3c4410393d788f9624ea0028f477543b173689ecdcb024b523816f5b26",
-      "size": 395
+      "sha256": "53294efeade4f735e9e84890c7d6c7ab792e6686c510374ab3de17db1f231210",
+      "size": 412
     },
     {
       "path": "include/wheel.h",

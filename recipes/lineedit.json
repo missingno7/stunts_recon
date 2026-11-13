@@ -2031,8 +2031,8 @@
   "preprocessor_closure": [
     {
       "path": "include/chartab.h",
-      "sha256": "012a041c655852d782c217fa89cf89a8d7a243a1f021b59905689d903022c4ce",
-      "size": 100
+      "sha256": "08cf32e58c51b2b367e5230b770d3591ecddf6ade197ad4a809958deba697c09",
+      "size": 134
     },
     {
       "path": "include/game.h",
@@ -2091,8 +2091,8 @@
     },
     {
       "path": "include/viewstat.h",
-      "sha256": "1a3f6e3c4410393d788f9624ea0028f477543b173689ecdcb024b523816f5b26",
-      "size": 395
+      "sha256": "53294efeade4f735e9e84890c7d6c7ab792e6686c510374ab3de17db1f231210",
+      "size": 412
     },
     {
       "line": 194,

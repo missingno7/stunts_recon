@@ -319,8 +319,8 @@
     },
     {
       "path": "include/chartab.h",
-      "sha256": "012a041c655852d782c217fa89cf89a8d7a243a1f021b59905689d903022c4ce",
-      "size": 100
+      "sha256": "08cf32e58c51b2b367e5230b770d3591ecddf6ade197ad4a809958deba697c09",
+      "size": 134
     },
     {
       "path": "include/files.h",

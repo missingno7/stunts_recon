@@ -28,6 +28,7 @@ extern void FAR audio_init_chunk(I16, I16, I16, I16, I16, I16, I16);
 
 /* Local view: audio_set_chunk_volume; parameters[1] is unsigned byte; another unit uses signed word. */
 void FAR _loadds audio_set_chunk_volume(I16 voiceIndex, U8 type);
+#include "auddrv.h"
 
 void FAR _loadds audiodriver_timer(void)
 {
@@ -281,7 +282,7 @@ void FAR _loadds audio_set_chunk_volume(I16 voiceIndex, U8 type)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(audio): start sample playback through the DOS sound driver. */
-#include "auddrv.h"
+
 void FAR _loadds start_audio_voice_sample(I16 voiceIndex, I8 FAR *voiceData)
 {
     struct AudioChunk *chunk;

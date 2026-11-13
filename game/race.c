@@ -209,6 +209,8 @@ struct ENGINESOUND eng2 = { 500, 10000, 9000, 0,
 	{ "ENGI", "ENGI", "STAR", "STOP", "BLOW", "CRAS", "SKID", "SKI2", "BUMP", "SCRA" } };
 I8 replay_axis_magnitude[34] = { 0, 0, 0, 0, 0, 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56,
 	60, 64, 68, 72, 76, 84, 90, 98, 106, 114, 121, 127, 127, 127 };
+#include "shp2rec.h"
+#include "sprite.h"
 
 /* run_game: reconstructed from the target listing (s005c) */
 
@@ -948,9 +950,6 @@ I16S savereplay(const I8* filename)
 	return (I8)ret;
 }
 
-#include "shp2rec.h"
-
-#include "sprite.h"
 /* Local view: locate_shape_fatal; frontend raw-object exclusion retains its SHAPE2D pointer result. */
 extern void FAR * FAR locate_shape_fatal(void FAR*, I8*);
 

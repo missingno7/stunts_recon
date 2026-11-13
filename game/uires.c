@@ -75,7 +75,8 @@ U16  font_secondary_color = 0;
 /* merged owner s008-a member point_in_rectangle */
 I8 far point_in_rectangle(I16 x1, I16 x2, I16 y1, I16 y2)
 { /* PURPOSE: Save the pixels under a rectangular sprite region when the backing store has room. Params: x1, x2, y1, y2. Returns: char. Globals: reads g_mousesave_x_tbl, g_mouseyposstacktable, mssprite_arrays; writes g_mousesave_x_tbl, g_mouseyposstacktable, mssprite_arrays. */ /* PLATFORM(memory): allocates or releases game-managed memory. */ /* PLATFORM(video): draws pixels, sprites, or text. */
-#include "mousebuf.h"
+    extern unsigned char  mouse_buffer_count;
+    extern struct SPRITE far *savedptr_ms;
 
     struct SPRITE saved_sprites[2];
     I32 required;
@@ -105,7 +106,8 @@ struct SPRITE far *mssprite_arrays[4];
 /* merged owner s008-a member restore_mouse_sprite */
 void far restoreboxwindow(void)
 { /* PURPOSE: Restore saved pixels and release the temporary sprite region. Params: none. Returns: void. Globals: reads g_mousesave_x_tbl, g_mouseyposstacktable, mssprite_arrays; writes none. */ /* PLATFORM(video): draws pixels, sprites, or text. */
-#include "mousebuf.h"
+    extern unsigned char  mouse_buffer_count;
+    extern struct SPRITE far *savedptr_ms;
 
     struct SPRITE saved_sprites[2];
 
@@ -128,8 +130,9 @@ extern I16 far messagebox();
 I16 far messagebox(I16 type, I16 check, I8 far *message, I16 x, I16 y,
                     U16  frame_arg, I16 *disabled, I8 initial)
 { /* PURPOSE: Lay out and draw a dialog, then process input until a choice is made. Params: type, check, message, x, y, frame_arg, disabled, initial. Returns: int. Globals: reads font_secondary_color, fontdefvalue; writes font_secondary_color. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(timer): registers, removes, or reads the game timer. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(input_mouse): polls or updates mouse state. */
-#include "dlgcolor.h"
-#include "chartab.h"
+    extern int dlg_colour;
+    extern int performGraphColor;
+    extern unsigned char _ctype[];
 
     I8 chr;
     I16 linehgt;
@@ -405,8 +408,8 @@ I16 far floadreq(I8 *path, I8 *selected_name, I16 attributes,
 { /* PURPOSE: Build and display the file list, returning the selected file name. Params: path, selected_name, attributes, heading. Returns: int. Globals: reads dialogarg2, flagsdown, font_secondary_color, g_is_busy, main_data_file_addr; writes g_is_busy. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */ /* PLATFORM(timer): registers, removes, or reads the game timer. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(input_mouse): polls or updates mouse state. */
     /* Local view: resbuftext; type is array[None]; another unit uses signed byte. */
     extern I8 resbuftext[];
-#include "dlgcolor.h"
-#include "chartab.h"
+    extern int dlg_colour;
+    extern unsigned char _ctype[];
 
     I16 hit_l[10];
     I8 answer;
@@ -621,7 +624,7 @@ I16 far fsavereq(I8 *name, I8 *directory, I8 far *title)
 { /* PURPOSE: Display the save dialog and return the selected file name. Params: name, directory, title. Returns: int. Globals: reads dialogarg2, font_secondary_color, main_data_file_addr; writes none. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */
     /* Local view: resbuftext; type is signed byte; another unit uses array[80]. */
     extern I8 resbuftext;
-#include "dlgcolor.h"
+    extern int dlg_colour;
 
     register I16 key;
     I8 accepted;
@@ -852,7 +855,7 @@ void strcpyfar(I8 *destination, I8 far *source)
 I16 far doslider(I16 op, I16 x, I16 width, I16 top, I16 height,
                        I16 value, I16 offset, I16 divisions)
 { /* PURPOSE: Track mouse movement and process the current pointer action. Params: op, x, width, top, height, value, offset, divisions. Returns: int. Globals: reads flagsdown, msecoordx, pos_y_ms; writes flagsdown. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(timer): registers, removes, or reads the game timer. */
-#include "dlgcolor.h"
+    extern int dlg_colour;
 
     register I16 low;
     register I16 end_position;
@@ -1504,8 +1507,10 @@ void far pullmouse(void)
 /* merged owner s008-rest member do_joy_restext */
 void far do_joystick_resource_text(void)
 { /* PURPOSE: Show joystick help, process selection, and restore audio and input state. Params: none. Returns: void. Globals: reads dialogarg2, font_secondary_color, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */ /* PLATFORM(input_joy): polls or updates joystick state. */
-#include "mousebuf.h"
-#include "dlgcolor.h"
+    extern int input_pushed;
+    extern char joystick_enabled;
+    extern char mousedrive;
+    extern int dlg_colour;
 
     
     I16 ys[9];
@@ -1575,7 +1580,9 @@ void far do_joystick_resource_text(void)
 /* merged owner s008-rest member do_key_restext */
 void far mkeyon(void)
 { /* PURPOSE: Show keyboard help and restore audio and input state. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */
-#include "mousebuf.h"
+    extern int input_pushed;
+    extern char joystick_enabled;
+    extern char mousedrive;
 
     
 
@@ -1594,7 +1601,8 @@ void far mkeyon(void)
 /* merged owner s008-rest member do_mou_restext */
 void far mmouseon(void)
 { /* PURPOSE: Show mouse help and restore audio and input state. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */
-#include "mousebuf.h"
+    extern int input_pushed;
+    extern char mousedrive;
 
     
     pushmouse() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
@@ -1611,7 +1619,7 @@ void far mmouseon(void)
 /* merged owner s008-rest member do_pau_restext */
 void far msystempause(void)
 { /* PURPOSE: Show pause help and restore audio and input state. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */
-#include "mousebuf.h"
+    extern int input_pushed;
 
     
     pushmouse() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
@@ -1627,7 +1635,7 @@ void far msystempause(void)
 /* merged owner s008-rest member do_mof_restext */
 void far mmusictog(void)
 { /* PURPOSE: Toggle music and effects options from their help page. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */
-#include "mousebuf.h"
+    extern int input_pushed;
 
     pushmouse() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
     input_pushed = 1;
@@ -1644,7 +1652,7 @@ void far mmusictog(void)
 /* merged owner s008-rest member do_sonsof_restext */
 void far msoundtog(void)
 { /* PURPOSE: Toggle sound options from their help page. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */
-#include "mousebuf.h"
+    extern int input_pushed;
 
     pushmouse() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
     input_pushed = 1;
@@ -1661,7 +1669,7 @@ void far msoundtog(void)
 /* merged owner s008-rest member do_dos_restext */
 void far mdosexit(void)
 { /* PURPOSE: Show DOS options and run the exit-list action when selected. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(input_kb): polls or updates keyboard state. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */ /* PLATFORM(dos): uses the DOS exit-list service. */
-#include "mousebuf.h"
+    extern int input_pushed;
 
     
     
@@ -1685,8 +1693,8 @@ void far msetrender(void)
     I16 saved_rate;
     register I16 selection_index;
     register I16 cursor;
-#include "mousebuf.h"
-#include "dlgcolor.h"
+    extern int input_pushed;
+    extern int performGraphColor;
 
     pushmouse() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
     input_pushed = 1;
