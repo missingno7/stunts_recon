@@ -68,9 +68,9 @@ def adapt_host_idle_waits(source: str, text: str) -> str:
              "        port_replay_activity = port_guest_activity_snapshot();\n"
              "        key_code = mykey(elticks());"),
             # Only the default case is reached with no key; the key cases redraw and continue themselves.
-            ("            default:\n                doreplay(1, core.game_frame, core.game_frame);\n"
+            ("            default:\n                doreplay(UI_REPLAY_OPERATION_DRAW, core.game_frame, core.game_frame);\n"
              "                continue;",
-             "            default:\n                doreplay(1, core.game_frame, core.game_frame);\n"
+             "            default:\n                doreplay(UI_REPLAY_OPERATION_DRAW, core.game_frame, core.game_frame);\n"
              "                if (key_code == 0 && inrepflg != 0 &&\n"
              "                    camera_buttons_pressed[2] == 0 && camera_buttons_pressed[3] == 0)\n"
              "                    port_guest_wait_for_activity(port_replay_activity);\n"
@@ -78,8 +78,8 @@ def adapt_host_idle_waits(source: str, text: str) -> str:
         ])
     elif source == "game/uires.c":
         changes.extend([
-            ("    case 1:\n        do {\n            key = mykey",
-             "    case 1:\n        do {\n"
+            ("    case DIALOG_MODE_WAIT_KEY:\n        do {\n            key = mykey",
+             "    case DIALOG_MODE_WAIT_KEY:\n        do {\n"
              "            uint32_t port_activity = port_guest_activity_snapshot();\n"
              "            key = mykey"),
             ("        } while (key == 0);",
@@ -535,12 +535,13 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             # DOS reads 0000:0005 before rejecting the null far pointer; a
             # native process cannot perform that read. Preserve its rejection
             # before accessing the instrument record.
-            old = "    sample = resource->data;\n    if (sample[5] == 5) {"
+            old = ("    sample = resource->data;\n"
+                   "    if (sample[AUDIO_SAMPLE_KIND_OFFSET] == AUDIO_SAMPLE_KIND_PERCUSSION) {")
             if transformed.count(old) != 1:
                 raise RuntimeError("Could not locate the nullable music instrument boundary")
             transformed = transformed.replace(old,
                 "    sample = resource->data;\n    if (sample == 0) return -1;\n"
-                "    if (sample[5] == 5) {", 1)
+                "    if (sample[AUDIO_SAMPLE_KIND_OFFSET] == AUDIO_SAMPLE_KIND_PERCUSSION) {", 1)
         if source in {"game/audioeng.c", "lib/audioply.c"}:
             transformed = "extern int32_t port_audio_is_active(void);\n" + transformed
             boundaries = ({"audio_op_unk": "return;", "audio_driver_timer": "return;"}

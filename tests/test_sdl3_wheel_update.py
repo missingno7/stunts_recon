@@ -14,6 +14,7 @@ from tools.porting.diffharness.oracle import DGROUP_PARAGRAPH
 sys.path.insert(0, str(ROOT / "port"))
 from game_abi import adapt_wheel_update_inputs
 from host_probe_modes import legacy_target_widths
+from project_headers import expand_constant_literals
 
 
 PROLOGUE = r'''#include "stunts_types.h"
@@ -94,6 +95,7 @@ class Sdl3WheelUpdateTests(unittest.TestCase):
                 with self.subTest(adapted=adapted):
                     cfile, exe, output = work / "probe.c", work / "probe.exe", work / "out.bin"
                     transformed = adapt_wheel_update_inputs(body) if adapted else body
+                    transformed = expand_constant_literals(transformed, source, ROOT)
                     cfile.write_text(PROLOGUE + legacy_target_widths(transformed) + wrapper)
                     compiled = subprocess.run([
                         str(gcc), "-std=gnu11", "-O0", "-I", str(ROOT / "port"),
@@ -127,7 +129,7 @@ class Sdl3WheelUpdateTests(unittest.TestCase):
             adapt_wheel_update_inputs("")
         source = (ROOT / "game/trkscene.c").read_text(encoding="latin-1")
         with self.assertRaises(ValueError):
-            adapt_wheel_update_inputs(source.replace("y = base[j] / 64;", "y = 0;"))
+            adapt_wheel_update_inputs(source.replace("y = base[j] / WORLD_COORDINATE_SCALE_I16;", "y = 0;"))
 
 
 if __name__ == "__main__":

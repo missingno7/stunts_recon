@@ -1,13 +1,23 @@
 """Expose shared reconstruction declarations to the existing host adapters.
 
 The historical frontend remains authoritative. This port-only expansion keeps
-its scalar include intact and presents ordinary guarded project headers to the
-same declaration parser/removal pass used for source-local declarations.
+its scalar include mapped to the port width header and presents ordinary
+guarded project headers to the declaration parser/removal pass.
 """
 from pathlib import Path
 import re
 
 _INCLUDE = re.compile(r'(?m)^[ \t]*#[ \t]*include[ \t]+"([^"\r\n]+)"[^\r\n]*(?:\r?\n|$)')
+
+
+_TOKENS = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|/\*.*?\*/|//[^\n]*', re.S)
+
+
+def _masked(source: str) -> str:
+    def mask(match):
+        raw = match[0]
+        return re.sub(r'[^\n]', ' ', raw) if raw.startswith(('/*', '//')) else raw
+    return _TOKENS.sub(mask, source)
 
 
 def expand_project_headers(text: str, root: Path) -> str:
@@ -23,7 +33,7 @@ def expand_project_headers(text: str, root: Path) -> str:
                 raise ValueError('Project include escapes include/: ' + name)
             if not path.is_file():
                 return match[0]
-            if path.name == 'stunts_types.h':
+            if path.name in {'types.h', 'stunts_types.h'}:
                 if scalar:
                     return '\n'
                 scalar = True
@@ -35,11 +45,7 @@ def expand_project_headers(text: str, root: Path) -> str:
             # first include can be conditional; eager de-duplication would
             # incorrectly erase a later active include.
             return expand(contents, stack + (path,)) + '\n'
-        tokens = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|/\*.*?\*/|//[^\n]*', re.S)
-        def mask(match):
-            raw = match[0]
-            return ''.join('\n' if c == '\n' else ' ' for c in raw) if raw.startswith(('/*', '//')) else raw
-        masked = tokens.sub(mask, source)
+        masked = _masked(source)
         result, cursor = [], 0
         for match in _INCLUDE.finditer(source):
             if not masked[match.start():match.end()].lstrip().startswith('#'):
@@ -50,3 +56,16 @@ def expand_project_headers(text: str, root: Path) -> str:
         return ''.join(result)
 
     return expand(text, ())
+
+
+def expand_constant_literals(text: str, source: str, root: Path) -> str:
+    """Expose the source's numeric macros in an extracted C probe body."""
+    expanded = expand_project_headers(source, root)
+    constants = {}
+    for match in re.finditer(r'(?m)^\s*#define[ \t]+(\w+)[ \t]+([^\r\n]+)', _masked(expanded)):
+        value = match[2].strip()
+        if re.fullmatch(r'[+-]?(?:0[xX][0-9a-fA-F]+|[0-9]+)[uUlL]*', value):
+            constants[match[1]] = value
+    # Leave directives, including their defining identifiers, to the C compiler.
+    tokens = re.compile(r'^[ \t]*#[^\r\n]*|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|/\*.*?\*/|//[^\n]*|\b[A-Za-z_]\w*\b', re.S | re.M)
+    return tokens.sub(lambda m: constants.get(m[0], m[0]), text)

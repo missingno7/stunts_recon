@@ -179,9 +179,9 @@ def local_config(source: str, text: str, owner: str):
     if STRICT_CENTRAL:
         lines.append("/* Public externs and non-static definitions come only from stunts_decls.h. */")
     else:
+        masked_source = mask_comments(text)
         for name, typ in sorted(data_types.items()):
             decl = render_type(typ, name, target=False)
-            masked_source = mask_comments(text)
             if re.search(rf"\b(?:I8S|signed\s+char)\s*(?:\*\s*)*{re.escape(name)}\b", masked_source):
                 decl = re.sub(r"\bchar\b", "signed char", decl, count=1)
             lines.append(f"extern {decl};")

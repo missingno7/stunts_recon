@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -60,24 +61,24 @@ class Sdl3WordSentinelTests(unittest.TestCase):
     def test_adapter_has_only_the_three_counted_source_anchors(self):
         intro_name = "render.c"
         track_name = "trkscene.c"
-        intro_expr = "carHeadingData == 0xffff"
+        intro_expr = "carHeadingData == INTRO_CAR_HEADING_UNSET"
         track_expr = "g_td01_track_filecpy[prev_path] == 0xffff"
         self.assertEqual(self.sources[intro_name].count(intro_expr), 1)
         self.assertEqual(self.sources[track_name].count(track_expr), 2)
-        self.assertEqual(self.adapted[intro_name].count("(uint16_t)carHeadingData == 0xffffu"), 1)
+        self.assertEqual(self.adapted[intro_name].count("(uint16_t)carHeadingData == (uint16_t)(INTRO_CAR_HEADING_UNSET)"), 1)
         self.assertEqual(
             self.adapted[track_name].count(
-                "(uint16_t)g_td01_track_filecpy[prev_path] == 0xffffu"),
+                "(uint16_t)g_td01_track_filecpy[prev_path] == (uint16_t)(0xffff)"),
             2,
         )
         self.assertEqual(
             self.adapted[intro_name].replace(
-                "(uint16_t)carHeadingData == 0xffffu", intro_expr),
+                "(uint16_t)carHeadingData == (uint16_t)(INTRO_CAR_HEADING_UNSET)", intro_expr),
             self.sources[intro_name],
         )
         self.assertEqual(
             self.adapted[track_name].replace(
-                "(uint16_t)g_td01_track_filecpy[prev_path] == 0xffffu", track_expr),
+                "(uint16_t)g_td01_track_filecpy[prev_path] == (uint16_t)(0xffff)", track_expr),
             self.sources[track_name],
         )
         self.assertEqual(adapt_word_sentinels("int untouched;\n", "other.c"),
@@ -88,7 +89,7 @@ class Sdl3WordSentinelTests(unittest.TestCase):
         track_name = "trkscene.c"
         with self.assertRaisesRegex(ValueError, "Expected 1"):
             adapt_word_sentinels(
-                self.sources[intro_name].replace("carHeadingData == 0xffff", "", 1),
+                self.sources[intro_name].replace("carHeadingData == INTRO_CAR_HEADING_UNSET", "", 1),
                 intro_name,
             )
         with self.assertRaisesRegex(ValueError, "Expected 2"):
@@ -102,9 +103,12 @@ class Sdl3WordSentinelTests(unittest.TestCase):
         compiler = host_compiler()
         if compiler is None:
             self.fail("A host C compiler is required for the sentinel regression")
-        intro_expr = "(uint16_t)carHeadingData == 0xffffu"
-        track_expr = "(uint16_t)g_td01_track_filecpy[prev_path] == 0xffffu"
+        intro_expr = "(uint16_t)carHeadingData == (uint16_t)(INTRO_CAR_HEADING_UNSET)"
+        track_expr = "(uint16_t)g_td01_track_filecpy[prev_path] == (uint16_t)(0xffff)"
+        constant = re.search(r'^#define INTRO_CAR_HEADING_UNSET[^\n]+',
+                             (ROOT / 'include/ui.h').read_text(), re.M)[0]
         source = f'''#include <stdint.h>
+{constant}
 static int intro_legacy(int16_t carHeadingData)
 {{ return carHeadingData == 0xffff; }}
 static int intro_adapted(int16_t carHeadingData)

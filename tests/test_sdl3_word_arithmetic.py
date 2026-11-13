@@ -42,7 +42,7 @@ def host_compiler() -> str | None:
 
 def extract_function(source: str, name: str) -> str:
     match = re.search(
-        rf"(?m)^(?:I8|I16)\s+{re.escape(name)}\s*\([^;\n]*\)\s*\{{",
+        rf"(?m)^(?:I8|I16|static\s+int16_t)\s+{re.escape(name)}\s*\([^;\n]*\)\s*\{{",
         source,
     )
     if match is None:
@@ -161,13 +161,12 @@ class Sdl3WordArithmeticTests(unittest.TestCase):
         if cls.compiler is None:
             raise AssertionError("A host C compiler is required for the overlay regression")
         cls.image = locked_image()
-        cls.original = (ROOT / "game" / "carsim.c").read_text(
-            encoding="latin-1")
+        from tools.porting.project_headers import expand_project_headers
+        cls.original = expand_project_headers(
+            (ROOT / "game" / "carsim.c").read_text(encoding="latin-1"), ROOT)
         cls.overlay = adapt_gameplay_word_arithmetic(cls.original)
-        marker = "/* PORT_BUILD: preserve locked 16-bit gameplay arithmetic. */"
-        begin = cls.overlay.index(marker)
-        finish = cls.overlay.index("extern short rate_frame;", begin)
-        cls.helpers = cls.overlay[begin:finish]
+        cls.helpers = "\n".join(extract_function(cls.overlay, name) for name in (
+            "port_game_s16_from_u16", "port_game_mul_sar16", "port_game_wall_hit_threshold"))
 
     def test_overlay_reproduces_locked_threshold_and_collision_windows(self):
         wall_cases = ((369, 140 << 8), (370, 140 << 8), (468, 140 << 8),

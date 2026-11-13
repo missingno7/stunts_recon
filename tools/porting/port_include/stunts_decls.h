@@ -5,7 +5,6 @@
 #ifndef STUNTS_DECLS_H
 #define STUNTS_DECLS_H
 #include "stunts_types.h"
-#include "platform_hw.h"
 #include "stunts_constants.h"
 #include "stunts_structs.h"
 

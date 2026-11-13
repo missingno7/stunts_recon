@@ -1,18 +1,20 @@
 # Aggregate target-layout view map (port-only)
 
+Source citations identify the original local views. Eight views now use the shared declarations' member names; their DOS sizes and offsets are unchanged.
+
 All `compiler_size` and field offsets come from isolated target probes under pinned MSC 5.10 `/AM /O /Gs`; the 27 type-probe TUs compiled 130 layouts and returned 1,260 member paths. The mapping is by target byte range; `bytes[+N]` is an explicit raw view when a source field does not share one canonical member boundary.
 
 | Source view | Measured size | Canonical type | Source member to canonical mapping |
 |---|---:|---|---|
 | `lib/planes.c:2 struct VECTOR` | 6 | `stunts_VECTOR` | x@0x0+2->x; y@0x2+2->y; z@0x4+2->z |
-| `lib/planes.c:3 struct MATRIX` | 18 | `stunts_MATRIX` | m@0x0+18->vals |
+| `lib/planes.c:3 struct MATRIX` | 18 | `stunts_MATRIX` | vals@0x0+18->vals |
 | `lib/planes.c:4 struct PLANE` | 34 | `stunts_PLANE` | plane_yz@0x0+2->plane_yz; plane_xy@0x2+2->plane_xy; plane_origin@0x4+6->plane_origin; plane_normal@0xA+6->plane_normal; plane_rotation@0x10+18->plane_rotation |
 | `lib/unflipsz.c:2 struct SHAPE2D` | 14 | `stunts_SHAPE2D_14` | s2d_width@0x0+2->s2d_width; s2d_height@0x2+2->s2d_height; s2d_unk1@0x4+2->s2d_unk1; s2d_unk2@0x6+2->s2d_unk2; s2d_pos_x@0x8+2->s2d_pos_x; s2d_pos_y@0xA+2->s2d_pos_y; s2d_unk3@0xC+1->s2d_unk3; s2d_unk4@0xD+1->s2d_unk4 |
 | `lib/expandsz.c:2 struct SHAPE2D` | 16 | `stunts_SHAPE2D_16` | width@0x0+2->s2d_width; height@0x2+2->s2d_height; unknown1@0x4+2->s2d_unk1; unknown2@0x6+2->s2d_unk2; x@0x8+2->s2d_pos_x; y@0xA+2->s2d_pos_y; unknown3@0xC+1->s2d_unk3; unknown4@0xD+1->s2d_unk4; unknown5@0xE+1->s2d_unk5; unknown6@0xF+1->s2d_unk6 |
 | `game/frontend.c:9 struct GAMEINFO` | 26 | `stunts_GAMEINFO` | game_playercarid@0x0+4->game_playercarid; game_playermaterial@0x4+1->game_playermaterial; game_playertransmission@0x5+1->game_playertransmission; game_opponenttype@0x6+1->game_opponenttype; game_opponentcarid@0x7+4->game_opponentcarid; game_opponentmaterial@0xB+1->game_opponentmaterial; game_opponenttransmission@0xC+1->game_opponenttransmission; game_trackname@0xD+9->game_trackname; game_framespersec@0x16+2->game_framespersec; game_recordedframes@0x18+2->game_recordedframes |
 | `game/frontend.c:21 struct HighScoreRecord` | 52 | `stunts_HighScoreRecord` | bytes@0x0+50->bytes; marker@0x32+2->marker |
 | `game/frontend.c:22 struct VECTOR` | 6 | `stunts_VECTOR` | x@0x0+2->x; y@0x2+2->y; z@0x4+2->z |
-| `game/frontend.c:23 struct VECTORLONG` | 12 | `stunts_VECTORLONG` | x@0x0+4->lx; y@0x4+4->ly; z@0x8+4->lz |
+| `game/frontend.c:23 struct VECTORLONG` | 12 | `stunts_VECTORLONG` | lx@0x0+4->lx; ly@0x4+4->ly; lz@0x8+4->lz |
 | `game/frontend.c:24 struct POINT2D` | 4 | `stunts_POINT2D` | x@0x0+2->x; y@0x2+2->y |
 | `game/frontend.c:25 struct RECTANGLE` | 8 | `stunts_RECTANGLE` | left@0x0+2->left; right@0x2+2->right; top@0x4+2->top; bottom@0x6+2->bottom |
 | `game/frontend.c:26 struct SPRITE` | 30 | `stunts_SPRITE_30` | image@0x0+4->sprite_bitmapptr; words@0x4+26->words |
@@ -28,7 +30,7 @@ All `compiler_size` and field offsets come from isolated target probes under pin
 | `game/carsim.c:4 struct RECTANGLE` | 8 | `stunts_RECTANGLE` | left@0x0+2->left; right@0x2+2->right; top@0x4+2->top; bottom@0x6+2->bottom |
 | `game/carsim.c:11 struct VECTOR` | 6 | `stunts_VECTOR` | x@0x0+2->x; y@0x2+2->y; z@0x4+2->z |
 | `game/carsim.c:15 struct VECTORLONG` | 12 | `stunts_VECTORLONG` | lx@0x0+4->lx; ly@0x4+4->ly; lz@0x8+4->lz |
-| `game/carsim.c:19 struct POINT2D` | 4 | `stunts_POINT2D` | px@0x0+2->x; py@0x2+2->y |
+| `game/carsim.c:19 struct POINT2D` | 4 | `stunts_POINT2D` | x@0x0+2->x; y@0x2+2->y |
 | `game/carsim.c:23 struct MATRIX` | 18 | `stunts_MATRIX` | vals@0x0+18->vals |
 | `game/carsim.c:25 struct PLANE` | 34 | `stunts_PLANE` | plane_yz@0x0+2->plane_yz; plane_xy@0x2+2->plane_xy; plane_origin@0x4+6->plane_origin; plane_normal@0xA+6->plane_normal; plane_rotation@0x10+18->plane_rotation |
 | `game/carsim.c:66 struct GAMEINFO` | 26 | `stunts_GAMEINFO` | game_playercarid@0x0+4->game_playercarid; game_playermaterial@0x4+1->game_playermaterial; game_playertransmission@0x5+1->game_playertransmission; game_opponenttype@0x6+1->game_opponenttype; game_opponentcarid@0x7+4->game_opponentcarid; game_opponentmaterial@0xB+1->game_opponentmaterial; game_opponenttransmission@0xC+1->game_opponenttransmission; game_trackname@0xD+9->game_trackname; game_framespersec@0x16+2->game_framespersec; game_recordedframes@0x18+2->game_recordedframes |
@@ -44,7 +46,7 @@ All `compiler_size` and field offsets come from isolated target probes under pin
 | `game/render.c:10 struct RECTANGLE` | 8 | `stunts_RECTANGLE` | left@0x0+2->left; right@0x2+2->right; top@0x4+2->top; bottom@0x6+2->bottom |
 | `game/render.c:17 struct VECTOR` | 6 | `stunts_VECTOR` | x@0x0+2->x; y@0x2+2->y; z@0x4+2->z |
 | `game/render.c:21 struct VECTORLONG` | 12 | `stunts_VECTORLONG` | lx@0x0+4->lx; ly@0x4+4->ly; lz@0x8+4->lz |
-| `game/render.c:25 struct POINT2D` | 4 | `stunts_POINT2D` | px@0x0+2->x; py@0x2+2->y |
+| `game/render.c:25 struct POINT2D` | 4 | `stunts_POINT2D` | x@0x0+2->x; y@0x2+2->y |
 | `game/render.c:29 struct MATRIX` | 18 | `stunts_MATRIX` | vals@0x0+18->vals |
 | `game/render.c:33 struct PLANE` | 34 | `stunts_PLANE` | plane_yz@0x0+2->plane_yz; plane_xy@0x2+2->plane_xy; plane_origin@0x4+6->plane_origin; plane_normal@0xA+6->plane_normal; plane_rotation@0x10+18->plane_rotation |
 | `game/render.c:77 struct GAMEINFO` | 26 | `stunts_GAMEINFO` | game_playercarid@0x0+4->game_playercarid; game_playermaterial@0x4+1->game_playermaterial; game_playertransmission@0x5+1->game_playertransmission; game_opponenttype@0x6+1->game_opponenttype; game_opponentcarid@0x7+4->game_opponentcarid; game_opponentmaterial@0xB+1->game_opponentmaterial; game_opponenttransmission@0xC+1->game_opponenttransmission; game_trackname@0xD+9->game_trackname; game_framespersec@0x16+2->game_framespersec; game_recordedframes@0x18+2->game_recordedframes |
@@ -66,7 +68,7 @@ All `compiler_size` and field offsets come from isolated target probes under pin
 | `game/trkscene.c:2 struct VECTOR` | 6 | `stunts_VECTOR` | x@0x0+2->x; y@0x2+2->y; z@0x4+2->z |
 | `game/trkscene.c:3 struct SHAPE3D` | 22 | `stunts_SHAPE3D` | numverts@0x0+2->numverts; shape3d_verts@0x2+4->shape3d_verts; numprimitives@0x6+2->numprimitives; numpaints@0x8+1->numpaints; reserved@0x9+1->reserved; primitives@0xA+4->primitives; cull1@0xE+4->cull1; cull2@0x12+4->cull2 |
 | `game/trkscene.c:4 struct TRKOBJINFO` | 14 | `stunts_TRKOBJINFO` | noOfBlocks@0x0+1->noOfBlocks; entry@0x1+1->entry; exitPoint@0x2+1->exitPoint; entryType@0x3+1->entryType; exitType@0x4+1->exitType; arrowType@0x5+1->arrowType; arrowOrient@0x6+2->arrowOrient; cameraDataOffset@0x8+2->cameraDataOffset; cameraOverlay@0xA+2->cameraOverlay; opponent3@0xC+1->opponent3; opponentSpeedCode@0xD+1->opponentSpeedCode |
-| `game/trkscene.c:5 struct TRACKOBJECT` | 14 | `stunts_TRACKOBJECT` | info@0x0+2->info; rotation@0x2+2->rotation_y; shape@0x4+2->shape; lowShape@0x6+2->low_detail_shape; overlay@0x8+1->overlay; surface@0x9+1->surface; ignoreZ@0xA+1->ignore_z_bias; multiTile@0xB+1->multi_tile; physicalModel@0xC+1->physical_model; unknown@0xD+1->unknown |
+| `game/trkscene.c:5 struct TRACKOBJECT` | 14 | `stunts_TRACKOBJECT` | ss_trkObjInfoPtr@0x0+2->info; ss_rotY@0x2+2->rotation_y; ss_shapePtr@0x4+2->shape; ss_loShapePtr@0x6+2->low_detail_shape; ss_ssOvelay@0x8+1->overlay; ss_surfaceType@0x9+1->surface; ss_ignoreZBias@0xA+1->ignore_z_bias; ss_multiTileFlag@0xB+1->multi_tile; ss_physicalModel@0xC+1->physical_model; scene_unk5@0xD+1->unknown |
 | `game/trkscene.c:6 struct TrackNode` | 14 | `stunts_TrackNode` | column@0x0+1->column; row@0x1+1->row; element@0x2+1->element; block@0x3+1->block; connection@0x4+1->connection; terrain@0x5+1->terrain; previousColumn@0x6+1->previousColumn; previousRow@0x7+1->previousRow; previousElement@0x8+1->previousElement; previousBlock@0x9+1->previousBlock; previousReversed@0xA+1->previousReversed; previousExitType@0xB+1->previousExitType; parent@0xC+2->parent |
 | `game/trkscene.c:7 struct GAMESTATE` | 1014 | `stunts_GAMESTATE_1014` | before_game_inputmode@0x0+1013->before_game_inputmode; game_inputmode@0x3F5+1->game_inputmode |
 | `game/trkscene.c:8 struct WALLREC` | 6 | `stunts_WALLREC` | orientation@0x0+2->orientation; x@0x2+2->x; z@0x4+2->z |
@@ -74,7 +76,7 @@ All `compiler_size` and field offsets come from isolated target probes under pin
 | `game/race.c:7 struct RECTANGLE` | 8 | `stunts_RECTANGLE` | left@0x0+2->left; right@0x2+2->right; top@0x4+2->top; bottom@0x6+2->bottom |
 | `game/race.c:14 struct VECTOR` | 6 | `stunts_VECTOR` | x@0x0+2->x; y@0x2+2->y; z@0x4+2->z |
 | `game/race.c:18 struct VECTORLONG` | 12 | `stunts_VECTORLONG` | lx@0x0+4->lx; ly@0x4+4->ly; lz@0x8+4->lz |
-| `game/race.c:22 struct POINT2D` | 4 | `stunts_POINT2D` | px@0x0+2->x; py@0x2+2->y |
+| `game/race.c:22 struct POINT2D` | 4 | `stunts_POINT2D` | x@0x0+2->x; y@0x2+2->y |
 | `game/race.c:26 struct MATRIX` | 18 | `stunts_MATRIX` | vals@0x0+18->vals |
 | `game/race.c:28 struct PLANE` | 34 | `stunts_PLANE` | plane_yz@0x0+2->plane_yz; plane_xy@0x2+2->plane_xy; plane_origin@0x4+6->plane_origin; plane_normal@0xA+6->plane_normal; plane_rotation@0x10+18->plane_rotation |
 | `game/race.c:74 struct GAMEINFO` | 26 | `stunts_GAMEINFO` | game_playercarid@0x0+4->game_playercarid; game_playermaterial@0x4+1->game_playermaterial; game_playertransmission@0x5+1->game_playertransmission; game_opponenttype@0x6+1->game_opponenttype; game_opponentcarid@0x7+4->game_opponentcarid; game_opponentmaterial@0xB+1->game_opponentmaterial; game_opponenttransmission@0xC+1->game_opponenttransmission; game_trackname@0xD+9->game_trackname; game_framespersec@0x16+1->game_framespersec_byte_view; game_recordedframes@0x18+2->game_recordedframes |
@@ -97,7 +99,7 @@ All `compiler_size` and field offsets come from isolated target probes under pin
 | `game/audioeng.c:18 struct AudioTimer` | 76 | `stunts_AudioTimer` | active@0x0+1->active; state@0x1+1->state; handle@0x2+2->handle; pitch_avg@0x4+2->pitch_avg; rate_avg@0x6+4->rate_avg; pitch@0xA+1->pitch; unkB@0xB+1->unkB; rate@0xC+2->rate; last_pitch@0xE+1->last_pitch; unkF@0xF+1->unkF; channels@0x10+8->channels; sample_word@0x18+2->sample_word; dirty@0x1A+1->dirty; retrigger@0x1B+1->retrigger; payload@0x1C+48->payload |
 | `game/uires.c:22 struct SHAPE2D` | 16 | `stunts_SHAPE2D_16` | words@0x0+12->words; bytes@0xC+4->bytes |
 | `game/uires.c:23 struct SPRITE` | 30 | `stunts_SPRITE_30` | sprite_bitmapptr@0x0+4->sprite_bitmapptr; words@0x4+6->words[0..2]; lineofs@0xA+2->sprite_lineofs; words2@0xC+18->words[4..12] |
-| `game/uires.c:39 struct SHAPE3DHEADER` | 4 | `stunts_SHAPE3DHEADER` | numverts@0x0+1->header_numverts; numprimitives@0x1+1->header_numprimitives; numpaints@0x2+1->header_numpaints; reserved@0x3+1->header_reserved |
+| `game/uires.c:39 struct SHAPE3DHEADER` | 4 | `stunts_SHAPE3DHEADER` | header_numverts@0x0+1->header_numverts; header_numprimitives@0x1+1->header_numprimitives; header_numpaints@0x2+1->header_numpaints; header_reserved@0x3+1->header_reserved |
 | `game/uires.c:40 struct SHAPE3D` | 22 | `stunts_SHAPE3D` | numverts@0x0+2->numverts; verts@0x2+4->shape3d_verts; numprimitives@0x6+2->numprimitives; numpaints@0x8+1->numpaints; reserved@0x9+1->reserved; primitives@0xA+4->primitives; cull1@0xE+4->cull1; cull2@0x12+4->cull2 |
 | `game/uires.c:46 struct FONTDEF_PREFIX` | 16 | `stunts_FONTDEF_PREFIX` | bytes@0x0+14->bytes; value@0xE+2->value |
 | `game/uires.c:58 struct GAMESTATE_SNAPSHOT` | 22 | `stunts_GAMESTATE_SNAPSHOT` | game_travDist@0x0+4->game_travDist; game_frame@0x4+2->game_frame; game_total_finish@0x6+2->game_total_finish; field_144@0x8+2->field_144; game_pEndFrame@0xA+2->game_pEndFrame; game_oEndFrame@0xC+2->game_oEndFrame; game_penalty@0xE+2->game_penalty; game_impactSpeed@0x10+2->game_impactSpeed; game_topSpeed@0x12+2->game_topSpeed; game_jumpCount@0x14+2->game_jumpCount |
@@ -111,7 +113,7 @@ All `compiler_size` and field offsets come from isolated target probes under pin
 | `lib/audioply.c:10 struct AudioChunk` | 76 | `stunts_AUDIOCHUNK` | pos@0x0+4->resource_data; depth@0x4+1->depth; stack@0x5+16->stack; activeVoices@0x15+1->activeVoices; maxVoices@0x16+1->maxVoices; reserved17@0x17+1->reserved17; delay@0x18+4->delay; reserved1c@0x1C+2->reserved1c; data@0x1E+4->sample_data; velocity@0x22+1->velocity; resourceType@0x23+1->resourceType; note@0x24+1->note; modeValue@0x25+1->modeValue; value26@0x26+2->value26; program@0x28+1->program; reserved29@0x29+5->reserved29; samples@0x2E+4->samples; loopDepth@0x32+1->loopDepth; loopPos@0x33+16->voice_loop_view.loopPos; loopCount@0x43+4->voice_loop_view.loopCount; channelNumber@0x47+1->channelNumber; callback@0x48+4->callback |
 | `lib/audioply.c:35 struct AudioVoice` | 46 | `stunts_AUDIOVOICE` | resourceIndex@0x0+1->resourceIndex; active@0x1+1->active; note@0x2+1->note; reserved03@0x3+5->reserved03; position@0x8+4->position; remaining@0xC+4->remaining; data@0x10+4->data; sampleRate@0x14+2->runtime_voice_view.sampleRate; state16@0x16+1->runtime_voice_view.state16; reserved17@0x17+1->runtime_voice_view.reserved17; value18@0x18+2->runtime_voice_view.value18; value1a@0x1A+2->runtime_voice_view.value1a; value1c@0x1C+2->runtime_voice_view.value1c; value1e@0x1E+2->runtime_voice_view.value1e; value20@0x20+2->runtime_voice_view.value20; value22@0x22+1->runtime_voice_view.value22; reserved23@0x23+1->runtime_voice_view.reserved23; value24@0x24+2->runtime_voice_view.value24; value26@0x26+1->runtime_voice_view.value26; value27@0x27+1->runtime_voice_view.value27; value28@0x28+1->runtime_voice_view.value28; value29@0x29+1->runtime_voice_view.value29; resource@0x2A+2->resource; channelNumber@0x2C+1->channelNumber; reserved2d@0x2D+1->reserved2d |
 | `lib/audioply.c:51 struct AudioSample` | 68 | `stunts_AudioSample` | reserved00@0x0+30->reserved00; level1e@0x1E+2->level1e; level20@0x20+2->level20; level22@0x22+2->level22; level24@0x24+2->level24; level26@0x26+2->level26; loopMode@0x28+1->loopMode; loopCount@0x29+1->loopCount; reserved2a@0x2A+4->reserved2a; limit2e@0x2E+2->limit2e; reserved30@0x30+4->reserved30; loopFlags@0x34+1->loopFlags; pulsePresent@0x35+1->pulsePresent; reserved36@0x36+4->reserved36; pulseCount@0x3A+1->pulseCount; pulseTable@0x3B+8->pulseTable |
-| `lib/startup.c:41 struct POINT2D` | 4 | `stunts_POINT2D` | px@0x0+2->x; py@0x2+2->y |
+| `lib/startup.c:41 struct POINT2D` | 4 | `stunts_POINT2D` | x@0x0+2->x; y@0x2+2->y |
 | `lib/startup.c:42 struct RECTANGLE` | 8 | `stunts_RECTANGLE` | left@0x0+2->left; right@0x2+2->right; top@0x4+2->top; bottom@0x6+2->bottom |
 | `lib/lineedit.c:3 struct SCREEN_RECT` | 20 | `stunts_SCREEN_RECT` | width@0x0+2->width; height@0x2+2->height; reserved@0x4+14->reserved; bottom@0x12+2->bottom |
 | `lib/shp2res.c:2 struct SHAPE2D` | 16 | `stunts_SHAPE2D_16` | width@0x0+2->s2d_width; height@0x2+2->s2d_height; unknown1@0x4+2->s2d_unk1; unknown2@0x6+2->s2d_unk2; pos_x@0x8+2->s2d_pos_x; pos_y@0xA+2->s2d_pos_y; unknown3@0xC+1->s2d_unk3; unknown4@0xD+1->s2d_unk4; unknown5@0xE+1->s2d_unk5; unknown6@0xF+1->s2d_unk6 |

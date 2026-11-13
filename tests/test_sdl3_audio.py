@@ -68,6 +68,18 @@ def extract_generated_struct(source: str, name: str) -> str:
 
 
 class SDL3AudioTests(unittest.TestCase):
+    def test_named_driver_entries_are_routed_and_unknown_entries_are_rejected(self):
+        from port.game_abi import route_audio_vectors
+        from tools.porting.project_headers import expand_project_headers
+        for name in ('audiores', 'audioply'):
+            source = expand_project_headers((ROOT / 'lib' / (name + '.c')).read_text(), ROOT)
+            routed = route_audio_vectors(source)
+            self.assertNotRegex(routed, r'\baudiodriverbinary\s*\+')
+            self.assertIn('port_audio_driver_', routed)
+        for offset in ('UNKNOWN_ENTRY', 'UNKNOWN_ENTRY + 3', '7'):
+            with self.subTest(offset=offset), self.assertRaises(ValueError):
+                route_audio_vectors('((DRVPROC)(audiodriverbinary + ' + offset + '))();')
+
     def test_ad15_driver_matches_locked_machine_register_traces(self) -> None:
         compiler = host_compiler()
         if compiler is None:
@@ -254,6 +266,9 @@ class SDL3AudioTests(unittest.TestCase):
             extract_generated_function(src028,
                 r"^I16 FAR _loadds process_audio_event\s*\("),
         ]
+        from tools.porting.project_headers import expand_constant_literals
+        macro_source = "\n".join((src027, src028, src029))
+        functions = [expand_constant_literals(body, macro_source, ROOT) for body in functions]
         compiler_env = os.environ.copy()
         compiler_env["PATH"] = os.pathsep.join(
             [str(Path(compiler).resolve().parent), compiler_env.get("PATH", "")])

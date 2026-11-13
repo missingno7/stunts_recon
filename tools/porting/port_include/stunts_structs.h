@@ -636,8 +636,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -1003,7 +1011,7 @@ struct MATERIALCLRLIST { U8  colors_00_0f[0x20]; I16S ground, sky; U8  colors_12
 #if defined(STUNTS_TU_planes)
 /* lib/planes.c:3; MATRIX layout. */
 #pragma pack(push, 2)
-struct MATRIX { int m[9]; };
+struct MATRIX { int vals[9]; };
 #pragma pack(pop)
 #endif
 
@@ -1285,8 +1293,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -1934,8 +1950,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -2592,8 +2616,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -3244,8 +3276,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -3893,8 +3933,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -4542,8 +4590,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -4754,7 +4810,7 @@ struct AudioVoice {
 #if defined(STUNTS_TU_frontend)
 /* game/frontend.c:32; VECTORLONG layout. */
 #pragma pack(push, 2)
-struct VECTORLONG { I32 x, y, z; };
+struct VECTORLONG { I32 lx, ly, lz; };
 #pragma pack(pop)
 #endif
 
@@ -5191,8 +5247,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -5663,7 +5727,7 @@ struct PLANE {
 /* game/carsim.c:44; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D {
-	I16 px, py;
+	I16 x, y;
 };
 #pragma pack(pop)
 #endif
@@ -5934,9 +5998,13 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
-  struct track_object_info *info;
   #ifdef PORT_BUILD
-  union { short rotation_y; short rotation; };
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
+  struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
   #else
   short rotation_y;
   #endif
@@ -6420,7 +6488,7 @@ struct PLANE {
 /* game/render.c:49; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D {
-	I16 px, py;
+	I16 x, y;
 };
 #pragma pack(pop)
 #endif
@@ -6703,9 +6771,13 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
-  struct track_object_info *info;
   #ifdef PORT_BUILD
-  union { short rotation_y; short rotation; };
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
+  struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
   #else
   short rotation_y;
   #endif
@@ -7207,7 +7279,7 @@ struct SecurityDialogResult {
 #if defined(STUNTS_TU_trkscene)
 /* game/trkscene.c:14; TRACKOBJECT layout. */
 #pragma pack(push, 2)
-struct TRACKOBJECT { struct TRKOBJINFO *info; I16S rotation; struct SHAPE3D *shape,*lowShape; U8  overlay; I8 surface,ignoreZ,multiTile,physicalModel,unknown; };
+struct TRACKOBJECT { struct TRKOBJINFO *ss_trkObjInfoPtr; I16S ss_rotY; struct SHAPE3D *ss_shapePtr,*ss_loShapePtr; U8  ss_ssOvelay; I8 ss_surfaceType,ss_ignoreZBias,ss_multiTileFlag,ss_physicalModel,scene_unk5; };
 #pragma pack(pop)
 #endif
 
@@ -7314,9 +7386,13 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
-  struct track_object_info *info;
   #ifdef PORT_BUILD
-  union { short rotation_y; short rotation; };
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
+  struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
   #else
   short rotation_y;
   #endif
@@ -7797,7 +7873,7 @@ struct PLANE {
 /* game/race.c:56; POINT2D layout. */
 #pragma pack(push, 2)
 struct POINT2D {
-	I16 px, py;
+	I16 x, y;
 };
 #pragma pack(pop)
 #endif
@@ -8106,8 +8182,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -8756,8 +8840,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -9405,8 +9497,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -9863,7 +9963,7 @@ struct SHAPE3D { U16S  numverts; I8 far *verts; U16S  numprimitives; U8  numpain
 #if defined(STUNTS_TU_uires)
 /* game/uires.c:51; SHAPE3DHEADER layout. */
 #pragma pack(push, 2)
-struct SHAPE3DHEADER { U8  numverts, numprimitives, numpaints, reserved; };
+struct SHAPE3DHEADER { U8  header_numverts, header_numprimitives, header_numpaints, header_reserved; };
 #pragma pack(pop)
 #endif
 
@@ -10041,8 +10141,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -10707,9 +10815,13 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
-  struct track_object_info *info;
   #ifdef PORT_BUILD
-  union { short rotation_y; short rotation; };
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
+  struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
   #else
   short rotation_y;
   #endif
@@ -11367,8 +11479,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -12016,8 +12136,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -12665,8 +12793,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -13314,8 +13450,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -13708,7 +13852,7 @@ struct PLANE {
 #if defined(STUNTS_TU_startup)
 /* lib/startup.c:42; POINT2D layout. */
 #pragma pack(push, 2)
-struct POINT2D { I16 px, py; };
+struct POINT2D { I16 x, y; };
 #pragma pack(pop)
 #endif
 
@@ -13963,8 +14107,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -14612,8 +14764,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -15261,8 +15421,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -15910,8 +16078,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -16559,8 +16735,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -17205,8 +17389,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -17851,8 +18043,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -18497,8 +18697,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -19143,8 +19351,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -19792,8 +20008,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -20441,8 +20665,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -21090,8 +21322,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -21742,8 +21982,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -22391,8 +22639,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -23040,8 +23296,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -23689,8 +23953,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -24338,8 +24610,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -24979,8 +25259,16 @@ struct scene_shape {
 /* game/trkconst.c:496; track_object layout. */
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;
@@ -25436,8 +25724,16 @@ struct scene_shape {
 #pragma pack(pop)
 #pragma pack(push, 2)
 struct track_object {
+  #ifdef PORT_BUILD
+  union { struct track_object_info *info; struct TRKOBJINFO *ss_trkObjInfoPtr; };
+  #else
   struct track_object_info *info;
+  #endif
+  #ifdef PORT_BUILD
+  union { short rotation_y; short rotation; short ss_rotY; };
+  #else
   short rotation_y;
+  #endif
   struct SHAPE3D *shape;
   struct SHAPE3D *low_detail_shape;
   unsigned char overlay, surface, ignore_z_bias, multi_tile, physical_model, unknown;

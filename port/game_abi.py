@@ -9,7 +9,7 @@ def adapt_word_sentinels(source: str, unit: str) -> str:
     instead promotes to signed int32 on the host, where -1 != 65535.
     """
     anchors = {
-        "render.c": ("carHeadingData == 0xffff", 1),
+        "render.c": ("carHeadingData == INTRO_CAR_HEADING_UNSET", 1),
         "trkscene.c": ("g_td01_track_filecpy[prev_path] == 0xffff", 2),
     }
     if unit not in anchors:
@@ -18,7 +18,7 @@ def adapt_word_sentinels(source: str, unit: str) -> str:
     if source.count(expression) != count:
         raise ValueError(f"Expected {count} DOS word sentinel comparisons in {unit}")
     left, right = expression.split(" == ")
-    return source.replace(expression, f"(uint16_t){left} == {right}u")
+    return source.replace(expression, f"(uint16_t){left} == (uint16_t)({right})")
 
 
 def adapt_renderer_word_arithmetic(source: str) -> str:
@@ -82,33 +82,45 @@ def route_audio_vectors(source: str) -> str:
     A DOS driver asset is data on the host. Parse balanced parentheses so
     multi-line function-pointer signatures cannot leave a raw executable call.
     """
+    code = re.sub(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|/\*.*?\*/|//[^\n]*',
+                  lambda m: re.sub(r'[^\n]', ' ', m[0]), source, flags=re.S)
+    offsets = {m[1]: int(m[2], 0) for m in re.finditer(
+        r'(?m)^\s*#define\s+((?:AUDIO_DRIVER_ENTRY_|AUD_DRV_ENTRY_)\w+)\s+(0[xX][0-9a-fA-F]+|[0-9]+)\b', code)}
     stack = []
     pairs = {}
-    for pos, ch in enumerate(source):
+    for pos, ch in enumerate(code):
         if ch == "(":
             stack.append(pos)
         elif ch == ")" and stack:
             pairs[pos] = stack.pop()
     edits = []
-    for match in re.finditer(r"\baudiodriverbinary\b(?:\s*\+\s*(0x[0-9a-fA-F]+|[0-9]+))?", source):
-        end = match.end()
-        while end < len(source) and (source[end].isspace() or source[end] == ")"):
-            end += 1
-        if end == len(source) or source[end] != "(":
-            continue
-        close = end - 1
-        while source[close].isspace():
-            close -= 1
-        start = pairs.get(close)
-        if start is None or start > match.start():
-            continue
-        expression = source[start:end].strip()
-        if not expression.startswith("(("):
-            continue
-        offset = int(match.group(1), 0) if match.group(1) else 0
-        if offset not in {0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 48, 57, 63, 66}:
-            raise ValueError(f"Unresolved DOS audio vector {offset:#x}")
-        edits.append((start, end, f"port_audio_driver_{offset:02x}"))
+    for match in re.finditer(r"\baudiodriverbinary\b", code):
+        for close, start in pairs.items():
+            if not start < match.start() < close:
+                continue
+            end = close + 1
+            while end < len(code) and code[end].isspace():
+                end += 1
+            if end == len(code) or code[end] != "(" or not code[start:close].startswith("(("):
+                continue
+            tail = re.fullmatch(r"\s*(?:\+\s*(0[xX][0-9a-fA-F]+|[0-9]+|[A-Za-z_]\w*))?\s*\)*\s*",
+                                code[match.end():close])
+            if tail is None:
+                raise ValueError("Unresolved DOS audio vector expression")
+            token = tail[1]
+            if token is None:
+                offset = 0
+            elif token in offsets:
+                offset = offsets[token]
+            else:
+                try:
+                    offset = int(token, 0)
+                except ValueError:
+                    raise ValueError(f"Unresolved DOS audio vector {token}") from None
+            if offset not in {0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 48, 57, 63, 66}:
+                raise ValueError(f"Unresolved DOS audio vector {offset:#x}")
+            edits.append((start, end, f"port_audio_driver_{offset:02x}"))
+            break
     for start, end, replacement in reversed(edits):
         source = source[:start] + replacement + source[end:]
     return source
@@ -167,7 +179,7 @@ def adapt_wheel_update_inputs(source: str) -> str:
                  "              struct VECTOR *source, I16S *origin)\n{")
     if source.count(signature) != 1:
         raise ValueError("Could not locate the wheel-update input boundary")
-    division = "y = base[j] / 64;"
+    division = "y = base[j] / WORLD_COORDINATE_SCALE_I16;"
     if source.count(division) != 1:
         raise ValueError("Could not locate the wheel-height word division")
     source = source.replace(division, "y = port_wheel_height_div64(base[j]);", 1)
@@ -237,12 +249,13 @@ def host_view_contracts(source: str) -> str:
         views.append(("MATRIX", 18, {"m._21": 2, "m._12": 6, "m._13": 12}))
     if unit in {"frontend.c", "carsim.c", "render.c",
                 "trkscene.c", "trackedt.c"}:
-        shape_field = "shape" if unit == "trkscene.c" else "ss_shapePtr"
+        shape_field = "ss_shapePtr"
         views.append(("TRACKOBJECT", 20, {shape_field: 6}))
     if unit == "trkconst.c":
         views.extend((("SHAPE3D", 22, {}),
                       ("scene_shape", 20, {"shape": 6}),
-                      ("track_object", 20, {"shape": 6}),
+                      ("track_object", 20, {"shape": 6, "info": 0, "ss_trkObjInfoPtr": 0,
+                                             "rotation_y": 4, "ss_rotY": 4}),
                       ("track_object_info", 16, {"camera_data": 8, "opponent1": 12})))
     if unit == "carsim.c":
         views.append(("TRKOBJINFO", 16, {"si_cameraDataOffset": 8, "link": 12}))

@@ -210,10 +210,10 @@ def adapt_update_frame(source: str) -> str:
 
 def adapt_trans_op(source: str) -> str:
     """Let capture-only clones observe shapes without consuming the old pool."""
-    entry = "    if (poly_list_insert_result != 0)\n        return 1;"
+    entry = "    if (poly_list_insert_result != 0)\n        return TRANSFORM_RESULT_POOL_FULL;"
     source = _replace_once(source, entry,
         "    if (poly_list_insert_result != 0 && !port_renderer_capture_only())\n"
-        "        return 1;", "ADD_OBJECT_TO_BUFFER pool guard")
+        "        return TRANSFORM_RESULT_POOL_FULL;", "ADD_OBJECT_TO_BUFFER pool guard")
     source = _replace_once(source, "    vertex_count = ts->shapeptr->numverts;",
         "    if (port_render_mode()==2 && (!ts || !ts->shapeptr)) {\n"
         "        port_camera_scene_reject(\"null shape submitted to original transform\"); return 1;\n"

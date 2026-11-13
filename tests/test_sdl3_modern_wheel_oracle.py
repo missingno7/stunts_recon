@@ -74,6 +74,7 @@ def compile_helper(compiler, output, *sources, include_render=False):
         str(Path(compiler).resolve().parent), environment.get("PATH", "")]))
     command = [compiler, "-std=c11", "-O2", "-Wall", "-Wextra",
                "-include", "stdint.h", "-I", str(ROOT / "include"),
+               "-I", str(ROOT / "tools" / "porting" / "port_include"),
                "-I", str(ROOT / "port"), "-I", str(HERE / "sdl3"),
                "-DI16=int16_t", "-DI8=int8_t", "-DI8S=int8_t",
                "-DU8=uint8_t", "-DU16=uint16_t", "-DI16S=int16_t",

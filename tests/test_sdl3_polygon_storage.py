@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 import sys
 sys.path.insert(0, str(ROOT / "tools" / "porting"))
 from host_probe_modes import legacy_target_widths  # noqa: E402
+from project_headers import expand_constant_literals  # noqa: E402
 from port.game_abi import adapt_polygon_storage  # noqa: E402
 
 
@@ -94,7 +95,8 @@ class Sdl3PolygonStorageTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix="stunts-sdl3-poly-") as directory:
             executable = Path(directory) / "polygon-storage-probe.exe"
             excerpt = Path(directory) / "polygon_storage_excerpt.inc"
-            excerpt.write_text(polygon_storage_excerpt(overlay),
+            excerpt.write_text(expand_constant_literals(
+                polygon_storage_excerpt(overlay), original, ROOT),
                                encoding="latin-1")
             source = ROOT / "tests" / "sdl3" / "polygon_storage_probe.c"
             result = subprocess.run(

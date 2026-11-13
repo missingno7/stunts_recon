@@ -220,7 +220,7 @@ def generalized_span_candidates(parsed_by_source: dict):
     callee_defs = {}
     macros_by_source = {}
     for source, item in parsed_by_source.items():
-        macros_by_source[source] = macros_in(item["text"])
+        macros_by_source[source] = item.get("macros", macros_in(item["text"]))
         for function in item["functions"]:
             if function["type"].get("k") == "fn":
                 callee_defs.setdefault(function["name"], []).append((source, function))
@@ -431,8 +431,11 @@ def scan_spans(root, rows):
     for row in rows:
         source = row["source"]
         text = (root / source).read_text(encoding="latin-1")
+        macros = macros_in(modes.expand_project_headers(text, root))
+        bounds = "\n".join(f"#define {name} {value}" for name, value in macros.items())
         parsed[source] = {"text": text, "functions": function_rows(source, text),
-                          "globals": source_globals(source, text)}
+                          "globals": source_globals(source, bounds + "\n" + text),
+                          "macros": macros}
     findings, statuses = build_contract_findings(
         root, read_json(root / "port/semantic-spans.json"), parsed,
         read_json(root / "layout/data-symbols.json"))
@@ -469,7 +472,7 @@ def build_contract_findings(root: Path, contract_data: dict,
         code = modes.mask_comments(text)
         funcs = parsed_by_source[source]["functions"]
         globals_ = parsed_by_source[source]["globals"]
-        macros = macros_in(text)
+        macros = parsed_by_source[source].get("macros", macros_in(text))
         issues = []
         produced = []
         if contract["kind"] == "cross_global_pointer_span":
