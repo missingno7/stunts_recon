@@ -496,6 +496,16 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
                     raise RuntimeError("Could not locate the track camera DGROUP-offset adapter")
                 transformed = transformed.replace(old, new, 1)
 
+        if source == "lib/sphhelp.c":
+            old = "ellipseh(source, buffer);"
+            if transformed.count(old) != 1:
+                raise RuntimeError("Could not locate the sphere helper's DOS point offset")
+            transformed = transformed.replace(
+                old,
+                "ellipseh((struct Point *)(uintptr_t)(uint16_t)source, buffer);",
+                1,
+            )
+
         if source == "game/carsim.c":
             old = "trackData = (struct VECTOR far *)objectInfo->link.dataPointer;"
             if transformed.count(old) != 1:

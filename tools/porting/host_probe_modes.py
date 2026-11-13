@@ -128,6 +128,75 @@ def source_tag_guards(text: str):
     return out
 
 
+def source_data_definition(text: str, name: str):
+    """Return a declaration with the source's exact type spelling for a global definition."""
+    code = mask_comments(text)
+    for start, end, kind in top_level_spans(text):
+        if kind != "stmt":
+            continue
+        stmt_code = code[start:end]
+        match = re.search(rf"\b{re.escape(name)}\b", stmt_code)
+        if not match:
+            continue
+        before = stmt_code[:match.start()]
+        if ("{" in before or
+                re.search(r"\b(?:extern|static|typedef)\b", before)):
+            continue
+        after = stmt_code[match.end():].lstrip()
+        if after.startswith("(") or "=" in before:
+            continue
+        # Drop a global initializer while preserving the original declarator,
+        # including I32/U32 aliases whose host widths differ from `int`.
+        parens = brackets = braces = 0
+        equal = -1
+        for i in range(match.end(), len(stmt_code)):
+            c = stmt_code[i]
+            if c == "(": parens += 1
+            elif c == ")": parens = max(0, parens - 1)
+            elif c == "[": brackets += 1
+            elif c == "]": brackets = max(0, brackets - 1)
+            elif c == "{": braces += 1
+            elif c == "}": braces = max(0, braces - 1)
+            elif c == "=" and parens == 0 and brackets == 0 and braces == 0:
+                equal = i
+                break
+        if equal >= 0:
+            raw = stmt_code[:equal].rstrip() + ";"
+        else:
+            raw = stmt_code.rstrip()
+            if not raw.endswith(";"):
+                raw += ";"
+        raw = legacy_target_widths(raw).strip()
+        return "extern " + raw
+    return None
+
+
+def source_object_macros(text: str, declarations: list[str]):
+    """Copy only source object-like macros needed by generated early declarations."""
+    definitions = {}
+    for line in text.splitlines():
+        match = re.match(r"\s*#\s*define\s+([A-Za-z_]\w*)(.*)$", line)
+        if not match or match.group(2).startswith("("):
+            continue
+        definitions.setdefault(match.group(1), match.group(2).strip())
+    needed = set()
+    pending = []
+    for declaration in declarations:
+        pending.extend(re.findall(r"\b[A-Z][A-Z0-9_]*\b", declaration))
+    while pending:
+        name = pending.pop()
+        if name in needed or name not in definitions:
+            continue
+        needed.add(name)
+        pending.extend(re.findall(r"\b[A-Z][A-Z0-9_]*\b", definitions[name]))
+    lines = []
+    for name, value in definitions.items():
+        if name not in needed:
+            continue
+        lines += [f"#ifndef {name}", f"#define {name} {value}" if value else f"#define {name}", "#endif"]
+    return lines
+
+
 def declaration_names(snippet: str, source: str):
     unit = cdecls.Unit(source_parser_text(snippet), source)
     names = []
@@ -140,11 +209,33 @@ def declaration_names(snippet: str, source: str):
 
 def local_config(source: str, text: str, owner: str):
     unit, fn_protos, data_types, static_data = local_names_and_types(source, text)
+    defined_functions = {
+        name for name, rows in unit.decls.items()
+        if any(d["type"]["k"] == "fn" and d.get("defined") for d in rows)
+    }
+    defined_data = {
+        name for name, rows in unit.decls.items()
+        if any(d["type"]["k"] != "fn" and d.get("defined") and
+               d.get("storage") != "static" for d in rows)
+    }
     if STRICT_CENTRAL:
         static_fns = {name: proto for name, proto in fn_protos.items()
                       if re.search(r"\bstatic\b", proto)}
-        fn_protos = static_fns
-        data_types = {}
+        # A same-TU definition is the source's real declaration. If it has a
+        # different spelling from the central port view, retain that definition
+        # signature in this compile overlay and suppress only the conflicting
+        # central prototype for this TU.
+        fn_protos = {name: (proto if name in HOST_OVERRIDES else legacy_target_widths(proto))
+                     for name, proto in fn_protos.items()
+                     if name in defined_functions or name in static_fns}
+        # A TU definition can follow an earlier use. Give it a declaration with
+        # its own host spelling before the source, while suppressing a conflicting
+        # central declaration for that same name.
+        source_data_decls = {name: decl for name in defined_data
+                             if (decl := source_data_definition(text, name)) is not None}
+        defined_data = set(source_data_decls)
+        data_types = {name: typ for name, typ in data_types.items()
+                      if name in defined_data}
     else:
         declaration_evidence = readj(PORT / "declaration-evidence.json")
         function_specs = declaration_evidence.get("function_prototypes", {})
@@ -170,21 +261,32 @@ def local_config(source: str, text: str, owner: str):
     lines.append(f"#define STUNTS_TU_{Path(source).stem} 1")
     for name in sorted(fn_protos):
         lines.append(f"#define STUNTS_LOCAL_FN_{name} 1")
-    local_data = static_data if STRICT_CENTRAL else set(data_types) | static_data
+    local_data = (static_data | defined_data) if STRICT_CENTRAL else set(data_types) | static_data
     for name in sorted(local_data):
         lines.append(f"#define STUNTS_LOCAL_DATA_{name} 1")
+    if STRICT_CENTRAL:
+        lines += source_object_macros(text, list(source_data_decls.values()))
+    if STRICT_CENTRAL and source == "game/uires.c" and "instringz" in fn_protos:
+        # stunts_api_views.h defines a wrapper that calls the same-TU definition.
+        # Put its local prototype before that inline wrapper while its central
+        # declaration is suppressed.
+        lines.append(fn_protos["instringz"])
     lines += ['#include "stunts_decls.h"', "", "/* Local definitions expose their own host spelling for calls made before the body. */"]
     lines += [p for _, p in sorted(fn_protos.items())]
     lines += ["", "/* Same-TU globals are declared from their definitions before source use. */"]
     if STRICT_CENTRAL:
-        lines.append("/* Public externs and non-static definitions come only from stunts_decls.h. */")
-    else:
-        masked_source = mask_comments(text)
-        for name, typ in sorted(data_types.items()):
+        lines.append("/* Central declarations cover shared externs; local definitions need an early local view. */")
+    masked_source = mask_comments(text)
+    for name, typ in sorted(data_types.items()):
+        decl = source_data_definition(text, name) if STRICT_CENTRAL else None
+        if decl is None:
             decl = render_type(typ, name, target=False)
-            if re.search(rf"\b(?:I8S|signed\s+char)\s*(?:\*\s*)*{re.escape(name)}\b", masked_source):
-                decl = re.sub(r"\bchar\b", "signed char", decl, count=1)
-            lines.append(f"extern {decl};")
+            if STRICT_CENTRAL:
+                decl = legacy_target_widths(decl)
+        if (not STRICT_CENTRAL and
+                re.search(rf"\b(?:I8S|signed\s+char)\s*(?:\*\s*)*{re.escape(name)}\b", masked_source)):
+            decl = re.sub(r"\bchar\b", "signed char", decl, count=1)
+        lines.append(decl if decl.startswith("extern ") else f"extern {decl};")
     cfg = WORK / "config" / (Path(source).stem + ".h")
     cfg.parent.mkdir(parents=True, exist_ok=True)
     cfg.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -318,11 +420,13 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
     out = text
     for a, b in sorted(set(removals), reverse=True):
         out = out[:a] + "\n#ifndef PORT_BUILD\n" + out[a:b] + "\n#endif /* PORT_BUILD */\n" + out[b:]
+    # Audio payload records can enter through any consumer's subsystem import.
+    # Their target-width aliases must agree with the host scalar header there.
+    out = re.sub(r"typedef\s+unsigned\s+int\s+u16\s*;", "typedef uint16_t u16;", out)
+    out = re.sub(r"typedef\s+unsigned\s+long\s+u32\s*;", "typedef uint32_t u32;", out)
+    out = re.sub(r"typedef\s+unsigned\s+char\s+u8\s*;", "typedef uint8_t u8;", out)
     if source == "game/audioeng.c":
         out = replace_seg007_asm(out, STRICT_CENTRAL)
-        out = re.sub(r"typedef\s+unsigned\s+int\s+u16\s*;", "typedef uint16_t u16;", out)
-        out = re.sub(r"typedef\s+unsigned\s+long\s+u32\s*;", "typedef uint32_t u32;", out)
-        out = re.sub(r"typedef\s+unsigned\s+char\s+u8\s*;", "typedef uint8_t u8;", out)
         out = '#include "seg007_arith.h"\n' + out
     if source == "game/render.c":
         out = out.replace("((I16)statemgmtcpy) = ((I16)slow_video_mode_state);",

@@ -64,8 +64,35 @@ def compile_helper(compiler, output, *sources, include_render=False):
     for source in sources:
         if source.parent in (ROOT / "game", ROOT / "lib"):
             prepared = output.parent / ("expanded_" + source.name)
-            prepared.write_text(legacy_target_widths(expand_project_headers(
-                source.read_text(encoding="latin-1"), ROOT)), encoding="latin-1")
+            expanded = legacy_target_widths(expand_project_headers(
+                source.read_text(encoding="latin-1"), ROOT))
+            # MSC accepts this array before PLANE is complete. The wheel
+            # helper never uses it; retain the port's owning single-object
+            # declaration, which GCC accepts with an incomplete record.
+            plane_array = "extern struct PLANE far plan_memres[];"
+            if plane_array not in expanded:
+                raise RuntimeError(f"could not locate {source.name} plane declaration adapter")
+            expanded = expanded.replace(
+                plane_array, "extern struct PLANE far plan_memres;")
+            # The DOS objects accept these same-width local views. GCC's
+            # executable oracle needs the definitions' actual host types.
+            port_views = {
+                "wheel.c": (
+                    "extern void far solidtire(struct POINT2D*, I16, I16, I16, I16);",
+                    "extern void far solidtire(struct WheelRect *, I16, I16, I16, I16);",
+                ),
+                "whlhelp.c": (
+                    "extern void far tire(struct WheelRect *, I16 *, I16);",
+                    "extern void far tire(struct WheelRect *, struct Point *, I16);",
+                ),
+            }
+            replacement = port_views.get(source.name)
+            if replacement:
+                old, new = replacement
+                if expanded.count(old) != 1:
+                    raise RuntimeError(f"could not locate {source.name} host declaration adapter")
+                expanded = expanded.replace(old, new, 1)
+            prepared.write_text(expanded, encoding="latin-1")
             prepared_sources.append(prepared)
         else:
             prepared_sources.append(source)

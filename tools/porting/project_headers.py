@@ -1,8 +1,9 @@
 """Expose shared reconstruction declarations to the existing host adapters.
 
 The historical frontend remains authoritative. This port-only expansion keeps
-its scalar include mapped to the port width header and presents ordinary
-guarded project headers to the declaration parser/removal pass.
+its scalar include mapped to the port width header and presents subsystem
+headers to the declaration parser/removal pass. Repeated imports remain in
+their original scopes, including intentionally unguarded extern headers.
 """
 from pathlib import Path
 import re
@@ -42,8 +43,9 @@ def expand_project_headers(text: str, root: Path) -> str:
                 raise ValueError('Recursive project include: ' + name)
             contents = path.read_text(encoding='latin-1')
             # Preserve guards and repeated includes for the C compiler. A
-            # first include can be conditional; eager de-duplication would
-            # incorrectly erase a later active include.
+            # first include can be conditional, or a declaration-only header
+            # can be imported in separate scopes. Eager de-duplication would
+            # erase declarations that the host adapters still need to see.
             return expand(contents, stack + (path,)) + '\n'
         masked = _masked(source)
         result, cursor = [], 0
