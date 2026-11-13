@@ -48,4 +48,26 @@ union FARRESOURCE {
     struct  { unsigned short offset; unsigned short segment; } word;
 };
 
+/* Files services and shared state. */
+struct HighScoreRecord;
+struct SHAPE2D;
+extern void far *loadedresourceptr;
+extern void far closeresource(void far *);
+extern char * far file_combine_and_find(char *, char *, char *);
+extern int far file_get_res_shape_count(void far *);
+extern int far file_load_shape2d_expandedsize(void far *);
+extern void far * file_load_shape2d_fatal_thunk(char *);
+extern int far findfirst(char *);
+extern void far *fluffyload(char *);
+extern char far *getres(char far *, char *);
+extern char far * far getresl(char far *, char *);
+extern void far locateshapes(void far *, char *, void far **);
+extern char far *locateshapez(void far *, char *);
+extern unsigned long far modsize(char far *);
+extern unsigned short modulesize(void far *);
+extern void far * far read_file_with_retry(int, char *, void far *);
+extern void far *resmem(char *, unsigned long);
+extern short far savefilez(char *, struct HighScoreRecord far *, unsigned long);
+extern short far savereplay(const char far *);
+extern struct SHAPE2D far * far shapepointer(unsigned char far *, int);
 #endif

@@ -17,52 +17,13 @@
 /* Game startup, menus, high scores, and security dialog.
  * The register declarations and marked labels/stores preserve MSC 5.10 OMF output.
  */
-/* PORT: Layout uses MSC /Zp and target scalar widths. *//* Local view: GAMEINFO; struct[8].type is unsigned word; another unit uses signed byte. */
-struct GAMEINFO {
-    I8 game_playercarid[4];
-    I8 game_playermaterial;
-    I8 game_playertransmission;
-    I8 game_opponenttype;
-    I8 game_opponentcarid[4];
-    I8 game_opponentmaterial;
-    I8 game_opponenttransmission;
-    I8 game_trackname[9];
-    U16S  game_framespersec;
-    U16S  game_recordedframes;
-};
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
 #include "gamerec.h"
 
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
 #include "math3d.h"
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-
 /* PORT: Layout uses MSC /Zp and target scalar widths. *//* Local view: SPRITE; struct.count is 2; another unit uses 14. */
 struct SPRITE { void far *image; U16S  words[13]; };
-/* PORT: Layout uses MSC /Zp and target scalar widths. *//* Local view: CARSTATE; struct[54].type is signed byte; another unit uses unsigned byte. */
-struct CARSTATE {
-    struct VECTORLONG car_posWorld1, car_posWorld2;
-    struct VECTOR car_rotate;
-    I16S car_pseudoGravity, car_steeringAngle, car_currpm, car_lastrpm;
-    I16S car_idlerpm2, car_speeddiff;
-    U16S  car_speed, car_speed2, car_lastspeed;
-    U16S  car_gearratio, car_gearratioshr8;
-    I16S car_knob_x, car_36MwhlAngle, car_knob_y, car_knob_x2, car_knob_y2;
-    I16S car_angle_z, car_40MfrontWhlAngle, car_grip_angle_excess, car_demandedGrip;
-    I16S car_surfacegrip_sum, car_route_bearing, car_trackdata3_index;
-    I16S car_wheel_fall_step[4], car_wheel_suspension_offset[4], car_rc3[4], car_rc4[4], car_wheel_suspension_target[4];
-    struct VECTOR car_whlWorldCrds1[4], car_whlWorldCrds2[4];
-    struct VECTOR car_route_center, car_route_edge_a, car_route_edge_b;
-    I16S car_route_has_link, field_B8, field_BA;
-    I8 car_is_braking, car_is_accelerating, car_current_gear;
-    I8 car_sumSurfFrontWheels, car_sumSurfRearWheels, car_sumSurfAllWheels;
-    I8 car_surfaceWhl[4], car_engineLimiterTimer, car_slidingFlag, car_contact_processed;
-    I8 car_crashBmpFlag, car_changing_gear, car_fpsmul2, car_transmission;
-    I8 car_finish_route_passed, car_route_point_index, car_audio_flags;
-};
+#include "car.h"
+
 /* PORT: Layout uses MSC /Zp and target scalar widths. *//* Local view: GAMESTATE; struct.count is 46; another unit uses 45. */
 struct GAMESTATE {
     I32 game_debris_x[24], game_debris_y[24], game_debris_z[24];
@@ -114,170 +75,53 @@ struct SHAPE3D {
     I8 far *shape3d_cull1;
     I8 far *shape3d_cull2;
 };
-/* PORT: Layout uses MSC /Zp and target scalar widths. *//* Local view: TRANSFORMEDSHAPE3D; struct[4].type is unsigned word; another unit uses signed word. */
-struct TRANSFORMEDSHAPE3D {
-    struct VECTOR pos;
-    struct SHAPE3D *shapeptr;
-    struct RECTANGLE *rectptr;
-    struct VECTOR rotvec;
-    U16  unk;
-    U8  ts_flags;
-    U8  material;
-};
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
+#include "xformrec.h"
 
-/* Local view: call_read_line; return is void; another unit uses signed word. */
-extern void far instringz(I8 *destination, I16 maxLength, I16 x, I16 y, I32 source);
+#include "ui.h"
 
 /* Local view: do_fileselect_dialog; parameters[3].pointer is signed byte; another unit uses void. */
 extern I8 far floadreq(I8 *directory, I8 *track,
                                      I8 *extension, I8 far *text);
-
-/* Local view: file_combine_and_find; parameters[2] is near pointer; another unit uses signed word. */
-extern I8 * far file_combine_and_find(I8 *, I8 *, I8 *);
-
-/* Local view: loadreplay; return is signed word; another unit uses signed byte. */
-extern I16S far loadreplay(I8 *dir, I8 *name);
-/* Local view: file_load_resource_file; return.pointer is void; another unit uses signed byte. */
-extern void far *far openresource(I8 *name);
-
-/* Local view: file_load_shape2d_fatal_thunk; return.pointer is void; another unit uses unsigned byte. */
-extern void far * file_load_shape2d_fatal_thunk(I8 *);
-
-/* Local view: file_write_fatal; parameters[1].pointer is struct HighScoreRecord; another unit uses void. */
-extern I16S far savefilez(I8 *path, struct HighScoreRecord far *source,
-                                  U32  length);
-
-/* Local view: font_setup_unknown; parameters[0] is signed word; another unit uses unsigned word. */
-extern void far textcolor(I16 colour, I16 mode);
-/* Local view: fmtframestr; parameters[1] is unsigned word; another unit uses signed word. */
-extern void far maketime(I8 *destination, U16S  frames, I16 mode);
-
-/* Local view: highscore_write_a; return is signed byte; another unit uses void. */
-extern I8 far readhighs(I16 create_defaults);
+#include "files.h"
+/* Local view: openresource; renderer retains its byte-pointer resource prototype. */
+extern void far *far openresource(I8 *);
 
 /* Local view: hiscore_draw_text; return is void; another unit uses near pointer. */
 extern void far hiscore_draw_text();
-
-/* Local view: shadowtext; return is void; another unit uses near pointer. */
-extern void far shadowtext(I8 *text, I16 width, I16 x, I16 colour, I16 mode);
-/* Local view: initscenery; parameters[0] is unsigned byte; another unit uses signed byte. */
-extern void far initscenery(U8  skybox);
-
-/* Local view: locate_many_resources; parameters[2].pointer.pointer is void; another unit uses signed byte. */
-extern void far locateshapes(void far *, I8 *, void far **);
-/* Local view: locate_shape_alt; return.pointer is void; another unit uses signed byte. */
-extern void far * far getres();
+#include "shapes3d.h"
 /* Local view: locate_shape_fatal; return.pointer is struct SHAPE2D; another unit uses signed byte. */
 extern struct SHAPE2D far * far locate_shape_fatal(void far *, I8 *);
-/* Local view: locate_text_resource; parameters[0].pointer is signed byte; another unit uses void. */
-extern I8 far * far getresl(I8 far *data, I8 *name);
-/* Local view: freememory; return is void; another unit uses far pointer. */
-extern void far freememory(void far *);
-
-/* Local view: mousecursor; return is signed word; another unit uses signed byte. */
-extern I16 far mousecursor();
-
-/* Local view: nullsub_2; parameters.count is 2; another unit uses 0. */
-extern void far nullsub_2(void far *, I16);
+#include "memory.h"
+#include "input.h"
+#include "game.h"
 /* Local math import preserves the original communal LINK ordering. */
-
-/* Local view: print_int_as_string_maybe; return is signed word; another unit uses void. */
-extern I16 far myitoa(I8 *text, I16 value, I16 mode, I16 width);
-
-/* Local view: clipzone; return is signed word; another unit uses signed byte. */
-extern I16 far clipzone(struct RECTANGLE *, struct RECTANGLE *);
 
 /* Local view: selectcar; parameters[0].pointer is signed byte; another unit uses struct GAMEINFO. */
 extern void far selectcar(I8 *, I8 *, I8 *, I16);
-/* Local view: INIT_OBJECTS_BUFFER; return is signed word; another unit uses unsigned word. */
-extern I16 far INIT_OBJECTS_BUFFER(I16, I16, I16, struct RECTANGLE *, I16);
-
-/* Local view: setup_aero_trackdata; parameters[0].pointer is void; another unit uses signed byte. */
-extern void far getsimdata(void far *, I16);
-
-/* Local view: shape2d_blit_rle_at; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
-extern void far movpackfxya(void far *shape, I16 x, I16 y);
-
-/* Local view: shape3d_load_all; return is void; another unit uses signed word. */
-extern void far init_3dpieces(void);
-
-/* Local view: messagebox; return is signed word; another unit uses unsigned word. */
+#include "video.h"
+/* Local view: messagebox; renderer retains its excluded unsigned return prototype. */
 extern I16 far messagebox();
+#include "timer.h"
+#include "track.h"
 
-/* Local view: sprite_blit_to_video; return is signed word; another unit uses void. */
-extern I16 far sprite_blit_to_video(void far *sprite, I16 effect);
-/* Local view: sprite_clear_1_color; parameters[0] is signed word; another unit uses unsigned byte. */
-extern void far clearwindow(I16 colour);
-/* Local view: sprite_clear_shape_alt; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
-extern void far readfxya(void far *, I16, I16);
-
-/* Local view: sprite_free_window; parameters[0].pointer is void; another unit uses struct SPRITE. */
-extern void far removewindow(void far *sprite);
-/* Local view: sprite_make_window; return.pointer is void; another unit uses struct SPRITE. */
-extern void far *far sprite_make_window(I16 width, I16 height, I16 depth);
-/* Local view: sprputimage; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
-extern void far movcf(void far *);
-/* Local view: sprite_putimage_and_alt; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
-extern void far movcfxya(void far *, I16, I16);
-
-/* Local view: sprite_setup1_from_arg_pointer; parameters[0].pointer is void; another unit uses struct SPRITE. */
-extern void far sprite_setup1_from_arg_pointer(void far *sprite);
-/* Local view: sprset1size; parameters[0] is signed word; another unit uses unsigned word. */
-extern void far clippix(I16 x, I16 y, I16 width, I16 height);
-
-/* Local view: strlen; return is signed word; another unit uses unsigned word. */
-extern I16 strlen(I8 *text);
-
-/* Local view: read_file_with_retry; parameters.count is 3; another unit uses 4. */
-extern void far * far read_file_with_retry(I16, I8 *, void far *);
-
-/* Local view: timer_get_delta_alt; return is signed word; another unit uses unsigned long. */
-extern I16 far elticks(void);
-/* Local view: compiletrack; return is signed byte; another unit uses signed word. */
-extern I8 far compiletrack(void);
 /* Local view: ADD_OBJECT_TO_BUFFER; return is unsigned word; another unit uses void. */
 extern U16  far ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D *);
-/* Local view: closeresource; parameters[0].pointer is void; another unit uses signed byte. */
-extern void far closeresource(void far *resource);
 
 /* Local view: update_car_speed; parameters[0] is signed word; another unit uses signed byte. */
 extern void far doengine(I16, I16, struct CARSTATE *, struct SIMD *);
 
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-
-/* Local view: backlightovr8; type is unsigned byte; another unit uses signed byte. */
-extern U8  backlightovr8;
-/* Local view: joystick_enabled; type is signed byte; another unit uses unsigned byte. */
-extern I8 joystick_enabled;
-/* Local view: endhsdemo; type is unsigned byte; another unit uses signed byte. */
-extern U8  didrace;
+#include "mousebuf.h"
 /* Local views precede the shared UI interfaces to preserve communal first sightings. */
-/* Local view: unused_count; type is signed word; another unit uses unsigned word. */
 int unused_count;
-/* Local view: main_data_file_addr; pointer is signed byte; another unit uses void. */
-extern I8 far *main_data_file_addr;
-/* Local view: vidflg3is_minus1; type is unsigned word; another unit uses signed word. */
-extern U16  vidflg3is_minus1;
 int pixel_scales;
-/* Local view: menutimeout; type is unsigned byte; another unit uses signed byte. */
-unsigned char menutimeout;
-#include "ui.h"
+I8 menutimeout;
 #include "viewstat.h"
 unsigned char entry_score_index;
 char results_entryname[17];
-
-/* Local view: dlg_colour; type is signed word; another unit uses unsigned word. */
-extern I16 dlg_colour;
-/* Local view: dialog_frame_color; type is signed word; another unit uses unsigned word. */
-extern I16 dialog_frame_color;
-/* Local view: elaptm1; type is signed word; another unit uses unsigned word. */
-extern I16S elaptm1;
+#include "dlgcolor.h"
 static short end_hiscore_random;
 
 void far *fntndat;
-/* Local view: rate_frame; type is unsigned word; another unit uses signed word. */
-extern U16S  rate_frame;
 struct GAMESTATE_SNAPSHOT race_stats;
 char buf_g_path[94];
 
@@ -291,18 +135,9 @@ void far *g_opp_resources[7];
 
 /* Local view: resbuftext; type is array[80]; another unit uses signed byte. */
 char resbuftext[80];
-
-/* Local view: hscore_trk11_ptr; pointer is struct HighScoreRecord; another unit uses signed byte. */
 struct HighScoreRecord far *hscore_trk11_ptr;
-/* Local view: td14tb; pointer is signed byte; another unit uses unsigned byte. */
-extern I8 far *td14tb;
 
 char opptext_label[3];
-/* Local view: g_vid_flg2_set; type is unsigned word; another unit uses signed word. */
-extern U16  g_vid_flg2_set;
-
-/* Local view: g_videoflg5; type is unsigned byte; another unit uses signed word. */
-extern U8  g_videoflg5;
 int waitm_ms;
 struct SPRITE far *g_wndspr;
 
@@ -313,11 +148,8 @@ static short hiscore_current_place;
 static short hiscore_opponent_live;
 short scrorder_idxs[7];
 
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
 /* Local view: SHAPE2D; struct.count is 6; another unit uses 10. */
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
 
 #include "matrix.h"
 struct PLANE;
@@ -379,112 +211,46 @@ short sndposrecord;
 short road_elem_ctrz;
 char pen_flag_count;
 unsigned char opponent_spd_tbl[16];
-
 #include "audio.h"
-#include "car.h"
 #include "chartab.h"
-#include "dlgcolor.h"
-#include "game.h"
-#include "video.h"
-#include "input.h"
-#include "memory.h"
-#include "shapes3d.h"
-#include "files.h"
-#include "track.h"
 
 struct GAMEINFO gmconfigbackup;
 
 void far *def_fntadr;
 
 short track3_gap[2];
-/* Local view: td3; pointer is signed byte; another unit uses signed word. */
-char far *td3;
-
-/* Local view: td6_ptr_b; pointer is signed byte; another unit uses unsigned word. */
-char far *td6_ptr_b;
-/* Local view: trackdat7; pointer is signed byte; another unit uses unsigned word. */
-extern I8 far *trackdat7;
-/* Local view: g_td08d; pointer is signed word; another unit uses unsigned word. */
-extern I16 far *g_td08d;
-/* Local view: trkptrpath; pointer is signed word; another unit uses struct VECTOR. */
-extern I16 far *trkptrpath;
+I16S far *td3;
+U16S  far *td6_ptr_b;
 /* Local view: td10checkptr; pointer is signed word; another unit uses struct VECTOR. */
 extern I16 far *trksign;
-/* Local view: savedptr_ms; pointer is signed byte; another unit uses struct SPRITE. */
-char far *savedptr_ms;
-
-/* Local view: road_trk; pointer is signed byte; another unit uses unsigned byte. */
-extern I8 far *road_trk;
-/* Local view: td_18_ref; pointer is signed byte; another unit uses unsigned byte. */
-extern I8 far *td_18_ref;
+struct SPRITE far *savedptr_ms;
 
 char far *coursedataappend_address;
-/* Local view: g_column_of_trkdata21_pth; pointer is signed byte; another unit uses unsigned byte. */
-extern I8 far *g_column_of_trkdata21_pth;
-/* Local view: tdfrompathrow22; pointer is signed byte; another unit uses unsigned byte. */
-extern I8 far *tdfrompathrow22;
 unsigned char far *trkd23adr;
-/* Local view: cvxs_a; segment is far; another unit uses huge. */
-extern struct GAMESTATE far *cvxs_a;
 char pass_check_flag;
-
-/* Local view: mmgr_alloc_resbytes; return.pointer is void; another unit uses signed byte. */
-extern void far *resmem(I8 *, U32 );
-
-/* Local view: run_intro_looped; return is signed word; another unit uses unsigned word. */
-extern I16 far run_intro_looped(void);
-
-/* Local view: run_option_menu; return is signed byte; another unit uses unsigned word. */
-extern I8 far run_option_menu(void);
-/* Local view: _memcpy; return is void; another unit uses near pointer. */
-extern void far _memcpy(void *, void *, U16 );
-
-/* Local view: getprotection; parameters.count is 1; another unit uses 0. */
-extern void far getprotection(I16);
-/* Local view: findfirst; return is signed word; another unit uses near pointer. */
-extern I16 far findfirst(I8 *);
-
-/* Local view: end_hiscore; return is signed byte; another unit uses unsigned word. */
-extern I8 far evaluation(void);
-
-/* Local view: loadedresourceptr; pointer is void; another unit uses signed byte. */
 void far *loadedresourceptr;
-
-/* Local view: intro_text_color_a, intro_text_style_a, intro_text_color_b, intro_text_style_b; type is unsigned word; another unit uses signed word. */
-extern U16S  intro_text_color_a, intro_text_style_a, intro_text_color_b, intro_text_style_b;
-/* Local view: intro_text_color_c, intro_text_style_c, intro_text_color_d, intro_text_style_d; type is unsigned word; another unit uses signed word. */
-extern U16S  intro_text_color_c, intro_text_style_c, intro_text_color_d, intro_text_style_d;
-/* Local view: intro_text_color_e, intro_text_style_e, intro_text_color_f, intro_text_style_f; type is unsigned word; another unit uses signed word. */
-extern U16S  intro_text_color_e, intro_text_style_e, intro_text_color_f, intro_text_style_f;
 
 struct RECTANGLE *active_ui_dirty_rect = 0;
 struct RECTANGLE *rectp = 0;
 I8 track_file[82] = {0};
 I8 replay_file[82] = {0};
 I8 ReplayName[10] = "DEFAULT";
-/* Local view: TerName; array is 5; another unit uses None. */
 I8 TerName[5][9] = { "desert", "tropical", "alpine", "city", "country" };
 I16 terheight[2] = { 0, 450 };
 I16 camlen = 210;
 I16 camheading = 464;
 I16 campitch = 80;
-/* Local view: mouse_enabled; type is signed byte; another unit uses unsigned byte. */
 I8 mousedrive = 0;
-/* Local view: is_audioloaded; type is signed byte; another unit uses signed word. */
 I8 is_audioloaded = 0;
 I8 HKeyFlag = 0;
 I8 cammd = 0;
-/* Local view: skybox_loaded; type is signed byte; another unit uses unsigned byte. */
 I8 skybox_loaded = 0;
 I8 mouseonstat = 0;
 I8 kbormouse = 0;
 I8 mouseonscreen = 0;
-/* Local view: renderlevel; type is signed byte; another unit uses unsigned byte. */
-I8 renderlevel = 0;
-/* Local view: g_is_busy; type is unsigned byte; another unit uses signed byte. */
-U8  g_is_busy = 0;
-/* Local view: mouse_buffer_count; type is signed byte; another unit uses unsigned byte. */
-I8 mouse_buffer_count = 0;
+U8  renderlevel = 0;
+I8 g_is_busy = 0;
+U8  mouse_buffer_count = 0;
 I8 aKevin[] = "kevin";
 I8 aOpp1[] = "opp1";
 I8 aCarcoun[] = "carcoun";
@@ -652,7 +418,7 @@ I16 main(I16 argc, I8 *argv[])
         }
         if (menutimeout == 0)
         {
-          if (compiletrack() != 0)
+          if ((I8)compiletrack() != 0)
           {
             teditmain(1);
             goto show_menu;
@@ -730,8 +496,6 @@ I16 main(I16 argc, I8 *argv[])
  * PLATFORM(memory): Game memory-manager API.
  * PLATFORM(video): Legacy video mode, sprite, pixel, or font API.
  */
-
-/* Local view: run_intro_looped; return is signed word; another unit uses unsigned word. */
 I16 far run_intro_looped(void)
 {
     register I16 inputResult;
@@ -1192,8 +956,6 @@ menu_loop:
  * Globals written: entry_score_index, g_is_busy, hscore_trk11_ptr, scrorder_idxs
  * PLATFORM(file): Legacy file and resource API.
  */
-
-/* Local view: highscore_write_a; return is signed byte; another unit uses void. */
 I8 far readhighs(I16 create_defaults)
 {
   void far *loaded_data;
@@ -2107,8 +1869,6 @@ menu_opponent_mouse_redraw:
  * PLATFORM(file): Legacy file and resource API.
  * PLATFORM(video): Legacy video mode, sprite, pixel, or font API.
  */
-
-/* Local view: run_option_menu; return is signed byte; another unit uses unsigned word. */
 I8 far run_option_menu(void)
 {
     I8 active;
@@ -2228,8 +1988,6 @@ I8 aOp01[] = "op01";
  * PLATFORM(timer): Timer-selected frame rate or timer position.
  * PLATFORM(video): Legacy video mode, sprite, pixel, or font API.
  */
-
-/* Local view: end_hiscore; return is signed byte; another unit uses unsigned word. */
 I8 far evaluation(void)
 {
   I8 newEvaluation;
@@ -2799,8 +2557,6 @@ I8 aA00[] = "a00";
  * PLATFORM(file): Legacy file and resource API.
  * PLATFORM(video): Legacy video mode, sprite, pixel, or font API.
  */
-
-/* Local view: getprotection; parameters.count is 1; another unit uses 0. */
 void far getprotection(I16 selection)
 {
     I8 prompt[1024];

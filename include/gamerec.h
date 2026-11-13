@@ -41,4 +41,19 @@ struct SecurityDialogResult {
     short input_y;
     short trailing_state[4];
 };
+
+/* Game configuration. */
+struct GAMEINFO;
+struct GAMEINFO {
+    char game_playercarid[4];
+    char game_playermaterial;
+    char game_playertransmission;
+    char game_opponenttype;
+    char game_opponentcarid[4];
+    char game_opponentmaterial;
+    char game_opponenttransmission;
+    char game_trackname[9];
+    char game_framespersec;
+    short game_recordedframes;
+};
 #endif

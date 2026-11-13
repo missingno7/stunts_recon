@@ -4,9 +4,9 @@
       "externals": [
         "__acrtused",
         "_file_get_res_shape_count",
+        "_file_load_shape2d_expandedsize",
         "__aFNalshr",
-        "_shapepointer",
-        "_file_load_shape2d_expandedsize"
+        "_shapepointer"
       ],
       "groups": [
         {
@@ -119,7 +119,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFNalshr",
-      "target_index": 3,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -136,7 +136,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_shapepointer",
-      "target_index": 4,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -187,9 +187,9 @@
     "externals": [
       "__acrtused",
       "_file_get_res_shape_count",
+      "_file_load_shape2d_expandedsize",
       "__aFNalshr",
-      "_shapepointer",
-      "_file_load_shape2d_expandedsize"
+      "_shapepointer"
     ],
     "groups": [
       {
@@ -285,13 +285,13 @@
   "preprocessor_closure": [
     {
       "path": "include/files.h",
-      "sha256": "c9279c40920d935c04309685a81ccb7f078ae3c8a0d35f28b52c4eead68a3a7a",
-      "size": 1978
+      "sha256": "8ffeddb470afd79527e7dde51cd3b8baeb8c929ed950ef2a9bebdd47679b91cc",
+      "size": 3060
     },
     {
       "path": "include/memory.h",
-      "sha256": "b88cb9f43838447756a9a5626f26a61203127ae4a528343e4148f697783c44d2",
-      "size": 891
+      "sha256": "0af493b5e8c060ca91c4b8b1d57f4d4b64c06e77dbd2509f6dffda3ca31a63d4",
+      "size": 1139
     },
     {
       "path": "include/resource.h",

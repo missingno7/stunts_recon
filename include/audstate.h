@@ -67,4 +67,12 @@ struct AudioTimer {             /* 0x4C bytes */
 #define AUDIO_PRIORITY_EFFECT_DEFAULT 0x40
 #define AUDIO_PRIORITY_ENGINE_FOURTH_RESOURCE 0x64
 #define AUDIO_PRIORITY_ENGINE_RESERVED 0x7f
+/* Sample resource bindings used by the engine and event player. */
+extern char far *kick_res;
+extern char far *g_snaresnd;
+extern char far *ride_audio_sound_res;
+extern char far *audio_opp_res;
+extern char far *chhtsample;
+extern char far *resource_sound_hit;
+extern char far *tommsampleresource;
 #endif

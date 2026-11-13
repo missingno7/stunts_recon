@@ -202,8 +202,8 @@
   "preprocessor_closure": [
     {
       "path": "include/input.h",
-      "sha256": "5bb6b46401f88ad81a22f5ce6446ef118c4716c4abc18b8cfec66ab0167587aa",
-      "size": 7430
+      "sha256": "d23d29078662dd32d7f944d633c9ee04a4992f8c7c7c80c67458a28d5d76f455",
+      "size": 8052
     },
     {
       "path": "include/types.h",
@@ -212,8 +212,8 @@
     },
     {
       "path": "include/video.h",
-      "sha256": "4612d335c0be47723bc1d6b24da0f5a2ae49bb7066ef81004b4b81158f5c17c1",
-      "size": 4558
+      "sha256": "9e219d2ee7a8ea2f42c367ba62f5b0dcc479ac973763b3babdcb5134c35e385a",
+      "size": 5853
     },
     {
       "line": 91,

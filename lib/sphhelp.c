@@ -1,4 +1,4 @@
-
+#include "math3d.h"
 #include "viewstat.h"
 #include "shapes3d.h"
 #include "types.h"
@@ -6,8 +6,7 @@
 
 #define SPHERE_SECTION_POINT_COUNT 32
 #define SPHERE_POINT_BUFFER_BYTES 128 /* 32 two-coordinate points at four bytes each. */
-/* Local view: ellipseh; parameters[0] is signed word; another unit uses near pointer. */
-extern void FAR ellipseh(I16, I8 *);
+#include "ellipse.h"
 
 /* Build sphere points in a temporary buffer, then submit them to the default renderer.
  * Params and return follow the declared C signature. */

@@ -1,20 +1,18 @@
-
 #include "audio.h"
 #include "files.h"
 #include "types.h"
 /* READABILITY: Walk packed four-character resource-name records and fill result pointers with shape or sound lookups. */
-/* Local view: locate_shape_fatal; return.pointer is signed byte; another unit uses struct SHAPE2D. */
-extern I8 FAR * FAR locate_shape_fatal(I8 FAR *data, I8 *name);
+/* Local view: locate_shape_fatal; frontend raw-object exclusion retains its SHAPE2D pointer result. */
+extern void FAR * FAR locate_shape_fatal(void FAR*, I8*);
+
 /* Resolve packed four-character shape names into the caller result array; stop at the empty-name terminator.
  * Params and return follow the declared C signature. */
 /* PLATFORM(file): resolve shape names in the loaded resource block. */
-/* Local view: locate_many_resources; parameters[0].pointer is signed byte; another unit uses void. */
 void locateshapes(I8 FAR *data, I8 *names, I8 FAR **result) {
     /* PLATFORM(file): resolve a resource name in the loaded asset block. */
     while (*names != 0) { *result++ = locate_shape_fatal(data, names); names += 4; }
 }
-/* Local view: locateshapez; parameters is [{'pointer': 'i8', 'qualifiers': [], 'segment': 'far'}, {'pointer': 'i8', 'qualifiers': [], 'segment': 'near'}]; another unit uses None. */
-extern I8 FAR * FAR locateshapez(I8 FAR *data, I8 *name);
+
 /* Resolve packed shape names without fatal error handling.
  * Params and return follow the declared C signature. */
 /* PLATFORM(file): resolve shape names in the loaded resource block. */

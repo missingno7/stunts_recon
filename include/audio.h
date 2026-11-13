@@ -160,7 +160,6 @@ typedef void (far *DRVPROC)();
 /* Audio driver services used by the engine. */
 #include "auddrv.h"
 /* Voice commands use entries that establish DS. */
-extern int far _loadds send_audio_stop_event(unsigned int, int);
 extern void far _loadds set_audio_voice_value(int, int);
 /* Shared audapi declarations; unnamed prototype parameters keep C1 allocation stable. */
 struct AudioChunk;
@@ -421,4 +420,23 @@ extern void far _loadds update_audio_voice_state(void);
 #define CAR_AUDIO_SKID_PRIMARY 2
 #define CAR_AUDIO_WALL_IMPACT 0x10
 
+/* Audio services and shared state. */
+struct AUDIO_CAR_FRAME;
+struct CARSTATE;
+struct SIMD;
+extern unsigned short audio_update_lock;
+extern char far *audiodriverbinary;
+extern char is_audioloaded;
+extern unsigned short mus_samplelimit;
+extern unsigned short snd_sample_rate_phase;
+extern void far audio_map_song_tracks(void far *);
+extern void far audio_pause_playback(void);
+extern int far audioresource_compare_chunknames(int, unsigned char far *, unsigned char far *, int);
+extern void far audioresource_copy_n_bytes(unsigned char far *, char far *, int);
+extern char far * far audioresource_find(char huge *, unsigned char *);
+extern int far audioresource_get_chunk_index(int, int, unsigned char *, char far *);
+extern unsigned long far audioresource_get_dword(char far *);
+extern unsigned int far audioresource_get_word(unsigned int far *);
+extern void doengine(char, char, struct CARSTATE*, struct SIMD*);
+extern void myupdatesfx1(struct AUDIO_CAR_FRAME *, short);
 #endif

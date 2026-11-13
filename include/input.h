@@ -118,7 +118,7 @@ extern char mouseonstat;
 extern int mousebutinputcode;
 extern unsigned int mousehorscale;
 extern char mouseonscreen;
-extern int mouseshown;
+extern struct SPRITE far *mouse_ptr_cursor;
 extern void far clear_keyboardbuffer(void);
 extern void far dohidemouse(void);
 extern void far doshowmouse(void);
@@ -142,4 +142,22 @@ extern void far setmousex(int, int);
 extern void far setmousey(unsigned int, unsigned int);
 extern int far testkey(void);
 
+/* Shared mousebuf interface. */
+extern int g_mousesave_x_tbl[4];
+extern int g_mouseyposstacktable[5];
+extern struct SPRITE far *mssprite_arrays[4];
+
+/* Input services and shared state. */
+struct SPRITE;
+extern int kbjoyflags;
+extern int flagsdown;
+extern int mouseshown;
+extern struct SPRITE far *mouse_unk_sprite_ptr;
+extern void far getmousepos(int *, int *, int *);
+extern void getprotection(void);
+extern int far initmouse(unsigned int, unsigned int);
+extern char mainkey(unsigned);
+extern int far mousecursor();
+extern void setmousebounds(int, int, int, int);
+extern void setmousepos(int, int);
 #endif

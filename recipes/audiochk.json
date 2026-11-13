@@ -23,7 +23,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_get_dword",
-      "target_index": 2,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -40,7 +40,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_get_chunk_index",
-      "target_index": 5,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -57,7 +57,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__AHSHIFT",
-      "target_index": 6,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -91,7 +91,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cap",
-      "target_index": 4,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -108,7 +108,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cap",
-      "target_index": 4,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -185,13 +185,13 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_audioresource_get_dword",
+      "__AHSHIFT",
       "_audioresource_compare_chunkname",
+      "_audioresource_copy_n_bytes",
+      "_audioresource_find",
       "_cap",
       "_audioresource_get_chunk_index",
-      "__AHSHIFT",
-      "_audioresource_find",
-      "_audioresource_copy_n_bytes"
+      "_audioresource_get_dword"
     ],
     "groups": [
       {
@@ -216,8 +216,8 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_audioresource_get_chunk_index",
-        "offset": 134,
+        "name": "_audioresource_copy_n_bytes",
+        "offset": 432,
         "segment": "UNIT_TEXT"
       },
       {
@@ -226,8 +226,8 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_audioresource_copy_n_bytes",
-        "offset": 432,
+        "name": "_audioresource_get_chunk_index",
+        "offset": 134,
         "segment": "UNIT_TEXT"
       }
     ],
@@ -308,14 +308,24 @@
   },
   "preprocessor_closure": [
     {
+      "path": "include/auddrv.h",
+      "sha256": "33f1d30b4e47455c3cfdebdde451f74317948c26d7b04a65330d7f58bc026f47",
+      "size": 777
+    },
+    {
+      "path": "include/audio.h",
+      "sha256": "573aaf8e174efe73f9248b3792f3893316bb264f1e32e1370f5002aae3bd0dfb",
+      "size": 16246
+    },
+    {
       "path": "include/chartab.h",
-      "sha256": "540ec3660be1ea671e4cc3adedf22983325debf32bd0f08c0465ad6ad1eed6c7",
-      "size": 120
+      "sha256": "012a041c655852d782c217fa89cf89a8d7a243a1f021b59905689d903022c4ce",
+      "size": 100
     },
     {
       "path": "include/files.h",
-      "sha256": "c9279c40920d935c04309685a81ccb7f078ae3c8a0d35f28b52c4eead68a3a7a",
-      "size": 1978
+      "sha256": "8ffeddb470afd79527e7dde51cd3b8baeb8c929ed950ef2a9bebdd47679b91cc",
+      "size": 3060
     },
     {
       "path": "include/resource.h",
@@ -329,8 +339,8 @@
     },
     {
       "path": "include/ui.h",
-      "sha256": "aa9428377377eafee946eb53470bddf273ebaf93c176bb8d00e7a8e2298e8373",
-      "size": 12638
+      "sha256": "838276f16c4fc56db94d41d46fdc1c05c70b1e4fba756373612e59660cf33995",
+      "size": 14184
     },
     {
       "line": 45,
@@ -347,6 +357,60 @@
     {
       "line": 199,
       "path": "include/ui.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 25,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": 1
+    },
+    {
+      "line": 55,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 56,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 81,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 89,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 108,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 122,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 150,
+      "path": "include/audio.h",
       "pragma": "pack",
       "value": null
     }

@@ -33,8 +33,8 @@ extern unsigned char palmap[16];
 extern unsigned short SDPAL_mcgacol1[129];
 extern unsigned short SDPAL_mcgadither[129];
 extern unsigned short SDPAL_mcgatype[129];
-extern unsigned short slow_video_mode_state;
 extern unsigned short video_cnstval;
+extern unsigned short slow_video_mode_state;
 extern void far drawcircle(int, int, int, int);
 extern void far INIT_PALETTE(void *, void *, void *, void *, unsigned short);
 extern void far writepixelc(int, int, int);
@@ -103,4 +103,32 @@ extern void FAR drawrectc(I16 x, I16 y, I16 width, I16 height, I16 color);
 #define SHAPE2D_HEADER_BYTES 16
 #define SHAPE_UNFLIP_BUFFER_OVERHEAD_BYTES 0x20
 
+/* Video services and shared state. */
+struct SHAPE2D;
+struct SPRITE;
+extern unsigned char  backlightovr8;
+extern struct SHAPE2D far *g_dastbmpbuf;
+extern unsigned char g_vid_flag6;
+extern short g_vid_flg2_set;
+extern unsigned char  g_videoflg5;
+extern unsigned short *material_color_table_pointer;
+extern unsigned short *material_pattern2_table_ptr;
+extern unsigned short *material_pattern_table_pointer;
+extern struct SPRITE far *spritepointermini;
+extern short vidflg3is_minus1;
+extern void far andcfxya(void far *, int, int);
+extern void clearwindow(unsigned char);
+extern void clippix(unsigned short, unsigned short, unsigned short, unsigned short);
+extern void far drawrect(int, int, int, int, int);
+extern void far movcf(void far *);
+extern void far movcfxya(void far *, int, int);
+extern void far movfxya(void far *, int, int);
+extern void far movpackfxya(void far *, int, int);
+extern void orcfxya(struct SHAPE2D far *, int, int);
+extern void far readfxya(void far *, int, int);
+extern void far removewindow(void far *);
+extern int far sprite_blit_to_video(void far *, int);
+extern void far sprite_draw_rect_outline(int, int, int, int, int);
+extern void far sprite_setup1_from_arg_pointer(void far *);
+extern void far *far sprite_make_window(int, int, int);
 #endif

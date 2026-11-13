@@ -107,8 +107,8 @@
   "preprocessor_closure": [
     {
       "path": "include/input.h",
-      "sha256": "5bb6b46401f88ad81a22f5ce6446ef118c4716c4abc18b8cfec66ab0167587aa",
-      "size": 7430
+      "sha256": "d23d29078662dd32d7f944d633c9ee04a4992f8c7c7c80c67458a28d5d76f455",
+      "size": 8052
     },
     {
       "path": "include/types.h",

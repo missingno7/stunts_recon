@@ -1,4 +1,3 @@
-
 #include "math3d.h"
 #include "types.h"
 /* READABILITY: Sort the heap keys in descending order while applying each swap to the paired data array. */

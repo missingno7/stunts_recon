@@ -136,7 +136,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_shape2d_palmap_apply",
-      "target_index": 6,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -170,7 +170,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_packmemory",
-      "target_index": 18,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -187,7 +187,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_purgememory",
-      "target_index": 20,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -204,7 +204,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_shape2d_expand",
-      "target_index": 5,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -221,7 +221,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadfilea",
-      "target_index": 3,
+      "target_index": 20,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -238,7 +238,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadfilea",
-      "target_index": 3,
+      "target_index": 20,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -255,7 +255,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_stricmp",
-      "target_index": 15,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -289,7 +289,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_reservememory",
-      "target_index": 21,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -306,7 +306,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_file_load_shape2d_palmap_init",
-      "target_index": 7,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -323,7 +323,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapez",
-      "target_index": 17,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -357,7 +357,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_shape2d_expandedsize",
-      "target_index": 16,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -374,7 +374,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_purgememory",
-      "target_index": 20,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -391,7 +391,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_unflip_shape2d_pes",
-      "target_index": 10,
+      "target_index": 14,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -408,7 +408,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_reservememory",
-      "target_index": 21,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -442,7 +442,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadpacka",
-      "target_index": 9,
+      "target_index": 21,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -459,7 +459,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_stricmp",
-      "target_index": 15,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -493,7 +493,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadpacka",
-      "target_index": 9,
+      "target_index": 21,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -510,7 +510,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_stricmp",
-      "target_index": 15,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -544,7 +544,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_purgememory",
-      "target_index": 20,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -561,7 +561,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_unflip_shape2d",
-      "target_index": 8,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -578,7 +578,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_reservememory",
-      "target_index": 21,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -612,7 +612,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_get_unflip_size",
-      "target_index": 2,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -629,7 +629,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadpacka",
-      "target_index": 9,
+      "target_index": 21,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -646,7 +646,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_stricmp",
-      "target_index": 15,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -680,7 +680,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 13,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -697,7 +697,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_checkmodule",
-      "target_index": 19,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -714,7 +714,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_checkmodule",
-      "target_index": 19,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -731,7 +731,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 13,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -765,7 +765,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_findfirst",
-      "target_index": 14,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -782,7 +782,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 13,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -799,7 +799,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_file_load_shape2d",
-      "target_index": 4,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -816,7 +816,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_file_load_shape2d",
-      "target_index": 4,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1023,26 +1023,26 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_file_get_unflip_size",
-      "_loadfilea",
+      "_file_load_shape2d_expandedsize",
+      "_findfirst",
+      "_locateshapez",
+      "_checkmodule",
+      "_purgememory",
+      "_reservememory",
       "_file_load_shape2d",
       "_file_load_shape2d_expand",
       "_file_load_shape2d_palmap_apply",
       "_file_load_shape2d_palmap_init",
       "_file_unflip_shape2d",
-      "_loadpacka",
-      "_file_unflip_shape2d_pes",
-      "_loadshape",
-      "_loadshapez",
-      "_strcpy",
-      "_findfirst",
-      "_stricmp",
-      "_file_load_shape2d_expandedsize",
-      "_locateshapez",
       "_packmemory",
-      "_checkmodule",
-      "_purgememory",
-      "_reservememory"
+      "_file_unflip_shape2d_pes",
+      "_strcpy",
+      "_loadshape",
+      "_stricmp",
+      "_loadshapez",
+      "_file_get_unflip_size",
+      "_loadfilea",
+      "_loadpacka"
     ],
     "groups": [
       {
@@ -1072,11 +1072,6 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_shape_extensions",
-        "offset": 0,
-        "segment": "_DATA"
-      },
-      {
         "name": "_file_load_shape2d_palmap_init",
         "offset": 730,
         "segment": "UNIT_TEXT"
@@ -1090,6 +1085,11 @@
         "name": "_loadshapez",
         "offset": 20,
         "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_shape_extensions",
+        "offset": 0,
+        "segment": "_DATA"
       },
       {
         "name": "_palmap",
@@ -1168,38 +1168,38 @@
   "preprocessor_closure": [
     {
       "path": "include/chartab.h",
-      "sha256": "540ec3660be1ea671e4cc3adedf22983325debf32bd0f08c0465ad6ad1eed6c7",
-      "size": 120
+      "sha256": "012a041c655852d782c217fa89cf89a8d7a243a1f021b59905689d903022c4ce",
+      "size": 100
     },
     {
       "path": "include/files.h",
-      "sha256": "c9279c40920d935c04309685a81ccb7f078ae3c8a0d35f28b52c4eead68a3a7a",
-      "size": 1978
+      "sha256": "8ffeddb470afd79527e7dde51cd3b8baeb8c929ed950ef2a9bebdd47679b91cc",
+      "size": 3060
     },
     {
       "path": "include/game.h",
-      "sha256": "efb4f8ec271fb25fdd21f28316f4300b0de522a08b4fc9734403ea6d0a0829e8",
-      "size": 11658
+      "sha256": "6ce4537b21870db8e0156b1a498c536db9febecac9d739dc83fbd5cbe360a6a1",
+      "size": 11942
     },
     {
       "path": "include/gamerec.h",
-      "sha256": "e3bf380bb327eb69feac2c074542c8d778f62f70fd2d0206b03c5d794b6a3826",
-      "size": 1007
+      "sha256": "1b5ceef18fd7b4a217b2341c624a5890f017f837cedbed6edbeac835b9a2816b",
+      "size": 1381
     },
     {
       "path": "include/input.h",
-      "sha256": "5bb6b46401f88ad81a22f5ce6446ef118c4716c4abc18b8cfec66ab0167587aa",
-      "size": 7430
+      "sha256": "d23d29078662dd32d7f944d633c9ee04a4992f8c7c7c80c67458a28d5d76f455",
+      "size": 8052
     },
     {
       "path": "include/math3d.h",
-      "sha256": "59a5ed823822b0ec3d7c3dad15159f8dae01f9cfd9b8a105eb89e0f12d4bbc69",
-      "size": 3760
+      "sha256": "569d2d4d31555d6f6973f800ed988d1cbe65126f033f68971fe56060202dd546",
+      "size": 4007
     },
     {
       "path": "include/memory.h",
-      "sha256": "b88cb9f43838447756a9a5626f26a61203127ae4a528343e4148f697783c44d2",
-      "size": 891
+      "sha256": "0af493b5e8c060ca91c4b8b1d57f4d4b64c06e77dbd2509f6dffda3ca31a63d4",
+      "size": 1139
     },
     {
       "path": "include/radius2d.h",
@@ -1218,18 +1218,18 @@
     },
     {
       "path": "include/ui.h",
-      "sha256": "aa9428377377eafee946eb53470bddf273ebaf93c176bb8d00e7a8e2298e8373",
-      "size": 12638
+      "sha256": "838276f16c4fc56db94d41d46fdc1c05c70b1e4fba756373612e59660cf33995",
+      "size": 14184
     },
     {
       "path": "include/video.h",
-      "sha256": "4612d335c0be47723bc1d6b24da0f5a2ae49bb7066ef81004b4b81158f5c17c1",
-      "size": 4558
+      "sha256": "9e219d2ee7a8ea2f42c367ba62f5b0dcc479ac973763b3babdcb5134c35e385a",
+      "size": 5853
     },
     {
       "path": "include/viewstat.h",
-      "sha256": "bcb9520644dfe17d764d2d5bb1a79bd6b719fe1cf1619cf4b1f1077a71348a44",
-      "size": 485
+      "sha256": "1a3f6e3c4410393d788f9624ea0028f477543b173689ecdcb024b523816f5b26",
+      "size": 395
     },
     {
       "line": 194,

@@ -1,21 +1,9 @@
 #ifndef STUNTS_GAMESTAT_H
 #define STUNTS_GAMESTAT_H
 
-/* Canonical game configuration and race state records. */
-/* Canonical GAMEINFO view; incompatible operational views stay local. */
+/* Canonical race state; operational variants remain local. */
+#include "gamerec.h"
 #pragma pack()
-struct GAMEINFO {
-    char game_playercarid[4];
-    char game_playermaterial;
-    char game_playertransmission;
-    char game_opponenttype;
-    char game_opponentcarid[4];
-    char game_opponentmaterial;
-    char game_opponenttransmission;
-    char game_trackname[9];
-    char game_framespersec;
-    short game_recordedframes;
-};
 /* Canonical GAMESTATE view; incompatible operational views stay local. */
 struct CARSTATE;
 struct VECTOR;

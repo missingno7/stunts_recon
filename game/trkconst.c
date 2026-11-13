@@ -361,7 +361,6 @@ unsigned char shapedata42_10[1236] = {
   78, 1, 115, 0, 180, 0, 0, 0, 200, 0, 0, 0, 178, 254, 56, 255,
   0, 0, 78, 1,
 };
-
 #include "track.h"
 
 struct track_object_info shapeinfos[120] = {
@@ -708,8 +707,6 @@ struct track_object trklst[215] = {
   {0, 0, &g_shapes3d[50], &g_shapes3d[50], 0, 0, 0, 0, 255, 0},
   {0, 0, &g_shapes3d[106], &g_shapes3d[107], 0, 0, 0, 0, 255, 0},
 };
-
-/* Local view: scene2; array is 19; another unit uses None. */
 struct scene_shape scene2[19] = {
   {0, 0, &g_shapes3d[108], &g_shapes3d[109], 0, 0, 0, 0, 255, 0},
   {0, 0, &g_shapes3d[45], &g_shapes3d[45], 0, 0, 1, 0, 255, 0},
@@ -731,7 +728,6 @@ struct scene_shape scene2[19] = {
   {0, 512, &g_shapes3d[40], &g_shapes3d[40], 0, 0, 1, 0, 255, 0},
   {0, 256, &g_shapes3d[40], &g_shapes3d[40], 0, 0, 1, 0, 255, 0},
 };
-/* Local view: scene3; array is 13; another unit uses None. */
 struct scene_shape scene3[13] = {
   {0, 0, &g_shapes3d[112], &g_shapes3d[112], 0, 0, 1, 0, 255, 0},
   {0, 0, &g_shapes3d[113], &g_shapes3d[113], 0, 0, 1, 0, 255, 0},
@@ -782,13 +778,11 @@ short highEntrXInnBounds0[7] = {
 short highEntrXOutBounds0[7] = {
   120, 168, 216, 264, 312, 360, 360,
 };
-/* Local view: shape_template_points_a; array is 6; another unit uses None. */
+#include "shapes3d.h"
 unsigned char shape_template_points_a[6] = {
   0, 0, 0, 0, 0, 0,
 };
 #include "math3d.h"
-
-/* Local view: shape_template_points_b; array is 12; another unit uses None. */
 struct coord_pair shape_template_points_b[12] = {
   {-120, 0},
   {-281, -120},
@@ -803,25 +797,21 @@ struct coord_pair shape_template_points_b[12] = {
   {281, 120},
   {0, 231},
 };
-/* Local view: shape_template_points_c; array is 3; another unit uses None. */
 struct coord_pair shape_template_points_c[3] = {
   {-60, 0},
   {-512, 60},
   {0, 512},
 };
-/* Local view: shape_template_points_d; array is 3; another unit uses None. */
 struct coord_pair shape_template_points_d[3] = {
   {-392, 0},
   {0, -632},
   {0, 0},
 };
-/* Local view: shape_template_points_e; array is 3; another unit uses None. */
 struct coord_pair shape_template_points_e[3] = {
   {392, 0},
   {0, 632},
   {0, 0},
 };
-/* Local view: shape_template_points_f; array is 6; another unit uses None. */
 struct coord_pair shape_template_points_f[6] = {
   {23, 0},
   {-255, 97},
@@ -856,7 +846,6 @@ struct car_exp_name_table aCar0 = {
   0,
 };
 char aStxxx[6] = "stxxx";
-/* Local view: car_wheel_offsets; array is 8; another unit uses 4. */
 unsigned char car_wheel_offsets[8] = {
   0, 0, 0, 0, 0, 0, 0, 0,
 };

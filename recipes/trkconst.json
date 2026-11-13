@@ -13073,6 +13073,16 @@
     ],
     "publics": [
       {
+        "name": "_shape_template_points_e",
+        "offset": 9422,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shape_template_points_f",
+        "offset": 9434,
+        "segment": "_DATA"
+      },
+      {
         "name": "_highEntrXInnBounds0",
         "offset": 9316,
         "segment": "_DATA"
@@ -13088,8 +13098,8 @@
         "segment": "_DATA"
       },
       {
-        "name": "_trklst",
-        "offset": 5704,
+        "name": "_car_wheel_offsets",
+        "offset": 9552,
         "segment": "_DATA"
       },
       {
@@ -13103,18 +13113,13 @@
         "segment": "_DATA"
       },
       {
-        "name": "_scene3",
-        "offset": 8980,
-        "segment": "_DATA"
-      },
-      {
         "name": "_loopBase_OutXBounds0",
         "offset": 9232,
         "segment": "_DATA"
       },
       {
-        "name": "_shape_template_points_a",
-        "offset": 9344,
+        "name": "_scene3",
+        "offset": 8980,
         "segment": "_DATA"
       },
       {
@@ -13123,8 +13128,8 @@
         "segment": "_DATA"
       },
       {
-        "name": "_shape_template_points_b",
-        "offset": 9350,
+        "name": "_aCar0",
+        "offset": 9470,
         "segment": "_DATA"
       },
       {
@@ -13133,33 +13138,18 @@
         "segment": "_DATA"
       },
       {
-        "name": "_shape_template_points_c",
-        "offset": 9398,
-        "segment": "_DATA"
-      },
-      {
         "name": "_loopSurface_ZBounds0",
         "offset": 9162,
         "segment": "_DATA"
       },
       {
-        "name": "_shape_template_points_d",
-        "offset": 9410,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_shape_template_points_e",
-        "offset": 9422,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_shape_template_points_f",
-        "offset": 9434,
-        "segment": "_DATA"
-      },
-      {
         "name": "_aBarn",
         "offset": 0,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_trklst",
+        "offset": 5704,
         "segment": "_DATA"
       },
       {
@@ -13173,11 +13163,6 @@
         "segment": "_DATA"
       },
       {
-        "name": "_aCar0",
-        "offset": 9470,
-        "segment": "_DATA"
-      },
-      {
         "name": "_shapeinfos",
         "offset": 4024,
         "segment": "_DATA"
@@ -13185,11 +13170,6 @@
       {
         "name": "_SPIPE_LIST",
         "offset": 694,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_car_wheel_offsets",
-        "offset": 9552,
         "segment": "_DATA"
       },
       {
@@ -13203,11 +13183,6 @@
         "segment": "_DATA"
       },
       {
-        "name": "_aGame1",
-        "offset": 9458,
-        "segment": "_DATA"
-      },
-      {
         "name": "_HSTR_LIST",
         "offset": 1480,
         "segment": "_DATA"
@@ -13215,11 +13190,6 @@
       {
         "name": "_shapedata42_6",
         "offset": 1522,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_aGame2",
-        "offset": 9464,
         "segment": "_DATA"
       },
       {
@@ -13233,16 +13203,6 @@
         "segment": "_DATA"
       },
       {
-        "name": "_aStxxx",
-        "offset": 9546,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_bkRdEntr_triang_zAdjust",
-        "offset": 9246,
-        "segment": "_DATA"
-      },
-      {
         "name": "_FLBSTR_LIST",
         "offset": 2746,
         "segment": "_DATA"
@@ -13253,6 +13213,26 @@
         "segment": "_DATA"
       },
       {
+        "name": "_aGame1",
+        "offset": 9458,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_aGame2",
+        "offset": 9464,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_aStxxx",
+        "offset": 9546,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_bkRdEntr_triang_zAdjust",
+        "offset": 9246,
+        "segment": "_DATA"
+      },
+      {
         "name": "_corkLR_negZBound",
         "offset": 9254,
         "segment": "_DATA"
@@ -13260,6 +13240,26 @@
       {
         "name": "_corkLR_posZBound",
         "offset": 9278,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shape_template_points_a",
+        "offset": 9344,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shape_template_points_b",
+        "offset": 9350,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shape_template_points_c",
+        "offset": 9398,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shape_template_points_d",
+        "offset": 9410,
         "segment": "_DATA"
       }
     ],
@@ -14454,13 +14454,13 @@
   "preprocessor_closure": [
     {
       "path": "include/car.h",
-      "sha256": "2c24e60b40310b7d1a7b21c30f6bc2109806706630fa4b27de37b7dae84bb2f4",
-      "size": 887
+      "sha256": "ab23506f9f297d54fd21ba7fcc82f1d92ab8874cf35b0dd2edb13b64c29d9d9e",
+      "size": 3033
     },
     {
       "path": "include/math3d.h",
-      "sha256": "59a5ed823822b0ec3d7c3dad15159f8dae01f9cfd9b8a105eb89e0f12d4bbc69",
-      "size": 3760
+      "sha256": "569d2d4d31555d6f6973f800ed988d1cbe65126f033f68971fe56060202dd546",
+      "size": 4007
     },
     {
       "path": "include/radius2d.h",
@@ -14468,14 +14468,19 @@
       "size": 120
     },
     {
+      "path": "include/shapes3d.h",
+      "sha256": "dcccffe18a51a7bd06da874b051076aa7e5d671033ca7a6f7ec8e688c9334d44",
+      "size": 7995
+    },
+    {
       "path": "include/skybox.h",
-      "sha256": "8672079aa3e3ef5db6e0ab0ec221faf2c9011c08d3538a1509b3dd079cb05f4f",
-      "size": 275
+      "sha256": "8f11de8494d20c762320addb89886546a1849890bee26ef3d5130957b809cf8c",
+      "size": 276
     },
     {
       "path": "include/track.h",
-      "sha256": "af0f4ae33a916802c626070cb6a0745e20cb8435ef4d039732913f37e6032a9e",
-      "size": 5927
+      "sha256": "9d48e3265dda487d1e07d7095547317b450f38903fabf257e1b427c761a2c55c",
+      "size": 6678
     },
     {
       "path": "include/types.h",
@@ -14561,6 +14566,12 @@
       "value": null
     },
     {
+      "line": 135,
+      "path": "include/shapes3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
       "line": 9,
       "path": "include/math3d.h",
       "pragma": "pack",
@@ -14597,7 +14608,97 @@
       "value": null
     },
     {
-      "line": 7,
+      "line": 149,
+      "path": "include/shapes3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 157,
+      "path": "include/shapes3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 170,
+      "path": "include/shapes3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 8,
       "path": "include/car.h",
       "pragma": "pack",
       "value": null

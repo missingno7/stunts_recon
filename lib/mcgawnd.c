@@ -1,5 +1,4 @@
 #include "types.h"
-
 #include "input.h"
 /* READABILITY: Create the 320 by 200 window sprite and prepare the two MCGA window draw paths. */
 struct SHAPE2D;
@@ -12,14 +11,10 @@ struct SPRITE {
 
 struct SPRITE far *mcgawnd_window_sprite;
     /* PLATFORM(video): create, select, or draw the MCGA window sprite. */
-/* Local view: sprite_make_window; return.pointer is struct SPRITE; another unit uses void. */
-extern struct SPRITE FAR * FAR sprite_make_window(U16 width, U16 height, U16 color);
+
     /* PLATFORM(video): create, select, or draw the MCGA window sprite. */
-/* Local view: sprite_setup1_from_arg_pointer; parameters[0].pointer is struct SPRITE; another unit uses void. */
-extern void FAR sprite_setup1_from_arg_pointer(struct SPRITE FAR *argsprite);
+
     /* PLATFORM(video): create, select, or draw the MCGA window sprite. */
-/* Local view: sprputimage; parameters[0].pointer is struct SHAPE2D; another unit uses void. */
-extern void FAR movcf(struct SHAPE2D FAR *shape);
 
 /* Create the MCGA window sprite if needed, select the scene sprite, and draw the window image.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.

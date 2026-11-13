@@ -21,4 +21,10 @@ extern void far purgememory(void far *);
 extern void far *far reservememory(const char *, unsigned short);
 extern long far segtoadr(unsigned char far *);
 
+/* Memory services and shared state. */
+extern void* _memcpy(void*, const void*, unsigned);
+extern unsigned long availmem(void);
+extern void far freememory(void far *);
+extern char far *packmemory(char far *);
+extern unsigned strlen(char *);
 #endif

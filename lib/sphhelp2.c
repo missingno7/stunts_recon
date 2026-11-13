@@ -1,16 +1,14 @@
-
 #include "matrix.h"
 #include "trig.h"
 #include "math3d.h"
 #include "radius.h"
 #include "types.h"
 /* READABILITY: Build the thirty-two front/back perimeter points for a sphere section from three source points. */
-
 #include "ellipse.h"
 #include "shapes3d.h"
 /* Interpolate and translate the front and rear sphere-section point rings.
  * Params and return follow the declared C signature. */
-/* Local view: ellipseh; parameters[0] is near pointer; another unit uses signed word. */
+
 void FAR ellipseh(struct Point *source, struct Point *output)
 {
     I16 startHalfX, startHalfY;

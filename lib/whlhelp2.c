@@ -1,6 +1,5 @@
 #include "types.h"
 /* READABILITY: Interpolate the wheel section corners, then derive the paired point rings. */
-
 #include "matrix.h"
 #include "trig.h"
 #include "math3d.h"

@@ -560,7 +560,7 @@
           "name": "_td3",
           "size": 4,
           "size_basis": {
-            "declaration": "char far *td3;",
+            "declaration": "I16S far *td3;",
             "kind": "declared-type"
           }
         },
@@ -646,7 +646,7 @@
           "name": "_didrace",
           "size": 1,
           "size_basis": {
-            "declaration": "char didrace;",
+            "declaration": "I8 didrace;",
             "kind": "declared-type"
           }
         },
@@ -780,7 +780,7 @@
           "name": "_flagsdown",
           "size": 2,
           "size_basis": {
-            "declaration": "int flagsdown;",
+            "declaration": "I16 flagsdown;",
             "kind": "declared-type"
           }
         },
@@ -889,7 +889,7 @@
           "name": "_mouse_ptr_cursor",
           "size": 4,
           "size_basis": {
-            "declaration": "void far *mouse_ptr_cursor;",
+            "declaration": "struct SPRITE far *mouse_ptr_cursor;",
             "kind": "declared-type"
           }
         },
@@ -1294,7 +1294,7 @@
           "name": "_spritepointermini",
           "size": 4,
           "size_basis": {
-            "declaration": "void far *spritepointermini;",
+            "declaration": "struct SPRITE far *spritepointermini;",
             "kind": "declared-type"
           }
         },
@@ -1369,7 +1369,7 @@
           "name": "_road_trk",
           "size": 4,
           "size_basis": {
-            "declaration": "char far* road_trk;",
+            "declaration": "U8  far *road_trk;",
             "kind": "declared-type"
           }
         },
@@ -1406,7 +1406,7 @@
           "name": "_trkptrpath",
           "size": 4,
           "size_basis": {
-            "declaration": "struct VECTOR far *trkptrpath;",
+            "declaration": "struct VECTOR far* trkptrpath;",
             "kind": "declared-type"
           }
         },
@@ -1506,7 +1506,7 @@
           "name": "_savedptr_ms",
           "size": 4,
           "size_basis": {
-            "declaration": "char far *savedptr_ms;",
+            "declaration": "struct SPRITE far *savedptr_ms;",
             "kind": "declared-type"
           }
         },
@@ -1689,7 +1689,7 @@
           "name": "_menutimeout",
           "size": 1,
           "size_basis": {
-            "declaration": "unsigned char menutimeout;",
+            "declaration": "I8 menutimeout;",
             "kind": "declared-type"
           }
         },
@@ -1748,7 +1748,7 @@
           "name": "_main_data_file_addr",
           "size": 4,
           "size_basis": {
-            "declaration": "void far *main_data_file_addr;",
+            "declaration": "void far* main_data_file_addr;",
             "kind": "declared-type"
           }
         },
@@ -1870,7 +1870,7 @@
           "name": "_td14tb",
           "size": 4,
           "size_basis": {
-            "declaration": "unsigned char far *td14tb;",
+            "declaration": "U8  far* td14tb;",
             "kind": "declared-type"
           }
         },
@@ -2018,7 +2018,7 @@
           "name": "_g_vid_flg2_set",
           "size": 2,
           "size_basis": {
-            "declaration": "short g_vid_flg2_set;",
+            "declaration": "I16S g_vid_flg2_set;",
             "kind": "declared-type"
           }
         },
@@ -2378,7 +2378,7 @@
           "name": "_td6_ptr_b",
           "size": 4,
           "size_basis": {
-            "declaration": "char far *td6_ptr_b;",
+            "declaration": "U16S  far *td6_ptr_b;",
             "kind": "declared-type"
           }
         },
@@ -2390,7 +2390,7 @@
           "name": "_vidflg3is_minus1",
           "size": 2,
           "size_basis": {
-            "declaration": "short vidflg3is_minus1;",
+            "declaration": "I16S vidflg3is_minus1;",
             "kind": "declared-type"
           }
         },
@@ -2426,7 +2426,7 @@
           "name": "_backlightovr8",
           "size": 1,
           "size_basis": {
-            "declaration": "char backlightovr8;",
+            "declaration": "U8  backlightovr8;",
             "kind": "declared-type"
           }
         },
@@ -2499,7 +2499,7 @@
           "name": "_rects_updt",
           "size": 15,
           "size_basis": {
-            "declaration": "I8 rects_updt[SPRITE_CLIP_RECT_CAPACITY];",
+            "declaration": "char rects_updt[15];",
             "kind": "declared-type"
           }
         },
@@ -2982,7 +2982,7 @@
           "name": "_elaptm1",
           "size": 2,
           "size_basis": {
-            "declaration": "unsigned short elaptm1;",
+            "declaration": "U16S  elaptm1;",
             "kind": "declared-type"
           }
         },
@@ -3249,7 +3249,7 @@
           "name": "_g_td08d",
           "size": 4,
           "size_basis": {
-            "declaration": "unsigned short far *g_td08d;",
+            "declaration": "I16 far* g_td08d;",
             "kind": "declared-type"
           }
         },
@@ -3742,7 +3742,7 @@
           "name": "_g_videoflg5",
           "size": 1,
           "size_basis": {
-            "declaration": "char g_videoflg5;",
+            "declaration": "U8  g_videoflg5;",
             "kind": "declared-type"
           }
         },

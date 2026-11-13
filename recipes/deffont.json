@@ -136,13 +136,13 @@
   "preprocessor_closure": [
     {
       "path": "include/chartab.h",
-      "sha256": "540ec3660be1ea671e4cc3adedf22983325debf32bd0f08c0465ad6ad1eed6c7",
-      "size": 120
+      "sha256": "012a041c655852d782c217fa89cf89a8d7a243a1f021b59905689d903022c4ce",
+      "size": 100
     },
     {
       "path": "include/ui.h",
-      "sha256": "aa9428377377eafee946eb53470bddf273ebaf93c176bb8d00e7a8e2298e8373",
-      "size": 12638
+      "sha256": "838276f16c4fc56db94d41d46fdc1c05c70b1e4fba756373612e59660cf33995",
+      "size": 14184
     },
     {
       "line": 194,

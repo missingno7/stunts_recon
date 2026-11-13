@@ -1,4 +1,8 @@
-/* Shared mousebuf interface. */
-extern int g_mousesave_x_tbl[4];
-extern int g_mouseyposstacktable[5];
-extern struct SPRITE far *mssprite_arrays[4];
+/* Buffered input state; some UI blocks retain separate external indices. */
+
+/* Mousebuf services and shared state. */
+extern int input_pushed;
+extern char joystick_enabled;
+extern unsigned char  mouse_buffer_count;
+extern char mousedrive;
+extern struct SPRITE far *savedptr_ms;

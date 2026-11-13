@@ -18,11 +18,6 @@ struct SHAPE2D {
 };
 #include "files.h"
 
-/* Local view: file_get_res_shape_count; return is signed word; another unit uses unsigned word. */
-extern I16 FAR file_get_res_shape_count(I8 FAR *memchunk);
-/* Local view: shapepointer; parameters[0].pointer is signed byte; another unit uses unsigned byte. */
-extern struct SHAPE2D FAR * FAR shapepointer(I8 FAR *memchunk, I16 index);
-
 /* Find the largest pixel area among a resource?s shapes and return its paragraph allocation size.
  * Params and return follow the declared C signature. */
 U16 FAR file_get_unflip_size(I8 FAR *memchunk)

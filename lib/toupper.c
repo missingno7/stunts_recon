@@ -1,4 +1,3 @@
-
 #include "chartab.h"
 #include "ui.h"
 #include "types.h"

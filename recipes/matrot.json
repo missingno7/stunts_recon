@@ -23,7 +23,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intsin",
-      "target_index": 6,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -40,7 +40,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intcos",
-      "target_index": 5,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -57,7 +57,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intsin",
-      "target_index": 6,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -74,7 +74,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intcos",
-      "target_index": 5,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -91,7 +91,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intsin",
-      "target_index": 6,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -108,7 +108,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intcos",
-      "target_index": 5,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -192,8 +192,8 @@
       "_xformx",
       "_xformy",
       "_xformz",
-      "_intcos",
-      "_intsin"
+      "_intsin",
+      "_intcos"
     ],
     "groups": [
       {
@@ -299,13 +299,18 @@
   "preprocessor_closure": [
     {
       "path": "include/math3d.h",
-      "sha256": "59a5ed823822b0ec3d7c3dad15159f8dae01f9cfd9b8a105eb89e0f12d4bbc69",
-      "size": 3760
+      "sha256": "569d2d4d31555d6f6973f800ed988d1cbe65126f033f68971fe56060202dd546",
+      "size": 4007
     },
     {
       "path": "include/radius2d.h",
       "sha256": "097d90d5382c47225c46504009b67e05ba91fb87371aa84b351d101f8693077e",
       "size": 120
+    },
+    {
+      "path": "include/trig.h",
+      "sha256": "5dea9502cd98d21ac44c8dd22c008b264207471d17579efb484af3e4bccffb51",
+      "size": 130
     },
     {
       "path": "include/types.h",

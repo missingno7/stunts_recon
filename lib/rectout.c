@@ -1,4 +1,4 @@
-
+#include "math3d.h"
 #include "viewstat.h"
 #include "game.h"
 #include "video.h"

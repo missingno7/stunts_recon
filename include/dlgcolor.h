@@ -1,5 +1,3 @@
-/* Shared dlgcolor interface. */
-#ifndef STUNTS_DLGCOLOR_H
-#define STUNTS_DLGCOLOR_H
+/* Shared externs for separate C scopes; intentionally unguarded. */
+extern int dlg_colour;
 extern int performGraphColor;
-#endif

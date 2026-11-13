@@ -1,6 +1,26 @@
 {
   "communal_declarations": [
     {
+      "name": "_tommsampleresource",
+      "size": 4
+    },
+    {
+      "name": "_ride_audio_sound_res",
+      "size": 4
+    },
+    {
+      "name": "_audio_opp_res",
+      "size": 4
+    },
+    {
+      "name": "_chhtsample",
+      "size": 4
+    },
+    {
+      "name": "_resource_sound_hit",
+      "size": 4
+    },
+    {
       "name": "_audioblock",
       "size": 24
     },
@@ -21,16 +41,16 @@
       "size": 1
     },
     {
+      "name": "_sfx_audio_vol",
+      "size": 1
+    },
+    {
       "name": "_audiochunktable",
       "size": 1824
     },
     {
       "name": "_snd_voices_tbl",
       "size": 736
-    },
-    {
-      "name": "_sfx_audio_vol",
-      "size": 1
     },
     {
       "name": "_g_audchnkvalue",
@@ -42,26 +62,6 @@
     },
     {
       "name": "_g_snaresnd",
-      "size": 4
-    },
-    {
-      "name": "_tommsampleresource",
-      "size": 4
-    },
-    {
-      "name": "_ride_audio_sound_res",
-      "size": 4
-    },
-    {
-      "name": "_audio_opp_res",
-      "size": 4
-    },
-    {
-      "name": "_chhtsample",
-      "size": 4
-    },
-    {
-      "name": "_resource_sound_hit",
       "size": 4
     }
   ],
@@ -85,7 +85,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -102,7 +102,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_check_flag2",
-      "target_index": 55,
+      "target_index": 54,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -119,7 +119,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -136,7 +136,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_block_audio_num",
-      "target_index": 37,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -187,7 +187,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_enable_flag2",
-      "target_index": 68,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -204,7 +204,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_disable_flag2",
-      "target_index": 59,
+      "target_index": 60,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -255,7 +255,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_reset_audio_event_state",
-      "target_index": 36,
+      "target_index": 42,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -272,7 +272,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_func1E",
-      "target_index": 64,
+      "target_index": 65,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -289,7 +289,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_block_audio_num",
-      "target_index": 37,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -306,7 +306,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_block_audio_num",
-      "target_index": 37,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -391,7 +391,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_reset_audio_event_state",
-      "target_index": 36,
+      "target_index": 42,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -408,7 +408,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_block_audio_num",
-      "target_index": 37,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -425,7 +425,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_init_chunk",
-      "target_index": 34,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -442,7 +442,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_musicvolumesetting",
-      "target_index": 45,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -459,7 +459,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_func1E",
-      "target_index": 64,
+      "target_index": 65,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -612,7 +612,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_set_chunk_volume",
-      "target_index": 74,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -765,7 +765,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 50,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -816,7 +816,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 50,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -918,7 +918,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_set_chunk_volume",
-      "target_index": 74,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -969,7 +969,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1071,7 +1071,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_init_chunk",
-      "target_index": 34,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1088,7 +1088,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_block_audio_num",
-      "target_index": 37,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1105,7 +1105,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_musicvolumesetting",
-      "target_index": 45,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1122,7 +1122,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_block_audio_num",
-      "target_index": 37,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1139,7 +1139,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mus_samplelimit",
-      "target_index": 54,
+      "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1207,7 +1207,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_reset_audio_chunks",
-      "target_index": 32,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1241,7 +1241,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_copy_4_bytes",
-      "target_index": 19,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1258,7 +1258,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_map_song_tracks",
-      "target_index": 24,
+      "target_index": 55,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1275,7 +1275,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_map_song_instruments",
-      "target_index": 81,
+      "target_index": 84,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1292,7 +1292,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_find",
-      "target_index": 71,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1326,7 +1326,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_find",
-      "target_index": 71,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1343,7 +1343,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_setticks",
-      "target_index": 80,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1377,7 +1377,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_reset_audio_chunks",
-      "target_index": 32,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1394,7 +1394,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_waitticks",
-      "target_index": 40,
+      "target_index": 57,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1411,7 +1411,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_setticks",
-      "target_index": 80,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1530,7 +1530,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_waitticks",
-      "target_index": 40,
+      "target_index": 57,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1547,7 +1547,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_setticks",
-      "target_index": 80,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1581,7 +1581,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_set_all_audio_chunk_volume",
-      "target_index": 41,
+      "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1615,7 +1615,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_musicvolumesetting",
-      "target_index": 45,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1649,7 +1649,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1666,7 +1666,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1683,7 +1683,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1700,7 +1700,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1734,7 +1734,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_enable_flag6",
-      "target_index": 69,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1751,7 +1751,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_disable_flag6",
-      "target_index": 61,
+      "target_index": 62,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1802,7 +1802,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_set_chunk_volume",
-      "target_index": 74,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1836,7 +1836,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1887,7 +1887,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_set_chunk_volume",
-      "target_index": 74,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1938,7 +1938,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_init_chunk",
-      "target_index": 34,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1972,7 +1972,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_func1E",
-      "target_index": 64,
+      "target_index": 65,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1989,7 +1989,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2006,7 +2006,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2023,7 +2023,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_init_chunk",
-      "target_index": 34,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2040,7 +2040,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_init_chunk2",
-      "target_index": 15,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2057,7 +2057,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochnk_actflags",
-      "target_index": 31,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2074,7 +2074,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochnk_actflags",
-      "target_index": 31,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2091,7 +2091,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2108,7 +2108,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochnk_actflags",
-      "target_index": 31,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2125,7 +2125,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2142,7 +2142,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochnk_actflags",
-      "target_index": 31,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2159,7 +2159,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2227,7 +2227,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_check_flag",
-      "target_index": 44,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2261,7 +2261,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_init_chunk2",
-      "target_index": 15,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2278,7 +2278,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochnk_actflags",
-      "target_index": 31,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2295,7 +2295,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochnk_actflags",
-      "target_index": 31,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2312,7 +2312,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2329,7 +2329,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochnk_actflags",
-      "target_index": 31,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2346,7 +2346,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochnk_actflags",
-      "target_index": 31,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2363,7 +2363,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadfilez",
-      "target_index": 2,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2380,7 +2380,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_make_filename",
-      "target_index": 78,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2414,7 +2414,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadpackz",
-      "target_index": 5,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2431,7 +2431,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_make_filename",
-      "target_index": 78,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2465,7 +2465,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadfilez",
-      "target_index": 2,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2482,7 +2482,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_make_filename",
-      "target_index": 78,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2516,7 +2516,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadpackz",
-      "target_index": 5,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2533,7 +2533,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_make_filename",
-      "target_index": 78,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2550,7 +2550,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadfilez",
-      "target_index": 2,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2567,7 +2567,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_make_filename",
-      "target_index": 78,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2669,7 +2669,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_purgememory",
-      "target_index": 48,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2907,7 +2907,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_deltimer",
-      "target_index": 22,
+      "target_index": 39,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2924,7 +2924,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriver_timer",
-      "target_index": 47,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2941,7 +2941,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriver_timer",
-      "target_index": 47,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3009,7 +3009,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_abortmessage",
-      "target_index": 77,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3179,7 +3179,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_purgememory",
-      "target_index": 48,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3230,7 +3230,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadfilez",
-      "target_index": 2,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3281,7 +3281,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_addtimer",
-      "target_index": 21,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3298,7 +3298,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriver_timer",
-      "target_index": 47,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3315,7 +3315,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriver_timer",
-      "target_index": 47,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3332,7 +3332,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_reset_audio_driver_state",
-      "target_index": 33,
+      "target_index": 40,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3383,7 +3383,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 39,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3400,7 +3400,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 39,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3417,7 +3417,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 39,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3468,7 +3468,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_musicvolumesetting",
-      "target_index": 45,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3519,7 +3519,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadfilez",
-      "target_index": 2,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3536,7 +3536,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_make_filename",
-      "target_index": 78,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3587,7 +3587,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_drvaudiocode",
-      "target_index": 42,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3604,7 +3604,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_drvaudiocode",
-      "target_index": 42,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3621,7 +3621,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_drvaudiocode",
-      "target_index": 42,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3672,7 +3672,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_addexit",
-      "target_index": 17,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3689,7 +3689,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodrv_atexit",
-      "target_index": 14,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3706,7 +3706,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodrv_atexit",
-      "target_index": 14,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3723,7 +3723,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audiodrv_atexit",
-      "target_index": 14,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3791,7 +3791,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioblock",
-      "target_index": 30,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3808,7 +3808,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audchnkvalue",
-      "target_index": 52,
+      "target_index": 80,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3825,7 +3825,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_set_all_audio_chunk_volume",
-      "target_index": 41,
+      "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3842,7 +3842,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_musicvolumesetting",
-      "target_index": 45,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3859,7 +3859,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_block_audio_num",
-      "target_index": 37,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3876,7 +3876,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_set_chunk_volume",
-      "target_index": 74,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3961,7 +3961,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_waitticks",
-      "target_index": 40,
+      "target_index": 57,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3978,7 +3978,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_find",
-      "target_index": 71,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4012,7 +4012,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_copy_4_bytes",
-      "target_index": 19,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4029,7 +4029,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_find",
-      "target_index": 71,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4046,7 +4046,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_find",
-      "target_index": 71,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4080,7 +4080,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_get_dword",
-      "target_index": 26,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4097,7 +4097,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_get_dword",
-      "target_index": 26,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4114,7 +4114,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioblock",
-      "target_index": 30,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4131,7 +4131,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audchnkvalue",
-      "target_index": 52,
+      "target_index": 80,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4148,7 +4148,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4165,7 +4165,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_abortmessage",
-      "target_index": 77,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4216,7 +4216,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_load_sfx_ge",
-      "target_index": 82,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4250,7 +4250,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_drvaudiocode",
-      "target_index": 42,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4267,7 +4267,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_abortmessage",
-      "target_index": 77,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4318,7 +4318,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_load_sfx_ge",
-      "target_index": 82,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4352,7 +4352,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_drvaudiocode",
-      "target_index": 42,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4369,7 +4369,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_load_sfx_ge",
-      "target_index": 82,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4403,7 +4403,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_drvaudiocode",
-      "target_index": 42,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4437,7 +4437,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_abortmessage",
-      "target_index": 77,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4488,7 +4488,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_load_sfx_ge",
-      "target_index": 82,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4522,7 +4522,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_drvaudiocode",
-      "target_index": 42,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4539,7 +4539,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_abortmessage",
-      "target_index": 77,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4590,7 +4590,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_load_sfx_ge",
-      "target_index": 82,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4624,7 +4624,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_drvaudiocode",
-      "target_index": 42,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4641,7 +4641,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_load_sfx_ge",
-      "target_index": 82,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4675,7 +4675,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_drvaudiocode",
-      "target_index": 42,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4726,7 +4726,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadfilez",
-      "target_index": 2,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4743,7 +4743,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadpackz",
-      "target_index": 5,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4760,7 +4760,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_make_filename",
-      "target_index": 78,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4794,7 +4794,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_copy_4_bytes",
-      "target_index": 19,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4811,7 +4811,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_get_dword",
-      "target_index": 26,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4828,7 +4828,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_get_chunk_index",
-      "target_index": 3,
+      "target_index": 64,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4845,7 +4845,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_copy_n_bytes",
-      "target_index": 16,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4879,7 +4879,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_get_word",
-      "target_index": 29,
+      "target_index": 70,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4981,7 +4981,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 39,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5032,7 +5032,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 50,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5049,7 +5049,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 50,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5066,7 +5066,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 50,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5083,7 +5083,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 50,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5100,7 +5100,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 50,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5117,7 +5117,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 39,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5134,7 +5134,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_init_chunk",
-      "target_index": 34,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5168,7 +5168,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 50,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5185,7 +5185,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_copy_4_bytes",
-      "target_index": 19,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5202,7 +5202,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapez",
-      "target_index": 84,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5219,7 +5219,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_find",
-      "target_index": 71,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5236,7 +5236,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resource_sound_hit",
-      "target_index": 67,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5253,7 +5253,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resource_sound_hit",
-      "target_index": 67,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5270,7 +5270,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_find",
-      "target_index": 71,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5304,7 +5304,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_chhtsample",
-      "target_index": 65,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5321,7 +5321,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_chhtsample",
-      "target_index": 65,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5338,7 +5338,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_find",
-      "target_index": 71,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5372,7 +5372,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_opp_res",
-      "target_index": 63,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5389,7 +5389,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_opp_res",
-      "target_index": 63,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5406,7 +5406,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_find",
-      "target_index": 71,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5440,7 +5440,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ride_audio_sound_res",
-      "target_index": 62,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5457,7 +5457,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ride_audio_sound_res",
-      "target_index": 62,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5474,7 +5474,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_find",
-      "target_index": 71,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5508,7 +5508,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_tommsampleresource",
-      "target_index": 60,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5525,7 +5525,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_tommsampleresource",
-      "target_index": 60,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5542,7 +5542,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_find",
-      "target_index": 71,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5576,7 +5576,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_snaresnd",
-      "target_index": 58,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5593,7 +5593,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_snaresnd",
-      "target_index": 58,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5610,7 +5610,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_find",
-      "target_index": 71,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5644,7 +5644,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kick_res",
-      "target_index": 56,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5661,7 +5661,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kick_res",
-      "target_index": 56,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5678,7 +5678,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_debug_printf_text",
-      "target_index": 20,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5712,7 +5712,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 50,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5729,7 +5729,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 50,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5746,7 +5746,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 50,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5763,7 +5763,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flush_stdin",
-      "target_index": 46,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5780,7 +5780,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_debug_printf_text",
-      "target_index": 20,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5814,7 +5814,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_debug_printf_text",
-      "target_index": 20,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5848,7 +5848,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5865,7 +5865,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 49,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5882,7 +5882,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_debug_printf_text",
-      "target_index": 20,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5916,7 +5916,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_musicvolumesetting",
-      "target_index": 45,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5950,7 +5950,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_debug_printf_text",
-      "target_index": 20,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6052,7 +6052,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_copy_4_bytes",
-      "target_index": 19,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6069,7 +6069,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_get_dword",
-      "target_index": 26,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6086,7 +6086,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_get_chunk_index",
-      "target_index": 3,
+      "target_index": 64,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6103,7 +6103,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_copy_n_bytes",
-      "target_index": 16,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6120,7 +6120,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_compare_chunkname",
-      "target_index": 8,
+      "target_index": 59,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6154,7 +6154,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_get_dword",
-      "target_index": 26,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6171,7 +6171,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_get_dword",
-      "target_index": 26,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7313,89 +7313,89 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_loadfilez",
-      "_audioresource_get_chunk_index",
-      "_audio_play_resource_default",
-      "_loadpackz",
-      "_audio_set_chunk_callback",
-      "_audio_set_music_volume",
-      "_audioresource_compare_chunkname",
-      "_release_audio_chunk",
-      "_audio_toggle_flag2",
-      "_reset_audio_voice_length",
-      "_audio_toggle_flag6",
-      "_init_audio_resources",
-      "_audiodrv_atexit",
-      "_audio_init_chunk2",
-      "_audioresource_copy_n_bytes",
+      "_audio_music_is_idle",
+      "_tommsampleresource",
+      "_ride_audio_sound_res",
+      "_audio_opp_res",
+      "_chhtsample",
       "_addexit",
+      "_resource_sound_hit",
+      "_setticks",
+      "_purgememory",
+      "_audio_set_chunk_volume",
+      "_audio_play_resource_default",
+      "_audio_set_chunk_callback",
+      "_release_audio_chunk",
+      "_reset_audio_voice_length",
+      "_audio_set_music_volume",
+      "_init_audio_resources",
+      "_audio_init_chunk2",
+      "_audio_toggle_flag2",
       "_audio_chunk_is_unavailable",
+      "_audio_toggle_flag6",
+      "_audio_check_flag",
+      "_audiodrv_atexit",
+      "_reserve_audio_chunk",
       "_audioresource_copy_4_bytes",
-      "_debug_printf_text",
-      "_addtimer",
-      "_deltimer",
+      "_audio_init_chunk",
+      "_audiodriver_timer",
       "_link_audio_shape_resources",
-      "_audio_map_song_tracks",
       "_load_audio_finalize",
-      "_audioresource_get_dword",
       "_load_song_file",
       "_load_voice_file",
-      "_audioresource_get_word",
+      "_flush_stdin",
+      "_load_sfx_file",
+      "_load_sfx_ge",
       "_audioblock",
       "_audiochnk_actflags",
+      "_addtimer",
       "_reset_audio_chunks",
+      "_deltimer",
       "_reset_audio_driver_state",
-      "_audio_init_chunk",
-      "_reserve_audio_chunk",
+      "_loadfilez",
       "_reset_audio_event_state",
       "_block_audio_num",
       "_restore_audio_volume",
       "_g_audiodrvvoices_count",
-      "_waitticks",
+      "_loadpackz",
       "_set_all_audio_chunk_volume",
       "_g_drvaudiocode",
       "_set_audio_load_error_policy",
-      "_audio_check_flag",
       "_g_musicvolumesetting",
-      "_flush_stdin",
-      "_audiodriver_timer",
-      "_purgememory",
-      "_audiochunktable",
-      "_snd_voices_tbl",
       "_sfx_audio_vol",
-      "_g_audchnkvalue",
-      "_snd_sample_rate_phase",
       "_mus_samplelimit",
+      "_snd_sample_rate_phase",
       "_audio_check_flag2",
-      "_kick_res",
+      "_audio_map_song_tracks",
       "_audio_debug_dump_state",
-      "_g_snaresnd",
+      "_waitticks",
+      "_audio_pause_playback",
+      "_audioresource_compare_chunkname",
       "_audio_disable_flag2",
-      "_tommsampleresource",
+      "_audioresource_copy_n_bytes",
       "_audio_disable_flag6",
-      "_ride_audio_sound_res",
-      "_audio_opp_res",
+      "_audioresource_find",
+      "_audioresource_get_chunk_index",
       "_audio_driver_func1E",
-      "_chhtsample",
+      "_audioresource_get_dword",
+      "_abortmessage",
       "_audio_driver_func3F",
-      "_resource_sound_hit",
+      "_debug_printf_text",
+      "_audioresource_get_word",
       "_audio_enable_flag2",
       "_audio_enable_flag6",
-      "_audio_pause_playback",
-      "_audioresource_find",
+      "_locateshapez",
       "_audio_get_chunk_marker",
       "_audio_get_chunk_note",
-      "_audio_set_chunk_volume",
+      "_audiochunktable",
       "_audio_load_driver",
+      "_snd_voices_tbl",
       "_audio_load_sample_bank",
-      "_abortmessage",
+      "_g_audchnkvalue",
       "_audio_make_filename",
-      "_load_sfx_file",
-      "_setticks",
-      "_audio_map_song_instruments",
-      "_load_sfx_ge",
-      "_audio_music_is_idle",
-      "_locateshapez"
+      "_kick_res",
+      "_g_snaresnd",
+      "_audio_map_song_instruments"
     ],
     "groups": [
       {
@@ -7415,6 +7415,21 @@
     ],
     "publics": [
       {
+        "name": "_audio_music_is_idle",
+        "offset": 812,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_audioflag6",
+        "offset": 47,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_audio_driver_mode",
+        "offset": 48,
+        "segment": "_DATA"
+      },
+      {
         "name": "_audio_play_resource_default",
         "offset": 900,
         "segment": "UNIT_TEXT"
@@ -7425,28 +7440,8 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_audioflag6",
-        "offset": 47,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_audio_set_music_volume",
-        "offset": 1990,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_audio_driver_mode",
-        "offset": 48,
-        "segment": "_DATA"
-      },
-      {
         "name": "_release_audio_chunk",
         "offset": 1036,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_audio_toggle_flag2",
-        "offset": 790,
         "segment": "UNIT_TEXT"
       },
       {
@@ -7455,8 +7450,8 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_audio_toggle_flag6",
-        "offset": 1590,
+        "name": "_audio_set_music_volume",
+        "offset": 1990,
         "segment": "UNIT_TEXT"
       },
       {
@@ -7465,13 +7460,13 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_audiodrv_atexit",
-        "offset": 2450,
+        "name": "_audio_init_chunk2",
+        "offset": 1400,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_audio_init_chunk2",
-        "offset": 1400,
+        "name": "_audio_toggle_flag2",
+        "offset": 790,
         "segment": "UNIT_TEXT"
       },
       {
@@ -7480,8 +7475,33 @@
         "segment": "UNIT_TEXT"
       },
       {
+        "name": "_audio_toggle_flag6",
+        "offset": 1590,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_audio_check_flag",
+        "offset": 1096,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_audiodrv_atexit",
+        "offset": 2450,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_reserve_audio_chunk",
+        "offset": 926,
+        "segment": "UNIT_TEXT"
+      },
+      {
         "name": "_audioresource_copy_4_bytes",
         "offset": 5206,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_audio_init_chunk",
+        "offset": 3306,
         "segment": "UNIT_TEXT"
       },
       {
@@ -7500,11 +7520,6 @@
         "segment": "_DATA"
       },
       {
-        "name": "_audio_map_song_tracks",
-        "offset": 4482,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_audio_driver_volume_command",
         "offset": 50,
         "segment": "_DATA"
@@ -7512,11 +7527,6 @@
       {
         "name": "_load_audio_finalize",
         "offset": 170,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_audioresource_get_dword",
-        "offset": 5160,
         "segment": "UNIT_TEXT"
       },
       {
@@ -7535,19 +7545,24 @@
         "segment": "_DATA"
       },
       {
-        "name": "_audioresource_get_word",
-        "offset": 5186,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_audio_pause_in_progress",
         "offset": 44,
         "segment": "_DATA"
       },
       {
+        "name": "_load_sfx_file",
+        "offset": 2930,
+        "segment": "UNIT_TEXT"
+      },
+      {
         "name": "_audio_song_ready",
         "offset": 46,
         "segment": "_DATA"
+      },
+      {
+        "name": "_load_sfx_ge",
+        "offset": 2626,
+        "segment": "UNIT_TEXT"
       },
       {
         "name": "_reset_audio_chunks",
@@ -7562,16 +7577,6 @@
       {
         "name": "_reset_audio_driver_state",
         "offset": 4262,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_audio_init_chunk",
-        "offset": 3306,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_reserve_audio_chunk",
-        "offset": 926,
         "segment": "UNIT_TEXT"
       },
       {
@@ -7590,14 +7595,9 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_audio_check_flag",
-        "offset": 1096,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_audio_check_flag2",
-        "offset": 1064,
-        "segment": "UNIT_TEXT"
+        "name": "_audio_update_lock",
+        "offset": 54,
+        "segment": "_DATA"
       },
       {
         "name": "_audiodriverbinary",
@@ -7605,14 +7605,24 @@
         "segment": "_DATA"
       },
       {
+        "name": "_audio_check_flag2",
+        "offset": 1064,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_audio_map_song_tracks",
+        "offset": 4482,
+        "segment": "UNIT_TEXT"
+      },
+      {
         "name": "_audio_debug_dump_state",
         "offset": 5278,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_audio_update_lock",
-        "offset": 54,
-        "segment": "_DATA"
+        "name": "_audio_pause_playback",
+        "offset": 324,
+        "segment": "UNIT_TEXT"
       },
       {
         "name": "_audio_disable_flag2",
@@ -7625,8 +7635,18 @@
         "segment": "UNIT_TEXT"
       },
       {
+        "name": "_audioresource_get_dword",
+        "offset": 5160,
+        "segment": "UNIT_TEXT"
+      },
+      {
         "name": "_audio_driver_func3F",
         "offset": 1690,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_audioresource_get_word",
+        "offset": 5186,
         "segment": "UNIT_TEXT"
       },
       {
@@ -7637,11 +7657,6 @@
       {
         "name": "_audio_enable_flag6",
         "offset": 1476,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_audio_pause_playback",
-        "offset": 324,
         "segment": "UNIT_TEXT"
       },
       {
@@ -7665,23 +7680,8 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_load_sfx_file",
-        "offset": 2930,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_audio_map_song_instruments",
         "offset": 3566,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_load_sfx_ge",
-        "offset": 2626,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_audio_music_is_idle",
-        "offset": 812,
         "segment": "UNIT_TEXT"
       }
     ],
@@ -7757,38 +7757,38 @@
   "preprocessor_closure": [
     {
       "path": "include/auddrv.h",
-      "sha256": "4a2681f4f662dd55e7992643e4db580501012c03b48689fdd695c1582740665e",
-      "size": 457
+      "sha256": "33f1d30b4e47455c3cfdebdde451f74317948c26d7b04a65330d7f58bc026f47",
+      "size": 777
     },
     {
       "path": "include/audio.h",
-      "sha256": "c313a260ee07d6c595a39f7ea4065b465aa10a53f66677c70cdab47f105412e7",
-      "size": 15339
+      "sha256": "573aaf8e174efe73f9248b3792f3893316bb264f1e32e1370f5002aae3bd0dfb",
+      "size": 16246
     },
     {
       "path": "include/files.h",
-      "sha256": "c9279c40920d935c04309685a81ccb7f078ae3c8a0d35f28b52c4eead68a3a7a",
-      "size": 1978
+      "sha256": "8ffeddb470afd79527e7dde51cd3b8baeb8c929ed950ef2a9bebdd47679b91cc",
+      "size": 3060
     },
     {
       "path": "include/game.h",
-      "sha256": "efb4f8ec271fb25fdd21f28316f4300b0de522a08b4fc9734403ea6d0a0829e8",
-      "size": 11658
+      "sha256": "6ce4537b21870db8e0156b1a498c536db9febecac9d739dc83fbd5cbe360a6a1",
+      "size": 11942
     },
     {
       "path": "include/gamerec.h",
-      "sha256": "e3bf380bb327eb69feac2c074542c8d778f62f70fd2d0206b03c5d794b6a3826",
-      "size": 1007
+      "sha256": "1b5ceef18fd7b4a217b2341c624a5890f017f837cedbed6edbeac835b9a2816b",
+      "size": 1381
     },
     {
       "path": "include/math3d.h",
-      "sha256": "59a5ed823822b0ec3d7c3dad15159f8dae01f9cfd9b8a105eb89e0f12d4bbc69",
-      "size": 3760
+      "sha256": "569d2d4d31555d6f6973f800ed988d1cbe65126f033f68971fe56060202dd546",
+      "size": 4007
     },
     {
       "path": "include/memory.h",
-      "sha256": "b88cb9f43838447756a9a5626f26a61203127ae4a528343e4148f697783c44d2",
-      "size": 891
+      "sha256": "0af493b5e8c060ca91c4b8b1d57f4d4b64c06e77dbd2509f6dffda3ca31a63d4",
+      "size": 1139
     },
     {
       "path": "include/radius2d.h",
@@ -7802,8 +7802,8 @@
     },
     {
       "path": "include/timer.h",
-      "sha256": "72c78a9e243d731fa2124d20898780d84a5e890f90ae5c483254c2314b54d74a",
-      "size": 734
+      "sha256": "f6337402d6312c3d64388962aa0dd66010c1ce0bbfb6e7cc81bc318a4b92f78b",
+      "size": 947
     },
     {
       "path": "include/tmrhook.h",
@@ -7816,9 +7816,14 @@
       "size": 1277
     },
     {
+      "path": "include/ui.h",
+      "sha256": "838276f16c4fc56db94d41d46fdc1c05c70b1e4fba756373612e59660cf33995",
+      "size": 14184
+    },
+    {
       "path": "include/viewstat.h",
-      "sha256": "bcb9520644dfe17d764d2d5bb1a79bd6b719fe1cf1619cf4b1f1077a71348a44",
-      "size": 485
+      "sha256": "1a3f6e3c4410393d788f9624ea0028f477543b173689ecdcb024b523816f5b26",
+      "size": 395
     },
     {
       "line": 17,
@@ -7883,6 +7888,24 @@
     {
       "line": 20,
       "path": "<source>",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 194,
+      "path": "include/ui.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 199,
+      "path": "include/ui.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 45,
+      "path": "include/files.h",
       "pragma": "pack",
       "value": null
     },
@@ -7979,12 +8002,6 @@
     {
       "line": 49,
       "path": "include/math3d.h",
-      "pragma": "pack",
-      "value": null
-    },
-    {
-      "line": 45,
-      "path": "include/files.h",
       "pragma": "pack",
       "value": null
     }

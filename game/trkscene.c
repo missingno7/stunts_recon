@@ -5,32 +5,23 @@
 #define FAST_TRIG_ANGLE_MASK 0x3FF
 #include "types.h"
 /* Scratch whole-object candidate in target member order. */ /* PORT: plain char signedness follows the pinned MSC target. */
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
-
 #include "matrix.h"
 #include "trig.h"
 #include "math3d.h"
 #include "radius.h"
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
+
 /* Local view: SHAPE3D; struct.count is 8; another unit uses 7. */
 struct SHAPE3D { U16S  numverts; struct VECTOR far *shape3d_verts; U16S  numprimitives; U8  numpaints; U8  reserved; void far *primitives; void far *cull1; void far *cull2; };
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
+
 /* The DOS near pointer aliases the camera word; six records have relocated Amiga pointers. */
 /* Local view: TRKOBJINFO; unsigned byte fields and a word overlay differ from the shared signed-byte/pointer record. */
 struct TRKOBJINFO { U8  noOfBlocks,entry,exitPoint,entryType,exitType,arrowType; I16S arrowOrient; I16S *cameraDataOffset; union { struct { U8  opponent1,opponent2; } opponent; U16S  cameraOffsetOverride; I16S *dataPointer; } cameraOverlay; U8  opponent3,opponentSpeedCode; };
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 #include "trkobj.h"
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 #include "track.h"
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 /* Local view: GAMESTATE; struct.count is 2; another unit uses 46. */
 struct GAMESTATE { U8  state_prefix_000[0x3f5]; I8 game_inputmode; };
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
-
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
-/* Local view: GAMEINFO; struct[8].type is unsigned word; another unit uses signed byte. */
-struct GAMEINFO { I8 game_playercarid[4],game_playermaterial,game_playertransmission,game_opponenttype,game_opponentcarid[4],game_opponentmaterial,game_opponenttransmission,game_trackname[9]; U16S  game_framespersec,game_recordedframes; };
+#include "gamerec.h"
 #include "car.h"
 #include "chartab.h"
 #include "ui.h"
@@ -46,8 +37,6 @@ int r_zp[30];
 int xcols[30];
 
 int z_ctr_pos[30];
-/* Local view: td14tb; pointer is unsigned byte; another unit uses signed byte. */
-extern U8  far *td14tb;
 
 /* Local view: trklst; of is struct TRACKOBJECT; another unit uses struct track_object. */
 extern struct TRACKOBJECT trklst[215];
@@ -57,34 +46,22 @@ short road_num;
 short wall_wallelement;
 short element_min_wall;
 unsigned char g_corkscrew_type_flag;
-/* Local view: g_cursurfacekindvalue; type is unsigned byte; another unit uses signed byte. */
-unsigned char g_cursurfacekindvalue;
-/* Local view: test_pln; type is unsigned byte; another unit uses signed byte. */
-unsigned char test_pln;
+/* Local view: g_cursurfacekindvalue; frontend owns unsigned char; trkscene owns char. */
+extern I8 g_cursurfacekindvalue;
+I8 g_cursurfacekindvalue;
+I8 test_pln;
 short hgthgt;
 short x_course_part;
 short road_elem_ctrz;
-
-/* Local view: wallrecrecord; pointer is struct WALLREC; another unit uses void. */
 struct WALLREC far *wallrecrecord;
-/* Local view: g_planlist; pointer is unsigned byte; another unit uses struct PLANE. */
-extern U8  far *g_planlist;
-/* Local view: plncurrptr; pointer is unsigned byte; another unit uses struct PLANE. */
-extern U8  far *plncurrptr;
 
 short wallanchor_x;
 
 void far *g_game13dresource;
 void far *game2res_pointer;
 void far *ptr_model_active;
-/* Local view: availmem, modsize; return is signed long; another unit uses unsigned long. */
-extern I32 far availmem(void),far modsize(I8 far *);
-/* Local view: fluffyload; return.pointer is signed byte; another unit uses void. */
-extern I8 far *fluffyload(I8 *name);
-/* Local view: locate_shape_fatal; return.pointer is signed byte; another unit uses struct SHAPE2D. */
-extern I8 far *locate_shape_fatal();
-/* Local view: locateshapez; return.pointer is signed byte; another unit uses void. */
-extern I8 far *locateshapez();
+/* Local view: locate_shape_fatal; frontend raw-object exclusion retains its SHAPE2D pointer result. */
+extern void FAR * FAR locate_shape_fatal(void FAR*, I8*);
 
 struct SHAPE3D g_shapes3d[SHAPE3D_CATALOG_CAPACITY];
 
@@ -107,65 +84,29 @@ struct VECTOR opponent_pointc[6];
 struct VECTOR veh_od[6];
 short ywhlang[5];
 short buf_obase[5];
-/* Local view: car_wheel_offsets; array is 4; another unit uses 8. */
-extern I16S car_wheel_offsets[4];
-/* Local view: shape_template_points_a, shape_template_points_b, shape_template_points_c, shape_template_points_d, shape_template_points_e, shape_template_points_f; array is None; another unit uses 6. */
-extern struct VECTOR shape_template_points_a[],shape_template_points_b[],shape_template_points_c[],shape_template_points_d[],shape_template_points_e[],shape_template_points_f[];
+
 char g_road_piece_id;
 char trk_sample_count;
-/* Local view: mmgr_alloc_resbytes; return.pointer is signed byte; another unit uses void. */
-extern I8 far *resmem(I8 *,I32);
-/* Local view: freememory returns void; the shared declaration returns a far pointer. */
-extern void far freememory(void far *);
+
 /* Unused OMF-order alias; accesses use g_shapes3d[127].shape3d_verts. */
 
 /* Unused OMF-order alias; accesses use g_shapes3d[126].shape3d_verts. */
 
-/* Local view: settires; parameters[5].pointer is signed word; another unit uses struct VECTOR. */
-extern void settires(struct VECTOR far *,I16,I16S *,I16S *,struct VECTOR *,I16S *);
-/* Local view: roadupcheck; parameters[0] is unsigned byte; another unit uses unsigned word. */
-extern U8  roadupcheck(U8 ,U8 );
 short far *g_td01_track_filecpy;
 
 unsigned char far *td19hdl;
-/* Local view: road_trk; pointer is unsigned byte; another unit uses signed byte. */
-extern U8  far *road_trk;
-/* Local view: td_18_ref; pointer is unsigned byte; another unit uses signed byte. */
-extern U8  far *td_18_ref;
 
-/* Local view: g_column_of_trkdata21_pth; pointer is unsigned byte; another unit uses signed byte. */
-extern U8  far *g_column_of_trkdata21_pth;
-/* Local view: tdfrompathrow22; pointer is unsigned byte; another unit uses signed byte. */
-extern U8  far *tdfrompathrow22;
 int g_trackpiecescounter;
-/* Local view: st_hdg; type is unsigned word; another unit uses signed word. */
-extern U16S  st_hdg;
 
 short gap_trackrow_1;
 unsigned char g_cur_track_row;
-/* Local view: g_td08d; pointer is unsigned word; another unit uses signed word. */
-unsigned short far *g_td08d;
-/* Local view: td6_ptr_b; pointer is unsigned word; another unit uses signed byte. */
-extern U16S  far *td6_ptr_b;
-/* Local view: trackdat7; pointer is unsigned word; another unit uses signed byte. */
+I16 far* g_td08d;
 unsigned short far *trackdat7;
 /* Local view: td10checkptr; pointer is struct VECTOR; another unit uses signed word. */
 extern struct VECTOR far *trksign;
-/* Local view: trkptrpath; pointer is struct VECTOR; another unit uses signed word. */
-struct VECTOR far *trkptrpath;
-
-/* Local view: td3; pointer is signed word; another unit uses signed byte. */
-extern I16S far *td3;
-
-/* Local view: file_load_resource_file; return.pointer is void; another unit uses signed byte. */
-extern void far *openresource(const I8 *);
-/* Local view: locate_text_resource; parameters[0].pointer is void; another unit uses signed byte. */
-extern I8 far *getresl(void far *,const I8 *);
-/* Local view: locate_shape_alt; return.pointer is signed byte; another unit uses void. */
-extern I8 far *getres(void far *,const I8 *);
-
-/* Local view: closeresource; parameters[0].pointer is void; another unit uses signed byte. */
-extern void far closeresource(void far *);
+struct VECTOR far* trkptrpath;
+/* Local view: openresource; renderer retains its byte-pointer resource prototype. */
+extern void far *far openresource(I8 *);
 
 /* Adds track objects and wall anchors for adjacent positions. Params: current and next track positions. Returns: none. State: reads track tables and updates object lists and anchors. */
 void getpinfo(struct VECTOR *position, struct VECTOR *nextPosition)
@@ -879,7 +820,7 @@ select_plan:
 		case 0x100: pl_i += 3; break;
 		}
 	}
-	plncurrptr = g_planlist + pl_i * 0x22;
+	plncurrptr = (U8 far *)g_planlist + pl_i * 0x22;
 	if (g_cursurfacekindvalue == 4)
 		hgthgt += ((position->z ^ position->x) >> 8) & 1;
 	else
@@ -1019,14 +960,13 @@ I16 getwpinfo(I16 column, I16 row, struct VECTOR *vertices) {
 /* Loads the shared 3D shape resources. Params: none. Returns: load status. State: updates shared shape-resource handles. */
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
-/* Local view: shape3d_load_all; return is signed word; another unit uses void. */
 I16 init_3dpieces(void)
 {
     register I16 i;
 
     g_game13dresource = 0;
     game2res_pointer = 0;
-    /* PLATFORM(memory): query available resource memory. */ if (availmem() < SHAPE_SHARED_MIN_FREE_BYTES) {
+    /* PLATFORM(memory): query available resource memory. */ if ((I32)availmem() < SHAPE_SHARED_MIN_FREE_BYTES) {
         return 1;
     }
     /* PLATFORM(file): load a 3D resource. */ g_game13dresource = fluffyload(aGame1);
@@ -1161,7 +1101,6 @@ void remove_3dcars(void)
 }
 
 /* Rebuilds cached wheel vertices when steering or wheel height changes. Params: output vertices, steering angle, base heights, cached values, source offsets and origin. Returns: none. State: updates wheel geometry and cached values. */
-/* Local view: settires; parameters[5].pointer is signed word; another unit uses struct VECTOR. */
 void settires(struct VECTOR far *out, I16 angle,
               I16S *base, I16S *last_angle_and_y,
               struct VECTOR *source, I16S *origin)
@@ -1222,7 +1161,6 @@ static U8  terrConnDataStoN[19] = { 0, 0, 0, 0, 0, 0, 1, 0, 5, 1, 4, 0, 5, 4, 0,
 
 /* Builds track and route data from the selected track resources. Params: none. Returns: setup status. State: reads track resources and updates track tables. */
 /* PLATFORM(memory): queries, allocates or releases resource memory. */
-/* Local view: compiletrack; return is signed word; another unit uses signed byte. */
 I16 compiletrack(void)
 {
   I8 matches;
@@ -2025,7 +1963,6 @@ void opponentcompile(void)
 }
 
 /* Maps a terrain and object pair to its hill-road replacement. Params: terrain and object IDs. Returns: replacement object ID. State: reads fixed substitution tables. */
-/* Local view: roadupcheck; parameters[0] is unsigned byte; another unit uses unsigned word. */
 U8  roadupcheck(U8  a, U8  b)
 {
     switch (a) {

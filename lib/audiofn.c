@@ -1,17 +1,15 @@
-
 #include "audio.h"
 #include "chartab.h"
 #include "ui.h"
 #include "video.h"
 #include "dlgcolor.h"
+#include "math3d.h"
 #include "viewstat.h"
 #include "files.h"
 #include "types.h"
 /* READABILITY: Construct an audio resource path and define the initialized palette, material, and UI color tables owned by this module. */
 char audiofiletmp[UI_AUDIOFILETMP_CAPACITY];
-
-/* Local view: strlen; return is unsigned word; another unit uses signed word. */
-extern U16 strlen(const I8 *string);
+#include "memory.h"
 
 /* Build a path from its directory, optional prefix, filename, and extension.
  * Params and return follow the declared C signature. */
@@ -40,36 +38,23 @@ I8 *audio_make_filename(I8 *filename, I8 *extension, I8 *prefix)
 U16S one_through_fourteen_table[UI_ONE_THROUGH_FOURTEEN_TABLE_CAPACITY] = {
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
 };
-/* Local view: dlg_colour; type is signed word; another unit uses unsigned word. */
 I16 dlg_colour = 15;
 I16 intro_color_max = 16;
 I16 menu_hover_color_a = 5;
 I16 menu_hover_color_b = 14;
 I16 animation_outline_color = 8;
-/* Local view: intro_text_color_a; type is signed word; another unit uses unsigned word. */
-I16 intro_text_color_a = 15;
-/* Local view: intro_text_style_a; type is signed word; another unit uses unsigned word. */
-I16 intro_text_style_a = 8;
-/* Local view: intro_text_color_b; type is signed word; another unit uses unsigned word. */
-I16 intro_text_color_b = 11;
-/* Local view: intro_text_style_b; type is signed word; another unit uses unsigned word. */
-I16 intro_text_style_b = 3;
-/* Local view: intro_text_color_c; type is signed word; another unit uses unsigned word. */
-I16 intro_text_color_c = 12;
-/* Local view: intro_text_style_c; type is signed word; another unit uses unsigned word. */
-I16 intro_text_style_c = 4;
-/* Local view: intro_text_color_d; type is signed word; another unit uses unsigned word. */
-I16 intro_text_color_d = 9;
-/* Local view: intro_text_style_d; type is signed word; another unit uses unsigned word. */
-I16 intro_text_style_d = 1;
-/* Local view: intro_text_color_e; type is signed word; another unit uses unsigned word. */
-I16 intro_text_color_e = 10;
-/* Local view: intro_text_style_e; type is signed word; another unit uses unsigned word. */
-I16 intro_text_style_e = 2;
-/* Local view: intro_text_color_f; type is signed word; another unit uses unsigned word. */
-I16 intro_text_color_f = 13;
-/* Local view: intro_text_style_f; type is signed word; another unit uses unsigned word. */
-I16 intro_text_style_f = 5;
+U16S  intro_text_color_a = 15;
+U16S  intro_text_style_a = 8;
+U16S  intro_text_color_b = 11;
+U16S  intro_text_style_b = 3;
+U16S  intro_text_color_c = 12;
+U16S  intro_text_style_c = 4;
+U16S  intro_text_color_d = 9;
+U16S  intro_text_style_d = 1;
+U16S  intro_text_color_e = 10;
+U16S  intro_text_style_e = 2;
+U16S  intro_text_color_f = 13;
+U16S  intro_text_style_f = 5;
 I16 palette_window_line_color = 11;
 I16 palette_window_fill_color = 9;
 I16 palette_window_line_style = 1;
@@ -81,8 +66,7 @@ I16 menu_clear_color = 9;
 I16 camera_select_fill_color = 1;
 I16 camera_select_outline_color = 4;
 I16 performGraphColor = 1;
-/* Local view: dialog_frame_color; type is signed word; another unit uses unsigned word. */
-I16 dialog_frame_color = 4;
+U16S  dialog_frame_color = 4;
 U16S SDPAL_mcgacol1[VIDEO_MATERIAL_TABLE_COUNT] = {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
     12, 13, 14, 15, 108, 116, 15, 28, 29, 14, 28, 31,
@@ -128,11 +112,9 @@ U16S SDPAL_mcgadither[VIDEO_MATERIAL_TABLE_COUNT] = {
     0x33CC, 0xB66D, 0x4992, 0xB66D, 0x4992, 0xB66D, 0x4992, 0x0000,
     0x0000
 };
-/* Local view: material_clrlist_ptr; pointer is unsigned word; another unit uses signed word. */
-U16S *material_clrlist_ptr = SDPAL_mcgacol1;
-/* Local view: material_color_table_pointer; pointer is unsigned word; another unit uses signed word. */
+/* Local view: material_clrlist_ptr; renderer retains its excluded MATERIALCLRLIST pointer. */
+extern I16* material_clrlist_ptr;
+I16* material_clrlist_ptr = SDPAL_mcgacol1;
 U16S *material_color_table_pointer = SDPAL_mcgacol1;
-/* Local view: material_pattern_table_pointer; pointer is unsigned word; another unit uses signed word. */
 U16S *material_pattern_table_pointer = SDPAL_mcgatype;
-/* Local view: material_pattern2_table_ptr; pointer is unsigned word; another unit uses signed word. */
 U16S *material_pattern2_table_ptr = SDPAL_mcgadither;

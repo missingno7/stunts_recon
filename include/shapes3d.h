@@ -196,4 +196,25 @@ struct POLYINFO {
 #define WHEEL_POINT_BUFFER_COUNT 48
 #define WHEEL_SECOND_RING_OFFSET 16
 
+/* Shape submission, materials and geometry. */
+struct POINT2D;
+struct RECTANGLE;
+struct WheelRect;
+struct coord_pair;
+extern unsigned polygonnumber;
+extern unsigned char  renderlevel;
+extern unsigned char shape_template_points_a[6];
+extern struct coord_pair shape_template_points_b[12];
+extern struct coord_pair shape_template_points_c[3];
+extern struct coord_pair shape_template_points_d[3];
+extern struct coord_pair shape_template_points_e[3];
+extern struct coord_pair shape_template_points_f[6];
+extern char skybox_loaded;
+extern void drawpolypt(int, int, int*);
+extern int init_3dpieces(void);
+extern unsigned INIT_OBJECTS_BUFFER(int, int, int, struct RECTANGLE*, int);
+extern void far initscenery(unsigned char);
+extern void makezonelist(unsigned char, char *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, char *, struct RECTANGLE *);
+extern void far solidtire(struct POINT2D*, int, int, int, int);
+extern void far tire(struct WheelRect *, int *, int);
 #endif

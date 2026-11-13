@@ -17,7 +17,6 @@
    transformed_primitive_paint = transprimitivepaintjob, backlightovr8 = backlights_paint_override,
    projected_point_table = polyvertpointptrtab, primitive_type_table = primtypetab, inverse_power_of_two_table = invpow2tbl. */
 #include "math3d.h"
-
 #include "matrix.h"
 #include "trig.h"
 #include "radius.h"
@@ -30,19 +29,10 @@
 
 /* PORT: This record is a 16-bit packed renderer structure; preserve MSC field alignment and signed widths. */
 #include "shapes3d.h"
-
 #include "viewstat.h"
 #include "game.h"
 #include "video.h"
-
-/* Local view: mmgr_alloc_resbytes; parameters[1] is signed long; another unit uses unsigned long. */
-extern void far* far resmem(I8*, I32);
-
-/* Local view: drawpolypt; parameters[2].pointer is struct POINT2D; another unit uses signed word. */
-extern void far drawpolypt(I16, I16, struct POINT2D*);
-
-/* Local view: solidtire; parameters[0].pointer is struct POINT2D; another unit uses struct WheelRect. */
-extern void far solidtire(struct POINT2D*, I16, I16, I16, I16);
+#include "files.h"
 
 static struct MATRIX mat_no_turn, mat_quarter_turn, mat_half_turn, mat_three_quarters_turn;
 struct MATRIX g_matrix_yrot;
@@ -60,8 +50,6 @@ int * matpatlistcopypointer2;
 unsigned short video_cnstval;
 static I32 vector_angle_cos, vector_angle_sin, vector_angle_sin2, vector_angle_cos2;
 static I8 shape3d_unused[576];
-
-/* Local view: polygonnumber; type is unsigned word; another unit uses signed word. */
 unsigned polygonnumber;
 static unsigned polyinfo_offset;
 static I16 poly_list_insert_result;
@@ -86,8 +74,6 @@ static U8  obj_flags;
 unsigned char transformed_vert_count;
 static struct RECTANGLE* current_rect;
 static I8 current_paintjob;
-/* Local view: backlightovr8; type is signed byte; another unit uses unsigned byte. */
-extern I8 backlightovr8;
 char g_vector_bitix;
 
 static struct POINT2D* projected_point_ptr_table[11];
@@ -119,8 +105,6 @@ void INIT_BUFFERS(void)
     polyinfo_reset_marker = POLYINFO_RESET_SENTINEL;
     facenodeiterator = POLYINFO_CAPACITY;
 }
-
-/* Local view: INIT_OBJECTS_BUFFER; return is unsigned word; another unit uses signed word. */
 unsigned INIT_OBJECTS_BUFFER(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cliprect, I16 unk)
 { /* PURPOSE: Build the requested view rotations and return the camera-facing angle. Params: angZ, angX, angY, cliprect, unk. Returns: unsigned. Globals: reads none; writes half_scale_flag, selection_rect, wkmatx. */
     struct MATRIX* matptr;
@@ -796,19 +780,9 @@ void initnm(void) { /* PURPOSE: Cache the sine and cosine values used by view-ve
 }
 
 I32 lgabs(I32 value) { /* PURPOSE: Return the magnitude of a signed long value. Params: value. Returns: long. Globals: none. */ if (value < 0) return -value; return value; }
-
-/* Local view: g_vid_flg2_set; type is signed word; another unit uses unsigned word. */
-short g_vid_flg2_set;
-/* Local view: vidflg3is_minus1; type is signed word; another unit uses unsigned word. */
-short vidflg3is_minus1;
-/* Local view: abortmessage; parameters.count is 1; another unit uses 2. */
-extern void abortmessage(I8 *);
-
-/* Local view: clipzone; return is signed byte; another unit uses signed word. */
-I8 clipzone(struct RECTANGLE *, struct RECTANGLE *);
-
-/* Local view: makezonelist; parameters[0] is unsigned byte; another unit uses signed byte. */
-void makezonelist(U8 , I8 *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, I8 *, struct RECTANGLE *);
+I16S g_vid_flg2_set;
+I16S vidflg3is_minus1;
+#include "ui.h"
 
 void mergezones(struct RECTANGLE *r1, struct RECTANGLE *r2, struct RECTANGLE *out)
 { /* PURPOSE: Write the smallest rectangle that covers both input rectangles. Params: r1, r2, out. Returns: void. Globals: reads g_vid_flg2_set, vidflg3is_minus1; writes vidflg3is_minus1. */
@@ -820,8 +794,6 @@ void mergezones(struct RECTANGLE *r1, struct RECTANGLE *r2, struct RECTANGLE *ou
         out->right = (out->right + g_vid_flg2_set - 1) & vidflg3is_minus1;
     }
 }
-
-/* Local view: clipzone; return is signed byte; another unit uses signed word. */
 I8 clipzone(struct RECTANGLE *r1, struct RECTANGLE *r2)
 { /* PURPOSE: Clip the first rectangle to the second and report an empty intersection. Params: r1, r2. Returns: char. Globals: none. */
     if (r1->right < r1->left) return 1;
@@ -985,8 +957,6 @@ I8 zoneadjacent(struct RECTANGLE* r1, struct RECTANGLE* r2) { /* PURPOSE: Test w
  else if (r2->right == r1->left) { if (r1->top != r2->top) return 0; if (r1->bottom != r2->bottom) return 0; return 1; }
  return 0;
 }
-
-/* Local view: makezonelist; parameters[0] is unsigned byte; another unit uses signed byte. */
 void makezonelist(U8  arg_rectcount, I8* arg_rectarray_indices, 
 	struct RECTANGLE* arg_rectarray1, struct RECTANGLE* arg_rectarray2, 
 	struct RECTANGLE* arg_rectptr, I8* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr) 

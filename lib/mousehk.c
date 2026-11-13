@@ -1,4 +1,3 @@
-
 #include "input.h"
 #include "types.h"
 /* READABILITY: Preserve the original empty far-call entry. */

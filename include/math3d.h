@@ -122,4 +122,11 @@ extern void FAR zclipline(struct VECTOR *, struct VECTOR *, struct VECTOR *, I16
 #define WORLD_COORDINATE_SCALE 64L
 #define WORLD_COORDINATE_SCALE_I16 64
 
+/* Math3d services and shared state. */
+struct PLANE;
+struct RECTANGLE;
+extern struct PLANE far* g_planlist;
+extern struct PLANE far plan_memres[];
+extern struct PLANE far* plncurrptr;
+extern char clipzone(struct RECTANGLE *, struct RECTANGLE *);
 #endif

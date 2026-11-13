@@ -19,4 +19,10 @@ extern int far testticks(void);
 extern void far timer_setup_interrupt(void);
 extern void far waitticks(void);
 
+/* Timer services and shared state. */
+extern unsigned short  elaptm1;
+extern short rate_frame;
+extern int far elapsedticks(void);
+extern int far elticks(void);
+extern unsigned long  far timedwait(unsigned long);
 #endif

@@ -3,52 +3,23 @@
 #include "audstate.h"
 #include "resource.h"
 
-
-
-
-
-
-
 static struct AudioTimer audio_timer_table[AUDIO_ENGINE_TIMER_COUNT];
 static int audio_timer_count;
 static char id_buffer[RESOURCE_ID_STRING_BYTES];
 /* MSC 6 /Zi: only called interfaces precede the public definitions; other API types shift PUBLIC type indices. */
-
 #include "auddrv.h"
 #include "radius2d.h"
 #include "tmrhook.h"
-
-
-
-
-
-
-
-
-/* Local view: locate_shape_fatal; return.pointer is unsigned byte; another unit uses struct SHAPE2D. */
-extern u8 far * far locate_shape_fatal(void far *lookup, char *name);
-
-/* Local view: reserve_audio_chunk; parameters[1] is signed word; another unit uses unsigned byte. */
-extern int far reserve_audio_chunk(int a, int b);
-/* Local view: abortmessage; parameters.count is 1; another unit uses 2. */
-extern void far abortmessage(char *message);
-/* Local view: start_audio_voice_sample; parameters[1].pointer is unsigned byte; another unit uses signed byte. */
-extern void far start_audio_voice_sample(int handle, u8 far *shape);
-/* Local view: send_audio_stop_event; MSC 6 /Zi requires the original ordinary far entry type; the shared entry uses _loadds. */
-extern short far send_audio_stop_event(u16 rate, int handle);
+/* Local view: locate_shape_fatal; frontend raw-object exclusion retains its SHAPE2D pointer result. */
+extern void FAR * FAR locate_shape_fatal(void FAR*, I8*);
+/* Local view: abortmessage; ui.h changes _audio_add_driver_timer PUBLIC type index 552 to 645. */
+extern void far abortmessage(char *);
 /* Local view: audio_set_chunk_volume; parameters[1] is signed word; another unit uses unsigned byte. */
 extern void far audio_set_chunk_volume(int handle, int value);
 /* Local view: set_audio_voice_value; MSC 6 /Zi requires the original ordinary far entry type; the shared entry uses _loadds. */
 extern void far set_audio_voice_value(int channel, int rate);
-
-
-
-/* Local view: audio_check_flag; parameters[2] is signed word; another unit uses unsigned byte. */
-extern int far audio_check_flag(void far *resource, int a, int b, int c);
-/* Local view: debug_printf_text; parameters[1] is signed word; another unit uses .... */
-extern void far debug_printf_text(char *format, int value);
-
-
+/* Local view: debug_printf_text; ui.h changes _audio_add_driver_timer PUBLIC type index 552 to 645. */
+extern void far debug_printf_text(char *, int);
 
 void far audio_add_driver_timer(void)
 { /* PURPOSE: Clear audio timer slots and register the audio update callback. Params: none. Returns: void. Globals: reads audio_timer_table; writes audio_timer_count. */ /* PLATFORM(timer): registers, removes, or reads the game timer. */

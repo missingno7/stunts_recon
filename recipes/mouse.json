@@ -1,10 +1,6 @@
 {
   "communal_declarations": [
     {
-      "name": "_mouse_api_y",
-      "size": 2
-    },
-    {
       "name": "_ms_buttons",
       "size": 2
     },
@@ -14,6 +10,10 @@
     },
     {
       "name": "_cursorxposition",
+      "size": 2
+    },
+    {
+      "name": "_mouse_api_y",
       "size": 2
     }
   ],
@@ -35,7 +35,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_int86",
-      "target_index": 8,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -52,7 +52,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -69,7 +69,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -86,7 +86,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -103,7 +103,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -120,7 +120,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_int86",
-      "target_index": 8,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -137,7 +137,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -154,7 +154,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -171,7 +171,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -205,7 +205,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -222,7 +222,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -256,7 +256,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -273,7 +273,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -290,7 +290,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_int86",
-      "target_index": 8,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -307,7 +307,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -324,7 +324,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -341,7 +341,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_int86",
-      "target_index": 8,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -358,7 +358,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -375,7 +375,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_api_y",
-      "target_index": 12,
+      "target_index": 16,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -392,7 +392,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -409,7 +409,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -443,7 +443,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cursorxposition",
-      "target_index": 16,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -460,7 +460,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -477,7 +477,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_int86",
-      "target_index": 8,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -494,7 +494,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -511,7 +511,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -545,7 +545,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_int86",
-      "target_index": 8,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -562,7 +562,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -579,7 +579,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -647,7 +647,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ms_buttons",
-      "target_index": 13,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -664,7 +664,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_api_y",
-      "target_index": 12,
+      "target_index": 16,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -681,7 +681,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -698,7 +698,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cursorxposition",
-      "target_index": 16,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -732,7 +732,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -749,7 +749,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ms_buttons",
-      "target_index": 13,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -766,7 +766,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -783,7 +783,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_int86",
-      "target_index": 8,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -800,7 +800,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -817,7 +817,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -834,7 +834,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_int86",
-      "target_index": 8,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -851,7 +851,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -868,7 +868,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -885,7 +885,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -902,7 +902,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -919,7 +919,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_int86",
-      "target_index": 8,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -936,7 +936,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -953,7 +953,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -970,7 +970,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1004,7 +1004,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1038,7 +1038,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouse_set_pixratio",
-      "target_index": 2,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1055,7 +1055,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_setmousebounds",
-      "target_index": 5,
+      "target_index": 14,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1106,7 +1106,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ms_buttons",
-      "target_index": 13,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1123,7 +1123,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1140,7 +1140,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1157,7 +1157,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_int86",
-      "target_index": 8,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1174,7 +1174,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1191,7 +1191,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1208,7 +1208,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_int86",
-      "target_index": 8,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1225,7 +1225,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1242,7 +1242,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1259,7 +1259,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_int86",
-      "target_index": 8,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1276,7 +1276,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1293,7 +1293,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1310,7 +1310,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1327,7 +1327,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msregisterms",
-      "target_index": 14,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1517,21 +1517,21 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
+      "_int86",
+      "mouse_get_position",
+      "mouse_show_cursor",
+      "mouse_hide_cursor",
       "_mouse_set_pixratio",
       "_setmousex",
       "_setmousey",
-      "_setmousebounds",
-      "_initmouse",
-      "mouse_get_position",
-      "_int86",
-      "mouse_show_cursor",
-      "mouse_hide_cursor",
-      "_setmousepos",
-      "_mouse_api_y",
       "_ms_buttons",
       "_msregisterms",
+      "_cursorxposition",
       "_getmousepos",
-      "_cursorxposition"
+      "_initmouse",
+      "_setmousebounds",
+      "_setmousepos",
+      "_mouse_api_y"
     ],
     "groups": [
       {
@@ -1551,31 +1551,6 @@
     ],
     "publics": [
       {
-        "name": "_mouse_set_pixratio",
-        "offset": 0,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_setmousex",
-        "offset": 496,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_setmousey",
-        "offset": 544,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_setmousebounds",
-        "offset": 178,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_initmouse",
-        "offset": 40,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "mouse_get_position",
         "offset": 262,
         "segment": "UNIT_TEXT"
@@ -1591,6 +1566,41 @@
         "segment": "UNIT_TEXT"
       },
       {
+        "name": "_mouse_set_pixratio",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_setmousex",
+        "offset": 496,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_setmousey",
+        "offset": 544,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_mouseshown",
+        "offset": 4,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_getmousepos",
+        "offset": 438,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_initmouse",
+        "offset": 40,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_setmousebounds",
+        "offset": 178,
+        "segment": "UNIT_TEXT"
+      },
+      {
         "name": "_setmousepos",
         "offset": 386,
         "segment": "UNIT_TEXT"
@@ -1601,18 +1611,8 @@
         "segment": "_DATA"
       },
       {
-        "name": "_getmousepos",
-        "offset": 438,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_mousehorscale",
         "offset": 2,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_mouseshown",
-        "offset": 4,
         "segment": "_DATA"
       }
     ],
@@ -1699,23 +1699,23 @@
   "preprocessor_closure": [
     {
       "path": "include/game.h",
-      "sha256": "efb4f8ec271fb25fdd21f28316f4300b0de522a08b4fc9734403ea6d0a0829e8",
-      "size": 11658
+      "sha256": "6ce4537b21870db8e0156b1a498c536db9febecac9d739dc83fbd5cbe360a6a1",
+      "size": 11942
     },
     {
       "path": "include/gamerec.h",
-      "sha256": "e3bf380bb327eb69feac2c074542c8d778f62f70fd2d0206b03c5d794b6a3826",
-      "size": 1007
+      "sha256": "1b5ceef18fd7b4a217b2341c624a5890f017f837cedbed6edbeac835b9a2816b",
+      "size": 1381
     },
     {
       "path": "include/input.h",
-      "sha256": "5bb6b46401f88ad81a22f5ce6446ef118c4716c4abc18b8cfec66ab0167587aa",
-      "size": 7430
+      "sha256": "d23d29078662dd32d7f944d633c9ee04a4992f8c7c7c80c67458a28d5d76f455",
+      "size": 8052
     },
     {
       "path": "include/math3d.h",
-      "sha256": "59a5ed823822b0ec3d7c3dad15159f8dae01f9cfd9b8a105eb89e0f12d4bbc69",
-      "size": 3760
+      "sha256": "569d2d4d31555d6f6973f800ed988d1cbe65126f033f68971fe56060202dd546",
+      "size": 4007
     },
     {
       "path": "include/radius2d.h",
@@ -1729,8 +1729,8 @@
     },
     {
       "path": "include/viewstat.h",
-      "sha256": "bcb9520644dfe17d764d2d5bb1a79bd6b719fe1cf1619cf4b1f1077a71348a44",
-      "size": 485
+      "sha256": "1a3f6e3c4410393d788f9624ea0028f477543b173689ecdcb024b523816f5b26",
+      "size": 395
     },
     {
       "line": 91,

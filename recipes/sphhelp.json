@@ -3,8 +3,8 @@
     "declarations": {
       "externals": [
         "__acrtused",
-        "_ellipseh",
         "_drawpolyp",
+        "_ellipseh",
         "_solidellipseh"
       ],
       "groups": [
@@ -117,7 +117,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_drawpolyp",
-      "target_index": 3,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -134,7 +134,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ellipseh",
-      "target_index": 2,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -157,9 +157,14 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
+      "path": "include/ellipse.h",
+      "sha256": "beca5e156c47d0c7f9f2829de0642667e2901e67e5da019f097e9cf6a35c282e",
+      "size": 309
+    },
+    {
       "path": "include/math3d.h",
-      "sha256": "59a5ed823822b0ec3d7c3dad15159f8dae01f9cfd9b8a105eb89e0f12d4bbc69",
-      "size": 3760
+      "sha256": "569d2d4d31555d6f6973f800ed988d1cbe65126f033f68971fe56060202dd546",
+      "size": 4007
     },
     {
       "path": "include/radius2d.h",
@@ -168,8 +173,8 @@
     },
     {
       "path": "include/shapes3d.h",
-      "sha256": "b7a71175f36ef6a9634608f85888bc61ba3549cc1e62f0fa0d56fa141064982d",
-      "size": 7021
+      "sha256": "dcccffe18a51a7bd06da874b051076aa7e5d671033ca7a6f7ec8e688c9334d44",
+      "size": 7995
     },
     {
       "path": "include/types.h",
@@ -178,8 +183,8 @@
     },
     {
       "path": "include/viewstat.h",
-      "sha256": "bcb9520644dfe17d764d2d5bb1a79bd6b719fe1cf1619cf4b1f1077a71348a44",
-      "size": 485
+      "sha256": "1a3f6e3c4410393d788f9624ea0028f477543b173689ecdcb024b523816f5b26",
+      "size": 395
     },
     {
       "line": 9,
@@ -274,6 +279,42 @@
     {
       "line": 170,
       "path": "include/shapes3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     }

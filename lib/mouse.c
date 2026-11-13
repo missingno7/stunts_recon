@@ -3,7 +3,7 @@
 /* READABILITY: Adapt the DOS mouse driver register interface to the game cursor state and coordinate conventions. */
 /* PORT: INT register packets require 16-bit word fields and MSC-compatible struct layout. */
 #include "input.h"
-
+#include "math3d.h"
 #include "viewstat.h"
 #include "game.h"
 
@@ -11,9 +11,6 @@ MouseRegs msregisterms;
 unsigned int ms_buttons;
 unsigned int cursorxposition;
 unsigned int mouse_api_y;
-
-/* Local view: setmousebounds; parameters[0] is unsigned word; another unit uses signed word. */
-void FAR setmousebounds(U16 xmin, U16 ymin, U16 xmax, U16 ymax);
 
 /* Set the DOS mouse horizontal and vertical pixel ratios.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
@@ -32,7 +29,6 @@ void FAR mouse_set_pixratio(U16 xratio, U16 yratio)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): initialize the DOS mouse and set its game bounds. */
-/* Local view: initmouse; parameters[0] is unsigned word; another unit uses signed word. */
 I16 FAR initmouse(U16 width, U16 height)
 {
     U16 status;
@@ -58,7 +54,6 @@ I16 FAR initmouse(U16 width, U16 height)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): set DOS mouse horizontal and vertical limits. */
-/* Local view: setmousebounds; parameters[0] is unsigned word; another unit uses signed word. */
 void FAR setmousebounds(U16 xmin, U16 ymin,
                           U16 xmax, U16 ymax)
 {
@@ -120,7 +115,6 @@ static void FAR mouse_hide_cursor(void)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): move the DOS mouse cursor. */
-/* Local view: setmousepos; parameters[0] is unsigned word; another unit uses signed word. */
 void FAR setmousepos(U16 x, U16 y)
 {
     msregisterms.ax = MOUSE_FN_SET_POSITION;
@@ -136,7 +130,6 @@ void FAR setmousepos(U16 x, U16 y)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(input_mouse): read the DOS mouse button and coordinate state. */
-/* Local view: getmousepos; parameters[0].pointer is unsigned word; another unit uses signed word. */
 void FAR getmousepos(U16 *ax, U16 *cx, U16 *dx)
 {
     msregisterms.ax = MOUSE_FN_GET_POSITION_AND_BUTTONS;

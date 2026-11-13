@@ -4,6 +4,7 @@
 /* PORT: Resource headers use MSC 16-bit int layout; assert these field offsets in a host port. */
 /* Local view: SHAPE2D; struct.count is 10; another unit uses 6. */
 struct SHAPE2D { I16 width,height,s2d_hotspot_x,s2d_hotspot_y,pos_x,pos_y; U8 s2d_plane_color0,s2d_plane_color1_bg,s2d_plane_color2_flip,s2d_plane_color3_flags; };
+#include "math3d.h"
 #include "viewstat.h"
 #include "game.h"
 #include "memory.h"
@@ -14,19 +15,12 @@ struct SHAPE2D { I16 width,height,s2d_hotspot_x,s2d_hotspot_y,pos_x,pos_y; U8 s2
     /* PLATFORM(file): load the named shape resource. */
 
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-/* Local view: modulesize; parameters[0].pointer is void; another unit uses signed byte. */
-extern U16S modulesize(void FAR *);
-    /* PLATFORM(memory): use game-managed storage for the shape resource. */
 
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
 
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-/* Local view: packmemory; return.pointer is void; another unit uses signed byte. */
-extern void FAR *packmemory(void FAR *);
-/* Local view: file_get_res_shape_count; return is unsigned word; another unit uses signed word. */
-extern U16S file_get_res_shape_count(void FAR *);
-/* Local view: shapepointer; parameters[0].pointer is unsigned byte; another unit uses signed byte. */
-extern struct SHAPE2D FAR *shapepointer(U8 FAR *, I16);
+
+    /* PLATFORM(memory): use game-managed storage for the shape resource. */
 
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
 

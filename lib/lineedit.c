@@ -1,8 +1,8 @@
 #include "types.h"
 /* READABILITY: Implement the shared line editor, including key polling, cursor drawing, and text-width handling. */
 #include "ui.h"
-
 #include "chartab.h"
+#include "math3d.h"
 #include "viewstat.h"
 #include "game.h"
 #include "input.h"
@@ -12,9 +12,8 @@
 static I8 *line_input_text_buffer;
 static I16S line_input_cursor_vertical, line_edit_x, line_edit_y;
 static I16S cursor_flash_state, line_text_max_width, line_input_cursor_slot;
+#include "memory.h"
 
-/* Local view: strlen; return is signed word; another unit uses unsigned word. */
-extern I16 strlen(I8 *text);
     /* PLATFORM(video): measure or draw the current line-edit display. */
 
     /* PLATFORM(video): measure or draw the current line-edit display. */
@@ -28,8 +27,9 @@ extern I16 strlen(I8 *text);
     /* PLATFORM(input_kb): read the next DOS keyboard callback value. */
 
     /* PLATFORM(timer): reset the game timer countdown for this input wait. */
-/* Local view: setticks; parameters.count is 2; another unit uses 1. */
-extern void FAR setticks(I16 offset, I16 segment);
+/* Local view: setticks; audiores raw-object exclusion retains its prototype. */
+extern void FAR setticks(I16, I16);
+
     /* PLATFORM(timer): set the cursor-blink timer interval. */
 
     /* PLATFORM(timer): check whether the timer countdown expired. */
@@ -40,7 +40,6 @@ extern void FAR setticks(I16 offset, I16 segment);
 /* PLATFORM(input_kb): poll the keyboard and abort callback for edit keys. */
 /* PLATFORM(video): copy the render surface before drawing line edits. */
 /* PLATFORM(timer): refresh cursor blink timing while waiting for input. */
-/* Local view: get_pstring; parameters[0] is signed byte; another unit uses signed word. */
 I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
                   I16 maxWidth, I16 x, I16 y,
                   I16 (FAR *readCallback)(void), I16 timerOffset, I16 timerSegment)
@@ -263,8 +262,8 @@ void FAR read_line_helper(void)
     if (cursor_flash_state == 0)
         return;
 
-    if (strlen(line_input_text_buffer) < line_input_cursor_slot)
-        line_input_cursor_slot = strlen(line_input_text_buffer);
+    if ((I16)strlen(line_input_text_buffer) < line_input_cursor_slot)
+        line_input_cursor_slot = (I16)strlen(line_input_text_buffer);
 
     /* PLATFORM(video): measure or draw the current line-edit display. */
     width = textnpixels(line_input_text_buffer + line_input_cursor_slot, 1);

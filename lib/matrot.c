@@ -6,11 +6,7 @@
 
 /* Local view: MATRIX; embedded MAT3 record differs from the shared flat nine-word array. */
 struct MATRIX { struct MAT3 m; };
-
-/* Local view: intcos; parameters[0] is signed word; another unit uses unsigned word. */
-extern I16S intcos(I16);
-/* Local view: intsin; parameters[0] is signed word; another unit uses unsigned word. */
-extern I16S intsin(I16);
+#include "trig.h"
 
 /* Write a fixed-point X-axis rotation matrix.
  * Params and return follow the declared C signature. */

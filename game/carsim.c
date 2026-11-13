@@ -20,55 +20,21 @@
 /* Exact-object requirement: write back the wheel response even when unchanged. */
 #define WRITE_BACK(value) ((value) = (value))
 #include "types.h"
-/* Local view: rate_frame; type is signed word; another unit uses unsigned word. */
-extern short rate_frame;
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
+#include "timer.h"
 
 #include "math3d.h"
 
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-
 #include "matrix.h"
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
 
 /* Local math imports preserve communal LINK ordering; communal order is load-bearing. */
 
 /* Local signed radius view; the shared math API returns an unsigned word. */
-/* Local view: inthypot; return is signed word; another unit uses unsigned word. */
-I16 inthypot(I16 z, I16 y);
+#include "radius.h"
 
-/* Local view: clipzone; return is signed word; another unit uses signed byte. */
-I16 clipzone(struct RECTANGLE* r1, struct RECTANGLE* r2);
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-
-/* Local view: GAMEINFO; struct[8].type is unsigned word; another unit uses signed byte. */
-struct GAMEINFO {
-	I8 game_playercarid[4];
-	I8 game_playermaterial;
-	I8 game_playertransmission;
-	I8 game_opponenttype;
-	I8 game_opponentcarid[4];
-	I8 game_opponentmaterial;
-	I8 game_opponenttransmission;
-	I8 game_trackname[9];
-	U16S  game_framespersec;
-	U16S  game_recordedframes;
-};
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
+#include "gamerec.h"
 
 #include "carstate.h"
 
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
 /* Local view: GAMESTATE; struct.count is 45; another unit uses 46. */
 struct GAMESTATE {
 	I32 game_debris_x[24]; 
@@ -118,221 +84,46 @@ struct GAMESTATE {
 	I8 field_45F;
 };
 
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-
 #include "game.h"
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
 
 #include "track.h"
 
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
 #include "trkinfo.h"
 
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-/* Local view: TRACKOBJECT; struct[2].type.pointer is void; another unit uses struct SHAPE3D. */
-struct TRACKOBJECT {
-    struct TRKOBJINFO *ss_trkObjInfoPtr;
-    I16S ss_rotY;
-    void *ss_shapePtr;
-    void *ss_loShapePtr;
-    U8  ss_ssOvelay;
-    I8 ss_surfaceType, ss_ignoreZBias, ss_multiTileFlag, ss_physicalModel, scene_unk5;
-};
-
-/* Local view: g_vid_flg2_set; type is signed word; another unit uses unsigned word. */
-extern I16S g_vid_flg2_set;
-/* Local view: vidflg3is_minus1; type is signed word; another unit uses unsigned word. */
-extern I16S vidflg3is_minus1;
-
-/* Local view: g_videoflg5; type is signed word; another unit uses unsigned byte. */
-extern I16S g_videoflg5;
-/* Local view: g_vid_flag6; type is signed word; another unit uses unsigned byte. */
-extern I16S g_vid_flag6;
-
-/* Local view: elaptm1; type is unsigned word; another unit uses signed word. */
-extern U16S  elaptm1;
-
-/* Local view: gm_playmode; type is unsigned byte; another unit uses signed byte. */
-extern U8  gm_playmode; 
-
- 
- 
- 
-/* Local view: st_hdg; type is signed word; another unit uses unsigned word. */
-extern short st_hdg;
-/* Local view: table_lookup; pointer is signed byte; another unit uses void. */
-extern char *table_lookup;
-/* Local view: steerWhlRespTable_10fps; type is array[None]; another unit uses near pointer. */
-extern I8 steerWhlRespTable_10fps[];
-/* Local view: steerWhlRespTable_20fps; type is array[None]; another unit uses near pointer. */
-extern I8 steerWhlRespTable_20fps[];
-
-/* Local view: popupact; type is signed word; another unit uses signed byte. */
-extern I16 popupact;
-/* Local view: mouse_enabled; type is signed byte; another unit uses unsigned byte. */
-extern I8 mousedrive;
-/* Local view: joystick_enabled; type is signed byte; another unit uses unsigned byte. */
-extern I8 joystick_enabled;
-
-/* Local view: input_pushed; type is signed word; another unit uses unsigned word. */
-extern I16 input_pushed;
-
-/* Local view: g_dastbmpbuf; type is signed word; another unit uses far pointer. */
-extern I16 g_dastbmpbuf;
-
-/* Local view: mainkey; return is void; another unit uses signed byte. */
-extern void mainkey(I16);
-
-/* Local view: flagsdown; type is signed word; another unit uses unsigned byte. */
-extern I16 flagsdown;
+#include "trkobj.h"
+#include "video.h"
+#include "car.h"
+#include "ui.h"
+#include "mousebuf.h"
+#include "input.h"
 
 /* Local view: resbuftext; type is signed byte; another unit uses array[80]. */
 extern I8 resbuftext;
-
-/* Local view: main_data_file_addr; pointer is void; another unit uses signed byte. */
-extern void far* main_data_file_addr;
-/* Local view: cvxs_a; segment is huge; another unit uses far. */
-extern struct GAMESTATE huge* cvxs_a;
-
- 
- 
-/* Local view: td3; pointer is signed byte; another unit uses signed word. */
-extern I8 far* td3;
- 
- 
-/* Local view: td6_ptr_b; pointer is signed byte; another unit uses unsigned word. */
-extern I8 far* td6_ptr_b;
-/* Local view: trackdat7; pointer is signed byte; another unit uses unsigned word. */
-extern I8 far* trackdat7;
-/* Local view: g_td08d; pointer is signed word; another unit uses unsigned word. */
-extern I16 far* g_td08d; 
-/* Local view: trkptrpath; pointer is signed word; another unit uses struct VECTOR. */
-extern I16 far* trkptrpath;
 /* Local view: td10checkptr; pointer is struct VECTOR; another unit uses signed word. */
 extern struct VECTOR far* trksign;
-/* Local view: hscore_trk11_ptr; pointer is signed byte; another unit uses struct HighScoreRecord. */
-extern I8 far* hscore_trk11_ptr; 
-/* Local view: savedptr_ms; pointer is signed byte; another unit uses struct SPRITE. */
-extern I8 far* savedptr_ms;
- 
-/* Local view: td14tb; pointer is unsigned byte; another unit uses signed byte. */
-extern U8  far* td14tb; 
- 
- 
-/* Local view: road_trk; pointer is signed byte; another unit uses unsigned byte. */
-extern char far* road_trk; 
-/* Local view: td_18_ref; pointer is signed byte; another unit uses unsigned byte. */
-extern char far* td_18_ref;
-
- 
-/* Local view: g_column_of_trkdata21_pth; pointer is signed byte; another unit uses unsigned byte. */
-extern char far* g_column_of_trkdata21_pth; 
-/* Local view: tdfrompathrow22; pointer is signed byte; another unit uses unsigned byte. */
-extern char far* tdfrompathrow22; 
- 
-
-/* Local view: g_is_busy; type is signed byte; another unit uses unsigned byte. */
-extern I8 g_is_busy;
-
-/* Local view: menutimeout; type is signed byte; another unit uses unsigned byte. */
-extern I8 menutimeout;
-/* Local view: dialog_frame_color; type is unsigned word; another unit uses signed word. */
-extern U16S  dialog_frame_color;
-
-/* Local view: endhsdemo; type is signed byte; another unit uses unsigned byte. */
-extern I8 didrace;
-
-/* Local view: renderlevel; type is unsigned byte; another unit uses signed byte. */
-extern U8  renderlevel;
-
-/* Local view: is_audioloaded; type is signed word; another unit uses signed byte. */
-extern I16S is_audioloaded;
+#include "shapes3d.h"
+#include "audio.h"
 
  
 
 /* Local view: material_clrlist_ptr; pointer is signed word; another unit uses struct MATERIALCLRLIST. */
 extern I16* material_clrlist_ptr;
-
-/* Local view: run_intro_looped; return is unsigned word; another unit uses signed word. */
-extern U16S  run_intro_looped(void);
-/* Local view: messagebox; return is unsigned word; another unit uses signed word. */
-extern U16S  messagebox(I16 unk1, I16 unk2, void far* textresptr, U16S  unk3, U16S  unk4, I16 arg, void* unk5, I16 unk6);
-
-/* Local view: selectcar; parameters[0].pointer is struct GAMEINFO; another unit uses signed byte. */
-extern void selectcar(struct GAMEINFO* unk, I8* unk2, I8* unk3, U16  unk4);
-
-/* Local view: end_hiscore; return is unsigned word; another unit uses signed byte. */
-extern unsigned evaluation(void);
-/* Local view: run_option_menu; return is unsigned word; another unit uses signed byte. */
-extern unsigned run_option_menu(void);
-/* Local view: getprotection; parameters.count is 0; another unit uses 1. */
-extern void getprotection(void);
-
-/* Local view: initmouse; parameters[0] is signed word; another unit uses unsigned word. */
-extern I16S initmouse(I16S a1, I16S a2);
-
-/* Local view: sprset1size; parameters[0] is unsigned word; another unit uses signed word. */
-extern void clippix(U16S  left, U16S  right, U16S  top, U16S  height);
-/* Local view: sprite_clear_1_color; parameters[0] is unsigned byte; another unit uses signed word. */
-extern void clearwindow(U8 );
-/* Local view: sprite_blit_to_video; return is void; another unit uses signed word. */
-extern void sprite_blit_to_video(struct SPRITE far* sprite);
-
-/* Local view: timer_get_delta_alt; return is unsigned long; another unit uses signed word. */
-extern U32  elticks(void);
-
-/* Local view: abortmessage; parameters.count is 2; another unit uses 1. */
-extern void abortmessage(const I8*, ...);
-
-/* Local view: _memcpy; return is near pointer; another unit uses void. */
-extern void* _memcpy(void*, const void*, unsigned);
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-
-#include "audio.h"
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-#include "car.h"
-#include "viewstat.h"
-#include "ui.h"
-#include "dlgcolor.h"
-#include "video.h"
-#include "input.h"
+/* Local view: messagebox; renderer retains its excluded unsigned return prototype. */
+extern I16 far messagebox();
 #include "memory.h"
-#include "shapes3d.h"
+
+#include "viewstat.h"
+#include "dlgcolor.h"
 #include "files.h"
-#include "timer.h"
 #include "trig.h"
-
-/* Local view: g_cursurfacekindvalue; type is signed byte; another unit uses unsigned byte. */
+/* Local view: g_cursurfacekindvalue; frontend owns unsigned char; trkscene owns char. */
 extern I8 g_cursurfacekindvalue;
-
-/* Local view: g_planlist; pointer is struct PLANE; another unit uses unsigned byte. */
-extern struct PLANE far* g_planlist;
-/* Local view: plncurrptr; pointer is struct PLANE; another unit uses unsigned byte. */
-extern struct PLANE far* plncurrptr;
-
-/* Local view: test_pln; type is signed byte; another unit uses unsigned byte. */
+/* Local view: test_pln; frontend owns unsigned char; trkscene owns char. */
 extern I8 test_pln;
-
-/* Local view: plan_memres; type is array[None]; another unit uses struct PLANE. */
-extern struct PLANE far plan_memres[];
-
-/* Local view: INIT_OBJECTS_BUFFER; return is unsigned word; another unit uses signed word. */
-extern unsigned INIT_OBJECTS_BUFFER(I16 angX, I16 angY, I16 angZ, struct RECTANGLE* cliprect, I16 unk);
 /* Local view: ADD_OBJECT_TO_BUFFER; return is void; another unit uses unsigned word. */
 extern void ADD_OBJECT_TO_BUFFER(struct TRANSFORMSHAPE3D* shape);
 
-/* Local view: polygonnumber; type is signed word; another unit uses unsigned word. */
-extern I16 polygonnumber;
-
 /* Unused OMF-order declaration: this address is private poly_link_list[0] in obj_seg006. */
-
-/* Local view: drawpolypt; parameters[2].pointer is signed word; another unit uses struct POINT2D. */
-extern void drawpolypt(I16 color, I16 vertlinecount, I16* vertlines);
 
 /* Local view: trklst; array is None; another unit uses 215. */
 extern struct TRACKOBJECT trklst[];
@@ -341,29 +132,18 @@ static struct MATRIX fallback_rotation_cache;
 
 static struct MATRIX plane_rotation_cache;
 
-/* Local view: update_car_speed; parameters[0] is signed byte; another unit uses signed word. */
-void doengine(I8 inputByte, I8 isOpponent, struct CARSTATE* carState, struct SIMD* carSetup);
-
-/* Local view: myupdatesfx1; parameters[0].pointer is struct AUDIO_CAR_FRAME; another unit uses signed byte. */
-void myupdatesfx1(struct AUDIO_CAR_FRAME *record, I16S value);
-/* Local view: gettlistpoint; return is signed byte; another unit uses signed word. */
-I8 gettlistpoint(I16 trackIndex, struct TRACKRESULT *result, I8 side,
-              I8 *opponentSpeed);
-
 I16 camerasizeinfo[4] = { 10, 50, 10, 20 };
 struct POINT2D signsizeinfo[2] = { { 5, 40 }, { 5, 10 } };
 struct POINT2D sfpostsizeinfo[2] = { { 6, 121 }, { 6, 9 } };
 struct POINT2D pointsizeinfo[2] = { { 1, 10 }, { 1, 10 } };
 I16 gravity[4] = { 21, 21, 15, 15 };
-/* Local view: steerWhlRespTable_20fps; type is array[64]; another unit uses near pointer. */
-I8 steerWhlRespTable_20fps[64] = {
+I8 steerWhlRespTable_20fps[] = {
     0, 8, -8, 0, 0, 7, -7, 0, 0, 6, -6, 0, 0, 5, -5, 0,
     0, 4, -4, 0, 0, 4, -4, 0, 0, 3, -3, 0, 0, 3, -3, 0,
     0, 2, -2, 0, 0, 2, -2, 0, 0, 2, -2, 0, 0, 1, -1, 0,
     0, 1, -1, 0, 0, 1, -1, 0, 0, 1, -1, 0, 0, 1, -1, 0
 };
-/* Local view: steerWhlRespTable_10fps; type is array[62]; another unit uses near pointer. */
-I8 steerWhlRespTable_10fps[62] = {
+I8 steerWhlRespTable_10fps[] = {
     0, 16, -16, 0, 0, 14, -14, 0, 0, 12, -12, 0, 0, 10, -10, 0,
     0, 8, -8, 0, 0, 8, -8, 0, 0, 6, -6, 0, 0, 6, -6, 0,
     0, 4, -4, 0, 0, 4, -4, 0, 0, 4, -4, 0, 0, 2, -2, 0,
@@ -1835,8 +1615,6 @@ I8 findcar(I16 *trackIndex, I16 *penaltyCounter)
  * Globals written: core
  * PLATFORM(timer): Timer-selected frame rate or timer position.
  */
-
-/* Local view: update_car_speed; parameters[0] is signed byte; another unit uses signed word. */
 void doengine(I8 inputByte, I8 isOpponent, struct CARSTATE* carState, struct SIMD* carSetup) {
 	I16 knobStep;
 	I16 offset;
@@ -2520,8 +2298,6 @@ void audio_dispatch_car_events(I8 flags, I16S audioId) { if (sndpendingstate != 
  * Globals written: none detected
  * PLATFORM(audio): Legacy audio service or audio-resource loading.
  */
-
-/* Local view: myupdatesfx1; parameters[0].pointer is struct AUDIO_CAR_FRAME; another unit uses signed byte. */
 void myupdatesfx1(struct AUDIO_CAR_FRAME *record, I16S value)
 {
     /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk2(g_player_sound_id, record->player_rpm,
@@ -2534,8 +2310,6 @@ void myupdatesfx1(struct AUDIO_CAR_FRAME *record, I16S value)
             record->opponent_offsets[2], record->opponent_offsets[3],
             record->opponent_offsets[4], record->opponent_offsets[5], value);
 }
-
-/* Local view: gettlistpoint; return is signed byte; another unit uses signed word. */
 I8 gettlistpoint(I16 trackIndex, struct TRACKRESULT *result, I8 side,
               I8 *opponentSpeed)
 {
@@ -3032,10 +2806,6 @@ void update_crash_debris(void)
     }
     core.game_debris_active = keepAlive;
 }
-/* Local view: locate_shape_alt; return.pointer is signed byte; another unit uses void. */
-extern I8 far *getres(I8 far *data, I8 *name);
-
-/* Local view: setup_aero_trackdata; parameters[0].pointer is void; another unit uses signed byte. */
 void getsimdata(void far *carresptr, I16 is_opponent)
 {
     register I16 i;
@@ -3075,17 +2845,13 @@ I8 pen_flag_count;
 I32 centerpos;
 I32 veh_position;
 I32 veh_z;
-/* Local view: rate_frame; type is signed word; another unit uses unsigned word. */
-I16S rate_frame;
-/* Local view: road_trk; pointer is signed byte; another unit uses unsigned byte. */
-I8 far* road_trk;
+short rate_frame;
+U8  far *road_trk;
 I16S sndposrecord;
-/* Local view: table_lookup; pointer is signed byte; another unit uses void. */
-I8 *table_lookup;
+char *table_lookup;
 I16S far* track04_plyraero;
 I16S far* trackdata_05_opp_aerotbl;
 unsigned char opponent_spd_tbl[16];
-/* Local view: plncurrptr; pointer is struct PLANE; another unit uses unsigned byte. */
 struct PLANE far* plncurrptr;
 I16S g_sgateopn;
 struct VECTOR tvec2;
@@ -3096,21 +2862,15 @@ I16 car_rotate_xc;
 I16 frwhl_angadjusted;
 I16 g_planidx2;
 char audio_frmarr[1360];
-/* Local view: g_planlist; pointer is struct PLANE; another unit uses unsigned byte. */
 struct PLANE far* g_planlist;
-/* Local view: td_18_ref; pointer is signed byte; another unit uses unsigned byte. */
-I8 far* td_18_ref;
-/* Local view: st_hdg; type is signed word; another unit uses unsigned word. */
-I16S st_hdg;
-/* Local view: g_column_of_trkdata21_pth; pointer is signed byte; another unit uses unsigned byte. */
-I8 far* g_column_of_trkdata21_pth;
+char far* td_18_ref;
+short st_hdg;
+char far* g_column_of_trkdata21_pth;
 struct SIMD ophys_7;
 I8 sndpendingstate;
-/* Local view: tdfrompathrow22; pointer is signed byte; another unit uses unsigned byte. */
-I8 far* tdfrompathrow22;
+char far* tdfrompathrow22;
 I16 nextpos_normalip;
 I16S g_cvxintvl;
-/* Local view: cvxs_a; segment is huge; another unit uses far. */
 struct GAMESTATE huge* cvxs_a;
 I16 wall_facingang;
 int trackctrpos2[30];

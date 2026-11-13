@@ -1,8 +1,4 @@
-/* View state; keep UI resources and clipping pairs adjacent. */
-#ifndef STUNTS_VIEWSTAT_H
-#define STUNTS_VIEWSTAT_H
-#include "math3d.h"
-struct SPRITE;
+/* Shared externs for separate C scopes; intentionally unguarded. */
 extern struct SPRITE far *g_wndspr;
 extern void far *fntndat;
 extern short cliprects_spare4[120];
@@ -14,4 +10,3 @@ extern int rcmapix[45];
 extern char rect_num3;
 extern char rects_updt[15];
 extern struct RECTANGLE full_screen_rectangle;
-#endif

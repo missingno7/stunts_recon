@@ -8,19 +8,13 @@
 #define WHEEL_DRAW_FACE_POINT_COUNT 0x12
 #define WHEEL_HALF_RING_POINT_COUNT 8
 #include "math3d.h"
-
 #include "wheel.h"
-
 #include "viewstat.h"
 #include "shapes3d.h"
-
-/* Local view: tire; parameters[1].pointer is signed word; another unit uses struct Point. */
-extern void FAR tire(struct WheelRect *, I16 *, I16);
 
 /* Construct the wheel perimeter and submit front, back, and side vertices for drawing.
  * Params and return follow the declared C signature. */
 /* PLATFORM(video): submit wheel faces and point buffers to the renderer. */
-/* Local view: solidtire; parameters[0].pointer is struct WheelRect; another unit uses struct POINT2D. */
 void FAR solidtire(struct WheelRect *rect, I16 count, I16 color,
     I16 styleA, I16 styleB)
 {

@@ -3,20 +3,12 @@
 #include "audio.h"
 
 /* PORT: Runtime audio records contain 16-bit far pointers; host pointer width changes their layout. */
-
 #include "audtick.h"
+#include "math3d.h"
 #include "viewstat.h"
 #include "game.h"
 #include "timer.h"
-
-/* Local view: audiodriverbinary; pointer is signed byte; another unit uses void. */
-extern I8 FAR *audiodriverbinary;
-/* Local view: audio_update_lock; type is unsigned word; another unit uses signed word. */
-extern U16S audio_update_lock;
-
-/* Local view: snd_sample_rate_phase; type is unsigned word; another unit uses signed word. */
 unsigned short snd_sample_rate_phase;
-/* Local view: mus_samplelimit; type is unsigned word; another unit uses signed word. */
 unsigned short mus_samplelimit;
 
 /* Local view: audiochunktable; array is None; another unit uses 24. */
@@ -29,25 +21,8 @@ static U8 audio_resource_buffer[260];
 static struct AudioEvent audio_event_read_buffer;
 static struct AudioEvent audioevent;
 static struct AudioEvent audio_event_send_buffer;
+#include "audstate.h"
 
-/* Local view: kick_res; pointer is signed byte; another unit uses void. */
-extern I8 FAR *kick_res;
-/* Local view: g_snaresnd; pointer is signed byte; another unit uses void. */
-extern I8 FAR *g_snaresnd;
-/* Local view: ride_audio_sound_res; pointer is signed byte; another unit uses void. */
-extern I8 FAR *ride_audio_sound_res;
-/* Local view: audio_opp_res; pointer is signed byte; another unit uses void. */
-extern I8 FAR *audio_opp_res;
-/* Local view: chhtsample; pointer is signed byte; another unit uses void. */
-extern I8 FAR *chhtsample;
-/* Local view: resource_sound_hit; pointer is signed byte; another unit uses void. */
-extern I8 FAR *resource_sound_hit;
-/* Local view: tommsampleresource; pointer is signed byte; another unit uses void. */
-extern I8 FAR *tommsampleresource;
-/* Local view: audioresource_get_dword; parameters[0].pointer is unsigned byte; another unit uses unsigned long. */
-extern U32 FAR audioresource_get_dword(U8 FAR *);
-/* Local view: audioresource_get_word; parameters[0].pointer is unsigned byte; another unit uses unsigned word. */
-extern U16S FAR audioresource_get_word(U8 FAR *);
 /* Local view: audio_init_chunk; parameters.count is 7; another unit uses 6. */
 extern void FAR audio_init_chunk(I16, I16, I16, I16, I16, I16, I16);
 
@@ -306,7 +281,7 @@ void FAR _loadds audio_set_chunk_volume(I16 voiceIndex, U8 type)
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
 /* PLATFORM(audio): start sample playback through the DOS sound driver. */
-/* Local view: start_audio_voice_sample; parameters[1].pointer is signed byte; another unit uses unsigned byte. */
+#include "auddrv.h"
 void FAR _loadds start_audio_voice_sample(I16 voiceIndex, I8 FAR *voiceData)
 {
     struct AudioChunk *chunk;

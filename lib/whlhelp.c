@@ -5,13 +5,11 @@
 #define WHEEL_OUTER_RING_OFFSET 32
 #include "wheel.h"
 #include "math3d.h"
-
 #include "viewstat.h"
 #include "shapes3d.h"
 
 /* Generate wheel section rings and copy a translated ring using the rectangle origin delta.
  * Params and return follow the declared C signature. */
-/* Local view: tire; parameters[1].pointer is struct Point; another unit uses signed word. */
 void FAR tire(struct WheelRect *rect, struct Point *coords, I16 count)
 {
     I16 dx, dy;

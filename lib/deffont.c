@@ -1,4 +1,3 @@
-
 #include "chartab.h"
 #include "ui.h"
 /* READABILITY: Define the built-in default font record, glyph-offset table, and bitmap bytes. */

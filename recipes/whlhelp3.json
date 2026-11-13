@@ -384,13 +384,13 @@
   "preprocessor_closure": [
     {
       "path": "include/ellipse.h",
-      "sha256": "e6a57fd6e53b8dc914b4d8777bc879d6951d71da7a52a4a4d61a52bd18659226",
-      "size": 253
+      "sha256": "beca5e156c47d0c7f9f2829de0642667e2901e67e5da019f097e9cf6a35c282e",
+      "size": 309
     },
     {
       "path": "include/math3d.h",
-      "sha256": "59a5ed823822b0ec3d7c3dad15159f8dae01f9cfd9b8a105eb89e0f12d4bbc69",
-      "size": 3760
+      "sha256": "569d2d4d31555d6f6973f800ed988d1cbe65126f033f68971fe56060202dd546",
+      "size": 4007
     },
     {
       "path": "include/matrix.h",
@@ -409,8 +409,8 @@
     },
     {
       "path": "include/shapes3d.h",
-      "sha256": "b7a71175f36ef6a9634608f85888bc61ba3549cc1e62f0fa0d56fa141064982d",
-      "size": 7021
+      "sha256": "dcccffe18a51a7bd06da874b051076aa7e5d671033ca7a6f7ec8e688c9334d44",
+      "size": 7995
     },
     {
       "path": "include/trig.h",
