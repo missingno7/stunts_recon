@@ -34,8 +34,8 @@ SPRITE ends
 ; SI; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                                      
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _putpixel_line1_maybe; proposed name _sprite_draw_line_record
 ; ASMDOC Purpose: Dispatch one prepared line record into solid horizontal, vertical, diagonal, fixed-point slope
@@ -130,7 +130,7 @@ line_load_source_value:
     add     di, cs:_sprite1.sprite_lineofs
     mov     di, cs:[di]
     add     di, [bp+local_rounded_x]
-    rep stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    rep stosb ;                                                                     
     pop     di
     pop     si
     mov     sp, bp
@@ -143,7 +143,7 @@ putpixel_line_load_source_byte:
     add     di, cs:_sprite1.sprite_lineofs
     mov     di, cs:[di]
     add     di, [bp+local_rounded_x]
-    mov     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[di], al ;                                                          
     pop     di
     pop     si
     mov     sp, bp
@@ -159,7 +159,7 @@ line_load_source_value_2:
     add     si, cs:_sprite1.sprite_lineofs
 putpixel_line_draw_loop:
     mov     di, cs:[si]
-    mov     es:[bx+di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[bx+di], al ;                                                          
     add     si, 2
     loop    putpixel_line_draw_loop
     pop     di
@@ -176,7 +176,7 @@ line_load_source_value_3:
     mov     bx, [bp+local_rounded_x]
 putpixel_line_draw_loop_2:
     mov     di, cs:[si]
-    mov     es:[bx+di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[bx+di], al ;                                                          
     dec     bx
     add     si, 2
     loop    putpixel_line_draw_loop_2
@@ -194,7 +194,7 @@ line_load_source_value_4:
     mov     bx, [bp+local_rounded_x]
 putpixel_line_draw_loop_3:
     mov     di, cs:[si]
-    mov     es:[bx+di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[bx+di], al ;                                                          
     inc     bx
     add     si, 2
     loop    putpixel_line_draw_loop_3
@@ -214,7 +214,7 @@ line_load_source_value_5:
     mov     bx, [bp+local_rounded_x]
 putpixel_line_draw_loop_4:
     mov     di, cs:[si]
-    mov     es:[bx+di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[bx+di], al ;                                                          
     add     si, 2
     sub     [bp+local_x_fraction], dx
     sbb     bx, 0
@@ -234,7 +234,7 @@ line_load_source_value_6:
     mov     bx, [bp+local_rounded_x]
 putpixel_line_draw_loop_5:
     mov     di, cs:[si]
-    mov     es:[bx+di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[bx+di], al ;                                                          
     add     si, 2
     add     [bp+local_x_fraction], dx
     adc     bx, 0
@@ -257,7 +257,7 @@ putpixel_line_draw_loop_6:
     shl     si, 1
     add     si, cs:_sprite1.sprite_lineofs
     mov     di, cs:[si]
-    mov     es:[bx+di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[bx+di], al ;                                                          
     dec     bx
     add     [bp+local_y_fraction], dx
     adc     [bp+local_rounded_y], 0
@@ -277,7 +277,7 @@ putpixel_line_draw_loop_7:
     shl     si, 1
     add     si, cs:_sprite1.sprite_lineofs
     mov     di, cs:[si]
-    mov     es:[bx+di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[bx+di], al ;                                                          
     inc     bx
     add     [bp+local_y_fraction], dx
     adc     [bp+local_rounded_y], 0

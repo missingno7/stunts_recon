@@ -1,4 +1,4 @@
-; ASMDOC Module: seg012_putimage_and_group. Proposed content name: sprite_and_blitters. Replaces segment-address
+;                                                                                                               
 ; ASMDOC placeholder with the shared clipped AND bitmap behavior; no split or merge.
 ; ASMDOC Public routines: _sprite_putimage_and_alt2, _sprite_putimage_and.
 ; ASMDOC Static contract audit: byte/word widths and offsets describe original 8086 paths; inherited generated
@@ -76,7 +76,7 @@ _andcfxy endp
 ;   listed operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _sprite_putimage_and: Clipped AND bitmap blit at explicit destination.
 ; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
@@ -232,7 +232,7 @@ putimage_and_read_loop:
     mov     cx, [bp+local_visible_width]
 putimage_and_read_loop_2:
     lodsb
-    and     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    and     es:[di], al ;                                                          
     inc     di
     loop    putimage_and_read_loop_2
     add     si, [bp+local_source_skip_or_cursor]
@@ -252,12 +252,12 @@ putimage_and_read_loop_3:
     mov     cx, [bp+local_word_count]
 putimage_and_read_loop_4:
     lodsw
-    and     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    and     es:[di], ax ;                                                          
     inc     di
     inc     di
     loop    putimage_and_read_loop_4
     lodsb
-    and     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    and     es:[di], al ;                                                          
     add     di, bx
     dec     dx
     jg      short putimage_and_read_loop_3
@@ -266,7 +266,7 @@ putimage_and_read_loop_5:
     mov     cx, [bp+local_word_count]
 putimage_and_read_loop_6:
     lodsw
-    and     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    and     es:[di], ax ;                                                          
     inc     di
     inc     di
     loop    putimage_and_read_loop_6
@@ -278,7 +278,7 @@ putimage_and_when_zero_2:
     inc     bx
 putimage_and_read_loop_7:
     lodsb
-    and     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    and     es:[di], al ;                                                          
     add     di, bx
     inc     bx
     dec     dx

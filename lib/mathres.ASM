@@ -168,7 +168,7 @@ public _file_get_res_shape_count
 ; and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _file_get_res_shape_count (_file_get_res_shape_count): Read archive count word at supplied far
 ; ASMDOC base+4.
@@ -189,7 +189,7 @@ _file_get_res_shape_count proc far
  push si
  mov es,[bp+8]
  mov si,[bp+6]
- mov ax,es:[si+4] ;/* PLATFORM(video): accesses display memory through ES. */
+ mov ax,es:[si+4] ;                                                          
  pop si
  pop bp
  ret
@@ -205,7 +205,7 @@ public _shapepointer
 ; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _file_get_shape2d (_file_get_shape2d): Compute normalized far shape pointer from count, indexed
 ; ASMDOC dword relative offset and archive segment.
@@ -231,7 +231,7 @@ _shapepointer proc far
  push si
  mov es,[bp+8]
  mov si,[bp+6]
- mov ax,es:[si+4] ;/* PLATFORM(video): accesses display memory through ES. */
+ mov ax,es:[si+4] ;                                                          
  shl ax,1
  shl ax,1
  mov bx,[bp+10]
@@ -253,8 +253,8 @@ _shapepointer proc far
  rcl dx,1
  add ax,cx
  adc dx,0
- add ax,es:[bx] ;/* PLATFORM(video): accesses display memory through ES. */
- adc dx,es:[bx+2] ;/* PLATFORM(video): accesses display memory through ES. */
+ add ax,es:[bx] ;                                                          
+ adc dx,es:[bx+2] ;                                                          
  mov bx,ax
  and bx,0Fh
  shr dx,1
@@ -613,7 +613,7 @@ public _gettick
 ; inputs and outputs follow the listed operands.
 ; Globals read: _timer_callback_counter.
 ; Globals written: none identified.
-; /* PLATFORM(timer): masks or restores interrupts around timer state. */
+;                                                                        
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _timer_get_counter (_timer_get_counter): Read low/high words of callback counter with maskable
 ; ASMDOC interrupts disabled.
@@ -629,10 +629,10 @@ public _gettick
 ; ASMDOC Reachability: live; direct or indirect reference retained.
 ; ASMDOC Notes: Does not preserve prior interrupt-enable state. Unit is callback ticks; no milliseconds conversion.
 _gettick proc far
-    cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+    cli ;                                                                       
     mov ax, word ptr ds:[_timer_callback_counter]
     mov dx, word ptr ds:[_timer_callback_counter+2]
-    sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+    sti ;                                                                       
     ret
 _gettick endp
 
@@ -646,7 +646,7 @@ public _tickcount
 ; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _timer_callback_counter.
 ; Globals written: none identified.
-; /* PLATFORM(timer): masks or restores interrupts around timer state. */
+;                                                                        
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _timer_custom_delta (_timer_custom_delta): Take interrupt-protected callback snapshot and
 ; ASMDOC subtract supplied dword modulo 2^32.
@@ -667,10 +667,10 @@ _tickcount proc far
     mov bp, sp
     mov bx, [bp + 6]
     mov cx, [bp + 8]
-    cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+    cli ;                                                                       
     mov ax, word ptr ds:[_timer_callback_counter]
     mov dx, word ptr ds:[_timer_callback_counter+2]
-    sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+    sti ;                                                                       
     sub ax, bx
     sbb dx, cx
     pop bp

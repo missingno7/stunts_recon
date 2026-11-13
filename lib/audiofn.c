@@ -7,7 +7,7 @@
 #include "viewstat.h"
 #include "files.h"
 #include "types.h"
-/* READABILITY: Construct an audio resource path and define the initialized palette, material, and UI color tables owned by this module. */
+/* Construct an audio resource path and define the initialized palette, material, and UI color tables owned by this module. */
 char audiofiletmp[UI_AUDIOFILETMP_CAPACITY];
 #include "memory.h"
 

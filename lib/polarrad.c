@@ -1,5 +1,5 @@
 #include "types.h"
-/* READABILITY: Compute the 3D polar radius by reducing x/y and then z through the project polarRadius helper. */
+/* Compute the 3D polar radius by reducing x/y and then z through the project polarRadius helper. */
 #include "matrix.h"
 #include "trig.h"
 #include "math3d.h"

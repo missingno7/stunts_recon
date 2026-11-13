@@ -531,7 +531,7 @@ _projectp endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; Global addresses taken: _window_release_order_error_msg.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 ; ASMDOC-GEOMETRY PUBLIC _sprite_free_window (original line 385)
@@ -581,8 +581,8 @@ _removewindow proc far
     push    di
     mov     es, word ptr [bp+8]
     mov     di, [bp+6]
-    mov     ds, word ptr es:[di+2] ;/* PLATFORM(video): accesses display memory through ES. */
-    mov     si, es:[di] ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     ds, word ptr es:[di+2] ;                                                          
+    mov     si, es:[di] ;                                                          
     mov     ax, [si+2]
     add     ax, 0Fh
     shl     ax, 1

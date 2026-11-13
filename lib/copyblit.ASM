@@ -1,4 +1,4 @@
-; ASMDOC Module: seg012_putimage_shared_group. Proposed content name: sprite_opaque_blitters. The public group copies
+;                                                                                                                    
 ; ASMDOC bitmap bytes using MOVS; old segment and AND wording obscure the operation; no split or merge.
 ; ASMDOC Public routines: _nopsub_33B98, _sprite_putimage_and_alt, _sprputimage.
 ; ASMDOC Static contract audit: byte/word widths and offsets describe original 8086 paths; inherited generated

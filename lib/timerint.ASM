@@ -98,7 +98,7 @@ extrn _abortmessage:far
 ; ASMDOC[timers] globals_read: _sinetable and _atantable through called helpers
 ; ASMDOC[timers] globals_written:
 ; ASMDOC[timers] services: FAR _polang(z,y); FAR _cosfast(angle) or _sinfast(angle)
-; ASMDOC[timers] reachability: Direct C callers in obj_seg003/005/006 and obj_seg007; live geometry helper.
+; ASMDOC[timers] reachability: Direct C callers in           /005/006 and           ; live geometry helper.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
 _inthypot proc far
     arg_z = word ptr 6
@@ -172,11 +172,11 @@ _inthypot endp
 ; inputs and outputs follow the listed operands.
 ; Globals read: _video_mode4_active.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
-; /* PLATFORM(video): accesses a VGA/MCGA display register port. */
-; /* PLATFORM(video): selects a video-memory segment. */
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
-; /* PLATFORM(video): calls a BIOS video service. */
+;                                                           
+;                                                                  
+;                                                       
+;                                                                      
+;                                                   
 ; -----------------------------------------------------------------------------
 ; ASMDOC[timers] Contract _video_set_mode7 (proposed name _video_set_mode7): If video_mode4_active is zero, delegate
 ; ASMDOC[timers]   to set_bios_mode3. Otherwise set equipment bits, program mono CRTC, clear B800:0000..7FFF and
@@ -192,7 +192,7 @@ _inthypot endp
 ; ASMDOC[timers]   flags
 ; ASMDOC[timers] globals_written: 0040:0010 equipment word; B800:[0000..7FFF] zero-filled (16384 words)
 ; ASMDOC[timers] services: FAR _set_bios_mode3 on flag=0 path; OUT 3BFh,3B8h,3B4h/3B5h; INT 10h AX=0007h
-; ASMDOC[timers] reachability: Shutdown path in src/obj_seg019.c; mode3 alternative is live.
+;                                                                                           
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
 _video_set_mode7 proc far
     push di
@@ -206,42 +206,42 @@ _video_set_mode7 proc far
 mode7_program_crtc:
     mov ax, 40h
     mov es, ax
-    mov ax, es:[10h] ;/* PLATFORM(video): accesses display memory through ES. */
+    mov ax, es:[10h] ;                                                          
     and ax, 0FFCFh
     or ax, 30h
-    mov es:[10h], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    mov es:[10h], ax ;                                                          
     mov al, 3
     mov dx, R5HW_VIDEO_MONO_MISC_PORT
-    out dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
+    out dx, al ;                                                                 
     mov al, 20h
     mov dx, R5HW_VIDEO_MONO_MODE_PORT
-    out dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
+    out dx, al ;                                                                 
     mov cx, 0Ch
     mov dx, R5HW_VIDEO_MONO_CRTC_INDEX_PORT
     xor bx, bx
 ; ASMDOC[timers] Block: Write 12 CRTC index/value pairs from owned table at DGROUP:40F8h.
 mode7_write_crtc_register_loop:
     mov al, bl
-    out dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
+    out dx, al ;                                                                 
     inc dx
     mov al, [bx + 40F8h]
-    out dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
+    out dx, al ;                                                                 
     dec dx
     inc bx
     loop mode7_write_crtc_register_loop
     cld
-    mov ax, R5HW_VIDEO_TEXT_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
+    mov ax, R5HW_VIDEO_TEXT_SEGMENT ;                                                      
     mov es, ax
     xor di, di
     mov cx, 4000h
     xor ax, ax
-    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    rep stosw ;                                                                     
     mov al, 28h
     mov dx, R5HW_VIDEO_MONO_MODE_PORT
-    out dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
+    out dx, al ;                                                                 
     mov ah, 0
     mov al, 7
-    int R5HW_BIOS_VIDEO_INT ;/* PLATFORM(video): calls a BIOS video service. */
+    int R5HW_BIOS_VIDEO_INT ;                                                  
     pop di
     retf
 _video_set_mode7 endp
@@ -302,9 +302,9 @@ _timer_setup_sound_countdown endp
 ; Globals written: _bios_tick_countdown, _previous_timer_irq_vector, _timer_callback_busy,
 ; _timer_interrupt_reload_value, _timer_sound_countdown_active,
 ;   _timer_sound_countdown_enabled, _timer_sound_countdown_ticks, _timerintr.
-; /* PLATFORM(timer): masks or restores interrupts around timer state. */
-; /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
-; /* PLATFORM(timer): accesses the programmable interval timer port. */
+;                                                                        
+;                                                                   
+;                                                                      
 ; -----------------------------------------------------------------------------
 ; ASMDOC[timers] Contract _timer_setup_interrupt (proposed name _timer_setup_interrupt): Set default DX=2E9Ch and
 ; ASMDOC[timers]   software divider=5; disable active countdown, enable chaining, clear first callback slot and
@@ -361,24 +361,24 @@ _timer_setup_interrupt proc far
 ; ASMDOC[timers] Block: Shared tail entered with BP saved and PIT data in DX. Clear only first callback slot; do not
 ; ASMDOC[timers]   reset the counters or whole list.
 shared_setup:
- cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+ cli ;                                                                       
  mov byte ptr ds:[_timer_callback_busy],0
  mov word ptr ds:[_timerintr],0
  mov word ptr ds:[_timerintr+2],0
- sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
- in al,R5HW_KEYBOARD_CONTROL_PORT ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+ sti ;                                                                       
+ in al,R5HW_KEYBOARD_CONTROL_PORT ;                                                                  
  and al,0FCh
- out R5HW_KEYBOARD_CONTROL_PORT,al ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+ out R5HW_KEYBOARD_CONTROL_PORT,al ;                                                                  
 ; ASMDOC[timers] Block: B6h commands PIT channel2, whereas DL/DH below go to channel0 port40h. This is observed code,
 ; ASMDOC[timers]   not a measured-rate claim.
  mov al,0B6h
- out R5HW_PIT_CONTROL_PORT,al ;/* PLATFORM(timer): accesses the programmable interval timer port. */
- in al,R5HW_PIC_MASTER_MASK_PORT ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+ out R5HW_PIT_CONTROL_PORT,al ;                                                                     
+ in al,R5HW_PIC_MASTER_MASK_PORT ;                                                                  
  or al,03h
- out R5HW_PIC_MASTER_MASK_PORT,al ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+ out R5HW_PIC_MASTER_MASK_PORT,al ;                                                                  
  xor ax,ax
  mov es,ax
- cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+ cli ;                                                                       
  mov ax,es:[20h]
  cmp ax,1909h
  je setup_after_old_off
@@ -394,14 +394,14 @@ setup_after_old_off:
  mov word ptr es:[20h],1909h
  mov word ptr es:[22h],cs
 setup_after_old_seg:
- in al,R5HW_PIC_MASTER_MASK_PORT ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+ in al,R5HW_PIC_MASTER_MASK_PORT ;                                                                  
  and al,0FCh
- out R5HW_PIC_MASTER_MASK_PORT,al ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
- sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+ out R5HW_PIC_MASTER_MASK_PORT,al ;                                                                  
+ sti ;                                                                       
  mov al,dl
- out R5HW_PIT_CHANNEL0_PORT,al ;/* PLATFORM(timer): accesses the programmable interval timer port. */
+ out R5HW_PIT_CHANNEL0_PORT,al ;                                                                     
  mov al,dh
- out R5HW_PIT_CHANNEL0_PORT,al ;/* PLATFORM(timer): accesses the programmable interval timer port. */
+ out R5HW_PIT_CHANNEL0_PORT,al ;                                                                     
  push cs
  mov ax,1848h
  push ax
@@ -421,9 +421,9 @@ _timer_setup_interrupt endp
 ; inputs and outputs follow the listed operands.
 ; Globals read: _previous_timer_irq_vector.
 ; Globals written: none identified.
-; /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
-; /* PLATFORM(timer): masks or restores interrupts around timer state. */
-; /* PLATFORM(timer): accesses the programmable interval timer port. */
+;                                                                   
+;                                                                        
+;                                                                      
 ; -----------------------------------------------------------------------------
 ; ASMDOC[timers] Contract _audio_stop_unknown (proposed name _timer_restore_irq_and_silence): If IRQ0 is still
 ; ASMDOC[timers]   CS:1909h, restore prior vector, unmask IRQ0/1, write two zero bytes to PIT channel0 and disable
@@ -454,35 +454,35 @@ timer_restore_owner_check:
     retf
 timer_restore_prev_irq_vector:
     in      al, R5HW_PIC_MASTER_MASK_PORT
-; Interrupt controller, 8259A. /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+; Interrupt controller, 8259A.                                                                   
     or      al, 03h
     out     R5HW_PIC_MASTER_MASK_PORT, al
-; Interrupt controller, 8259A. /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
-    cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+; Interrupt controller, 8259A.                                                                   
+    cli ;                                                                       
     mov     ax, word ptr _previous_timer_irq_vector
     mov     es:20h, ax
     mov     ax, word ptr _previous_timer_irq_vector+2
     mov     es:22h, ax
     in      al, R5HW_PIC_MASTER_MASK_PORT
-; Interrupt controller, 8259A. /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+; Interrupt controller, 8259A.                                                                   
 
     and     al, 0FCh
 
     out     R5HW_PIC_MASTER_MASK_PORT, al
-; Interrupt controller, 8259A. /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
-    sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+; Interrupt controller, 8259A.                                                                   
+    sti ;                                                                       
     mov     al, 0
     out     R5HW_PIT_CHANNEL0_PORT, al
-; Timer 8253-5 (AT: 8254.2). /* PLATFORM(timer): accesses the programmable interval timer port. */
+; Timer 8253-5 (AT: 8254.2).                                                                      
     out     R5HW_PIT_CHANNEL0_PORT, al
-; Timer 8253-5 (AT: 8254.2). /* PLATFORM(timer): accesses the programmable interval timer port. */
+; Timer 8253-5 (AT: 8254.2).                                                                      
     in      al, R5HW_KEYBOARD_CONTROL_PORT
-; PC/XT PPI port B bits: /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+; PC/XT PPI port B bits:                                                                   
 
     and     al, 0FCh
 
     out     R5HW_KEYBOARD_CONTROL_PORT, al
-; PC/XT PPI port B bits: /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+; PC/XT PPI port B bits:                                                                   
     retf
 _restoretimer endp
 
@@ -553,7 +553,7 @@ _addtimer endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; Global addresses taken: _timerintr.
-; /* PLATFORM(timer): masks or restores interrupts around timer state. */
+;                                                                        
 ; -----------------------------------------------------------------------------
 ; ASMDOC[timers] Contract _timer_remove_callback (proposed name _timer_remove_callback): Match both words of a far
 ; ASMDOC[timers]   callback in five slots; compact remaining slots and clear last slot under CLI/STI.
@@ -591,7 +591,7 @@ timer_remove_advance_slot:
 ; ASMDOC[timers] Block: Only successful compaction masks interrupts; STI enables them unconditionally rather than
 ; ASMDOC[timers]   restoring entry IF.
 timer_remove_disable_interrupts:
-    cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+    cli ;                                                                       
     dec     cx
     jz      short timer_remove_clear_tail_slot
 timer_remove_shift_slots:
@@ -604,7 +604,7 @@ timer_remove_shift_slots:
 timer_remove_clear_tail_slot:
     mov     word ptr [bx], 0
     mov     word ptr [bx+2], 0
-    sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+    sti ;                                                                       
     pop     bp
     retf
 _deltimer endp
@@ -657,9 +657,9 @@ _sseqds endp
 ; Globals written: _bios_tick_countdown, _timer_callback_busy, _timer_callback_counter,
 ; _timer_callback_reentry_depth, _timer_callback_reentry_peak, _timer_elapsed_ticks_high,
 ;   _timer_elapsed_ticks_low.
-; /* PLATFORM(timer): masks or restores interrupts around timer state. */
-; /* PLATFORM(dos): accesses the PIC or keyboard controller port. */
-; /* PLATFORM(timer): returns from a hardware timer interrupt. */
+;                                                                        
+;                                                                   
+;                                                                
 ; -----------------------------------------------------------------------------
 ; ASMDOC[timers] Contract _timer_intr_callback (proposed name _timer_intr_callback): IRQ0 handler: divided
 ; ASMDOC[timers]   elapsed/BIOS chain work, raw callback counter and live far-pointer callback scan guarded against
@@ -690,7 +690,7 @@ _sseqds endp
 ; ASMDOC[timers]   no direct CALL.
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
 _timer_intr_callback proc far
-    cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+    cli ;                                                                       
     push ds
     push es
     push ax
@@ -702,7 +702,7 @@ _timer_intr_callback proc far
     push bp
     mov ax, seg dseg
     mov ds, ax
-    sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+    sti ;                                                                       
     dec word ptr _bios_tick_countdown
     jg timer_send_pic_eoi
     inc word ptr _timer_elapsed_ticks_low
@@ -720,7 +720,7 @@ timer_reload_tick_counter:
     nop
 timer_send_pic_eoi:
     mov al, 20h
-    out R5HW_PIC_MASTER_COMMAND_PORT, al ;/* PLATFORM(dos): accesses the PIC or keyboard controller port. */
+    out R5HW_PIC_MASTER_COMMAND_PORT, al ;                                                                  
 ; ASMDOC[timers] Block: Test only low byte of input_pushed. A nonzero value skips callback counter and clears
 ; ASMDOC[timers]   busy/reentry state, even on nested entry.
 timer_check_callback_enable:
@@ -731,11 +731,11 @@ timer_check_callback_enable:
     inc word ptr _timer_callback_counter+2
 timer_advance_callback_clock:
     xor di, di
-    cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+    cli ;                                                                       
     cmp byte ptr _timer_callback_busy, 0
     jne timer_count_reentrant_tick
     mov byte ptr _timer_callback_busy, 1
-    sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+    sti ;                                                                       
 ; ASMDOC[timers] Block: Read each live FAR slot after the previous callback returns; callbacks must preserve DS and
 ; ASMDOC[timers]   DI for this loop. Effects on other globals are opaque.
 timer_start_callback_scan:
@@ -768,7 +768,7 @@ timer_restore_irq_frame:
     pop ax
     pop es
     pop ds
-    iret ;/* PLATFORM(timer): returns from a hardware timer interrupt. */
+    iret ;                                                               
 _timer_intr_callback endp
 
 ; timer_intr_group: _sub_303BA

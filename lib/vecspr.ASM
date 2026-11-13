@@ -584,8 +584,8 @@ _clippix endp
 ; inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): selects a video-memory segment. */
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+;                                                       
+;                                                                      
 ; -----------------------------------------------------------------------------
 ; ASMDOC-GEOMETRY ---------------------------------------------------------------------------
 ; ASMDOC-GEOMETRY PUBLIC _video_clear_color (original line 397)
@@ -625,12 +625,12 @@ _clearscreen proc far
     push bp
     mov bp,sp
     push di
-    mov ax,R5HW_VIDEO_GRAPHICS_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
+    mov ax,R5HW_VIDEO_GRAPHICS_SEGMENT ;                                                      
     mov es,ax
     mov ax,[bp+6]
     mov di,0
     mov cx,0FA00h
-    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    rep stosw ;                                                                     
     pop di
     pop bp
     retf

@@ -63,14 +63,6 @@ def source_text(path: Path) -> str:
 
 
 def source_markers(text: str) -> dict[str, object]:
-    comment_hits = []
-    platform_hits = []
-    port_hits = []
-    for line_no, line in enumerate(text.splitlines(), start=1):
-        for match in re.finditer(r"PLATFORM\(([^)]+)\)(?:\s*:\s*([^*]+))?", line, re.I):
-            platform_hits.append({"tag": match.group(1).strip(), "description": (match.group(2) or "").strip(), "line": line_no})
-        for match in re.finditer(r"\bPORT\s*:\s*([^*\r\n]+)", line, re.I):
-            port_hits.append({"tag": match.group(1).strip(), "line": line_no})
     code = re.sub(r"/\*.*?\*/|//[^\n]*|\"(?:\\.|[^\"\\])*\"|'(?:\\.|[^'\\])*'", " ", text, flags=re.S)
     hits: dict[str, list[str]] = {c: [] for c in CATEGORIES}
     if re.search(r"\b(?:unsigned\s+)?int\b", code):
@@ -89,7 +81,33 @@ def source_markers(text: str) -> dict[str, object]:
         hits["struct packing"].append("explicit packing/alignment directive")
     if re.search(r"\b(?:struct|union)\b", code):
         hits["struct packing"].append("aggregate layout needs host review where it crosses file/API or serialized-data boundaries")
-    return {"platform_tags": platform_hits, "port_tags": port_hits, "markers": hits}
+    return {"platform_tags": [], "port_tags": [], "markers": hits}
+
+
+def load_platform_services(root: Path) -> dict[str, object]:
+    path = root / "tools/porting/platform-services.json"
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except OSError as exc:
+        raise RuntimeError(f"Platform service table is unavailable: {path}") from exc
+    if data.get("schema") != 1:
+        raise RuntimeError(f"Unsupported platform service table schema: {data.get('schema')}")
+    return data
+
+
+def platform_function_tags(data: dict[str, object], source: str) -> dict[str, list[str]]:
+    bindings = data.get("bindings", {}).get(source, {})
+    by_name = data.get("by_name", {})
+    result: dict[str, list[str]] = {}
+    for function, row in bindings.items():
+        kinds = set(row.get("explicit", []))
+        for name, name_kinds in row.get("names", {}).items():
+            if by_name.get(name) != name_kinds:
+                raise RuntimeError(f"Platform service binding disagrees for {source}:{function}:{name}")
+            kinds.update(name_kinds)
+        if kinds:
+            result[function] = sorted(kinds)
+    return result
 
 
 def classify_diagnostic(line: str) -> list[str]:
@@ -124,24 +142,9 @@ def classify_diagnostic(line: str) -> list[str]:
     return list(dict.fromkeys(result))
 
 
-def port_tag_covers(category: str, text: str) -> bool:
-    lower = text.lower()
-    terms = {
-        "implicit int widths": ("int", "width", "16-bit", "16 bit", "scalar", "promotion", "conversion", "signedness"),
-        "pointer size assumptions": ("pointer", "segment", "offset", "address", "far"),
-        "segment arithmetic": ("segment", "offset", "far-pointer", "far pointer", "16:16"),
-        "inline asm": ("asm", "assembly", "instruction"),
-        "int86/port I/O": ("port", "interrupt", "bios", "dos", "hardware", "i/o"),
-        "far pointer normalization": ("far", "segment", "offset", "pointer"),
-        "signed shift": ("shift", "arithmetic right", "signed right"),
-        "struct packing": ("pack", "layout", "field offset", "alignment", "record", "structure"),
-        "other compiler diagnostic": (),
-    }
-    return any(term in lower for term in terms.get(category, ()))
-
-
 def run_one(gcc: Path, source: Path, index: int, out_dir: Path,
-            root: Path, compat: Path, include_dir: Path, deadline: float | None = None) -> dict[str, object]:
+            root: Path, compat: Path, include_dir: Path, deadline: float | None = None,
+            function_tags: dict[str, list[str]] | None = None) -> dict[str, object]:
     obj = out_dir / f"{index:03d}_{source.stem}.o"
     if obj.exists():
         obj.unlink()
@@ -172,6 +175,9 @@ def run_one(gcc: Path, source: Path, index: int, out_dir: Path,
                      "stdout": stdout, "stderr": stderr, "command": cmd})
     text = source_text(source)
     markers = source_markers(text)
+    function_tags = function_tags or {}
+    platform_hits = [{"tag": kind, "functions": [function for function, kinds in function_tags.items() if kind in kinds]}
+                     for kind in sorted({kind for kinds in function_tags.values() for kind in kinds})]
     counts = collections.Counter()
     all_lines: list[str] = []
     category_diags: dict[str, list[str]] = {c: [] for c in CATEGORIES}
@@ -198,7 +204,8 @@ def run_one(gcc: Path, source: Path, index: int, out_dir: Path,
         "status": {r["mode"]: r["status"] for r in runs},
         "returncodes": {r["mode"]: r["returncode"] for r in runs},
         "counts": dict(counts),
-        "tags": {"PLATFORM": markers["platform_tags"], "PORT": markers["port_tags"]},
+        "tags": {"PLATFORM": platform_hits, "PORT": []},
+        "function_tags": function_tags,
         "markers": markers["markers"],
         "diagnostics": category_diags,
         "warning_error_lines": all_lines,
@@ -222,6 +229,7 @@ def render_report(results: list[dict[str, object]], gcc: Path, gcc_version: str,
               f"- Distinct GCC warning diagnostics: {warning_total}; distinct error diagnostics: {error_total} (same line/message across the two passes counted once).",
               "- `I16/U16/I32/U32` are mapped to fixed-width types. Bare `int` remains host 32-bit while original MSC 5.x `int` is 16-bit; flat pointers are host-sized because segmented qualifiers are erased.",
               "- Lexical markers are review requests; compiler diagnostics are reported separately. Errors from missing legacy declarations or incompatible declarations are actionable host-port blockers.", "",
+        "Platform-service kinds come from `tools/porting/platform-services.json`; exact per-function sets are recorded in the raw results.", "",
               "## Category coverage", ""]
     for category in CATEGORIES:
         marked = sum(bool(x["markers"].get(category)) for x in results)
@@ -240,23 +248,13 @@ def render_report(results: list[dict[str, object]], gcc: Path, gcc_version: str,
             else:
                 lines.append("- BLOCKER CLASS: 2 (legacy type, declaration, or ABI assumptions fail under the flat host types).")
         platform = item["tags"]["PLATFORM"]
-        port = item["tags"]["PORT"]
         tags = []
-        platform_grouped = {}
         for item_tag in platform:
-            platform_grouped.setdefault(item_tag["tag"], []).append(item_tag["line"])
-        for key, tag_lines in platform_grouped.items():
-            refs = ",".join(str(n) for n in tag_lines[:5])
-            suffix = f" (+{len(tag_lines)-5})" if len(tag_lines) > 5 else ""
-            tags.append(f"PLATFORM({key})@{refs}{suffix}")
-        port_grouped = {}
-        for item_tag in port:
-            port_grouped.setdefault(item_tag["tag"], []).append(item_tag["line"])
-        for key, tag_lines in port_grouped.items():
-            refs = ",".join(str(n) for n in tag_lines[:4])
-            suffix = f" (+{len(tag_lines)-4})" if len(tag_lines) > 4 else ""
-            tags.append(f"PORT: {key}@{refs}{suffix}")
-        lines.append("- Existing tags: " + ("; ".join(tags) if tags else "none"))
+            functions = item_tag["functions"]
+            shown = ",".join(functions[:4])
+            suffix = f" (+{len(functions)-4})" if len(functions) > 4 else ""
+            tags.append(f"PLATFORM({item_tag['tag']}) in {shown}{suffix}")
+        lines.append("- Platform services: " + ("; ".join(tags) if tags else "none"))
         present = False
         active_categories = []
         for category in CATEGORIES:
@@ -280,20 +278,6 @@ def render_report(results: list[dict[str, object]], gcc: Path, gcc_version: str,
                 lines.append(f"  - ? {len(diagnostics)-3} additional categorized diagnostic rows; see `host/results.json`.")
         if not present:
             lines.append("- No screened host-port hazard marker or compiler diagnostic.")
-        followups = []
-        for category in active_categories:
-            if category == "other compiler diagnostic":
-                continue
-            covered = any(port_tag_covers(category, x["tag"]) for x in port)
-            if not covered:
-                followups.append(f"add/review `PORT:` coverage for {category}")
-        hw_categories = {"segment arithmetic", "int86/port I/O"} & set(active_categories)
-        platform_domains = {x["tag"].lower() for x in platform}
-        if "int86/port I/O" in hw_categories and not (platform_domains & {"dos", "bios", "hardware", "video", "timer", "input_kb", "input_mouse", "input_joy"}):
-            followups.append("add/review `PLATFORM(dos/bios/hardware)` for hardware access")
-        if "segment arithmetic" in hw_categories and not (platform_domains & {"dos", "bios", "memory", "file", "video", "audio"}):
-            followups.append("add/review `PLATFORM(memory/dos)` for segment-based access")
-        lines.append("- Tagging follow-up: " + ("; ".join(followups) if followups else "the screened hazards have matching source PORT tags"))
         lines.append("")
     lines += ["## Category interpretation", "",
               "- **implicit int widths:** audit bare `int`, implicit declarations/returns, narrowing, and sign conversions against the 16-bit MSC ABI.",
@@ -337,6 +321,7 @@ def main() -> int:
     out_dir.mkdir(parents=True, exist_ok=True)
     (output_root / "host").mkdir(parents=True, exist_ok=True)
     sources = active_c_sources(root)
+    platform_data = load_platform_services(root)
     if len(sources) > MAX_SOURCES:
         raise SystemExit(f"Refusing to exceed bounded source inventory ({len(sources)} > {MAX_SOURCES}).")
     if not gcc.is_file():
@@ -353,7 +338,8 @@ def main() -> int:
         if time.monotonic() >= deadline:
             raise SystemExit(f"Refusing to exceed {MAX_TOTAL_SECONDS}-second total probe limit.")
         source = (root / info["source"]).resolve()
-        item = run_one(gcc, source, i, out_dir, root, compat, include_dir, deadline)
+        function_tags = platform_function_tags(platform_data, info["source"])
+        item = run_one(gcc, source, i, out_dir, root, compat, include_dir, deadline, function_tags)
         item["owners"] = info["owners"]
         item["recipes"] = info["recipes"]
         results.append(item)

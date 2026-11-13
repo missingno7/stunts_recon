@@ -1,8 +1,7 @@
 #include "types.h"
-/* READABILITY: Translate parsed music and sound events into DOS audio-driver voice operations. */
+/* Translate parsed music and sound events into DOS audio-driver voice operations. */
 #include "audio.h"
 
-/* PORT: Runtime audio records contain 16-bit far pointers; host pointer width changes their layout. */
 #include "audtick.h"
 #include "math3d.h"
 #include "viewstat.h"
@@ -71,7 +70,6 @@ void FAR _loadds process_effect_audio_chunks(void)
 /* Apply one parsed chunk event to the selected channel or driver voice.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(audio): send parsed chunk commands to the loaded DOS sound driver. */
 void FAR _loadds process_audio_chunk_event(I16 chunkIndex)
 {
     U8 param;
@@ -102,7 +100,6 @@ void FAR _loadds process_audio_chunk_event(I16 chunkIndex)
                         callback(chunkIndex);
                     break;
                 case AUDIO_EVENT_RAW_BYTES:
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
                     ((void (FAR *)(I16, U8 *))(audiodriverbinary + AUDIO_DRIVER_ENTRY_SEND_RAW_BYTES))(
                         audioevent.length - AUDIO_RAW_EVENT_DRIVER_COUNT_BIAS, audio_resource_buffer);
                     break;
@@ -134,10 +131,8 @@ void FAR _loadds process_audio_chunk_event(I16 chunkIndex)
                             chunk->channelNumber = chunk->data[AUDIO_SAMPLE_CHANNEL_OFFSET];
                         else
                             chunk->channelNumber = (chunkIndex & AUDIO_CHANNEL_NIBBLE_MASK) + 1;
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
                         ((void (FAR *)(I16, I16, I16))(audiodriverbinary + AUDIO_DRIVER_ENTRY_SET_PROGRAM))(
                             (U8)chunk->channelNumber, 0, chunk->volume);
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
                         ((void (FAR *)(I16, I16, struct AudioChunk *, I8 FAR *))(audiodriverbinary + AUDIO_DRIVER_ENTRY_BIND_SAMPLE))(
                             chunk->channelNumber, 0, chunk, chunk->data);
                     }
@@ -208,7 +203,6 @@ I8 FAR * FAR _loadds find_audio_chunk_data(U8 index, struct AudioChunk *chunk)
 /* Send a voice parameter change to the appropriate driver channel.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(audio): apply voice commands through the loaded DOS sound driver. */
 void FAR _loadds apply_audio_voice_event(I16 voiceIndex, U8 type, I16 value)
 {
     struct AudioChunk *chunk;
@@ -218,11 +212,9 @@ void FAR _loadds apply_audio_voice_event(I16 voiceIndex, U8 type, I16 value)
     if (type == AUDIO_CONTROLLER_HOLD)
         chunk->modeValue = value;
     if (audio_driver_mode != AUDIO_DRIVER_MODE_VOICE)
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
         ((void (FAR *)(I16, struct AudioVoice *, I16, I16))(audiodriverbinary + AUDIO_DRIVER_ENTRY_SET_CONTROLLER))(chunk->channelNumber, 0, type, value);
     for (i = 0; i < g_audiodrvvoices_count; i++) {
         if (snd_voices_tbl[i].resourceIndex == chunk->resourceType && audio_driver_mode == AUDIO_DRIVER_MODE_VOICE)
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
             ((void (FAR *)(I16, struct AudioVoice *, I16, I16))(audiodriverbinary + AUDIO_DRIVER_ENTRY_SET_CONTROLLER))(i, &snd_voices_tbl[i], type, value);
         if (type == AUDIO_CONTROLLER_HOLD && value == 0 && snd_voices_tbl[i].active == AUDIO_VOICE_RELEASED && snd_voices_tbl[i].resourceIndex == chunk->resourceType)
             snd_voices_tbl[i].envelope_state = AUDIO_LEVEL_STATE_RELEASE;
@@ -232,7 +224,6 @@ void FAR _loadds apply_audio_voice_event(I16 voiceIndex, U8 type, I16 value)
 /* Send the packed voice parameter update to the audio driver.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(audio): set one voice parameter in the DOS sound driver. */
 void FAR _loadds set_audio_voice_parameter(I16 voiceIndex, I16 value)
 {
     struct AudioChunk *voice;
@@ -242,14 +233,12 @@ void FAR _loadds set_audio_voice_parameter(I16 voiceIndex, I16 value)
         value |= AUDIO_WORD_PARAMETER_LOW_BYTE_SIGN_BIT;
     value = ((value & AUDIO_WORD_PARAMETER_HIGH_BYTE_MASK) >> 1) + ((I8S)value - AUDIO_WORD_PARAMETER_CENTER);
     voice->pitch_bend = value;
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
     ((void (FAR *)(struct AudioChunk *, I16, I16))(audiodriverbinary + AUDIO_DRIVER_ENTRY_SET_CHUNK_PARAMETER))(voice, value, voice->channelNumber);
 }
 
 /* Send a voice parameter to one channel or to the full driver voice table.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(audio): route channel parameter updates to the DOS sound driver. */
 /* Local view: audio_set_chunk_volume; parameters[1] is unsigned byte; another unit uses signed word. */
 void FAR _loadds audio_set_chunk_volume(I16 voiceIndex, U8 type)
 {
@@ -266,14 +255,12 @@ void FAR _loadds audio_set_chunk_volume(I16 voiceIndex, U8 type)
             do {
                 if (snd_voices_tbl[i].resourceIndex == voiceIndex)
                     ((void (FAR *)(I16, struct AudioVoice *, I16))
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
                         (audiodriverbinary + AUDIO_DRIVER_ENTRY_SET_PROGRAM))(i, &snd_voices_tbl[i], typeCode);
                 ++i;
             } while (i < g_audiodrvvoices_count);
         }
     } else {
         ((void (FAR *)(I16, struct AudioVoice *, I16))
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
             (audiodriverbinary + AUDIO_DRIVER_ENTRY_SET_PROGRAM))(audioChunk->channelNumber, 0, type);
     }
 }
@@ -281,7 +268,6 @@ void FAR _loadds audio_set_chunk_volume(I16 voiceIndex, U8 type)
 /* Start a sample on the selected voice through the audio driver.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(audio): start sample playback through the DOS sound driver. */
 
 void FAR _loadds start_audio_voice_sample(I16 voiceIndex, I8 FAR *voiceData)
 {
@@ -300,14 +286,12 @@ void FAR _loadds start_audio_voice_sample(I16 voiceIndex, I8 FAR *voiceData)
             do {
                 if (snd_voices_tbl[i].resourceIndex == voiceIndex)
                     ((void (FAR *)(I16, struct AudioVoice *, struct AudioChunk *, I8 FAR *))
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
                         (audiodriverbinary + AUDIO_DRIVER_ENTRY_BIND_SAMPLE))(i, &snd_voices_tbl[i], chunk, voiceData);
                 ++i;
             } while (i < g_audiodrvvoices_count);
         }
     } else {
         ((void (FAR *)(I16, struct AudioVoice *, struct AudioChunk *, I8 FAR *))
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
             (audiodriverbinary + AUDIO_DRIVER_ENTRY_BIND_SAMPLE))(
                 audiochunktable[voiceIndex].channelNumber, 0,
                 &audiochunktable[voiceIndex], voiceData);
@@ -317,7 +301,6 @@ void FAR _loadds start_audio_voice_sample(I16 voiceIndex, I8 FAR *voiceData)
 /* Dispatch a timed music event to the driver voice or channel.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(audio): dispatch timed event commands to the DOS sound driver. */
 I16 FAR _loadds process_audio_event(struct AudioEvent *event, I16 chunkIndex)
 {
     struct AudioChunk *resource;
@@ -365,7 +348,6 @@ I16 FAR _loadds process_audio_event(struct AudioEvent *event, I16 chunkIndex)
         channel->data = sample;
         if (audio_driver_mode == AUDIO_DRIVER_MODE_VOICE)
             ((void (FAR *)(I16, struct AudioVoice *, struct AudioChunk *, I8 FAR *))
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
                 (audiodriverbinary + AUDIO_DRIVER_ENTRY_BIND_SAMPLE))(voiceNum, channel, resource, sample);
     }
     channel->resourceIndex = chunkIndex;
@@ -393,13 +375,11 @@ I16 FAR _loadds process_audio_event(struct AudioEvent *event, I16 chunkIndex)
         channel->channelNumber = resource->channelNumber;
     if (event->command == AUDIO_EVENT_EXPLICIT_RATE) {
         ((void (FAR *)(I16, struct AudioVoice *, U16S))
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
             (audiodriverbinary + AUDIO_DRIVER_ENTRY_SET_VOICE_VALUE))(channel->channelNumber, channel, event->delta);
         if (audio_driver_mode != AUDIO_DRIVER_MODE_VOICE)
             event->command = AUDIO_EVENT_CHANNEL_MODE_RATE_NOTE;
     }
     ((void (FAR *)(I16, struct AudioVoice *, struct AudioChunk *, I16, I16, I8 FAR *))
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
         (audiodriverbinary + AUDIO_DRIVER_ENTRY_START_NOTE))(channel->channelNumber, channel, resource,
                                  (I8)event->command + sample[AUDIO_SAMPLE_NOTE_BIAS_OFFSET], event->param, sample);
     audioblock[chunkIndex] = event->command;
@@ -417,10 +397,8 @@ I16 FAR _loadds send_audio_stop_event(U16 rate, I16 handle)
 /* Send a value update for one selected audio voice.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(audio): update the selected DOS sound-driver voice. */
 void FAR _loadds set_audio_voice_value(I16 voiceNum, I16 value)
 {
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
     ((void (FAR *)(I16, struct AudioVoice *, I16))(audiodriverbinary + AUDIO_DRIVER_ENTRY_SET_VOICE_VALUE))(
         snd_voices_tbl[voiceNum].channelNumber, &snd_voices_tbl[voiceNum], value);
 }
@@ -428,7 +406,6 @@ void FAR _loadds set_audio_voice_value(I16 voiceNum, I16 value)
 /* Stop or reset driver voices while selecting a reusable voice slot.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(audio): stop/reset candidate voices through the DOS sound driver. */
 I16 FAR _loadds select_audio_voice_slot(I8 FAR *sample, struct AudioChunk *chunk)
 {
     I16 slotSounding;
@@ -462,10 +439,8 @@ I16 FAR _loadds select_audio_voice_slot(I8 FAR *sample, struct AudioChunk *chunk
             return slotReleased;
         if (slotSounding == -1)
             return -1;
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
         ((void (FAR *)(I16, struct AudioVoice *))(audiodriverbinary + AUDIO_DRIVER_ENTRY_RELEASE_VOICE))(
             snd_voices_tbl[slotSounding].channelNumber, &snd_voices_tbl[slotSounding]);
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
         ((void (FAR *)(I16, struct AudioVoice *))(audiodriverbinary + AUDIO_DRIVER_ENTRY_FORCE_OFF_VOICE))(
             snd_voices_tbl[slotSounding].channelNumber, &snd_voices_tbl[slotSounding]);
         return slotSounding;
@@ -493,17 +468,13 @@ I16 FAR _loadds select_audio_voice_slot(I8 FAR *sample, struct AudioChunk *chunk
             }
         }
         if (slotReleased != -1) {
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
             ((void (FAR *)(I16, struct AudioVoice *))(audiodriverbinary + AUDIO_DRIVER_ENTRY_RELEASE_VOICE))(slotReleased, &snd_voices_tbl[slotReleased]);
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
             ((void (FAR *)(I16, struct AudioVoice *))(audiodriverbinary + AUDIO_DRIVER_ENTRY_FORCE_OFF_VOICE))(slotReleased, &snd_voices_tbl[slotReleased]);
             return slotReleased;
         }
         if (slotSounding == -1)
             return -1;
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
         ((void (FAR *)(I16, struct AudioVoice *))(audiodriverbinary + AUDIO_DRIVER_ENTRY_RELEASE_VOICE))(slotSounding, &snd_voices_tbl[slotSounding]);
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
         ((void (FAR *)(I16, struct AudioVoice *))(audiodriverbinary + AUDIO_DRIVER_ENTRY_FORCE_OFF_VOICE))(slotSounding, &snd_voices_tbl[slotSounding]);
         return slotSounding;
     } else {
@@ -531,9 +502,7 @@ I16 FAR _loadds select_audio_voice_slot(I8 FAR *sample, struct AudioChunk *chunk
                 snd_voices_tbl[slotReleased].resource->activeVoices--;
                 chunk->activeVoices++;
             }
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
             ((void (FAR *)(I16, struct AudioVoice *))(audiodriverbinary + AUDIO_DRIVER_ENTRY_RELEASE_VOICE))(slotReleased, &snd_voices_tbl[slotReleased]);
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
             ((void (FAR *)(I16, struct AudioVoice *))(audiodriverbinary + AUDIO_DRIVER_ENTRY_FORCE_OFF_VOICE))(slotReleased, &snd_voices_tbl[slotReleased]);
             return slotReleased;
         }
@@ -543,9 +512,7 @@ I16 FAR _loadds select_audio_voice_slot(I8 FAR *sample, struct AudioChunk *chunk
             snd_voices_tbl[slotSounding].resource->activeVoices--;
             chunk->activeVoices++;
         }
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
         ((void (FAR *)(I16, struct AudioVoice *))(audiodriverbinary + AUDIO_DRIVER_ENTRY_RELEASE_VOICE))(slotSounding, &snd_voices_tbl[slotSounding]);
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
         ((void (FAR *)(I16, struct AudioVoice *))(audiodriverbinary + AUDIO_DRIVER_ENTRY_FORCE_OFF_VOICE))(slotSounding, &snd_voices_tbl[slotSounding]);
         return slotSounding;
     }
@@ -622,12 +589,10 @@ void FAR _loadds update_audio_voice_state(void)
 /* Clear one voice through the audio driver.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(audio): clear the selected DOS sound-driver voice. */
 void FAR _loadds clear_audio_voice(struct AudioVoice *voice)
 {
     voice->position++;
     if (voice->remaining == 0) {
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
         ((void (FAR *)(I16, struct AudioVoice *))(audiodriverbinary + AUDIO_DRIVER_ENTRY_RELEASE_VOICE))(voice->channelNumber, voice);
         voice->active = AUDIO_VOICE_RELEASED;
         if (audiochunktable[voice->resourceIndex].modeValue != 0) {
@@ -643,7 +608,6 @@ void FAR _loadds clear_audio_voice(struct AudioVoice *voice)
 /* Reset driver voice and event state after processing an audio event.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(audio): clear timed voice state in the DOS sound driver. */
 void FAR _loadds reset_audio_event_state(void)
 {
     I16 i;
@@ -683,7 +647,6 @@ void FAR _loadds reset_audio_event_state(void)
                 voice->envelope_state = AUDIO_LEVEL_STATE_OFF;
                 voice->active = AUDIO_VOICE_IDLE;
                 --audiochunktable[voice->resourceIndex].activeVoices;
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
                 ((void (FAR *)(U16, struct AudioVoice *))(audiodriverbinary + AUDIO_DRIVER_ENTRY_FORCE_OFF_VOICE))(voice->channelNumber, voice);
                 audioblock[voice->resourceIndex] = 0;
             }
@@ -733,18 +696,15 @@ void FAR _loadds reset_audio_event_state(void)
                 }
             }
         }
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
         ((void (FAR *)(U16, struct AudioVoice *, struct AudioChunk *, I8 FAR *))(audiodriverbinary + AUD_DRV_ENTRY_UPDATE_VOICE))(
             voice->channelNumber, voice, voice->resource, voice->data);
     }
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
     ((void (FAR *)(struct AudioVoice *))(audiodriverbinary + AUD_DRV_ENTRY_UPDATE_VOICE_ARRAY))(snd_voices_tbl);
 }
 
 /* Send the function-1Eh driver operation for the selected chunk channels.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(audio): send function 1Eh to the DOS sound driver. */
 void FAR _loadds audio_driver_func1E(I16 first, I16 last)
 {
     I16 i;
@@ -753,7 +713,6 @@ void FAR _loadds audio_driver_func1E(I16 first, I16 last)
     if (audio_driver_mode == AUDIO_DRIVER_MODE_VOICE) {
         for (i = 0; i < g_audiodrvvoices_count; i++) {
             if (snd_voices_tbl[i].resourceIndex <= last && snd_voices_tbl[i].resourceIndex >= first) {
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
                 ((void (FAR *)(I16))(audiodriverbinary + AUDIO_DRIVER_ENTRY_RESET_CHANNEL))(i);
                 snd_voices_tbl[i].active = AUDIO_VOICE_IDLE;
                 snd_voices_tbl[i].data = 0;
@@ -764,7 +723,6 @@ void FAR _loadds audio_driver_func1E(I16 first, I16 last)
     } else {
         for (i = first; i <= last; i++) {
             if (audiochunktable[i].channelNumber < AUDIO_CHANNEL_NUMBER_LIMIT) {
-    /* PLATFORM(audio): dispatch this event or voice operation to the loaded DOS audio driver. */
                 ((void (FAR *)(I16))(audiodriverbinary + AUDIO_DRIVER_ENTRY_RESET_CHANNEL))(audiochunktable[i].channelNumber);
                 for (j = 0; j < AUDIO_VOICE_CAPACITY; j++) {
                     if (snd_voices_tbl[j].resourceIndex == i) {

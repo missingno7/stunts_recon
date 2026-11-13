@@ -2,7 +2,7 @@
 #include "chartab.h"
 #include "ui.h"
 #include "types.h"
-/* READABILITY: Compare audio chunk names, find a chunk-table index, locate resource bytes, and copy them. */
+/* Compare audio chunk names, find a chunk-table index, locate resource bytes, and copy them. */
 #include "audio.h"
 
 /* Compare up to count bytes of two names, optionally using case-sensitive matching.
@@ -60,7 +60,6 @@ I8 FAR * FAR audioresource_find(I8 HUGE *resource, U8 *chunkName)
     num = *(U16 FAR *)(resource + RESOURCE_COUNT_OFFSET);
     index = audioresource_get_chunk_index(0, num, chunkName, resource + RESOURCE_DIRECTORY_HEADER_BYTES);
     if (index >= 0) {
-        /* PORT: Huge-pointer addition must preserve segment:offset normalization within this resource. */
         entry = (I8 FAR *)resource + RESOURCE_DIRECTORY_HEADER_BYTES + num * RESOURCE_OFFSET_BYTES + index * RESOURCE_OFFSET_BYTES;
         offset = audioresource_get_dword(entry);
         chunkData = (I8 FAR *)resource + RESOURCE_DIRECTORY_HEADER_BYTES + num * 8 + offset;

@@ -38,7 +38,7 @@ assume cs:S012_TEXT
 ; outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): selects a video-memory segment. */
+;                                                       
 ; -----------------------------------------------------------------------------
 ; ASMDOC[timers] Contract _nopsub_3215A (proposed name _console_clear_mono_screen): Clear all 2000 monochrome cells
 ; ASMDOC[timers]   with zero words, leaving caller cursor state unchanged.
@@ -54,7 +54,7 @@ assume cs:S012_TEXT
 ; ASMDOC[timers] dead: false (static known-program reachability; never permission to trim extent)
 _console_clear_mono_screen proc far
     push di
-    mov ax, R5HW_VIDEO_MONO_TEXT_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
+    mov ax, R5HW_VIDEO_MONO_TEXT_SEGMENT ;                                                      
     mov es, ax
     xor di, di
     mov cx, 07D0h
@@ -131,7 +131,7 @@ _console_delete_current_row endp
 ; Globals written: console_cursor_offset, console_cursor_row, console_return_cs, console_return_ip,
 ; console_save_cursor, console_saved_cursor.
 ; Global addresses taken: _output_buffer.
-; /* PLATFORM(video): selects a video-memory segment. */
+;                                                       
 ; -----------------------------------------------------------------------------
 ; ASMDOC[timers] Contract _debug_printf_text (proposed name _debug_printf_text): Format caller varargs into static
 ; ASMDOC[timers]   120-byte buffer then render legacy bytes on B000 text page using saved cursor and attribute;
@@ -177,7 +177,7 @@ noop_entry3_loop_head_01:
     mov ax, word ptr console_return_ip
     push ax
     push si
-    mov ax, R5HW_VIDEO_MONO_TEXT_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
+    mov ax, R5HW_VIDEO_MONO_TEXT_SEGMENT ;                                                      
     mov es, ax
 ; ASMDOC[timers] Block: Literal DGROUP:4BC6h names output_buffer; read formatted bytes until NUL without an explicit
 ; ASMDOC[timers]   buffer bound.

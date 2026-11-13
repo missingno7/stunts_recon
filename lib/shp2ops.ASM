@@ -169,7 +169,7 @@ _movpackfxya endp
 ;   operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+;                                                                      
 ; -----------------------------------------------------------------------------
 ; ASMDOC(font_shapes) Contract _shape2d_op_unk (proposed _shape2d_blit_rle): Decode a signed-packet RLE shape as pixel
 ; ASMDOC(font_shapes) overwrite, using header position (+8,+0A).
@@ -262,7 +262,7 @@ shape_op_unk_when_greater:
     xor     ch, ch
     lodsb
 shape_op_unk_fill_loop:
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
     dec     dx
     jg      short shape_op_unk_when_greater_2
     add     [bp+local_row_table_cursor], 2
@@ -448,7 +448,7 @@ _movpackcfxya endp
 ;   operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+;                                                                      
 ; -----------------------------------------------------------------------------
 ; ASMDOC(font_shapes) Contract _shape2d_op_unk3 (proposed _shape2d_blit_rle_clipped): Clip and decode a
 ; signed-packet RLE
@@ -637,7 +637,7 @@ shape_op_unk3_when_greater:
     xor     ch, ch
     lodsb
 shape_op_unk3_fill_loop:
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
     dec     dx
     jle     short op_unk3_when_less_or_equal_2
     loop    shape_op_unk3_fill_loop

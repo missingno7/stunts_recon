@@ -4,7 +4,6 @@
 #define HUGE huge
 #define FAST_TRIG_ANGLE_MASK 0x3FF
 #include "types.h"
-/* Scratch whole-object candidate in target member order. */ /* PORT: plain char signedness follows the pinned MSC target. */
 #include "matrix.h"
 #include "trig.h"
 #include "math3d.h"
@@ -958,19 +957,17 @@ I16 getwpinfo(I16 column, I16 row, struct VECTOR *vertices) {
 }
 
 /* Loads the shared 3D shape resources. Params: none. Returns: load status. State: updates shared shape-resource handles. */
-/* PLATFORM(file): loads, reads, writes or resolves game files. */
-/* PLATFORM(memory): queries, allocates or releases resource memory. */
 I16 init_3dpieces(void)
 {
     register I16 i;
 
     g_game13dresource = 0;
     game2res_pointer = 0;
-    /* PLATFORM(memory): query available resource memory. */ if ((I32)availmem() < SHAPE_SHARED_MIN_FREE_BYTES) {
+    if ((I32)availmem() < SHAPE_SHARED_MIN_FREE_BYTES) {
         return 1;
     }
-    /* PLATFORM(file): load a 3D resource. */ g_game13dresource = fluffyload(aGame1);
-    /* PLATFORM(file): load a 3D resource. */ game2res_pointer = fluffyload(aGame2);
+    g_game13dresource = fluffyload(aGame1);
+    game2res_pointer = fluffyload(aGame2);
     for (i = 0; i < SHAPE_SHARED_RESOURCE_COUNT; ++i) {
         ptr_model_active = locateshapez(g_game13dresource, aBarn[i]);
         if (ptr_model_active == 0) {
@@ -982,20 +979,17 @@ I16 init_3dpieces(void)
 }
 
 /* Releases shared 3D shape resources. Params: none. Returns: none. State: reads and clears shared resource handles. */
-/* PLATFORM(memory): queries, allocates or releases resource memory. */
 void remove_3dpieces(void)
 {
     if (g_game13dresource != 0) {
-        /* PLATFORM(memory): release resource memory. */ freememory(g_game13dresource);
+        freememory(g_game13dresource);
     }
     if (game2res_pointer != 0) {
-        /* PLATFORM(memory): release resource memory. */ freememory(game2res_pointer);
+        freememory(game2res_pointer);
     }
 }
 
 /* Loads player and opponent car shapes. Params: player and opponent car IDs. Returns: none. State: updates car-shape resource pointers. */
-/* PLATFORM(file): loads, reads, writes or resolves game files. */
-/* PLATFORM(memory): queries, allocates or releases resource memory. */
 void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 	I32 copyOffset;
 	I32 sizeBytes;
@@ -1006,7 +1000,7 @@ void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 	aStxxx[3] = arg_playercarid[1];
 	aStxxx[4] = arg_playercarid[2];
 	aStxxx[5] = arg_playercarid[3];
-	/* PLATFORM(file): load a 3D resource. */ pl_carres_3d = fluffyload(aStxxx);
+	pl_carres_3d = fluffyload(aStxxx);
 	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[0]), &g_shapes3d[SHAPE_PLAYER_BODY]);
 	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[1]), &g_shapes3d[SHAPE_PLAYER_WHEELS]);
 
@@ -1015,7 +1009,6 @@ void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 	pos_pt.x = (vertices[3].x + vertices[0].x)>> 1;
 	ancv2.z = vertices[6].z;
 	ancv2.x = (vertices[6].x + vertices[9].x) >> 1;
-	
 	for (loopIndex = 0; loopIndex < WHEEL_GEOMETRY_VERTICES_PER_WHEEL; loopIndex++) {
 		pts_set[loopIndex].x = pos_pt.x - vertices[loopIndex].x;
 		pts_set[loopIndex].z = pos_pt.z - vertices[loopIndex].z;
@@ -1042,9 +1035,8 @@ void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 		if (arg_playercarid[0] == firstOpponent && arg_playercarid[1] == arg_opponentcarid[1] &&
 			arg_playercarid[2] == arg_opponentcarid[2] && arg_playercarid[3] == arg_opponentcarid[3])
 		{
-			/* PLATFORM(memory): query a resource block size. */ sizeBytes = modsize(pl_carres_3d);
-			/* PLATFORM(memory): allocate resource memory. */ carcopyresourceptr = resmem(aCar0[7], sizeBytes);
-			
+			sizeBytes = modsize(pl_carres_3d);
+			carcopyresourceptr = resmem(aCar0[7], sizeBytes);
 			for (copyOffset = 0; copyOffset < sizeBytes; copyOffset++) {
 				carcopyresourceptr[copyOffset] = pl_carres_3d[copyOffset];
 			}
@@ -1053,7 +1045,7 @@ void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 			aStxxx[3] = arg_opponentcarid[1];
 			aStxxx[4] = arg_opponentcarid[2];
 			aStxxx[5] = arg_opponentcarid[3];
-			/* PLATFORM(file): load a 3D resource. */ carcopyresourceptr = fluffyload(aStxxx);
+			carcopyresourceptr = fluffyload(aStxxx);
 		}
 
 		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[8]), &g_shapes3d[SHAPE_OPPONENT_BODY]);
@@ -1089,15 +1081,14 @@ void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 }
 
 /* Releases player and opponent car-shape resources. Params: none. Returns: none. State: reads and clears car resource pointers. */
-/* PLATFORM(memory): queries, allocates or releases resource memory. */
 void remove_3dcars(void)
 {
     if (carcopyresourceptr != 0) {
         settires(&g_shapes3d[SHAPE_OPPONENT_WHEELS].shape3d_verts[SHAPE_WHEEL_VERTEX_START], 0, car_wheel_offsets, buf_obase, veco, (I16S *)&ctrmesh);
-        /* PLATFORM(memory): release a resource block. */ purgememory(carcopyresourceptr);
+        purgememory(carcopyresourceptr);
     }
     settires(&g_shapes3d[SHAPE_PLAYER_WHEELS].shape3d_verts[SHAPE_WHEEL_VERTEX_START], 0, car_wheel_offsets, ywhlang, pts_set, (I16S *)&pos_pt);
-    /* PLATFORM(memory): release resource memory. */ freememory(pl_carres_3d);
+    freememory(pl_carres_3d);
 }
 
 /* Rebuilds cached wheel vertices when steering or wheel height changes. Params: output vertices, steering angle, base heights, cached values, source offsets and origin. Returns: none. State: updates wheel geometry and cached values. */
@@ -1139,7 +1130,6 @@ void settires(struct VECTOR far *out, I16 angle,
     }
 
     for (j = 0; j < 4; ++j) {
-        /* PORT: short base heights are promoted to 16-bit int for signed division. */
         y = base[j] / WORLD_COORDINATE_SCALE_I16;
         if (last_angle_and_y[j] != y) {
             span_start = j * WHEEL_GEOMETRY_VERTICES_PER_WHEEL;
@@ -1160,7 +1150,6 @@ static U8  terrConnDataNtoS[19] = { 0, 0, 0, 0, 0, 0, 1, 1, 5, 0, 4, 5, 0, 0, 4,
 static U8  terrConnDataStoN[19] = { 0, 0, 0, 0, 0, 0, 1, 0, 5, 1, 4, 0, 5, 4, 0, 5, 1, 1, 4 };
 
 /* Builds track and route data from the selected track resources. Params: none. Returns: setup status. State: reads track resources and updates track tables. */
-/* PLATFORM(memory): queries, allocates or releases resource memory. */
 I16 compiletrack(void)
 {
   I8 matches;
@@ -1203,7 +1192,7 @@ I16 compiletrack(void)
   I8S  conn;
   I8 loop_done;
   U8  prev_elem;
-  /* PLATFORM(memory): allocate resource memory. */ alloc = resmem("tcomp", 0x380L);
+  alloc = resmem("tcomp", 0x380L);
   if (alloc == 0)
     return 2;
   queuePtr = alloc;
@@ -1872,15 +1861,12 @@ I16 compiletrack(void)
     sampled_trk_column = cur_col;
     g_cur_track_row = y;
   }
-  /* PLATFORM(memory): release a resource block. */
   purgememory(alloc);
 
   return err;
 }
 
 /* Loads opponent-specific data. Params: none. Returns: none. State: stores the loaded opponent resource. */
-/* PLATFORM(file): loads, reads, writes or resolves game files. */
-/* PLATFORM(memory): queries, allocates or releases resource memory. */
 void opponentcompile(void)
 {
     U32  savedSums[256];
@@ -1902,10 +1888,10 @@ void opponentcompile(void)
     register I16S visited;
 
     aOpp1[3] = globalgamesettings.game_opponenttype + '0';
-    /* PLATFORM(file): load a resource file. */ res = openresource(aOpp1);
+    res = openresource(aOpp1);
     strcpyfar(opptext_label, getresl(res, "nam"));
-    /* PLATFORM(file): locate opponent path data in the loaded bundle. */ pathData = getres(res, "path");
-    /* PORT: the speed table is traversed through a segmented FAR resource pointer. */ /* PLATFORM(file): locate opponent speed data in the loaded bundle. */ tbl = (U8  far *)getres(res, "sped");
+    pathData = getres(res, "path");
+    tbl = (U8  far *)getres(res, "sped");
     for (i = 0; i < 16; i++)
         opponent_spd_tbl[i] = tbl[i];
 
@@ -1943,7 +1929,7 @@ void opponentcompile(void)
                 td3[count + 1] = 1;
             }
             if (dep == 0) {
-                /* PLATFORM(memory): release a loaded resource. */ closeresource(res);
+                closeresource(res);
                 return;
             }
             dep--;

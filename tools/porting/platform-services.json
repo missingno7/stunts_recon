@@ -1,0 +1,4849 @@
+{
+  "schema": 1,
+  "description": "Port-side replacement for source PLATFORM comments. Name-derived bindings are exact call/access associations; explicit entries retain tags with no unique service name.",
+  "by_name": {
+    "BIOS_KEY_F10": [
+      "input_kb"
+    ],
+    "addtimer": [
+      "timer"
+    ],
+    "andcfxy": [
+      "video"
+    ],
+    "andcfxya": [
+      "video"
+    ],
+    "andfxya": [
+      "video"
+    ],
+    "andpackf": [
+      "video"
+    ],
+    "apply_audio_voice_event": [
+      "audio"
+    ],
+    "audio_add_driver_timer": [
+      "audio"
+    ],
+    "audio_check_flag": [
+      "audio"
+    ],
+    "audio_chunk_is_unavailable": [
+      "audio"
+    ],
+    "audio_dispatch_car_events": [
+      "audio"
+    ],
+    "audio_driver_func1E": [
+      "audio"
+    ],
+    "audio_function2": [
+      "audio"
+    ],
+    "audio_function2_wrap": [
+      "audio"
+    ],
+    "audio_init_chunk2": [
+      "audio"
+    ],
+    "audio_init_engine": [
+      "audio"
+    ],
+    "audio_op_unk": [
+      "audio"
+    ],
+    "audio_op_unk2": [
+      "audio"
+    ],
+    "audio_op_unk3": [
+      "audio"
+    ],
+    "audio_op_unk4": [
+      "audio"
+    ],
+    "audio_op_unk5": [
+      "audio"
+    ],
+    "audio_op_unk6": [
+      "audio"
+    ],
+    "audio_op_unk7": [
+      "audio"
+    ],
+    "audio_pause_playback": [
+      "audio"
+    ],
+    "audio_remove_driver_timer": [
+      "audio"
+    ],
+    "audio_set_chunk_volume": [
+      "audio"
+    ],
+    "audio_toggle_flag2": [
+      "audio"
+    ],
+    "audio_toggle_flag6": [
+      "audio"
+    ],
+    "audio_unload": [
+      "audio"
+    ],
+    "availmem": [
+      "memory"
+    ],
+    "car_fpsmul2": [
+      "timer"
+    ],
+    "checkmodule": [
+      "memory"
+    ],
+    "clear_audio_voice": [
+      "audio"
+    ],
+    "clear_rect": [
+      "video"
+    ],
+    "clearwindow": [
+      "video"
+    ],
+    "clippix": [
+      "video"
+    ],
+    "closeresource": [
+      "memory"
+    ],
+    "compiletrack": [
+      "memory"
+    ],
+    "convertjoy": [
+      "input_joy"
+    ],
+    "criterr": [
+      "dos"
+    ],
+    "deltimer": [
+      "timer"
+    ],
+    "displaywindow": [
+      "video"
+    ],
+    "docursor": [
+      "input_mouse"
+    ],
+    "doengine": [
+      "timer"
+    ],
+    "dohidemouse": [
+      "video"
+    ],
+    "doshowmouse": [
+      "video"
+    ],
+    "doslider": [
+      "input_mouse"
+    ],
+    "dosteering": [
+      "timer"
+    ],
+    "drawblimpworld": [
+      "video"
+    ],
+    "drawcircle": [
+      "video"
+    ],
+    "drawhighs": [
+      "video"
+    ],
+    "drawhorizon": [
+      "video"
+    ],
+    "drawlogo": [
+      "video"
+    ],
+    "drawpiecebox": [
+      "video"
+    ],
+    "drawpolyp": [
+      "video"
+    ],
+    "drawpolypt": [
+      "video"
+    ],
+    "drawrect": [
+      "video"
+    ],
+    "drawrectc": [
+      "video"
+    ],
+    "drawtext": [
+      "video"
+    ],
+    "drawtrackbox": [
+      "video"
+    ],
+    "drawworld": [
+      "video"
+    ],
+    "drawworldflipzones": [
+      "video"
+    ],
+    "elapsedticks": [
+      "timer"
+    ],
+    "exit": [
+      "dos"
+    ],
+    "file_combine_and_find": [
+      "file"
+    ],
+    "file_find_shapes_optional_alt": [
+      "file"
+    ],
+    "file_find_sounds_required": [
+      "file"
+    ],
+    "file_get_res_shape_count": [
+      "file"
+    ],
+    "file_load_audio_resource": [
+      "audio"
+    ],
+    "file_load_shape2d_expand": [
+      "file"
+    ],
+    "file_load_shape2d_expandedsize": [
+      "file"
+    ],
+    "file_load_shape2d_fatal_thunk": [
+      "file"
+    ],
+    "file_load_shape2d_nofatal2": [
+      "file"
+    ],
+    "file_load_shape2d_palmap_apply": [
+      "file"
+    ],
+    "file_load_shape2d_palmap_init": [
+      "file"
+    ],
+    "file_unflip_shape2d": [
+      "file"
+    ],
+    "file_unflip_shape2d_pes": [
+      "file"
+    ],
+    "filename": [
+      "file"
+    ],
+    "fluffyload": [
+      "file"
+    ],
+    "fontsetfontdef": [
+      "video"
+    ],
+    "fortextxy": [
+      "video"
+    ],
+    "frameRate": [
+      "timer"
+    ],
+    "freememory": [
+      "memory"
+    ],
+    "frmcs_time": [
+      "timer"
+    ],
+    "g_cvxintvl": [
+      "timer"
+    ],
+    "game_end_delay_limit": [
+      "timer"
+    ],
+    "gameintinit": [
+      "timer"
+    ],
+    "genhline": [
+      "timer"
+    ],
+    "get_joy_flags": [
+      "input_joy"
+    ],
+    "getmousepos": [
+      "input_mouse"
+    ],
+    "getres": [
+      "file"
+    ],
+    "gettick": [
+      "timer"
+    ],
+    "gotosim": [
+      "timer"
+    ],
+    "hiscore_draw_text": [
+      "video"
+    ],
+    "init_audio_resources": [
+      "audio"
+    ],
+    "initgraphics": [
+      "video"
+    ],
+    "initmemory": [
+      "memory"
+    ],
+    "initmouse": [
+      "input_mouse"
+    ],
+    "initmousedrive": [
+      "input_mouse"
+    ],
+    "initscenery": [
+      "file"
+    ],
+    "initsim": [
+      "timer"
+    ],
+    "interpretsub": [
+      "input_kb"
+    ],
+    "kb_init_interrupt": [
+      "input_kb"
+    ],
+    "kb_shift_checking2": [
+      "input_kb"
+    ],
+    "keyboard_exit_handler": [
+      "input_kb"
+    ],
+    "keyboard_shift_checking1": [
+      "input_kb"
+    ],
+    "keystate": [
+      "input_kb"
+    ],
+    "load_audio_finalize": [
+      "audio"
+    ],
+    "load_sfx_file": [
+      "file"
+    ],
+    "load_sfx_ge": [
+      "file"
+    ],
+    "load_shape2d_nofatal_thunk": [
+      "file"
+    ],
+    "load_shape2d_res_nofatal_thunk": [
+      "file"
+    ],
+    "load_song_file": [
+      "file"
+    ],
+    "load_voice_file": [
+      "file"
+    ],
+    "loadandshapepackz": [
+      "file"
+    ],
+    "loaddrawbits": [
+      "file"
+    ],
+    "loadfilea": [
+      "file"
+    ],
+    "loadfileat": [
+      "file"
+    ],
+    "loadfileatz": [
+      "file"
+    ],
+    "loadfilez": [
+      "file"
+    ],
+    "loadpacka": [
+      "file"
+    ],
+    "loadpackz": [
+      "file"
+    ],
+    "loadreplay": [
+      "file"
+    ],
+    "loadshapez": [
+      "file"
+    ],
+    "locate_sound_fatal": [
+      "file"
+    ],
+    "locateshapes": [
+      "file"
+    ],
+    "locateshapesz": [
+      "file"
+    ],
+    "makename": [
+      "file"
+    ],
+    "mergezones": [
+      "video"
+    ],
+    "modsize": [
+      "memory"
+    ],
+    "modulesize": [
+      "memory"
+    ],
+    "mouse_get_position": [
+      "input_mouse"
+    ],
+    "mouse_hide_cursor": [
+      "input_mouse"
+    ],
+    "mouse_set_pixratio": [
+      "input_mouse"
+    ],
+    "mouse_show_cursor": [
+      "input_mouse"
+    ],
+    "mousecursor": [
+      "input_mouse"
+    ],
+    "mouseoff": [
+      "video"
+    ],
+    "mouseon": [
+      "video"
+    ],
+    "movcf": [
+      "video"
+    ],
+    "movcfxya": [
+      "video"
+    ],
+    "moveopponent": [
+      "timer"
+    ],
+    "moveplayer": [
+      "timer"
+    ],
+    "movesim": [
+      "audio"
+    ],
+    "movf": [
+      "video"
+    ],
+    "movfxya": [
+      "video"
+    ],
+    "movpackcf": [
+      "video"
+    ],
+    "movpackcfxya": [
+      "video"
+    ],
+    "movpackf": [
+      "video"
+    ],
+    "movpackfxya": [
+      "video"
+    ],
+    "movtxy": [
+      "video"
+    ],
+    "mycenter": [
+      "video"
+    ],
+    "myfindnext": [
+      "file"
+    ],
+    "myload": [
+      "file"
+    ],
+    "mysetfont": [
+      "video"
+    ],
+    "myupdatesfx": [
+      "audio"
+    ],
+    "myupdatesfx1": [
+      "audio"
+    ],
+    "normkey": [
+      "input_kb"
+    ],
+    "oldFramesPerSecond": [
+      "timer"
+    ],
+    "openresource": [
+      "file"
+    ],
+    "orcfxy": [
+      "video"
+    ],
+    "orcfxya": [
+      "video"
+    ],
+    "orfxya": [
+      "video"
+    ],
+    "orpackf": [
+      "video"
+    ],
+    "packmemory": [
+      "memory"
+    ],
+    "pen_flag_count": [
+      "timer"
+    ],
+    "penalty_ctr": [
+      "timer"
+    ],
+    "preRender_line": [
+      "video"
+    ],
+    "preRender_patterned": [
+      "video"
+    ],
+    "preRender_wheel_helper4": [
+      "video"
+    ],
+    "process_audio_chunk_event": [
+      "audio"
+    ],
+    "process_audio_event": [
+      "audio"
+    ],
+    "purgekey": [
+      "input_kb"
+    ],
+    "purgememory": [
+      "memory"
+    ],
+    "rate_frame": [
+      "timer"
+    ],
+    "read_file_with_retry": [
+      "file"
+    ],
+    "read_line_helper": [
+      "video"
+    ],
+    "read_line_helper2": [
+      "video"
+    ],
+    "readf": [
+      "video"
+    ],
+    "readfxya": [
+      "video"
+    ],
+    "readhighs": [
+      "file"
+    ],
+    "release_audio_chunk": [
+      "audio"
+    ],
+    "remove_3dcars": [
+      "memory"
+    ],
+    "remove_3dpieces": [
+      "memory"
+    ],
+    "removedrawbits": [
+      "memory"
+    ],
+    "removegameint": [
+      "timer"
+    ],
+    "removescenery": [
+      "memory"
+    ],
+    "removewindow": [
+      "video"
+    ],
+    "reserve_audio_chunk": [
+      "audio"
+    ],
+    "reservememory": [
+      "memory"
+    ],
+    "reset_audio_driver_state": [
+      "audio"
+    ],
+    "reset_audio_event_state": [
+      "audio"
+    ],
+    "reset_audio_voice_length": [
+      "audio"
+    ],
+    "resizememory": [
+      "memory"
+    ],
+    "resmem": [
+      "memory"
+    ],
+    "restore_audio_volume": [
+      "audio"
+    ],
+    "restoretimer": [
+      "audio"
+    ],
+    "restorewindow": [
+      "video"
+    ],
+    "run_intro": [
+      "video"
+    ],
+    "savefilez": [
+      "file"
+    ],
+    "savehighs": [
+      "file"
+    ],
+    "savereplay": [
+      "file"
+    ],
+    "savewindow": [
+      "video"
+    ],
+    "seedrandom": [
+      "video"
+    ],
+    "select_audio_voice_slot": [
+      "audio"
+    ],
+    "send_audio_stop_event": [
+      "audio"
+    ],
+    "set_audio_voice_parameter": [
+      "audio"
+    ],
+    "set_audio_voice_value": [
+      "audio"
+    ],
+    "setbiosticks": [
+      "timer"
+    ],
+    "setfont": [
+      "video"
+    ],
+    "setmousebounds": [
+      "input_mouse"
+    ],
+    "setmousepos": [
+      "input_mouse"
+    ],
+    "setmousex": [
+      "input_mouse"
+    ],
+    "setmousey": [
+      "input_mouse"
+    ],
+    "setprojectp": [
+      "video"
+    ],
+    "setup_mcgawnd1": [
+      "video"
+    ],
+    "setup_mcgawnd2": [
+      "video"
+    ],
+    "shadowtext": [
+      "video"
+    ],
+    "shapepointer": [
+      "file"
+    ],
+    "sink": [
+      "video"
+    ],
+    "skybox_op_helper2": [
+      "video"
+    ],
+    "solidellipseh": [
+      "video"
+    ],
+    "solidtire": [
+      "video"
+    ],
+    "sprite_blit_dither_phase": [
+      "video"
+    ],
+    "sprite_blit_to_video": [
+      "video"
+    ],
+    "sprite_draw_beveled_frame": [
+      "video"
+    ],
+    "sprite_draw_rect_outline": [
+      "video"
+    ],
+    "sprite_make_window": [
+      "video"
+    ],
+    "sprite_setup1_from_arg_pointer": [
+      "video"
+    ],
+    "sprite_two_color_poly_list": [
+      "video"
+    ],
+    "start_audio_voice_sample": [
+      "audio"
+    ],
+    "testbiosticks": [
+      "input_kb"
+    ],
+    "testkey": [
+      "input_kb"
+    ],
+    "testticks": [
+      "timer"
+    ],
+    "textcolor": [
+      "video"
+    ],
+    "textnpixels": [
+      "video"
+    ],
+    "textpixels": [
+      "video"
+    ],
+    "timedwait": [
+      "timer"
+    ],
+    "timer_setup_interrupt": [
+      "timer"
+    ],
+    "tmaskxcfxya": [
+      "video"
+    ],
+    "tmr2": [
+      "timer"
+    ],
+    "unlockedmemory": [
+      "memory"
+    ],
+    "update_crash_debris": [
+      "timer"
+    ],
+    "usebuffer": [
+      "video"
+    ],
+    "usebufferc": [
+      "video"
+    ],
+    "usescreen": [
+      "video"
+    ],
+    "usescreenc": [
+      "video"
+    ],
+    "vgapalette": [
+      "video"
+    ],
+    "video_set_mode4": [
+      "video"
+    ],
+    "video_set_mode7": [
+      "video"
+    ],
+    "vsyncstate": [
+      "video"
+    ],
+    "waitbios": [
+      "timer"
+    ],
+    "waitticks": [
+      "timer"
+    ],
+    "writepixelc": [
+      "video"
+    ],
+    "xorbox": [
+      "video"
+    ],
+    "xorrectc": [
+      "video"
+    ]
+  },
+  "bindings": {
+    "game/audioeng.c": {
+      "audio_add_driver_timer": {
+        "names": {
+          "addtimer": [
+            "timer"
+          ]
+        },
+        "explicit": [
+          "timer"
+        ]
+      },
+      "audio_driver_timer": {
+        "names": {
+          "audio_chunk_is_unavailable": [
+            "audio"
+          ],
+          "audio_init_chunk2": [
+            "audio"
+          ],
+          "audio_op_unk": [
+            "audio"
+          ],
+          "audio_set_chunk_volume": [
+            "audio"
+          ],
+          "set_audio_voice_value": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "audio_function2": {
+        "names": {
+          "reset_audio_voice_length": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "audio_function2_wrap": {
+        "names": {
+          "audio_check_flag": [
+            "audio"
+          ],
+          "audio_function2": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "audio_init_engine": {
+        "names": {
+          "reserve_audio_chunk": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file"
+        ]
+      },
+      "audio_op_unk": {
+        "names": {
+          "audio_set_chunk_volume": [
+            "audio"
+          ],
+          "send_audio_stop_event": [
+            "audio"
+          ],
+          "start_audio_voice_sample": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "audio_op_unk3": {
+        "names": {
+          "audio_check_flag": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "audio_op_unk4": {
+        "names": {
+          "audio_check_flag": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "audio_op_unk5": {
+        "names": {
+          "audio_check_flag": [
+            "audio"
+          ],
+          "audio_init_chunk2": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "audio_op_unk6": {
+        "names": {
+          "audio_check_flag": [
+            "audio"
+          ],
+          "audio_init_chunk2": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "audio_op_unk7": {
+        "names": {
+          "audio_init_chunk2": [
+            "audio"
+          ]
+        },
+        "explicit": []
+      },
+      "audio_remove_driver_timer": {
+        "names": {
+          "deltimer": [
+            "timer"
+          ],
+          "release_audio_chunk": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "timer"
+        ]
+      },
+      "nopsub_27220": {
+        "names": {
+          "audio_check_flag": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "nopsub_2726C": {
+        "names": {
+          "audio_check_flag": [
+            "audio"
+          ],
+          "audio_function2": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "nopsub_272B0": {
+        "names": {
+          "audio_check_flag": [
+            "audio"
+          ],
+          "audio_function2": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "nopsub_27489": {
+        "names": {
+          "audio_chunk_is_unavailable": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      }
+    },
+    "game/carsim.c": {
+      "audio_dispatch_car_events": {
+        "names": {
+          "audio_dispatch_car_events": [
+            "audio"
+          ],
+          "audio_op_unk3": [
+            "audio"
+          ],
+          "audio_op_unk4": [
+            "audio"
+          ]
+        },
+        "explicit": []
+      },
+      "doengine": {
+        "names": {
+          "car_fpsmul2": [
+            "timer"
+          ],
+          "doengine": [
+            "timer"
+          ],
+          "rate_frame": [
+            "timer"
+          ]
+        },
+        "explicit": []
+      },
+      "dosteering": {
+        "names": {
+          "dosteering": [
+            "timer"
+          ],
+          "rate_frame": [
+            "timer"
+          ]
+        },
+        "explicit": []
+      },
+      "finishgame": {
+        "names": {
+          "audio_function2_wrap": [
+            "audio"
+          ],
+          "game_end_delay_limit": [
+            "timer"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "timer"
+        ]
+      },
+      "gotosim": {
+        "names": {
+          "gotosim": [
+            "timer"
+          ],
+          "tmr2": [
+            "timer"
+          ]
+        },
+        "explicit": []
+      },
+      "initsim": {
+        "names": {
+          "frmcs_time": [
+            "timer"
+          ],
+          "g_cvxintvl": [
+            "timer"
+          ],
+          "initsim": [
+            "timer"
+          ],
+          "rate_frame": [
+            "timer"
+          ]
+        },
+        "explicit": []
+      },
+      "movecar": {
+        "names": {
+          "audio_dispatch_car_events": [
+            "audio"
+          ],
+          "rate_frame": [
+            "timer"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "timer"
+        ]
+      },
+      "moveopponent": {
+        "names": {
+          "moveopponent": [
+            "timer"
+          ],
+          "rate_frame": [
+            "timer"
+          ]
+        },
+        "explicit": []
+      },
+      "moveplayer": {
+        "names": {
+          "moveplayer": [
+            "timer"
+          ],
+          "pen_flag_count": [
+            "timer"
+          ],
+          "penalty_ctr": [
+            "timer"
+          ]
+        },
+        "explicit": []
+      },
+      "movesim": {
+        "names": {
+          "movesim": [
+            "audio"
+          ],
+          "myupdatesfx": [
+            "audio"
+          ]
+        },
+        "explicit": []
+      },
+      "myupdatesfx": {
+        "names": {
+          "audio_function2": [
+            "audio"
+          ],
+          "audio_op_unk": [
+            "audio"
+          ],
+          "audio_op_unk5": [
+            "audio"
+          ],
+          "audio_op_unk6": [
+            "audio"
+          ],
+          "audio_op_unk7": [
+            "audio"
+          ],
+          "myupdatesfx": [
+            "audio"
+          ]
+        },
+        "explicit": []
+      },
+      "myupdatesfx1": {
+        "names": {
+          "audio_op_unk2": [
+            "audio"
+          ],
+          "myupdatesfx1": [
+            "audio"
+          ]
+        },
+        "explicit": []
+      },
+      "update_crash_debris": {
+        "names": {
+          "rate_frame": [
+            "timer"
+          ],
+          "update_crash_debris": [
+            "timer"
+          ]
+        },
+        "explicit": []
+      }
+    },
+    "game/frontend.c": {
+      "addhighs": {
+        "names": {
+          "rate_frame": [
+            "timer"
+          ],
+          "sprite_blit_to_video": [
+            "video"
+          ],
+          "usebuffer": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "input_kb",
+          "timer",
+          "video"
+        ]
+      },
+      "drawhighs": {
+        "names": {
+          "drawhighs": [
+            "video"
+          ],
+          "fontsetfontdef": [
+            "video"
+          ],
+          "fortextxy": [
+            "video"
+          ],
+          "hiscore_draw_text": [
+            "video"
+          ],
+          "mysetfont": [
+            "video"
+          ],
+          "textcolor": [
+            "video"
+          ],
+          "usebuffer": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "evaluation": {
+        "names": {
+          "audio_unload": [
+            "audio"
+          ],
+          "clearwindow": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "docursor": [
+            "input_mouse"
+          ],
+          "file_load_audio_resource": [
+            "audio"
+          ],
+          "fontsetfontdef": [
+            "video"
+          ],
+          "fortextxy": [
+            "video"
+          ],
+          "hiscore_draw_text": [
+            "video"
+          ],
+          "makename": [
+            "file"
+          ],
+          "mousecursor": [
+            "input_mouse"
+          ],
+          "movcf": [
+            "video"
+          ],
+          "movcfxya": [
+            "video"
+          ],
+          "myload": [
+            "file"
+          ],
+          "mysetfont": [
+            "video"
+          ],
+          "openresource": [
+            "file"
+          ],
+          "purgememory": [
+            "memory"
+          ],
+          "removewindow": [
+            "video"
+          ],
+          "sprite_blit_to_video": [
+            "video"
+          ],
+          "sprite_make_window": [
+            "video"
+          ],
+          "sprite_setup1_from_arg_pointer": [
+            "video"
+          ],
+          "textcolor": [
+            "video"
+          ],
+          "textpixels": [
+            "video"
+          ],
+          "usebuffer": [
+            "video"
+          ],
+          "usebufferc": [
+            "video"
+          ],
+          "usescreen": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file",
+          "input_kb",
+          "input_mouse",
+          "memory",
+          "timer",
+          "video"
+        ]
+      },
+      "genhline": {
+        "names": {
+          "frameRate": [
+            "timer"
+          ],
+          "genhline": [
+            "timer"
+          ],
+          "rate_frame": [
+            "timer"
+          ]
+        },
+        "explicit": []
+      },
+      "getprotection": {
+        "names": {
+          "fortextxy": [
+            "video"
+          ],
+          "openresource": [
+            "file"
+          ]
+        },
+        "explicit": [
+          "file",
+          "video"
+        ]
+      },
+      "load_intro_resources": {
+        "names": {
+          "clearwindow": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "drawrectc": [
+            "video"
+          ],
+          "movcf": [
+            "video"
+          ],
+          "movcfxya": [
+            "video"
+          ],
+          "movf": [
+            "video"
+          ],
+          "openresource": [
+            "file"
+          ],
+          "readf": [
+            "video"
+          ],
+          "shadowtext": [
+            "video"
+          ],
+          "sprite_blit_to_video": [
+            "video"
+          ],
+          "usebuffer": [
+            "video"
+          ],
+          "usebufferc": [
+            "video"
+          ],
+          "usescreen": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "timer",
+          "video"
+        ]
+      },
+      "main": {
+        "names": {
+          "audio_unload": [
+            "audio"
+          ],
+          "file_load_audio_resource": [
+            "audio"
+          ],
+          "fontsetfontdef": [
+            "video"
+          ],
+          "keyboard_exit_handler": [
+            "input_kb"
+          ],
+          "keyboard_shift_checking1": [
+            "input_kb"
+          ],
+          "loadfileat": [
+            "file"
+          ],
+          "makename": [
+            "file"
+          ],
+          "myload": [
+            "file"
+          ],
+          "openresource": [
+            "file"
+          ],
+          "purgememory": [
+            "memory"
+          ],
+          "resmem": [
+            "memory"
+          ],
+          "restoretimer": [
+            "audio"
+          ],
+          "video_set_mode7": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file",
+          "input_kb",
+          "memory",
+          "video"
+        ]
+      },
+      "readhighs": {
+        "names": {
+          "makename": [
+            "file"
+          ],
+          "read_file_with_retry": [
+            "file"
+          ],
+          "readhighs": [
+            "file"
+          ],
+          "savefilez": [
+            "file"
+          ]
+        },
+        "explicit": []
+      },
+      "run_intro": {
+        "names": {
+          "movf": [
+            "video"
+          ],
+          "run_intro": [
+            "video"
+          ],
+          "sprite_blit_to_video": [
+            "video"
+          ],
+          "usebufferc": [
+            "video"
+          ],
+          "usescreenc": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "run_intro_looped": {
+        "names": {
+          "audio_unload": [
+            "audio"
+          ],
+          "file_load_audio_resource": [
+            "audio"
+          ],
+          "freememory": [
+            "memory"
+          ],
+          "myload": [
+            "file"
+          ],
+          "removewindow": [
+            "video"
+          ],
+          "sprite_blit_to_video": [
+            "video"
+          ],
+          "sprite_make_window": [
+            "video"
+          ],
+          "usebufferc": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file",
+          "memory",
+          "video"
+        ]
+      },
+      "run_option_menu": {
+        "names": {
+          "clearwindow": [
+            "video"
+          ],
+          "loadreplay": [
+            "file"
+          ],
+          "openresource": [
+            "file"
+          ],
+          "shadowtext": [
+            "video"
+          ],
+          "usescreen": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "video"
+        ]
+      },
+      "savehighs": {
+        "names": {
+          "makename": [
+            "file"
+          ],
+          "savefilez": [
+            "file"
+          ],
+          "savehighs": [
+            "file"
+          ]
+        },
+        "explicit": []
+      },
+      "select": {
+        "names": {
+          "docursor": [
+            "input_mouse"
+          ],
+          "freememory": [
+            "memory"
+          ],
+          "mousecursor": [
+            "input_mouse"
+          ],
+          "movf": [
+            "video"
+          ],
+          "myload": [
+            "file"
+          ],
+          "removewindow": [
+            "video"
+          ],
+          "sprite_blit_to_video": [
+            "video"
+          ],
+          "sprite_make_window": [
+            "video"
+          ],
+          "usebuffer": [
+            "video"
+          ],
+          "usescreen": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "input_kb",
+          "input_mouse",
+          "memory",
+          "video"
+        ]
+      },
+      "selectcar": {
+        "names": {
+          "clearwindow": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "docursor": [
+            "input_mouse"
+          ],
+          "file_combine_and_find": [
+            "file"
+          ],
+          "file_load_shape2d_fatal_thunk": [
+            "file"
+          ],
+          "fontsetfontdef": [
+            "video"
+          ],
+          "fortextxy": [
+            "video"
+          ],
+          "freememory": [
+            "memory"
+          ],
+          "mousecursor": [
+            "input_mouse"
+          ],
+          "movcf": [
+            "video"
+          ],
+          "movcfxya": [
+            "video"
+          ],
+          "movf": [
+            "video"
+          ],
+          "myfindnext": [
+            "file"
+          ],
+          "mysetfont": [
+            "video"
+          ],
+          "oldFramesPerSecond": [
+            "timer"
+          ],
+          "openresource": [
+            "file"
+          ],
+          "rate_frame": [
+            "timer"
+          ],
+          "readfxya": [
+            "video"
+          ],
+          "removewindow": [
+            "video"
+          ],
+          "sprite_blit_to_video": [
+            "video"
+          ],
+          "sprite_make_window": [
+            "video"
+          ],
+          "textcolor": [
+            "video"
+          ],
+          "tmaskxcfxya": [
+            "video"
+          ],
+          "usebuffer": [
+            "video"
+          ],
+          "usebufferc": [
+            "video"
+          ],
+          "usescreen": [
+            "video"
+          ],
+          "writepixelc": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "input_kb",
+          "input_mouse",
+          "memory",
+          "timer",
+          "video"
+        ]
+      },
+      "selectopponent": {
+        "names": {
+          "clearwindow": [
+            "video"
+          ],
+          "docursor": [
+            "input_mouse"
+          ],
+          "fontsetfontdef": [
+            "video"
+          ],
+          "fortextxy": [
+            "video"
+          ],
+          "freememory": [
+            "memory"
+          ],
+          "mousecursor": [
+            "input_mouse"
+          ],
+          "myload": [
+            "file"
+          ],
+          "mysetfont": [
+            "video"
+          ],
+          "openresource": [
+            "file"
+          ],
+          "readfxya": [
+            "video"
+          ],
+          "removewindow": [
+            "video"
+          ],
+          "sprite_blit_to_video": [
+            "video"
+          ],
+          "sprite_make_window": [
+            "video"
+          ],
+          "textcolor": [
+            "video"
+          ],
+          "usebuffer": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "input_kb",
+          "input_mouse",
+          "memory",
+          "timer",
+          "video"
+        ]
+      },
+      "teditmain": {
+        "names": {
+          "clearwindow": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "docursor": [
+            "input_mouse"
+          ],
+          "fontsetfontdef": [
+            "video"
+          ],
+          "fortextxy": [
+            "video"
+          ],
+          "loadfileat": [
+            "file"
+          ],
+          "makename": [
+            "file"
+          ],
+          "mousecursor": [
+            "input_mouse"
+          ],
+          "mysetfont": [
+            "video"
+          ],
+          "openresource": [
+            "file"
+          ],
+          "removewindow": [
+            "video"
+          ],
+          "shadowtext": [
+            "video"
+          ],
+          "sprite_blit_to_video": [
+            "video"
+          ],
+          "sprite_make_window": [
+            "video"
+          ],
+          "textcolor": [
+            "video"
+          ],
+          "usebuffer": [
+            "video"
+          ],
+          "usescreen": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "input_kb",
+          "input_mouse",
+          "video"
+        ]
+      }
+    },
+    "game/polygon.c": {
+      "DRAW_OBJECTS": {
+        "names": {
+          "drawcircle": [
+            "video"
+          ],
+          "drawpolypt": [
+            "video"
+          ],
+          "preRender_line": [
+            "video"
+          ],
+          "preRender_patterned": [
+            "video"
+          ],
+          "solidtire": [
+            "video"
+          ],
+          "sprite_two_color_poly_list": [
+            "video"
+          ],
+          "writepixelc": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "video"
+        ]
+      },
+      "INIT_MATRIX": {
+        "names": {
+          "resmem": [
+            "memory"
+          ]
+        },
+        "explicit": []
+      }
+    },
+    "game/race.c": {
+      "dodash": {
+        "names": {
+          "andcfxy": [
+            "video"
+          ],
+          "andpackf": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "displaywindow": [
+            "video"
+          ],
+          "freememory": [
+            "memory"
+          ],
+          "mouseoff": [
+            "video"
+          ],
+          "mouseon": [
+            "video"
+          ],
+          "movcfxya": [
+            "video"
+          ],
+          "movpackcf": [
+            "video"
+          ],
+          "movpackcfxya": [
+            "video"
+          ],
+          "movpackfxya": [
+            "video"
+          ],
+          "myload": [
+            "file"
+          ],
+          "orcfxy": [
+            "video"
+          ],
+          "orcfxya": [
+            "video"
+          ],
+          "orpackf": [
+            "video"
+          ],
+          "preRender_line": [
+            "video"
+          ],
+          "readfxya": [
+            "video"
+          ],
+          "removewindow": [
+            "video"
+          ],
+          "sprite_make_window": [
+            "video"
+          ],
+          "sprite_setup1_from_arg_pointer": [
+            "video"
+          ],
+          "usescreen": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "memory",
+          "video"
+        ]
+      },
+      "doreplay": {
+        "names": {
+          "displaywindow": [
+            "video"
+          ],
+          "drawrect": [
+            "video"
+          ],
+          "fontsetfontdef": [
+            "video"
+          ],
+          "initmousedrive": [
+            "input_mouse"
+          ],
+          "keystate": [
+            "input_kb"
+          ],
+          "loadreplay": [
+            "file"
+          ],
+          "makename": [
+            "file"
+          ],
+          "mergezones": [
+            "video"
+          ],
+          "mousecursor": [
+            "input_mouse"
+          ],
+          "mouseoff": [
+            "video"
+          ],
+          "mouseon": [
+            "video"
+          ],
+          "movpackf": [
+            "video"
+          ],
+          "movtxy": [
+            "video"
+          ],
+          "mysetfont": [
+            "video"
+          ],
+          "myupdatesfx": [
+            "audio"
+          ],
+          "savereplay": [
+            "file"
+          ],
+          "shadowtext": [
+            "video"
+          ],
+          "sprite_draw_rect_outline": [
+            "video"
+          ],
+          "textcolor": [
+            "video"
+          ],
+          "timedwait": [
+            "timer"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file",
+          "input_joy",
+          "input_kb",
+          "input_mouse",
+          "timer",
+          "video"
+        ]
+      },
+      "gameint": {
+        "names": {
+          "myupdatesfx": [
+            "audio"
+          ],
+          "myupdatesfx1": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "timer"
+        ]
+      },
+      "gameintinit": {
+        "names": {
+          "addtimer": [
+            "timer"
+          ],
+          "gameintinit": [
+            "timer"
+          ]
+        },
+        "explicit": []
+      },
+      "initmousedrive": {
+        "names": {
+          "initmousedrive": [
+            "input_mouse"
+          ],
+          "setmousebounds": [
+            "input_mouse"
+          ],
+          "setmousepos": [
+            "input_mouse"
+          ]
+        },
+        "explicit": []
+      },
+      "loadgamefiles": {
+        "names": {
+          "audio_add_driver_timer": [
+            "audio"
+          ],
+          "audio_init_engine": [
+            "audio"
+          ],
+          "availmem": [
+            "memory"
+          ],
+          "closeresource": [
+            "memory"
+          ],
+          "myload": [
+            "file"
+          ],
+          "openresource": [
+            "file"
+          ],
+          "sprite_make_window": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file",
+          "input_joy",
+          "input_kb",
+          "input_mouse",
+          "memory",
+          "timer",
+          "video"
+        ]
+      },
+      "loadreplay": {
+        "names": {
+          "loadfileat": [
+            "file"
+          ],
+          "loadreplay": [
+            "file"
+          ],
+          "makename": [
+            "file"
+          ]
+        },
+        "explicit": []
+      },
+      "mainkey": {
+        "names": {
+          "initmousedrive": [
+            "input_mouse"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "input_joy",
+          "input_kb",
+          "input_mouse",
+          "timer",
+          "video"
+        ]
+      },
+      "moveeverything": {
+        "names": {
+          "getmousepos": [
+            "input_mouse"
+          ],
+          "keystate": [
+            "input_kb"
+          ],
+          "myupdatesfx": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "input_joy",
+          "input_kb",
+          "input_mouse"
+        ]
+      },
+      "removegamefiles": {
+        "names": {
+          "audio_remove_driver_timer": [
+            "audio"
+          ],
+          "closeresource": [
+            "memory"
+          ],
+          "freememory": [
+            "memory"
+          ],
+          "removewindow": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "memory",
+          "video"
+        ]
+      },
+      "removegameint": {
+        "names": {
+          "deltimer": [
+            "timer"
+          ],
+          "removegameint": [
+            "timer"
+          ],
+          "timedwait": [
+            "timer"
+          ]
+        },
+        "explicit": []
+      },
+      "run_game": {
+        "names": {
+          "andpackf": [
+            "video"
+          ],
+          "audio_pause_playback": [
+            "audio"
+          ],
+          "audio_remove_driver_timer": [
+            "audio"
+          ],
+          "clear_rect": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "getmousepos": [
+            "input_mouse"
+          ],
+          "initmousedrive": [
+            "input_mouse"
+          ],
+          "loadreplay": [
+            "file"
+          ],
+          "mouseoff": [
+            "video"
+          ],
+          "mouseon": [
+            "video"
+          ],
+          "movtxy": [
+            "video"
+          ],
+          "myupdatesfx": [
+            "audio"
+          ],
+          "orpackf": [
+            "video"
+          ],
+          "restore_audio_volume": [
+            "audio"
+          ],
+          "usebuffer": [
+            "video"
+          ],
+          "usescreen": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file",
+          "input_joy",
+          "input_kb",
+          "input_mouse",
+          "timer",
+          "video"
+        ]
+      },
+      "savereplay": {
+        "names": {
+          "savefilez": [
+            "file"
+          ],
+          "savereplay": [
+            "file"
+          ]
+        },
+        "explicit": []
+      }
+    },
+    "game/render.c": {
+      "crack": {
+        "names": {
+          "getres": [
+            "file"
+          ],
+          "preRender_line": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "video"
+        ]
+      },
+      "drawblimpworld": {
+        "names": {
+          "clearwindow": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "drawblimpworld": [
+            "video"
+          ],
+          "movcfxya": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "drawhorizon": {
+        "names": {
+          "clearwindow": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "drawhorizon": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "drawlogo": {
+        "names": {
+          "clearwindow": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "drawlogo": [
+            "video"
+          ],
+          "writepixelc": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "drawtext": {
+        "names": {
+          "drawtext": [
+            "video"
+          ],
+          "mergezones": [
+            "video"
+          ],
+          "tmaskxcfxya": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "drawworld": {
+        "names": {
+          "clippix": [
+            "video"
+          ],
+          "drawworld": [
+            "video"
+          ],
+          "fontsetfontdef": [
+            "video"
+          ],
+          "mergezones": [
+            "video"
+          ],
+          "mysetfont": [
+            "video"
+          ],
+          "shadowtext": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "drawworldflipzones": {
+        "names": {
+          "clippix": [
+            "video"
+          ],
+          "drawworldflipzones": [
+            "video"
+          ],
+          "mouseoff": [
+            "video"
+          ],
+          "mouseon": [
+            "video"
+          ],
+          "movcf": [
+            "video"
+          ],
+          "usescreen": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "initscenery": {
+        "names": {
+          "file_load_shape2d_fatal_thunk": [
+            "file"
+          ],
+          "initscenery": [
+            "file"
+          ]
+        },
+        "explicit": []
+      },
+      "loaddrawbits": {
+        "names": {
+          "loaddrawbits": [
+            "file"
+          ],
+          "myload": [
+            "file"
+          ]
+        },
+        "explicit": []
+      },
+      "logo": {
+        "names": {
+          "clear_rect": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "closeresource": [
+            "memory"
+          ],
+          "elapsedticks": [
+            "timer"
+          ],
+          "fluffyload": [
+            "file"
+          ],
+          "freememory": [
+            "memory"
+          ],
+          "mouseoff": [
+            "video"
+          ],
+          "mouseon": [
+            "video"
+          ],
+          "movcf": [
+            "video"
+          ],
+          "openresource": [
+            "file"
+          ],
+          "removewindow": [
+            "video"
+          ],
+          "setprojectp": [
+            "video"
+          ],
+          "sprite_make_window": [
+            "video"
+          ],
+          "usebuffer": [
+            "video"
+          ],
+          "usescreen": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "input_joy",
+          "input_kb",
+          "input_mouse",
+          "memory",
+          "timer",
+          "video"
+        ]
+      },
+      "removedrawbits": {
+        "names": {
+          "freememory": [
+            "memory"
+          ],
+          "removedrawbits": [
+            "memory"
+          ]
+        },
+        "explicit": []
+      },
+      "removescenery": {
+        "names": {
+          "freememory": [
+            "memory"
+          ],
+          "removescenery": [
+            "memory"
+          ]
+        },
+        "explicit": []
+      },
+      "sink": {
+        "names": {
+          "clearwindow": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "sink": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "skybox_op_helper2": {
+        "names": {
+          "clearwindow": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "movcfxya": [
+            "video"
+          ],
+          "skybox_op_helper2": [
+            "video"
+          ]
+        },
+        "explicit": []
+      }
+    },
+    "game/rpmrand.ASM": {
+      "_initialize_div0": {
+        "names": {},
+        "explicit": [
+          "dos"
+        ]
+      },
+      "_intr0_handler": {
+        "names": {},
+        "explicit": [
+          "bios"
+        ]
+      },
+      "_nopsub_19DFF": {
+        "names": {},
+        "explicit": [
+          "bios"
+        ]
+      },
+      "_nopsub_19E09": {
+        "names": {},
+        "explicit": [
+          "bios"
+        ]
+      },
+      "_nopsub_19E13": {
+        "names": {},
+        "explicit": [
+          "bios"
+        ]
+      }
+    },
+    "game/trackedt.c": {
+      "drawpiecebox": {
+        "names": {
+          "andfxya": [
+            "video"
+          ],
+          "movfxya": [
+            "video"
+          ],
+          "orfxya": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "video"
+        ]
+      },
+      "drawtrackbox": {
+        "names": {
+          "andcfxya": [
+            "video"
+          ],
+          "andfxya": [
+            "video"
+          ],
+          "movcfxya": [
+            "video"
+          ],
+          "movfxya": [
+            "video"
+          ],
+          "orcfxya": [
+            "video"
+          ],
+          "orfxya": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "video"
+        ]
+      },
+      "trackedit": {
+        "names": {
+          "BIOS_KEY_F10": [
+            "input_kb"
+          ],
+          "andfxya": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "closeresource": [
+            "memory"
+          ],
+          "doslider": [
+            "input_mouse"
+          ],
+          "drawpiecebox": [
+            "video"
+          ],
+          "drawrect": [
+            "video"
+          ],
+          "drawtrackbox": [
+            "video"
+          ],
+          "file_load_shape2d_fatal_thunk": [
+            "file"
+          ],
+          "freememory": [
+            "memory"
+          ],
+          "getres": [
+            "file"
+          ],
+          "loadfileat": [
+            "file"
+          ],
+          "locateshapes": [
+            "file"
+          ],
+          "makename": [
+            "file"
+          ],
+          "mousecursor": [
+            "input_mouse"
+          ],
+          "mouseoff": [
+            "video"
+          ],
+          "mouseon": [
+            "video"
+          ],
+          "movfxya": [
+            "video"
+          ],
+          "movtxy": [
+            "video"
+          ],
+          "openresource": [
+            "file"
+          ],
+          "orfxya": [
+            "video"
+          ],
+          "preRender_line": [
+            "video"
+          ],
+          "readfxya": [
+            "video"
+          ],
+          "removewindow": [
+            "video"
+          ],
+          "savefilez": [
+            "file"
+          ],
+          "sprite_blit_to_video": [
+            "video"
+          ],
+          "sprite_draw_beveled_frame": [
+            "video"
+          ],
+          "sprite_make_window": [
+            "video"
+          ],
+          "sprite_setup1_from_arg_pointer": [
+            "video"
+          ],
+          "textcolor": [
+            "video"
+          ],
+          "textpixels": [
+            "video"
+          ],
+          "timedwait": [
+            "timer"
+          ],
+          "usebuffer": [
+            "video"
+          ],
+          "usebufferc": [
+            "video"
+          ],
+          "usescreen": [
+            "video"
+          ],
+          "xorbox": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "input_kb",
+          "input_mouse",
+          "memory",
+          "timer",
+          "video"
+        ]
+      }
+    },
+    "game/trkscene.c": {
+      "compiletrack": {
+        "names": {
+          "compiletrack": [
+            "memory"
+          ],
+          "purgememory": [
+            "memory"
+          ],
+          "resmem": [
+            "memory"
+          ]
+        },
+        "explicit": []
+      },
+      "init_3dcars": {
+        "names": {
+          "fluffyload": [
+            "file"
+          ],
+          "modsize": [
+            "memory"
+          ],
+          "resmem": [
+            "memory"
+          ]
+        },
+        "explicit": [
+          "file",
+          "memory"
+        ]
+      },
+      "init_3dpieces": {
+        "names": {
+          "availmem": [
+            "memory"
+          ],
+          "fluffyload": [
+            "file"
+          ]
+        },
+        "explicit": [
+          "file",
+          "memory"
+        ]
+      },
+      "opponentcompile": {
+        "names": {
+          "closeresource": [
+            "memory"
+          ],
+          "getres": [
+            "file"
+          ],
+          "openresource": [
+            "file"
+          ]
+        },
+        "explicit": [
+          "file",
+          "memory"
+        ]
+      },
+      "remove_3dcars": {
+        "names": {
+          "freememory": [
+            "memory"
+          ],
+          "purgememory": [
+            "memory"
+          ],
+          "remove_3dcars": [
+            "memory"
+          ]
+        },
+        "explicit": []
+      },
+      "remove_3dpieces": {
+        "names": {
+          "freememory": [
+            "memory"
+          ],
+          "remove_3dpieces": [
+            "memory"
+          ]
+        },
+        "explicit": []
+      }
+    },
+    "game/uires.c": {
+      "audio_unload": {
+        "names": {
+          "freememory": [
+            "memory"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "memory"
+        ]
+      },
+      "clear_keyboardbuffer": {
+        "names": {},
+        "explicit": [
+          "input_kb",
+          "timer"
+        ]
+      },
+      "closeresource": {
+        "names": {
+          "freememory": [
+            "memory"
+          ]
+        },
+        "explicit": []
+      },
+      "do_dea_textres": {
+        "names": {},
+        "explicit": [
+          "file",
+          "input_kb",
+          "video"
+        ]
+      },
+      "do_joystick_resource_text": {
+        "names": {
+          "audio_pause_playback": [
+            "audio"
+          ],
+          "convertjoy": [
+            "input_joy"
+          ],
+          "drawrect": [
+            "video"
+          ],
+          "get_joy_flags": [
+            "input_joy"
+          ],
+          "mouseoff": [
+            "video"
+          ],
+          "normkey": [
+            "input_kb"
+          ],
+          "purgekey": [
+            "input_kb"
+          ],
+          "restore_audio_volume": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file",
+          "input_joy",
+          "input_kb",
+          "video"
+        ]
+      },
+      "docursor": {
+        "names": {
+          "mouseoff": [
+            "video"
+          ],
+          "mouseon": [
+            "video"
+          ],
+          "sprite_draw_rect_outline": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "timer",
+          "video"
+        ]
+      },
+      "dohidemouse": {
+        "names": {
+          "displaywindow": [
+            "video"
+          ],
+          "movcf": [
+            "video"
+          ],
+          "restorewindow": [
+            "video"
+          ],
+          "savewindow": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "video"
+        ]
+      },
+      "doshowmouse": {
+        "names": {
+          "andcfxya": [
+            "video"
+          ],
+          "displaywindow": [
+            "video"
+          ],
+          "orcfxya": [
+            "video"
+          ],
+          "readfxya": [
+            "video"
+          ],
+          "restorewindow": [
+            "video"
+          ],
+          "savewindow": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "video"
+        ]
+      },
+      "doslider": {
+        "names": {
+          "drawrect": [
+            "video"
+          ],
+          "mouseoff": [
+            "video"
+          ],
+          "mouseon": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "input_kb",
+          "timer",
+          "video"
+        ]
+      },
+      "draw3dbutton": {
+        "names": {
+          "drawrect": [
+            "video"
+          ],
+          "preRender_line": [
+            "video"
+          ],
+          "textcolor": [
+            "video"
+          ],
+          "textpixels": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "video"
+        ]
+      },
+      "drnd": {
+        "names": {
+          "gettick": [
+            "timer"
+          ]
+        },
+        "explicit": []
+      },
+      "elticks": {
+        "names": {
+          "elapsedticks": [
+            "timer"
+          ]
+        },
+        "explicit": []
+      },
+      "ensure_file_exists": {
+        "names": {
+          "mouseoff": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "video"
+        ]
+      },
+      "file_load_audio_resource": {
+        "names": {
+          "init_audio_resources": [
+            "audio"
+          ],
+          "load_audio_finalize": [
+            "audio"
+          ],
+          "myload": [
+            "file"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file"
+        ]
+      },
+      "floadreq": {
+        "names": {
+          "drawrect": [
+            "video"
+          ],
+          "file_combine_and_find": [
+            "file"
+          ],
+          "mousecursor": [
+            "input_mouse"
+          ],
+          "mouseoff": [
+            "video"
+          ],
+          "mouseon": [
+            "video"
+          ],
+          "movtxy": [
+            "video"
+          ],
+          "mycenter": [
+            "video"
+          ],
+          "myfindnext": [
+            "file"
+          ],
+          "preRender_line": [
+            "video"
+          ],
+          "textcolor": [
+            "video"
+          ],
+          "textpixels": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "input_kb",
+          "input_mouse",
+          "timer",
+          "video"
+        ]
+      },
+      "fluffyload": {
+        "names": {
+          "myload": [
+            "file"
+          ]
+        },
+        "explicit": [
+          "file"
+        ]
+      },
+      "fsavereq": {
+        "names": {
+          "mouseon": [
+            "video"
+          ],
+          "movtxy": [
+            "video"
+          ],
+          "textcolor": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "video"
+        ]
+      },
+      "getres": {
+        "names": {},
+        "explicit": [
+          "file"
+        ]
+      },
+      "getresl": {
+        "names": {},
+        "explicit": [
+          "file"
+        ]
+      },
+      "hiscore_draw_text": {
+        "names": {
+          "fortextxy": [
+            "video"
+          ],
+          "textcolor": [
+            "video"
+          ],
+          "textpixels": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "video"
+        ]
+      },
+      "hurrykey": {
+        "names": {},
+        "explicit": [
+          "input_kb"
+        ]
+      },
+      "instringz": {
+        "names": {
+          "mouseoff": [
+            "video"
+          ],
+          "mouseon": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "input_kb",
+          "video"
+        ]
+      },
+      "loading": {
+        "names": {
+          "mouseoff": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "video"
+        ]
+      },
+      "mdosexit": {
+        "names": {
+          "audio_pause_playback": [
+            "audio"
+          ],
+          "restore_audio_volume": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "dos",
+          "file",
+          "input_kb",
+          "video"
+        ]
+      },
+      "memerr": {
+        "names": {},
+        "explicit": [
+          "file",
+          "video"
+        ]
+      },
+      "messagebox": {
+        "names": {
+          "clearwindow": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "displaywindow": [
+            "video"
+          ],
+          "mousecursor": [
+            "input_mouse"
+          ],
+          "mouseoff": [
+            "video"
+          ],
+          "mouseon": [
+            "video"
+          ],
+          "movtxy": [
+            "video"
+          ],
+          "sprite_draw_rect_outline": [
+            "video"
+          ],
+          "textcolor": [
+            "video"
+          ],
+          "textpixels": [
+            "video"
+          ],
+          "waitbios": [
+            "timer"
+          ]
+        },
+        "explicit": [
+          "input_kb",
+          "input_mouse",
+          "timer",
+          "video"
+        ]
+      },
+      "mkeyon": {
+        "names": {
+          "audio_pause_playback": [
+            "audio"
+          ],
+          "restore_audio_volume": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file",
+          "input_kb",
+          "video"
+        ]
+      },
+      "mmouseon": {
+        "names": {
+          "audio_pause_playback": [
+            "audio"
+          ],
+          "restore_audio_volume": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file",
+          "input_kb",
+          "video"
+        ]
+      },
+      "mmusictog": {
+        "names": {
+          "audio_toggle_flag2": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file",
+          "input_kb",
+          "video"
+        ]
+      },
+      "mouseoff": {
+        "names": {
+          "dohidemouse": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "video"
+        ]
+      },
+      "mouseon": {
+        "names": {
+          "doshowmouse": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "video"
+        ]
+      },
+      "msetrender": {
+        "names": {
+          "audio_pause_playback": [
+            "audio"
+          ],
+          "restore_audio_volume": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file",
+          "input_kb",
+          "video"
+        ]
+      },
+      "msoundtog": {
+        "names": {
+          "audio_toggle_flag6": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file",
+          "input_kb",
+          "video"
+        ]
+      },
+      "msystempause": {
+        "names": {
+          "audio_pause_playback": [
+            "audio"
+          ],
+          "restore_audio_volume": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "file",
+          "input_kb",
+          "video"
+        ]
+      },
+      "mycenter": {
+        "names": {
+          "textpixels": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "mykey": {
+        "names": {
+          "dohidemouse": [
+            "video"
+          ],
+          "doshowmouse": [
+            "video"
+          ],
+          "get_joy_flags": [
+            "input_joy"
+          ],
+          "getmousepos": [
+            "input_mouse"
+          ]
+        },
+        "explicit": [
+          "input_joy",
+          "input_kb",
+          "input_mouse",
+          "video"
+        ]
+      },
+      "mykeywait": {
+        "names": {},
+        "explicit": [
+          "input_kb",
+          "timer"
+        ]
+      },
+      "myload": {
+        "names": {
+          "file_load_shape2d_nofatal2": [
+            "file"
+          ],
+          "filename": [
+            "file"
+          ],
+          "load_sfx_file": [
+            "file"
+          ],
+          "load_shape2d_nofatal_thunk": [
+            "file"
+          ],
+          "load_shape2d_res_nofatal_thunk": [
+            "file"
+          ],
+          "load_song_file": [
+            "file"
+          ],
+          "load_voice_file": [
+            "file"
+          ],
+          "loadfilez": [
+            "file"
+          ],
+          "loadpackz": [
+            "file"
+          ]
+        },
+        "explicit": []
+      },
+      "mysetfont": {
+        "names": {
+          "setfont": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "openresource": {
+        "names": {
+          "myload": [
+            "file"
+          ]
+        },
+        "explicit": [
+          "file"
+        ]
+      },
+      "point_in_rectangle": {
+        "names": {
+          "availmem": [
+            "memory"
+          ],
+          "displaywindow": [
+            "video"
+          ],
+          "mouseoff": [
+            "video"
+          ],
+          "readfxya": [
+            "video"
+          ],
+          "savewindow": [
+            "video"
+          ],
+          "sprite_make_window": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "memory",
+          "video"
+        ]
+      },
+      "pullmouse": {
+        "names": {
+          "mouseoff": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "video"
+        ]
+      },
+      "read_file_with_retry": {
+        "names": {
+          "loadfileatz": [
+            "file"
+          ]
+        },
+        "explicit": [
+          "file"
+        ]
+      },
+      "restoreboxwindow": {
+        "names": {
+          "mouseoff": [
+            "video"
+          ],
+          "mouseon": [
+            "video"
+          ],
+          "movfxya": [
+            "video"
+          ],
+          "removewindow": [
+            "video"
+          ],
+          "restorewindow": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "video"
+        ]
+      },
+      "shadowtext": {
+        "names": {
+          "fortextxy": [
+            "video"
+          ],
+          "textcolor": [
+            "video"
+          ],
+          "textpixels": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "video"
+        ]
+      },
+      "sprite_blit_to_video": {
+        "names": {
+          "mouseoff": [
+            "video"
+          ],
+          "mouseon": [
+            "video"
+          ],
+          "movcf": [
+            "video"
+          ],
+          "sprite_blit_dither_phase": [
+            "video"
+          ],
+          "usescreen": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "input_kb",
+          "timer",
+          "video"
+        ]
+      },
+      "sprite_draw_beveled_frame": {
+        "names": {
+          "preRender_line": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "video"
+        ]
+      },
+      "usebuffer": {
+        "names": {
+          "sprite_setup1_from_arg_pointer": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "usebufferc": {
+        "names": {
+          "clearwindow": [
+            "video"
+          ],
+          "sprite_setup1_from_arg_pointer": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "usescreen": {
+        "names": {
+          "sprite_setup1_from_arg_pointer": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "usescreenc": {
+        "names": {
+          "clearwindow": [
+            "video"
+          ],
+          "sprite_setup1_from_arg_pointer": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "waitforkey": {
+        "names": {},
+        "explicit": [
+          "input_kb",
+          "timer"
+        ]
+      }
+    },
+    "lib/audioply.c": {
+      "apply_audio_voice_event": {
+        "names": {
+          "apply_audio_voice_event": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "audio_driver_func1E": {
+        "names": {
+          "audio_driver_func1E": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "audio_set_chunk_volume": {
+        "names": {
+          "audio_set_chunk_volume": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "clear_audio_voice": {
+        "names": {
+          "clear_audio_voice": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "process_audio_chunk_event": {
+        "names": {
+          "process_audio_chunk_event": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "process_audio_event": {
+        "names": {
+          "process_audio_event": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "reset_audio_event_state": {
+        "names": {
+          "reset_audio_event_state": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "select_audio_voice_slot": {
+        "names": {
+          "select_audio_voice_slot": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "set_audio_voice_parameter": {
+        "names": {
+          "set_audio_voice_parameter": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "set_audio_voice_value": {
+        "names": {
+          "set_audio_voice_value": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "start_audio_voice_sample": {
+        "names": {
+          "start_audio_voice_sample": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      }
+    },
+    "lib/audiores.c": {
+      "audio_driver_func3F": {
+        "names": {
+          "waitticks": [
+            "timer"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "timer"
+        ]
+      },
+      "audio_load_driver": {
+        "names": {
+          "addtimer": [
+            "timer"
+          ],
+          "loadfilez": [
+            "file"
+          ],
+          "purgememory": [
+            "memory"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "timer"
+        ]
+      },
+      "audio_pause_playback": {
+        "names": {
+          "audio_pause_playback": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "audiodrv_atexit": {
+        "names": {
+          "deltimer": [
+            "timer"
+          ],
+          "purgememory": [
+            "memory"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "timer"
+        ]
+      },
+      "init_audio_resources": {
+        "names": {},
+        "explicit": [
+          "file",
+          "memory",
+          "timer"
+        ]
+      },
+      "link_audio_shape_resources": {
+        "names": {},
+        "explicit": [
+          "file"
+        ]
+      },
+      "load_audio_finalize": {
+        "names": {
+          "load_audio_finalize": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "load_sfx_ge": {
+        "names": {
+          "load_sfx_ge": [
+            "file"
+          ],
+          "loadfilez": [
+            "file"
+          ],
+          "loadpackz": [
+            "file"
+          ]
+        },
+        "explicit": []
+      },
+      "reset_audio_driver_state": {
+        "names": {
+          "reset_audio_driver_state": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      },
+      "restore_audio_volume": {
+        "names": {
+          "restore_audio_volume": [
+            "audio"
+          ]
+        },
+        "explicit": [
+          "audio"
+        ]
+      }
+    },
+    "lib/bmpmask.ASM": {
+      "_andpackf": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/fileio.ASM": {
+      "_loadfileat": {
+        "names": {},
+        "explicit": [
+          "file"
+        ]
+      },
+      "_locate_sound_fatal": {
+        "names": {},
+        "explicit": [
+          "dos"
+        ]
+      }
+    },
+    "lib/filewrit.ASM": {
+      "_savefilez": {
+        "names": {},
+        "explicit": [
+          "file"
+        ]
+      }
+    },
+    "lib/fontdraw.ASM": {
+      "_fortextxy": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/fontmat.ASM": {
+      "_file_unflip_shape2d": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_textpixels": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_vertsync": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_vsyncstate": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/gfxres.ASM": {
+      "_criterr": {
+        "names": {},
+        "explicit": [
+          "dos"
+        ]
+      },
+      "_criterr_interrupt_handler": {
+        "names": {},
+        "explicit": [
+          "bios"
+        ]
+      },
+      "_filesize": {
+        "names": {},
+        "explicit": [
+          "file"
+        ]
+      },
+      "_findfirst": {
+        "names": {},
+        "explicit": [
+          "dos",
+          "file"
+        ]
+      },
+      "_findnext": {
+        "names": {},
+        "explicit": [
+          "dos",
+          "file"
+        ]
+      },
+      "_getbiostick": {
+        "names": {},
+        "explicit": [
+          "timer"
+        ]
+      },
+      "_resetcriterr": {
+        "names": {},
+        "explicit": [
+          "dos"
+        ]
+      },
+      "_unpacksize": {
+        "names": {},
+        "explicit": [
+          "file"
+        ]
+      },
+      "_video_set_mode4": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/iconmask.ASM": {
+      "_andfxya": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/kbcalls.ASM": {
+      "_nextkey": {
+        "names": {},
+        "explicit": [
+          "input_kb"
+        ]
+      },
+      "_normkey": {
+        "names": {},
+        "explicit": [
+          "input_kb"
+        ]
+      },
+      "_purgekey": {
+        "names": {},
+        "explicit": [
+          "input_kb"
+        ]
+      }
+    },
+    "lib/kbint.ASM": {
+      "_kb_init_interrupt": {
+        "names": {},
+        "explicit": [
+          "input_kb"
+        ]
+      },
+      "_kb_int16_handler": {
+        "names": {},
+        "explicit": [
+          "input_kb"
+        ]
+      },
+      "_kb_int9_handler": {
+        "names": {},
+        "explicit": [
+          "input_kb"
+        ]
+      },
+      "_keyboard_exit_handler": {
+        "names": {},
+        "explicit": [
+          "input_kb"
+        ]
+      }
+    },
+    "lib/kbjoy.ASM": {
+      "_get_joy_flags": {
+        "names": {},
+        "explicit": [
+          "bios",
+          "input_joy"
+        ]
+      },
+      "_input_read_char_or_joystick": {
+        "names": {},
+        "explicit": [
+          "input_kb"
+        ]
+      },
+      "_interpretkey": {
+        "names": {},
+        "explicit": [
+          "input_kb"
+        ]
+      },
+      "_joybuttons": {
+        "names": {},
+        "explicit": [
+          "input_joy"
+        ]
+      },
+      "_normkeyi": {
+        "names": {},
+        "explicit": [
+          "input_kb"
+        ]
+      },
+      "_set_bios_mode3": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/linedisp.ASM": {
+      "_draw_unknown_lines": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/lineedit.c": {
+      "get_pstring": {
+        "names": {
+          "displaywindow": [
+            "video"
+          ],
+          "setbiosticks": [
+            "timer"
+          ],
+          "testbiosticks": [
+            "input_kb"
+          ],
+          "testkey": [
+            "input_kb"
+          ],
+          "testticks": [
+            "timer"
+          ]
+        },
+        "explicit": [
+          "input_kb",
+          "timer",
+          "video"
+        ]
+      },
+      "read_line_helper": {
+        "names": {
+          "read_line_helper": [
+            "video"
+          ],
+          "textnpixels": [
+            "video"
+          ],
+          "textpixels": [
+            "video"
+          ],
+          "xorrectc": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "read_line_helper2": {
+        "names": {
+          "drawrectc": [
+            "video"
+          ],
+          "movtxy": [
+            "video"
+          ],
+          "read_line_helper2": [
+            "video"
+          ],
+          "textpixels": [
+            "video"
+          ]
+        },
+        "explicit": []
+      }
+    },
+    "lib/linerend.ASM": {
+      "_draw_filled_lines": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_scalecfxy": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_textcolor": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/maskblit.ASM": {
+      "_andcfxya": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/mathres.ASM": {
+      "_file_get_res_shape_count": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_gettick": {
+        "names": {},
+        "explicit": [
+          "timer"
+        ]
+      },
+      "_shapepointer": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_tickcount": {
+        "names": {},
+        "explicit": [
+          "timer"
+        ]
+      }
+    },
+    "lib/mcgawnd.c": {
+      "setup_mcgawnd1": {
+        "names": {
+          "movcf": [
+            "video"
+          ],
+          "setup_mcgawnd1": [
+            "video"
+          ],
+          "sprite_make_window": [
+            "video"
+          ],
+          "sprite_setup1_from_arg_pointer": [
+            "video"
+          ]
+        },
+        "explicit": []
+      },
+      "setup_mcgawnd2": {
+        "names": {
+          "setup_mcgawnd2": [
+            "video"
+          ],
+          "sprite_make_window": [
+            "video"
+          ],
+          "sprite_setup1_from_arg_pointer": [
+            "video"
+          ]
+        },
+        "explicit": []
+      }
+    },
+    "lib/memmgr.ASM": {
+      "_initmemory": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_initmemsize": {
+        "names": {},
+        "explicit": [
+          "memory"
+        ]
+      },
+      "_mmgr_alloc_resmem": {
+        "names": {},
+        "explicit": [
+          "dos",
+          "memory"
+        ]
+      },
+      "_mmgr_init_video_reserve": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/mode13h.ASM": {
+      "_initgraphics": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/mouse.c": {
+      "getmousepos": {
+        "names": {
+          "getmousepos": [
+            "input_mouse"
+          ]
+        },
+        "explicit": [
+          "input_mouse"
+        ]
+      },
+      "initmouse": {
+        "names": {
+          "initmouse": [
+            "input_mouse"
+          ]
+        },
+        "explicit": [
+          "bios",
+          "input_mouse"
+        ]
+      },
+      "mouse_get_position": {
+        "names": {
+          "mouse_get_position": [
+            "input_mouse"
+          ]
+        },
+        "explicit": [
+          "input_mouse"
+        ]
+      },
+      "mouse_hide_cursor": {
+        "names": {
+          "mouse_hide_cursor": [
+            "input_mouse"
+          ]
+        },
+        "explicit": [
+          "input_mouse"
+        ]
+      },
+      "mouse_set_pixratio": {
+        "names": {
+          "mouse_set_pixratio": [
+            "input_mouse"
+          ]
+        },
+        "explicit": [
+          "input_mouse"
+        ]
+      },
+      "mouse_show_cursor": {
+        "names": {
+          "mouse_show_cursor": [
+            "input_mouse"
+          ]
+        },
+        "explicit": [
+          "input_mouse"
+        ]
+      },
+      "setmousebounds": {
+        "names": {
+          "setmousebounds": [
+            "input_mouse"
+          ]
+        },
+        "explicit": [
+          "input_mouse"
+        ]
+      },
+      "setmousepos": {
+        "names": {
+          "setmousepos": [
+            "input_mouse"
+          ]
+        },
+        "explicit": [
+          "input_mouse"
+        ]
+      },
+      "setmousex": {
+        "names": {
+          "setmousex": [
+            "input_mouse"
+          ]
+        },
+        "explicit": [
+          "input_mouse"
+        ]
+      },
+      "setmousey": {
+        "names": {
+          "setmousey": [
+            "input_mouse"
+          ]
+        },
+        "explicit": [
+          "input_mouse"
+        ]
+      }
+    },
+    "lib/patlines.ASM": {
+      "draw_patterned_lines": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/pixline.ASM": {
+      "_drawcline": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/project.ASM": {
+      "_removewindow": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/putpixel.ASM": {
+      "_writepixelc": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/rectout.c": {
+      "xorbox": {
+        "names": {
+          "xorbox": [
+            "video"
+          ],
+          "xorrectc": [
+            "video"
+          ]
+        },
+        "explicit": []
+      }
+    },
+    "lib/reslook.c": {
+      "file_find_shapes_optional_alt": {
+        "names": {
+          "file_find_shapes_optional_alt": [
+            "file"
+          ]
+        },
+        "explicit": [
+          "file"
+        ]
+      },
+      "file_find_sounds_required": {
+        "names": {
+          "file_find_sounds_required": [
+            "file"
+          ],
+          "locate_sound_fatal": [
+            "file"
+          ]
+        },
+        "explicit": []
+      },
+      "locateshapes": {
+        "names": {
+          "locateshapes": [
+            "file"
+          ]
+        },
+        "explicit": [
+          "file"
+        ]
+      },
+      "locateshapesz": {
+        "names": {
+          "locateshapesz": [
+            "file"
+          ]
+        },
+        "explicit": [
+          "file"
+        ]
+      }
+    },
+    "lib/scalblit.ASM": {
+      "_xorrectc": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/shp2file.c": {
+      "file_load_shape2d": {
+        "names": {
+          "checkmodule": [
+            "memory"
+          ],
+          "file_load_shape2d_expand": [
+            "file"
+          ],
+          "file_load_shape2d_expandedsize": [
+            "file"
+          ],
+          "file_load_shape2d_palmap_apply": [
+            "file"
+          ],
+          "file_load_shape2d_palmap_init": [
+            "file"
+          ],
+          "file_unflip_shape2d": [
+            "file"
+          ],
+          "file_unflip_shape2d_pes": [
+            "file"
+          ],
+          "loadfilea": [
+            "file"
+          ],
+          "loadpacka": [
+            "file"
+          ],
+          "packmemory": [
+            "memory"
+          ],
+          "purgememory": [
+            "memory"
+          ],
+          "reservememory": [
+            "memory"
+          ]
+        },
+        "explicit": [
+          "file",
+          "memory"
+        ]
+      },
+      "file_load_shape2d_palmap_init": {
+        "names": {
+          "file_load_shape2d_palmap_init": [
+            "file"
+          ]
+        },
+        "explicit": []
+      },
+      "loadshape": {
+        "names": {},
+        "explicit": [
+          "file",
+          "memory"
+        ]
+      },
+      "loadshapez": {
+        "names": {
+          "loadshapez": [
+            "file"
+          ]
+        },
+        "explicit": [
+          "file"
+        ]
+      }
+    },
+    "lib/shp2ops.ASM": {
+      "_movpackcf": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_movpackf": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/shp2res.c": {
+      "loadandshapepack": {
+        "names": {},
+        "explicit": [
+          "file",
+          "memory"
+        ]
+      },
+      "loadandshapepacka": {
+        "names": {
+          "checkmodule": [
+            "memory"
+          ],
+          "modulesize": [
+            "memory"
+          ],
+          "packmemory": [
+            "memory"
+          ],
+          "purgememory": [
+            "memory"
+          ],
+          "reservememory": [
+            "memory"
+          ]
+        },
+        "explicit": [
+          "file",
+          "memory"
+        ]
+      },
+      "loadandshapepackz": {
+        "names": {
+          "loadandshapepackz": [
+            "file"
+          ]
+        },
+        "explicit": [
+          "file"
+        ]
+      },
+      "shapepack": {
+        "names": {
+          "file_get_res_shape_count": [
+            "file"
+          ],
+          "resizememory": [
+            "memory"
+          ],
+          "shapepointer": [
+            "file"
+          ]
+        },
+        "explicit": [
+          "file",
+          "memory"
+        ]
+      }
+    },
+    "lib/shpexpnd.ASM": {
+      "_file_load_shape2d_expand": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/shppal.ASM": {
+      "_file_load_shape2d_palmap_apply": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/sphhelp.c": {
+      "solidellipseh": {
+        "names": {
+          "drawpolyp": [
+            "video"
+          ],
+          "solidellipseh": [
+            "video"
+          ]
+        },
+        "explicit": []
+      }
+    },
+    "lib/sprclear.ASM": {
+      "_clearwindow": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/sprrect.c": {
+      "sprite_draw_rect_outline": {
+        "names": {
+          "drawrectc": [
+            "video"
+          ],
+          "sprite_draw_rect_outline": [
+            "video"
+          ]
+        },
+        "explicit": []
+      }
+    },
+    "lib/sprrects.ASM": {
+      "_drawrect": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_sprite_blit_dither_phase": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/sprvideo.ASM": {
+      "_movtxy": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_orcfxya": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_orfxya": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_orpackf": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_tmaskxcfxya": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_tmaskxf": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_vgapalette": {
+        "names": {},
+        "explicit": [
+          "palette"
+        ]
+      }
+    },
+    "lib/startup.c": {
+      "availmem": {
+        "names": {
+          "unlockedmemory": [
+            "memory"
+          ]
+        },
+        "explicit": []
+      },
+      "file_combine_and_find": {
+        "names": {
+          "file_combine_and_find": [
+            "file"
+          ],
+          "makename": [
+            "file"
+          ]
+        },
+        "explicit": [
+          "file"
+        ]
+      },
+      "file_load_shape2d_nofatal2": {
+        "names": {
+          "file_load_shape2d_nofatal2": [
+            "file"
+          ]
+        },
+        "explicit": []
+      },
+      "initmodes": {
+        "names": {
+          "audio_toggle_flag2": [
+            "audio"
+          ],
+          "audio_toggle_flag6": [
+            "audio"
+          ],
+          "clearwindow": [
+            "video"
+          ],
+          "clippix": [
+            "video"
+          ],
+          "criterr": [
+            "dos"
+          ],
+          "displaywindow": [
+            "video"
+          ],
+          "exit": [
+            "dos"
+          ],
+          "initgraphics": [
+            "video"
+          ],
+          "initmemory": [
+            "memory"
+          ],
+          "initmouse": [
+            "input_mouse"
+          ],
+          "interpretsub": [
+            "input_kb"
+          ],
+          "kb_init_interrupt": [
+            "input_kb"
+          ],
+          "kb_shift_checking2": [
+            "input_kb"
+          ],
+          "restoretimer": [
+            "audio"
+          ],
+          "testkey": [
+            "input_kb"
+          ],
+          "timer_setup_interrupt": [
+            "timer"
+          ],
+          "usescreenc": [
+            "video"
+          ],
+          "video_set_mode4": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "audio",
+          "dos",
+          "file",
+          "input_kb",
+          "input_mouse",
+          "memory",
+          "timer",
+          "video"
+        ]
+      },
+      "loadpalandmouse": {
+        "names": {
+          "file_load_shape2d_fatal_thunk": [
+            "file"
+          ],
+          "freememory": [
+            "memory"
+          ],
+          "movfxya": [
+            "video"
+          ],
+          "sprite_make_window": [
+            "video"
+          ],
+          "sprite_setup1_from_arg_pointer": [
+            "video"
+          ],
+          "usescreen": [
+            "video"
+          ],
+          "vgapalette": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "file",
+          "memory",
+          "video"
+        ]
+      },
+      "modsize": {
+        "names": {
+          "modsize": [
+            "memory"
+          ],
+          "modulesize": [
+            "memory"
+          ]
+        },
+        "explicit": []
+      },
+      "myfindnext": {
+        "names": {
+          "myfindnext": [
+            "file"
+          ]
+        },
+        "explicit": []
+      },
+      "resmem": {
+        "names": {
+          "reservememory": [
+            "memory"
+          ],
+          "resmem": [
+            "memory"
+          ]
+        },
+        "explicit": []
+      },
+      "seedrandom": {
+        "names": {
+          "seedrandom": [
+            "video"
+          ],
+          "vsyncstate": [
+            "video"
+          ]
+        },
+        "explicit": [
+          "bios"
+        ]
+      }
+    },
+    "lib/textcon.ASM": {
+      "_console_clear_mono_screen": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_debug_printf_text": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/timerhlp.ASM": {
+      "_elapsedticks": {
+        "names": {},
+        "explicit": [
+          "timer"
+        ]
+      }
+    },
+    "lib/timerint.ASM": {
+      "_deltimer": {
+        "names": {},
+        "explicit": [
+          "timer"
+        ]
+      },
+      "_restoretimer": {
+        "names": {},
+        "explicit": [
+          "dos",
+          "timer"
+        ]
+      },
+      "_timer_intr_callback": {
+        "names": {},
+        "explicit": [
+          "dos",
+          "timer"
+        ]
+      },
+      "_timer_setup_interrupt": {
+        "names": {},
+        "explicit": [
+          "dos",
+          "timer"
+        ]
+      },
+      "_video_set_mode7": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/unflip.ASM": {
+      "_file_unflip_shape2d_pes": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/vecspr.ASM": {
+      "_clearscreen": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/vidmode.ASM": {
+      "_video_add_exithandler": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      },
+      "_video_on_exit": {
+        "names": {},
+        "explicit": [
+          "video"
+        ]
+      }
+    },
+    "lib/wheel.c": {
+      "solidtire": {
+        "names": {
+          "drawpolyp": [
+            "video"
+          ],
+          "preRender_wheel_helper4": [
+            "video"
+          ],
+          "solidtire": [
+            "video"
+          ]
+        },
+        "explicit": []
+      }
+    }
+  }
+}

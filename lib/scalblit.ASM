@@ -1,4 +1,4 @@
-; ASMDOC Module: sprite_rectangle_scaled_blitters. Proposed content name: sprite_rectangle_scaled_blitters. Existing
+;                                                                                                                   
 ; ASMDOC module name covers rectangles, mapping-table operations and shared scaled bitmap tail; retain.
 ; ASMDOC Public routines: _draw_filled_rect, _clear_rect, _sub_35DC8, _sub_35DE6, _sub_35E08, _loc_35ED9.
 ; ASMDOC Static contract audit: byte/word widths and offsets describe original 8086 paths; inherited generated
@@ -52,7 +52,7 @@ public _shape2d_scale_blit_tail
 ;   operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _draw_filled_rect: XOR the clipped rectangle with the low byte of the supplied color.
 ; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
@@ -150,7 +150,7 @@ handle_odd_rectangle_width:
 draw_rectangle_rows:
     mov     cx, [bp+arg_width]
 write_rectangle_word_pixels:
-    xor     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    xor     es:[di], ax ;                                                          
     inc     di
     inc     di
     loop    write_rectangle_word_pixels
@@ -169,11 +169,11 @@ draw_odd_rectangle_width:
 draw_odd_rectangle_rows:
     mov     cx, [bp+arg_width]
 write_odd_rect_word_pixels:
-    xor     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    xor     es:[di], ax ;                                                          
     inc     di
     inc     di
     loop    write_odd_rect_word_pixels
-    xor     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    xor     es:[di], al ;                                                          
     add     di, dx
     dec     si
     jg      short draw_odd_rectangle_rows
@@ -181,7 +181,7 @@ write_odd_rect_word_pixels:
 draw_single_pixel_rows:
     inc     dx
 write_single_pixel_rows:
-    xor     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    xor     es:[di], al ;                                                          
     add     di, dx
     dec     si
     jg      short write_single_pixel_rows

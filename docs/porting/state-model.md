@@ -39,6 +39,36 @@ Evidence-backed units are narrow: `car_speed` and `car_speed2` are unsigned Q8 m
 
 Fast trig uses `0x400` units per turn, `0x100` per quadrant and a table peak of 16,384 (Q14). The transform and table values are fixed inputs to deterministic math; do not replace them with floating-point approximations.
 
+## Source-local port contracts
+
+The general width, packing, Q8 and coordinate rules above cover repeated campaign notes. This table preserves the additional operation or record detail needed at specific source routines. Repeated notes in one function are merged; functions with only those already-covered general rules are omitted.
+
+| Function | Port contract |
+|---|---|
+| `calccoll`, `evaluation`, `selectcar` | Convert the Q8 value at the legacy routine boundary. |
+| `dohandling` | The unsigned 16-bit product wraps before scaling; convert its Q8 input at the routine boundary. |
+| `gettlistpoint` | Advance resource pointers with DOS far-pointer normalization after offset arithmetic. |
+| `main` | Keep local record layout at the MSC default two-byte packing and target scalar widths. |
+| `INIT_MATRIX` | Renderer records mix near and far pointers; derive offsets with medium-model pointer widths and default two-byte packing. |
+| `dodash` | `car_speed` is unsigned 16-bit Q8 mph here; this conversion is zero-fill. |
+| `run_game`, `getpinfo` | Plain `char` follows the pinned MSC target's signedness. |
+| `crack` | Crash-shape and animation metadata are far resource pointers; aggregate offsets use default MSC packing. |
+| `drawworldflipzones` | Preserve target plain-`char` signedness and MSC-packed aggregate offsets. |
+| `drawtrackbox` | Promote signed 8-bit `mapRow` to 16-bit `int`; keep index arithmetic 16-bit over the far table. Byte `0xFF` is the cache-invalid sentinel, distinct from serialized continuation codes. |
+| `trackedit` | Track records use 16-bit near pointers and default MSC alignment; game-info records retain their byte/word layout. |
+| `opponentcompile` | Traverse the speed table through a segmented far resource pointer. |
+| `settires` | Promote short base heights to 16-bit `int` before signed division. |
+| `doslider` | Thumb placement depends on signed 16-bit products, left shifts, and division. |
+| `makeobjdef` | Keep far-pointer arithmetic at 16 bits and honor encoded resource-record sizes. |
+| `point_in_rectangle` | Feed the MSC ctype table an 8-bit character code; a negative host `char` can index before `_ctype + 1`. Its resource and renderer views also require target pointer widths and two-byte record alignment. |
+| `strcpyfar` | Advance its resource source with 16:16 far-pointer semantics. |
+| `audioresource_find` | Normalize huge-pointer addition within the resource's segment:offset span. |
+| `audiodriver_timer` | Runtime audio records contain 16-bit far pointers; host pointer width cannot define their layout. |
+| `file_load_shape2d_expandedsize` | Resource-header `int` fields are 16-bit; accumulate expanded size as `long` before narrowing to `int`. |
+| `mouse_set_pixratio` | The INT register packet uses 16-bit words and MSC-compatible structure layout. |
+| `loadandshapepack`, `file_get_unflip_size` | Resource-header fields use the MSC 16-bit `int` layout; preserve their verified offsets. |
+| `ellipseh`, `ellipse` | Halving signed geometry coordinates uses arithmetic right shift. |
+
 ## Replay-determinism boundary
 
 ### Camera selector hitboxes

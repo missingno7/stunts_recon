@@ -8,11 +8,16 @@ GCC=shutil.which('gcc')
 if not GCC and probe.DEFAULT_GCC.is_file(): GCC=str(probe.DEFAULT_GCC)
 
 class HostProbeTests(unittest.TestCase):
-    def test_source_markers_find_port_boundaries(self):
+    def test_source_markers_ignore_removed_comment_annotations(self):
         markers=probe.source_markers('int x; /* PORT: 16-bit width */\n/* PLATFORM(video): BIOS call. */')
-        self.assertTrue(markers['port_tags'])
-        self.assertTrue(markers['platform_tags'])
+        self.assertFalse(markers['port_tags'])
+        self.assertFalse(markers['platform_tags'])
         self.assertTrue(markers['markers']['implicit int widths'])
+
+    def test_platform_service_table_preserves_function_kinds(self):
+        data=probe.load_platform_services(ROOT)
+        self.assertEqual(data['by_name']['addtimer'],['timer'])
+        self.assertEqual(probe.platform_function_tags(data,'game/audioeng.c')['audio_add_driver_timer'],['timer'])
 
     @unittest.skipUnless(GCC, 'GCC is not installed; host compile smoke test skipped')
     def test_one_source_compiles_through_host_probe(self):

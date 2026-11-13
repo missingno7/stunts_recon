@@ -1,8 +1,8 @@
 ; ASMDOC Module: In-place palette-index mapping across all bitmap shapes in a RAM archive.
-; ASMDOC Owner asm_load_25f48; original source asm/file_load_shape2d_palmap_apply.ASM.
+;                                                                                     
 ; ASMDOC Routine inventory: _file_load_shape2d_palmap_apply
 ; ASMDOC All BP stack offsets below follow PUSH BP / MOV BP,SP; data spans are caller-owned.
-; ASMDOC No hardware service or self-modifying code; existing PLATFORM(video) annotations are false for this
+;                                                                                                           
 ; resource transform.
 .8086
 INCLUDE include\hw.inc
@@ -18,8 +18,8 @@ public _file_load_shape2d_palmap_apply
 ; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+;                                                           
+;                                                                      
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_load_shape2d_palmap_apply
 ; ASMDOC purpose: Map each raw shape pixel in-place through caller near palette lookup bytes.
@@ -59,7 +59,7 @@ _file_load_shape2d_palmap_apply proc far
     mov     di, [bp+arg_memchunkoff]
     mov     si, [bp+arg_palmap]
 ; ASMDOC ES is the caller archive, not video memory. Signed comparison below treats counts >=0x8000 as negative.
-    mov     cx, es:[di+4] ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     cx, es:[di+4] ;                                                          
     mov     [bp+var_shapecount], cx
     xor     ax, ax
     mov     [bp+shapecounter], ax
@@ -81,16 +81,16 @@ shape_palmap_when_less:
     mov     es, dx
     mov     di, ax
 ; ASMDOC Unsigned width*height MUL; only low 16 bits drive LOOP. No zero-product precheck.
-    mov     ax, es:[di+0] ;/* PLATFORM(video): accesses display memory through ES. */
-    mul     word ptr es:[di+2] ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     ax, es:[di+0] ;                                                          
+    mul     word ptr es:[di+2] ;                                                          
     mov     cx, ax
     add     di, 10h
     xor     bx, bx
 shape_palmap_fill_loop:
 ; ASMDOC BL is full 8-bit pixel index; the map is not masked or bounded to the usual 16 initialized entries.
-    mov     bl, es:[di] ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     bl, es:[di] ;                                                          
     mov     al, [bx+si]
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
     loop    shape_palmap_fill_loop
     inc     [bp+shapecounter]
     jmp     short shape_palmap_wait_loop

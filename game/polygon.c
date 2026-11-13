@@ -10,24 +10,15 @@
 #define RECT_EMPTY_MIN_SENTINEL 9999
 #define RECT_EMPTY_MAX_SENTINEL -1
 #include "types.h"
-/* obj_seg006: whole seg006 object (22 functions, file order = image order).
-   Globals without a reviewed semantic alias use their bound data names:
-   data_31852 = transshapenumpaints, transformed_shape_material = transshapematerial,
-   transformed_shape_bounds = transshaperectptr, transformed_primitive_cursor = transshapeprimptr,
-   transformed_primitive_paint = transprimitivepaintjob, backlightovr8 = backlights_paint_override,
-   projected_point_table = polyvertpointptrtab, primitive_type_table = primtypetab, inverse_power_of_two_table = invpow2tbl. */
 #include "math3d.h"
 #include "matrix.h"
 #include "trig.h"
 #include "radius.h"
 
-/* PORT: This in-memory record uses MSC medium-model far pointers and default 2-byte packing; verify field offsets before host serialization. */
 #include "shape3d.h"
 
-/* PORT: This record contains a near pointer; MSC pointer width and default 2-byte packing determine its offsets. */
 #include "xformrec.h"
 
-/* PORT: This record is a 16-bit packed renderer structure; preserve MSC field alignment and signed widths. */
 #include "shapes3d.h"
 #include "viewstat.h"
 #include "game.h"
@@ -78,36 +69,37 @@ char g_vector_bitix;
 
 static struct POINT2D* projected_point_ptr_table[11];
 #include "ui.h"
-
+/* Allocates the polygon information pool and initializes cached rotations. */
 void INIT_MATRIX(void)
-{ /* PURPOSE: Allocate the polygon information pool and initialize cached rotations. Params: none. Returns: void. Globals: reads mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn; writes mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn, polyinfoptr. */ /* PLATFORM(memory): allocates or releases game-managed memory. */
-    polyinfoptr = resmem("polyinfo", POLYINFO_POOL_BYTES) /* PLATFORM(memory): allocate the polygon information buffer from game memory. */;
+{
+    polyinfoptr = resmem("polyinfo", POLYINFO_POOL_BYTES);
     xformy(&mat_no_turn, 0);
     xformy(&mat_quarter_turn, ANGLE_QUARTER_TURN);
     xformy(&mat_half_turn, ANGLE_HALF_TURN);
     xformy(&mat_three_quarters_turn, ANGLE_THREE_QUARTERS_TURN);
     initnm();
 }
-
+/* Saves the material color and pattern tables used by polygon drawing. */
 void INIT_PALETTE(void* clrlist, void* clrlist2, void* patlist, void* patlist2, U16S  videoConst)
-{ /* PURPOSE: Save the material color and pattern tables used by polygon drawing. Params: clrlist, clrlist2, patlist, patlist2, videoConst. Returns: void. Globals: reads none; writes g_mat_clrlist_copy_2_ptr, mat_copy_clr_lst_ptr, material_patlistptr_copy, matpatlistcopypointer2, video_cnstval. */
+{
     mat_copy_clr_lst_ptr = clrlist;
     g_mat_clrlist_copy_2_ptr = clrlist2;
     material_patlistptr_copy = patlist;
     matpatlistcopypointer2 = patlist2;
     video_cnstval = videoConst;
 }
-
+/* Resets polygon numbering, insertion state, and face-list cursors. */
 void INIT_BUFFERS(void)
-{ /* PURPOSE: Reset polygon numbering, insertion state, and face-list cursors. Params: none. Returns: void. Globals: reads none; writes facenodeiterator, poly_list_insert_result, polygonnumber, polyinfo_offset, polyinfo_reset_marker. */
+{
     polygonnumber = 0;
     polyinfo_offset = 0;
     poly_list_insert_result = 0;
     polyinfo_reset_marker = POLYINFO_RESET_SENTINEL;
     facenodeiterator = POLYINFO_CAPACITY;
 }
+/* Builds the requested view rotations and returns the camera-facing angle. */
 unsigned INIT_OBJECTS_BUFFER(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cliprect, I16 unk)
-{ /* PURPOSE: Build the requested view rotations and return the camera-facing angle. Params: angZ, angX, angY, cliprect, unk. Returns: unsigned. Globals: reads none; writes half_scale_flag, selection_rect, wkmatx. */
+{
     struct MATRIX* matptr;
     struct VECTOR vec, vec2;
 
@@ -122,10 +114,10 @@ unsigned INIT_OBJECTS_BUFFER(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cli
     mat_vec(&vec, matptr, &vec2);
     return intatan(vec2.x, vec2.z) & ANGLE_TURN_MASK;
 }
-
+/* Transforms a 3D shape, clips its primitives, and appends visible polygons. */
 /* Local view: ADD_OBJECT_TO_BUFFER; return is unsigned word; another unit uses void. */
 unsigned ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D* ts)
-{ /* PURPOSE: Transform a 3D shape, clip its primitives, and append visible polygons. Params: ts. Returns: unsigned. Globals: reads the shape, transform, material and clip state; writes projected-vertex, polygon-list and clipping scratch state. */
+{
     U8  ptype;
     I16 added;
     I16 primflag;
@@ -221,9 +213,9 @@ unsigned ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D* ts)
         projected_point_ptr_table[i] = &screenpts[i];
         local = obj_verts[i];
         if (half_scale_flag != 0) {
-            local.x >>= SHAPE3D_HALF_SCALE_SHIFT; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
-            local.y >>= SHAPE3D_HALF_SCALE_SHIFT; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
-            local.z >>= SHAPE3D_HALF_SCALE_SHIFT; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
+            local.x >>= SHAPE3D_HALF_SCALE_SHIFT;
+            local.y >>= SHAPE3D_HALF_SCALE_SHIFT;
+            local.z >>= SHAPE3D_HALF_SCALE_SHIFT;
         }
         mat_vec(&local, &mview, &viewvert);
         viewvert.x += position.x;
@@ -276,9 +268,9 @@ visible:
                 case VERTEX_CLIP_UNTRANSFORMED:
                     local = obj_verts[i];
                     if (half_scale_flag != 0) {
-                        local.x >>= SHAPE3D_HALF_SCALE_SHIFT; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
-                        local.y >>= SHAPE3D_HALF_SCALE_SHIFT; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
-                        local.z >>= SHAPE3D_HALF_SCALE_SHIFT; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
+                        local.x >>= SHAPE3D_HALF_SCALE_SHIFT;
+                        local.y >>= SHAPE3D_HALF_SCALE_SHIFT;
+                        local.z >>= SHAPE3D_HALF_SCALE_SHIFT;
                     }
                     mat_vec(&local, &mview, &viewvert);
                     viewvert.x += position.x;
@@ -523,7 +515,9 @@ visible:
         return TRANSFORM_RESULT_NOT_VISIBLE;
     return TRANSFORM_RESULT_SUBMITTED;
 }
-extern unsigned polysort(unsigned depth, unsigned search_sorted_position) { /* PURPOSE: Handle the insert newest poly in poly linked list 40ed6 operation. Params: depth, search_sorted_position. Returns: unsigned. Globals: reads poly_cursor1, poly_info_ptrs, poly_link_list, poly_link_listit4, polygon_link_3_list_iter, polygonnumber, polyinfo_offset, transformed_vert_count; writes facenodeiterator, poly_link_list, poly_link_listit4, polygon_link_3_list_iter, polygonnumber, polyinfo_offset. */
+/* Inserts the newest polygon into the linked list. */
+extern unsigned polysort(unsigned depth, unsigned search_sorted_position)
+{
     register I16 remaining;
     register I16 list_index;
     if (search_sorted_position == 0) {
@@ -552,8 +546,9 @@ extern unsigned polysort(unsigned depth, unsigned search_sorted_position) { /* P
     polyinfo_offset += transformed_vert_count * sizeof(struct POINT2D) + POLYINFO_RECORD_PREFIX_BYTES;
     return polygonnumber == POLYINFO_CAPACITY || (I16)polyinfo_offset > POLYINFO_LAST_START_OFFSET;
 }
-
-unsigned getoutcode(struct POINT2D *point) { /* PURPOSE: Return the clip-rectangle outcode for one projected point. Params: point. Returns: unsigned. Globals: reads selection_rect; writes none. */
+/* Returns the clip-rectangle outcode for one projected point. */
+unsigned getoutcode(struct POINT2D *point)
+{
     register struct POINT2D *p = point;
     I8 flag;
     if (p->y < selection_rect.top) flag=CLIP_OUTCODE_TOP;
@@ -563,9 +558,9 @@ unsigned getoutcode(struct POINT2D *point) { /* PURPOSE: Return the clip-rectang
     else if (p->x > selection_rect.right) flag|=CLIP_OUTCODE_RIGHT;
     return flag;
 }
-
+/* Tests the winding of a projected polygon against the camera. */
 I8 front_facing(struct POINT2D far *pts)
-{ /* PURPOSE: Test the winding of a projected polygon against the camera. Params: pts. Returns: char. Globals: none. */
+{
     I32 dx0, dx1, dy0, dy1;
 
     dx0 = (I32)pts[0].x - pts[1].x;
@@ -578,9 +573,9 @@ I8 front_facing(struct POINT2D far *pts)
     }
     return 0;
 }
-
+/* Draws queued polygon records through the matching primitive renderer. */
 void DRAW_OBJECTS(void)
-{ /* PURPOSE: Draw queued polygon records through the matching primitive renderer. Params: none. Returns: void. Globals: reads g_mat_clrlist_copy_2_ptr, mat_copy_clr_lst_ptr, material_patlistptr_copy, matpatlistcopypointer2, poly_info_ptrs, poly_link_list, polygonnumber; writes none. */ /* PLATFORM(video): draws pixels, sprites, or text. */
+{
     struct POINT2D far* srcpts;
     struct POLYINFO far* info;
     register I16 polyIndex;
@@ -610,37 +605,38 @@ void DRAW_OBJECTS(void)
             }
             switch (material_patlistptr_copy[materialIndex]) {
             case POLYGON_FILL_SOLID:
-                drawpolypt(fill, pointCount, polypts) /* PLATFORM(video): draw a filled polygon. */;
+                drawpolypt(fill, pointCount, polypts);
                 break;
             case POLYGON_FILL_PATTERNED:
                 if (matpatlistcopypointer2[materialIndex] != 0)
-                    preRender_patterned(matpatlistcopypointer2[materialIndex], fill, pointCount, polypts) /* PLATFORM(video): draw a patterned polygon. */;
+                    preRender_patterned(matpatlistcopypointer2[materialIndex], fill, pointCount, polypts);
                 break;
             case POLYGON_FILL_SECONDARY_PARAMETERS:
-                sprite_two_color_poly_list(matpatlistcopypointer2[materialIndex], g_mat_clrlist_copy_2_ptr[materialIndex], fill, pointCount, polypts) /* PLATFORM(video): draw a polygon using the secondary fill parameters. */;
+                sprite_two_color_poly_list(matpatlistcopypointer2[materialIndex], g_mat_clrlist_copy_2_ptr[materialIndex], fill, pointCount, polypts);
                 break;
             }
             break;
         case POLYINFO_TYPE_LINE:
-            preRender_line(info->points[0].x, info->points[0].y, info->points[1].x, info->points[1].y, fill) /* PLATFORM(video): draw a line primitive. */;
+            preRender_line(info->points[0].x, info->points[0].y, info->points[1].x, info->points[1].y, fill);
             break;
         case POLYINFO_TYPE_WHEEL:
             for (idx = 0; idx < 4; idx++)
                 polypts[idx] = info->points[idx];
-            solidtire(polypts, WHEEL_INNER_RADIUS_Q14, fill, mat_copy_clr_lst_ptr[materialIndex + 1], mat_copy_clr_lst_ptr[materialIndex + 2]) /* PLATFORM(video): draw a wheel primitive. */;
+            solidtire(polypts, WHEEL_INNER_RADIUS_Q14, fill, mat_copy_clr_lst_ptr[materialIndex + 1], mat_copy_clr_lst_ptr[materialIndex + 2]);
             break;
         case POLYINFO_TYPE_SPHERE:
-            drawcircle(info->points[0].x, info->points[0].y, info->points[1].x, fill) /* PLATFORM(video): draw a sphere primitive. */;
+            drawcircle(info->points[0].x, info->points[0].y, info->points[1].x, fill);
             break;
         case POLYINFO_TYPE_PIXEL:
-            writepixelc(info->points[0].x, info->points[0].y, fill) /* PLATFORM(video): plot a pixel primitive. */;
+            writepixelc(info->points[0].x, info->points[0].y, fill);
             break;
         }
     }
     INIT_BUFFERS();
 }
-
-struct MATRIX* makematrix(I16 z, I16 x, I16 y, I16 unk) { /* PURPOSE: Compose cached Z, X, and Y rotation matrices in the requested order. Params: z, x, y, unk. Returns: struct MATRIX*. Globals: reads g_matrix_yrot, g_rot_mat_z, mat_half_turn, mat_no_turn and 5 other globals; writes g_matrix_yrot, g_rot_mat_z, mat_half_turn, mat_no_turn and 5 other globals. */
+/* Composes cached Z, X, and Y rotation matrices in the requested order. */
+struct MATRIX* makematrix(I16 z, I16 x, I16 y, I16 unk)
+{
     register I16 rotation_flags = 0;
     register struct MATRIX* result;
 
@@ -723,8 +719,9 @@ struct MATRIX* makematrix(I16 z, I16 x, I16 y, I16 unk) { /* PURPOSE: Compose ca
     }
     return result;
 }
-
-void zonecheck(struct POINT2D *pt, struct RECTANGLE *rc) { /* PURPOSE: Expand a rectangle to include one projected point. Params: pt, rc. Returns: void. Globals: none. */
+/* Expands a rectangle to include one projected point. */
+void zonecheck(struct POINT2D *pt, struct RECTANGLE *rc)
+{
     register I16 x, y;
     x=pt->x; y=pt->y;
     if(rc->left>x) rc->left=x;
@@ -732,24 +729,25 @@ void zonecheck(struct POINT2D *pt, struct RECTANGLE *rc) { /* PURPOSE: Expand a 
     if(rc->top>y) rc->top=y;
     { I16 temp=y+1; if(rc->bottom<temp) rc->bottom=temp; }
 }
-
-norm_zone(struct VECTOR* vec) { /* PURPOSE: Classify a view vector into the renderer angle and octant table. Params: vec. Returns: unspecified. Globals: reads vector_angle_cos, vector_angle_sin; writes none. */
+/* Classifies a view vector into the renderer angle and octant table. */
+norm_zone(struct VECTOR* vec)
+{
 	I32 height;
 	I32 temp;
 	I8 octant;
 	I16 below;
 	I16 angle;
-	
+
 	height = abs(vec->y);
-	
+
 	temp = inthypot(abs(vec->x), abs(vec->z));
-	
+
 	if (vector_angle_cos == vector_angle_sin) {
 		below = temp < height;
 	} else {
 		below = temp * vector_angle_cos < height * vector_angle_sin;
 	}
-	
+
 	if (vec->y < 0) {
 		if (below != 0) return CULL_LOWER_POLE_INDEX;
 	} else
@@ -762,30 +760,33 @@ norm_zone(struct VECTOR* vec) { /* PURPOSE: Classify a view vector into the rend
 	} else {
 		octant = 0;
 	}
-	
+
 	angle = -intatan(vec->z, -vec->x);
 	if (angle < 0) {
 		angle += ANGLE_UNITS_PER_TURN;
 	}
-	
+
 	octant += ((angle * CULL_AZIMUTH_BIN_COUNT) >> CULL_ANGLE_BIN_SHIFT);
-	
+
 	return octant;
 }
-
-void initnm(void) { /* PURPOSE: Cache the sine and cosine values used by view-vector classification. Params: none. Returns: void. Globals: reads none; writes vector_angle_cos, vector_angle_cos2, vector_angle_sin, vector_angle_sin2. */
+/* Caches the sine and cosine values used by view-vector classification. */
+void initnm(void)
+{
     vector_angle_sin = intsin(ANGLE_EIGHTH_TURN);
     vector_angle_cos = intcos(ANGLE_EIGHTH_TURN);
     vector_angle_sin2 = intsin(ANGLE_EIGHTH_TURN);
     vector_angle_cos2 = intcos(ANGLE_EIGHTH_TURN);
 }
-
-I32 lgabs(I32 value) { /* PURPOSE: Return the magnitude of a signed long value. Params: value. Returns: long. Globals: none. */ if (value < 0) return -value; return value; }
+/* Returns the magnitude of a signed long value. */
+I32 lgabs(I32 value)
+{
+if (value < 0) return -value; return value; }
 I16S g_vid_flg2_set;
 I16S vidflg3is_minus1;
-
+/* Writes the smallest rectangle that covers both input rectangles. */
 void mergezones(struct RECTANGLE *r1, struct RECTANGLE *r2, struct RECTANGLE *out)
-{ /* PURPOSE: Write the smallest rectangle that covers both input rectangles. Params: r1, r2, out. Returns: void. Globals: reads g_vid_flg2_set, vidflg3is_minus1; writes vidflg3is_minus1. */
+{
     out->left = r1->left <= r2->left ? r1->left : r2->left;
     out->right = r1->right >= r2->right ? r1->right : r2->right;
     out->top = r1->top <= r2->top ? r1->top : r2->top;
@@ -794,8 +795,9 @@ void mergezones(struct RECTANGLE *r1, struct RECTANGLE *r2, struct RECTANGLE *ou
         out->right = (out->right + g_vid_flg2_set - 1) & vidflg3is_minus1;
     }
 }
+/* Clips the first rectangle to the second and reports an empty intersection. */
 I8 clipzone(struct RECTANGLE *r1, struct RECTANGLE *r2)
-{ /* PURPOSE: Clip the first rectangle to the second and report an empty intersection. Params: r1, r2. Returns: char. Globals: none. */
+{
     if (r1->right < r1->left) return 1;
     if (r2->right <= r1->left) return 1;
     if (r1->right <= r2->left) return 1;
@@ -808,8 +810,9 @@ I8 clipzone(struct RECTANGLE *r1, struct RECTANGLE *r2)
     if (r1->bottom > r2->bottom) r1->bottom = r2->bottom;
     return 0;
 }
-
-void addzone(I8* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr, struct RECTANGLE* rect) { /* PURPOSE: Merge or split a rectangle as needed before adding it to a clip list. Params: arg_rect_array_length_ptr, arg_rect_array_ptr, rect. Returns: void. Globals: reads g_vid_flg2_set, vidflg3is_minus1; writes vidflg3is_minus1. */	
+/* Merges or splits a rectangle as needed before adding it to a clip list. */
+void addzone(I8* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr, struct RECTANGLE* rect)
+{
 	struct RECTANGLE bottom_rect;
 	struct RECTANGLE merged;
 	I8 shift_index;
@@ -830,7 +833,7 @@ void addzone(I8* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr
 		and     ax, video_flag3_isFFFF
 		mov     [bx+RECTANGLE.rc_right], ax*/
 	}
-	
+
 	for (rect_count = 0; rect_count < *arg_rect_array_length_ptr; rect_count++) {
 		entry_ptr = &arg_rect_array_ptr[rect_count];
 		if (zoneoverlap(rect, entry_ptr) == 0)
@@ -927,40 +930,45 @@ void addzone(I8* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr
 	arg_rect_array_ptr[*arg_rect_array_length_ptr] = *rect;
 	(*arg_rect_array_length_ptr)++;
 }
-
-I8 zoneoverlap(struct RECTANGLE* r1, struct RECTANGLE* r2) { /* PURPOSE: Test whether two half-open rectangles overlap. Params: r1, r2. Returns: char. Globals: none. */
+/* Tests whether two half-open rectangles overlap. */
+I8 zoneoverlap(struct RECTANGLE* r1, struct RECTANGLE* r2)
+{
 	if (r1->right <= r2->left) {
 		return 0;
 	}
-	
+
 	if (r2->right <= r1->left) {
 		return 0;
 	}
-	
+
 	if (r1->top >= r2->bottom) {
 		return 0;
 	}
-	
+
 	if (r1->bottom <= r2->top) {
 		return 0;
 	}
-	
+
 	return 1;
 }
-
-I8 zoneinside(struct RECTANGLE *a,struct RECTANGLE *b){ /* PURPOSE: Test whether the first rectangle is contained in the second. Params: a, b. Returns: char. Globals: none. */return a->right<=b->right && a->left>=b->left && a->top>=b->top && a->bottom<=b->bottom;}
-
-I8 zoneadjacent(struct RECTANGLE* r1, struct RECTANGLE* r2) { /* PURPOSE: Test whether two rectangles share a complete edge. Params: r1, r2. Returns: char. Globals: none. */
+/* Tests whether the first rectangle is contained in the second. */
+I8 zoneinside(struct RECTANGLE *a,struct RECTANGLE *b)
+{
+return a->right<=b->right && a->left>=b->left && a->top>=b->top && a->bottom<=b->bottom;}
+/* Tests whether two rectangles share a complete edge. */
+I8 zoneadjacent(struct RECTANGLE* r1, struct RECTANGLE* r2)
+{
  if (r1->bottom == r2->top) { if (r1->left != r2->left) return 0; if (r1->right != r2->right) return 0; return 1; }
  else if (r1->top == r2->bottom) { if (r1->left != r2->left) return 0; if (r1->right != r2->right) return 0; return 1; }
  else if (r1->right == r2->left) { if (r1->top != r2->top) return 0; if (r1->bottom != r2->bottom) return 0; return 1; }
  else if (r2->right == r1->left) { if (r1->top != r2->top) return 0; if (r1->bottom != r2->bottom) return 0; return 1; }
  return 0;
 }
-void makezonelist(U8  arg_rectcount, I8* arg_rectarray_indices, 
-	struct RECTANGLE* arg_rectarray1, struct RECTANGLE* arg_rectarray2, 
-	struct RECTANGLE* arg_rectptr, I8* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr) 
-{ /* PURPOSE: Select, clip, and add the requested source rectangles to the result list. Params: arg_rectcount, arg_rectarray_indices, arg_rectarray1, arg_rectarray2, arg_rectptr, arg_rect_array_length_ptr, arg_rect_array_ptr. Returns: void. Globals: none. */
+/* Selects, clips, and adds the requested source rectangles to the result list. */
+void makezonelist(U8  arg_rectcount, I8* arg_rectarray_indices,
+	struct RECTANGLE* arg_rectarray1, struct RECTANGLE* arg_rectarray2,
+	struct RECTANGLE* arg_rectptr, I8* arg_rect_array_length_ptr, struct RECTANGLE* arg_rect_array_ptr)
+{
 	I8 has_result;
 	struct RECTANGLE* selected_rect_ptr;
 	struct RECTANGLE cover_rect;
@@ -1008,8 +1016,9 @@ void makezonelist(U8  arg_rectcount, I8* arg_rectarray_indices,
 	}
 
 }
-
-void sortzonelist(I8 arg_array_length, struct RECTANGLE* arg_rect_array, I16* arg_array_indices) { /* PURPOSE: Sort rectangle indices by their top coordinate. Params: arg_array_length, arg_rect_array, arg_array_indices. Returns: void. Globals: none. */
+/* Sorts rectangle indices by their top coordinate. */
+void sortzonelist(I8 arg_array_length, struct RECTANGLE* arg_rect_array, I16* arg_array_indices)
+{
     register I16 sortIndex;
     I16 intbuffer[256];
     if (arg_array_length > 1) {

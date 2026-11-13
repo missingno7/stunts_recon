@@ -1,4 +1,4 @@
-; INPUTDOC Module keyboard_numlock_enable (owner load_26af4); comment-only static contract review.
+;                                                                                                 
 ; INPUTDOC Audited INPUTDOC contracts qualify the older retained generic comments; no code or declarations changed.
 ; INPUTDOC Routine names below follow rename-plan.json; definitions retain their original spelling.
 ; INPUTDOC dead=true means statically unreferenced; no proof against arbitrary external/numeric callers or execution.

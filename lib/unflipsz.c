@@ -1,9 +1,8 @@
 #include "memory.h"
 #include "video.h"
 #include "types.h"
-/* READABILITY: Compute the largest unflipped shape allocation in paragraph units. */
+/* Compute the largest unflipped shape allocation in paragraph units. */
 
-/* PORT: Resource headers use MSC 16-bit int layout; assert these field offsets in a host port. */
 /* Local 14-byte prefix; the complete shape record has two further flag bytes. */
 /* Local view: SHAPE2D; struct.count is 8; another unit uses 6. */
 struct SHAPE2D {

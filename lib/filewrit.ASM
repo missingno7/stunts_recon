@@ -1,5 +1,5 @@
 ; ASMDOC Module: DOS far-source streaming writes and their two inverted historical policy names.
-; ASMDOC Owner file_write_entries; original source asm/file_write_entries.ASM.
+;                                                                             
 ; ASMDOC Routine inventory: _file_write_nofatal, _file_write_fatal
 ; ASMDOC All BP stack offsets below follow PUSH BP / MOV BP,SP; data spans are caller-owned.
 ; ASMDOC Proposed module name describes both policies without perpetuating the inverted fatal/nofatal spelling.
@@ -80,7 +80,7 @@ _savefile endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; Global addresses taken: aSFileError_0.
-; /* PLATFORM(file): calls a DOS file service. */
+;                                                
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_write_fatal
 ; ASMDOC purpose: Create/truncate and stream a far source to disk; policy 1 returns an error on failure
@@ -131,7 +131,7 @@ _file_write:
     xor     cx, cx
     mov     ah, 3Ch
     int     R5HW_DOS_INT
-; DOS - 2+ - CREATE A FILE WITH HANDLE (CREAT) /* PLATFORM(file): calls a DOS file service. */
+; DOS - 2+ - CREATE A FILE WITH HANDLE (CREAT)                                                
     jb      short write_file_fatal_when_below
     mov     [bp+var_filehandle], ax
 write_file_fatal_scan_loop:
@@ -154,7 +154,7 @@ file_fatal_when_not_below:
     mov     dx, [bp+arg_srcoff]
     mov     bx, [bp+var_filehandle]
     mov     ah, 40h
-    int     R5HW_DOS_INT ; DOS - 2+ - WRITE TO FILE WITH HANDLE /* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ; DOS - 2+ - WRITE TO FILE WITH HANDLE                                                
     jb      short write_file_fatal_when_below
     cmp     ax, cx
     jnz     short file_fatal_when_nonzero_2
@@ -167,12 +167,12 @@ write_file_fatal_when_below:
     mov     [bp+var_errno], ax
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
-    int     R5HW_DOS_INT ; DOS - 2+ - CLOSE A FILE WITH HANDLE /* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ; DOS - 2+ - CLOSE A FILE WITH HANDLE                                                
     mov     ax, ss
     mov     ds, ax
     mov     dx, [bp+arg_filename]
     mov     ah, 41h
-    int     R5HW_DOS_INT ; DOS - 2+ - DELETE A FILE (UNLINK) /* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ; DOS - 2+ - DELETE A FILE (UNLINK)                                                
     mov     ax, [bp+var_errno]
 ; ASMDOC Machine-code policy is decisive: nonzero returns AX; zero falls through to fatal_error.
     cmp     [bp+var_fatal], 0
@@ -187,7 +187,7 @@ write_file_fatal_when_below:
 write_file_fatal_when_zero:
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
-    int     R5HW_DOS_INT ; DOS - 2+ - CLOSE A FILE WITH HANDLE /* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ; DOS - 2+ - CLOSE A FILE WITH HANDLE                                                
     xor     ax, ax
 file_fatal_return_if_nonzero:
     pop     di

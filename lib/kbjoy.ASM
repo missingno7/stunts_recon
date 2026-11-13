@@ -1,4 +1,4 @@
-; INPUTDOC Module input_keyboard_joystick_services (owner input_keyboard_joystick_services); comment-only static
+;                                                                                                               
 ; INPUTDOC contract review.
 ; INPUTDOC Audited INPUTDOC contracts qualify the older retained generic comments; no code or declarations changed.
 ; INPUTDOC Routine names below follow rename-plan.json; definitions retain their original spelling.
@@ -99,7 +99,7 @@ public _joystick_scale_saved_y
 ; inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): calls a BIOS video service. */
+;                                                   
 ; -----------------------------------------------------------------------------
 ; INPUTDOC Contract _set_bios_mode3 (original _set_bios_mode3).
 ; INPUTDOC Purpose: Clear the video surface, select text equipment bits, set BIOS mode 3 and palette/background zero.
@@ -126,10 +126,10 @@ _set_bios_mode3 proc far
     mov     es:[10h], ax
     mov     ah, 0
     mov     al, 3
-    int     R5HW_BIOS_VIDEO_INT ;/* PLATFORM(video): calls a BIOS video service. */
+    int     R5HW_BIOS_VIDEO_INT ;                                                  
     mov     ah, 0Bh
     mov     bx, 0
-    int     R5HW_BIOS_VIDEO_INT ;/* PLATFORM(video): calls a BIOS video service. */
+    int     R5HW_BIOS_VIDEO_INT ;                                                  
     retf
 _set_bios_mode3 endp
 ; -----------------------------------------------------------------------------
@@ -140,7 +140,7 @@ _set_bios_mode3 endp
 ; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _callbackflags, _callbackflags2, key_parser_busy_flag.
 ; Globals written: key_parser_busy_flag.
-; /* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+;                                                                              
 ; -----------------------------------------------------------------------------
 ; INPUTDOC Contract _kb_parse_key (original _kb_parse_key).
 ; INPUTDOC Purpose: Dispatch a key callback or return its ASCII/extended game key word.
@@ -158,20 +158,20 @@ _set_bios_mode3 endp
 ; INPUTDOC key_parser_busy_flag
 ; INPUTDOC Globals written: key_parser_busy_flag; caller key stack word for ASCII; callback-dependent globals
 ; INPUTDOC Services: CLI/STI; indirect FAR callback with no explicitly supplied argument words
-; INPUTDOC Reachability: Live via kb_get_char; callback targets are explicitly registered by src/obj_seg031.c.
+;                                                                                                             
 _interpretkey proc far
     push bp
     mov bp, sp
-    cli ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+    cli ;                                                                             
 ; INPUTDOC Busy return intentionally leaves AX untouched; STI does not restore entry IF.
     cmp byte ptr ds:[key_parser_busy_flag], 0
     je acquire_key_parser_lock
-    sti ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+    sti ;                                                                             
     pop bp
     retf
 acquire_key_parser_lock:
     mov byte ptr ds:[key_parser_busy_flag], 1
-    sti ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+    sti ;                                                                             
     mov bx, [bp + 6]
     or bl, bl
     je select_keyboard_callback_table
@@ -328,7 +328,7 @@ _interpretclear endp
 ; Globals read: joystick_button_keycode_table, joystick_repeat_count, joystick_repeat_current_key,
 ; joystick_repeat_previous_key.
 ; Globals written: joystick_repeat_count, joystick_repeat_current_key, joystick_repeat_previous_key.
-; /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; INPUTDOC Contract _input_read_char_or_joystick (original _nopsub_304B6).
 ; INPUTDOC Purpose: Read a pending BIOS key or return a delayed joystick direction/button character.
@@ -349,11 +349,11 @@ _interpretclear endp
 _input_read_char_or_joystick proc far
     mov     ah, 1
     int     R5HW_BIOS_KEYBOARD_INT
-; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+; KEYBOARD - CHECK BUFFER, DO NOT CLEAR                                                           
     jz      short poll_joystick_for_character
     mov     ah, 0
     int     R5HW_BIOS_KEYBOARD_INT
-; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY                                                           
     or      al, al
     jz      short return_empty_key_char
     xor     ah, ah
@@ -362,11 +362,11 @@ return_empty_key_char:
 ; INPUTDOC No preceding fall-through: this second BIOS/parser body follows RETF and has no local incoming edge.
     mov     ah, 1
     int     R5HW_BIOS_KEYBOARD_INT
-; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+; KEYBOARD - CHECK BUFFER, DO NOT CLEAR                                                           
     jz      short poll_joystick_for_character
     mov     ah, 0
     int     R5HW_BIOS_KEYBOARD_INT
-; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY                                                           
     push    ax
     call far ptr _interpretkey
     add     sp, 2
@@ -413,7 +413,7 @@ _input_read_char_or_joystick endp
 ; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; INPUTDOC Contract _kb_get_char (original _kb_get_char).
 ; INPUTDOC Purpose: Peek a key; consume and parse it only when SS equals DS.
@@ -433,7 +433,7 @@ _input_read_char_or_joystick endp
 _normkeyi proc far
     mov     ah, 1
     int     R5HW_BIOS_KEYBOARD_INT
-; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+; KEYBOARD - CHECK BUFFER, DO NOT CLEAR                                                           
     jnz     short read_buffered_key_char
     xor     ax, ax
     retf
@@ -445,7 +445,7 @@ read_buffered_key_char:
     jnz     short return_keyboard_character
     mov     ah, 0
     int     R5HW_BIOS_KEYBOARD_INT
-; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY                                                           
     push    ax
     call far ptr _interpretkey
     add     sp, 2
@@ -544,7 +544,7 @@ _joystate endp
 ; inputs and outputs follow the listed operands.
 ; Globals read: _joystick_enabled, _kbinput, _kbscancodes.
 ; Globals written: none identified.
-; /* PLATFORM(input_joy): accesses the joystick game port. */
+;                                                            
 ; -----------------------------------------------------------------------------
 ; INPUTDOC Contract _input_get_action_buttons (original _nopsub_305C8).
 ; INPUTDOC Purpose: OR configured keyboard action buttons with active-low joystick buttons.
@@ -577,7 +577,7 @@ read_joystick_buttons:
     mov     dx, R5HW_JOYSTICK_GAME_PORT
     test    _joystick_enabled, 01h
     jz      short return_combined_input_flags
-    in      al, dx ; Game I/O port /* PLATFORM(input_joy): accesses the joystick game port. */
+    in      al, dx ; Game I/O port                                                            
     not     al
 
     and     al, 30h
@@ -604,8 +604,8 @@ _joybuttons endp
 ; joystick_y_calibration_ticks, joystick_y_down_threshold,
 ; joystick_y_maximum, joystick_y_minimum, joystick_y_sample_maximum, joystick_y_sample_minimum,
 ; joystick_y_scale_factor, joystick_y_up_threshold.
-; /* PLATFORM(input_joy): accesses the joystick game port. */
-; /* PLATFORM(bios): changes the processor interrupt-enable state. */
+;                                                            
+;                                                                    
 ; -----------------------------------------------------------------------------
 ; INPUTDOC Contract _get_joy_flags (original _get_joy_flags).
 ; INPUTDOC Purpose: Measure gameport RC axes, update calibration and return direction/button bits.
@@ -637,20 +637,20 @@ _get_joy_flags proc far
 start_joystick_sampling:
     mov     _joyinput, 0
     mov     dx, R5HW_JOYSTICK_GAME_PORT
-    in      al, dx ; Game I/O port /* PLATFORM(input_joy): accesses the joystick game port. */
+    in      al, dx ; Game I/O port                                                            
     mov     _joybutton, al
     mov     bl, 3
     mov     _joyflag1, 50h ; 'P'
     mov     _joyflag2, 50h ; 'P'
 ; INPUTDOC Interrupts are unconditionally reenabled at calibrate_x_axis after bounded RC polling.
-    cli ;/* PLATFORM(bios): changes the processor interrupt-enable state. */
-    out     dx, al ; Game I/O port /* PLATFORM(input_joy): accesses the joystick game port. */
+    cli ;                                                                   
+    out     dx, al ; Game I/O port                                                            
     mov     cx, 14h
 joystick_sampling_delay:
     loop    joystick_sampling_delay
     mov     cx, 0
 sample_joystick_axes:
-    in      al, dx ; Game I/O port /* PLATFORM(input_joy): accesses the joystick game port. */
+    in      al, dx ; Game I/O port                                                            
     and     al, bl
     xor     al, bl
     jnz     short classify_axis_sample
@@ -679,7 +679,7 @@ store_x_axis_sample:
 
     jnz     short store_y_axis_sample
 calibrate_x_axis:
-    sti ;/* PLATFORM(bios): changes the processor interrupt-enable state. */
+    sti ;                                                                   
     mov     ax, _joyflag1
     cmp     ax, joystick_x_minimum
     jge     short update_x_axis_maximum
@@ -809,7 +809,7 @@ classify_y_axis_direction:
     or      _joyinput, 02h
 read_joystick_button_flags:
 ; INPUTDOC Button is logically pressed if either first or last active-low sample was low.
-    in      al, dx ; Game I/O port /* PLATFORM(input_joy): accesses the joystick game port. */
+    in      al, dx ; Game I/O port                                                            
     and     al, _joybutton
 
     and     al, 30h

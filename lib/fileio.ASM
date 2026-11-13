@@ -1,5 +1,5 @@
 ; ASMDOC Module: DOS whole-file reads, managed binary loading, RLE/VLE decompression dispatch, and archive ID lookup.
-; ASMDOC Owner resource_file_io_decompression; original source asm/resource_file_io_decompression.ASM.
+;                                                                                                     
 ; ASMDOC Routine inventory: _file_read, _file_read_nofatal, _file_read_fatal, _file_decomp_rle,
 ; _file_decomp_rle_single,
 ; ASMDOC _file_decomp_rle_seq, _file_load_binary, _file_load_binary_nofatal, _file_decomp, _file_decomp_nofatal,
@@ -141,7 +141,7 @@ _loadfileatz endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; Global addresses taken: _aSFileError.
-; /* PLATFORM(file): calls a DOS file service. */
+;                                                
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_read_fatal
 ; ASMDOC purpose: Read a complete file in 16 KiB DOS handle chunks using one/fatal policy.
@@ -189,7 +189,7 @@ read_body:
     mov     dx, [bp+arg_filename]
     xor     al, al
     mov     ah, 3Dh
-    int     R5HW_DOS_INT ; DOS - 2+ - OPEN DISK FILE WITH HANDLE /* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ; DOS - 2+ - OPEN DISK FILE WITH HANDLE                                                
     jb      short error
     mov     [bp+var_filehandle], ax
 readloop:
@@ -198,14 +198,14 @@ readloop:
     mov     cx, 4000h
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Fh
-    int     R5HW_DOS_INT ; DOS - 2+ - READ FROM FILE WITH HANDLE /* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ; DOS - 2+ - READ FROM FILE WITH HANDLE                                                
     jb      short error
     add     [bp+var_curseg], 400h
     cmp     ax, 4000h
     jz      short readloop
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
-    int     R5HW_DOS_INT ; DOS - 2+ - CLOSE A FILE WITH HANDLE /* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ; DOS - 2+ - CLOSE A FILE WITH HANDLE                                                
     mov     ax, [bp+arg_dstoff]
     mov     dx, [bp+arg_dstseg]
     pop     ds
@@ -1174,7 +1174,7 @@ _locate_shape_fatal endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; Global addresses taken: aLocateshape4_4sShapeNotF, aLocatesound4_4sSoundNotF.
-; /* PLATFORM(dos): terminates the DOS process. */
+;                                                 
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _locate_sound_fatal
 ; ASMDOC purpose: Find a four-byte archive ID; report missing sound as fatal.
@@ -1267,7 +1267,7 @@ find_sound_fatal_error_path_01:
     push    [bp+arg_requested_name]
     push    dx
     call    far ptr _abortmessage
-    int     R5HW_DOS_TERMINATE_INT ; DOS - PROGRAM TERMINATION /* PLATFORM(dos): terminates the DOS process. */
+    int     R5HW_DOS_TERMINATE_INT ; DOS - PROGRAM TERMINATION                                                 
 find_sound_fatal_branch_path_04:
     xor     ax, ax
     jmp     short find_sound_fatal_join_01

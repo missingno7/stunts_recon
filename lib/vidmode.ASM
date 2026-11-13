@@ -33,8 +33,8 @@ assume cs:S012_TEXT
 ; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _currentvideomode.
 ; Globals written: _currentvideomode, saved_video_control_register.
-; /* PLATFORM(video): calls a BIOS video service. */
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                   
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC[timers] Contract _video_add_exithandler (proposed name _video_add_exithandler): When saved mode byte is
 ; ASMDOC[timers]   zero, query BIOS mode, save it and BDA equipment byte, and append video_on_exit to exit list.
@@ -55,11 +55,11 @@ _video_add_exithandler proc far
 ; ASMDOC[timers] Block: BIOS query returns mode in AL; saved mode 0 still equals sentinel and therefore does not
 ; ASMDOC[timers]   prevent later registrations.
     mov ah, 0Fh
-    int R5HW_BIOS_VIDEO_INT ;/* PLATFORM(video): calls a BIOS video service. */
+    int R5HW_BIOS_VIDEO_INT ;                                                  
     mov ds:[_currentvideomode], al
     mov ax, 40h
     mov es, ax
-    mov al, es:[10h] ;/* PLATFORM(video): accesses display memory through ES. */
+    mov al, es:[10h] ;                                                          
     mov ds:[saved_video_control_register], al
 ; ASMDOC[timers] Block: Address-taken FAR cleanup callback makes video_on_exit live without a direct CALL.
     push cs
@@ -80,8 +80,8 @@ _video_add_exithandler endp
 ; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _currentvideomode, saved_video_control_register.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
-; /* PLATFORM(video): calls a BIOS video service. */
+;                                                           
+;                                                   
 ; -----------------------------------------------------------------------------
 ; ASMDOC[timers] Contract _video_on_exit (proposed name _video_on_exit): Restore saved BDA equipment byte
 ; ASMDOC[timers]   before/after BIOS mode change; if equipment bits 4-5 are 30h clear graphics memory; set BIOS
@@ -103,14 +103,14 @@ _video_on_exit proc far
     mov ax, 40h
     mov es, ax
     mov al, ds:[saved_video_control_register]
-    mov es:[10h], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov es:[10h], al ;                                                          
     mov ah, 0
     mov al, ds:[_currentvideomode]
-    int R5HW_BIOS_VIDEO_INT ;/* PLATFORM(video): calls a BIOS video service. */
+    int R5HW_BIOS_VIDEO_INT ;                                                  
     mov ax, 40h
     mov es, ax
     mov al, ds:[saved_video_control_register]
-    mov es:[10h], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov es:[10h], al ;                                                          
 ; ASMDOC[timers] Block: Test saved equipment display bits, not a hardware control register. Saved state is retained
 ; ASMDOC[timers]   after restoration.
     and al, 30h
@@ -123,7 +123,7 @@ _video_on_exit proc far
 skip_color_clear_for_non_cga:
     mov ah, 0Bh
     mov bx, 0
-    int R5HW_BIOS_VIDEO_INT ;/* PLATFORM(video): calls a BIOS video service. */
+    int R5HW_BIOS_VIDEO_INT ;                                                  
     retf
 _video_on_exit endp
 

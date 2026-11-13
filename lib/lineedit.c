@@ -1,5 +1,5 @@
 #include "types.h"
-/* READABILITY: Implement the shared line editor, including key polling, cursor drawing, and text-width handling. */
+/* Implement the shared line editor, including key polling, cursor drawing, and text-width handling. */
 #include "ui.h"
 #include "chartab.h"
 #include "math3d.h"
@@ -14,32 +14,14 @@ static I16S line_input_cursor_vertical, line_edit_x, line_edit_y;
 static I16S cursor_flash_state, line_text_max_width, line_input_cursor_slot;
 #include "memory.h"
 
-    /* PLATFORM(video): measure or draw the current line-edit display. */
 
-    /* PLATFORM(video): measure or draw the current line-edit display. */
-
-    /* PLATFORM(video): measure or draw the current line-edit display. */
-
-    /* PLATFORM(video): measure or draw the current line-edit display. */
-
-    /* PLATFORM(input_kb): poll the game input-abort state. */
-
-    /* PLATFORM(input_kb): read the next DOS keyboard callback value. */
-
-    /* PLATFORM(timer): reset the game timer countdown for this input wait. */
 /* Local view: setticks; audiores raw-object exclusion retains its prototype. */
 extern void FAR setticks(I16, I16);
 
-    /* PLATFORM(timer): set the cursor-blink timer interval. */
-
-    /* PLATFORM(timer): check whether the timer countdown expired. */
 
 /* Edit a bounded text buffer using keyboard input, blink timing, and the line-rendering helpers.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(input_kb): poll the keyboard and abort callback for edit keys. */
-/* PLATFORM(video): copy the render surface before drawing line edits. */
-/* PLATFORM(timer): refresh cursor blink timing while waiting for input. */
 I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
                   I16 maxWidth, I16 x, I16 y,
                   I16 (FAR *readCallback)(void), I16 timerOffset, I16 timerSegment)
@@ -49,7 +31,6 @@ I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
   I16S inputKey;
   I16S cursorIndex;
   I16S insertMode;
-    /* PLATFORM(video): copy the active render surface before editing. */
   displaywindow();
   line_edit_x = x;
   line_edit_y = y;
@@ -71,9 +52,7 @@ I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
   cursor_flash_state = 1;
   insertMode = 0;
   read_line_helper();
-    /* PLATFORM(timer): reset the game timer countdown for this input wait. */
   setticks(timerOffset, timerSegment);
-    /* PLATFORM(timer): set the cursor-blink timer interval. */
   setbiosticks(4L);
   firstKey = 1;
   for (;;)
@@ -85,16 +64,13 @@ I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
     }
     else
     {
-    /* PLATFORM(input_kb): read the next DOS keyboard callback value. */
       while ((inputKey = testkey()) == 0) {
-    /* PLATFORM(input_kb): poll the game input-abort state. */
         if (testbiosticks() != 0) { inputKey = 0; break; }
         readCallback();
       }
     }
     if (inputKey == 0)
     {
-    /* PLATFORM(timer): set the cursor-blink timer interval. */
       setbiosticks(4L);
       savedBlink = cursor_flash_state;
       cursor_flash_state = 1;
@@ -107,14 +83,12 @@ I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
       {
         cursor_flash_state = 1;
       }
-    /* PLATFORM(timer): check whether the timer countdown expired. */
       if ((timerOffset | timerSegment) != 0 && testticks() != 0)
       {
         break;
       }
       continue;
     }
-    /* PLATFORM(timer): reset the game timer countdown for this input wait. */
     setticks(timerOffset, timerSegment);
     if (inputKey == KEY_ASCII_ENTER || inputKey == KEY_ASCII_ESCAPE || inputKey == KEY_SCAN_UP || inputKey == KEY_SCAN_DOWN && !(flags & UI_LINE_EDIT_KEEP_DOWN_KEY) || inputKey == KEY_ASCII_TAB && !(flags & UI_LINE_EDIT_KEEP_TAB_KEY))
       break;
@@ -252,7 +226,6 @@ I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
 /* Measure the text prefix and draw the cursor block at the current edit position.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(video): measure and draw the text cursor using the renderer. */
 void FAR read_line_helper(void)
 {
     I16S width;
@@ -265,23 +238,18 @@ void FAR read_line_helper(void)
     if ((I16)strlen(line_input_text_buffer) < line_input_cursor_slot)
         line_input_cursor_slot = (I16)strlen(line_input_text_buffer);
 
-    /* PLATFORM(video): measure or draw the current line-edit display. */
     width = textnpixels(line_input_text_buffer + line_input_cursor_slot, 1);
     if (width == 0)
-    /* PLATFORM(video): measure displayed text using the game font renderer. */
         width = textpixels(" ");
 
-    /* PLATFORM(video): measure or draw the current line-edit display. */
     x = textnpixels(line_input_text_buffer, line_input_cursor_slot) + line_edit_x;
     y = line_input_font_header->line_height + line_edit_y - line_input_cursor_vertical;
-    /* PLATFORM(video): measure or draw the current line-edit display. */
     xorrectc(x, y, width, line_input_cursor_vertical, line_input_font_header->foreground);
 }
 
 /* Clamp text to the configured width, draw it, and update the remaining line background.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(video): clip and draw the editable text line. */
 void FAR read_line_helper2(void)
 {
     I16S length;
@@ -290,7 +258,6 @@ void FAR read_line_helper2(void)
 
     if (line_text_max_width != 0) {
         for (;;) {
-    /* PLATFORM(video): measure displayed text using the game font renderer. */
             if (textpixels(line_input_text_buffer) <= line_text_max_width)
                 break;
             if (strlen(line_input_text_buffer) == 0)
@@ -303,14 +270,11 @@ void FAR read_line_helper2(void)
     if (line_input_cursor_slot > length)
         line_input_cursor_slot = length;
 
-    /* PLATFORM(video): measure or draw the current line-edit display. */
     movtxy(line_input_text_buffer, line_edit_x, line_edit_y);
     if (line_text_max_width != 0) {
-    /* PLATFORM(video): measure displayed text using the game font renderer. */
         fontWidth = textpixels(line_input_text_buffer);
         unusedWidth = line_text_max_width - fontWidth;
         if (unusedWidth > 0)
-    /* PLATFORM(video): measure or draw the current line-edit display. */
             drawrectc(fontWidth + line_edit_x, line_edit_y, unusedWidth,
                           line_input_font_header->line_height, line_input_font_header->background);
     }

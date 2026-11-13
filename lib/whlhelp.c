@@ -1,5 +1,5 @@
 #include "types.h"
-/* READABILITY: Generate wheel perimeter points and offset their paired ring by the rectangle origin delta. */
+/* Generate wheel perimeter points and offset their paired ring by the rectangle origin delta. */
 
 #define WHEEL_RING_POINT_COUNT 16
 #define WHEEL_OUTER_RING_OFFSET 32

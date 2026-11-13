@@ -3,7 +3,7 @@
 #include "math3d.h"
 #include "radius.h"
 #include "types.h"
-/* READABILITY: Build the thirty-two front/back perimeter points for a sphere section from three source points. */
+/* Build the thirty-two front/back perimeter points for a sphere section from three source points. */
 #include "ellipse.h"
 #include "shapes3d.h"
 /* Interpolate and translate the front and rear sphere-section point rings.
@@ -23,7 +23,6 @@ void FAR ellipseh(struct Point *source, struct Point *output)
     output[0].y = source[1].y - source[0].y;
     output[8].x = source[2].x - source[0].x;
     output[8].y = source[2].y - source[0].y;
-    /* PORT: Signed geometry coordinates use arithmetic right shifts when halved. */
     startHalfX = output[0].x >> RING_HALF_COMPONENT_SHIFT;
     initialQuarterX = startHalfX >> RING_HALF_COMPONENT_SHIFT;
     threeQuarterX0 = startHalfX + initialQuarterX;

@@ -1,4 +1,4 @@
-; ASMDOC Module: load_232c0. Proposed content name: sprite_clear_1_color. Address-derived owner load_232c0 should
+;                                                                                                                
 ; ASMDOC follow its single-purpose existing source filename; no split or merge.
 ; ASMDOC Public routines: _sprite_clear_1_color.
 ; ASMDOC Static contract audit: byte/word widths and offsets describe original 8086 paths; inherited generated
@@ -19,8 +19,8 @@ public _clearwindow
 ; SI; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                                      
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _sprite_clear_1_color: Fill sprite1 current clip rectangle with the supplied palette index.
 ; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
@@ -66,7 +66,7 @@ _clearwindow proc far
 ; ASMDOC REP STOSW inherits DF; this routine does not clear it.
 sprite_clear_1_color_fill_loop:
     mov     cx, bx
-    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    rep stosw ;                                                                     
     add     di, si
     dec     dx
     jg      short sprite_clear_1_color_fill_loop
@@ -81,8 +81,8 @@ clear_1_color_when_below:
     inc     si
 clear_1_color_fill_loop_2:
     mov     cx, bx
-    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
-    mov     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    rep stosw ;                                                                     
+    mov     es:[di], al ;                                                          
     add     di, si
     dec     dx
     jg      short clear_1_color_fill_loop_2
@@ -90,7 +90,7 @@ clear_1_color_fill_loop_2:
 sprite_clear_1_color_when_zero:
     inc     si
 clear_1_color_draw_loop_2:
-    mov     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[di], al ;                                                          
     add     di, si
     dec     dx
     jg      short clear_1_color_draw_loop_2

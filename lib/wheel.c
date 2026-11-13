@@ -1,5 +1,5 @@
 #include "types.h"
-/* READABILITY: Generate, rotate, and submit the front/back wheel outline and side faces for rendering. */
+/* Generate, rotate, and submit the front/back wheel outline and side faces for rendering. */
 
 #define WHEEL_RING_POINT_COUNT 16
 #define WHEEL_SECOND_RING_OFFSET 16
@@ -14,7 +14,6 @@
 
 /* Construct the wheel perimeter and submit front, back, and side vertices for drawing.
  * Params and return follow the declared C signature. */
-/* PLATFORM(video): submit wheel faces and point buffers to the renderer. */
 void FAR solidtire(struct WheelRect *rect, I16 count, I16 color,
     I16 styleA, I16 styleB)
 {
@@ -33,7 +32,6 @@ void FAR solidtire(struct WheelRect *rect, I16 count, I16 color,
     tire(rect, (I16 *)vertices, count);
     pointPtr = vertices;
     for (position = 0; position < WHEEL_RING_POINT_COUNT - 1; ++position) {
-    /* PLATFORM(video): submit generated wheel geometry to the renderer. */
         preRender_wheel_helper4(color, WHEEL_QUAD_POINT_COUNT,
             pointPtr[0].x, pointPtr[0].y,
             pointPtr[1].x, pointPtr[1].y,
@@ -41,7 +39,6 @@ void FAR solidtire(struct WheelRect *rect, I16 count, I16 color,
             pointPtr[WHEEL_OUTER_RING_OFFSET].x, pointPtr[WHEEL_OUTER_RING_OFFSET].y);
         ++pointPtr;
     }
-    /* PLATFORM(video): submit generated wheel geometry to the renderer. */
     preRender_wheel_helper4(color, WHEEL_QUAD_POINT_COUNT,
         pointPtr[0].x, pointPtr[0].y,
         vertices[0].x, vertices[0].y,
@@ -78,7 +75,6 @@ void FAR solidtire(struct WheelRect *rect, I16 count, I16 color,
             ++secondSet;
         }
     }
-    /* PLATFORM(video): submit generated wheel geometry to the renderer. */
     drawpolyp(styleA, 0x12, (I8 *)drawVertices);
 
     firstPoint = vertices + topPoint;
@@ -100,8 +96,6 @@ void FAR solidtire(struct WheelRect *rect, I16 count, I16 color,
             --secondSet;
         }
     }
-    /* PLATFORM(video): submit generated wheel geometry to the renderer. */
     drawpolyp(styleA, 0x12, (I8 *)drawVertices);
-    /* PLATFORM(video): submit generated wheel geometry to the renderer. */
     drawpolyp(styleB, 0x10, (I8 *)(vertices + WHEEL_SECOND_RING_OFFSET));
 }

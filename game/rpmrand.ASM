@@ -144,7 +144,7 @@ _sgn endp
 ; inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(bios): calls a software interrupt service. */
+;                                                          
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _nopsub_19DFF (_dos_call_int61_ax): Pass an opaque word through AX to software INT 61h; provider
 ; ASMDOC and operation unknown.
@@ -169,7 +169,7 @@ int61_set_frame:
 int61_load_argument:
     mov     ax, [bp+arg_service_argument]
 int61_call_driver:
-    int     61h ; reserved for user interrupt /* PLATFORM(bios): calls a software interrupt service. */
+    int     61h ; reserved for user interrupt                                                          
     pop     bp
 int61_return:
     retf
@@ -182,7 +182,7 @@ _nopsub_19DFF endp
 ; inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(bios): calls a software interrupt service. */
+;                                                          
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _nopsub_19E09 (_dos_call_int60_ax): Pass an opaque word through AX to software INT 60h; provider
 ; ASMDOC and operation unknown.
@@ -206,7 +206,7 @@ int60_set_frame:
     mov     bp, sp
 int60_load_argument:
     mov     ax, [bp+arg_service_argument]
-    int     60h ;/* PLATFORM(bios): calls a software interrupt service. */
+    int     60h ;                                                         
     pop     bp
     retf
 _nopsub_19E09 endp
@@ -218,7 +218,7 @@ _nopsub_19E09 endp
 ; outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(bios): calls a software interrupt service. */
+;                                                          
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _nopsub_19E13 (_dos_call_int62_si): Pass an opaque word through SI to software INT 62h; provider
 ; ASMDOC and operation unknown.
@@ -245,7 +245,7 @@ int62_save_index:
     push    si
     mov     si, [bp+arg_service_argument]
 int62_call_driver:
-    int     62h ; reserved for user interrupt /* PLATFORM(bios): calls a software interrupt service. */
+    int     62h ; reserved for user interrupt                                                          
     pop     si
 int62_restore_index_and_return:
     pop     bp
@@ -416,7 +416,7 @@ _myrandom endp
 ; outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: _divide0_fault_cs, _divide0_fault_ip.
-; /* PLATFORM(bios): returns from a hardware interrupt. */
+;                                                         
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _intr0_handler (_intr0_handler): Record fault CS:IP, advance saved IP by exactly two bytes, zero
 ; ASMDOC AX, and resume with IRET.
@@ -457,7 +457,7 @@ div0_clear_return_value:
     xor     ax, ax
     pop     ds
     pop     bp
-    iret ;/* PLATFORM(bios): returns from a hardware interrupt. */
+    iret ;                                                        
 _intr0_handler endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Implement the operation identified by initialize div0.
@@ -467,7 +467,7 @@ _intr0_handler endp
 ; inputs and outputs follow the listed operands.
 ; Globals read: _old_intr0_handler.
 ; Globals written: _old_intr0_handler.
-; /* PLATFORM(dos): calls a DOS service. */
+;                                          
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _initialize_div0 (_initialize_div0): Save old INT0 vector then install this module's divide
 ; ASMDOC handler.
@@ -489,7 +489,7 @@ div0_get_old_vector:
     mov     ah, 35h ; '5'
 div0_select_int0:
     mov     al, 0
-    int     R5HW_DOS_INT ; DOS - 2+ - GET INTERRUPT VECTOR /* PLATFORM(dos): calls a DOS service. */
+    int     R5HW_DOS_INT ; DOS - 2+ - GET INTERRUPT VECTOR                                          
 div0_capture_old_segment:
     mov     word ptr _old_intr0_handler+2, es
 div0_capture_old_offset:
@@ -504,7 +504,7 @@ div0_select_set_vector_function:
     mov     ah, 25h ; '%'
 div0_select_int0_vector:
     mov     al, 0
-    int     R5HW_DOS_INT ; DOS - SET INTERRUPT VECTOR /* PLATFORM(dos): calls a DOS service. */
+    int     R5HW_DOS_INT ; DOS - SET INTERRUPT VECTOR                                          
     pop     ds
 div0_return:
     retf
@@ -528,7 +528,7 @@ _restore_div_zero_vector     label byte
     lds     dx, _old_intr0_handler
     mov     ah, 25h
     mov     al, 0
-    int     R5HW_DOS_INT ;/* PLATFORM(dos): calls a DOS service. */
+    int     R5HW_DOS_INT ;                                         
 _initialize_div0 endp
 ; ASMDOC Shared restore-vector epilogue lies outside PROC extent but belongs to the public restore entry.
 tail_19F13:

@@ -1,5 +1,5 @@
 ; ASMDOC Module: Seven far tail-forwarders into the C 2D shape loader and run encoder.
-; ASMDOC Owner file_load_shape2d_thunks; original source asm/file_load_shape2d_thunks.ASM.
+;                                                                                         
 ; ASMDOC Routine inventory: _file_load_shape2d_res_fatal_thunk, _load_shape2d_res_nofatal_thunk,
 ; _file_load_shape2d_res_thunk,
 ; ASMDOC _parse_shape2d_thunk, _file_load_shape2d_fatal_thunk, _load_shape2d_nofatal_thunk, _file_load_shape2d_thunk

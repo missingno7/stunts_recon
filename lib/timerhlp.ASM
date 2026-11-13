@@ -43,7 +43,7 @@ public _timedwait
 ; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _last_timer_callback_counter, _timer_callback_counter.
 ; Globals written: _last_timer_callback_counter.
-; /* PLATFORM(timer): masks or restores interrupts around timer state. */
+;                                                                        
 ; -----------------------------------------------------------------------------
 ; ASMDOC[timers] Contract _timer_get_delta (proposed name _timer_get_delta): Snapshot callback counter under CLI/STI,
 ; ASMDOC[timers]   update previous snapshot and return modular 32-bit elapsed delta.
@@ -63,10 +63,10 @@ _elapsedticks proc far
 ; ASMDOC[timers]   IRQ-masked.
     mov bx, word ptr ds:[_last_timer_callback_counter]
     mov cx, word ptr ds:[previous_timer_counter_hi]
-    cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+    cli ;                                                                       
     mov ax, word ptr ds:[_timer_callback_counter]
     mov dx, word ptr ds:[_timer_callback_counter+2]
-    sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+    sti ;                                                                       
     mov  word ptr ds:[_last_timer_callback_counter], ax
     mov word ptr ds:[previous_timer_counter_hi], dx
     sub ax, bx

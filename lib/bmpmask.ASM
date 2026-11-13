@@ -147,7 +147,7 @@ _andpackfxya endp
 ;   operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _shape2d_render_bmp_as_mask; proposed name _shape2d_render_bmp_as_mask
 ; ASMDOC Purpose: AND a signed packet stream into sprite1 at shape header origin. Positive control repeats next
@@ -237,7 +237,7 @@ bmp_as_mask_when_greater:
     xor     ch, ch
     lodsb
 render_bmp_as_mask_scan_loop:
-    and     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    and     es:[di], al ;                                                          
     inc     di
     dec     dx
     jg      short bmp_as_mask_when_greater_2
@@ -257,7 +257,7 @@ render_bmp_as_mask_when_less:
     xor     ch, ch
 render_bmp_as_mask_read_loop_2:
     lodsb
-    and     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    and     es:[di], al ;                                                          
     inc     di
     dec     dx
     jg      short bmp_as_mask_when_greater_3

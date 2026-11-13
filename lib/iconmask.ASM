@@ -77,7 +77,7 @@ _andfxy endp
 ;   listed operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _putpixel_iconMask; proposed name _putpixel_iconMask
 ; ASMDOC Purpose: AND raw shape bitmap into sprite1 at explicit x/y.
@@ -163,12 +163,12 @@ putpixel_iconmask_read_loop:
     mov     cx, [bp+var_6]
 putpixel_iconmask_read_loop_2:
     lodsw
-    and     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    and     es:[di], ax ;                                                          
     inc     di
     inc     di
     loop    putpixel_iconmask_read_loop_2
     lodsb
-    and     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    and     es:[di], al ;                                                          
     add     di, bx
     dec     dx
     jg      short putpixel_iconmask_read_loop
@@ -183,7 +183,7 @@ putpixel_iconmask_read_loop_3:
     mov     cx, [bp+var_6]
 putpixel_iconmask_read_loop_4:
     lodsw
-    and     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    and     es:[di], ax ;                                                          
     inc     di
     inc     di
     loop    putpixel_iconmask_read_loop_4
@@ -198,7 +198,7 @@ putpixel_iconmask_when_zero:
     inc     bx
 putpixel_iconmask_read_loop_5:
     lodsb
-    and     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    and     es:[di], ax ;                                                          
     add     di, bx
     dec     dx
     jg      short putpixel_iconmask_read_loop_5

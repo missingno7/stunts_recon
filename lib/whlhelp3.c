@@ -3,7 +3,7 @@
 #include "math3d.h"
 #include "radius.h"
 #include "types.h"
-/* READABILITY: Build the sixteen front/back perimeter points for a wheel section from three source points. */
+/* Build the sixteen front/back perimeter points for a wheel section from three source points. */
 #include "ellipse.h"
 #include "shapes3d.h"
 /* Interpolate and translate the front and rear wheel-section point rings.
@@ -23,7 +23,6 @@ void ellipse(Point *source, Point *output)
     output[2].y = fixedmult(output[0].y + output[4].y, RING_WEIGHT_DIAGONAL_Q14);
     output[1].x = fixedmult(output[0].x + (output[4].x >> RING_HALF_COMPONENT_SHIFT), RING_WEIGHT_HALF_AXIS_Q14);
     output[1].y = fixedmult(output[0].y + (output[4].y >> RING_HALF_COMPONENT_SHIFT), RING_WEIGHT_HALF_AXIS_Q14);
-    /* PORT: Signed geometry coordinates use arithmetic right shifts when halved. */
     half_dx = output[0].x >> RING_HALF_COMPONENT_SHIFT;
     output[3].x = fixedmult(output[4].x + half_dx, RING_WEIGHT_HALF_AXIS_Q14);
     half_dy = output[0].y >> RING_HALF_COMPONENT_SHIFT;

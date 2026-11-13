@@ -111,8 +111,8 @@ _drawrectc endp
 ;   listed operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                                      
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC(font_shapes) Contract _sprite_1_unk (proposed _sprite_fill_rect_unclipped): Fill a solid indexed-color
 ; rectangle.
@@ -179,7 +179,7 @@ sprite_1_unk_shared_path:
     jle     short sprite_1_unk_draw_loop
 sprite_1_unk_fill_loop:
     mov     cx, [bp+arg_width]
-    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    rep stosw ;                                                                     
     add     di, dx
     dec     si
     jg      short sprite_1_unk_fill_loop
@@ -194,8 +194,8 @@ sprite_1_unk_when_below:
     inc     dx
 sprite_1_unk_fill_loop_2:
     mov     cx, [bp+arg_width]
-    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
-    mov     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    rep stosw ;                                                                     
+    mov     es:[di], al ;                                                          
     add     di, dx
     dec     si
     jg      short sprite_1_unk_fill_loop_2
@@ -203,7 +203,7 @@ sprite_1_unk_fill_loop_2:
 sprite_1_unk_when_zero:
     inc     dx
 sprite_1_unk_draw_loop_2:
-    mov     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[di], al ;                                                          
     add     di, dx
     dec     si
     jg      short sprite_1_unk_draw_loop_2
@@ -254,7 +254,7 @@ _drawrect endp
 ;   operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC(font_shapes) Contract _sprite_1_unk3 (proposed _sprite_blit_dither_phase): Copy a phase-selected sparse
 ; pattern of
@@ -369,7 +369,7 @@ sprite_1_unk3_draw_loop_3:
     add     si, ax
     add     di, ax
     mov     al, [si]
-    mov     es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[di], al ;                                                          
     mov     al, cs:sprite_run_post_skip_by_phase[bx]
     add     si, ax
     add     di, ax

@@ -16,7 +16,7 @@ public _writepixelc
 ; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _putpixel_single_maybe; proposed name _sprite_putpixel_clipped
 ; ASMDOC Purpose: Plot one low-byte color only if signed x/y lie inside sprite1 half-open bounds.
@@ -75,7 +75,7 @@ write_pixel:
  add di,cs:[si]
  mov es,word ptr cs:[_sprite1+2]
  mov ax,[bp+0Ah]
- mov es:[di],al ;/* PLATFORM(video): accesses display memory through ES. */
+ mov es:[di],al ;                                                          
  pop di
  pop si
  pop bp

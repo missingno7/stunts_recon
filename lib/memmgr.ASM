@@ -51,8 +51,8 @@ public _nomemerr, _expanderr, _exmemerr, _resources
 ; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _resendptr2, _resmem_base_seg, _resmem_end_seg, _resptr1.
 ; Globals written: _pspofs, _pspseg, _resendptr1, _resmem_base_seg, _resmem_end_seg, _resptr2.
-; /* PLATFORM(dos): calls a DOS service. */
-; /* PLATFORM(memory): calls a DOS memory-allocation service. */
+;                                          
+;                                                               
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _mmgr_alloc_resmem (_mmgr_alloc_resmem): Initialize resource arena, optionally allocating DOS
 ; ASMDOC block and resizing it toward the supplied exclusive segment boundary.
@@ -81,12 +81,12 @@ _mmgr_alloc_resmem proc far
     push    si
     push    di
     mov     ax, 3000h
-    int     R5HW_DOS_INT ; DOS - GET DOS VERSION /* PLATFORM(dos): calls a DOS service. */
+    int     R5HW_DOS_INT ; DOS - GET DOS VERSION                                          
     mov     bx, cs
     cmp     al, 3
     jl      short resmem_alloc_branch_path_01
     mov     ah, 62h
-    int     R5HW_DOS_INT ; DOS - 3+ - GET PSP ADDRESS /* PLATFORM(dos): calls a DOS service. */
+    int     R5HW_DOS_INT ; DOS - 3+ - GET PSP ADDRESS                                          
 resmem_alloc_branch_path_01:
     mov     _pspofs, bx
     mov     _pspseg, ds
@@ -94,7 +94,7 @@ resmem_alloc_branch_path_01:
     jnz     short resmem_alloc_loop_head_01
     mov     bx, 64h ; 'd'
     mov     ah, 48h
-    int     R5HW_DOS_INT ; DOS - 2+ - ALLOCATE MEMORY /* PLATFORM(memory): calls a DOS memory-allocation service. */
+    int     R5HW_DOS_INT ; DOS - 2+ - ALLOCATE MEMORY                                                               
     mov     si, _resptr1
     mov     [si+MEMCHUNK.resofs], ax
     mov     _resmem_base_seg, ax
@@ -103,10 +103,10 @@ resmem_alloc_branch_path_01:
     sub     bx, [si+MEMCHUNK.resofs]
     mov     ah, 4Ah
     int     R5HW_DOS_INT
-; DOS - 2+ - ADJUST MEMORY BLOCK SIZE (SETBLOCK) /* PLATFORM(memory): calls a DOS memory-allocation service. */
+; DOS - 2+ - ADJUST MEMORY BLOCK SIZE (SETBLOCK)                                                               
     mov     ah, 4Ah
     int     R5HW_DOS_INT
-; DOS - 2+ - ADJUST MEMORY BLOCK SIZE (SETBLOCK) /* PLATFORM(memory): calls a DOS memory-allocation service. */
+; DOS - 2+ - ADJUST MEMORY BLOCK SIZE (SETBLOCK)                                                               
     mov     ax, _resmem_base_seg
     add     ax, bx
     mov     si, _resendptr2
@@ -139,7 +139,7 @@ _mmgr_alloc_resmem endp
 ; and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): selects a video-memory segment. */
+;                                                       
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _mmgr_alloc_a000 (_mmgr_alloc_a000): Initialize resource arena using exclusive upper segment
 ; ASMDOC A000h.
@@ -160,7 +160,7 @@ _mmgr_alloc_resmem endp
 ; ASMDOC A000:0000.
 _initmemory proc far
 
-    mov     ax, R5HW_VIDEO_GRAPHICS_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
+    mov     ax, R5HW_VIDEO_GRAPHICS_SEGMENT ;                                                      
     push    ax
     call    _mmgr_alloc_resmem
     add     sp, 2
@@ -173,7 +173,7 @@ _initmemory endp
 ; inputs and outputs follow the listed operands.
 ; Globals read: _resendptr2, _resmem_end_seg.
 ; Globals written: _resmem_end_seg.
-; /* PLATFORM(video): selects a video-memory segment. */
+;                                                       
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _nopsub_310FE (_mmgr_init_video_reserve): Initialize arena below A000h, then subtract caller
 ; ASMDOC reserve paragraphs from upper sentinel segment and global end.
@@ -196,7 +196,7 @@ _mmgr_init_video_reserve proc far
 
     push    bp
     mov     bp, sp
-    mov     ax, R5HW_VIDEO_GRAPHICS_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
+    mov     ax, R5HW_VIDEO_GRAPHICS_SEGMENT ;                                                      
     push    ax
     call    _mmgr_alloc_resmem
     add     sp, 2
@@ -215,7 +215,7 @@ _mmgr_init_video_reserve endp
 ; inferred; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _resendptr2, _resmem_end_seg, _resptr1.
 ; Globals written: _pspofs, _pspseg, _resmem_base_seg, _resmem_end_seg.
-; /* PLATFORM(memory): calls a DOS memory-allocation service. */
+;                                                               
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _nopsub_3111D (_mmgr_alloc_dos_heap): Initialize arena using DOS paragraph count; retry once with
 ; ASMDOC BX returned by a failed allocation, then share descriptor reset epilogue.
@@ -246,10 +246,10 @@ _initmemsize proc far
     jnz     short resmem_alloc_loop_head_01
     mov     bx, [bp+arg_requested_paragraphs]
     mov     ah, 48h
-    int     R5HW_DOS_INT ; DOS - 2+ - ALLOCATE MEMORY /* PLATFORM(memory): calls a DOS memory-allocation service. */
+    int     R5HW_DOS_INT ; DOS - 2+ - ALLOCATE MEMORY                                                               
     jnb     short noop_entry2_branch_path_01
     mov     ah, 48h
-    int     R5HW_DOS_INT ; DOS - 2+ - ALLOCATE MEMORY /* PLATFORM(memory): calls a DOS memory-allocation service. */
+    int     R5HW_DOS_INT ; DOS - 2+ - ALLOCATE MEMORY                                                               
 noop_entry2_branch_path_01:
     mov     si, _resptr1
     mov     [si+MEMCHUNK.resofs], ax

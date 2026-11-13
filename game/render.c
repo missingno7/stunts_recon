@@ -11,13 +11,12 @@
 #define HUGE huge
 #include "types.h"
 
-/* obj_seg003 whole-object candidate (s003d).  RECONSTRUCTION NOTE: original identifiers are not
- * recoverable.  Local/parameter names and the scoping of extern declarations (K&R-style
+/* Local/parameter names and the scoping of extern declarations (K&R-style
  * function-scope externs in draw_clip/init_rect_arrays) are pressure-constrained reconstruction
  * choices: MSC 5.10 C2's CSE capacity in update_frame depends on symbol-table memory (names of
  * referenced globals and of update_frame's locals).  They are not recovered names.
  * Data shapes: rect_unk[15] (15-iteration copy loop + rect_unk[si], labels at 8-byte stride),
- * hill_offs[9][2] (pair table, see comment); fence pair lists by their pinned labels; plane state kept separate. */ /* PORT: plain char signedness follows the pinned MSC target. */
+ * hill_offs[9][2] (pair table, see comment); fence pair lists by their pinned labels; plane state kept separate. */
 
 #include "math3d.h"
 
@@ -32,7 +31,7 @@
 
 #include "car.h"
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: GAMESTATE; struct[9].type is unsigned word; another unit uses signed word. */
+/* Local view: GAMESTATE; struct[9].type is unsigned word; another unit uses signed word. */
 struct GAMESTATE {
 	I32 game_debris_x[24]; // x
 	I32 game_debris_y[24]; // y
@@ -82,7 +81,7 @@ struct GAMESTATE {
 	I8 field_45F;
 };
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: SIMD; struct.count is 30; another unit uses 29. */
+/* Local view: SIMD; struct.count is 30; another unit uses 29. */
 struct SIMD {
 	I8 num_gears;
 	I8 simd_unk;
@@ -116,7 +115,7 @@ struct SIMD {
 	I16S far* aerorestable;
 };
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: TRKOBJINFO; struct.count is 12; another unit uses 11. */
+/* Local view: TRKOBJINFO; struct.count is 12; another unit uses 11. */
 struct TRKOBJINFO {
 	I8  si_noOfBlocks;      // How many shapeInfo pieces compose the element. Arbitrary for the first piece, 0 for the following ones.
 	I8  si_entryPoint;      // Connectivity of the track element regarding tiles.
@@ -126,7 +125,7 @@ struct TRKOBJINFO {
 	I8  si_arrowType;        // Type of the element for determining penalty-arrow behaviour.
 	I16S si_arrowOrient;      // Orientation angle for penalty-arrow purposes
 	I16S* si_cameraDataOffset; // offset (0003B770)
-	I8  si_opp1;             //Appears to affect how the opponent AI approaches an element.
+	I8  si_opp1; //Appears to affect how the opponent AI approaches an element.
 	I8  si_opp2;
 	I8  si_opp3;
 	I8  si_oppSpedCode;
@@ -182,7 +181,7 @@ extern struct MATERIALCLRLIST *material_clrlist_ptr;
 /* Local view: messagebox; return is unsigned word; another unit uses signed word. */
 extern U16S  messagebox(I16 unk1, I16 unk2, void far* textresptr, U16S  unk3, U16S  unk4, I16 arg, void* unk5, I16 unk6);
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: SHAPE3D; struct.count is 7; another unit uses 8. */
+/* Local view: SHAPE3D; struct.count is 7; another unit uses 8. */
 struct SHAPE3D {
 	U16S  shape3d_numverts;
 	struct VECTOR far* shape3d_verts;
@@ -211,9 +210,9 @@ extern struct TRACKOBJECT trklst[215]; // 215 entries
 #include "dlgcolor.h"
 #include "files.h"
 
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: SHAPE2D; struct.count is 6; another unit uses 10. */
+/* Local view: SHAPE2D; struct.count is 6; another unit uses 10. */
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: SPRITE; struct.count is 2; another unit uses 14. */
+/* Local view: SPRITE; struct.count is 2; another unit uses 14. */
 struct SPRITE { void far *image; U16S  words[13]; };
 #include "skybox.h"
 #include "trig.h"
@@ -230,7 +229,6 @@ extern void far removewindow(void far *);
 #include "memory.h"
 
 /* Copies a clipped window region. Params: clip rectangle. Returns: none. State: reads the active window sprite and clip state. */
-/* PLATFORM(video): draws to or configures the display surface. */
 void far drawworldflipzones(struct RECTANGLE *clipRect)
 {
     extern struct SPRITE far *g_wndspr;
@@ -246,7 +244,7 @@ void far drawworldflipzones(struct RECTANGLE *clipRect)
     struct RECTANGLE *currentRect;
     if (g_videoflg5 != 0)
         return;
-    /* PLATFORM(video): copy the working sprite pages. */ usescreen();
+    usescreen();
     if (g_simprect == 0) {
         if (statemgmtcpy != 0) {
             for (i=0; i<15; ++i)
@@ -266,29 +264,29 @@ void far drawworldflipzones(struct RECTANGLE *clipRect)
             if (rect_num3 != 0) {
                 sortzonelist(rect_num3,
                     rectclip, rcmapix);
-                /* PLATFORM(video): select the opaque drawing path. */ mouseoff();
+                mouseoff();
                 i = 0;
                 goto draw_rect_check;
                 do {
                     currentRect = &rectclip[rcmapix[i]];
-                    /* PLATFORM(video): select the sprite clip rectangle. */ clippix(currentRect->left, currentRect->right,
+                    clippix(currentRect->left, currentRect->right,
                         currentRect->top, currentRect->bottom);
-                    /* PLATFORM(video): blit the saved sprite image. */ movcf(g_wndspr->image);
+                    movcf(g_wndspr->image);
                     ++i;
 draw_rect_check:
                     ;
                 } while (rect_num3 > i);
                 goto draw_transparent;
             }
-            /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, MCGA_SCREEN_WIDTH_PIXELS, clipRect->top, clipRect->bottom);
+            clippix(0, MCGA_SCREEN_WIDTH_PIXELS, clipRect->top, clipRect->bottom);
         } else {
-            /* PLATFORM(video): select the sprite clip rectangle. */ clippix(clipRect->left, clipRect->right,
+            clippix(clipRect->left, clipRect->right,
                 clipRect->top, clipRect->bottom);
         }
     }
-    /* PLATFORM(video): select the opaque drawing path. */ mouseoff();
-    /* PLATFORM(video): blit the saved sprite image. */ movcf(g_wndspr->image);
-/* PLATFORM(video): select the transparent drawing path. */ draw_transparent:
+    mouseoff();
+    movcf(g_wndspr->image);
+draw_transparent:
     mouseon();
     if (statemgmtcpy != 0) {
         rotpr[1] = prevcamrot;
@@ -313,7 +311,6 @@ draw_rect_check:
     }
 }
 /* Updates the visible game frame. Params: page and clip rectangle. Returns: none. State: reads frame, scene, camera and sprite globals; updates render lists. */
-/* PLATFORM(video): draws to or configures the display surface. */
 void drawworld(I8 page, struct RECTANGLE* clip) {
     extern int rotpr[2];
     extern int prevcamrot;
@@ -408,17 +405,17 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 	}
 
 	// Set car position (own or opponent's)
-	if (intraffic == 0) {		
-		/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ car_coord.x = core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT;
-		/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ car_coord.y = core.playerstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT;
-		/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ car_coord.z = core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT;
+	if (intraffic == 0) {
+		car_coord.x = core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT;
+		car_coord.y = core.playerstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT;
+		car_coord.z = core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT;
 		car_angle_y = core.playerstate.car_rotate.y;
 		my_car_bank = core.playerstate.car_rotate.z;
 		rot_x = core.playerstate.car_rotate.x;
 	} else {
-		/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ car_coord.x = core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT;
-		/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ car_coord.y = core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT;
-		/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ car_coord.z = core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT;
+		car_coord.x = core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT;
+		car_coord.y = core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT;
+		car_coord.z = core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT;
 		car_angle_y = core.opponentstate.car_rotate.y;
 		my_car_bank = core.opponentstate.car_rotate.z;
 		rot_x = core.opponentstate.car_rotate.x;
@@ -426,7 +423,6 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 
 	view_rot_x = -1;
 	cam_bank = 0;
-	
 	// Set camera position, based on the car position and the camera mode
 	switch (cammd) {
 	case 2:
@@ -477,9 +473,9 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 			viewpoint.y = hgthgt;
 		}
 
-		if (test_pln != 0) {		
+		if (test_pln != 0) {
 			si = plane_distance(pl_i, viewpoint.x, viewpoint.y, viewpoint.z);
-			if (si < 0xC) {			
+			if (si < 0xC) {
 				tvec2.x = 0;
 				tvec2.y = 0xC - si;
 				tvec2.z = 0;
@@ -590,7 +586,6 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 	// Select the detail level (FULL if 1st or 2nd option in the graphics menu
 	// were chosen, MEDIUM if the 3rd, FASTEST if 4th or 5th)
 	thresh = detthrlevel[renderlevel];
-	
 	// Cycle on the 23 tiles to draw, determine if they really need to be drawn
 	for (si = 0x16; si >= 0; si--) {
 	if (skipped[si] != 0) continue;
@@ -604,13 +599,11 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 	} else {
 					track_elem = td14tb[lnoffsets[trow] + tx];
 					tile_ground = td15p_9[gterrtrk[trow] + tx];
-	
 					if (track_elem != 0) {
 						if (tile_ground >= 7 && tile_ground < 0xB) {
 							track_elem = roadupcheck(tile_ground, track_elem);
 							tile_ground = 0;
 						}
-	
 						switch (track_elem) {
 						case 0xFD:
 							tx--;
@@ -630,21 +623,17 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 							break;
 						}
 					}
-	
 					terrain_list[si] = tile_ground;
 					lod_levels[si] = tile_table[si * 3 + 2];
-	
 					if (track_elem != 0 && renderlevel != 0 &&
 						trklst[track_elem].ss_physicalModel >= 0x40 &&
 						(tx != car_x_tile || trow != car_z_tile))
 					{
 						track_elem = 0;
 					}
-	
 					east_list[si] = tx;
 					south_tab[si] = trow;
 					elem_list[si] = track_elem;
-	
 					if (track_elem != 0) {
 						j = trklst[track_elem].ss_multiTileFlag;
 						if (j != 0) {
@@ -677,7 +666,6 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 								}
 						}
 					}
-						
 					}
 	}
 	}
@@ -755,7 +743,6 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 				}
 
 				if (j2 != -1) {
-						
 					if (core.opponentstate.car_surfaceWhl[0] != 4 || core.opponentstate.car_surfaceWhl[1] != 4 || core.opponentstate.car_surfaceWhl[2] != 4 || core.opponentstate.car_surfaceWhl[3] != 4) {
 						offset_v.x = 0;
 						offset_v.z = 0;
@@ -775,7 +762,6 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 //; -----------------------------------------------------------------------------
 
 	ovl_pending = 0;
-	
 	// With the information collected by the previus tile-scan algorithm,
 	// proceed to draw the shapes in each tile. Start from the farthest
 	// (painter's algorithm)
@@ -877,7 +863,6 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 				if (result > 0)
 					goto draw_done;
 			}
-		
 		}
 
 		// terrain type 0x06: a flat piece of land at an elevated level
@@ -1121,9 +1106,9 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 						for (j2 = 0; j2 < 0x18; j2++) {
 							if (core.game_debris_planar_step[j2] != 0) if (checkpoint_no + 2 == core.game_debris_origin_kind[j2]) {
 								trkobj = &scene3[core.game_debris_shape_index[j2]];
-								/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.x = (core.game_debris_x[j2] >> WORLD_COORDINATE_SHIFT) + trksign[checkpoint_no * 3 + 0] - viewpoint.x;
-								/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.y = (core.game_debris_y[j2] >> WORLD_COORDINATE_SHIFT) + trksign[checkpoint_no * 3 + 1] - viewpoint.y;
-								/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.z = (core.game_debris_z[j2] >> WORLD_COORDINATE_SHIFT) + trksign[checkpoint_no * 3 + 2] - viewpoint.z;
+								g_curr_tsp->pos.x = (core.game_debris_x[j2] >> WORLD_COORDINATE_SHIFT) + trksign[checkpoint_no * 3 + 0] - viewpoint.x;
+								g_curr_tsp->pos.y = (core.game_debris_y[j2] >> WORLD_COORDINATE_SHIFT) + trksign[checkpoint_no * 3 + 1] - viewpoint.y;
+								g_curr_tsp->pos.z = (core.game_debris_z[j2] >> WORLD_COORDINATE_SHIFT) + trksign[checkpoint_no * 3 + 2] - viewpoint.z;
 								g_curr_tsp->shapeptr = trkobj->ss_shapePtr;
 								g_curr_tsp->rectptr = &tparr[2];
 								g_curr_tsp->ts_flags = flagbits | 5;
@@ -1162,9 +1147,9 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 				for (j2 = 0; j2 < 0x18; j2++) {
 					if (core.game_debris_planar_step[j2] != 0) if (core.game_debris_origin_kind[j2] == 0) {
 						trkobj = &scene3[core.game_debris_shape_index[j2]];
-						/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.x = (core.game_debris_x[j2] + core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - viewpoint.x;
-						/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.y = (core.game_debris_y[j2] + core.playerstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - viewpoint.y;
-						/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.z = (core.game_debris_z[j2] + core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - viewpoint.z;
+						g_curr_tsp->pos.x = (core.game_debris_x[j2] + core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - viewpoint.x;
+						g_curr_tsp->pos.y = (core.game_debris_y[j2] + core.playerstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - viewpoint.y;
+						g_curr_tsp->pos.z = (core.game_debris_z[j2] + core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - viewpoint.z;
 						g_curr_tsp->shapeptr = trkobj->ss_shapePtr;
 						g_curr_tsp->rectptr = &tparr[2];
 						g_curr_tsp->ts_flags = flagbits | 5;
@@ -1179,10 +1164,9 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 			}
 
 			trkobj = &trklst[2];//0x1C / sizeof(struct TRACKOBJECT)];
-			/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.x = (core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - viewpoint.x;
-			/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.y = (core.playerstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - viewpoint.y;
-			/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.z = (core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - viewpoint.z;
-			
+			g_curr_tsp->pos.x = (core.playerstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - viewpoint.x;
+			g_curr_tsp->pos.y = (core.playerstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - viewpoint.y;
+			g_curr_tsp->pos.z = (core.playerstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - viewpoint.z;
 			if (tile_lod != 0 || renderlevel > 2) {
 				g_curr_tsp->shapeptr = trkobj->ss_loShapePtr;
 			} else {
@@ -1208,16 +1192,15 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 			g_curr_tsp->material = globalgamesettings.game_playermaterial;
 			transformed_shape_add_for_sort(car_zofs & start_bias, 2);
 		}
-		
 		if ((cur_opp_east == tx || cur_opp_east == tile_east2) && (opp_wheel_south_val == trow || opp_wheel_south_val == drow)) {
 			if (core.game_debris_active != 0) {
 				for (j2 = 0; j2 < 0x18; j2++) {
 					if (core.game_debris_planar_step[j2] != 0) {
 						if (core.game_debris_origin_kind[j2] == 1) {
 							trkobj = &scene3[core.game_debris_shape_index[j2]];
-							/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.x = (core.game_debris_x[j2] + core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - viewpoint.x;
-							/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.y = (core.game_debris_y[j2] + core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - viewpoint.y;
-							/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.z = (core.game_debris_z[j2] + core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - viewpoint.z;
+							g_curr_tsp->pos.x = (core.game_debris_x[j2] + core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - viewpoint.x;
+							g_curr_tsp->pos.y = (core.game_debris_y[j2] + core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - viewpoint.y;
+							g_curr_tsp->pos.z = (core.game_debris_z[j2] + core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - viewpoint.z;
 							g_curr_tsp->shapeptr = trkobj->ss_shapePtr;
 							g_curr_tsp->rectptr = &tparr[2];
 							g_curr_tsp->ts_flags = flagbits | 5;
@@ -1232,9 +1215,9 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 				}
 			}
 			trkobj = &trklst[3];//0x2A / sizeof(struct TRACKOBJECT)];
-			/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.x = (core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - viewpoint.x;
-			/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.y = (core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - viewpoint.y;
-			/* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ g_curr_tsp->pos.z = (core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - viewpoint.z;
+			g_curr_tsp->pos.x = (core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - viewpoint.x;
+			g_curr_tsp->pos.y = (core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - viewpoint.y;
+			g_curr_tsp->pos.z = (core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - viewpoint.z;
 
 			if (tile_lod != 0 || renderlevel > 2) {
 				g_curr_tsp->shapeptr = trkobj->ss_loShapePtr;
@@ -1278,15 +1261,14 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 				vptr[1].z = nfences;
 				vptr[2].z = nfences;
 				vptr[3].z = nfences;
-				 
 				g_curr_tsp->pos.x =
 					fixedmult(intsin(st_hdg + 0x200), 0x1B6) +
-					fixedmult(intsin(st_hdg + 0x100), START_GATE_ARM_LENGTH) + 
+					fixedmult(intsin(st_hdg + 0x100), START_GATE_ARM_LENGTH) +
 					trackctrpos2[idxtrk] - viewpoint.x;
 				g_curr_tsp->pos.y = terheight[g_hillf] - viewpoint.y;
 				g_curr_tsp->pos.z =
 					fixedmult(intcos(st_hdg + 0x200), 0x1B6) +
-					fixedmult(intcos(st_hdg + 0x100), START_GATE_ARM_LENGTH) + 
+					fixedmult(intcos(st_hdg + 0x100), START_GATE_ARM_LENGTH) +
 					row_ctr_zs[tagtrk] - viewpoint.z;
 
 				g_curr_tsp->shapeptr = &g_shapes3d[0x98A / sizeof(struct SHAPE3D)];
@@ -1355,7 +1337,7 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 draw_done:
 	// Draw the skybox
 	skybox_result = drawhorizon(page, clip, cur_sky_sign, &view_mat, bank, view_rot_x, viewpoint.y);
-	/* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, clip->top, clip->bottom);
+	clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, clip->top, clip->bottom);
 	DRAW_OBJECTS();
 
 	// This supposedly draws the explosion. The fact that it cycles three
@@ -1375,7 +1357,7 @@ draw_done:
 		}
 
 		if (clipzone(rect_ptr, clip) == 0) {
-			/* PLATFORM(video): select the sprite clip rectangle. */ clippix(rect_ptr->left, rect_ptr->right, rect_ptr->top, rect_ptr->bottom);
+			clippix(rect_ptr->left, rect_ptr->right, rect_ptr->top, rect_ptr->bottom);
 			offset_v.x = (rect_ptr->right + rect_ptr->left) >> 1;
 			offset_v.y = (rect_ptr->top + rect_ptr->bottom) >> 1;
 			j = rect_ptr->right - rect_ptr->left;
@@ -1395,7 +1377,7 @@ draw_done:
 */
 
 	// Depict windscreen cracking after a crash
-	/* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, clip->top, clip->bottom);
+	clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, clip->top, clip->bottom);
 	if (cammd == 0) {
 
 		if (intraffic != 0) {
@@ -1425,14 +1407,14 @@ draw_done:
 	if (gm_playmode == 0) {
 		if (core.game_inputmode != 0) {
 			maketime(&resbuftext, elaptm1 + tmr2, 0);
-			/* PLATFORM(video): select a font definition. */ mysetfont(fntled_res);
+			mysetfont(fntled_res);
 			if (statemgmtcpy != 0) {
-				/* PLATFORM(video): draw the introduction text. */ mergezones(shadowtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0), &tparr[6], &tparr[6]);
+				mergezones(shadowtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0), &tparr[6], &tparr[6]);
 			} else {
-				/* PLATFORM(video): draw the introduction text. */ shadowtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0);
+				shadowtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0);
 			}
 
-			/* PLATFORM(video): select the active font definition. */ fontsetfontdef();
+			fontsetfontdef();
 		}
 	}
 
@@ -1469,7 +1451,6 @@ extern char rects_updt[15];
 extern struct RECTANGLE full_screen_rectangle;
 
 /* Draws the sky and ground bands. Params: clip rectangle, x offset and horizon. Returns: none. State: reads skybox images, heights and colors. */
-/* PLATFORM(video): draws to or configures the display surface. */
 void far skybox_op_helper2(struct RECTANGLE *rectptr, I16 x, I16 horizon)
 {
     {
@@ -1483,8 +1464,8 @@ void far skybox_op_helper2(struct RECTANGLE *rectptr, I16 x, I16 horizon)
             upper_height = rectptr->bottom - rectptr->top;
 
         if (upper_height > 0) {
-            /* PLATFORM(video): select the sprite clip rectangle. */ clippix(rectptr->left, rectptr->right, rectptr->top, rectptr->top + upper_height);
-            /* PLATFORM(video): fill the active clip with a color. */ clearwindow(g_skybox_sky_clr);
+            clippix(rectptr->left, rectptr->right, rectptr->top, rectptr->top + upper_height);
+            clearwindow(g_skybox_sky_clr);
         }
     }
 
@@ -1493,12 +1474,12 @@ void far skybox_op_helper2(struct RECTANGLE *rectptr, I16 x, I16 horizon)
         if (renderlevel != 4) {
             sky_x = ((x + SKYBOX_HORIZONTAL_HALF_WRAP) & FAST_TRIG_ANGLE_MASK) - SKYBOX_HORIZONTAL_WRAP_SIZE;
             if (rectptr->top < horizon && horizon - maxscnh <= rectptr->bottom) {
-                /* PLATFORM(video): select the sprite clip rectangle. */ clippix(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
-                /* PLATFORM(video): blit a shape to the display. */ movcfxya(skypics[0], sky_x, horizon - scene_1ht);
-                /* PLATFORM(video): blit a shape to the display. */ movcfxya(skypics[1], sky_x + PLATFORM_SCREEN_WIDTH_PIXELS, horizon - scene_2ht);
-                /* PLATFORM(video): blit a shape to the display. */ movcfxya(skypics[2], sky_x + SKYBOX_PANEL3_X, horizon - scene_3ht);
-                /* PLATFORM(video): blit a shape to the display. */ movcfxya(skypics[3], sky_x + SKYBOX_PANEL4_X, horizon - scene_4ht);
-                /* PLATFORM(video): blit a shape to the display. */ movcfxya(skypics[0], sky_x + 0x400, horizon - scene_1ht);
+                clippix(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
+                movcfxya(skypics[0], sky_x, horizon - scene_1ht);
+                movcfxya(skypics[1], sky_x + PLATFORM_SCREEN_WIDTH_PIXELS, horizon - scene_2ht);
+                movcfxya(skypics[2], sky_x + SKYBOX_PANEL3_X, horizon - scene_3ht);
+                movcfxya(skypics[3], sky_x + SKYBOX_PANEL4_X, horizon - scene_4ht);
+                movcfxya(skypics[0], sky_x + 0x400, horizon - scene_1ht);
             }
         }
     }
@@ -1513,14 +1494,13 @@ void far skybox_op_helper2(struct RECTANGLE *rectptr, I16 x, I16 horizon)
 
         lower_height = rectptr->bottom - ground_top;
         if (lower_height > 0) {
-            /* PLATFORM(video): select the sprite clip rectangle. */ clippix(rectptr->left, rectptr->right, ground_top, ground_top + lower_height);
-            /* PLATFORM(video): fill the active clip with a color. */ clearwindow(ground_skybox);
+            clippix(rectptr->left, rectptr->right, ground_top, ground_top + lower_height);
+            clearwindow(ground_skybox);
         }
     }
 }
 
 /* Builds and draws the skybox view. Params: preview, clip, latitude, rotation, mode, detail and camera height. Returns: draw status. State: reads skybox/terrain state and updates clip rectangles. */
-/* PLATFORM(video): draws to or configures the display surface. */
 I16 drawhorizon(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
               struct MATRIX *rotation, I16 projection_mode, I16 detail, I16 camera_y)
 {
@@ -1541,7 +1521,7 @@ I16 drawhorizon(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
 
     rect_num3 = 0;
     draw_result = 0;
-    /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, clip->top, clip->bottom);
+    clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, clip->top, clip->bottom);
 
     if (projection_mode != 0) {
         transform_input.x = 0x4650 * latitude;
@@ -1553,9 +1533,9 @@ I16 drawhorizon(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
 
         if (vecs[0].z < 0 || vecs[1].z < 0) {
             temp = g_skybox_sky_clr;
-/* PLATFORM(video): select the sprite clip rectangle. */ fill:
+fill:
             clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, clip->top, clip->bottom);
-            /* PLATFORM(video): fill the active clip with a color. */ clearwindow(temp);
+            clearwindow(temp);
             draw_result = 1;
             goto done;
         }
@@ -1641,8 +1621,8 @@ I16 drawhorizon(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
                                            &rc, &rect_num3, rectclip);
                         for (temp = 0; temp < rect_num3; temp++) {
                             rectptr = &rectclip[temp];
-                            /* PLATFORM(video): select the sprite clip rectangle. */ clippix(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
-                            /* PLATFORM(video): fill the active clip with a color. */ clearwindow(g_skybox_sky_clr);
+                            clippix(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
+                            clearwindow(g_skybox_sky_clr);
                         }
                     }
 
@@ -1654,8 +1634,8 @@ I16 drawhorizon(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
                                            &rc, &rect_num3, rectclip);
                         for (temp = 0; temp < rect_num3; temp++) {
                             rectptr = &rectclip[temp];
-                            /* PLATFORM(video): select the sprite clip rectangle. */ clippix(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
-                            /* PLATFORM(video): fill the active clip with a color. */ clearwindow(ground_skybox);
+                            clippix(rectptr->left, rectptr->right, rectptr->top, rectptr->bottom);
+                            clearwindow(ground_skybox);
                         }
                     }
                 }
@@ -1702,7 +1682,7 @@ I16 drawhorizon(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
         transform_input.z = 0x3a98 * latitude;
         mat_vec(&transform_input, rotation, &vecs[0]);
         if (vecs[0].z < 0) {
-            /* PLATFORM(video): fill the active clip with a color. */ clearwindow(g_skybox_sky_clr);
+            clearwindow(g_skybox_sky_clr);
             if (statemgmtcpy != 0) {
                 draw_result = 1;
                 tparr[5].left = 0;
@@ -1756,13 +1736,13 @@ simple:
             if (clip->bottom - clip->top < i)
                 i = clip->bottom - clip->top;
             if (i > 0) {
-                /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, clip->top, clip->top + i);
-                /* PLATFORM(video): fill the active clip with a color. */ clearwindow(ground_skybox);
+                clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, clip->top, clip->top + i);
+                clearwindow(ground_skybox);
             }
             i = clip->bottom - horizon;
             if (i > 0) {
-                /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, horizon, horizon + i);
-                /* PLATFORM(video): fill the active clip with a color. */ clearwindow(g_skybox_sky_clr);
+                clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, horizon, horizon + i);
+                clearwindow(g_skybox_sky_clr);
             }
             draw_result = 1;
         }
@@ -1785,7 +1765,6 @@ void transformed_shape_add_for_sort(I16 zadjust, I8 sort_group_id) {
 }
 
 /* Draws the track preview background. Params: none. Returns: none. State: reads current track, camera and skybox state. */
-/* PLATFORM(video): draws to or configures the display surface. */
 void drawblimpworld(void)
 {
     struct TRACKOBJECT *overlay;
@@ -1818,14 +1797,14 @@ void drawblimpworld(void)
     horizon = screen_point.y;
     if (horizon < 0)
         horizon = 0;
-    /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, horizon - sky_hgt_world);
-    /* PLATFORM(video): fill the active clip with a color. */ clearwindow(g_skybox_sky_clr);
-    /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, PREVIEW_VIEWPORT_HEIGHT);
-    /* PLATFORM(video): blit a shape to the display. */ movcfxya(skypics[2], 0, horizon - scene_3ht);
-    /* PLATFORM(video): blit a shape to the display. */ movcfxya(skypics[3], PLATFORM_SCREEN_WIDTH_PIXELS, horizon - scene_4ht);
-    /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, horizon, PLATFORM_SCREEN_HEIGHT_PIXELS);
-    /* PLATFORM(video): fill the active clip with a color. */ clearwindow(ground_skybox);
-    /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, PLATFORM_SCREEN_HEIGHT_PIXELS);
+    clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, horizon - sky_hgt_world);
+    clearwindow(g_skybox_sky_clr);
+    clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, PREVIEW_VIEWPORT_HEIGHT);
+    movcfxya(skypics[2], 0, horizon - scene_3ht);
+    movcfxya(skypics[3], PLATFORM_SCREEN_WIDTH_PIXELS, horizon - scene_4ht);
+    clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, horizon, PLATFORM_SCREEN_HEIGHT_PIXELS);
+    clearwindow(ground_skybox);
+    clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, PLATFORM_SCREEN_HEIGHT_PIXELS);
     INIT_OBJECTS_BUFFER(0, rot_angle, 0, &trackpreview_cliprect, 1);
 
     transformed.rotvec.x = 0;
@@ -1978,7 +1957,6 @@ void drawblimpworld(void)
 }
 
 /* Draws the in-game text overlay. Params: none. Returns: the affected rectangle. State: reads and updates text and game-display state. */
-/* PLATFORM(video): draws to or configures the display surface. */
 struct RECTANGLE *drawtext(void)
 {
     register I16 remainder;
@@ -1987,42 +1965,42 @@ struct RECTANGLE *drawtext(void)
 
     if (menutimeout != 0) {
         strcpyfar(&resbuftext, getresl(gamerptrs, aDm1));
-        /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+        mergezones(&game_rect_txt_in,
             shadowtext(&resbuftext, mycenter(&resbuftext), HUD_DEMO_MESSAGE_FIRST_Y, dlg_colour, 0),
             &game_rect_txt_in);
 
         strcpyfar(&resbuftext, getresl(gamerptrs, aDm2));
-        /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+        mergezones(&game_rect_txt_in,
             shadowtext(&resbuftext, mycenter(&resbuftext), HUD_DEMO_MESSAGE_SECOND_Y, dlg_colour, 0),
             &game_rect_txt_in);
     } else if (gm_playmode == 0) {
         if (core.game_inputmode == 0) {
             strcpyfar(&resbuftext, getresl(gamerptrs, aPre));
-            /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+            mergezones(&game_rect_txt_in,
                 shadowtext(&resbuftext, mycenter(&resbuftext), 0x5A, dlg_colour, 0),
                 &game_rect_txt_in);
         } else if (pass_check_flag == 0) {
             strcpyfar(&resbuftext, getresl(gamerptrs, aSe1));
-            /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+            mergezones(&game_rect_txt_in,
                 shadowtext(&resbuftext, mycenter(&resbuftext), HUD_PRIMARY_MESSAGE_Y, dlg_colour, 0),
                 &game_rect_txt_in);
             strcpyfar(&resbuftext, getresl(gamerptrs, aSe2));
-            /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+            mergezones(&game_rect_txt_in,
                 shadowtext(&resbuftext, mycenter(&resbuftext), 0x69, dlg_colour, 0),
                 &game_rect_txt_in);
         } else if (intraffic == 0 && cammd == 0 && core.playerstate.car_crashBmpFlag == 0) {
             switch (core.game_player_guidance) {
-            /* PLATFORM(video): blit a transparent shape. */ case 1:
+            case 1:
                 tmaskxcfxya(sdgbmp_v[3], HUD_PLAYER_MARKER_X, HUD_PRIMARY_MESSAGE_Y);
                 mergezones(&game_rect_txt_in, &rect_ingame_text2, &game_rect_txt_in);
                 break;
-            /* PLATFORM(video): blit a transparent shape. */ case 2:
+            case 2:
                 tmaskxcfxya(sdgbmp_v[4], HUD_PLAYER_MARKER_X, HUD_PRIMARY_MESSAGE_Y);
                 mergezones(&game_rect_txt_in, &rect_ingame_text2, &game_rect_txt_in);
                 break;
             case 3:
                 strcpyfar(&resbuftext, getresl(gamerptrs, aWww));
-                /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+                mergezones(&game_rect_txt_in,
                     shadowtext(&resbuftext, mycenter(&resbuftext), HUD_PRIMARY_MESSAGE_Y, dlg_colour, 0),
                     &game_rect_txt_in);
                 break;
@@ -2030,12 +2008,12 @@ struct RECTANGLE *drawtext(void)
 
             resbuftext = 0;
             switch (core.game_opponent_pass_side) {
-            /* PLATFORM(video): blit a transparent shape. */ case 1:
+            case 1:
                 tmaskxcfxya(sdgbmp_v[3], 0x44, HUD_OPPONENT_MARKER_Y);
                 mergezones(&game_rect_txt_in, &rect_ingame_text3, &game_rect_txt_in);
                 strcpyfar(&resbuftext, getresl(gamerptrs, aOpp));
                 break;
-            /* PLATFORM(video): blit a transparent shape. */ case 2:
+            case 2:
                 tmaskxcfxya(sdgbmp_v[4], 0xE4, HUD_OPPONENT_MARKER_Y);
                 mergezones(&game_rect_txt_in, &rect_ingame_text4, &game_rect_txt_in);
                 strcpyfar(&resbuftext, getresl(gamerptrs, aOpp_0));
@@ -2043,7 +2021,7 @@ struct RECTANGLE *drawtext(void)
             }
 
             if (resbuftext != 0) {
-                /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+                mergezones(&game_rect_txt_in,
                     shadowtext(&resbuftext, mycenter(&resbuftext), HUD_OPPONENT_MESSAGE_Y, dlg_colour, 0),
                     &game_rect_txt_in);
             }
@@ -2051,7 +2029,7 @@ struct RECTANGLE *drawtext(void)
             if (pen_flag_count != 0) {
                 strcpyfar(&resbuftext, getresl(gamerptrs, aPen));
                 maketime(&resbuftext + strlen(&resbuftext), g_penaltytm, 0);
-                /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
+                mergezones(&game_rect_txt_in,
                     shadowtext(&resbuftext, mycenter(&resbuftext), HUD_PENALTY_MESSAGE_Y, dlg_colour, 0),
                     &game_rect_txt_in);
             }
@@ -2060,7 +2038,7 @@ struct RECTANGLE *drawtext(void)
         remainder = core.game_frame % rate_frame;
         if (remainder < ((I16S)rate_frame >> 1)) {
             strcpyfar(&resbuftext, getresl(gamerptrs, aRpl_0));
-            /* PLATFORM(video): draw the introduction text. */ mergezones(&game_rect_txt_in,
+            mergezones(&game_rect_txt_in,
                 shadowtext(&resbuftext, 0x138 - (strlen(&resbuftext) << 3), 0x0F, dlg_colour, 0),
                 &game_rect_txt_in);
         }
@@ -2070,7 +2048,6 @@ struct RECTANGLE *drawtext(void)
 }
 
 /* Updates the sinking message animation. Params: frame, top and height. Returns: affected rectangle. State: reads and updates message-rectangle state. */
-/* PLATFORM(video): draws to or configures the display surface. */
 struct RECTANGLE *sink(I16 frame, I16 top, I16 height)
 {
     register I16 offset;
@@ -2085,8 +2062,8 @@ struct RECTANGLE *sink(I16 frame, I16 top, I16 height)
     game_rect_txt_in.top = top + height - offset;
     game_rect_txt_in.bottom = top + height;
 
-    /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, game_rect_txt_in.top, game_rect_txt_in.bottom);
-    /* PLATFORM(video): fill the active clip with a color. */ clearwindow(g_skyboxwat_clr);
+    clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, game_rect_txt_in.top, game_rect_txt_in.bottom);
+    clearwindow(g_skyboxwat_clr);
     return &game_rect_txt_in;
 }
 
@@ -2357,10 +2334,9 @@ struct RECTANGLE rect_ingame_text4 = { 228, 252, 113, 128 };
 static char init_crak_resource_names[2][5] = { "crak", "cinf" };
 
 /* Updates the crack/crash overlay. Params: frame, top and height. Returns: affected rectangle. State: reads and updates crash-overlay state. */
-/* PLATFORM(video): draws to or configures the display surface. */
-/* PLATFORM(file): resolves crash-shape data inside a loaded resource. */ struct RECTANGLE *crack(I16 frame, I16 top, I16 height)
+struct RECTANGLE *crack(I16 frame, I16 top, I16 height)
 {
-    /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ struct CRACK_LINE { struct POINT2D start, end; };
+    struct CRACK_LINE { struct POINT2D start, end; };
     struct CRACK_LINE far *crak_shape;
     I16 far *cinf_shape;
     I16 animation_counter;
@@ -2368,8 +2344,8 @@ static char init_crak_resource_names[2][5] = { "crak", "cinf" };
     struct POINT2D start_point, crack_end, adjust_point;
     register I16 crackIndex;
 
-    /* PORT: crash-shape data uses a segmented FAR resource pointer. */ /* PLATFORM(file): resolve crash-line data inside the loaded bundle. */ crak_shape = getres(gamerptrs, init_crak_resource_names[0]);
-    /* PORT: animation metadata uses a segmented FAR resource pointer. */ /* PLATFORM(file): resolve crash-animation data inside the loaded bundle. */ cinf_shape = getres(gamerptrs, init_crak_resource_names[1]);
+    crak_shape = getres(gamerptrs, init_crak_resource_names[0]);
+    cinf_shape = getres(gamerptrs, init_crak_resource_names[1]);
 
     animation_counter = frame / ((I16)rate_frame / 7);
     if (animation_counter >= cinf_shape[0])
@@ -2384,11 +2360,11 @@ static char init_crak_resource_names[2][5] = { "crak", "cinf" };
         start_point.y = ((I32)start_point.y * height) / CRACK_SOURCE_CANVAS_HEIGHT;
         crack_end.y = ((I32)crack_end.y * height) / CRACK_SOURCE_CANVAS_HEIGHT;
 
-        /* PLATFORM(video): draw a preview line. */ preRender_line(start_point.x, start_point.y + top - 1,
+        preRender_line(start_point.x, start_point.y + top - 1,
                        crack_end.x, crack_end.y + top - 1, 0);
-        /* PLATFORM(video): draw a preview line. */ preRender_line(start_point.x, start_point.y + top + 1,
+        preRender_line(start_point.x, start_point.y + top + 1,
                        crack_end.x, crack_end.y + top + 1, 0);
-        /* PLATFORM(video): draw a preview line. */ preRender_line(start_point.x, start_point.y + top,
+        preRender_line(start_point.x, start_point.y + top,
                        crack_end.x, crack_end.y + top, dlg_colour);
 
         if (statemgmtcpy != 0) {
@@ -2414,7 +2390,6 @@ static char init_crak_resource_names[2][5] = { "crak", "cinf" };
 }
 
 /* Loads the selected skybox. Params: skybox mode. Returns: none. State: updates the skybox resource handle and loaded-state flag. */
-/* PLATFORM(file): loads, reads, writes or resolves game files. */
 void far initscenery(I8 mode)
 {
     register I16 skyHeight;
@@ -2428,7 +2403,7 @@ void far initscenery(I8 mode)
         removescenery();
         scene_idx = mode;
         skybox_loaded = 1;
-        /* PLATFORM(file): load the selected skybox resource. */ skyres_handle.pointer = file_load_shape2d_fatal_thunk((I8 *)TerName + 9 * mode);
+        skyres_handle.pointer = file_load_shape2d_fatal_thunk((I8 *)TerName + 9 * mode);
         locateshapes(skyres_handle.pointer, "scensce2sce3sce4",
                               (I8 far **)skypics);
         scene_1ht = skypics[0]->height;
@@ -2455,20 +2430,18 @@ void far initscenery(I8 mode)
 }
 
 /* Releases the active skybox resource. Params: none. Returns: none. State: clears the skybox resource handle and loaded-state flag. */
-/* PLATFORM(memory): queries, allocates or releases resource memory. */
 void far removescenery(void)
 {
-    /* PLATFORM(memory): release resource memory. */ if (skybox_loaded != 0)
+    if (skybox_loaded != 0)
         freememory(skyres_handle.pointer);
     skybox_loaded = 0;
 }
 
 /* Loads the SD game shape set. Params: none. Returns: none. State: stores the loaded resource handle. */
-/* PLATFORM(file): loads, reads, writes or resolves game files. */
 void far loaddrawbits(void)
 {
     register I16 i;
-    /* PLATFORM(file): load a named resource. */ sdgame2hdl = myload(8, "sdgame2");
+    sdgame2hdl = myload(8, "sdgame2");
     locateshapes(sdgame2hdl, "ex01ex02ex03leftrigh",
                           (I8 far **)sdgbmp_v);
     for (i = 0; i < 3; ++i)
@@ -2476,19 +2449,11 @@ void far loaddrawbits(void)
 }
 
 /* Releases the SD game shape set. Params: none. Returns: none. State: reads the stored resource handle. */
-/* PLATFORM(memory): queries, allocates or releases resource memory. */
-void far removedrawbits(void) { /* PLATFORM(memory): release resource memory. */ freememory(sdgame2hdl); }
+void far removedrawbits(void) { freememory(sdgame2hdl); }
 
 I8 aCarcoun_0[] = "carcoun";
 
 /* Loads and prepares the introduction scene. Params: none. Returns: setup status. State: reads resource names and updates intro/render state. */
-/* PLATFORM(file): loads, reads, writes or resolves game files. */
-/* PLATFORM(input_joy): reads joystick state. */
-/* PLATFORM(input_kb): reads keyboard state or dispatches a game key. */
-/* PLATFORM(input_mouse): reads pointer state or configures pointer bounds. */
-/* PLATFORM(memory): queries, allocates or releases resource memory. */
-/* PLATFORM(timer): reads timer state or registers a callback. */
-/* PLATFORM(video): draws to or configures the display surface. */
 I8 far logo(void)
 {
     I16 lastElapsedFrames;
@@ -2526,12 +2491,12 @@ I8 far logo(void)
     I16 savedGoalZ;
 
     operationResult = 0;
-    /* PLATFORM(file): load a 3D resource. */ title3dresValue = fluffyload("title");
+    title3dresValue = fluffyload("title");
     locateshapes(title3dresValue, "logolog2brav", lastShapeResources);
     makeobjdef(lastShapeResources[0], &intro_alt);
     makeobjdef(lastShapeResources[1], &logo_title);
     makeobjdef(lastShapeResources[2], &brav);
-    /* PLATFORM(video): create an offscreen sprite surface. */ if (g_videoflg5 == 0)
+    if (g_videoflg5 == 0)
         g_wndspr = sprite_make_window(PLATFORM_SCREEN_WIDTH_PIXELS, PLATFORM_SCREEN_HEIGHT_PIXELS, 0x0f);
 
     targetApproachDifference = 0;
@@ -2542,17 +2507,17 @@ I8 far logo(void)
         ++targetApproachDifference;
     } while (targetApproachDifference < 100);
 
-    /* PLATFORM(video): configure the intro scene projection. */ setprojectp(0x28, 0x28, PLATFORM_SCREEN_WIDTH_PIXELS, PLATFORM_SCREEN_HEIGHT_PIXELS);
+    setprojectp(0x28, 0x28, PLATFORM_SCREEN_WIDTH_PIXELS, PLATFORM_SCREEN_HEIGHT_PIXELS);
     oldCameraX = 0x400;
     cameraZPrevious = 0x400;
     cameraYIdle = 0x12c;
     oldPhase = 0;
     lastElapsedFrames = 0;
-    /* PLATFORM(file): load a resource file. */ otherCarResource = openresource(aCarcoun_0);
+    otherCarResource = openresource(aCarcoun_0);
     getsimdata(otherCarResource, 1);
-    /* PLATFORM(memory): release a loaded resource. */ closeresource(otherCarResource);
+    closeresource(otherCarResource);
     initlogo();
-    /* PLATFORM(timer): read the elapsed timer interval. */ elapsedticks();
+    elapsedticks();
     pointTotalB = 0;
     activePointCountA = 0;
     statemgmtcpy = slow_video_mode_state;
@@ -2566,7 +2531,7 @@ I8 far logo(void)
     frameReady = 1;
 
     do {
-        /* PLATFORM(timer): read the elapsed timer interval. */ baseFrameDelta = elapsedticks();
+        baseFrameDelta = elapsedticks();
         frmexcess += baseFrameDelta;
         while (frmexcess > frmcs_time) {
             frmexcess -= frmcs_time;
@@ -2598,14 +2563,14 @@ I8 far logo(void)
             frameReady = 0;
             if (g_videoflg5 != 0)
                 setup_mcgawnd2();
-            /* PLATFORM(video): copy the window sprite to the display page. */ else
+            else
                 usebuffer();
 
             carHeadingData = INTRO_CAR_HEADING_UNSET;
             oldDrawOpponent = 1;
-            /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ opponentXPosition = (core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT);
-            /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ lastOpponentY = (core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT);
-            /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ savedOpponentZ = (core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT);
+            opponentXPosition = (core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT);
+            lastOpponentY = (core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT);
+            savedOpponentZ = (core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT);
             if (6 * ((I16)rate_frame) > lastElapsedFrames) {
                 oldDrawOpponent = 0;
                 carHeadingData = core.opponentstate.car_rotate.x & 0x03ff;
@@ -2642,34 +2607,34 @@ I8 far logo(void)
                      tparr[savedRectangleIndex], &gameRestoredRect, &lastDrawRect);
 
             if (g_videoflg5 != 0) {
-                /* PLATFORM(video): select the opaque drawing path. */ mouseoff();
+                mouseoff();
                 setup_mcgawnd1();
-                /* PLATFORM(video): select the transparent drawing path. */ mouseon();
+                mouseon();
                 if (statemgmtcpy != 0)
                     tparr[savedRectangleIndex] = gameRestoredRect;
                 savedRectangleIndex ^= 1;
             } else {
-                /* PLATFORM(video): copy the working sprite pages. */ usescreen();
+                usescreen();
                 if (statemgmtcpy != 0) {
                     mergezones(&lastDrawRect, &tparr[2], &oldSavedRect);
                     if (clipzone(&oldSavedRect, &rc0_cpy) == 0) {
-                        /* PLATFORM(video): select the sprite clip rectangle. */ clippix(oldSavedRect.left, oldSavedRect.right,
+                        clippix(oldSavedRect.left, oldSavedRect.right,
                                           oldSavedRect.top, oldSavedRect.bottom);
-                        /* PLATFORM(video): select the opaque drawing path. */ mouseoff();
-                        /* PLATFORM(video): blit the saved sprite image. */ movcf(g_wndspr->image);
-                        /* PLATFORM(video): select the transparent drawing path. */ mouseon();
+                        mouseoff();
+                        movcf(g_wndspr->image);
+                        mouseon();
                         tparr[0] = gameRestoredRect;
                         tparr[2] = lastDrawRect;
                     }
                 } else {
-                    /* PLATFORM(video): select the opaque drawing path. */ mouseoff();
-                    /* PLATFORM(video): blit the saved sprite image. */ movcf(g_wndspr->image);
-                    /* PLATFORM(video): select the transparent drawing path. */ mouseon();
+                    mouseoff();
+                    movcf(g_wndspr->image);
+                    mouseon();
                 }
             }
 
         }
-/* PLATFORM(input_joy): poll joystick input. */ /* PLATFORM(input_kb): poll keyboard input. */ /* PLATFORM(input_mouse): poll mouse input. */ clear_keyboardbuffer: /* MSC 5.10: deleting this unused label changes COMDEF order. */
+clear_keyboardbuffer: /* MSC 5.10: deleting this unused label changes COMDEF order. */
         if (hurrykey(baseFrameDelta)) {
             operationResult = 1;
             break;
@@ -2679,20 +2644,19 @@ I8 far logo(void)
     if (g_videoflg5 != 0) {
         if (get_0() != 0) {
             setup_mcgawnd2();
-            /* PLATFORM(video): clear a display rectangle. */ clear_rect(0, 0, PLATFORM_SCREEN_WIDTH_PIXELS, PLATFORM_SCREEN_HEIGHT_PIXELS, 0);
-            /* PLATFORM(video): select the opaque drawing path. */ mouseoff();
+            clear_rect(0, 0, PLATFORM_SCREEN_WIDTH_PIXELS, PLATFORM_SCREEN_HEIGHT_PIXELS, 0);
+            mouseoff();
             setup_mcgawnd1();
-            /* PLATFORM(video): select the transparent drawing path. */ mouseon();
+            mouseon();
         }
     } else {
-        /* PLATFORM(video): release an offscreen sprite surface. */ removewindow(g_wndspr);
+        removewindow(g_wndspr);
     }
-    /* PLATFORM(memory): release resource memory. */ freememory(title3dresValue);
+    freememory(title3dresValue);
     return operationResult;
 }
 
 /* Draws the introduction scene. Params: camera, projection and clip data from the signature. Returns: none. State: reads intro-scene and sprite state. */
-/* PLATFORM(video): draws to or configures the display surface. */
 void far drawlogo(I16 camX, I16 camY, I16 camZ, I16 logoRotation,
                   I16 cloudRotation, I16 showOpponent, I16 useLogo,
                   struct VECTOR *cloudPoints, struct POINT2D *oldPoints,
@@ -2731,9 +2695,9 @@ void far drawlogo(I16 camX, I16 camY, I16 camZ, I16 logoRotation,
     modelShape.material = 0;
     ADD_OBJECT_TO_BUFFER(&modelShape);
     if (showOpponent) {
-        /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ modelShape.pos.x = (I16)(core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - camX;
-        /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ modelShape.pos.y = (I16)(core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - camY;
-        /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ modelShape.pos.z = (I16)(core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - camZ;
+        modelShape.pos.x = (I16)(core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT) - camX;
+        modelShape.pos.y = (I16)(core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT) - camY;
+        modelShape.pos.z = (I16)(core.opponentstate.car_posWorld1.lz >> WORLD_COORDINATE_SHIFT) - camZ;
         modelShape.shape = &brav;
         if (statemgmtcpy != 0) {
             modelShape.rect = &initialClip;
@@ -2755,24 +2719,24 @@ logo_complete: /* MSC 5.10: deleting this unused label changes COMDEF order. */
         index = 0;
         while (index < *oldPointCount) {
             projectedPoint = oldPoints[index];
-            /* PLATFORM(video): draw a display pixel. */ writepixelc(projectedPoint.x, projectedPoint.y, 0);
+            writepixelc(projectedPoint.x, projectedPoint.y, 0);
             ++index;
         }
     }
     mergezones(oldClip, &inputClip, &unionRect);
     if (clipzone(&unionRect, &rc0_cpy) == 0) {
-        /* PLATFORM(video): select the sprite clip rectangle. */ clippix(unionRect.left, unionRect.right,
+        clippix(unionRect.left, unionRect.right,
                           unionRect.top, unionRect.bottom);
-        /* PLATFORM(video): fill the active clip with a color. */ clearwindow(0);
+        clearwindow(0);
     }
     previousClip = initialClip;
     goto prepare_draw;
 
-/* PLATFORM(video): select the sprite clip rectangle. */ no_incremental:
+no_incremental:
     clippix(intro_cliprect.left, intro_cliprect.right,
                       intro_cliprect.top, intro_cliprect.bottom);
-    /* PLATFORM(video): fill the active clip with a color. */ clearwindow(0);
-/* PLATFORM(video): select the sprite clip rectangle. */ prepare_draw:
+    clearwindow(0);
+prepare_draw:
     clippix(intro_cliprect.left, intro_cliprect.right,
                       intro_cliprect.top, intro_cliprect.bottom);
     count = 0;
@@ -2784,7 +2748,7 @@ logo_complete: /* MSC 5.10: deleting this unused label changes COMDEF order. */
         mat_vec(&inputPoint, &wkmatx, &relativeVector);
         if (relativeVector.z > PLATFORM_SCREEN_HEIGHT_PIXELS) {
             projectp(&relativeVector, &projectedPoint);
-            /* PLATFORM(video): draw a display pixel. */ writepixelc(projectedPoint.x, projectedPoint.y,
+            writepixelc(projectedPoint.x, projectedPoint.y,
                                   intro_colorvalue);
             if (statemgmtcpy != 0) {
                 oldPoints[count++] = projectedPoint;

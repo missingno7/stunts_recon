@@ -1,5 +1,5 @@
 ; ASMDOC Module: PES selected-plane transpose through caller scratch RAM.
-; ASMDOC Owner load_260f6; original source asm/file_unflip_shape2d_pes.ASM.
+;                                                                          
 ; ASMDOC Routine inventory: _file_unflip_shape2d_pes
 ; ASMDOC All BP stack offsets below follow PUSH BP / MOV BP,SP; data spans are caller-owned.
 ; ASMDOC Pure memory transpose. No self-modification, code-data overlap, or indirect callback.
@@ -19,7 +19,7 @@ public _file_unflip_shape2d_pes
 ;   operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+;                                                                      
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_unflip_shape2d_pes
 ; ASMDOC purpose: Transpose each selected PES plane through scratch, copying it back to the same archive plane.
@@ -142,7 +142,7 @@ shape_unflip_fill_loop:
     mov     cx, [bp+var_width]
 shape_unflip_fill_loop_2:
     mov     al, [si]
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
 unflip_advance_source_pointer:
     add     si, bx
 shape_unflip_continue_path:

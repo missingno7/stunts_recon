@@ -34,8 +34,14 @@ def adapt_host_idle_waits(source: str, text: str) -> str:
     if source == "game/frontend.c":
         for variable, epoch in (("mouseDelta", "menu"), ("timerDiff", "track"),
                                 ("rotationDeltaY", "car"), ("timeDelta", "opponent")):
-            old = f"    {variable} = /* PLATFORM(input_mouse):"
-            changes.append((old, f"    uint32_t port_{epoch}_activity = "
+            assignment = re.compile(
+                rf"(?m)^([ \t]*){re.escape(variable)}\s*=\s*(?=(?:/\*.*?\*/\s*)?docursor\s*\()")
+            matches = list(assignment.finditer(text))
+            if len(matches) != 1:
+                raise RuntimeError(f"Could not locate one mouse activity assignment in {source}: {variable}")
+            old = matches[0].group(0)
+            indent = matches[0].group(1)
+            changes.append((old, f"{indent}uint32_t port_{epoch}_activity = "
                             "port_guest_activity_snapshot();\n" + old))
         changes.extend([
             ("        if (keyCode == 0)\n            continue;",
@@ -165,8 +171,7 @@ static int16_t port_game_wall_hit_threshold(int16_t angle)
 '''
     transformed = source.replace(include, include + helpers, 1)
     replacements = (
-        ("threshold = (100 - ((70 * i) >> 8)) << Q8_FRACTION_BITS; "
-         "/* PORT: Q8 value is converted at the legacy boundary. */",
+        ("threshold = (100 - ((70 * i) >> 8)) << Q8_FRACTION_BITS;",
          "threshold = port_game_wall_hit_threshold(i); "
          "/* PORT_BUILD: locked IMUL/SAR and unsigned speed comparison. */"),
         ("if (activeCarState->car_speed2 > threshold) {",
@@ -445,9 +450,11 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             transformed = transformed.replace(
                 "norm_zone(struct VECTOR*);",
                 "I16 norm_zone(struct VECTOR*);")
-            transformed = transformed.replace(
-                "norm_zone(struct VECTOR* vec) {",
-                "I16 norm_zone(struct VECTOR* vec) {")
+            transformed, count = re.subn(
+                r"(?m)^(\s*)norm_zone\(struct VECTOR\* vec\)([ \t]*\r?\n[ \t]*)\{",
+                r"\1I16 norm_zone(struct VECTOR* vec)\2{", transformed, count=1)
+            if count != 1:
+                raise RuntimeError("Could not locate norm_zone definition after comment cleanup")
         elif source == "lib/lineedit.c":
             old = "setticks(timerOffset, timerSegment);"
             if transformed.count(old) != 2:

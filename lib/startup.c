@@ -12,7 +12,7 @@
 #include "timer.h"
 #include "dlgcolor.h"
 #include "types.h"
-/* READABILITY: Initialize game startup state, set up input/video/audio services, and load the palette and cursor resources. */
+/* Initialize game startup state, set up input/video/audio services, and load the palette and cursor resources. */
 /* MSC 5.10 <ctype.h> macros over the pinned runtime table _ctype */
 #define _UPPER 0x1
 #define _LOWER 0x2
@@ -24,30 +24,22 @@
 /* Forward a nonfatal shape-resource load to its shared loader.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(file): forward the shape path to the shared file/resource loader. */
 void FAR* file_load_shape2d_nofatal2(I8* shapename) { return load_shape2d_nofatal_thunk(shapename); }
-    /* PLATFORM(file): use the game file and resource search service. */
 
-    /* PLATFORM(file): use the game file and resource search service. */
 
 /* Build a directory/name/extension path and ask the file service to find it.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(file): build a DOS path and request a file search. */
 I8 * FAR file_combine_and_find(I8 *dir, I8 *name, I8 *ext)
 {
     I8 path[80];
-    /* PLATFORM(file): use the game file and resource search service. */
     makename(dir, name, ext, path);
-    /* PLATFORM(file): use the game file and resource search service. */
     return findfirst(path);
 }
-    /* PLATFORM(file): use the game file and resource search service. */
 
 /* Forward enumeration to the shared file-search service.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(file): continue the shared DOS file search. */
 const I8* myfindnext(void) { return findnext(); }
 void nullsub_1(void) {}
 void nullsub_2(void) {}
@@ -59,76 +51,17 @@ unsigned short slow_video_mode_state;
 /* Local view: material_clrlist_ptr; renderer retains its excluded MATERIALCLRLIST pointer. */
 extern I16* material_clrlist_ptr;
 
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
-
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
-
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
-
-    /* PLATFORM(memory): use the game-managed far-memory service. */
-
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-
-    /* PLATFORM(timer): use the game timer service. */
-
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-
-    /* PLATFORM(input_mouse): initialize DOS mouse bounds for the display. */
-
-    /* PLATFORM(audio): call the configured DOS audio driver service. */
-
-    /* PLATFORM(audio): call the configured DOS audio driver service. */
-
-    /* PLATFORM(audio): call the configured DOS audio driver service. */
-
-    /* PLATFORM(audio): call the configured DOS audio driver service. */
-
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-
-    /* PLATFORM(timer): use the game timer service. */
-
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-
-    /* PLATFORM(file): read startup shape resources through the game file service. */
-
-    /* PLATFORM(file): read startup shape resources through the game file service. */
 /* Local view: locate_shape_fatal; frontend raw-object exclusion retains its SHAPE2D pointer result. */
 extern void FAR * FAR locate_shape_fatal(void FAR*, I8*);
 
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 
-    /* PLATFORM(memory): use the game-managed far-memory service. */
-
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 struct SPRITE far *spritepointermini;
 struct SPRITE far *mouse_ptr_cursor;
 
 /* Initialize game input, video, timer, mouse, audio, and startup resources; choose timing-dependent detail settings.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(input_kb): initialize keyboard input and install game key callbacks. */
-/* PLATFORM(dos): install the DOS critical-error hook and exit on startup failure. */
-/* PLATFORM(video): select video mode and initialize the startup render surfaces. */
-/* PLATFORM(timer): initialize the game timer and measure startup rendering speed. */
-/* PLATFORM(input_mouse): initialize the DOS mouse for the 320x200 screen. */
-/* PLATFORM(audio): initialize or disable the selected DOS sound driver. */
-/* PLATFORM(file): load the startup shape and palette resources. */
 void initmodes(I16 argc, I8* argv[])
 {
 	register I16 i, j;
@@ -138,51 +71,33 @@ void initmodes(I16 argc, I8* argv[])
 	struct RECTANGLE limits;
 
 	// Keyboard
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	kb_init_interrupt();
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	kb_shift_checking2();
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	testkey();
 
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	interpretsub(0x0007, &msetrender);
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	interpretsub(0x000A, &do_joystick_resource_text);
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	interpretsub(0x000B, &mkeyon);
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	interpretsub(0x3200, &mmusictog);
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	interpretsub(0x0010, &msystempause);
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	interpretsub('p', &msystempause);
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	interpretsub(0x0011, &mdosexit);
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	interpretsub(0x0013, &msoundtog);
-    /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 	interpretsub(0x0018, &mdosexit);
-	
 	// Video
 	pixel_scales = 1;
 	g_vid_flg2_set = 1;
 	vidflg3is_minus1 = -1;
 	vidflg4_is1 = 1;
 
-    /* PLATFORM(memory): use the game-managed far-memory service. */
 	initmemory();
-	
 	g_videoflg5 = 0;
 	g_vid_flag6 = 1;
-	
 	textrespfxchr = 'e';
-	
 	// Parse arguments.
 	mode_4 = 0;
 	nosound = 0;
 	unknown = 0;
-	
 	for (i = 1; argc > i; ++i) {
 		if (argv[i][0] == '/') {
 			switch (argv[i][1]) {
@@ -212,63 +127,40 @@ void initmodes(I16 argc, I8* argv[])
 			}
 		}
 	}
-	
 	// Unused "/nd" switch. Maybe used when loading other video drivers?
 
 	// Video mode.
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 	initgraphics();
 	if (mode_4) {
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 		video_set_mode4();
 	}
 
-    /* PLATFORM(timer): use the game timer service. */
 	timer_setup_interrupt();
 
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 	usescreenc();
 
-    /* PLATFORM(input_mouse): initialize DOS mouse bounds for the display. */
 	initmouse(PLATFORM_SCREEN_WIDTH_PIXELS, PLATFORM_SCREEN_HEIGHT_PIXELS);
 
 	// Audio driver.
-    /* PLATFORM(audio): call the configured DOS audio driver service. */
 	if (audio_load_driver(audiodriverstring, 0, 0)) {
-    /* PLATFORM(audio): call the configured DOS audio driver service. */
 		restoretimer();
-    /* PLATFORM(dos): terminate the DOS process on startup failure. */
 		exit(1);
 	}
-	
 	if (nosound) {
-    /* PLATFORM(audio): call the configured DOS audio driver service. */
 		audio_toggle_flag2();
-    /* PLATFORM(audio): call the configured DOS audio driver service. */
 		audio_toggle_flag6();
 	}
-	
-    /* PLATFORM(dos): install the DOS critical-error callback. */
 	criterr(&do_dea_textres);
-	
 	loadpalandmouse();
-	
 	// Timing measures.
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 		displaywindow();
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 	clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, STARTUP_VIDEO_BENCH_HEIGHT);
 
-    /* PLATFORM(timer): use the game timer service. */
 	elticks();
 	for (i = 0; i < STARTUP_VIDEO_BENCH_REPEATS; ++i) {
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 		clearwindow(0); // the c impl is too slow/wrong and produces faulty timing values
 	}
-    /* PLATFORM(timer): use the game timer service. */
 	timer1 = elticks();
-	
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 	clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, STARTUP_RECT_BENCH_HEIGHT);
 
 	for (i = 0; i < STARTUP_VIDEO_BENCH_REPEATS; ++i) {
@@ -276,17 +168,12 @@ void initmodes(I16 argc, I8* argv[])
 		limits.right = 0;
 		limits.top = 0;
 		limits.bottom = 0;
-		
 		for (j = 0; j < STARTUP_RECT_BENCH_POINTS; ++j) {
 			tmppoint.y = tmppoint.x = j;
 			zonecheck(&tmppoint, &limits);
 		}
-		
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 		clearwindow(0);
 	}
-	
-    /* PLATFORM(timer): use the game timer service. */
 	middle_delta = elticks();
 
 	for (i = 0; i < STARTUP_CPU_BENCH_OUTER; ++i) {
@@ -294,10 +181,7 @@ void initmodes(I16 argc, I8* argv[])
 			zonecheck(&tmppoint, &limits);
 		}
 	}
-	
-    /* PLATFORM(timer): use the game timer service. */
 	timerdelta3 = elticks();
-	
 	if (middle_delta > timer1)
 		slow_video_mode_state = 0;
 	else
@@ -325,27 +209,21 @@ void initmodes(I16 argc, I8* argv[])
 
 	rate_frame = frm_rate2;
 	statemgmtcpy = slow_video_mode_state;
-	
 	seedrandom();
-	
 	INIT_PALETTE(material_clrlist_ptr, material_color_table_pointer, material_pattern_table_pointer, material_pattern2_table_ptr, 0);
 }
 
 /* Wait for a video-status transition and advance the game random generators.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(video): synchronize the startup delay against video status. */
 void seedrandom(void)
 {
     register I16 status1, i;
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
     status1 = vsyncstate();
     i = 0;
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
     while (status1 == vsyncstate() && i < STARTUP_VIDEO_WAIT_LIMIT)
         ++i;
     if (i == STARTUP_RANDOM_FALLBACK_CHECK)
-        /* PLATFORM(bios): read the BIOS tick-count byte as the fallback seed. */
         i = *((I8S *)0x046c);
     while (i--) { rand(); myrandom(); }
     i &= STARTUP_RANDOM_SEED_BYTE_MASK;
@@ -355,9 +233,6 @@ void seedrandom(void)
 /* Load the startup palette and mouse cursor shapes, then copy them to the render surfaces.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(file): load the palette and cursor data through the game file service. */
-/* PLATFORM(video): upload the palette and copy cursor shapes to render surfaces. */
-/* PLATFORM(memory): release loaded shape pages after copying the cursor. */
 void loadpalandmouse(void)
 {
     U8 colors[PLATFORM_PALETTE_RGB_BYTES];
@@ -368,66 +243,46 @@ void loadpalandmouse(void)
     void FAR *filedata;
     I16 cursor_width;
 
-    /* PLATFORM(file): read startup shape resources through the game file service. */
     filedata = file_load_shape2d_fatal_thunk("sdmain");
-    /* PLATFORM(file): read startup shape resources through the game file service. */
     palptr = locate_shape_fatal(filedata, "!pal");
     palptr += 0x10;
     for (count = 0; count < 0x300; ++count)
         colors[count] = palptr[count];
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
     vgapalette(0, PLATFORM_PALETTE_COLOR_COUNT, colors);
 
-    /* PLATFORM(file): read startup shape resources through the game file service. */
     shape_data = locate_shape_fatal(filedata, "smou");
     cursor_width = ((I16S FAR *)shape_data)[0] * g_vid_flg2_set;
     height = ((I16S FAR *)shape_data)[1];
-    /* PLATFORM(memory): use the game-managed far-memory service. */
     freememory(filedata);
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
     spritepointermini = sprite_make_window(cursor_width, height, PLATFORM_VGA_COLOR_WHITE);
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
     mouse_ptr_cursor = sprite_make_window(cursor_width, height, PLATFORM_VGA_COLOR_WHITE);
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
     mouse_unk_sprite_ptr = sprite_make_window(cursor_width + g_vid_flg2_set, height, PLATFORM_VGA_COLOR_WHITE);
 
-    /* PLATFORM(file): read startup shape resources through the game file service. */
     filedata = file_load_shape2d_fatal_thunk("sdmain");
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
     sprite_setup1_from_arg_pointer(spritepointermini);
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
     movfxya(locate_shape_fatal(filedata, "smou"), 0, 0);
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
     sprite_setup1_from_arg_pointer(mouse_ptr_cursor);
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
     movfxya(locate_shape_fatal(filedata, "mmou"), 0, 0);
-    /* PLATFORM(memory): use the game-managed far-memory service. */
     freememory(filedata);
-    /* PLATFORM(video): call the MCGA video or sprite renderer service. */
     usescreen();
 }
 I16 get_0(void) { return 0; }
-    /* PLATFORM(memory): use the game-managed far-memory service. */
 
 /* Convert byte count to paragraph count and request pages from the game memory manager.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
-/* PLATFORM(memory): request paragraph-backed storage from the game memory manager. */
 void FAR *resmem(const I8 *name, I32 size)
 {
-    /* PLATFORM(memory): use the game-managed far-memory service. */
     return reservememory(name, size / DOS_PARAGRAPH_BYTES_I16 + 1);
 }
 U32 availmem(void)
 {
-    /* PLATFORM(memory): read the current game-memory-manager offset difference. */
     return ((U32)unlockedmemory()) << 4;
 }
 
 /* Convert a memory-manager chunk size from paragraphs to bytes.
- * PLATFORM(memory): query the game memory manager chunk record. */
+ * */
 U32 FAR modsize(I8 FAR *ptr)
 {
-    /* PLATFORM(memory): read this game-memory-manager chunk size. */
     return ((U32)modulesize(ptr)) << 4;
 }

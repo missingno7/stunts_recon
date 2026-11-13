@@ -526,7 +526,7 @@ _intatan endp
 ; and outputs follow the listed operands.
 ; Globals read: _timer_elapsed_ticks_high, _timer_elapsed_ticks_low.
 ; Globals written: none identified.
-; /* PLATFORM(timer): masks or restores interrupts around timer state. */
+;                                                                        
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _sub_2EAD4 / _timer_read_elapsed_ticks
 ; Read a coherent low/high elapsed-tick snapshot while interrupts are masked.
@@ -541,11 +541,11 @@ _intatan endp
 ; Liveness: live; Live: same-module deadline setters, testers and wait loops.
 ; Evidence: lib/gfxres.ASM:348
 _getbiostick proc far
-    cli ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+    cli ;                                                                       
     mov     ax, _timer_elapsed_ticks_low
     mov     dx, _timer_elapsed_ticks_high
 timer_snapshot_complete:
-    sti ;/* PLATFORM(timer): masks or restores interrupts around timer state. */
+    sti ;                                                                       
 timer_snapshot_return:
     retf
 _getbiostick endp
@@ -1672,7 +1672,7 @@ _clipline endp
 ; services: none.
 ; Liveness: live; Live: shape parsing inventory has five call leads; pointer-conversion counterpart is called
 ; by
-; src/obj_seg035_group.c.
+;                        
 ; Notes: Arithmetic only; does not parse a shape or touch video memory.
 _segtoadr proc far
     arg_pointer_offset = word ptr 6
@@ -1751,7 +1751,7 @@ _adrtoseg endp
 ;   follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(bios): returns from a hardware interrupt. */
+;                                                         
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _criterr_interrupt_handler / _criterr_interrupt_handler
 ; Call the selected critical-error callback and return its AX result to DOS.
@@ -1793,7 +1793,7 @@ _criterr_interrupt_handler proc far
     pop     cx
     pop     dx
     pop     bx
-    iret ;/* PLATFORM(bios): returns from a hardware interrupt. */
+    iret ;                                                        
 _criterr_interrupt_handler endp
 ; -----------------------------------------------------------------------------
 ; Purpose: Install the critical-error interrupt handler.
@@ -1803,7 +1803,7 @@ _criterr_interrupt_handler endp
 ; specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(dos): calls a DOS service. */
+;                                          
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _set_criterr_handler / _set_criterr_handler
 ; Register cleanup, save INT24 and install a game critical-error callback.
@@ -1848,7 +1848,7 @@ _criterr proc far
     mov     ds, ax
     mov     al, 24h
     mov     ah, 25h
-    int     R5HW_DOS_INT ;/* PLATFORM(dos): calls a DOS service. */
+    int     R5HW_DOS_INT ;                                         
     pop     ds
     pop     bp
     retf
@@ -1861,7 +1861,7 @@ _criterr endp
 ; and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(dos): calls a DOS service. */
+;                                          
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _criterr_exithandler / _criterr_exithandler
 ; Restore the saved DOS critical-error vector unless its segment equals its offset.
@@ -1885,7 +1885,7 @@ _resetcriterr proc far
     mov     ds, cs:saved_int24_vector_segment
     mov     al, 24h
     mov     ah, 25h
-    int     R5HW_DOS_INT ;/* PLATFORM(dos): calls a DOS service. */
+    int     R5HW_DOS_INT ;                                         
 criterr_restore_previous_vector:
     pop     ds
     retf
@@ -2433,7 +2433,7 @@ _filesizez endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; Global addresses taken: _aSFileError_1.
-; /* PLATFORM(file): calls a DOS file service. */
+;                                                
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_paras_fatal / _file_paras_fatal
 ; Read physical file length and return its rounded-up paragraph count with fatal policy.
@@ -2474,7 +2474,7 @@ file_paras_body:
     mov     dx, [bp+arg_filename]
     mov     ah, 3Dh
     xor     al, al
-    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ;                                               
     jnb     short file_paras_file_opened
     cmp     [bp+var_fatal], 0
     jnz     short file_paras_open_error
@@ -2498,12 +2498,12 @@ file_paras_file_opened:
     sub     cx, cx
     sub     dx, dx
     mov     ax, 4202h
-    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ;                                               
     push    dx
     push    ax
     sub     dx, dx
     mov     ax, 4200h
-    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ;                                               
     pop     ax
     pop     dx
     xor     bx, bx
@@ -2523,7 +2523,7 @@ file_paras_count_from_bytes:
     mov     [bp+var_length], ax
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
-    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ;                                               
     mov     ax, [bp+var_length]
     pop     di
     pop     si
@@ -2628,7 +2628,7 @@ _unpacksizez endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; Global addresses taken: _aSFileError_1.
-; /* PLATFORM(file): calls a DOS file service. */
+;                                                
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_decomp_paras_fatal / _file_decomp_paras_fatal
 ; Read packed header output length and return its rounded-up paragraph count with fatal policy.
@@ -2675,7 +2675,7 @@ file_decomp_paras_body:
     mov     dx, [bp+arg_filename]
     mov     ah, 3Dh
     xor     al, al
-    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ;                                               
     jnb     short decomp_file_read_header
     jmp     short decomp_nonfatal_return
     nop ; retained code pad; EVEN is illegal in a BYTE-aligned segment
@@ -2692,12 +2692,12 @@ decomp_file_read_header:
     lea     dx, [bp+var_6]
     mov     cx, 4
     mov     ah, 3Fh
-    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ;                                               
     cmp     ax, cx
     jnz     short decomp_close_short_read
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
-    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ;                                               
     mov     ax, [bp+var_5]
     mov     dx, [bp-3]
     xor     dh, dh
@@ -2724,7 +2724,7 @@ decomp_convert_size_to_paras:
 decomp_close_short_read:
     mov     bx, [bp+var_filehandle]
     mov     ah, 3Eh
-    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ;                                               
 decomp_nonfatal_return:
     cmp     [bp+var_fatal], 0
     jnz     short decomp_report_fatal_error
@@ -2752,8 +2752,8 @@ _unpacksize endp
 ; Globals read: _foundfileptr.
 ; Globals written: _foundfileptr.
 ; Global addresses taken: _dtatransbuffer, _foundfile, _foundfilepath.
-; /* PLATFORM(dos): calls a DOS service. */
-; /* PLATFORM(file): calls a DOS file service. */
+;                                          
+;                                                
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_find / _file_find
 ; Start a DOS file search and return a shared full path with the matched filename.
@@ -2773,7 +2773,7 @@ _unpacksize endp
 ; _foundfile;
 ; _foundfileptr
 ; services: INT21 AH=1Ah(set DTA), AH=4Eh(findfirst)
-; Liveness: live; Live: src/obj_seg000 etc and shape/file loaders.
+; Liveness: live; Live: src/           etc and shape/file loaders.
 ; Notes: DTA begins at a 30-byte block; its filename field deliberately continues into adjacent _foundfilepath
 ; storage. Does not restore former DOS DTA.
 _findfirst proc far
@@ -2785,12 +2785,12 @@ _findfirst proc far
     push    di
     mov     dx, offset DGROUP:_dtatransbuffer
     mov     ah, 1Ah
-    int     R5HW_DOS_INT ;/* PLATFORM(dos): calls a DOS service. */
+    int     R5HW_DOS_INT ;                                         
     mov     dx, [bp+arg_filename]
 ; ASMDOC BLOCK: CL alone is initialized: attribute mask also depends on incoming CH (normally zero).
     mov     cl, 6
     mov     ah, 4Eh
-    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ;                                               
     jb      short _file_find_err
     mov     di, offset DGROUP:_foundfile
     mov     _foundfileptr, di
@@ -2840,8 +2840,8 @@ _findfirst endp
 ; Globals read: none identified.
 ; Globals written: none identified.
 ; Global addresses taken: _dtatransbuffer.
-; /* PLATFORM(dos): calls a DOS service. */
-; /* PLATFORM(file): calls a DOS file service. */
+;                                          
+;                                                
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_find_next / _file_find_next
 ; Continue the shared DOS search and overwrite the prior result filename in place.
@@ -2866,9 +2866,9 @@ _findnext proc far
     push    di
     mov     dx, offset DGROUP:_dtatransbuffer
     mov     ah, 1Ah
-    int     R5HW_DOS_INT ;/* PLATFORM(dos): calls a DOS service. */
+    int     R5HW_DOS_INT ;                                         
     mov     ah, 4Fh
-    int     R5HW_DOS_INT ;/* PLATFORM(file): calls a DOS file service. */
+    int     R5HW_DOS_INT ;                                               
 ; ASMDOC BLOCK: Both branches use the earlier routine shared result/epilogue, not this PROC extent alone.
     jb      short _file_find_err
     jmp     short _file_find_ok
@@ -2926,10 +2926,10 @@ _fixedmult endp
 ; inputs and outputs follow the listed operands.
 ; Globals read: video_mode4_register_values.
 ; Globals written: _video_mode4_active.
-; /* PLATFORM(video): calls a BIOS video service. */
-; /* PLATFORM(video): accesses a VGA/MCGA display register port. */
-; /* PLATFORM(video): selects a video-memory segment. */
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+;                                                   
+;                                                                  
+;                                                       
+;                                                                      
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _video_set_mode4 / _video_set_mode4
 ; Select BIOS mode 4, program monochrome CRTC timing and clear 32 KiB at B800:0000.
@@ -2956,36 +2956,36 @@ _video_set_mode4 proc far
     mov     es:10h, ax
     mov     ah, 0
     mov     al, 4
-    int     R5HW_BIOS_VIDEO_INT ;/* PLATFORM(video): calls a BIOS video service. */
+    int     R5HW_BIOS_VIDEO_INT ;                                                  
     mov     al, 3
     mov     dx, R5HW_VIDEO_MONO_MISC_PORT
-    out     dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
+    out     dx, al ;                                                                 
     mov     al, 2
     mov     dx, R5HW_VIDEO_MONO_MODE_PORT
-    out     dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
+    out     dx, al ;                                                                 
     mov     cx, 0Ch
     mov     dx, R5HW_VIDEO_MONO_CRTC_INDEX_PORT
     xor     bx, bx
 video_mode4_write_register_loop:
     mov     al, bl
-    out     dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
+    out     dx, al ;                                                                 
     inc     dx
     mov     al, video_mode4_register_values[bx]
-    out     dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
+    out     dx, al ;                                                                 
     dec     dx
     inc     bx
     loop    video_mode4_write_register_loop
     cld
-    mov     ax, R5HW_VIDEO_TEXT_SEGMENT ;/* PLATFORM(video): selects a video-memory segment. */
+    mov     ax, R5HW_VIDEO_TEXT_SEGMENT ;                                                      
     mov     es, ax
     xor     di, di
 ; ASMDOC BLOCK: 0x4000 words clears 0x8000 bytes in B800 memory.
     mov     cx, 4000h
     xor     ax, ax
-    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    rep stosw ;                                                                     
     mov     al, 8Ah
     mov     dx, R5HW_VIDEO_MONO_MODE_PORT
-    out     dx, al ;/* PLATFORM(video): accesses a VGA/MCGA display register port. */
+    out     dx, al ;                                                                 
     pop     di
     retf
 _video_set_mode4 endp

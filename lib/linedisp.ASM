@@ -87,8 +87,8 @@ _sprite_fill_two_color_spans_at endp
 ;   operands.
 ; Globals read: _line_pattern_bits, _prerender_auxiliary_arg, _sprite1.
 ; Globals written: _line_pattern_bits.
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                                      
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _draw_unknown_lines; proposed name _sprite_fill_two_color_spans
 ; ASMDOC Purpose: Fill each inclusive span: pattern bit 0 stores primary color; bit 1 stores auxiliary color.
@@ -170,7 +170,7 @@ draw_unknown_lines_draw_loop:
 draw_unknown_lines_fill_loop:
     rol     ah, 1
     jb      short draw_unknown_lines_when_below
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
     loop    draw_unknown_lines_fill_loop
 draw_unknown_lines_draw_loop_2:
     add     [bp+arg_right_edges], 2
@@ -186,7 +186,7 @@ draw_unknown_lines_draw_loop_2:
     pop     bp
     retf
 draw_unknown_lines_when_below:
-    mov     es:[di], dl ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[di], dl ;                                                          
     inc     di
     loop    draw_unknown_lines_fill_loop
     jmp     short draw_unknown_lines_draw_loop_2

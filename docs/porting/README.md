@@ -6,7 +6,7 @@ This index connects the original executable's platform boundaries to resource fo
 
 `include/types.h` names the original 8-, 16-, and 32-bit integer spellings with macros (`I8`, `U8`, `I8S`, `I16`, `U16`, `I16S`, `U16S`, `I32`, and `U32`). `I16`/`U16` expand to the original 16-bit `int`/`unsigned int`; `I16S`/`U16S` preserve source declarations spelled `short`. The original medium model uses far code and near data, with segmented `FAR`, `NEAR`, and `HUGE` pointer qualifiers. A host port can redefine the listed macros before including the header to use its fixed-width integers and flat pointers. The header uses macros instead of typedefs because typedef substitutions changed OMF `EXTDEF`/`COMDEF` ordering in the Q2, Q3, and Q4 probes.
 
-Keep one-line `/* PORT: ... */` comments beside code whose behavior depends on the original ABI or machine, such as 16-bit integer wraparound, segment:offset arithmetic, far-pointer normalization, structure packing, signed shifts, or plain-char signedness. Find subsystem annotations and portability hazards with `git grep -n -E 'PLATFORM\([^)]*\)|PORT:' -- game lib`; PowerShell also supports `Get-ChildItem game,lib -Filter *.c | Select-String -Pattern 'PLATFORM\([^)]*\)|PORT:'`.
+Keep SDL3 platform-service classifications in [`tools/porting/platform-services.json`](../../tools/porting/platform-services.json); it maps service names to kinds and records function-specific exceptions. Keep ABI and arithmetic contracts in [the state model](state-model.md) and `port/semantic-contracts.json`. Reconstructed sources do not carry port annotations; search them for code and ordinary explanatory comments as needed.
 
 ## Subsystem map
 

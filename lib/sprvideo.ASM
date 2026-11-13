@@ -1,4 +1,4 @@
-; ASMDOC Module: sprite_shape_video_ops. Proposed content name: sprite_shape_video_ops. Existing name describes this
+;                                                                                                                   
 ; ASMDOC inseparable mixed bitmap/RLE/text/palette module; retain.
 ; ASMDOC Public routines: _sprite_putimage_or_alt, _sprite_putimage_or, _putpixel_iconFillings, _shape2d_op_unk4,
 ; ASMDOC _sprite_putimage_transparent, _release_shape_resources, _draw_text_at, _video_set_palette.
@@ -139,7 +139,7 @@ _orcfxy endp
 ;   listed operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _sprite_putimage_or: Clipped OR bitmap blit at explicit destination.
 ; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
@@ -296,7 +296,7 @@ sprite_or_loop_head_02:
     mov     cx, [bp+local_visible_width]
 sprite_or_loop_head_03:
     lodsb
-    or      es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    or      es:[di], al ;                                                          
     inc     di
     loop    sprite_or_loop_head_03
     add     si, [bp+local_source_skip_or_cursor]
@@ -316,12 +316,12 @@ sprite_or_loop_head_04:
     mov     cx, [bp+local_word_count]
 sprite_or_loop_head_05:
     lodsw
-    or      es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    or      es:[di], ax ;                                                          
     inc     di
     inc     di
     loop    sprite_or_loop_head_05
     lodsb
-    or      es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    or      es:[di], al ;                                                          
     add     di, bx
     dec     dx
     jg      short sprite_or_loop_head_04
@@ -330,7 +330,7 @@ sprite_or_loop_head_06:
     mov     cx, [bp+local_word_count]
 sprite_or_loop_head_07:
     lodsw
-    or      es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    or      es:[di], ax ;                                                          
     inc     di
     inc     di
     loop    sprite_or_loop_head_07
@@ -342,7 +342,7 @@ sprite_or_branch_path_09:
     inc     bx
 sprite_or_loop_head_08:
     lodsb
-    or      es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    or      es:[di], al ;                                                          
     add     di, bx
     inc     bx
     dec     dx
@@ -377,7 +377,7 @@ _orcfxya endp
 ;   listed operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _putpixel_iconFillings: Unclipped OR bitmap blit at explicit destination.
 ; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
@@ -455,12 +455,12 @@ icon_fill_loop_head_01:
     mov     cx, [bp+var_6]
 icon_fill_loop_head_02:
     lodsw
-    or      es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    or      es:[di], ax ;                                                          
     inc     di
     inc     di
     loop    icon_fill_loop_head_02
     lodsb
-    or      es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    or      es:[di], al ;                                                          
     add     di, bx
     dec     dx
     jg      short icon_fill_loop_head_01
@@ -475,7 +475,7 @@ icon_fill_loop_head_04:
     mov     cx, [bp+var_6]
 icon_fill_loop_head_05:
     lodsw
-    or      es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    or      es:[di], ax ;                                                          
     inc     di
     inc     di
     loop    icon_fill_loop_head_05
@@ -487,7 +487,7 @@ icon_fill_branch_path_01:
     inc     bx
 icon_fill_loop_head_06:
     lodsb
-    or      es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    or      es:[di], ax ;                                                          
     add     di, bx
     dec     dx
     jg      short icon_fill_loop_head_06
@@ -537,7 +537,7 @@ _orfxya endp
 ;   operands.
 ; Globals read: _sprite1.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _shape2d_op_unk4: Decode signed byte RLE packets and OR pixels at the stored shape position without
 ; ASMDOC clipping.
@@ -610,7 +610,7 @@ shape_op4_branch_path_01:
     xor     ch, ch
     lodsb
 shape_op4_loop_head_02:
-    or      es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    or      es:[di], al ;                                                          
     inc     di
     dec     dx
     jg      short shape_op4_branch_path_02
@@ -628,7 +628,7 @@ shape_op4_branch_path_03:
     xor     ch, ch
 shape_op4_loop_head_03:
     lodsb
-    or      es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    or      es:[di], al ;                                                          
     inc     di
     dec     dx
     jg      short shape_op4_branch_path_04
@@ -668,7 +668,7 @@ _orpackf endp
 ;   listed operands.
 ; Globals read: _incnums, _sprite1.
 ; Globals written: none identified.
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+;                                                                      
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _sprite_putimage_transparent: Clipped bitmap blit through the color-remapping table; mapped
 ; FFh skips
@@ -828,7 +828,7 @@ sprite_alpha_loop_head_03:
     mov     al, cs:_incnums[bx]
     cmp     al, ah
     jz      short sprite_alpha_branch_path_07
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
     loop    sprite_alpha_loop_head_03
     jmp     short sprite_alpha_join_02
     nop ; retained code pad at an even offset; EVEN would emit no byte
@@ -893,7 +893,7 @@ _tmaskxcfxya endp
 ; Globals read: _fontdefseg, _incnums, _sprite1.
 ; Globals written: _aCopyrightCUnlimitedSoftwareInc_198, fh_x, fh_y.
 ; Global addresses taken: _aCopyrightCUnlimitedSoftwareInc_198.
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+;                                                                      
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _release_shape_resources: Unclipped remapped-transparent bitmap blit at shape-stored position.
 ; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
@@ -957,7 +957,7 @@ shape_release_loop_head_02:
     mov     al, cs:_incnums[bx]
     cmp     al, 0FFh
     jz      short shape_release_branch_path_01
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
     loop    shape_release_loop_head_02
     jmp     short shape_release_join_02
     nop ; retained code pad at an even offset; EVEN would emit no byte
@@ -1004,8 +1004,8 @@ _tmaskxf endp
 ; Globals read: _fontdefseg, _sprite1, fh_advance, fh_bgcolor, fh_fgcolor, fh_glyphs, fh_height, fh_left,
 ; fh_lineheight, fh_proportional, fh_rowbytes, fh_x, fh_y.
 ; Globals written: fh_advance, fh_rowbytes, fh_x, fh_y.
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                                      
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _draw_text_at: Opaque bitmap-font text draw at explicit position; advances font cursor.
 ; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
@@ -1122,7 +1122,7 @@ draw_text_loop_head_03:
 draw_text_loop_head_04:
     shl     dl, 1
     jnb     short draw_text_branch_path_05
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
     loop    draw_text_loop_head_04
     inc     si
     dec     dh
@@ -1136,7 +1136,7 @@ draw_text_loop_head_05:
     add     ds:[fh_x], ax
     jmp     draw_text_loop_head_01
 draw_text_branch_path_05:
-    mov     es:[di], ah ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[di], ah ;                                                          
     inc     di
     loop    draw_text_loop_head_04
     inc     si
@@ -1161,7 +1161,7 @@ _movtxy endp
 ; inferred; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(palette): calls the BIOS palette service. */
+;                                                         
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _video_set_palette: Load a DAC register block through BIOS video service.
 ; ASMDOC convention: 16-bit FAR cdecl; BP+6 is first argument after PUSH BP; RETF without immediate; caller removes
@@ -1197,7 +1197,7 @@ palette_join_01:
     mov     ah, 10h
     mov     al, 12h
     int     R5HW_BIOS_VIDEO_INT
-; - VIDEO - SET BLOCK OF DAC REGISTERS (EGA, VGA/MCGA) /* PLATFORM(palette): calls the BIOS palette service. */
+; - VIDEO - SET BLOCK OF DAC REGISTERS (EGA, VGA/MCGA)                                                         
     pop     bp
     retf
     db 0 ; retained zero fill at this boundary

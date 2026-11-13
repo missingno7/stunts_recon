@@ -1,8 +1,8 @@
 ; ASMDOC Module: RAM archive rebuild and packed-plane to indexed-pixel expansion.
-; ASMDOC Owner asm_load_25fa2; original source asm/file_load_shape2d_expand.ASM.
+;                                                                               
 ; ASMDOC Routine inventory: _file_load_shape2d_expand
 ; ASMDOC All BP stack offsets below follow PUSH BP / MOV BP,SP; data spans are caller-owned.
-; ASMDOC Pure caller-buffer transformation, despite existing PLATFORM(video) tags. No self-modification or
+;                                                                                                         
 ; indirect callback.
 .8086
 INCLUDE include\hw.inc
@@ -20,8 +20,8 @@ public _file_load_shape2d_expand
 ;   operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+;                                                           
+;                                                                      
 ; -----------------------------------------------------------------------------
 ; ASMDOC CONTRACT _file_load_shape2d_expand
 ; ASMDOC purpose: Construct an archive of 8-times-wider indexed bitmap shapes from up to four packed 1-bit planes.
@@ -87,8 +87,8 @@ _file_load_shape2d_expand proc far
 expand_store_output_value:
     mov     [bp+var_shapecounter], ax
     mov     [bp+var_offsets], di
-    mov     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
-    mov     es:[di+2], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[di], ax ;                                                          
+    mov     es:[di+2], ax ;                                                          
 shape_expand_wait_loop:
     mov     ax, [bp+var_shapecounter]
     cmp     ax, [bp+var_shapecount]
@@ -115,8 +115,8 @@ shape_expand_continue_path_2:
     mov     [bp+var_srcshapeoff], ax
     mov     es, [bp+arg_mempagesseg]
     mov     di, [bp+var_offsets]
-    mov     bx, es:[di] ;/* PLATFORM(video): accesses display memory through ES. */
-    mov     cx, es:[di+2] ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     bx, es:[di] ;                                                          
+    mov     cx, es:[di+2] ;                                                          
     add     di, 4
     mov     [bp+var_offsets], di
 ; ASMDOC Length is low word of unsigned MUL; subsequent size shifts do not rotate carry into DX.
@@ -133,8 +133,8 @@ shape_expand_continue_path_2:
     inc     bx
     cmp     bx, [bp+var_shapecount]
     jge     short expand_when_greater_or_equal
-    mov     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
-    mov     es:[di+2], dx ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[di], ax ;                                                          
+    mov     es:[di+2], dx ;                                                          
     jmp     short shape_expand_when_condition
     even ; word-align the following entry
 expand_when_greater_or_equal:
@@ -146,8 +146,8 @@ expand_when_greater_or_equal:
     add     ax, bx
     adc     dx, 0
     mov     di, [bp+arg_mempagesoff]
-    mov     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
-    mov     es:[di+2], dx ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[di], ax ;                                                          
+    mov     es:[di+2], dx ;                                                          
 shape_expand_when_condition:
     push    [bp+var_shapecounter]
     push    [bp+arg_mempagesseg]
@@ -172,7 +172,7 @@ shape_expand_load_source_value:
     shl     ax, 1
     shl     ax, 1
     shl     ax, 1
-    mov     es:[di], ax ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     es:[di], ax ;                                                          
     mov     al, [si+0Dh]
 shape_expand_shift_value:
     shr     al, 1
@@ -190,7 +190,7 @@ expand_load_source_value_2:
     jg      short expand_when_less_or_equal
     shl     cx, 1
     shl     cx, 1
-    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    rep stosw ;                                                                     
 expand_advance_source_pointer:
     add     si, 10h
     mov     [bp+var_srcdataoff], si
@@ -213,7 +213,7 @@ shape_expand_read_loop:
 shape_expand_scan_loop_2:
     shl     al, 1
     jnb     short shape_expand_when_not_below
-    or      es:[di], ah ;/* PLATFORM(video): accesses display memory through ES. */
+    or      es:[di], ah ;                                                          
 shape_expand_when_not_below:
     inc     di
     loop    shape_expand_scan_loop_2

@@ -1,9 +1,8 @@
 #include "files.h"
 #include "memory.h"
 #include "types.h"
-/* READABILITY: Compute expanded shape-resource storage requirements in paragraph units. */
+/* Compute expanded shape-resource storage requirements in paragraph units. */
 
-/* PORT: Resource headers use MSC 16-bit int layout; assert these field offsets in a host port. */
 /* Local signed 16-byte shape view; other units use unsigned position words. */
 /* Local view: SHAPE2D; struct.count is 10; another unit uses 6. */
 struct SHAPE2D {
@@ -27,7 +26,6 @@ I16 FAR file_load_shape2d_expandedsize(void FAR *memchunk) {
         size += sizeof(struct SHAPE2D);
     }
     size += sizeof(struct SHAPE2D);
-    /* PORT: The 16-bit compiler accumulates this size as long before narrowing to int. */
     size >>= DOS_PARAGRAPH_SHIFT;
     return size;
 }

@@ -110,7 +110,7 @@ _draw_patterned_lines label far
 ; SI; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _line_pattern_bits.
 ; Globals written: _line_pattern_bits.
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+;                                                                      
 ; -----------------------------------------------------------------------------
 draw_patterned_lines proc far
     arg_left_edges = word ptr 6
@@ -159,7 +159,7 @@ pattern_lines_loop_head_01:
 pattern_lines_loop_head_02:
     rol     ah, 1
     jnb     short pattern_lines_branch_path_02
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
     loop    pattern_lines_loop_head_02
 pattern_lines_loop_head_03:
     add     [bp+arg_right_edges], 2

@@ -1,4 +1,4 @@
-; INPUTDOC Module keyboard_input_callbacks (owner keyboard_input_callbacks); comment-only static contract review.
+;                                                                                                                
 ; INPUTDOC Audited INPUTDOC contracts qualify the older retained generic comments; no code or declarations changed.
 ; INPUTDOC Routine names below follow rename-plan.json; definitions retain their original spelling.
 ; INPUTDOC dead=true means statically unreferenced; no proof against arbitrary external/numeric callers or execution.
@@ -84,7 +84,7 @@ _testkey endp
 ; outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; INPUTDOC Contract _kb_read_char (original _kb_read_char).
 ; INPUTDOC Purpose: Nonblockingly dequeue one BIOS key and discard scan byte for ASCII characters.
@@ -105,14 +105,14 @@ _normkey proc far
 
     mov     ah, 1
     int     R5HW_BIOS_KEYBOARD_INT
-; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+; KEYBOARD - CHECK BUFFER, DO NOT CLEAR                                                           
     jnz     short readchar_consume_buffered_key
     xor     ax, ax
     retf
 readchar_consume_buffered_key:
     mov     ah, 0
     int     R5HW_BIOS_KEYBOARD_INT
-; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY                                                           
     or      al, al
     jz      short readchar_return_ascii_character
     xor     ah, ah
@@ -127,7 +127,7 @@ _normkey endp
 ; outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; INPUTDOC Contract _kb_checking (original _kb_checking).
 ; INPUTDOC Purpose: Peek one BIOS key without dequeue and normalize its ASCII return.
@@ -146,7 +146,7 @@ _normkey endp
 ; INPUTDOC Reachability: Live: called by both NumLock wrappers.
 _nextkey proc far
     mov ah,1
-    int R5HW_BIOS_KEYBOARD_INT ;/* PLATFORM(input_kb): calls the BIOS keyboard service. */
+    int R5HW_BIOS_KEYBOARD_INT ;                                                          
     jnz have_key
     xor ax,ax
 have_key:
@@ -255,7 +255,7 @@ _flush_stdin endp
 ; outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; INPUTDOC Contract _kb_check (original _kb_check).
 ; INPUTDOC Purpose: Consume all BIOS keys until the queue is empty.
@@ -276,7 +276,7 @@ _purgekey proc far
 
     mov     ah, 1
     int     R5HW_BIOS_KEYBOARD_INT
-; KEYBOARD - CHECK BUFFER, DO NOT CLEAR /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+; KEYBOARD - CHECK BUFFER, DO NOT CLEAR                                                           
     jnz     short kb_check_consume_pending_key
     xor     ax, ax
     retf
@@ -284,7 +284,7 @@ kb_check_consume_pending_key:
     mov     ah, 0
 ; INPUTDOC Unconditional retry discards every pending key, including normal ASCII.
     int     R5HW_BIOS_KEYBOARD_INT
-; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY /* PLATFORM(input_kb): calls the BIOS keyboard service. */
+; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY                                                           
     jmp     short near ptr _purgekey
 _purgekey endp
 ; -----------------------------------------------------------------------------

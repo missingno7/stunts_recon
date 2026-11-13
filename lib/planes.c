@@ -1,4 +1,4 @@
-/* READABILITY: Define far plane and vector state initialized in the far-data contribution. */
+/* Define far plane and vector state initialized in the far-data contribution. */
 #include "math3d.h"
 #include "matrix.h"
 #include "viewstat.h"

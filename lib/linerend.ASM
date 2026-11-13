@@ -54,7 +54,7 @@ public _setfont
 ; path-specific inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+;                                                                      
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _draw_filled_lines; proposed name _draw_filled_lines
 ; ASMDOC Purpose: Fill inclusive left/right spans with the low color byte, selecting byte/word stores by
@@ -120,8 +120,8 @@ fill_lines_loop_head_01:
     test    cx, 0FFF8h
     jnz     short fill_lines_branch_path_02 ; jump if (cx & 0xFFF8), ie jump if cx >= 8.
     rep stosb
-; rep count = cx = (arg2->member0 - arg0->member0) + 1 /* PLATFORM(video): writes display or sprite memory
-; through ES:DI. */
+; rep count = cx = (arg2->member0 - arg0->member0) + 1                                                    
+                   
 fill_lines_loop_head_02:
     add     [bp+arg_x2arr], 2
     add     [bp+arg_x1arr], 2
@@ -139,23 +139,23 @@ fill_lines_branch_path_02:
     jnz     short fill_lines_branch_path_04
     shr     cx, 1
     jb      short fill_lines_branch_path_03
-    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    rep stosw ;                                                                     
     jmp     short fill_lines_loop_head_02
 fill_lines_branch_path_03:
-    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    rep stosw ;                                                                     
+    stosb ;                                                                     
     jmp     short fill_lines_loop_head_02
 fill_lines_branch_path_04:
     shr     cx, 1
     jb      short fill_lines_branch_path_05
     dec     cx
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
-    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
+    rep stosw ;                                                                     
+    stosb ;                                                                     
     jmp     short fill_lines_loop_head_02
 fill_lines_branch_path_05:
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
-    rep stosw ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
+    rep stosw ;                                                                     
     jmp     short fill_lines_loop_head_02
     db 0 ; retained zero fill at this boundary
 _draw_filled_lines endp
@@ -377,7 +377,7 @@ _readf endp
 ;   operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): selects a video-memory segment. */
+;                                                       
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _shapeexpl; proposed name _shapeexpl
 ; ASMDOC Purpose: Scale a transparent bitmap by unsigned 8.8 scale, subtract signed scaled hotspot, clip to
@@ -607,12 +607,12 @@ _sprite1 dw 0, 0A000h, 0, 0, 0, offset lineoffsets
     dw 0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, PLATFORM_SCREEN_HEIGHT_PIXELS
     dw PLATFORM_SCREEN_WIDTH_PIXELS, 0, PLATFORM_SCREEN_WIDTH_PIXELS
     dw 0, PLATFORM_SCREEN_WIDTH_PIXELS
-; /* PLATFORM(video): selects a video-memory segment. */
+;                                                       
 _sprite2 dw 0, 0A000h, 0, 0, 0, offset lineoffsets
     dw 0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, PLATFORM_SCREEN_HEIGHT_PIXELS
     dw PLATFORM_SCREEN_WIDTH_PIXELS, 0, PLATFORM_SCREEN_WIDTH_PIXELS
     dw 0, PLATFORM_SCREEN_WIDTH_PIXELS
-; /* PLATFORM(video): selects a video-memory segment. */
+;                                                       
 ; Scanline offsets = 320*y, y=0..199; exact. Verified 200/200, no exceptions.
 lineoffsets label word
 row_number = 0
@@ -629,7 +629,7 @@ _scalecfxy endp
 ; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _fontdefseg.
 ; Globals written: _fontdefseg.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC Contract _font_setup_unknown; proposed name _font_set_colors
 ; ASMDOC Purpose: Set foreground/background font words to zero-extended argument low bytes in current font segment.
@@ -689,7 +689,7 @@ _textcolor proc far
     mov     es, ax
     mov     ds, ds:[_fontdefseg]
     cld
-    mov     word ptr es:[di+16h], ds ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     word ptr es:[di+16h], ds ;                                                          
     mov     cx, 0Bh
     rep movsw
     pop     si

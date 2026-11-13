@@ -142,7 +142,7 @@ _textnpixels endp
 ; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _fontdefseg.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC(font_shapes) Contract _font_op2 (proposed _font_op2): Measure text width modulo 65536 by summing
 ; advances of glyphs
@@ -190,12 +190,12 @@ font_op2_loop_head_01:
     inc     si
     xor     bh, bh
     shl     bx, 1
-    mov     bx, es:[bx+16h] ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     bx, es:[bx+16h] ;                                                          
     or      bx, bx
     jz      short font_op2_loop_head_01
     or      cl, cl
     jz      short font_op2_branch_path_02
-    mov     bl, es:[bx] ;/* PLATFORM(video): accesses display memory through ES. */
+    mov     bl, es:[bx] ;                                                          
     xor     bh, bh
     mov     di, bx
 font_op2_branch_path_02:
@@ -808,7 +808,7 @@ _mat_invert endp
 ;   operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): writes display or sprite memory through ES:DI. */
+;                                                                      
 ; -----------------------------------------------------------------------------
 ; ASMDOC(font_shapes) Contract _file_unflip_shape2d (proposed _file_unflip_shape2d): Transform flagged
 ; byte-per-pixel shapes
@@ -938,7 +938,7 @@ fliptype0:
     mov     cx, [bp+var_width]
 unflip_shape_loop_head_03:
     mov     al, [bx]
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
     add     bx, [bp+var_height]
     loop    unflip_shape_loop_head_03
     inc     dx
@@ -956,7 +956,7 @@ fliptype1:
     mov     cx, [bp+var_width]
 unflip_shape_loop_head_04:
     mov     al, [bx]
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
     add     bx, [bp+var_height]
     loop    unflip_shape_loop_head_04
     add     di, [bp+var_width]
@@ -976,7 +976,7 @@ unflip_shape_loop_head_05:
     mov     cx, [bp+var_width]
 unflip_shape_loop_head_06:
     mov     al, [bx]
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
     add     bx, [bp+var_height]
     loop    unflip_shape_loop_head_06
     add     di, [bp+var_width]
@@ -1000,7 +1000,7 @@ fliptype2:
     adc     si, 0
 unflip_shape_loop_head_07:
     mov     al, [bx]
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
     add     bx, si
     loop    unflip_shape_loop_head_07
     inc     dx
@@ -1011,7 +1011,7 @@ unflip_shape_loop_head_07:
     shr     si, 1
 unflip_shape_loop_head_08:
     mov     al, [bx]
-    stosb ;/* PLATFORM(video): writes display or sprite memory through ES:DI. */
+    stosb ;                                                                     
     add     bx, si
     loop    unflip_shape_loop_head_08
     inc     dx
@@ -1464,7 +1464,7 @@ _file_decomp_vle endp
 ; outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses a VGA/MCGA display register port. */
+;                                                                  
 ; -----------------------------------------------------------------------------
 ; ASMDOC(font_shapes) Contract _nopsub_32FEE (proposed _video_wait_vblank_start): Wait for current
 ; vertical-retrace bit to
@@ -1490,11 +1490,11 @@ _vertsync proc far
     mov     dx, R5HW_VIDEO_STATUS_PORT
 ; ASMDOC(font_shapes) Wait for current bit-3 interval to end before waiting for the next rising interval.
 noop_entry3_loop_head_01:
-    in      al, dx ; Video status bits: /* PLATFORM(video): accesses a VGA/MCGA display register port. */
+    in      al, dx ; Video status bits:                                                                  
     test    al, 08h
     jnz     short noop_entry3_loop_head_01
 noop_entry3_loop_head_02:
-    in      al, dx ; Video status bits: /* PLATFORM(video): accesses a VGA/MCGA display register port. */
+    in      al, dx ; Video status bits:                                                                  
     test    al, 08h
     jz      short noop_entry3_loop_head_02
     retf
@@ -1507,7 +1507,7 @@ _vertsync endp
 ; outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses a VGA/MCGA display register port. */
+;                                                                  
 ; -----------------------------------------------------------------------------
 ; ASMDOC(font_shapes) Contract _video_get_status (proposed _video_get_status): Read only the vertical-retrace
 ; status bit.
@@ -1525,7 +1525,7 @@ _vertsync endp
 _vsyncstate proc far
 
     mov     dx, R5HW_VIDEO_STATUS_PORT
-    in      al, dx ; Video status bits: /* PLATFORM(video): accesses a VGA/MCGA display register port. */
+    in      al, dx ; Video status bits:                                                                  
     and     al, 08h
     xor     ah, ah
     retf

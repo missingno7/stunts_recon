@@ -17,8 +17,8 @@ public _initgraphics
 ; inputs and outputs follow the listed operands.
 ; Globals read: none identified.
 ; Globals written: none identified.
-; /* PLATFORM(video): accesses display memory through ES. */
-; /* PLATFORM(video): calls a BIOS video service. */
+;                                                           
+;                                                   
 ; -----------------------------------------------------------------------------
 ; ASMDOC[timers] Contract _video_set_mode_13h (proposed name _video_set_mode_13h): Register display cleanup, set
 ; ASMDOC[timers]   equipment display bits to 10h, select background zero and mode 13h, then clear with word pattern
@@ -41,16 +41,16 @@ _initgraphics proc far
  call far ptr _video_add_exithandler
  mov ax,40h
  mov es,ax
- mov ax,es:[10h] ;/* PLATFORM(video): accesses display memory through ES. */
+ mov ax,es:[10h] ;                                                          
  and ax,0FFCFh
  or ax,10h
- mov es:[10h],ax ;/* PLATFORM(video): accesses display memory through ES. */
+ mov es:[10h],ax ;                                                          
  mov ah,0Bh
  mov bx,0
- int R5HW_BIOS_VIDEO_INT ;/* PLATFORM(video): calls a BIOS video service. */
+ int R5HW_BIOS_VIDEO_INT ;                                                  
  mov ah,0
  mov al,13h
- int R5HW_BIOS_VIDEO_INT ;/* PLATFORM(video): calls a BIOS video service. */
+ int R5HW_BIOS_VIDEO_INT ;                                                  
 ; ASMDOC[timers] Block: Two zero words are pushed although video_clear_color reads one word pattern; preserve
 ; ASMDOC[timers]   original stack sequence and four-byte cleanup.
  xor ax,ax

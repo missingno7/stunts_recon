@@ -1,4 +1,4 @@
-; INPUTDOC Module keyboard_interrupt_runtime (owner keyboard_interrupt_runtime); comment-only static contract review.
+;                                                                                                                    
 ; INPUTDOC Audited INPUTDOC contracts qualify the older retained generic comments; no code or declarations changed.
 ; INPUTDOC Routine names below follow rename-plan.json; definitions retain their original spelling.
 ; INPUTDOC dead=true means statically unreferenced; no proof against arbitrary external/numeric callers or execution.
@@ -99,8 +99,8 @@ public _keystate
 ; Globals read: none identified.
 ; Globals written: old_kb_intr_bios_ofs, old_kb_intr_bios_seg, old_kb_intr_ofs, old_kb_intr_seg.
 ; Global addresses taken: _kbinput.
-; /* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
-; /* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+;                                                                        
+;                                                                                
 ; -----------------------------------------------------------------------------
 ; INPUTDOC Contract _kb_init_interrupt (original _kb_init_interrupt).
 ; INPUTDOC Purpose: Install IRQ1 and INT16 vectors, clear 90 held-key bytes and register exit cleanup.
@@ -121,32 +121,32 @@ public _keystate
 ; INPUTDOC callback.
 _kb_init_interrupt proc far
     push di
-    in al, R5HW_PIC_MASTER_MASK_PORT ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
+    in al, R5HW_PIC_MASTER_MASK_PORT ;                                                                       
     mov ah, al
     or al, 03h
-    out R5HW_PIC_MASTER_MASK_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
+    out R5HW_PIC_MASTER_MASK_PORT, al ;                                                                       
     xor bx, bx
     mov es, bx
-    mov bx, es:[24h] ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+    mov bx, es:[24h] ;                                                                               
 ; INPUTDOC Installation detection compares only INT09 offset, not its segment; common setup still runs.
     cmp bx, offset _kb_int9_handler
     je keyboard_init_finish_setup
     mov ds:[old_kb_intr_ofs], bx
-    mov bx, es:[26h] ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+    mov bx, es:[26h] ;                                                                               
     mov ds:[old_kb_intr_seg], bx
     mov word ptr es:[24h], offset _kb_int9_handler
-; /* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
-    mov word ptr es:[26h], cs ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
-    mov bx, es:[58h] ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+;                                                                                
+    mov word ptr es:[26h], cs ;                                                                               
+    mov bx, es:[58h] ;                                                                               
     mov ds:[old_kb_intr_bios_ofs], bx
-    mov bx, es:[5Ah] ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+    mov bx, es:[5Ah] ;                                                                               
     mov ds:[old_kb_intr_bios_seg], bx
     mov word ptr es:[58h], offset _kb_int16_handler
-; /* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
-    mov word ptr es:[5Ah], cs ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+;                                                                                
+    mov word ptr es:[5Ah], cs ;                                                                               
 keyboard_init_finish_setup:
     mov al, ah
-    out R5HW_PIC_MASTER_MASK_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
+    out R5HW_PIC_MASTER_MASK_PORT, al ;                                                                       
     mov ax, ds
     mov es, ax
 ; INPUTDOC Only held keys are cleared here; ring indices/count/capacity are not reset.
@@ -171,8 +171,8 @@ _kb_init_interrupt endp
 ; inputs and outputs follow the listed operands.
 ; Globals read: old_kb_intr_bios_ofs, old_kb_intr_bios_seg, old_kb_intr_ofs, old_kb_intr_seg.
 ; Globals written: none identified.
-; /* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
-; /* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+;                                                                        
+;                                                                                
 ; -----------------------------------------------------------------------------
 ; INPUTDOC Contract _keyboard_exit_handler (original _keyboard_exit_handler).
 ; INPUTDOC Purpose: Restore saved keyboard vectors and clear held-modifier BDA low bits.
@@ -187,29 +187,29 @@ _kb_init_interrupt endp
 ; INPUTDOC Services: IN/OUT PIC mask 21h
 ; INPUTDOC Reachability: Live: registered in kb_init_interrupt:105-108 and called in game/frontend.c:664.
 _keyboard_exit_handler proc far
-    in al, R5HW_PIC_MASTER_MASK_PORT ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
+    in al, R5HW_PIC_MASTER_MASK_PORT ;                                                                       
     mov ah, al
     or al, 03h
-    out R5HW_PIC_MASTER_MASK_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
+    out R5HW_PIC_MASTER_MASK_PORT, al ;                                                                       
     xor bx, bx
     mov es, bx
     mov bx, ds:[old_kb_intr_ofs]
     or bx, bx
     je keyboard_exit_restore_flags
-    mov es:[24h], bx ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+    mov es:[24h], bx ;                                                                               
     mov bx, ds:[old_kb_intr_seg]
-    mov es:[26h], bx ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+    mov es:[26h], bx ;                                                                               
     mov bx, ds:[old_kb_intr_bios_ofs]
-    mov es:[58h], bx ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+    mov es:[58h], bx ;                                                                               
     mov bx, ds:[old_kb_intr_bios_seg]
-    mov es:[5Ah], bx ;/* PLATFORM(input_kb): reads or updates the keyboard interrupt vector table. */
+    mov es:[5Ah], bx ;                                                                               
 ; INPUTDOC AND F0h preserves lock-toggle high nibble and clears low held-modifier nibble.
     mov al, es:[417h]
     and al, 0F0h
     mov es:[417h], al
 keyboard_exit_restore_flags:
     mov al, ah
-    out R5HW_PIC_MASTER_MASK_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
+    out R5HW_PIC_MASTER_MASK_PORT, al ;                                                                       
     retf
 _keyboard_exit_handler endp
 ; -----------------------------------------------------------------------------
@@ -219,9 +219,9 @@ _keyboard_exit_handler endp
 ; path-specific inputs and outputs follow the listed operands.
 ; Globals read: _kbinput, kb_intr_data, kb_intr_data3, kb_intr_data4, keymap1, keymap2, keymap3, keymap4, keymap5.
 ; Globals written: _kbinput, kb_intr_data, kb_intr_data2, kb_intr_data4, kb_intr_data_array, kblastinput.
-; /* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
-; /* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
-; /* PLATFORM(input_kb): returns from a keyboard hardware interrupt. */
+;                                                                              
+;                                                                        
+;                                                                      
 ; -----------------------------------------------------------------------------
 ; INPUTDOC Contract _kb_int9_handler (original _kb_int9_handler).
 ; INPUTDOC Purpose: Acknowledge keyboard IRQ, update held state and overwrite the translated key queue.
@@ -239,7 +239,7 @@ _keyboard_exit_handler endp
 ; INPUTDOC Reachability: Live: kb_init_interrupt:87-88 writes this address to IVT INT09.
 _kb_int9_handler proc far
 ; INPUTDOC Nested interrupts enabled before register saves; this does not chain the old INT09 handler.
-    sti ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+    sti ;                                                                             
     push ax
     push bx
     push cx
@@ -247,14 +247,14 @@ _kb_int9_handler proc far
     push ds
     mov ax, seg dseg
     mov ds, ax
-    in al, R5HW_KEYBOARD_DATA_PORT ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
+    in al, R5HW_KEYBOARD_DATA_PORT ;                                                                       
     push ax
-    in al, R5HW_KEYBOARD_CONTROL_PORT ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
+    in al, R5HW_KEYBOARD_CONTROL_PORT ;                                                                       
     mov ah, al
     or al, 80h
-    out R5HW_KEYBOARD_CONTROL_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
+    out R5HW_KEYBOARD_CONTROL_PORT, al ;                                                                       
     xchg ah, al
-    out R5HW_KEYBOARD_CONTROL_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
+    out R5HW_KEYBOARD_CONTROL_PORT, al ;                                                                       
     pop ax
     test al, 80h
     je keyboard_irq_decode_make_code
@@ -262,13 +262,13 @@ _kb_int9_handler proc far
     jmp keyboard_irq_map_control_state
 keyboard_irq_send_eoi_restore:
     mov al, 20h
-    out R5HW_PIC_MASTER_COMMAND_PORT, al ;/* PLATFORM(input_kb): accesses the PIC or keyboard controller port. */
+    out R5HW_PIC_MASTER_COMMAND_PORT, al ;                                                                       
     pop ds
     pop dx
     pop cx
     pop bx
     pop ax
-    iret ;/* PLATFORM(input_kb): returns from a keyboard hardware interrupt. */
+    iret ;                                                                     
 keyboard_irq_decode_make_code:
     xor ah, ah
     mov bx, ax
@@ -298,7 +298,7 @@ keyboard_irq_store_make_state:
 keyboard_irq_translate_key:
 ; INPUTDOC Queue capacity is kb_intr_data3 bytes (initialized to 2), although backing allocation is 128 bytes.
     mov bx, ds:[kb_intr_data]
-    cli ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+    cli ;                                                                             
     mov  word ptr kb_intr_data_array[bx], ax
     add bx, 2
     cmp bx, ds:[kb_intr_data3]
@@ -316,7 +316,7 @@ keyboard_irq_enqueue_key_event:
     mov ds:[kb_intr_data2], ax
 keyboard_irq_advance_queue_head:
     mov ds:[kb_intr_data4], bx
-    sti ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+    sti ;                                                                             
     jmp keyboard_irq_send_eoi_restore
 keyboard_irq_commit_queue_tail:
     mov ah, al
@@ -356,7 +356,7 @@ _kb_int9_handler endp
 ; outputs follow the listed operands.
 ; Globals read: _kbinput, kb_intr_data2, kb_intr_data3, kb_intr_data4, kb_intr_data_array.
 ; Globals written: kb_intr_data2, kb_intr_data4.
-; /* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+;                                                                              
 ; -----------------------------------------------------------------------------
 ; INPUTDOC Contract _kb_int16_handler (original _kb_int16_handler).
 ; INPUTDOC Purpose: Provide nonblocking dequeue, peek and held-shift services with live result flags.
@@ -388,13 +388,13 @@ _kb_int16_handler proc far
 keyboard_bios_unknown_function:
     xor ax, ax
 keyboard_bios_return_common:
-    sti ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+    sti ;                                                                             
     pop ds
     pop bx
 ; INPUTDOC Discard saved interrupt FLAGS instead of restoring them, exposing service ZF and enabled IF.
     retf 2
 keyboard_bios_read_waiting_key:
-    cli ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+    cli ;                                                                             
 ; INPUTDOC AH00 is nonblocking in this replacement: an empty queue returns AX=0 immediately.
     cmp word ptr ds:[kb_intr_data4], 0
     je keyboard_bios_unknown_function
@@ -413,7 +413,7 @@ kb_bios_advance_read_index:
 keyboard_bios_peek_key:
     cmp word ptr ds:[kb_intr_data4], 0
     je keyboard_bios_unknown_function
-    sti ;/* PLATFORM(input_kb): masks or restores interrupts around keyboard state. */
+    sti ;                                                                             
     mov bx, ds:[kb_intr_data2]
     mov ax, word ptr kb_intr_data_array[bx]
     pop ds

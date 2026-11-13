@@ -64,7 +64,7 @@ FONTHDR ends
 ; Globals read: _fontdefseg, _sprite1, fh_advance, fh_bgcolor, fh_fgcolor, fh_glyphs, fh_height, fh_left,
 ; fh_lineheight, fh_proportional, fh_rowbytes, fh_x, fh_y.
 ; Globals written: fh_advance, fh_rowbytes, fh_x, fh_y.
-; /* PLATFORM(video): accesses display memory through ES. */
+;                                                           
 ; -----------------------------------------------------------------------------
 ; ASMDOC(font_shapes) Contract _font_draw_text (proposed _font_draw_text): Draw NUL-terminated legacy-byte glyphs
 ; ASMDOC(font_shapes) transparently into active sprite1 at explicit coordinates.
@@ -208,7 +208,7 @@ font_text_draw_loop_3:
 font_text_draw_loop_4:
     shl dl, 1
     jnb short font_text_when_not_below
-    mov es:[di], al ;/* PLATFORM(video): accesses display memory through ES. */
+    mov es:[di], al ;                                                          
 font_text_when_not_below:
     inc di
     loop font_text_draw_loop_4
