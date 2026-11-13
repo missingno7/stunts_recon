@@ -1,22 +1,16 @@
-#include "stunts_types.h"
-#include "platform_hw.h"
+#include "types.h"
 #define MOUSE_DEFAULT_PIXEL_RATIO 16
 /* READABILITY: Adapt the DOS mouse driver register interface to the game cursor state and coordinate conventions. */
 /* PORT: INT register packets require 16-bit word fields and MSC-compatible struct layout. */
-#include "inputrec.h"
-
-#include "game.h"
 #include "input.h"
 
+#include "viewstat.h"
+#include "game.h"
 
 MouseRegs msregisterms;
 unsigned int ms_buttons;
 unsigned int cursorxposition;
 unsigned int mouse_api_y;
-
-
-
-
 
 /* Local view: setmousebounds; parameters[0] is unsigned word; another unit uses signed word. */
 void FAR setmousebounds(U16 xmin, U16 ymin, U16 xmax, U16 ymax);

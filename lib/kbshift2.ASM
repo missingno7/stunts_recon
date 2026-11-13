@@ -6,7 +6,7 @@
 ; INPUTDOC Routine _kb_shift_checking2 -> _kb_shift_checking2: Clear BDA NumLock bit and peek the normalized pending
 ; INPUTDOC key.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 extrn _nextkey:far
 S018_TEXT segment byte public 'CODE'
 assume cs:S018_TEXT

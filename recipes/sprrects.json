@@ -251,9 +251,9 @@
   "id": "sprrects",
   "include_closure": [
     {
-      "path": "include/platform_hw.inc",
-      "sha256": "8961b57e4f26d730398c81f883947e5a9836f03b8817bf9fd3637a9a94e52d76",
-      "size": 1927
+      "path": "include/hw.inc",
+      "sha256": "8a536c057f4bdae07d8267c682ee4f218cdcdd5bca2daf7e816d252d6a9df800",
+      "size": 1404
     }
   ],
   "kind": "asm",

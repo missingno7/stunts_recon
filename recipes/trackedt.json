@@ -1,24 +1,24 @@
 {
   "communal_declarations": [
     {
-      "name": "_td14tb",
-      "size": 4
-    },
-    {
-      "name": "_td15p_9",
-      "size": 4
+      "name": "_sampled_trk_column",
+      "size": 1
     },
     {
       "name": "_gterrtrk",
       "size": 60
     },
     {
-      "name": "_lnoffsets",
-      "size": 60
+      "name": "_td15p_9",
+      "size": 4
     },
     {
-      "name": "_sampled_trk_column",
-      "size": 1
+      "name": "_td14tb",
+      "size": 4
+    },
+    {
+      "name": "_lnoffsets",
+      "size": 60
     }
   ],
   "end": 117842,
@@ -39,7 +39,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_draw3dbutton",
-      "target_index": 57,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -56,7 +56,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -90,7 +90,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_a",
-      "target_index": 10,
+      "target_index": 65,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -107,7 +107,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_b",
-      "target_index": 12,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -124,7 +124,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_c",
-      "target_index": 15,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -141,7 +141,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_draw3dbutton",
-      "target_index": 57,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -158,7 +158,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -192,7 +192,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_a",
-      "target_index": 10,
+      "target_index": 65,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -209,7 +209,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_b",
-      "target_index": 12,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -226,7 +226,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_c",
-      "target_index": 15,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -243,7 +243,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_draw_beveled_frame",
-      "target_index": 63,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -260,7 +260,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_palette_window_line_color",
-      "target_index": 79,
+      "target_index": 40,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -277,7 +277,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_palette_window_fill_color",
-      "target_index": 78,
+      "target_index": 39,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -294,7 +294,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_palette_window_line_style",
-      "target_index": 80,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -311,7 +311,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_draw_beveled_frame",
-      "target_index": 63,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -328,7 +328,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_palette_window_line_color",
-      "target_index": 79,
+      "target_index": 40,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -345,7 +345,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_palette_window_fill_color",
-      "target_index": 78,
+      "target_index": 39,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -362,7 +362,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_palette_window_line_style",
-      "target_index": 80,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -379,7 +379,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_draw3dbutton",
-      "target_index": 57,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -396,7 +396,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -430,7 +430,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_a",
-      "target_index": 10,
+      "target_index": 65,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -447,7 +447,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_b",
-      "target_index": 12,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -464,7 +464,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_c",
-      "target_index": 15,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -481,7 +481,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_usebufferc",
-      "target_index": 61,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -498,7 +498,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cur_track_row",
-      "target_index": 6,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -515,7 +515,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sampled_trk_column",
-      "target_index": 62,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -566,7 +566,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 40,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -583,7 +583,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -600,7 +600,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -617,7 +617,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -634,7 +634,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -651,7 +651,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -702,7 +702,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 40,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -719,7 +719,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -736,7 +736,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -753,7 +753,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -770,7 +770,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -787,7 +787,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -804,7 +804,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getres",
-      "target_index": 36,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -838,7 +838,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getres",
-      "target_index": 36,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -872,7 +872,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getres",
-      "target_index": 36,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -940,7 +940,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getres",
-      "target_index": 36,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -974,7 +974,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_wndspr",
-      "target_index": 9,
+      "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -991,7 +991,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_wndspr",
-      "target_index": 9,
+      "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1008,7 +1008,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 52,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1025,7 +1025,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_openresource",
-      "target_index": 34,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1059,7 +1059,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 52,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1076,7 +1076,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pixel_scales",
-      "target_index": 41,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1110,7 +1110,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 52,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1127,7 +1127,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pixel_scales",
-      "target_index": 41,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1161,7 +1161,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 52,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1178,7 +1178,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pixel_scales",
-      "target_index": 41,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1212,7 +1212,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 52,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1229,7 +1229,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pixel_scales",
-      "target_index": 41,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1263,7 +1263,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapes",
-      "target_index": 29,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1314,7 +1314,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapes",
-      "target_index": 29,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1365,7 +1365,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapes",
-      "target_index": 29,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1416,7 +1416,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_shape2d_fatal_thunk",
-      "target_index": 26,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1450,7 +1450,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 75,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1501,7 +1501,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_setup1_from_arg_pointer",
-      "target_index": 64,
+      "target_index": 51,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1518,7 +1518,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clippix",
-      "target_index": 59,
+      "target_index": 49,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1535,7 +1535,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_drawtrackbox",
-      "target_index": 76,
+      "target_index": 62,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1552,7 +1552,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clippix",
-      "target_index": 59,
+      "target_index": 49,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1569,7 +1569,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_doslider",
-      "target_index": 55,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1586,7 +1586,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_doslider",
-      "target_index": 55,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1603,7 +1603,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_usebuffer",
-      "target_index": 58,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1620,7 +1620,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_checktracksyntax",
-      "target_index": 28,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1637,7 +1637,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_doslider",
-      "target_index": 55,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1654,7 +1654,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_drawpiecebox",
-      "target_index": 72,
+      "target_index": 60,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1671,7 +1671,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_usebuffer",
-      "target_index": 58,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1722,7 +1722,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1739,7 +1739,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_draw3dbutton",
-      "target_index": 57,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1756,7 +1756,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1790,7 +1790,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_a",
-      "target_index": 10,
+      "target_index": 65,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1807,7 +1807,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_b",
-      "target_index": 12,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1824,7 +1824,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_c",
-      "target_index": 15,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1841,7 +1841,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_draw3dbutton",
-      "target_index": 57,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1858,7 +1858,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1892,7 +1892,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_a",
-      "target_index": 10,
+      "target_index": 65,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1909,7 +1909,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_b",
-      "target_index": 12,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1926,7 +1926,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_c",
-      "target_index": 15,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1943,7 +1943,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_draw3dbutton",
-      "target_index": 57,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1960,7 +1960,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1994,7 +1994,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_a",
-      "target_index": 10,
+      "target_index": 65,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2011,7 +2011,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_b",
-      "target_index": 12,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2028,7 +2028,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_menu_button_color_c",
-      "target_index": 15,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2045,7 +2045,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movtxy",
-      "target_index": 33,
+      "target_index": 16,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2062,7 +2062,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2079,7 +2079,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textpixels",
-      "target_index": 86,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2096,7 +2096,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2113,7 +2113,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpyfar",
-      "target_index": 82,
+      "target_index": 87,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2130,7 +2130,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2147,7 +2147,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2164,7 +2164,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2181,7 +2181,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2198,7 +2198,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2215,7 +2215,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2232,7 +2232,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textcolor",
-      "target_index": 3,
+      "target_index": 80,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2249,7 +2249,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 20,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2266,7 +2266,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 71,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2385,7 +2385,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2402,7 +2402,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2419,7 +2419,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2436,7 +2436,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2453,7 +2453,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2470,7 +2470,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2487,7 +2487,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2504,7 +2504,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2521,7 +2521,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_usescreen",
-      "target_index": 53,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2538,7 +2538,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_blit_to_video",
-      "target_index": 69,
+      "target_index": 57,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2555,7 +2555,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_wndspr",
-      "target_index": 9,
+      "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2572,7 +2572,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_wndspr",
-      "target_index": 9,
+      "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2589,7 +2589,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_orfxya",
-      "target_index": 39,
+      "target_index": 21,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2640,7 +2640,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_andfxya",
-      "target_index": 49,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2691,7 +2691,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 75,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2742,7 +2742,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_preRender_line",
-      "target_index": 44,
+      "target_index": 75,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2759,7 +2759,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 46,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2776,7 +2776,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_preRender_line",
-      "target_index": 44,
+      "target_index": 75,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2793,7 +2793,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 46,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2810,7 +2810,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_preRender_line",
-      "target_index": 44,
+      "target_index": 75,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2827,7 +2827,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 46,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2844,7 +2844,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_preRender_line",
-      "target_index": 44,
+      "target_index": 75,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2861,7 +2861,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 46,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2878,7 +2878,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2895,7 +2895,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2912,7 +2912,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pos_y_ms",
-      "target_index": 45,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2929,7 +2929,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msecoordx",
-      "target_index": 31,
+      "target_index": 77,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2946,7 +2946,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_doslider",
-      "target_index": 55,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2963,7 +2963,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 23,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2980,7 +2980,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_doslider",
-      "target_index": 55,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2997,7 +2997,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 23,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3014,7 +3014,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 75,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3065,7 +3065,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 71,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3082,7 +3082,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_timedwait",
-      "target_index": 30,
+      "target_index": 24,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3099,7 +3099,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_doslider",
-      "target_index": 55,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3116,7 +3116,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 23,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3133,7 +3133,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mousecursor",
-      "target_index": 27,
+      "target_index": 20,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3218,7 +3218,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mykey",
-      "target_index": 48,
+      "target_index": 85,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3235,7 +3235,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_elticks",
-      "target_index": 21,
+      "target_index": 14,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3252,7 +3252,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseon",
-      "target_index": 74,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3269,7 +3269,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_xorbox",
-      "target_index": 73,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3286,7 +3286,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_text_cursor_outline_color",
-      "target_index": 42,
+      "target_index": 54,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3303,7 +3303,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 75,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3354,7 +3354,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 71,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3371,7 +3371,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_readfxya",
-      "target_index": 77,
+      "target_index": 64,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3422,7 +3422,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseoff",
-      "target_index": 71,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3439,7 +3439,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 18,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3456,7 +3456,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3490,7 +3490,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 46,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3507,7 +3507,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseon",
-      "target_index": 74,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3524,7 +3524,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_drawrect",
-      "target_index": 14,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3541,7 +3541,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3558,7 +3558,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3609,7 +3609,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clear_keyboardbuffer",
-      "target_index": 38,
+      "target_index": 79,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3626,7 +3626,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3643,7 +3643,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3660,7 +3660,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3677,7 +3677,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_tdfrompathrow22",
-      "target_index": 8,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3694,7 +3694,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_column_of_trkdata21_pth",
-      "target_index": 7,
+      "target_index": 84,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3711,7 +3711,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cur_track_row",
-      "target_index": 6,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3728,7 +3728,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sampled_trk_column",
-      "target_index": 62,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3745,7 +3745,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_trackpiecescounter",
-      "target_index": 19,
+      "target_index": 55,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3762,7 +3762,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 18,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3779,7 +3779,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3813,7 +3813,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 46,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3830,7 +3830,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_compiletrack",
-      "target_index": 32,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3864,7 +3864,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_trackpiecescounter",
-      "target_index": 19,
+      "target_index": 55,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3881,7 +3881,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3898,7 +3898,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3915,7 +3915,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3932,7 +3932,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_tdfrompathrow22",
-      "target_index": 8,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3949,7 +3949,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_tdfrompathrow22",
-      "target_index": 8,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3966,7 +3966,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_column_of_trkdata21_pth",
-      "target_index": 7,
+      "target_index": 84,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3983,7 +3983,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_column_of_trkdata21_pth",
-      "target_index": 7,
+      "target_index": 84,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4000,7 +4000,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_trackpiecescounter",
-      "target_index": 19,
+      "target_index": 55,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4017,7 +4017,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseon",
-      "target_index": 74,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4034,7 +4034,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_xorbox",
-      "target_index": 73,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4051,7 +4051,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_text_cursor_outline_color",
-      "target_index": 42,
+      "target_index": 54,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4068,7 +4068,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pos_y_ms",
-      "target_index": 45,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4136,7 +4136,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pos_y_ms",
-      "target_index": 45,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4153,7 +4153,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msecoordx",
-      "target_index": 31,
+      "target_index": 77,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4170,7 +4170,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 18,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4187,7 +4187,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4221,7 +4221,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 46,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4238,7 +4238,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_is_busy",
-      "target_index": 24,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4255,7 +4255,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 18,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4272,7 +4272,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4289,7 +4289,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 11,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4306,7 +4306,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 11,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4340,7 +4340,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 46,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4357,7 +4357,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_readhighs",
-      "target_index": 56,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4374,7 +4374,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_savefilez",
-      "target_index": 51,
+      "target_index": 42,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4391,7 +4391,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_buf_g_path",
-      "target_index": 66,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4408,7 +4408,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4425,7 +4425,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4442,7 +4442,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 18,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4459,7 +4459,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4476,7 +4476,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 11,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4493,7 +4493,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 11,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4527,7 +4527,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 46,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4544,7 +4544,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_findfirst",
-      "target_index": 54,
+      "target_index": 44,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4561,7 +4561,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_buf_g_path",
-      "target_index": 66,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4578,7 +4578,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makename",
-      "target_index": 67,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4595,7 +4595,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_track_file",
-      "target_index": 83,
+      "target_index": 33,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4612,7 +4612,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 84,
+      "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4646,7 +4646,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_buf_g_path",
-      "target_index": 66,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4663,7 +4663,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fsavereq",
-      "target_index": 47,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4680,7 +4680,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_track_file",
-      "target_index": 83,
+      "target_index": 33,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4697,7 +4697,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 84,
+      "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4714,7 +4714,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4731,7 +4731,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 11,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4748,7 +4748,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 11,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4782,7 +4782,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_usescreen",
-      "target_index": 53,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4799,7 +4799,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_is_busy",
-      "target_index": 24,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4816,7 +4816,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sampled_trk_column",
-      "target_index": 62,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4833,7 +4833,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cur_track_row",
-      "target_index": 6,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4850,7 +4850,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_compiletrack",
-      "target_index": 32,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4867,7 +4867,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadfileat",
-      "target_index": 4,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4884,7 +4884,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_buf_g_path",
-      "target_index": 66,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4901,7 +4901,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4918,7 +4918,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4935,7 +4935,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makename",
-      "target_index": 67,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4952,7 +4952,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_track_file",
-      "target_index": 83,
+      "target_index": 33,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4969,7 +4969,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 84,
+      "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5003,7 +5003,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_buf_g_path",
-      "target_index": 66,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5020,7 +5020,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_floadreq",
-      "target_index": 37,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5037,7 +5037,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_track_file",
-      "target_index": 83,
+      "target_index": 33,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5054,7 +5054,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 84,
+      "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5088,7 +5088,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5105,7 +5105,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 11,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5122,7 +5122,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 11,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5156,7 +5156,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_is_busy",
-      "target_index": 24,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5173,7 +5173,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 18,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5190,7 +5190,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5224,7 +5224,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 46,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5241,7 +5241,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_usescreen",
-      "target_index": 53,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5258,7 +5258,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 84,
+      "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5275,7 +5275,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5292,7 +5292,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getres",
-      "target_index": 36,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5343,7 +5343,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5360,7 +5360,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 18,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5377,7 +5377,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5411,7 +5411,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dialog_frame_color",
-      "target_index": 16,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5428,7 +5428,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5445,7 +5445,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_messagebox",
-      "target_index": 18,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5462,7 +5462,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 50,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5496,7 +5496,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dialog_frame_color",
-      "target_index": 16,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5513,7 +5513,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5615,7 +5615,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5632,7 +5632,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5649,7 +5649,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5666,7 +5666,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5683,7 +5683,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5700,7 +5700,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5717,7 +5717,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5734,7 +5734,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5751,7 +5751,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5768,7 +5768,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5785,7 +5785,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5802,7 +5802,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5819,7 +5819,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5836,7 +5836,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5853,7 +5853,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5870,7 +5870,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5887,7 +5887,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5904,7 +5904,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5921,7 +5921,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5938,7 +5938,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5955,7 +5955,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5972,7 +5972,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5989,7 +5989,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6006,7 +6006,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6023,7 +6023,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6040,7 +6040,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6057,7 +6057,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gterrtrk",
-      "target_index": 22,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6074,7 +6074,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6091,7 +6091,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6108,7 +6108,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gterrtrk",
-      "target_index": 22,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6125,7 +6125,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 75,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6210,7 +6210,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_orfxya",
-      "target_index": 39,
+      "target_index": 21,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6261,7 +6261,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_andfxya",
-      "target_index": 49,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6312,7 +6312,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 75,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6363,7 +6363,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6380,7 +6380,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 75,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6431,7 +6431,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_freememory",
-      "target_index": 68,
+      "target_index": 56,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6448,7 +6448,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_closeresource",
-      "target_index": 65,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6465,7 +6465,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_removewindow",
-      "target_index": 60,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6482,7 +6482,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_removewindow",
-      "target_index": 60,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6499,7 +6499,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_removewindow",
-      "target_index": 60,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6516,7 +6516,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_removewindow",
-      "target_index": 60,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6533,7 +6533,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_removewindow",
-      "target_index": 60,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6550,7 +6550,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_wndspr",
-      "target_index": 9,
+      "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6567,7 +6567,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_wndspr",
-      "target_index": 9,
+      "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6686,7 +6686,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 75,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6737,7 +6737,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 75,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6788,7 +6788,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6805,7 +6805,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6822,7 +6822,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6839,7 +6839,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_andcfxya",
-      "target_index": 85,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6890,7 +6890,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6907,7 +6907,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6924,7 +6924,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6941,7 +6941,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcfxya",
-      "target_index": 81,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6992,7 +6992,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7009,7 +7009,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7026,7 +7026,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gterrtrk",
-      "target_index": 22,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7043,7 +7043,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_orcfxya",
-      "target_index": 2,
+      "target_index": 74,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7094,7 +7094,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7111,7 +7111,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7128,7 +7128,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7145,7 +7145,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_andcfxya",
-      "target_index": 85,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7196,7 +7196,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7213,7 +7213,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7230,7 +7230,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7247,7 +7247,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcfxya",
-      "target_index": 81,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7298,7 +7298,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7315,7 +7315,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7332,7 +7332,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gterrtrk",
-      "target_index": 22,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7349,7 +7349,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcfxya",
-      "target_index": 81,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7400,7 +7400,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7417,7 +7417,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7434,7 +7434,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gterrtrk",
-      "target_index": 22,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7451,7 +7451,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 75,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7502,7 +7502,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 75,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7553,7 +7553,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7570,7 +7570,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcfxya",
-      "target_index": 81,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7621,7 +7621,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7638,7 +7638,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7655,7 +7655,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gterrtrk",
-      "target_index": 22,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7672,7 +7672,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcfxya",
-      "target_index": 81,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7723,7 +7723,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7740,7 +7740,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7757,7 +7757,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gterrtrk",
-      "target_index": 22,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7774,7 +7774,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7791,7 +7791,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7808,7 +7808,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gterrtrk",
-      "target_index": 22,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7825,7 +7825,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7842,7 +7842,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7859,7 +7859,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7876,7 +7876,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gterrtrk",
-      "target_index": 22,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7893,7 +7893,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcfxya",
-      "target_index": 81,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7944,7 +7944,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7961,7 +7961,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7978,7 +7978,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gterrtrk",
-      "target_index": 22,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7995,7 +7995,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcfxya",
-      "target_index": 81,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8046,7 +8046,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8063,7 +8063,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8080,7 +8080,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gterrtrk",
-      "target_index": 22,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8097,7 +8097,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8114,7 +8114,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8131,7 +8131,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gterrtrk",
-      "target_index": 22,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8148,7 +8148,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_andcfxya",
-      "target_index": 85,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8199,7 +8199,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcfxya",
-      "target_index": 81,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8250,7 +8250,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8267,7 +8267,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8284,7 +8284,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gterrtrk",
-      "target_index": 22,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8301,7 +8301,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_orfxya",
-      "target_index": 39,
+      "target_index": 21,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8352,7 +8352,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_andfxya",
-      "target_index": 49,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8403,7 +8403,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8420,7 +8420,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8437,7 +8437,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8454,7 +8454,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8471,7 +8471,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8488,7 +8488,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8505,7 +8505,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8522,7 +8522,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8539,7 +8539,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8556,7 +8556,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8573,7 +8573,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8590,7 +8590,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8607,7 +8607,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8624,7 +8624,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8641,7 +8641,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8658,7 +8658,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8675,7 +8675,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8692,7 +8692,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8709,7 +8709,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_trackoverlapcheck",
-      "target_index": 43,
+      "target_index": 70,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8726,7 +8726,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8743,7 +8743,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8760,7 +8760,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8777,7 +8777,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8794,7 +8794,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8811,7 +8811,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8828,7 +8828,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 17,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8845,7 +8845,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_gterrtrk",
-      "target_index": 22,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8862,7 +8862,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8879,7 +8879,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8896,7 +8896,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_roadupcheck",
-      "target_index": 70,
+      "target_index": 59,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8913,7 +8913,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8930,7 +8930,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8947,7 +8947,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8964,7 +8964,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8981,7 +8981,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8998,7 +8998,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9015,7 +9015,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9032,7 +9032,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_trackoverlapcheck",
-      "target_index": 43,
+      "target_index": 70,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9049,7 +9049,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9066,7 +9066,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_andcfxya",
-      "target_index": 85,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9117,7 +9117,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9134,7 +9134,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9151,7 +9151,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9168,7 +9168,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9185,7 +9185,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9202,7 +9202,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9219,7 +9219,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9236,7 +9236,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9253,7 +9253,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9270,7 +9270,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9287,7 +9287,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9304,7 +9304,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9321,7 +9321,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9338,7 +9338,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9355,7 +9355,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9372,7 +9372,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 5,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9389,7 +9389,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9406,7 +9406,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9423,7 +9423,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 25,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10259,92 +10259,92 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_orcfxya",
-      "_textcolor",
-      "_loadfileat",
-      "_td14tb",
-      "_g_cur_track_row",
-      "_g_column_of_trkdata21_pth",
-      "_tdfrompathrow22",
-      "_g_wndspr",
-      "_menu_button_color_a",
+      "_sampled_trk_column",
       "_main_data_file_addr",
-      "_menu_button_color_b",
+      "_usebuffer",
       "_resbuftext",
       "_drawrect",
-      "_menu_button_color_c",
+      "_pixel_scales",
+      "_usebufferc",
       "_dialog_frame_color",
-      "_td15p_9",
+      "_sprite_draw_beveled_frame",
+      "_pos_y_ms",
       "_messagebox",
-      "_g_trackpiecescounter",
       "_dlg_colour",
       "_elticks",
-      "_gterrtrk",
+      "_textpixels",
+      "_movtxy",
       "_flagsdown",
       "_g_is_busy",
-      "_lnoffsets",
       "_file_load_shape2d_fatal_thunk",
       "_mousecursor",
-      "_checktracksyntax",
+      "_orfxya",
+      "_doslider",
       "_locateshapes",
       "_timedwait",
-      "_msecoordx",
-      "_compiletrack",
-      "_movtxy",
-      "_openresource",
-      "_trackedit",
-      "_getres",
-      "_floadreq",
-      "_clear_keyboardbuffer",
-      "_orfxya",
-      "_locate_shape_fatal",
-      "_pixel_scales",
-      "_text_cursor_outline_color",
-      "_trackoverlapcheck",
-      "_preRender_line",
-      "_pos_y_ms",
-      "_performGraphColor",
-      "_fsavereq",
-      "_mykey",
-      "_andfxya",
-      "_getresl",
-      "_savefilez",
-      "_sprite_make_window",
-      "_usescreen",
-      "_findfirst",
-      "_doslider",
-      "_readhighs",
       "_draw3dbutton",
-      "_usebuffer",
-      "_clippix",
-      "_removewindow",
-      "_usebufferc",
-      "_sampled_trk_column",
-      "_sprite_draw_beveled_frame",
-      "_sprite_setup1_from_arg_pointer",
-      "_closeresource",
+      "_compiletrack",
+      "_andfxya",
+      "_openresource",
       "_buf_g_path",
+      "_getres",
       "_makename",
-      "_freememory",
-      "_sprite_blit_to_video",
-      "_roadupcheck",
+      "_floadreq",
+      "_track_file",
+      "_locate_shape_fatal",
+      "_fsavereq",
       "_mouseoff",
-      "_drawpiecebox",
-      "_xorbox",
+      "_getresl",
       "_mouseon",
-      "_movfxya",
-      "_drawtrackbox",
-      "_readfxya",
       "_palette_window_fill_color",
       "_palette_window_line_color",
       "_palette_window_line_style",
-      "_movcfxya",
-      "_strcpyfar",
-      "_track_file",
+      "_savefilez",
+      "_sprite_make_window",
+      "_findfirst",
+      "_readhighs",
+      "_g_cur_track_row",
+      "_g_wndspr",
+      "_xorbox",
+      "_clippix",
+      "_removewindow",
+      "_sprite_setup1_from_arg_pointer",
       "_globalgamesettings",
+      "_closeresource",
+      "_text_cursor_outline_color",
+      "_g_trackpiecescounter",
+      "_freememory",
+      "_sprite_blit_to_video",
+      "_gterrtrk",
+      "_roadupcheck",
+      "_drawpiecebox",
+      "_movfxya",
+      "_drawtrackbox",
+      "_checktracksyntax",
+      "_readfxya",
+      "_menu_button_color_a",
+      "_trackedit",
+      "_menu_button_color_b",
+      "_menu_button_color_c",
+      "_movcfxya",
+      "_trackoverlapcheck",
       "_andcfxya",
-      "_textpixels",
-      "_trklst"
+      "_performGraphColor",
+      "_trklst",
+      "_orcfxya",
+      "_preRender_line",
+      "_td15p_9",
+      "_msecoordx",
+      "_loadfileat",
+      "_clear_keyboardbuffer",
+      "_textcolor",
+      "_usescreen",
+      "_td14tb",
+      "_lnoffsets",
+      "_g_column_of_trkdata21_pth",
+      "_mykey",
+      "_tdfrompathrow22",
+      "_strcpyfar"
     ],
     "groups": [
       {
@@ -10364,6 +10364,31 @@
     ],
     "publics": [
       {
+        "name": "_palette_column_limits",
+        "offset": 222,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_palette_row_limits",
+        "offset": 224,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_trackmenu2_buttons_x1",
+        "offset": 182,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_trackmenu2_buttons_x2",
+        "offset": 192,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_function_key_scan_codes",
+        "offset": 158,
+        "segment": "_DATA"
+      },
+      {
         "name": "_trackmenu2_buttons_y1",
         "offset": 202,
         "segment": "_DATA"
@@ -10374,14 +10399,29 @@
         "segment": "_DATA"
       },
       {
-        "name": "_aEokenseieemseedewwefuenpestej",
-        "offset": 106,
+        "name": "_aTer0",
+        "offset": 152,
         "segment": "_DATA"
       },
       {
-        "name": "_aFlatlakelak1lak2lak3lak4highg",
-        "offset": 226,
+        "name": "_aCrs0crs1crs2crs3",
+        "offset": 304,
         "segment": "_DATA"
+      },
+      {
+        "name": "_aUcr0ucr1ucr2ucr3",
+        "offset": 322,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_drawpiecebox",
+        "offset": 7162,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_drawtrackbox",
+        "offset": 7660,
+        "segment": "UNIT_TEXT"
       },
       {
         "name": "_checktracksyntax",
@@ -10399,53 +10439,13 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_function_key_scan_codes",
-        "offset": 158,
+        "name": "_aEokenseieemseedewwefuenpestej",
+        "offset": 106,
         "segment": "_DATA"
       },
       {
-        "name": "_drawpiecebox",
-        "offset": 7162,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_drawtrackbox",
-        "offset": 7660,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_palette_column_limits",
-        "offset": 222,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_aTer0",
-        "offset": 152,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_palette_row_limits",
-        "offset": 224,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_aCrs0crs1crs2crs3",
-        "offset": 304,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_aUcr0ucr1ucr2ucr3",
-        "offset": 322,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_trackmenu2_buttons_x1",
-        "offset": 182,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_trackmenu2_buttons_x2",
-        "offset": 192,
+        "name": "_aFlatlakelak1lak2lak3lak4highg",
+        "offset": 226,
         "segment": "_DATA"
       }
     ],
@@ -10519,24 +10519,9 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
-      "path": "include/audeng.h",
-      "sha256": "9cd04ff48bb7830e929eeef0e13a533fb5548a6d68e43a50e10438b7c230bd73",
-      "size": 240
-    },
-    {
       "path": "include/chartab.h",
       "sha256": "540ec3660be1ea671e4cc3adedf22983325debf32bd0f08c0465ad6ad1eed6c7",
       "size": 120
-    },
-    {
-      "path": "include/dialog.h",
-      "sha256": "a7ed94fffb221c0713f567c1f19b2c1906ba8947090b24c472b341907bd38539",
-      "size": 97
-    },
-    {
-      "path": "include/dlgapi.h",
-      "sha256": "7e1f5a3deac2bb5e28e4aa94a6fb3cbdad5ee2a734188971150a258502ce6939",
-      "size": 3394
     },
     {
       "path": "include/dlgcolor.h",
@@ -10544,64 +10529,44 @@
       "size": 122
     },
     {
-      "path": "include/font.h",
-      "sha256": "6764a13f5316d6a2e05f61bd6ec789ec690155f0086a213350083e183ebb8c8f",
-      "size": 90
+      "path": "include/files.h",
+      "sha256": "c9279c40920d935c04309685a81ccb7f078ae3c8a0d35f28b52c4eead68a3a7a",
+      "size": 1978
     },
     {
       "path": "include/game.h",
-      "sha256": "0bf7bc4afb9b518f5702334334695ab123f2e69c7c02dd895a65b1ed10e8761f",
-      "size": 94
+      "sha256": "efb4f8ec271fb25fdd21f28316f4300b0de522a08b4fc9734403ea6d0a0829e8",
+      "size": 11658
     },
     {
-      "path": "include/gameapi.h",
-      "sha256": "50e49c283baa693885098a6302c3180b9489601c32874735da3b30c0dabb17f2",
-      "size": 10975
-    },
-    {
-      "path": "include/geom2d.h",
-      "sha256": "2938bb58c7180ac1095c0efa64d0e9b7e1099eab96e8310945cc1cac41253465",
-      "size": 421
-    },
-    {
-      "path": "include/gfxapi.h",
-      "sha256": "58324548a2ee1621d772130e0432c7c6d61960cba899e48f360f65e1fc2303c2",
-      "size": 1221
+      "path": "include/gamerec.h",
+      "sha256": "e3bf380bb327eb69feac2c074542c8d778f62f70fd2d0206b03c5d794b6a3826",
+      "size": 1007
     },
     {
       "path": "include/input.h",
-      "sha256": "d43bddf63efc4400afb7396fc0c52009a31f8f1d4e30b04f976309bb75a64769",
-      "size": 1584
+      "sha256": "5bb6b46401f88ad81a22f5ce6446ef118c4716c4abc18b8cfec66ab0167587aa",
+      "size": 7430
     },
     {
-      "path": "include/platform_hw.h",
-      "sha256": "e3863a97e9a936f227221b474f085abbd3eb2deb5df33993f7ad00c75baaa9bc",
-      "size": 6111
+      "path": "include/math3d.h",
+      "sha256": "59a5ed823822b0ec3d7c3dad15159f8dae01f9cfd9b8a105eb89e0f12d4bbc69",
+      "size": 3760
     },
     {
-      "path": "include/prim3d.h",
-      "sha256": "18ae050c00e4e0144daadd37e0d874d276b43e1cec7d9096ea31da45ae53b4a5",
-      "size": 97
+      "path": "include/radius2d.h",
+      "sha256": "097d90d5382c47225c46504009b67e05ba91fb87371aa84b351d101f8693077e",
+      "size": 120
     },
     {
-      "path": "include/render.h",
-      "sha256": "3fbaca8201aed98ce123d7023893c1793bc0d77d82585d41852019a92386b5c3",
-      "size": 2773
+      "path": "include/resource.h",
+      "sha256": "052068fa1e24947398e3da537b058f5d5ff43dbf82477ae37f5ff578313ee9e2",
+      "size": 1439
     },
     {
-      "path": "include/replay.h",
-      "sha256": "7e3c91591ec83a1bedfedcb2f6ece698e24f2eb902c6fc7cde7a27f22922882d",
-      "size": 466
-    },
-    {
-      "path": "include/resapi.h",
-      "sha256": "02fc475f572e989fe5018490f3763c0a370d69e6bc89c8b87d78d3ed9836792b",
-      "size": 1650
-    },
-    {
-      "path": "include/shape2d.h",
-      "sha256": "78a33e428533c6f18ef18f19d5ed266d6135023711b7892978d33e452e63e8fc",
-      "size": 1825
+      "path": "include/shapes3d.h",
+      "sha256": "b7a71175f36ef6a9634608f85888bc61ba3549cc1e62f0fa0d56fa141064982d",
+      "size": 7021
     },
     {
       "path": "include/skybox.h",
@@ -10609,19 +10574,9 @@
       "size": 275
     },
     {
-      "path": "include/stunts_types.h",
-      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
-      "size": 1091
-    },
-    {
-      "path": "include/text.h",
-      "sha256": "3127d93aacc187b46df5f4d3bb2b8824567ee1d5393a3b253054e6bed5cfbe49",
-      "size": 1990
-    },
-    {
       "path": "include/track.h",
-      "sha256": "2acb2f8daa69a0a6842795031dfcffac90ddd0347842192b7506c83cde8bf24f",
-      "size": 3796
+      "sha256": "af0f4ae33a916802c626070cb6a0745e20cb8435ef4d039732913f37e6032a9e",
+      "size": 5927
     },
     {
       "path": "include/trkobj.h",
@@ -10629,13 +10584,23 @@
       "size": 490
     },
     {
-      "path": "include/uiapi.h",
-      "sha256": "5f58af358736623f4548a30e8eeb25a8e0ce4e22d85a532de2fb3ad71c5c2035",
-      "size": 95
+      "path": "include/types.h",
+      "sha256": "ee3c95010d95f2bcb0d86f9a877a3ee1f1e495dbab382f33a83b9cf9e456b7db",
+      "size": 1277
+    },
+    {
+      "path": "include/ui.h",
+      "sha256": "aa9428377377eafee946eb53470bddf273ebaf93c176bb8d00e7a8e2298e8373",
+      "size": 12638
+    },
+    {
+      "path": "include/video.h",
+      "sha256": "4612d335c0be47723bc1d6b24da0f5a2ae49bb7066ef81004b4b81158f5c17c1",
+      "size": 4558
     },
     {
       "path": "include/viewstat.h",
-      "sha256": "a59d13683da45f7e1cc415d8855bad44143d07d95d6806a53cc94321cfda5fe5",
+      "sha256": "bcb9520644dfe17d764d2d5bb1a79bd6b719fe1cf1619cf4b1f1077a71348a44",
       "size": 485
     },
     {
@@ -10645,74 +10610,266 @@
       "value": null
     },
     {
-      "line": 7,
-      "path": "include/geom2d.h",
+      "line": 194,
+      "path": "include/ui.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 12,
-      "path": "include/geom2d.h",
+      "line": 199,
+      "path": "include/ui.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 17,
-      "path": "include/geom2d.h",
+      "line": 9,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 7,
-      "path": "include/geom2d.h",
+      "line": 16,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 12,
-      "path": "include/geom2d.h",
+      "line": 28,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 17,
-      "path": "include/geom2d.h",
+      "line": 33,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 7,
-      "path": "include/geom2d.h",
+      "line": 38,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 12,
-      "path": "include/geom2d.h",
+      "line": 49,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 17,
-      "path": "include/geom2d.h",
+      "line": 8,
+      "path": "include/gamerec.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 7,
-      "path": "include/geom2d.h",
+      "line": 21,
+      "path": "include/gamerec.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 12,
-      "path": "include/geom2d.h",
+      "line": 26,
+      "path": "include/gamerec.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 17,
-      "path": "include/geom2d.h",
+      "line": 32,
+      "path": "include/gamerec.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 91,
+      "path": "include/input.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 91,
+      "path": "include/input.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 135,
+      "path": "include/shapes3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 149,
+      "path": "include/shapes3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 157,
+      "path": "include/shapes3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 170,
+      "path": "include/shapes3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 45,
+      "path": "include/files.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/track.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 29,
+      "path": "include/track.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 42,
+      "path": "include/track.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 57,
+      "path": "include/track.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 73,
+      "path": "include/track.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 80,
+      "path": "include/track.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 85,
+      "path": "include/track.h",
       "pragma": "pack",
       "value": null
     }

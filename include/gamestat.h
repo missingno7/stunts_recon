@@ -1,9 +1,25 @@
-/* Canonical GAMESTATE view; incompatible operational views stay local. */
 #ifndef STUNTS_GAMESTAT_H
 #define STUNTS_GAMESTAT_H
+
+/* Canonical game configuration and race state records. */
+/* Canonical GAMEINFO view; incompatible operational views stay local. */
+#pragma pack()
+struct GAMEINFO {
+    char game_playercarid[4];
+    char game_playermaterial;
+    char game_playertransmission;
+    char game_opponenttype;
+    char game_opponentcarid[4];
+    char game_opponentmaterial;
+    char game_opponenttransmission;
+    char game_trackname[9];
+    char game_framespersec;
+    short game_recordedframes;
+};
+/* Canonical GAMESTATE view; incompatible operational views stay local. */
 struct CARSTATE;
 struct VECTOR;
-#include "vec3.h"
+#include "math3d.h"
 #pragma pack()
 struct GAMESTATE {
     long game_debris_x[24];
@@ -52,4 +68,5 @@ struct GAMESTATE {
     char game_opponent_pass_side;
     char field_45F;
 };
+
 #endif

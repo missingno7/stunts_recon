@@ -10,7 +10,7 @@
 ; ASMDOC Original comments are preserved verbatim even when superseded by these contracts; see files-report.md
 ; for discrepancies.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 name asm012_133840
 DSEG segment byte public 'STUNTSD'
 DSEG ends

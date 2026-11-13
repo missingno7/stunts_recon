@@ -6,7 +6,7 @@
 #define ANGLE_HALF_TURN 0x200
 #define ANGLE_TURN_SHIFT 10
 #define Q8_FRACTION_BITS 8
-#include "stunts_types.h"
+#include "types.h"
 /* MSC 5.10 <ctype.h> macros over the pinned runtime table _ctype */
 #define _UPPER 0x1
 #define _LOWER 0x2
@@ -34,14 +34,11 @@ struct GAMEINFO {
 #include "gamerec.h"
 
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
-#include "vec3.h"
-/* PORT: Layout uses MSC /Zp and target scalar widths. *//* Local view: VECTORLONG; struct[0].name is x; another unit uses lx. */
-struct VECTORLONG { I32 x, y, z; };
+#include "math3d.h"
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
-#include "point2d.h"
+/* PORT: Layout uses MSC /Zp and target scalar widths. */
 
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
-#include "geom2d.h"
 
 /* PORT: Layout uses MSC /Zp and target scalar widths. *//* Local view: SPRITE; struct.count is 2; another unit uses 14. */
 struct SPRITE { void far *image; U16S  words[13]; };
@@ -132,25 +129,12 @@ struct TRANSFORMEDSHAPE3D {
 /* Local view: call_read_line; return is void; another unit uses signed word. */
 extern void far instringz(I8 *destination, I16 maxLength, I16 x, I16 y, I32 source);
 
-
-
 /* Local view: do_fileselect_dialog; parameters[3].pointer is signed byte; another unit uses void. */
 extern I8 far floadreq(I8 *directory, I8 *track,
                                      I8 *extension, I8 far *text);
 
-
-
-
-
-
-
-
-
-
-
 /* Local view: file_combine_and_find; parameters[2] is near pointer; another unit uses signed word. */
 extern I8 * far file_combine_and_find(I8 *, I8 *, I8 *);
-
 
 /* Local view: loadreplay; return is signed word; another unit uses signed byte. */
 extern I16S far loadreplay(I8 *dir, I8 *name);
@@ -164,22 +148,16 @@ extern void far * file_load_shape2d_fatal_thunk(I8 *);
 extern I16S far savefilez(I8 *path, struct HighScoreRecord far *source,
                                   U32  length);
 
-
-
-
-
 /* Local view: font_setup_unknown; parameters[0] is signed word; another unit uses unsigned word. */
 extern void far textcolor(I16 colour, I16 mode);
 /* Local view: fmtframestr; parameters[1] is unsigned word; another unit uses signed word. */
 extern void far maketime(I8 *destination, U16S  frames, I16 mode);
-
 
 /* Local view: highscore_write_a; return is signed byte; another unit uses void. */
 extern I8 far readhighs(I16 create_defaults);
 
 /* Local view: hiscore_draw_text; return is void; another unit uses near pointer. */
 extern void far hiscore_draw_text();
-
 
 /* Local view: shadowtext; return is void; another unit uses near pointer. */
 extern void far shadowtext(I8 *text, I16 width, I16 x, I16 colour, I16 mode);
@@ -197,16 +175,12 @@ extern I8 far * far getresl(I8 far *data, I8 *name);
 /* Local view: freememory; return is void; another unit uses far pointer. */
 extern void far freememory(void far *);
 
-
-
 /* Local view: mousecursor; return is signed word; another unit uses signed byte. */
 extern I16 far mousecursor();
-
 
 /* Local view: nullsub_2; parameters.count is 2; another unit uses 0. */
 extern void far nullsub_2(void far *, I16);
 /* Local math import preserves the original communal LINK ordering. */
-
 
 /* Local view: print_int_as_string_maybe; return is signed word; another unit uses void. */
 extern I16 far myitoa(I8 *text, I16 value, I16 mode, I16 width);
@@ -225,13 +199,11 @@ extern void far getsimdata(void far *, I16);
 /* Local view: shape2d_blit_rle_at; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
 extern void far movpackfxya(void far *shape, I16 x, I16 y);
 
-
 /* Local view: shape3d_load_all; return is void; another unit uses signed word. */
 extern void far init_3dpieces(void);
 
 /* Local view: messagebox; return is signed word; another unit uses unsigned word. */
 extern I16 far messagebox();
-
 
 /* Local view: sprite_blit_to_video; return is signed word; another unit uses void. */
 extern I16 far sprite_blit_to_video(void far *sprite, I16 effect);
@@ -239,8 +211,6 @@ extern I16 far sprite_blit_to_video(void far *sprite, I16 effect);
 extern void far clearwindow(I16 colour);
 /* Local view: sprite_clear_shape_alt; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
 extern void far readfxya(void far *, I16, I16);
-
-
 
 /* Local view: sprite_free_window; parameters[0].pointer is void; another unit uses struct SPRITE. */
 extern void far removewindow(void far *sprite);
@@ -255,9 +225,6 @@ extern void far movcfxya(void far *, I16, I16);
 extern void far sprite_setup1_from_arg_pointer(void far *sprite);
 /* Local view: sprset1size; parameters[0] is signed word; another unit uses unsigned word. */
 extern void far clippix(I16 x, I16 y, I16 width, I16 height);
-
-
-
 
 /* Local view: strlen; return is signed word; another unit uses unsigned word. */
 extern I16 strlen(I8 *text);
@@ -277,43 +244,7 @@ extern void far closeresource(void far *resource);
 /* Local view: update_car_speed; parameters[0] is signed word; another unit uses signed byte. */
 extern void far doengine(I16, I16, struct CARSTATE *, struct SIMD *);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
-
-
-
-
-
-
-
-
-
 
 /* Local view: backlightovr8; type is unsigned byte; another unit uses signed byte. */
 extern U8  backlightovr8;
@@ -328,10 +259,11 @@ int unused_count;
 extern I8 far *main_data_file_addr;
 /* Local view: vidflg3is_minus1; type is unsigned word; another unit uses signed word. */
 extern U16  vidflg3is_minus1;
+int pixel_scales;
 /* Local view: menutimeout; type is unsigned byte; another unit uses signed byte. */
 unsigned char menutimeout;
-#include "text.h"
-#include "dialog.h"
+#include "ui.h"
+#include "viewstat.h"
 unsigned char entry_score_index;
 char results_entryname[17];
 
@@ -353,8 +285,6 @@ struct GAMEINFO globalgamesettings;
 char textstr[40];
 char g_gsnashape_data[5];
 
-
-
 void far *g_miscfile_ptr;
 void far *resource_ptropp;
 void far *g_opp_resources[7];
@@ -362,17 +292,12 @@ void far *g_opp_resources[7];
 /* Local view: resbuftext; type is array[80]; another unit uses signed byte. */
 char resbuftext[80];
 
-
-
-
-
 /* Local view: hscore_trk11_ptr; pointer is struct HighScoreRecord; another unit uses signed byte. */
 struct HighScoreRecord far *hscore_trk11_ptr;
 /* Local view: td14tb; pointer is signed byte; another unit uses unsigned byte. */
 extern I8 far *td14tb;
 
 char opptext_label[3];
-int pixel_scales;
 /* Local view: g_vid_flg2_set; type is unsigned word; another unit uses signed word. */
 extern U16  g_vid_flg2_set;
 
@@ -380,12 +305,6 @@ extern U16  g_vid_flg2_set;
 extern U8  g_videoflg5;
 int waitm_ms;
 struct SPRITE far *g_wndspr;
-
-
-
-
-
-
 
 static short hiscore_rank_prev;
 static short hiscore_old_entry;
@@ -405,7 +324,6 @@ struct PLANE;
 /* Shared simulation state definitions. */
 unsigned char g_rpl_init;
 long centerpos;
-int car_roty_pln;
 char g_plyr_snd_state;
 int wall_facingang;
 int rotxvehicle;
@@ -413,82 +331,74 @@ unsigned char test_pln;
 unsigned char g_cursurfacekindvalue;
 int g_penaltytm;
 struct SIMD ophys_7;
-int viewyshift;
 long veh_position;
 short g_cvxintvl;
-struct MATRIX matrix_transform_view;
 short st_hdg;
 unsigned char sigframe;
+struct MATRIX matrix_transform_view;
 char audio_frmarr[1360];
 int g_audio_frms_ix;
+char intraffic;
 short g_sgateopn;
 unsigned short tmr2;
 char inrepflg;
 char tagtrk;
 int nextpos_normalip;
 int wallanchor_z;
+int g_planidx2;
 int frwhl_angadjusted;
-char audiooppflag;
+int viewyshift;
 struct PLANE far* plncurrptr;
-char g_hillf;
+char audiooppflag;
 short x_course_part;
-struct VECTOR tvec2;
 short wallanchor_x;
 char gm_playmode;
 int op_eng_sound_id;
+int g_player_sound_id;
 struct PLANE far* g_planlist;
 int g_trackpiecescounter;
 long veh_z;
-char sndpendingstate;
-int g_player_sound_id;
-short wall_wallelement;
-short hgthgt;
-struct VECTOR pln_rot_output;
-int g_planidx2;
-short frmcs_time;
-int car_rotate_xc;
-short element_min_wall;
-char idxtrk;
 short road_num;
 int pln_rotate_z;
 char *table_lookup;
+short frmcs_time;
+struct VECTOR pln_rot_output;
+struct VECTOR tvec2;
+short hgthgt;
+int car_rotate_xc;
+int car_roty_pln;
+short element_min_wall;
+char sndpendingstate;
+char idxtrk;
+short wall_wallelement;
 short pl_i;
 int anglerotate_car;
-short sndposrecord;
+char g_hillf;
 int yrotrotveh;
-char intraffic;
+short sndposrecord;
 short road_elem_ctrz;
 char pen_flag_count;
 unsigned char opponent_spd_tbl[16];
 
-#include "audapi.h"
+#include "audio.h"
 #include "car.h"
 #include "chartab.h"
 #include "dlgcolor.h"
 #include "game.h"
-#include "gfxapi.h"
+#include "video.h"
 #include "input.h"
-#include "mathapi.h"
-#include "mathops.h"
-#include "memapi.h"
-#include "prim3d.h"
-#include "replay.h"
-#include "resapi.h"
-#include "shape2d.h"
-#include "sprite2d.h"
+#include "memory.h"
+#include "shapes3d.h"
+#include "files.h"
 #include "track.h"
-
 
 struct GAMEINFO gmconfigbackup;
 
-
 void far *def_fntadr;
-
 
 short track3_gap[2];
 /* Local view: td3; pointer is signed byte; another unit uses signed word. */
 char far *td3;
-
 
 /* Local view: td6_ptr_b; pointer is signed byte; another unit uses unsigned word. */
 char far *td6_ptr_b;
@@ -502,8 +412,6 @@ extern I16 far *trkptrpath;
 extern I16 far *trksign;
 /* Local view: savedptr_ms; pointer is signed byte; another unit uses struct SPRITE. */
 char far *savedptr_ms;
-
-
 
 /* Local view: road_trk; pointer is signed byte; another unit uses unsigned byte. */
 extern I8 far *road_trk;
@@ -520,24 +428,16 @@ unsigned char far *trkd23adr;
 extern struct GAMESTATE far *cvxs_a;
 char pass_check_flag;
 
-
-
 /* Local view: mmgr_alloc_resbytes; return.pointer is void; another unit uses signed byte. */
 extern void far *resmem(I8 *, U32 );
 
-
-
 /* Local view: run_intro_looped; return is signed word; another unit uses unsigned word. */
 extern I16 far run_intro_looped(void);
-
-
 
 /* Local view: run_option_menu; return is signed byte; another unit uses unsigned word. */
 extern I8 far run_option_menu(void);
 /* Local view: _memcpy; return is void; another unit uses near pointer. */
 extern void far _memcpy(void *, void *, U16 );
-
-
 
 /* Local view: getprotection; parameters.count is 1; another unit uses 0. */
 extern void far getprotection(I16);
@@ -547,19 +447,8 @@ extern I16 far findfirst(I8 *);
 /* Local view: end_hiscore; return is signed byte; another unit uses unsigned word. */
 extern I8 far evaluation(void);
 
-
-
-
-
-
 /* Local view: loadedresourceptr; pointer is void; another unit uses signed byte. */
 void far *loadedresourceptr;
-
-
-
-
-
-
 
 /* Local view: intro_text_color_a, intro_text_style_a, intro_text_color_b, intro_text_style_b; type is unsigned word; another unit uses signed word. */
 extern U16S  intro_text_color_a, intro_text_style_a, intro_text_color_b, intro_text_style_b;
@@ -567,8 +456,6 @@ extern U16S  intro_text_color_a, intro_text_style_a, intro_text_color_b, intro_t
 extern U16S  intro_text_color_c, intro_text_style_c, intro_text_color_d, intro_text_style_d;
 /* Local view: intro_text_color_e, intro_text_style_e, intro_text_color_f, intro_text_style_f; type is unsigned word; another unit uses signed word. */
 extern U16S  intro_text_color_e, intro_text_style_e, intro_text_color_f, intro_text_style_f;
-
-
 
 struct RECTANGLE *active_ui_dirty_rect = 0;
 struct RECTANGLE *rectp = 0;
@@ -649,7 +536,7 @@ I16 main(I16 argc, I8 *argv[])
   fntndat = /* PLATFORM(file): Legacy file and resource API. */ myload(0, "fontn.fnt");
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fontsetfontdef();
   INIT_MATRIX();
-  index = 0x6BF3;
+  index = TRACK_ARENA_BYTES;
   trackBlock = /* PLATFORM(memory): Game memory-manager API. */ resmem("trakdata", index);
   g_td01_track_filecpy = (I16S far *) trackBlock;
   trackBlock += TRACK_MAP_PAIR_BYTES;
@@ -672,7 +559,7 @@ I16 main(I16 argc, I8 *argv[])
   trksign = (I16 far *) trackBlock;
   trackBlock += 0x120;
   hscore_trk11_ptr = (struct HighScoreRecord far *) trackBlock;
-  trackBlock += 0x16C;
+  trackBlock += HIG_TABLE_BYTES;
   savedptr_ms = trackBlock;
   trackBlock += 0xF0;
   td13_replay_hdr = trackBlock;
@@ -732,36 +619,36 @@ I16 main(I16 argc, I8 *argv[])
       /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ file_load_audio_resource("skidslct", "skidms", "SLCT");
     switch (select())
     {
-      case 3:
+      case UI_MAIN_TRACK:
         teditmain(0);
         goto show_menu;
-      case 2:
+      case UI_MAIN_OPPONENT:
         /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
         loading();
         selectopponent();
         goto show_menu;
-      case 4:
+      case UI_MAIN_OPTIONS:
         /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
         loading();
         if (run_option_menu() == 0)
           goto show_menu;
         menuFlag = 1;
         goto do_game;
-      case 1:
+      case UI_MAIN_CAR:
         /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
         loading();
         selectcar(globalgamesettings.game_playercarid, &globalgamesettings.game_playermaterial, &globalgamesettings.game_playertransmission, 0);
         goto show_menu;
-      case 0:
+      case UI_MAIN_START:
         menuFlag = 0;
       do_game:
         gmconfigbackup = globalgamesettings;
         for (index = 0; index < TRACK_MAP_PAIR_BYTES; ++index)
           coursedataappend_address[index] = td14tb[index];
-        for (index = 0; index < 0x51; ++index)
+        for (index = 0; index < UI_FILENAME_BACKUP_BYTES; ++index)
         {
           coursedataappend_address[index + TRACK_MAP_PAIR_BYTES] = track_file[index];
-          coursedataappend_address[index + 0x75B] = replay_file[index];
+          coursedataappend_address[index + TRACK_ARENA_REPLAY_PATH_OFFSET] = replay_file[index];
         }
         if (menutimeout == 0)
         {
@@ -815,16 +702,16 @@ I16 main(I16 argc, I8 *argv[])
     globalgamesettings = gmconfigbackup;
     for (index = 0; index < TRACK_MAP_PAIR_BYTES; ++index)
       td14tb[index] = coursedataappend_address[index];
-    for (index = 0; index < 0x51; ++index)
+    for (index = 0; index < UI_FILENAME_BACKUP_BYTES; ++index)
     {
       track_file[index] = coursedataappend_address[index + TRACK_MAP_PAIR_BYTES];
-      replay_file[index] = coursedataappend_address[index + 0x75B];
+      replay_file[index] = coursedataappend_address[index + TRACK_ARENA_REPLAY_PATH_OFFSET];
     }
     /* PLATFORM(memory): Game memory-manager API. */ purgememory(cvxs_a);
     if (menutimeout != 0)
       goto do_intro0;
     goto show_menu;
-  } while (messagebox(2, 1, getresl(main_data_file_addr, "dos"), 0xFFFF, 0xFFFF, dialog_frame_color, 0, 0) < 1);
+  } while (messagebox(2, 1, getresl(main_data_file_addr, "dos"), UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0) < 1);
   mouseoff();
   /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ restoretimer();
   audiodrv_atexit();
@@ -1042,10 +929,10 @@ I8S  far load_intro_resources(void)
 
 I8S  menu_left[6] = { 1, 2, 4, 0, 3, 0 };
 I8S  menu_right[6] = { 3, 0, 1, 4, 2, 0 };
-I16 menu_buttons_x1[5] = { 105, 66, 5, 190, 255 };
-I16 menu_buttons_x2[5] = { 208, 107, 67, 253, 312 };
-I16 menu_buttons_y1[5] = { 119, 77, 114, 76, 116 };
-I16 menu_buttons_y2[5] = { 197, 120, 170, 122, 166 };
+I16 menu_buttons_x1[UI_MAIN_MENU_BUTTON_COUNT] = { 105, 66, 5, 190, 255 };
+I16 menu_buttons_x2[UI_MAIN_MENU_BUTTON_COUNT] = { 208, 107, 67, 253, 312 };
+I16 menu_buttons_y1[UI_MAIN_MENU_BUTTON_COUNT] = { 119, 77, 114, 76, 116 };
+I16 menu_buttons_y2[UI_MAIN_MENU_BUTTON_COUNT] = { 197, 120, 170, 122, 166 };
 /* Purpose: Draws and processes the main menu.
  * Parameters: none.
  * Returns: far.
@@ -1101,7 +988,7 @@ I8 far select(void)
             selection = hit;
 
         unused_count += mouseDelta;
-        if (unused_count > 6000) {
+        if (unused_count > UI_MAIN_IDLE_TIMEOUT) {
             unused_count = 0;
             ++menutimeout;
         }
@@ -1120,7 +1007,7 @@ I8 far select(void)
             selection = menu_right[selection];
             break;
         case 27:
-            selection = -1;
+            selection = UI_MAIN_CANCEL;
             goto menu_done;
         case 13:
         case 32:
@@ -1133,10 +1020,10 @@ menu_done:
     return selection;
 }
 
-I16S trackmenu_buttons_x1[3] = { 16, 112, 208 };
-I16S trackmenu_buttons_x2[3] = { 112, 208, 304 };
-I16S trackmenu_buttons_y1[3] = { 171, 171, 171 };
-I16S trackmenu_buttons_y2[3] = { 197, 197, 197 };
+I16S trackmenu_buttons_x1[UI_TRACK_MENU_BUTTON_COUNT] = { 16, 112, 208 };
+I16S trackmenu_buttons_x2[UI_TRACK_MENU_BUTTON_COUNT] = { 112, 208, 304 };
+I16S trackmenu_buttons_y1[UI_TRACK_MENU_BUTTON_COUNT] = { 171, 171, 171 };
+I16S trackmenu_buttons_y2[UI_TRACK_MENU_BUTTON_COUNT] = { 197, 197, 197 };
 /* Purpose: Presents the track list and handles track selection.
  * Parameters: restart.
  * Returns: far.
@@ -1194,7 +1081,7 @@ preview:
                         dlg_colour, 0);
 
     if (readhighs(0) == 0) {
-        if (hscore_trk11_ptr[scrorder_idxs[0]].marker != 0xffff) {
+        if (hscore_trk11_ptr[scrorder_idxs[0]].marker != HIG_EMPTY_TIME) {
         strcpyfar(resbuftext, getresl(main_data_file_addr, "hs0"));
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ shadowtext(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), 0x12,
                         dlg_colour, 0);
@@ -1202,7 +1089,7 @@ preview:
         genhline(0, offsets);
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ textcolor(0, 0);
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[0], 16, 30);
-        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[1], 120, 30);
+        /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[1], UI_HIG_CAR_COLUMN_X, 30);
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[2], 224, 30);
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[3], 272, 30);
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fontsetfontdef();
@@ -1232,7 +1119,7 @@ menu_loop:
         trackmenu_buttons_y1, trackmenu_buttons_y2,
         menu_hover_color_a, menu_hover_color_b);
     unused_count += timerDiff;
-    if (unused_count > 0x1770) {
+    if (unused_count > UI_MAIN_IDLE_TIMEOUT) {
         unused_count = 0;
         ++menutimeout;
     }
@@ -1243,7 +1130,7 @@ menu_loop:
     if (choice != -1)
         trackSelection = choice;
     if (menutimeout != 0) {
-        trackSelection = 2;
+        trackSelection = UI_TRACKS_MENU_RETURN;
         keyCodePressed = 0x0d;
     }
     if (keyCodePressed == 0)
@@ -1253,16 +1140,16 @@ menu_loop:
         if (trackSelection != 0)
             --trackSelection;
         else
-            trackSelection = 2;
+            trackSelection = UI_TRACKS_MENU_RETURN;
         goto menu_loop;
     case 0x4d00:
-        if (trackSelection < 2)
+        if (trackSelection < UI_TRACKS_MENU_RETURN)
             ++trackSelection;
         else
             trackSelection = 0;
         goto menu_loop;
     case 0x1b:
-        trackSelection = -1;
+        trackSelection = UI_TRACKS_MENU_CANCEL;
     case 0x0d:
     case 0x20:
         break;
@@ -1273,7 +1160,7 @@ menu_loop:
     default:
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(g_wndspr);
         return;
-    case 0:
+    case UI_TRACKS_MENU_LOAD:
         dialogRes = floadreq(track_file, globalgamesettings.game_trackname,
                                          ".trk",
                                          getresl(main_data_file_addr, "trk"));
@@ -1286,7 +1173,7 @@ menu_loop:
         }
         lastSelection = -1;
         goto menu_loop;
-    case 1:
+    case UI_TRACKS_MENU_EDIT:
         /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(g_wndspr);
     restart_game:
         /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
@@ -1332,13 +1219,13 @@ I8 far readhighs(I16 create_defaults)
     return 0;
   }
   strcpy((I8 *) row.bytes, "....................");
-  strcpy(((I8 *) row.bytes) + 17, ".......................");
-  row.bytes[41] = 0;
-  strcpy(((I8 *) row.bytes) + 42, "../....");
-  row.marker = 0xffff;
+  strcpy(((I8 *) row.bytes) + HIG_RECORD_OFFSET_CAR_TEXT, ".......................");
+  row.bytes[HIG_RECORD_OFFSET_CAR_STYLE] = 0;
+  strcpy(((I8 *) row.bytes) + HIG_RECORD_OFFSET_OPPONENT_TEXT, "../....");
+  row.marker = HIG_EMPTY_TIME;
   for (index = 0; index < 7; ++index)
     hscore_trk11_ptr[index] = row;
-  index = /* PLATFORM(file): Legacy file and resource API. */ savefilez(buf_g_path, hscore_trk11_ptr, 0x16C);
+  index = /* PLATFORM(file): Legacy file and resource API. */ savefilez(buf_g_path, hscore_trk11_ptr, HIG_TABLE_BYTES);
   if (index != 0)
     return 1;
   return 0;
@@ -1372,7 +1259,7 @@ void far drawhighs(void)
     strcpyfar(resbuftext, getresl(main_data_file_addr, "hs2"));
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, 16, 15, dlg_colour, 0);
     strcpyfar(resbuftext, getresl(main_data_file_addr, "hs3"));
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, 120, 15, dlg_colour, 0);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, UI_HIG_CAR_COLUMN_X, 15, dlg_colour, 0);
     strcpyfar(resbuftext, getresl(main_data_file_addr, "hs5"));
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, 224, 15, dlg_colour, 0);
     strcpyfar(resbuftext, getresl(main_data_file_addr, "hs4"));
@@ -1384,10 +1271,10 @@ void far drawhighs(void)
 row_normal:
     row_color = 0;
 row_draw:
-    row_top = row_index * 10 + 25;
+    row_top = row_index * UI_HIG_ROW_HEIGHT + UI_HIG_FIRST_ROW_Y;
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ textcolor(row_color, 0);
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[0], 16, row_top);
-    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[1], 120, row_top);
+    /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[1], UI_HIG_CAR_COLUMN_X, row_top);
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[2], 224, row_top);
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ fortextxy(resbuftext + offsets[3], 272, row_top);
     ++row_index;
@@ -1423,19 +1310,19 @@ void far genhline(I16 rowIndex, I8 *stringOffsets)
     strcpy(resbuftext, (I8 *)scoreRecord.bytes);
     textLength = strlen(resbuftext) + 1;
     stringOffsets[1] = textLength;
-    strcpy(resbuftext + textLength, (I8 *)scoreRecord.bytes + 17);
+    strcpy(resbuftext + textLength, (I8 *)scoreRecord.bytes + HIG_RECORD_OFFSET_CAR_TEXT);
     textLength += strlen(resbuftext + textLength) + 1;
     stringOffsets[2] = textLength;
     resbuftext[textLength] = 0;
-    if (scoreRecord.bytes[41] == 1)
+    if (scoreRecord.bytes[HIG_RECORD_OFFSET_CAR_STYLE] == 1)
         strcat(resbuftext + textLength, "(");
-    strcat(resbuftext + textLength, (I8 *)scoreRecord.bytes + 42);
-    if (scoreRecord.bytes[41] == 1)
+    strcat(resbuftext + textLength, (I8 *)scoreRecord.bytes + HIG_RECORD_OFFSET_OPPONENT_TEXT);
+    if (scoreRecord.bytes[HIG_RECORD_OFFSET_CAR_STYLE] == 1)
         strcat(resbuftext + textLength, ")");
     textLength += strlen(resbuftext + textLength) + 1;
     frameRate = /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame;
-    /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame = 20;
-    if (scoreRecord.marker != 0xffff)
+    /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame = HIG_CANONICAL_FPS;
+    if (scoreRecord.marker != HIG_EMPTY_TIME)
         maketime(timeText, scoreRecord.marker, 1);
     else
         maketime(timeText, 0, 1);
@@ -1479,14 +1366,14 @@ void far addhighs(U16S  score, I8 far *text, U8  carStyle)
 
         current.marker = score;
         current.bytes[0] = 0;
-        strcpy((I8 *)current.bytes + 17, textstr);
-        current.bytes[41] = carStyle;
+        strcpy((I8 *)current.bytes + HIG_RECORD_OFFSET_CAR_TEXT, textstr);
+        current.bytes[HIG_RECORD_OFFSET_CAR_STYLE] = carStyle;
         if (globalgamesettings.game_opponenttype != 0) {
-            strcpy((I8 *)current.bytes + 42, opptext_label);
-            current.bytes[44] = '/';
-            strcpy((I8 *)current.bytes + 45, g_gsnashape_data);
+            strcpy((I8 *)current.bytes + HIG_RECORD_OFFSET_OPPONENT_TEXT, opptext_label);
+            current.bytes[HIG_RECORD_OFFSET_OPPONENT_SEPARATOR] = '/';
+            strcpy((I8 *)current.bytes + HIG_RECORD_OFFSET_OPPONENT_CAR_TEXT, g_gsnashape_data);
         } else {
-            strcpy((I8 *)current.bytes + 42, " ");
+            strcpy((I8 *)current.bytes + HIG_RECORD_OFFSET_OPPONENT_TEXT, " ");
         }
         hscore_trk11_ptr[6] = current;
 
@@ -1496,7 +1383,7 @@ void far addhighs(U16S  score, I8 far *text, U8  carStyle)
         messagebox(3, 0, text, -1, -1,
                     dialog_frame_color, &dialogY, 0);
         /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
-        instringz(results_entryname, 16, dialogY, dialogX, 30000);
+        instringz(results_entryname, UI_HIG_NAME_LIMIT, dialogY, dialogX, 30000);
         strcpy((I8 *)current.bytes, results_entryname);
         hscore_trk11_ptr[6] = current;
 
@@ -1527,15 +1414,15 @@ void far savehighs(void)
 
     /* PLATFORM(file): Legacy file and resource API. */ makename(track_file, globalgamesettings.game_trackname, ".hig", buf_g_path);
     g_is_busy = 1;
-    /* PLATFORM(file): Legacy file and resource API. */ savefilez(buf_g_path, orderedScores, 0x16cUL);
+    /* PLATFORM(file): Legacy file and resource API. */ savefilez(buf_g_path, orderedScores, HIG_TABLE_BYTES_U32);
     g_is_busy = 0;
 }
 
 struct RECTANGLE carmenu_cliprect = { 0, 320, 0, 95 };
-I16 carmenu_buttons_y1[5] = { 229, 229, 229, 229, 229 };
-I16 carmenu_buttons_y2[5] = { 316, 316, 316, 316, 316 };
-I16 carmenu_buttons_x1[5] = { 107, 125, 143, 161, 179 };
-I16 carmenu_buttons_x2[5] = { 124, 142, 160, 178, 196 };
+I16 carmenu_buttons_y1[UI_CAR_MENU_BUTTON_COUNT] = { 229, 229, 229, 229, 229 };
+I16 carmenu_buttons_y2[UI_CAR_MENU_BUTTON_COUNT] = { 316, 316, 316, 316, 316 };
+I16 carmenu_buttons_x1[UI_CAR_MENU_BUTTON_COUNT] = { 107, 125, 143, 161, 179 };
+I16 carmenu_buttons_x2[UI_CAR_MENU_BUTTON_COUNT] = { 124, 142, 160, 178, 196 };
 I8 aLnam[6] = "lnam";
 struct RECTANGLE car_menu_clip_rect = { 0, 320, 0, 0 };
 struct VECTOR car_menu_car_position = { 0, -840, 2880 };
@@ -1878,7 +1765,7 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usescreen();
     rotationDeltaY = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ docursor(selectedButtonY, carmenu_buttons_y1, carmenu_buttons_y2, carmenu_buttons_x1, carmenu_buttons_x2, menu_hover_color_a, menu_hover_color_b);
     unused_count += rotationDeltaY;
-    if (unused_count > 0x2ee0)
+    if (unused_count > UI_CAR_IDLE_TIMEOUT)
     {
       unused_count = 0;
       ++menutimeout;
@@ -1903,7 +1790,7 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
         case 0x20:
           switch (selectedButtonY)
         {
-          case 0:
+          case UI_CAR_MENU_DONE:
             if (canLeave == 0)
               continue;
             /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ removewindow(g_wndspr);
@@ -1922,19 +1809,19 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
             menutimeout = 0;
             return;
 
-          case 1:
+          case UI_CAR_MENU_NEXT:
             ++carIndexY;
             if (carIndexY == carCountLast)
               carIndexY = 0;
             continue;
 
-          case 2:
+          case UI_CAR_MENU_PREVIOUS:
             --carIndexY;
             if (carIndexY < 0)
               carIndexY = carCountLast - 1;
             continue;
 
-          case 3:
+          case UI_CAR_MENU_TRANSMISSION:
             *transmissionofs ^= 1;
             /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
             buttonText = getresl(g_miscfile_ptr, ((*transmissionofs) != 0) ? ("bau") : ("bma"));
@@ -1945,7 +1832,7 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
             mouseon();
             continue;
 
-          case 4:
+          case UI_CAR_MENU_MATERIAL:
             ++(*materialofs);
             runStateNew = 3;
             continue;
@@ -1971,7 +1858,6 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
           selectedButtonY = 0;
           break;
 
-
       }
 
     }
@@ -1979,10 +1865,10 @@ void far selectcar(I8 *caridptr, I8 *materialofs,
 
 }
 
-I16 opponentmenu_buttons_x1[5] = { 20, 76, 132, 188, 244 };
-I16 opponentmenu_buttons_x2[5] = { 76, 132, 188, 244, 300 };
-I16 opponentmenu_buttons_y1[5] = { 177, 177, 177, 177, 177 };
-I16 opponentmenu_buttons_y2[5] = { 197, 197, 197, 197, 197 };
+I16 opponentmenu_buttons_x1[UI_OPPONENT_MENU_BUTTON_COUNT] = { 20, 76, 132, 188, 244 };
+I16 opponentmenu_buttons_x2[UI_OPPONENT_MENU_BUTTON_COUNT] = { 76, 132, 188, 244, 300 };
+I16 opponentmenu_buttons_y1[UI_OPPONENT_MENU_BUTTON_COUNT] = { 177, 177, 177, 177, 177 };
+I16 opponentmenu_buttons_y2[UI_OPPONENT_MENU_BUTTON_COUNT] = { 197, 197, 197, 197, 197 };
 /* Purpose: Presents and processes the opponent selection menu.
  * Parameters: none.
  * Returns: far.
@@ -2137,20 +2023,20 @@ menu_opponent_mouse_redraw:
         case 0x1b:
         case 0x20:
             switch (selectionIndex) {
-            case 0:
+            case UI_OPPONENT_MENU_PREVIOUS:
                 --globalgamesettings.game_opponenttype;
                 if (globalgamesettings.game_opponenttype < 1)
                     globalgamesettings.game_opponenttype = 6;
                 break;
-            case 1:
+            case UI_OPPONENT_MENU_NEXT:
                 ++globalgamesettings.game_opponenttype;
                 if (globalgamesettings.game_opponenttype == 7)
                     globalgamesettings.game_opponenttype = 1;
                 break;
-            case 2:
+            case UI_OPPONENT_MENU_NONE:
                 globalgamesettings.game_opponenttype = 0;
                 break;
-            case 3:
+            case UI_OPPONENT_MENU_CAR:
                 if (globalgamesettings.game_opponenttype != 0) {
                     /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
                     mouseoff();
@@ -2166,7 +2052,7 @@ menu_opponent_mouse_redraw:
                     continue;
                 }
                 break;
-            case 4:
+            case UI_OPPONENT_MENU_DONE:
                 if (globalgamesettings.game_opponenttype != 0) {
                     if (globalgamesettings.game_opponentcarid[0] == -1) {
                         globalgamesettings.game_opponentcarid[0] = globalgamesettings.game_playercarid[0];
@@ -2245,10 +2131,10 @@ I8 far run_option_menu(void)
     while (active != 0) {
         selection = messagebox(2, 1,
             getresl(g_miscfile_ptr, "mop"),
-            0xffff, 0xffff, dialog_frame_color, 0, 0);
+            UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0);
 
         switch (selection) {
-        case 0:
+        case UI_OPTION_MENU_INPUT:
             if (mousedrive != 0) {
                 color_or_file = 2;
             } else if (joystick_enabled != 0) {
@@ -2258,7 +2144,7 @@ I8 far run_option_menu(void)
             }
             selection = messagebox(2, 1,
                 getresl(g_miscfile_ptr, "mid"),
-                0xffff, 0xffff, performGraphColor, 0, color_or_file);
+                UI_DIALOG_CENTER, UI_DIALOG_CENTER, performGraphColor, 0, color_or_file);
             switch (selection) {
             case 0: mkeyon(); break;
             case 1: do_joystick_resource_text(); break;
@@ -2266,15 +2152,15 @@ I8 far run_option_menu(void)
             }
             break;
 
-        case 1:
+        case UI_OPTION_MENU_MOF_RESOURCE:
             mmusictog();
             break;
 
-        case 2:
+        case UI_OPTION_MENU_SONSOF_RESOURCE:
             msoundtog();
             break;
 
-        case 3:
+        case UI_OPTION_MENU_LOAD_REPLAY:
             color_or_file = floadreq(replay_file, ReplayName, ".rpl",
                 getresl(main_data_file_addr, "rep"));
             if (color_or_file != 0) {
@@ -2287,16 +2173,16 @@ I8 far run_option_menu(void)
             }
             break;
 
-        case 4:
+        case UI_OPTION_MENU_GRAPHICS:
             msetrender();
             break;
 
-        case 5:
+        case UI_OPTION_MENU_DOS:
             mdosexit();
             break;
 
         case -1:
-        case 6:
+        case UI_OPTION_MENU_DONE:
             active = 0;
             break;
         }
@@ -2311,10 +2197,10 @@ I16 hiscore_anim_table[28] = { 2, 1, 2, 3, 4, 1, 4, 0, 5, 0, 0, 6, 5, 6, 5, 1,
                                1, 2, 3, 5, 0, 6, 2, 3, 4, 4, 0, 6 };
 I16S hiscore_rank_remap[3] = { 2, 0, 1 };
 I16S hiscore_entry_remap[4] = { 1, 0, 3, 2 };
-I16S hiscore_buttons_x1[5] = { 4, 84, 164, 244, 128 };
-I16S hiscore_buttons_x2[5] = { 75, 155, 235, 315, 199 };
-I16S hiscore_buttons_y1[5] = { 174, 174, 174, 174, 174 };
-I16S hiscore_buttons_y2[5] = { 197, 197, 197, 197, 197 };
+I16S hiscore_buttons_x1[UI_RESULTS_BUTTON_COUNT] = { 4, 84, 164, 244, 128 };
+I16S hiscore_buttons_x2[UI_RESULTS_BUTTON_COUNT] = { 75, 155, 235, 315, 199 };
+I16S hiscore_buttons_y1[UI_RESULTS_BUTTON_COUNT] = { 174, 174, 174, 174, 174 };
+I16S hiscore_buttons_y2[UI_RESULTS_BUTTON_COUNT] = { 197, 197, 197, 197, 197 };
 I8 aOpp2win[] = "opp2win";
 I8 aOpp2lose[] = "opp2lose";
 I8 aOp01[] = "op01";
@@ -2426,7 +2312,7 @@ I8 far evaluation(void)
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), y, dlg_colour, 0);
     y += 10;
   }
-  resultMode = 2;
+  resultMode = UI_RACE_RESULT_NO_WINNER;
   if (globalgamesettings.game_opponenttype != 0)
   {
     if (race_stats.game_opponent_finish_time == 0)
@@ -2434,14 +2320,14 @@ I8 far evaluation(void)
       strcpyfar(resbuftext, getresl(textFile, "olt"));
       strcpyfar(resbuftext + strlen(resbuftext), getresl(textFile, "dnf"));
       if (race_stats.game_total_finish != 0)
-        resultMode = 0;
+        resultMode = UI_RACE_RESULT_PLAYER_WINS;
     }
     else if (race_stats.game_total_finish == 0 || (U16S ) race_stats.game_opponent_finish_time < (U16S ) race_stats.game_total_finish)
     {
       strcpyfar(resbuftext, getresl(textFile, "owt"));
       maketime(formattedRaceTextBuffer, race_stats.game_opponent_finish_time, 1);
       strcat(resbuftext, formattedRaceTextBuffer);
-      resultMode = 1;
+      resultMode = UI_RACE_RESULT_OPPONENT_WINS;
     }
     else
     {
@@ -2449,17 +2335,17 @@ I8 far evaluation(void)
       maketime(formattedRaceTextBuffer, race_stats.game_opponent_finish_time, 1);
       strcat(resbuftext, formattedRaceTextBuffer);
       if (race_stats.game_total_finish != 0)
-        resultMode = 0;
+        resultMode = UI_RACE_RESULT_PLAYER_WINS;
     }
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), y, dlg_colour, 0);
     y += 10;
   }
-  if (resultMode == 0)
+  if (resultMode == UI_RACE_RESULT_PLAYER_WINS)
     /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ file_load_audio_resource("skidvict", "skidms", "VICT");
   else
     /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ file_load_audio_resource("skidover", "skidms", "OVER");
   opponent = globalgamesettings.game_opponenttype;
-  if (resultMode == 2)
+  if (resultMode == UI_RACE_RESULT_NO_WINNER)
     if (race_stats.game_oEndFrame != race_stats.game_pEndFrame)
     opponent = 0;
   strcpyfar(resbuftext, getresl(textFile, "avs"));
@@ -2505,7 +2391,7 @@ I8 far evaluation(void)
       hiscore_opponent_live = drnd() % 3;
       if (hiscore_opponent_live == hiscore_opponent_earlier)
         hiscore_opponent_live = hiscore_rank_remap[hiscore_opponent_live];
-      if (resultMode == 1)
+      if (resultMode == UI_RACE_RESULT_OPPONENT_WINS)
       {
         if (race_stats.game_total_finish != 0)
           end_hiscore_random = drnd() % 2 + 2;
@@ -2517,7 +2403,7 @@ I8 far evaluation(void)
       if (end_hiscore_random == hiscore_old_entry)
         end_hiscore_random = hiscore_entry_remap[end_hiscore_random];
     }
-    if (resultMode == 1)
+    if (resultMode == UI_RACE_RESULT_OPPONENT_WINS)
     {
       aOpp2win[3] = globalgamesettings.game_opponenttype + '0';
       scoreResource = /* PLATFORM(file): Legacy file and resource API. */ myload(3, aOpp2win);
@@ -2535,7 +2421,7 @@ I8 far evaluation(void)
       resChar = 'd';
     }
   }
-  newRecord = 0;
+  newRecord = UI_HIG_STATE_NORMAL;
   /* PLATFORM(file): Legacy file and resource API. */ makename(track_file, globalgamesettings.game_trackname, ".trk", buf_g_path);
   trackFile = /* PLATFORM(file): Legacy file and resource API. */ myload(1, buf_g_path);
   if (trackFile == 0)
@@ -2549,39 +2435,39 @@ I8 far evaluation(void)
     {
       if (trackFile[i] != td14tb[i])
       {
-        newRecord = -1;
+        newRecord = UI_HIG_STATE_INELIGIBLE;
         break;
       }
     }
     /* PLATFORM(memory): Game memory-manager API. */ purgememory(trackFile);
   }
   else
-    newRecord = -1;
-  if (newRecord != -1)
+    newRecord = UI_HIG_STATE_INELIGIBLE;
+  if (newRecord != UI_HIG_STATE_INELIGIBLE)
   {
     if (readhighs(0) != 0)
       if (readhighs(1) != 0)
-      newRecord = -1;
+      newRecord = UI_HIG_STATE_INELIGIBLE;
   }
-  if (newRecord == 0)
+  if (newRecord == UI_HIG_STATE_NORMAL)
   if (race_stats.game_total_finish != 0)
   {
     finalScoreTimeForRecord = race_stats.game_total_finish;
     if ((didrace & 6) == 0)
       if (finalScoreTimeForRecord != 0 && hscore_trk11_ptr[6].marker > finalScoreTimeForRecord)
-      newRecord = 1;
+      newRecord = UI_HIG_STATE_QUALIFYING;
   }
   currentAnimationFrame = 0;
-  animTime = 30;
+  animTime = UI_RESULTS_ANIMATION_TICKS;
   newEvaluation = 1;
 redraw:
-  if (opponent != 0 && newRecord == 2)
+  if (opponent != 0 && newRecord == UI_HIG_STATE_SHOW_EVALUATION)
   {
-    newRecord = 0;
+    newRecord = UI_HIG_STATE_NORMAL;
     /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
     drawhighs();
     /* MSC 5.10: keep this assignment despite the common assignment below. */
-    currentMenuSelection = 1;
+    currentMenuSelection = UI_RESULTS_BUTTON_REPLAY;
     newEvaluation = 1;
   }
   else if (opponent != 0)
@@ -2600,7 +2486,7 @@ redraw:
     textLen = 0;
     pixels = 0;
     wordLen = 0;
-    if (resultMode == 2)
+    if (resultMode == UI_RACE_RESULT_NO_WINNER)
       parts = 1;
     else
       parts = 3;
@@ -2609,7 +2495,7 @@ redraw:
       switch (i)
       {
         case 0:
-          if (resultMode == 2)
+          if (resultMode == UI_RACE_RESULT_NO_WINNER)
             textResourceCursor = getresl(enemyRes, "d4a");
           else
           {
@@ -2681,7 +2567,7 @@ redraw:
     newEvaluation = 0;
     if (newRecord > 0)
     {
-      newRecord = 0;
+      newRecord = UI_HIG_STATE_NORMAL;
       newEvaluation = 1;
       draw3dbutton(getresl(textFile, "bct"), 0x81, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
       /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ sprite_blit_to_video(g_wndspr, screenBlitFlag);
@@ -2694,9 +2580,9 @@ redraw:
       {
         animationTimeDelta = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ docursor(4, hiscore_buttons_x1, hiscore_buttons_x2, hiscore_buttons_y1, hiscore_buttons_y2, menu_hover_color_a, menu_hover_color_b);
         animTime += animationTimeDelta;
-        if (animTime >= 30)
+        if (animTime >= UI_RESULTS_ANIMATION_TICKS)
         {
-          animTime -= 30;
+          animTime -= UI_RESULTS_ANIMATION_TICKS;
           ++currentAnimationFrame;
           if (animationFrameList[currentAnimationFrame] == 0)
             currentAnimationFrame = 0;
@@ -2738,13 +2624,13 @@ redraw:
     /* PLATFORM(input_kb): Legacy keyboard input or keyboard-state restoration. */ clear_keyboardbuffer();
     mouseoff();
     addhighs(finalScoreTimeForRecord, getresl(textFile, "inh"), 0);
-    newRecord = 0;
+    newRecord = UI_HIG_STATE_NORMAL;
     screenBlitFlag = -2;
   }
   else
   {
     mouseoff();
-    if (newRecord == -1)
+    if (newRecord == UI_HIG_STATE_INELIGIBLE)
     {
       strcpyfar(resbuftext, getresl(textFile, "hna"));
       /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ hiscore_draw_text(resbuftext, /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ mycenter(resbuftext), 0x32, dlg_colour, 0);
@@ -2754,11 +2640,11 @@ redraw:
   }
 /* MSC 5.10: this unreferenced boundary remains object-sensitive. */
 show_buttons:
-  currentMenuSelection = 1;
+  currentMenuSelection = UI_RESULTS_BUTTON_REPLAY;
   priorMenuIndex = 1;
   docursorinit();
   /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
-  if (opponent == 0 || newRecord == -1)
+  if (opponent == 0 || newRecord == UI_HIG_STATE_INELIGIBLE)
     screenXOffset = -36;
   else
   {
@@ -2774,7 +2660,7 @@ show_buttons:
     menuText = getresl(textFile, "bra");
   else
     menuText = getresl(textFile, "bdr");
-  draw3dbutton(menuText, screenXOffset + hiscore_buttons_x1[2] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
+  draw3dbutton(menuText, screenXOffset + hiscore_buttons_x1[UI_RESULTS_BUTTON_DRIVE] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
   draw3dbutton(getresl(textFile, "bmm"), screenXOffset + hiscore_buttons_x1[3] + 1, 0xaf, 0x46, 0x15, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
   for (i = 0; i < 4; ++i)
   {
@@ -2800,12 +2686,12 @@ show_buttons:
     }
     animationTimeDelta = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ docursor(currentMenuSelection, buttonsX1, buttonX2Positions, hiscore_buttons_y1, hiscore_buttons_y2, menu_hover_color_a, menu_hover_color_b);
     if (newEvaluation == 0)
-    if (resultMode != 2)
+    if (resultMode != UI_RACE_RESULT_NO_WINNER)
     {
       animTime += animationTimeDelta;
-      if (animTime >= 30)
+      if (animTime >= UI_RESULTS_ANIMATION_TICKS)
       {
-        animTime -= 30;
+        animTime -= UI_RESULTS_ANIMATION_TICKS;
         ++currentAnimationFrame;
         if (animationFrameList[currentAnimationFrame] == 0)
           currentAnimationFrame = 0;
@@ -2831,7 +2717,7 @@ show_buttons:
         mouseon();
       }
     }
-    if (opponent == 0 || newRecord == -1)
+    if (opponent == 0 || newRecord == UI_HIG_STATE_INELIGIBLE)
     {
       clickedButton = /* PLATFORM(input_mouse): Legacy mouse input for menu interaction. */ mousecursor(3, buttonsX1 + 1, buttonX2Positions + 1, hiscore_buttons_y1 + 1, hiscore_buttons_y2 + 1);
       if (clickedButton != -1)
@@ -2850,18 +2736,18 @@ show_buttons:
     {
       case 13:
       case 32:
-        if (currentMenuSelection == 0)
+        if (currentMenuSelection == UI_RESULTS_BUTTON_EVALUATE)
         {
           /* PLATFORM(video): Legacy video mode, sprite, pixel, or font API. */ usebuffer();
           draw3dbutton(0, 0, 0, SCREEN_WIDTH_PIXELS, HALF_SCREEN_HEIGHT_PIXELS, menu_button_color_a, menu_button_color_b, menu_button_color_c, 0);
           if (newEvaluation != 0)
           {
-            newRecord = 0;
+            newRecord = UI_HIG_STATE_NORMAL;
             goto redraw;
           }
           else
           {
-            newRecord = 2;
+            newRecord = UI_HIG_STATE_SHOW_EVALUATION;
             goto redraw;
           }
         }
@@ -2876,25 +2762,25 @@ show_buttons:
         closeresource(textFile);
         return currentMenuSelection - 1;
       case 0x4b00:
-        if (opponent == 0 || newRecord == -1)
+        if (opponent == 0 || newRecord == UI_HIG_STATE_INELIGIBLE)
         {
           if (currentMenuSelection <= 1)
-            currentMenuSelection = 3;
+            currentMenuSelection = UI_RESULTS_BUTTON_MAIN_MENU;
           else
             --currentMenuSelection;
         }
-        else if (currentMenuSelection != 0)
+        else if (currentMenuSelection != UI_RESULTS_BUTTON_EVALUATE)
           --currentMenuSelection;
         else
-          currentMenuSelection = 3;
+          currentMenuSelection = UI_RESULTS_BUTTON_MAIN_MENU;
         break;
       case 0x4d00:
-        if (currentMenuSelection < 3)
+        if (currentMenuSelection < UI_RESULTS_BUTTON_MAIN_MENU)
           ++currentMenuSelection;
-        else if (opponent == 0 || newRecord == -1)
-          currentMenuSelection = 1;
+        else if (opponent == 0 || newRecord == UI_HIG_STATE_INELIGIBLE)
+          currentMenuSelection = UI_RESULTS_BUTTON_REPLAY;
         else
-          currentMenuSelection = 0;
+          currentMenuSelection = UI_RESULTS_BUTTON_EVALUATE;
         break;
       default:
         continue;
@@ -2934,7 +2820,7 @@ void far getprotection(I16 selection)
     strcat(prompt, resbuftext + 6);
     for (scanIndex = 0; scanIndex < 6; ++scanIndex)
         questionID[scanIndex] = resbuftext[scanIndex];
-    messagebox(3, 1, (I8 far *)prompt, 0xffff, 0x78,
+    messagebox(3, 1, (I8 far *)prompt, UI_DIALOG_CENTER, 0x78,
                 performGraphColor, points, 0);
     resbuftext[2] = 0;
     resbuftext[0] = questionID[0];

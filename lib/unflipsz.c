@@ -1,6 +1,6 @@
 #include "memory.h"
-#include "sprite2d.h"
-#include "stunts_types.h"
+#include "video.h"
+#include "types.h"
 /* READABILITY: Compute the largest unflipped shape allocation in paragraph units. */
 
 /* PORT: Resource headers use MSC 16-bit int layout; assert these field offsets in a host port. */
@@ -16,7 +16,7 @@ struct SHAPE2D {
     U8 s2d_plane_color0;
     U8 s2d_plane_color1_bg;
 };
-#include "resapi.h"
+#include "files.h"
 
 /* Local view: file_get_res_shape_count; return is signed word; another unit uses unsigned word. */
 extern I16 FAR file_get_res_shape_count(I8 FAR *memchunk);

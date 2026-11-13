@@ -1,10 +1,10 @@
 /* READABILITY: Define far plane and vector state initialized in the far-data contribution. */
 
-#include "vec3.h"
-/* Local view: MATRIX; local MATRIX member view differs from math3d.h. */
-struct MATRIX { int m[9]; };
-#include "plane.h"
+#include "math3d.h"
 
+#include "matrix.h"
+
+#include "viewstat.h"
 #include "game.h"
 
 /* Local view: plan_memres; type is struct PLANE; another unit uses array[None]. */

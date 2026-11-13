@@ -1,4 +1,3 @@
-#include "platform_hw.h"
 #define TRACK_MAP_ROW_COUNT 30
 #define TRACK_MAP_COLUMN_COUNT 30
 #define TRACK_MAP_CELL_COUNT 900
@@ -28,7 +27,7 @@
 #define TERRAIN_SHAPE_COUNT 19
 #define TRACK_EDITOR_CURSOR_COUNT 4
 #define ROAD_TILE_SHAPE_COUNT 4
-#include "stunts_types.h"
+#include "types.h"
 /* PORT: Resource records contain far pointers and depend on MSC default 2-byte packing; never use the host layout as the file layout. */
 /* Local view: SHAPE2D; struct.count is 8; another unit uses 6. */
 struct SHAPE2D {
@@ -64,16 +63,16 @@ struct GAMEINFO {
     U16S  game_framespersec;
     U16S  game_recordedframes;
 };
-#include "font.h"
+#include "chartab.h"
+#include "ui.h"
+#include "viewstat.h"
 #include "game.h"
-#include "gfxapi.h"
+#include "video.h"
 #include "input.h"
-#include "prim3d.h"
-#include "resapi.h"
-#include "shape2d.h"
+#include "shapes3d.h"
+#include "files.h"
 #include "track.h"
-#include "uiapi.h"
-
+#include "dlgcolor.h"
 
 /* Local view: trklst; array is None; another unit uses 215. */
 extern struct TRACKOBJECT trklst[];
@@ -100,20 +99,13 @@ int lnoffsets[30];
 extern I8 resbuftext[];
 unsigned char sampled_trk_column;
 
-
-
 /* Local view: dialog_frame_color; type is signed word; another unit uses unsigned word. */
 extern I16 dialog_frame_color;
 /* Local view: dlg_colour; type is signed word; another unit uses unsigned word. */
 extern I16 dlg_colour;
 
-
-
-
-
 /* Local view: flagsdown; type is unsigned byte; another unit uses signed word. */
 extern U8  flagsdown;
-
 
 /* Local view: g_is_busy; type is unsigned byte; another unit uses signed byte. */
 extern U8  g_is_busy;
@@ -133,9 +125,6 @@ extern I8 far * far getresl(U8  far *data, I8 *name);
 /* Local view: sprite_make_window; return.pointer is struct SPRITE; another unit uses void. */
 extern struct SPRITE far * far sprite_make_window(I16 width, I16 height, I16 flags);
 
-
-
-
 /* Local view: sprset1size; parameters[0] is signed word; another unit uses unsigned word. */
 extern void far clippix(I16 left, I16 right, I16 top, I16 bottom);
 /* Local view: sprite_setup1_from_arg_pointer; parameters[0].pointer is struct SPRITE; another unit uses void. */
@@ -143,7 +132,6 @@ extern void far sprite_setup1_from_arg_pointer(struct SPRITE far *sprite);
 
 /* Local view: sprite_blit_to_video; return is void; another unit uses signed word. */
 extern void far sprite_blit_to_video(struct SPRITE far *sprite, I16 mode);
-
 
 /* Local view: movfxya; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
 extern void far movfxya(void far *shape, I16 x, I16 y);
@@ -156,13 +144,8 @@ extern void far andcfxya(void far *shape, I16 x, I16 y);
 /* Local view: orcfxya; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
 extern void far orcfxya(void far *shape, I16 x, I16 y);
 
-
-
-
 /* Local view: font_setup_unknown; parameters[0] is signed word; another unit uses unsigned word. */
 extern void far textcolor(I16 colour, I16 mode);
-
-
 
 /* Local view: drawrect; return is void; another unit uses signed word. */
 extern void far drawrect(I16 x, I16 y, I16 width, I16 height, I16 color);
@@ -183,7 +166,6 @@ extern I8 far floadreq(I8 *dir, I8 *name, I8 *ext, I8 far *title);
 /* Local view: fsavereq; parameters[2].pointer is signed byte; another unit uses void. */
 extern I8 far fsavereq(I8 *dir, I8 *name, I8 far *title);
 
-
 /* Local view: file_write_fatal; parameters[1].pointer is unsigned byte; another unit uses struct HighScoreRecord. */
 extern I16 far savefilez(I8 *path, U8  far *buffer, I32 size);
 /* Local view: findfirst; return is signed word; another unit uses near pointer. */
@@ -200,8 +182,6 @@ extern void far freememory(U8  far *data);
 /* Local view: roadupcheck; parameters[0] is unsigned word; another unit uses unsigned byte. */
 extern U8  far roadupcheck(U16  terrain, U16  element);
 
-
-
 /* Local view: drawpiecebox; parameters is None; another unit uses ['u8']. */
 void drawpiecebox();
 /* Local view: drawtrackbox; parameters is None; another unit uses ['u8', 'u8', {'pointer': 'u8', 'qualifiers': [], 'segment': 'near'}, {'pointer': 'u8', 'qualifiers': [], 'segment': 'near'}]. */
@@ -210,10 +190,10 @@ void drawtrackbox();
 I8 aEokenseieemseedewwefuenpestej[] = "eokenseieemseedewwefuenpestejsejdeteewaefteat";
 I8 aTer0[] = "ter0";
 U16  function_key_scan_codes[12] = { BIOS_KEY_F1, BIOS_KEY_F2, BIOS_KEY_F3, BIOS_KEY_F4, BIOS_KEY_F5, BIOS_KEY_F6, BIOS_KEY_F7, BIOS_KEY_F8, BIOS_KEY_F9, BIOS_KEY_F10, 0, 0 }; /* PLATFORM(input_kb): maps BIOS F1-F10 return values to menu shortcuts. */
-I16 trackmenu2_buttons_x1[5] = { 9, 202, 220, 8, 220 };
-I16 trackmenu2_buttons_x2[5] = { 199, 206, 315, 199, 315 };
-I16 trackmenu2_buttons_y1[5] = { 181, 4, 132, 4, 36 };
-I16 trackmenu2_buttons_y2[5] = { 187, 179, 139, 179, 187 };
+I16 trackmenu2_buttons_x1[UI_TRACK_EDITOR_REGION_COUNT] = { 9, 202, 220, 8, 220 };
+I16 trackmenu2_buttons_x2[UI_TRACK_EDITOR_REGION_COUNT] = { 199, 206, 315, 199, 315 };
+I16 trackmenu2_buttons_y1[UI_TRACK_EDITOR_REGION_COUNT] = { 181, 4, 132, 4, 36 };
+I16 trackmenu2_buttons_y2[UI_TRACK_EDITOR_REGION_COUNT] = { 187, 179, 139, 179, 187 };
 U8  palette_column_limits[2] = { TRACK_MAP_COLUMN_COUNT, 6 };
 U8  palette_row_limits[2] = { 29, 9 };
 I8 aFlatlakelak1lak2lak3lak4highg[] = "flatlakelak1lak2lak3lak4highgoungouwgousgouegou1gou2gou3gou4gou5gou6gou7gou8";
@@ -250,7 +230,7 @@ void trackedit(void)
     I8S  tileSize;
     U8  lastHoverShape;
     I8S  droppedPosY;
-    U8  terrainCache[132];
+    U8  terrainCache[TRACK_PREVIEW_CACHE_COUNT];
     I16 animationCount;
     I16 lastTextWidth;
     I8S  destPosX;
@@ -264,7 +244,7 @@ void trackedit(void)
     I8S  saveOutcome;
     I8S  destPosY;
     struct SPRITE far *windows[4];
-    U8  elementState[132];
+    U8  elementState[TRACK_PREVIEW_CACHE_COUNT];
     register I16 stepTime;
     I16 screenPosY;
     I8S  lastPutCol;
@@ -279,7 +259,6 @@ void trackedit(void)
     U8  inEditor;
     U8  oldCell;
     U8  selectedPiece;
-
 
     sdtBuffer = file_load_shape2d_fatal_thunk("sdtedit") /* PLATFORM(file): load a 2D shape or enter the fatal-error path. */;
     locateshapes(sdtBuffer, aFlatlakelak1lak2lak3lak4highg, terrain_tile_shapes) /* PLATFORM(file): resolve the requested names in one resource block. */;
@@ -300,7 +279,7 @@ void trackedit(void)
     mediumTextData = getres(teditData, "mnam") /* PLATFORM(file): locate a named shape in resource data. */;
     pieceNames = getres(teditData, "tnam") /* PLATFORM(file): locate a named shape in resource data. */;
     mapDirty = 0;
-    for (j = 0; j < 132; ++j) {
+    for (j = 0; j < TRACK_PREVIEW_CACHE_COUNT; ++j) {
         elementState[j] = TRACK_CACHE_INVALID;
         terrainCache[j] = TRACK_CACHE_INVALID;
     }
@@ -326,7 +305,7 @@ void trackedit(void)
     paletteModified = 1;
     imageMode = -1;
     inEditor = 1;
-    activeGroup = 1;
+    activeGroup = UI_EDITOR_PALETTE_FIRST_TRACK;
     pathFlag = 1;
     lastTextWidth = 0;
     paletteArea = 0;
@@ -339,7 +318,7 @@ void trackedit(void)
     errorMsg = 0;
     selectCol[0] = sampled_trk_column;
     selRow[0] = g_cur_track_row;
-    selRow[1] = 7;
+    selRow[1] = UI_EDITOR_COMMAND_ROW_SKY;
 
     usebufferc() /* PLATFORM(video): copy the active window sprite into buffer 1 and clear its color. */;
     draw3dbutton(getresl(teditData, "bti") /* PLATFORM(file): locate a named text entry in resource data. */, 0xd9, 3, 0x66, 0x16,
@@ -363,7 +342,7 @@ nextFrame:
             shapeWidth = 1;
             objectHeight = 1;
             tileSize = 0;
-            if (activeGroup != 0) {
+            if (activeGroup != UI_EDITOR_PALETTE_TERRAIN) {
                 switch (trklst[selectedPiece].ss_multiTileFlag) {
                 case 1:
                     objectHeight = 2;
@@ -412,7 +391,7 @@ nextFrame:
             }
             usebuffer() /* PLATFORM(video): copy the active window sprite into buffer 1. */;
             drawpiecebox(activeGroup) /* PLATFORM(video): render terrain and track icons into the active sprite buffer. */;
-            if (activeGroup == 0)
+            if (activeGroup == UI_EDITOR_PALETTE_TERRAIN)
                 doslider(0, 0xdd, 0x5f, 0x85, 5, 0, 1, 1) /* PLATFORM(input_mouse): track the mouse and process its current action. */;
             else
                 doslider(0, 0xdd, 0x5f, 0x85, 5, activeGroup - 1, 1, 10) /* PLATFORM(input_mouse): track the mouse and process its current action. */;
@@ -437,7 +416,7 @@ nextFrame:
             if (paletteModified) {
                 paletteModified = 0;
                 sprite_setup1_from_arg_pointer(windows[tileSize]) /* PLATFORM(video): select the sprite described by the argument pointer. */;
-                if (activeGroup == 0) {
+                if (activeGroup == UI_EDITOR_PALETTE_TERRAIN) {
                     movfxya(terrain_tile_shapes[selectedPiece], 0, 0) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
                     preRender_line(1, 0, 15, 0, performGraphColor) /* PLATFORM(video): draw a line primitive. */;
                     preRender_line(1, 14, 15, 14, performGraphColor) /* PLATFORM(video): draw a line primitive. */;
@@ -509,7 +488,7 @@ nextFrame:
                 if (hovered >= TRACK_ELEMENT_SPECIAL_BASE)
                     hovered = 0;
             }
-            if (activeGroup == 0)
+            if (activeGroup == UI_EDITOR_PALETTE_TERRAIN)
                 hovered = 0;
         }
 
@@ -582,7 +561,7 @@ nextFrame:
                     }
                     break;
                 case 2:
-                    if (paletteArea != 1 || selRow[1] != 6) {
+                    if (paletteArea != 1 || selRow[1] != UI_EDITOR_COMMAND_ROW_PAGE) {
                         paletteArea = 1;
                         selRow[1] = 6;
                         key = 1;
@@ -595,7 +574,7 @@ nextFrame:
                 case 3:
                     destPosX = (msecoordx - TRACK_EDITOR_CELL_ORIGIN_X) / TRACK_EDITOR_CELL_PIXELS;
                     destPosY = (pos_y_ms - TRACK_EDITOR_CELL_ORIGIN_Y) / TRACK_EDITOR_CELL_PIXELS;
-                    if (activeGroup != 0) {
+                    if (activeGroup != UI_EDITOR_PALETTE_TERRAIN) {
                         if (destPosY == 10 && (trklst[selectedPiece].ss_multiTileFlag & 1))
                             --destPosY;
                         if (destPosX == 11 && (trklst[selectedPiece].ss_multiTileFlag & 2))
@@ -676,7 +655,7 @@ paletteClick:
             goto nextFrame;
         }
         trackStep = 0;
-        for (j = 0; j < 10; ++j) {
+        for (j = 0; j < UI_EDITOR_TRACK_PAGE_COUNT; ++j) {
             if (function_key_scan_codes[j] == key) {
                 activeGroup = j + 1;
                 key = 0;
@@ -690,15 +669,15 @@ paletteClick:
             paletteArea ^= 1;
             break;
         case '-':
-            if (activeGroup > 1)
+            if (activeGroup > UI_EDITOR_PALETTE_FIRST_TRACK)
                 --activeGroup;
             break;
         case '+':
-            if (activeGroup < 10)
+            if (activeGroup < UI_EDITOR_PALETTE_LAST_TRACK)
                 ++activeGroup;
             break;
         case 0x5400:
-            activeGroup = 0;
+            activeGroup = UI_EDITOR_PALETTE_TERRAIN;
             selectedPiece = 0;
             break;
         case 'c':
@@ -726,12 +705,12 @@ paletteClick:
             if (paletteArea) {
                 if (selRow[1] < TRACK_PALETTE_GRID_SIDE) {
                     selectedPiece = palette_piece_layout[selRow[1] * TRACK_PALETTE_GRID_SIDE + activeGroup * TRACK_PALETTE_PAGE_CELL_COUNT + selectCol[1]];
-                    if (activeGroup != 0) {
+                    if (activeGroup != UI_EDITOR_PALETTE_TERRAIN) {
                         if ((trklst[selectedPiece].ss_multiTileFlag & 1) &&
-                                selRow[0] - viewTop == 10)
+                                selRow[0] - viewTop == UI_EDITOR_PREVIEW_LAST_ROW)
                             --selRow[0];
                         if ((trklst[selectedPiece].ss_multiTileFlag & 2) &&
-                                selectCol[0] - originX == 11)
+                                selectCol[0] - originX == UI_EDITOR_PREVIEW_LAST_COLUMN)
                             --selectCol[0];
                     }
                     ++paletteModified;
@@ -739,9 +718,9 @@ paletteClick:
                 } else {
                     pathFlag = 1;
                     if (selRow[1] == TRACK_PALETTE_GRID_SIDE) {
-                        if (++activeGroup > 10)
-                            activeGroup = 1;
-                    } else if (selRow[1] == 7) {
+                        if (++activeGroup > UI_EDITOR_PALETTE_LAST_TRACK)
+                            activeGroup = UI_EDITOR_PALETTE_FIRST_TRACK;
+                    } else if (selRow[1] == UI_EDITOR_COMMAND_ROW_SKY) {
                         answer = messagebox(2, 1, getresl(teditData, "mss") /* PLATFORM(file): locate a named text entry in resource data. */,
                             -1, -1, dialog_frame_color, 0, td14tb[0x384]) /* PLATFORM(video): present the interactive dialog renderer. */;
                         if (answer != -1 && answer != 5) {
@@ -749,7 +728,7 @@ paletteClick:
                             ++mapChanged;
                             mapDirty = 1;
                         }
-                    } else if (selRow[1] == 8 && selectCol[1] != 0) {
+                    } else if (selRow[1] == UI_EDITOR_COMMAND_ROW_LOAD_CLEAR && selectCol[1] != 0) {
                         answer = messagebox(2, 1, getresl(teditData, "men") /* PLATFORM(file): locate a named text entry in resource data. */,
                             -1, -1, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
                         if (answer != -1 && answer != 5) {
@@ -763,7 +742,7 @@ paletteClick:
                             ++mapChanged;
                             mapDirty = 1;
                         }
-                    } else if (selRow[1] == 8 && selectCol[1] == 0) {
+                    } else if (selRow[1] == UI_EDITOR_COMMAND_ROW_LOAD_CLEAR && selectCol[1] == 0) {
                         usescreen() /* PLATFORM(video): copy the current sprite into the active buffer. */;
                         if (mapDirty && (j = messagebox(2, 1, getresl(teditData, "chl") /* PLATFORM(file): locate a named text entry in resource data. */,
                                 -1, -1, performGraphColor, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */) == 0)
@@ -786,34 +765,34 @@ paletteClick:
                         g_is_busy = 0;
                     } else if (selectCol[1] == 0) {
 save:
-                        saveOutcome = 0;
+                        saveOutcome = UI_SAVE_STATE_RETRY;
                         g_is_busy = 1;
-                        while (saveOutcome == 0) {
+                        while (saveOutcome == UI_SAVE_STATE_RETRY) {
                             usescreen() /* PLATFORM(video): copy the current sprite into the active buffer. */;
                             ++mapChanged;
                             if (fsavereq(track_file, globalgamesettings.game_trackname,
                                     getresl(main_data_file_addr, "trk") /* PLATFORM(file): locate a named text entry in resource data. */) /* PLATFORM(file): open the save-file UI and return its selection. */) {
                                 makename(track_file, globalgamesettings.game_trackname, ".trk",
                                     buf_g_path) /* PLATFORM(file): build the path used by the file service. */;
-                                saveOutcome = 1;
+                                saveOutcome = UI_SAVE_STATE_WRITE;
                                 if (findfirst(buf_g_path) /* PLATFORM(file): search for a file by name. */) {
                                     j = messagebox(2, 1, getresl(main_data_file_addr, "fex") /* PLATFORM(file): locate a named text entry in resource data. */,
                                         -1, -1, performGraphColor, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
                                     if (j == -1)
-                                        saveOutcome = -1;
+                                        saveOutcome = UI_SAVE_STATE_CANCEL;
                                     else if (j == 0)
-                                        saveOutcome = 0;
+                                        saveOutcome = UI_SAVE_STATE_RETRY;
                                 }
                             } else
-                                saveOutcome = -1;
-                            if (saveOutcome == 1) {
+                                saveOutcome = UI_SAVE_STATE_CANCEL;
+                            if (saveOutcome == UI_SAVE_STATE_WRITE) {
                                 j = savefilez(buf_g_path, td14tb, 0x70aL) /* PLATFORM(file): write a file or enter the fatal-error path. */;
                                 if (j == 0)
                                     readhighs(1);
                                 if (j != 0) {
                                     messagebox(1, 1, getresl(main_data_file_addr, "ser") /* PLATFORM(file): locate a named text entry in resource data. */,
                                         -1, -1, performGraphColor, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
-                                    saveOutcome = 0;
+                                    saveOutcome = UI_SAVE_STATE_RETRY;
                                 } else
                                     mapDirty = 0;
                             }
@@ -826,7 +805,7 @@ save:
                         inEditor = 0;
                     }
                 }
-            } else if (activeGroup == 0) {
+            } else if (activeGroup == UI_EDITOR_PALETTE_TERRAIN) {
                 if (selectCol[0] == lastPutCol && selRow[0] == droppedPosY) {
                     tmpShape = selectedPiece;
                     selectedPiece = oldCell;
@@ -918,7 +897,7 @@ save:
             break;
         case KEY_SCAN_LEFT:
             if (paletteArea && selRow[1] == TRACK_PALETTE_GRID_SIDE) {
-                if (activeGroup > 1)
+                if (activeGroup > UI_EDITOR_PALETTE_FIRST_TRACK)
                     --activeGroup;
             } else if (selectCol[paletteArea] != 0) {
                 lastPutCol = -1;
@@ -939,7 +918,7 @@ save:
             break;
         case KEY_SCAN_RIGHT:
             if (paletteArea && selRow[1] == TRACK_PALETTE_GRID_SIDE) {
-                if (activeGroup < 10)
+                if (activeGroup < UI_EDITOR_PALETTE_LAST_TRACK)
                     ++activeGroup;
             } else {
                 boxMarker = 1;

@@ -1,10 +1,12 @@
 
+#include "matrix.h"
+#include "trig.h"
 #include "math3d.h"
-#include "stunts_types.h"
+#include "radius.h"
+#include "types.h"
 /* READABILITY: Build the thirty-two front/back perimeter points for a sphere section from three source points. */
 
-
-
+#include "ellipse.h"
 #include "shapes3d.h"
 /* Interpolate and translate the front and rear sphere-section point rings.
  * Params and return follow the declared C signature. */

@@ -7,7 +7,7 @@
 ; bitmap/table
 ; ASMDOC memory is caller-selected; no owned routine calls an application callback.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 name asm012_154486
 DGROUP group _DATA
 assume ds:DGROUP, ss:DGROUP

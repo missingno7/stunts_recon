@@ -107,13 +107,19 @@
   "preprocessor_closure": [
     {
       "path": "include/input.h",
-      "sha256": "d43bddf63efc4400afb7396fc0c52009a31f8f1d4e30b04f976309bb75a64769",
-      "size": 1584
+      "sha256": "5bb6b46401f88ad81a22f5ce6446ef118c4716c4abc18b8cfec66ab0167587aa",
+      "size": 7430
     },
     {
-      "path": "include/stunts_types.h",
-      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
-      "size": 1091
+      "path": "include/types.h",
+      "sha256": "ee3c95010d95f2bcb0d86f9a877a3ee1f1e495dbab382f33a83b9cf9e456b7db",
+      "size": 1277
+    },
+    {
+      "line": 91,
+      "path": "include/input.h",
+      "pragma": "pack",
+      "value": null
     }
   ],
   "profile": "msc510-medium",

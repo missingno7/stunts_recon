@@ -12,7 +12,7 @@
 ; describe
 ; ASMDOC(font_shapes) transitive shared exits.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 name asm012_141362
 MATRIX struc
 _11 dw ?

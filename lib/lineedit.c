@@ -1,34 +1,27 @@
-#include "stunts_types.h"
-#include "platform_hw.h"
+#include "types.h"
 /* READABILITY: Implement the shared line editor, including key polling, cursor drawing, and text-width handling. */
-#include "fontrec.h"
+#include "ui.h"
 
-#include "font.h"
+#include "chartab.h"
+#include "viewstat.h"
 #include "game.h"
 #include "input.h"
-#include "sprite2d.h"
-#include "timer.h"
 #include "video.h"
-
+#include "timer.h"
 
 static I8 *line_input_text_buffer;
 static I16S line_input_cursor_vertical, line_edit_x, line_edit_y;
 static I16S cursor_flash_state, line_text_max_width, line_input_cursor_slot;
 
-
 /* Local view: strlen; return is signed word; another unit uses unsigned word. */
 extern I16 strlen(I8 *text);
     /* PLATFORM(video): measure or draw the current line-edit display. */
 
-
     /* PLATFORM(video): measure or draw the current line-edit display. */
 
     /* PLATFORM(video): measure or draw the current line-edit display. */
 
     /* PLATFORM(video): measure or draw the current line-edit display. */
-
-
-
 
     /* PLATFORM(input_kb): poll the game input-abort state. */
 
@@ -40,7 +33,6 @@ extern void FAR setticks(I16 offset, I16 segment);
     /* PLATFORM(timer): set the cursor-blink timer interval. */
 
     /* PLATFORM(timer): check whether the timer countdown expired. */
-
 
 /* Edit a bounded text buffer using keyboard input, blink timing, and the line-rendering helpers.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
@@ -65,9 +57,9 @@ I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
   line_input_text_buffer = buffer;
   line_text_max_width = maxWidth;
   buffer[bufferLimit] = 0;
-  if (flags & 1)
+  if (flags & UI_LINE_EDIT_CLEAR_BUFFER)
     buffer[0] = 0;
-  if (flags & 2)
+  if (flags & UI_LINE_EDIT_CURSOR_AT_START)
     line_input_cursor_slot = 0;
   else
     line_input_cursor_slot = strlen(buffer);
@@ -76,7 +68,7 @@ I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
     buffer[cursorIndex++] = ' ';
 
   read_line_helper2();
-  line_input_cursor_vertical = 1;
+  line_input_cursor_vertical = UI_LINE_CURSOR_BAR_PIXELS;
   cursor_flash_state = 1;
   insertMode = 0;
   read_line_helper();
@@ -125,7 +117,7 @@ I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
     }
     /* PLATFORM(timer): reset the game timer countdown for this input wait. */
     setticks(timerOffset, timerSegment);
-    if (inputKey == KEY_ASCII_ENTER || inputKey == KEY_ASCII_ESCAPE || inputKey == KEY_SCAN_UP || inputKey == KEY_SCAN_DOWN && !(flags & 8) || inputKey == KEY_ASCII_TAB && !(flags & 0x10))
+    if (inputKey == KEY_ASCII_ENTER || inputKey == KEY_ASCII_ESCAPE || inputKey == KEY_SCAN_UP || inputKey == KEY_SCAN_DOWN && !(flags & UI_LINE_EDIT_KEEP_DOWN_KEY) || inputKey == KEY_ASCII_TAB && !(flags & UI_LINE_EDIT_KEEP_TAB_KEY))
       break;
     if (inputKey == KEY_SCAN_RIGHT)
     {
@@ -159,12 +151,12 @@ I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
       if (insertMode == 0)
       {
         insertMode = 1;
-        line_input_cursor_vertical = 8;
+        line_input_cursor_vertical = UI_LINE_CURSOR_BLOCK_PIXELS;
       }
       else
       {
         insertMode = 0;
-        line_input_cursor_vertical = 1;
+        line_input_cursor_vertical = UI_LINE_CURSOR_BAR_PIXELS;
       }
     }
     else
@@ -218,7 +210,7 @@ I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
         continue;
       }
       read_line_helper();
-      if (firstKey != 0 && (!(flags & 4)))
+      if (firstKey != 0 && (!(flags & UI_LINE_EDIT_KEEP_FIRST_TEXT)))
       {
         line_input_cursor_slot = 0;
         cursorIndex = 0;
@@ -257,7 +249,6 @@ I16 FAR get_pstring(I8 flags, I8 *buffer, I16 pendingKey, I16 bufferLimit,
   read_line_helper();
   return inputKey;
 }
-
 
 /* Measure the text prefix and draw the cursor block at the current edit position.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.

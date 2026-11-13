@@ -4,7 +4,7 @@
 ; ASMDOC declarations, old comments or line endings changed.
 ; ASMDOC Public routines: _nopsub_33330, _draw_unknown_lines. Stack offsets are post-prologue BP offsets.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 _DATA segment word public 'DATA'
 _DATA ends
 _BSS segment word public 'BSS'

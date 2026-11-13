@@ -426,7 +426,7 @@
           "name": "_g_shapes3d",
           "size": 2860,
           "size_basis": {
-            "declaration": "struct SHAPE3D g_shapes3d[130];",
+            "declaration": "struct SHAPE3D g_shapes3d[SHAPE3D_CATALOG_CAPACITY];",
             "kind": "declared-type"
           }
         },
@@ -670,7 +670,7 @@
           "name": "_audiochunktable",
           "size": 1824,
           "size_basis": {
-            "declaration": "struct AUDIOCHUNK audiochunktable[24];",
+            "declaration": "struct AUDIOCHUNK audiochunktable[AUDIO_CHUNK_CAPACITY];",
             "kind": "declared-type"
           }
         },
@@ -1591,7 +1591,7 @@
           "name": "_tparr",
           "size": 120,
           "size_basis": {
-            "declaration": "struct RECTANGLE tparr[15];",
+            "declaration": "struct RECTANGLE tparr[SPRITE_CLIP_RECT_CAPACITY];",
             "kind": "declared-type"
           }
         },
@@ -1677,7 +1677,7 @@
           "name": "_audioblock",
           "size": 24,
           "size_basis": {
-            "declaration": "unsigned char audioblock[24];",
+            "declaration": "unsigned char audioblock[AUDIO_CHUNK_CAPACITY];",
             "kind": "declared-type"
           }
         },
@@ -1772,7 +1772,7 @@
           "name": "_g_audchnkvalue",
           "size": 24,
           "size_basis": {
-            "declaration": "unsigned char g_audchnkvalue[24];",
+            "declaration": "unsigned char g_audchnkvalue[AUDIO_CHUNK_CAPACITY];",
             "kind": "declared-type"
           }
         },
@@ -2499,7 +2499,7 @@
           "name": "_rects_updt",
           "size": 15,
           "size_basis": {
-            "declaration": "char rects_updt[15];",
+            "declaration": "I8 rects_updt[SPRITE_CLIP_RECT_CAPACITY];",
             "kind": "declared-type"
           }
         },
@@ -2547,7 +2547,7 @@
           "name": "_rclist",
           "size": 120,
           "size_basis": {
-            "declaration": "struct RECTANGLE rclist[15];",
+            "declaration": "struct RECTANGLE rclist[SPRITE_CLIP_RECT_CAPACITY];",
             "kind": "declared-type"
           }
         },
@@ -2773,7 +2773,7 @@
           "name": "_g_savrc",
           "size": 120,
           "size_basis": {
-            "declaration": "struct RECTANGLE g_savrc[15];",
+            "declaration": "struct RECTANGLE g_savrc[SPRITE_CLIP_RECT_CAPACITY];",
             "kind": "declared-type"
           }
         },
@@ -2994,7 +2994,7 @@
           "name": "_snd_voices_tbl",
           "size": 736,
           "size_basis": {
-            "declaration": "struct AUDIOVOICE snd_voices_tbl[16];",
+            "declaration": "struct AUDIOVOICE snd_voices_tbl[AUDIO_VOICE_CAPACITY];",
             "kind": "declared-type"
           }
         },
@@ -3224,7 +3224,7 @@
           "name": "_audiochnk_actflags",
           "size": 24,
           "size_basis": {
-            "declaration": "unsigned char audiochnk_actflags[24];",
+            "declaration": "unsigned char audiochnk_actflags[AUDIO_CHUNK_CAPACITY];",
             "kind": "declared-type"
           }
         },

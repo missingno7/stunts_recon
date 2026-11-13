@@ -18,7 +18,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapez",
-      "target_index": 7,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -35,7 +35,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_sound_fatal",
-      "target_index": 8,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -52,7 +52,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapez",
-      "target_index": 7,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -69,7 +69,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 4,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -153,11 +153,11 @@
       "__acrtused",
       "_file_find_shapes_optional_alt",
       "_locateshapesz",
+      "_file_find_sounds_required",
       "_locate_shape_fatal",
       "_locateshapes",
-      "_file_find_sounds_required",
-      "_locateshapez",
-      "_locate_sound_fatal"
+      "_locate_sound_fatal",
+      "_locateshapez"
     ],
     "groups": [
       {
@@ -187,13 +187,13 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_locateshapes",
-        "offset": 0,
+        "name": "_file_find_sounds_required",
+        "offset": 116,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_file_find_sounds_required",
-        "offset": 116,
+        "name": "_locateshapes",
+        "offset": 0,
         "segment": "UNIT_TEXT"
       }
     ],
@@ -267,29 +267,89 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
-      "path": "include/audapi.h",
-      "sha256": "969bb452d8258b945ca6f7ea31d93fd5e17e872761f83809e72ec52902115e4a",
-      "size": 4342
-    },
-    {
       "path": "include/auddrv.h",
       "sha256": "4a2681f4f662dd55e7992643e4db580501012c03b48689fdd695c1582740665e",
       "size": 457
     },
     {
-      "path": "include/audvoice.h",
-      "sha256": "0f86f905ee2881bb198e4c7e97336e1811cbbd3634027641c2cab8ab1f7027d6",
-      "size": 233
+      "path": "include/audio.h",
+      "sha256": "c313a260ee07d6c595a39f7ea4065b465aa10a53f66677c70cdab47f105412e7",
+      "size": 15339
     },
     {
-      "path": "include/resapi.h",
-      "sha256": "02fc475f572e989fe5018490f3763c0a370d69e6bc89c8b87d78d3ed9836792b",
-      "size": 1650
+      "path": "include/files.h",
+      "sha256": "c9279c40920d935c04309685a81ccb7f078ae3c8a0d35f28b52c4eead68a3a7a",
+      "size": 1978
     },
     {
-      "path": "include/stunts_types.h",
-      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
-      "size": 1091
+      "path": "include/resource.h",
+      "sha256": "052068fa1e24947398e3da537b058f5d5ff43dbf82477ae37f5ff578313ee9e2",
+      "size": 1439
+    },
+    {
+      "path": "include/types.h",
+      "sha256": "ee3c95010d95f2bcb0d86f9a877a3ee1f1e495dbab382f33a83b9cf9e456b7db",
+      "size": 1277
+    },
+    {
+      "line": 17,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 25,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": 1
+    },
+    {
+      "line": 55,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 56,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 81,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 89,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 108,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 122,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 150,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 45,
+      "path": "include/files.h",
+      "pragma": "pack",
+      "value": null
     }
   ],
   "profile": "msc510-medium",

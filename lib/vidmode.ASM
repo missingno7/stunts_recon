@@ -3,7 +3,7 @@
 ; ASMDOC[timers] Authoritative contracts below refine older retained comments; original source bytes are untouched.
 ; ASMDOC[timers] Stack offsets BP+6/BP+8 refer to saved-BP FAR frame; entry SP+4/SP+6 refer to original FAR frame.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 name asm012_140718
 _DATA segment word public 'DATA'
 ; ASMDOC[timers] Block: Private bytes: zero-mode sentinel and saved low BDA equipment byte. Neither is an exported

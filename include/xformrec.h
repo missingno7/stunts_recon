@@ -4,7 +4,7 @@
 struct RECTANGLE;
 struct SHAPE3D;
 struct VECTOR;
-#include "vec3.h"
+#include "math3d.h"
 #pragma pack()
 struct TRANSFORMEDSHAPE3D {
     struct VECTOR pos;

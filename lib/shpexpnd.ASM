@@ -5,7 +5,7 @@
 ; ASMDOC Pure caller-buffer transformation, despite existing PLATFORM(video) tags. No self-modification or
 ; indirect callback.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 extrn _shapepointer:far

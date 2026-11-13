@@ -1,6 +1,10 @@
+#ifndef STUNTS_FILES_H
+#define STUNTS_FILES_H
+
+/* Resources, archives and file access. */
+/* Resource archives, names, paths and file layouts. */
+#include "resource.h"
 /* Shared resapi declarations; unnamed prototype parameters keep C1 allocation stable. */
-#ifndef STUNTS_RESAPI_H
-#define STUNTS_RESAPI_H
 struct ENGINESOUND;
 extern const char aLocateshape4_4sShapeNotF[];
 extern const char aSFileError[];
@@ -36,4 +40,12 @@ extern void far *far loadpackz(char *);
 extern void far locateshapesz(char far *, char *, char far **);
 extern void far tmaskxf(void far *);
 extern void far removegamefiles(void);
+/* Shared resrec declarations; DOS medium-model types. */
+union FARRESOURCE;
+#pragma pack()
+union FARRESOURCE {
+    void far *pointer;
+    struct  { unsigned short offset; unsigned short segment; } word;
+};
+
 #endif

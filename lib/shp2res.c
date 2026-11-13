@@ -1,12 +1,13 @@
-#include "stunts_types.h"
+#include "files.h"
+#include "types.h"
 /* READABILITY: Cache or load shape resources, parse their run-length encoded image data, and size the resulting pages. */
 /* PORT: Resource headers use MSC 16-bit int layout; assert these field offsets in a host port. */
 /* Local view: SHAPE2D; struct.count is 10; another unit uses 6. */
 struct SHAPE2D { I16 width,height,s2d_hotspot_x,s2d_hotspot_y,pos_x,pos_y; U8 s2d_plane_color0,s2d_plane_color1_bg,s2d_plane_color2_flip,s2d_plane_color3_flags; };
+#include "viewstat.h"
 #include "game.h"
-#include "memapi.h"
-#include "shape2d.h"
-
+#include "memory.h"
+#include "video.h"
 
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
 
@@ -27,11 +28,7 @@ extern U16S file_get_res_shape_count(void FAR *);
 /* Local view: shapepointer; parameters[0].pointer is unsigned byte; another unit uses signed byte. */
 extern struct SHAPE2D FAR *shapepointer(U8 FAR *, I16);
 
-
-
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-
-
 
 /* Load a shape resource and report failures as fatal.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
@@ -105,14 +102,14 @@ void shapepack(void FAR *memchunk, void FAR *mempages)
 
     /* PLATFORM(file): read the shape count from the loaded resource block. */
     index = file_get_res_shape_count(memchunk);
-    pagescnt = (U32 FAR *)((U8 FAR *)mempages + index * 4 + 6);
+    pagescnt = (U32 FAR *)((U8 FAR *)mempages + index * 4 + RESOURCE_DIRECTORY_HEADER_BYTES);
     page_data = mempages;
     input_read = memchunk;
-    for (shape_index = 0; shape_index < index * 4 + 6; shape_index++) {
+    for (shape_index = 0; shape_index < index * 4 + RESOURCE_DIRECTORY_HEADER_BYTES; shape_index++) {
         *page_data++ = *input_read++;
     }
 
-    dest = (U8 FAR *)mempages + index * 8 + 6;
+    dest = (U8 FAR *)mempages + index * 8 + RESOURCE_DIRECTORY_HEADER_BYTES;
     baseaddr = dest;
     for (shape_index = 0; shape_index < index; shape_index++) {
     /* PLATFORM(file): read the current shape descriptor from the loaded resource block. */
@@ -130,12 +127,12 @@ void shapepack(void FAR *memchunk, void FAR *mempages)
 
         while (page_remaining != 0) {
             repeat = parse_shape2d_helper3((I8 FAR *)src);
-            if (repeat > 3 || literal_cnt >= page_remaining) {
-                while (literal_cnt > 127) {
-                    literal_cnt -= 127;
-                    page_remaining -= 127;
-                    *dest++ = 0x81;
-                    for (shape_data_num = 0; shape_data_num < 127; shape_data_num++)
+            if (repeat > SHAPE2D_RLE_MIN_RUN_MINUS_ONE || literal_cnt >= page_remaining) {
+                while (literal_cnt > SHAPE2D_RLE_MAX_PACKET_PIXELS) {
+                    literal_cnt -= SHAPE2D_RLE_MAX_PACKET_PIXELS;
+                    page_remaining -= SHAPE2D_RLE_MAX_PACKET_PIXELS;
+                    *dest++ = SHAPE2D_RLE_LITERAL_127;
+                    for (shape_data_num = 0; shape_data_num < SHAPE2D_RLE_MAX_PACKET_PIXELS; shape_data_num++)
                         *dest++ = *literal_from++;
                 }
                 if (literal_cnt != 0) {
@@ -146,14 +143,14 @@ void shapepack(void FAR *memchunk, void FAR *mempages)
                 }
 
                 if (repeat > page_remaining) repeat = page_remaining;
-                while (repeat > 127) {
-                    repeat -= 127;
-                    page_remaining -= 127;
-                    *dest++ = 0x7f;
+                while (repeat > SHAPE2D_RLE_MAX_PACKET_PIXELS) {
+                    repeat -= SHAPE2D_RLE_MAX_PACKET_PIXELS;
+                    page_remaining -= SHAPE2D_RLE_MAX_PACKET_PIXELS;
+                    *dest++ = SHAPE2D_RLE_MAX_PACKET_PIXELS;
                     *dest++ = *src;
-                    src += 127;
+                    src += SHAPE2D_RLE_MAX_PACKET_PIXELS;
                 }
-                if (repeat > 3) {
+                if (repeat > SHAPE2D_RLE_MIN_RUN_MINUS_ONE) {
                     *dest++ = repeat;
                     page_remaining -= repeat;
                     *dest++ = *src;
@@ -165,11 +162,11 @@ void shapepack(void FAR *memchunk, void FAR *mempages)
             src++;
             literal_cnt++;
         }
-        *dest++ = 0;
+        *dest++ = SHAPE2D_RLE_END;
     }
 
     output_size = segtoadr(dest) - segtoadr(mempages);
-    if (output_size & 15) {
+    if (output_size & DOS_PARAGRAPH_OFFSET_MASK) {
         output_size = (output_size >> 4) + 1;
     } else {
         output_size >>= 4;

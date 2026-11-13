@@ -4,7 +4,7 @@
 ; ASMDOC earlier annotations.
 ; ASMDOC No exhaustive dynamic call graph. dead=true means no retained source reference in this bounded audit, not
 ; ASMDOC permission to remove bytes.
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 .model medium
 
 _DATA segment word public 'DATA'

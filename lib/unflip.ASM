@@ -4,7 +4,7 @@
 ; ASMDOC All BP stack offsets below follow PUSH BP / MOV BP,SP; data spans are caller-owned.
 ; ASMDOC Pure memory transpose. No self-modification, code-data overlap, or indirect callback.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 extrn _shapepointer:far

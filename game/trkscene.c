@@ -1,24 +1,27 @@
+#include "memory.h"
 #define FAR far
 #define NEAR near
 #define HUGE huge
 #define FAST_TRIG_ANGLE_MASK 0x3FF
-#include "stunts_types.h"
+#include "types.h"
 /* Scratch whole-object candidate in target member order. */ /* PORT: plain char signedness follows the pinned MSC target. */
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 
+#include "matrix.h"
+#include "trig.h"
 #include "math3d.h"
+#include "radius.h"
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 /* Local view: SHAPE3D; struct.count is 8; another unit uses 7. */
 struct SHAPE3D { U16S  numverts; struct VECTOR far *shape3d_verts; U16S  numprimitives; U8  numpaints; U8  reserved; void far *primitives; void far *cull1; void far *cull2; };
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 /* The DOS near pointer aliases the camera word; six records have relocated Amiga pointers. */
-/* Local view: TRKOBJINFO; struct[0].name is noOfBlocks; another unit uses si_noOfBlocks. */
+/* Local view: TRKOBJINFO; unsigned byte fields and a word overlay differ from the shared signed-byte/pointer record. */
 struct TRKOBJINFO { U8  noOfBlocks,entry,exitPoint,entryType,exitType,arrowType; I16S arrowOrient; I16S *cameraDataOffset; union { struct { U8  opponent1,opponent2; } opponent; U16S  cameraOffsetOverride; I16S *dataPointer; } cameraOverlay; U8  opponent3,opponentSpeedCode; };
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
-/* Local view: TRACKOBJECT; struct[0].name is info; another unit uses ss_trkObjInfoPtr. */
-struct TRACKOBJECT { struct TRKOBJINFO *info; I16S rotation; struct SHAPE3D *shape,*lowShape; U8  overlay; I8 surface,ignoreZ,multiTile,physicalModel,unknown; };
+#include "trkobj.h"
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
-#include "trackrec.h"
+#include "track.h"
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */
 /* Local view: GAMESTATE; struct.count is 2; another unit uses 46. */
@@ -29,16 +32,13 @@ struct GAMESTATE { U8  state_prefix_000[0x3f5]; I8 game_inputmode; };
 /* Local view: GAMEINFO; struct[8].type is unsigned word; another unit uses signed byte. */
 struct GAMEINFO { I8 game_playercarid[4],game_playermaterial,game_playertransmission,game_opponenttype,game_opponentcarid[4],game_opponentmaterial,game_opponenttransmission,game_trackname[9]; U16S  game_framespersec,game_recordedframes; };
 #include "car.h"
-#include "font.h"
+#include "chartab.h"
+#include "ui.h"
+#include "viewstat.h"
 #include "game.h"
-#include "mathapi.h"
-#include "prim3d.h"
-#include "resapi.h"
-#include "track.h"
-#include "uiapi.h"
-
-
-
+#include "shapes3d.h"
+#include "files.h"
+#include "dlgcolor.h"
 
 int postable[30];
 int r_zp[30];
@@ -51,7 +51,6 @@ extern U8  far *td14tb;
 
 /* Local view: trklst; of is struct TRACKOBJECT; another unit uses struct track_object. */
 extern struct TRACKOBJECT trklst[215];
-
 
 short pl_i;
 short road_num;
@@ -75,10 +74,6 @@ extern U8  far *plncurrptr;
 
 short wallanchor_x;
 
-
-
-
-
 void far *g_game13dresource;
 void far *game2res_pointer;
 void far *ptr_model_active;
@@ -91,8 +86,7 @@ extern I8 far *locate_shape_fatal();
 /* Local view: locateshapez; return.pointer is signed byte; another unit uses void. */
 extern I8 far *locateshapez();
 
-struct SHAPE3D g_shapes3d[130];
-
+struct SHAPE3D g_shapes3d[SHAPE3D_CATALOG_CAPACITY];
 
 /* Local view: aCar0; type is array[None]; another unit uses struct car_exp_name_table. */
 extern I8 aCar0[][5];
@@ -121,12 +115,11 @@ char g_road_piece_id;
 char trk_sample_count;
 /* Local view: mmgr_alloc_resbytes; return.pointer is signed byte; another unit uses void. */
 extern I8 far *resmem(I8 *,I32);
-/* Local view: freememory, purgememory; return is void; another unit uses far pointer. */
-extern void far freememory(void far *),far purgememory(void far *);
+/* Local view: freememory returns void; the shared declaration returns a far pointer. */
+extern void far freememory(void far *);
 /* Unused OMF-order alias; accesses use g_shapes3d[127].shape3d_verts. */
 
 /* Unused OMF-order alias; accesses use g_shapes3d[126].shape3d_verts. */
-
 
 /* Local view: settires; parameters[5].pointer is signed word; another unit uses struct VECTOR. */
 extern void settires(struct VECTOR far *,I16,I16S *,I16S *,struct VECTOR *,I16S *);
@@ -148,7 +141,6 @@ int g_trackpiecescounter;
 /* Local view: st_hdg; type is unsigned word; another unit uses signed word. */
 extern U16S  st_hdg;
 
-
 short gap_trackrow_1;
 unsigned char g_cur_track_row;
 /* Local view: g_td08d; pointer is unsigned word; another unit uses signed word. */
@@ -161,7 +153,6 @@ unsigned short far *trackdat7;
 extern struct VECTOR far *trksign;
 /* Local view: trkptrpath; pointer is struct VECTOR; another unit uses signed word. */
 struct VECTOR far *trkptrpath;
-
 
 /* Local view: td3; pointer is signed word; another unit uses signed byte. */
 extern I16S far *td3;
@@ -258,30 +249,30 @@ void getpinfo(struct VECTOR *position, struct VECTOR *nextPosition)
 		switch (tileElem) {
 		case 0xfd:
 			tileElem = td14tb[gterrtrk[trkR + 1] + trackCol - 1];
-			if (trklst[tileElem].multiTile & 1)
+			if (trklst[tileElem].ss_multiTileFlag & 1)
 				road_elem_ctrz = postable[trkR + 1];
-			if (trklst[tileElem].multiTile & 2)
+			if (trklst[tileElem].ss_multiTileFlag & 2)
 				x_course_part = xcols[trackCol];
 			break;
 		case 0xfe:
 			tileElem = td14tb[gterrtrk[trkR + 1] + trackCol];
-			if (trklst[tileElem].multiTile & 1)
+			if (trklst[tileElem].ss_multiTileFlag & 1)
 				road_elem_ctrz = postable[trkR + 1];
-			if (trklst[tileElem].multiTile & 2)
+			if (trklst[tileElem].ss_multiTileFlag & 2)
 				x_course_part = xcols[trackCol + 1];
 			break;
 		case 0xff:
 			tileElem = td14tb[gterrtrk[trkR] + trackCol - 1];
-			if (trklst[tileElem].multiTile & 1)
+			if (trklst[tileElem].ss_multiTileFlag & 1)
 				road_elem_ctrz = postable[trkR];
-			if (trklst[tileElem].multiTile & 2)
+			if (trklst[tileElem].ss_multiTileFlag & 2)
 				x_course_part = xcols[trackCol];
 			break;
 		}
-	} else if (trklst[tileElem].multiTile != 0) {
-		if (trklst[tileElem].multiTile & 1)
+	} else if (trklst[tileElem].ss_multiTileFlag != 0) {
+		if (trklst[tileElem].ss_multiTileFlag & 1)
 			road_elem_ctrz = postable[trkR];
-		if (trklst[tileElem].multiTile & 2)
+		if (trklst[tileElem].ss_multiTileFlag & 2)
 			x_course_part = xcols[trackCol + 1];
 	}
 
@@ -293,8 +284,8 @@ void getpinfo(struct VECTOR *position, struct VECTOR *nextPosition)
 		tileElem = roadupcheck(cellTerr, tileElem);
 
 	o = &trklst[tileElem];
-	physModel = o->physicalModel;
-	elementAngle = o->rotation;
+	physModel = o->ss_physicalModel;
+	elementAngle = o->ss_rotY;
 	switch (elementAngle) {
 	case 0:
 		break;
@@ -323,7 +314,7 @@ void getpinfo(struct VECTOR *position, struct VECTOR *nextPosition)
 	}
 	/* MSC 5.10 emits this unused store; removing it changes the object. */
 	angAngle = 0;
-	surfType = o->surface + 1;
+	surfType = o->ss_surfaceType + 1;
 	if ((I8S )surfType < 1)
 		surfType = 1;
 	absLocalCrds.x = locElemCrds.x < 0 ? -locElemCrds.x : locElemCrds.x;
@@ -487,7 +478,7 @@ void getpinfo(struct VECTOR *position, struct VECTOR *nextPosition)
 		pl_i = 2;
 		test_pln = 0;
 		if (turnRadius >= -0x6c && turnRadius <= 0x6c) break;
-		side = (intatan(locElemCrds.x + 0x400, locElemCrds.z + 0x400) & 0xff) * 0x12;
+		side = (intatan(locElemCrds.x + 0x400, locElemCrds.z + 0x400) & ANGLE_QUADRANT_OFFSET_MASK) * 0x12;
 		localX = 0x11 - (side >> 8);
 		wall_wallelement = 0x2a;
 		element_min_wall = -12;
@@ -536,7 +527,7 @@ void getpinfo(struct VECTOR *position, struct VECTOR *nextPosition)
 	case 26:
 		turnRadius = inthypot(locElemCrds.x + 0x400, locElemCrds.z + 0x400) - 0x600;
 		if (turnRadius <= -0x78 || turnRadius >= 0x7e) break;
-		side = (intatan(locElemCrds.x + 0x400, locElemCrds.z + 0x400) & 0xff) * 0x12;
+		side = (intatan(locElemCrds.x + 0x400, locElemCrds.z + 0x400) & ANGLE_QUADRANT_OFFSET_MASK) * 0x12;
 		localX = 0x11 - (side >> 8);
 		pl_i = localX + 7;
 		g_cursurfacekindvalue = surfType;
@@ -867,13 +858,13 @@ finish:
 			if (pl_i == 0) pl_i = 3;
 			break;
 		case 11: case 12: case 13: case 14:
-			side = fixedmult(intcos(0xff80), locElemCrds.x) +
-				fixedmult(intsin(0xff80), locElemCrds.z);
+			side = fixedmult(intcos(ANGLE_NEGATIVE_EIGHTH_TURN_U16), locElemCrds.x) +
+				fixedmult(intsin(ANGLE_NEGATIVE_EIGHTH_TURN_U16), locElemCrds.z);
 			if (side < 0) pl_i = 4;
 			break;
 		case 15: case 16: case 17: case 18:
-			side = fixedmult(intcos(0xff80), locElemCrds.x) +
-				fixedmult(intsin(0xff80), locElemCrds.z);
+			side = fixedmult(intcos(ANGLE_NEGATIVE_EIGHTH_TURN_U16), locElemCrds.x) +
+				fixedmult(intsin(ANGLE_NEGATIVE_EIGHTH_TURN_U16), locElemCrds.z);
 			if (side > 0) pl_i = 5;
 			else hgthgt = 0x1c2;
 			break;
@@ -941,27 +932,27 @@ I16 getwpinfo(I16 column, I16 row, struct VECTOR *vertices) {
         switch (tileElement) {
         case 0xfd:
             tileElement = td14tb[column + lnoffsets[row - 1] - 1];
-            if (trklst[tileElement].multiTile & 1) centerRow = r_zp[row + 1];
-            if (trklst[tileElement].multiTile & 2) centerX = xcols[column];
+            if (trklst[tileElement].ss_multiTileFlag & 1) centerRow = r_zp[row + 1];
+            if (trklst[tileElement].ss_multiTileFlag & 2) centerX = xcols[column];
             break;
         case 0xfe:
             tileElement = td14tb[column + lnoffsets[row - 1]];
-            if (trklst[tileElement].multiTile & 1) centerRow = r_zp[row + 1];
-            if (trklst[tileElement].multiTile & 2) centerX = xcols[column + 1];
+            if (trklst[tileElement].ss_multiTileFlag & 1) centerRow = r_zp[row + 1];
+            if (trklst[tileElement].ss_multiTileFlag & 2) centerX = xcols[column + 1];
             break;
         case 0xff:
             tileElement = td14tb[column + lnoffsets[row] - 1];
-            if (trklst[tileElement].multiTile & 1) centerRow = r_zp[row];
-            if (trklst[tileElement].multiTile & 2) centerX = xcols[column];
+            if (trklst[tileElement].ss_multiTileFlag & 1) centerRow = r_zp[row];
+            if (trklst[tileElement].ss_multiTileFlag & 2) centerX = xcols[column];
             break;
         }
-    } else if (trklst[tileElement].multiTile != 0) {
-        if (trklst[tileElement].multiTile & 1) centerRow = r_zp[row];
-        if (trklst[tileElement].multiTile & 2) centerX = xcols[column + 1];
+    } else if (trklst[tileElement].ss_multiTileFlag != 0) {
+        if (trklst[tileElement].ss_multiTileFlag & 1) centerRow = r_zp[row];
+        if (trklst[tileElement].ss_multiTileFlag & 2) centerX = xcols[column + 1];
     }
 
     numPoints = 0;
-    switch (trklst[tileElement].physicalModel) {
+    switch (trklst[tileElement].ss_physicalModel) {
     case 0x23:
         numPoints = 2;
         templatePoints = shape_template_points_c;
@@ -996,7 +987,7 @@ I16 getwpinfo(I16 column, I16 row, struct VECTOR *vertices) {
     terrainIndex = td15p_9[column + gterrtrk[row]];
     if (terrainIndex == 6) height = terheight[1];
     else height = 0;
-    rotationY = trklst[tileElement].rotation;
+    rotationY = trklst[tileElement].ss_rotY;
 
     for (point = 0; point < numPoints; point++) {
         switch (rotationY) {
@@ -1035,12 +1026,12 @@ I16 init_3dpieces(void)
 
     g_game13dresource = 0;
     game2res_pointer = 0;
-    /* PLATFORM(memory): query available resource memory. */ if (availmem() < 65000L) {
+    /* PLATFORM(memory): query available resource memory. */ if (availmem() < SHAPE_SHARED_MIN_FREE_BYTES) {
         return 1;
     }
     /* PLATFORM(file): load a 3D resource. */ g_game13dresource = fluffyload(aGame1);
     /* PLATFORM(file): load a 3D resource. */ game2res_pointer = fluffyload(aGame2);
-    for (i = 0; i < 0x74; ++i) {
+    for (i = 0; i < SHAPE_SHARED_RESOURCE_COUNT; ++i) {
         ptr_model_active = locateshapez(g_game13dresource, aBarn[i]);
         if (ptr_model_active == 0) {
             ptr_model_active = locate_shape_fatal(game2res_pointer, aBarn[i]);
@@ -1076,31 +1067,31 @@ void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 	aStxxx[4] = arg_playercarid[2];
 	aStxxx[5] = arg_playercarid[3];
 	/* PLATFORM(file): load a 3D resource. */ pl_carres_3d = fluffyload(aStxxx);
-	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[0]), &g_shapes3d[124]);
-	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[1]), &g_shapes3d[126]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[0]), &g_shapes3d[SHAPE_PLAYER_BODY]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[1]), &g_shapes3d[SHAPE_PLAYER_WHEELS]);
 
-	vertices = &(g_shapes3d[126].shape3d_verts[8]);
+	vertices = &(g_shapes3d[SHAPE_PLAYER_WHEELS].shape3d_verts[SHAPE_WHEEL_VERTEX_START]);
 	pos_pt.z = vertices[0].z;
 	pos_pt.x = (vertices[3].x + vertices[0].x)>> 1;
 	ancv2.z = vertices[6].z;
 	ancv2.x = (vertices[6].x + vertices[9].x) >> 1;
 	
-	for (loopIndex = 0; loopIndex < 6; loopIndex++) {
+	for (loopIndex = 0; loopIndex < WHEEL_GEOMETRY_VERTICES_PER_WHEEL; loopIndex++) {
 		pts_set[loopIndex].x = pos_pt.x - vertices[loopIndex].x;
 		pts_set[loopIndex].z = pos_pt.z - vertices[loopIndex].z;
 		pts_set[loopIndex].y = vertices[loopIndex].y;
-		secondveccar[loopIndex].x = ancv2.x - vertices[loopIndex + 6].x;
-		secondveccar[loopIndex].z = ancv2.z - vertices[loopIndex + 6].z;
-		secondveccar[loopIndex].y = vertices[loopIndex + 6].y;
-		veccar[loopIndex] = vertices[loopIndex + 12];
-		car_dvecs[loopIndex] = vertices[loopIndex + 18];
+		secondveccar[loopIndex].x = ancv2.x - vertices[loopIndex + WHEEL_GEOMETRY_VERTICES_PER_WHEEL].x;
+		secondveccar[loopIndex].z = ancv2.z - vertices[loopIndex + WHEEL_GEOMETRY_VERTICES_PER_WHEEL].z;
+		secondveccar[loopIndex].y = vertices[loopIndex + WHEEL_GEOMETRY_VERTICES_PER_WHEEL].y;
+		veccar[loopIndex] = vertices[loopIndex + WHEEL_GEOMETRY_REAR_VERTEX_START];
+		car_dvecs[loopIndex] = vertices[loopIndex + WHEEL_GEOMETRY_LAST_WHEEL_VERTEX_START];
 	}
 
 	for (loopIndex = 0; loopIndex < 5; loopIndex++) {
 		ywhlang[loopIndex] = 0;
 	}
 
-	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[2]), &g_shapes3d[128]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[2]), &g_shapes3d[SHAPE_PLAYER_AUXILIARY]);
 	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[3]), &g_shapes3d[116]);
 	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[4]), &g_shapes3d[117]);
 	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[5]), &g_shapes3d[118]);
@@ -1125,29 +1116,29 @@ void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 			/* PLATFORM(file): load a 3D resource. */ carcopyresourceptr = fluffyload(aStxxx);
 		}
 
-		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[8]), &g_shapes3d[125]);
-		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[9]), &g_shapes3d[127]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[8]), &g_shapes3d[SHAPE_OPPONENT_BODY]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[9]), &g_shapes3d[SHAPE_OPPONENT_WHEELS]);
 
-		vertices = &(g_shapes3d[127].shape3d_verts[8]);
+		vertices = &(g_shapes3d[SHAPE_OPPONENT_WHEELS].shape3d_verts[SHAPE_WHEEL_VERTEX_START]);
 		ctrmesh.z = vertices[0].z;
 		ctrmesh.x = (vertices[3].x + vertices[0].x)>> 1;
 		g_op_carvector2.z = vertices[6].z;
 		g_op_carvector2.x = (vertices[6].x + vertices[9].x) >> 1;
 
-		for (loopIndex = 0; loopIndex < 6; loopIndex++) {
+		for (loopIndex = 0; loopIndex < WHEEL_GEOMETRY_VERTICES_PER_WHEEL; loopIndex++) {
 			veco[loopIndex].x = ctrmesh.x - vertices[loopIndex].x;
 			veco[loopIndex].z = ctrmesh.z - vertices[loopIndex].z;
 			veco[loopIndex].y = vertices[loopIndex].y;
-			secondoveh[loopIndex].x = g_op_carvector2.x - vertices[loopIndex + 6].x;
-			secondoveh[loopIndex].z = g_op_carvector2.z - vertices[loopIndex + 6].z;
-			secondoveh[loopIndex].y = vertices[loopIndex + 6].y;
-			opponent_pointc[loopIndex] = vertices[loopIndex + 12];
-			veh_od[loopIndex] = vertices[loopIndex + 18];
+			secondoveh[loopIndex].x = g_op_carvector2.x - vertices[loopIndex + WHEEL_GEOMETRY_VERTICES_PER_WHEEL].x;
+			secondoveh[loopIndex].z = g_op_carvector2.z - vertices[loopIndex + WHEEL_GEOMETRY_VERTICES_PER_WHEEL].z;
+			secondoveh[loopIndex].y = vertices[loopIndex + WHEEL_GEOMETRY_VERTICES_PER_WHEEL].y;
+			opponent_pointc[loopIndex] = vertices[loopIndex + WHEEL_GEOMETRY_REAR_VERTEX_START];
+			veh_od[loopIndex] = vertices[loopIndex + WHEEL_GEOMETRY_LAST_WHEEL_VERTEX_START];
 		}
 		for (loopIndex = 0; loopIndex < 5; loopIndex++) {
 			buf_obase[loopIndex] = 0;
 		}
-		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[10]), &g_shapes3d[129]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[10]), &g_shapes3d[SHAPE_OPPONENT_AUXILIARY]);
 		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[11]), &g_shapes3d[120]);
 		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[12]), &g_shapes3d[121]);
 		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[13]), &g_shapes3d[122]);
@@ -1162,10 +1153,10 @@ void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 void remove_3dcars(void)
 {
     if (carcopyresourceptr != 0) {
-        settires(&g_shapes3d[127].shape3d_verts[8], 0, car_wheel_offsets, buf_obase, veco, (I16S *)&ctrmesh);
+        settires(&g_shapes3d[SHAPE_OPPONENT_WHEELS].shape3d_verts[SHAPE_WHEEL_VERTEX_START], 0, car_wheel_offsets, buf_obase, veco, (I16S *)&ctrmesh);
         /* PLATFORM(memory): release a resource block. */ purgememory(carcopyresourceptr);
     }
-    settires(&g_shapes3d[126].shape3d_verts[8], 0, car_wheel_offsets, ywhlang, pts_set, (I16S *)&pos_pt);
+    settires(&g_shapes3d[SHAPE_PLAYER_WHEELS].shape3d_verts[SHAPE_WHEEL_VERTEX_START], 0, car_wheel_offsets, ywhlang, pts_set, (I16S *)&pos_pt);
     /* PLATFORM(memory): release resource memory. */ freememory(pl_carres_3d);
 }
 
@@ -1183,11 +1174,11 @@ void settires(struct VECTOR far *out, I16 angle,
     I16 sine;
     I16 cosine;
 
-    if (last_angle_and_y[4] != angle) {
+    if (last_angle_and_y[WHEEL_GEOMETRY_ANGLE_CACHE_INDEX] != angle) {
         sine = intsin(angle >> 1);
         cosine = intcos(angle >> 1);
 
-        for (i = 0; i < 6; ++i) {
+        for (i = 0; i < WHEEL_GEOMETRY_VERTICES_PER_WHEEL; ++i) {
             out[i].x = fixedmult(source[i].z, sine)
                      + origin[0]
                      + fixedmult(source[i].x, cosine);
@@ -1196,7 +1187,7 @@ void settires(struct VECTOR far *out, I16 angle,
                      + fixedmult(source[i].z, cosine);
         }
 
-        for (i = 6; i < 12; ++i) {
+        for (i = WHEEL_GEOMETRY_VERTICES_PER_WHEEL; i < WHEEL_GEOMETRY_REAR_VERTEX_START; ++i) {
             out[i].x = fixedmult(source[i].z, sine)
                      + origin[3]
                      + fixedmult(source[i].x, cosine);
@@ -1205,15 +1196,15 @@ void settires(struct VECTOR far *out, I16 angle,
                      + fixedmult(source[i].z, cosine);
         }
 
-        last_angle_and_y[4] = angle;
+        last_angle_and_y[WHEEL_GEOMETRY_ANGLE_CACHE_INDEX] = angle;
     }
 
     for (j = 0; j < 4; ++j) {
         /* PORT: short base heights are promoted to 16-bit int for signed division. */
-        y = base[j] / 64;
+        y = base[j] / WORLD_COORDINATE_SCALE_I16;
         if (last_angle_and_y[j] != y) {
-            span_start = j * 6;
-            end = span_start + 6;
+            span_start = j * WHEEL_GEOMETRY_VERTICES_PER_WHEEL;
+            end = span_start + WHEEL_GEOMETRY_VERTICES_PER_WHEEL;
             for (i = span_start; i < end; ++i) {
                 out[i].y = source[i].y - y;
             }
@@ -1551,7 +1542,7 @@ I16 compiletrack(void)
       goto error;
     }
     matches = 0;
-    objInfo = trklst[object].info;
+    objInfo = trklst[object].ss_trkObjInfoPtr;
     if (objInfo != 0)
     {
       for (i = 0; i < objInfo->noOfBlocks; i++)
@@ -1714,7 +1705,7 @@ I16 compiletrack(void)
   tdfrompathrow22[g_trackpiecescounter] = y;
   td_18_ref[g_trackpiecescounter] = (connStat << 4) + sub;
   road_trk[g_trackpiecescounter] = object;
-  objInfo = trklst[object].info;
+  objInfo = trklst[object].ss_trkObjInfoPtr;
   blk = objInfo + sub;
   arrow = blk->opponent3;
   if (arrow == 0)
@@ -1723,10 +1714,10 @@ I16 compiletrack(void)
   } else {
     if (arrow != (-1) && runLength > 3 && g_road_piece_id != 0x30)
     {
-      objInfo = trklst[object].info;
+      objInfo = trklst[object].ss_trkObjInfoPtr;
       blk = objInfo + sub;
       arrow = blk->opponent3;
-      objInfo = trklst[prev_elem].info;
+      objInfo = trklst[prev_elem].ss_trkObjInfoPtr;
       blk = objInfo + prevBlock;
       if (prev_reversed_dir != 0)
       {
@@ -1775,8 +1766,8 @@ I16 compiletrack(void)
       if (td15p_9[gterrtrk[oldRow] + oldX] == 6)
         cur_pos.y += 0x1c2;
       trksign[g_road_piece_id].y = cur_pos.y;
-      trksign[g_road_piece_id].z = ((trklst[prev_elem].multiTile & 1) ? (r_zp[oldRow]) : (row_ctr_zs[oldRow])) + cur_pos.z;
-      trksign[g_road_piece_id].x = ((trklst[prev_elem].multiTile & 2) ? (xcols[oldX + 1]) : (trackctrpos2[oldX])) + cur_pos.x;
+      trksign[g_road_piece_id].z = ((trklst[prev_elem].ss_multiTileFlag & 1) ? (r_zp[oldRow]) : (row_ctr_zs[oldRow])) + cur_pos.z;
+      trksign[g_road_piece_id].x = ((trklst[prev_elem].ss_multiTileFlag & 2) ? (xcols[oldX + 1]) : (trackctrpos2[oldX])) + cur_pos.x;
       td19hdl[lnoffsets[oldRow] + oldX] = g_road_piece_id;
       g_road_piece_id++;
     }
@@ -1788,7 +1779,7 @@ I16 compiletrack(void)
     goto error;
   }
 
-  objInfo = trklst[object].info;
+  objInfo = trklst[object].ss_trkObjInfoPtr;
   blk = objInfo + sub;
   if (connStat != 0)
   {
@@ -1884,7 +1875,7 @@ I16 compiletrack(void)
       elem_idx = road_trk[sampleIdx];
       sub = td_18_ref[sampleIdx] & 0x0f;
       conn = td_18_ref[sampleIdx] & 0x10;
-      blk = trklst[elem_idx].info;
+      blk = trklst[elem_idx].ss_trkObjInfoPtr;
       if (conn != 0 && blk[sub].cameraOverlay.dataPointer != 0)
         camData = (struct VECTOR *) blk[sub].cameraOverlay.dataPointer;
       else
@@ -1918,11 +1909,11 @@ I16 compiletrack(void)
         trackdat7[j] = 0;
       td6_ptr_b[j] = 0;
       trkptrpath[j].y = trackdat7[j] + cur_pos.y;
-      if (trklst[elem_idx].multiTile & 1)
+      if (trklst[elem_idx].ss_multiTileFlag & 1)
         trkptrpath[j].z = r_zp[y] + cur_pos.z;
       else
         trkptrpath[j].z = row_ctr_zs[y] + cur_pos.z;
-      trkptrpath[j].x = ((trklst[elem_idx].multiTile & 2) ? (xcols[cur_col + 1]) : (trackctrpos2[cur_col])) + cur_pos.x;
+      trkptrpath[j].x = ((trklst[elem_idx].ss_multiTileFlag & 2) ? (xcols[cur_col + 1]) : (trackctrpos2[cur_col])) + cur_pos.x;
       j++;
     }
   }

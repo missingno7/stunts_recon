@@ -1,7 +1,7 @@
 /* View state; keep UI resources and clipping pairs adjacent. */
 #ifndef STUNTS_VIEWSTAT_H
 #define STUNTS_VIEWSTAT_H
-#include "geom2d.h"
+#include "math3d.h"
 struct SPRITE;
 extern struct SPRITE far *g_wndspr;
 extern void far *fntndat;

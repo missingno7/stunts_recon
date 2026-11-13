@@ -5,7 +5,7 @@
 ; ASMDOC[timers] Data exports: _timer_copy_unk: shared deadline dword; _timer_copy_target_high: EQU alias at shared
 ; ASMDOC[timers]   deadline+2; _line_input_screen_rect: word near pointer owned here but unused by these routines
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 name asm012_141210
 DGROUP group CONST,_BSS,_DATA
 assume ds:DGROUP

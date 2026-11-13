@@ -9,19 +9,18 @@
 #define POLYINFO_RESET_SENTINEL 0xffff
 #define RECT_EMPTY_MIN_SENTINEL 9999
 #define RECT_EMPTY_MAX_SENTINEL -1
-#include "stunts_types.h"
+#include "types.h"
 /* obj_seg006: whole seg006 object (22 functions, file order = image order).
    Globals without a reviewed semantic alias use their bound data names:
    data_31852 = transshapenumpaints, transformed_shape_material = transshapematerial,
    transformed_shape_bounds = transshaperectptr, transformed_primitive_cursor = transshapeprimptr,
    transformed_primitive_paint = transprimitivepaintjob, backlightovr8 = backlights_paint_override,
    projected_point_table = polyvertpointptrtab, primitive_type_table = primtypetab, inverse_power_of_two_table = invpow2tbl. */
-#include "geom2d.h"
-
-
 #include "math3d.h"
-#include "point2d.h"
 
+#include "matrix.h"
+#include "trig.h"
+#include "radius.h"
 
 /* PORT: This in-memory record uses MSC medium-model far pointers and default 2-byte packing; verify field offsets before host serialization. */
 #include "shape3d.h"
@@ -30,49 +29,26 @@
 #include "xformrec.h"
 
 /* PORT: This record is a 16-bit packed renderer structure; preserve MSC field alignment and signed widths. */
-#include "polyinfo.h"
+#include "shapes3d.h"
 
+#include "viewstat.h"
 #include "game.h"
-#include "gfxapi.h"
-#include "mathapi.h"
-#include "mathops.h"
-#include "prim3d.h"
-#include "shape2d.h"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#include "video.h"
 
 /* Local view: mmgr_alloc_resbytes; parameters[1] is signed long; another unit uses unsigned long. */
 extern void far* far resmem(I8*, I32);
 
-
 /* Local view: drawpolypt; parameters[2].pointer is struct POINT2D; another unit uses signed word. */
 extern void far drawpolypt(I16, I16, struct POINT2D*);
 
-
-
-
 /* Local view: solidtire; parameters[0].pointer is struct POINT2D; another unit uses struct WheelRect. */
 extern void far solidtire(struct POINT2D*, I16, I16, I16, I16);
-
 
 static struct MATRIX mat_no_turn, mat_quarter_turn, mat_half_turn, mat_three_quarters_turn;
 struct MATRIX g_matrix_yrot;
 struct MATRIX matrix_x_rotation;
 struct MATRIX g_rot_mat_z;
 struct MATRIX matrotation_tmp;
-
 
 static struct RECTANGLE selection_rect;
 static I16 half_scale_flag;
@@ -114,18 +90,7 @@ static I8 current_paintjob;
 extern I8 backlightovr8;
 char g_vector_bitix;
 
-
-
 static struct POINT2D* projected_point_ptr_table[11];
-
-
-
-
-
-
-
-
-
 
 void INIT_MATRIX(void)
 { /* PURPOSE: Allocate the polygon information pool and initialize cached rotations. Params: none. Returns: void. Globals: reads mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn; writes mat_half_turn, mat_no_turn, mat_quarter_turn, mat_three_quarters_turn, polyinfoptr. */ /* PLATFORM(memory): allocates or releases game-managed memory. */
@@ -166,7 +131,7 @@ unsigned INIT_OBJECTS_BUFFER(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cli
     selection_rect = *cliprect;
     half_scale_flag = unk;
     matptr = makematrix(-angZ, -angX, -angY, 0);
-    vec.z = 0x2710;
+    vec.z = VIEW_HEADING_AXIS_LENGTH;
     vec.y = 0;
     vec.x = 0;
     mat_vec(&vec, matptr, &vec2);
@@ -185,7 +150,7 @@ unsigned ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D* ts)
     struct VECTOR position;
     unsigned npts;
     unsigned idx;
-    struct POINT2D screenpts[255];
+    struct POINT2D screenpts[SHAPE3D_VERTEX_CAPACITY];
     struct MATRIX invview;
     I32 far* cull2ptr;
     struct POINT2D far* out;
@@ -201,7 +166,7 @@ unsigned ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D* ts)
     struct POINT2D far* srcpt;
     struct VECTOR viewvert;
     I16 ptx;
-    I8 vertcode[256];
+    I8 vertcode[SHAPE3D_VERTEX_CODE_CAPACITY];
     I16 pixsize;
     I16 hidden;
     I16 numdrawn;
@@ -209,11 +174,11 @@ unsigned ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D* ts)
     struct POINT2D ipt;
     I16 pty;
     struct VECTOR surfvec;
-    struct VECTOR vertbuf[255];
+    struct VECTOR vertbuf[SHAPE3D_VERTEX_CAPACITY];
     I32 far* cullwords;
 
     if (poly_list_insert_result != 0)
-        return 1;
+        return TRANSFORM_RESULT_POOL_FULL;
     vertex_count = ts->shapeptr->numverts;
     current_prim_start = ts->shapeptr->primitives;
     obj_verts = ts->shapeptr->verts;
@@ -224,16 +189,16 @@ unsigned ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D* ts)
     if (transformed_shape_material >= (U8 )current_num_paints)
         transformed_shape_material = 0;
     obj_flags = ts->ts_flags;
-    if (obj_flags & 8)
+    if (obj_flags & SHAPE3D_FLAG_ACCUMULATE_RECT)
         current_rect = ts->rectptr;
     for (i = 0; i < vertex_count; i++)
-        vertcode[i] = -1;
+        vertcode[i] = VERTEX_CLIP_UNTRANSFORMED;
 
-    if (obj_flags & 2) {
+    if (obj_flags & SHAPE3D_FLAG_VIEW_SPACE_POSITION) {
         matptr = makematrix(ts->rotvec.x, ts->rotvec.y, ts->rotvec.z, 0);
         transmult(matptr, &wkmatx, &mview);
         position = ts->pos;
-        cullmask = -1L;
+        cullmask = CULL_DIRECTIONS_ALL;
         cullbits2 = 0;
     } else {
         matptr = makematrix(ts->rotvec.x, ts->rotvec.y, ts->rotvec.z, 0);
@@ -242,11 +207,11 @@ unsigned ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D* ts)
         mat_invert(&mview, &invview);
         local.x = 0;
         local.y = 0;
-        local.z = 0x1000;
+        local.z = CULL_VIEW_AXIS_LENGTH;
         mat_vec(&local, &invview, &viewvert);
         if ((viewvert.y > 0 && ts->pos.y < 0) ||
             (ts->unk * 2 > abs(position.x) && ts->unk * 2 > abs(position.z))) {
-            cullmask = -1L;
+            cullmask = CULL_DIRECTIONS_ALL;
             cullbits2 = 0;
         } else {
             g_vector_bitix = norm_zone(&viewvert);
@@ -257,35 +222,35 @@ unsigned ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D* ts)
     poly_link_listit4 = poly_cursor1 = facenodeiterator;
     polygon_link_3_list_iter = 0;
     numdrawn = 0;
-    if (vertex_count > 8)
-        transformed_vert_count = 8;
+    if (vertex_count > SHAPE3D_INITIAL_BOUNDING_VERTICES)
+        transformed_vert_count = SHAPE3D_INITIAL_BOUNDING_VERTICES;
     else
         transformed_vert_count = vertex_count;
-    if (transformed_vert_count > 4 && obj_verts[0].y == obj_verts[4].y)
-        transformed_vert_count = 4;
+    if (transformed_vert_count > SHAPE3D_FLAT_BOUNDING_VERTICES && obj_verts[0].y == obj_verts[4].y)
+        transformed_vert_count = SHAPE3D_FLAT_BOUNDING_VERTICES;
 
-    rectcode = 0x0F;
+    rectcode = CLIP_OUTCODE_ALL;
     hidden = 1;
     someclipped = 0;
     for (i = 0; i < transformed_vert_count; i++) {
         projected_point_ptr_table[i] = &screenpts[i];
         local = obj_verts[i];
         if (half_scale_flag != 0) {
-            local.x >>= 1; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
-            local.y >>= 1; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
-            local.z >>= 1; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
+            local.x >>= SHAPE3D_HALF_SCALE_SHIFT; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
+            local.y >>= SHAPE3D_HALF_SCALE_SHIFT; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
+            local.z >>= SHAPE3D_HALF_SCALE_SHIFT; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
         }
         mat_vec(&local, &mview, &viewvert);
         viewvert.x += position.x;
         viewvert.y += position.y;
         viewvert.z += position.z;
         vertbuf[i] = viewvert;
-        if (viewvert.z < 12) {
-            vertcode[i] = 1;
+        if (viewvert.z < SHAPE3D_NEAR_PLANE_Z) {
+            vertcode[i] = VERTEX_CLIP_BEHIND_NEAR;
             someclipped = 1;
         } else {
             hidden = 0;
-            vertcode[i] = 0;
+            vertcode[i] = VERTEX_CLIP_PROJECTED;
             projectp(&viewvert, projected_point_ptr_table[i]);
             if (rectcode != 0)
                 rectcode &= getoutcode(projected_point_ptr_table[i]);
@@ -294,12 +259,12 @@ unsigned ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D* ts)
         }
     }
     if (hidden != 0 || someclipped == 0 || ts->unk < abs(position.x))
-        return -1;
+        return TRANSFORM_RESULT_NOT_VISIBLE;
 
 visible:
     current_prim_start = ts->shapeptr->primitives;
     do {
-        shape_prim_next = current_prim_start + NP[*current_prim_start] + current_num_paints + 2;
+        shape_prim_next = current_prim_start + NP[*current_prim_start] + current_num_paints + PRIMITIVE_PREFIX_BYTES;
         primflag = current_prim_start[1];
         added = 0;
         if (*cullwords & cullmask) {
@@ -308,9 +273,9 @@ visible:
             ptype = PT[prim];
             shape_polyinfo = (struct POLYINFO far*)(polyinfoptr + polyinfo_offset);
             poly_info_ptrs[polygonnumber] = shape_polyinfo;
-            current_paintjob = current_prim_start[transformed_shape_material + 2];
-            current_prim_start += current_num_paints + 2;
-            rectcode = 0x0F;
+            current_paintjob = current_prim_start[transformed_shape_material + PRIMITIVE_PREFIX_BYTES];
+            current_prim_start += current_num_paints + PRIMITIVE_PREFIX_BYTES;
+            rectcode = CLIP_OUTCODE_ALL;
             hidden = 1;
             someclipped = 0;
             current_prim_verts = current_prim_start;
@@ -323,24 +288,24 @@ visible:
                     if (rectcode != 0)
                         rectcode &= getoutcode(projected_point_ptr_table[npts]);
                     break;
-                case -1:
+                case VERTEX_CLIP_UNTRANSFORMED:
                     local = obj_verts[i];
                     if (half_scale_flag != 0) {
-                        local.x >>= 1; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
-                        local.y >>= 1; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
-                        local.z >>= 1; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
+                        local.x >>= SHAPE3D_HALF_SCALE_SHIFT; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
+                        local.y >>= SHAPE3D_HALF_SCALE_SHIFT; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
+                        local.z >>= SHAPE3D_HALF_SCALE_SHIFT; /* PORT: signed right shift uses the target arithmetic-shift behavior. */
                     }
                     mat_vec(&local, &mview, &viewvert);
                     viewvert.x += position.x;
                     viewvert.y += position.y;
                     viewvert.z += position.z;
                     vertbuf[i] = viewvert;
-                    if (viewvert.z < 12) {
-                        vertcode[i] = 1;
+                    if (viewvert.z < SHAPE3D_NEAR_PLANE_Z) {
+                        vertcode[i] = VERTEX_CLIP_BEHIND_NEAR;
                         someclipped = 1;
                     } else {
                         hidden = 0;
-                        vertcode[i] = 0;
+                        vertcode[i] = VERTEX_CLIP_PROJECTED;
                         projectp(&viewvert, projected_point_ptr_table[npts]);
                         if (rectcode != 0)
                             rectcode &= getoutcode(projected_point_ptr_table[npts]);
@@ -353,11 +318,11 @@ visible:
             }
             if (hidden == 0 && (rectcode == 0 || someclipped != 0)) {
                 switch (ptype) {
-                case 0:
+                case POLYINFO_TYPE_POLYGON:
                     out = shape_polyinfo->points;
                     current_prim_verts = current_prim_start;
                     depth = 0;
-                    rectcode = 0x0F;
+                    rectcode = CLIP_OUTCODE_ALL;
                     if (someclipped == 0) {
                         for (i = 0; i < transformed_vert_count; i++) {
                             idx = *current_prim_verts++;
@@ -373,9 +338,9 @@ visible:
                         for (i = 0; i < transformed_vert_count; i++) {
                             idx = *current_prim_verts++;
                             depth += vertbuf[idx].z;
-                            if (vertcode[idx] == 0) {
+                            if (vertcode[idx] == VERTEX_CLIP_PROJECTED) {
                                 if (vertcode[lastidx] != 0) {
-                                    zclipline(&vertbuf[idx], &vertbuf[lastidx], &local, 12);
+                                    zclipline(&vertbuf[idx], &vertbuf[lastidx], &local, SHAPE3D_NEAR_PLANE_Z);
                                     projectp(&local, &ipt);
                                     if (screenpts[idx].x != ipt.x || screenpts[idx].y != ipt.y) {
                                         if (rectcode != 0)
@@ -391,8 +356,8 @@ visible:
                                 out++;
                                 npts++;
                             } else {
-                                if (vertcode[lastidx] == 0) {
-                                    zclipline(&vertbuf[lastidx], &vertbuf[idx], &local, 12);
+                                if (vertcode[lastidx] == VERTEX_CLIP_PROJECTED) {
+                                    zclipline(&vertbuf[lastidx], &vertbuf[idx], &local, SHAPE3D_NEAR_PLANE_Z);
                                     projectp(&local, &ipt);
                                     if (screenpts[lastidx].x != ipt.x || screenpts[lastidx].y != ipt.y) {
                                         if (rectcode != 0)
@@ -408,9 +373,9 @@ visible:
                         transformed_vert_count = npts;
                     }
                     if (transformed_vert_count != 0 && rectcode == 0) {
-                        if ((primflag & 1) || (*cull2ptr & cullbits2) || front_facing(shape_polyinfo->points))
+                        if ((primflag & PRIMITIVE_FLAG_DOUBLE_SIDED) || (*cull2ptr & cullbits2) || front_facing(shape_polyinfo->points))
                             added++;
-                        if (added != 0 && (obj_flags & 8) != 0) {
+                        if (added != 0 && (obj_flags & SHAPE3D_FLAG_ACCUMULATE_RECT) != 0) {
                     srcpt = shape_polyinfo->points;
                     for (npts = 0; npts < transformed_vert_count; npts++) {
                         ptx = srcpt->x;
@@ -428,29 +393,29 @@ visible:
                         }
                     }
                     break;
-                case 1:
+                case POLYINFO_TYPE_LINE:
                     i = current_prim_start[0];
                     j = current_prim_start[1];
                     if (vertcode[i] + vertcode[j] == 2)
                         break;
                     if (vertcode[i] != 0) {
-                        zclipline(&vertbuf[j], &vertbuf[i], &local, 12);
+                        zclipline(&vertbuf[j], &vertbuf[i], &local, SHAPE3D_NEAR_PLANE_Z);
                         projectp(&local, &screenpts[i]);
                     } else if (vertcode[j] != 0) {
-                        zclipline(&vertbuf[i], &vertbuf[j], &local, 12);
+                        zclipline(&vertbuf[i], &vertbuf[j], &local, SHAPE3D_NEAR_PLANE_Z);
                         projectp(&local, &screenpts[j]);
                     }
                     depth = vertbuf[i].z + vertbuf[j].z;
                     shape_polyinfo->points[0] = *projected_point_ptr_table[0];
                     shape_polyinfo->points[1] = *projected_point_ptr_table[1];
-                    if (obj_flags & 8) {
+                    if (obj_flags & SHAPE3D_FLAG_ACCUMULATE_RECT) {
                         zonecheck(projected_point_ptr_table[0], current_rect);
                         zonecheck(projected_point_ptr_table[1], current_rect);
                     }
                     transformed_vert_count = 2;
                     added++;
                     break;
-                case 3:
+                case POLYINFO_TYPE_WHEEL:
                     if (someclipped != 0)
                         break;
                     shape_polyinfo->points[0] = *projected_point_ptr_table[0];
@@ -472,7 +437,7 @@ visible:
                                       shape_polyinfo->points[0].y - shape_polyinfo->points[2].y);
                     if (j > i)
                         i = j;
-                    if (obj_flags & 8) {
+                    if (obj_flags & SHAPE3D_FLAG_ACCUMULATE_RECT) {
                         corner.x = shape_polyinfo->points[0].x - i - 1;
                         corner.y = shape_polyinfo->points[0].y - i - 1;
                         zonecheck(&corner, current_rect);
@@ -489,11 +454,11 @@ visible:
                     transformed_vert_count = 4;
                     added = 1;
                     break;
-                case 2:
+                case POLYINFO_TYPE_SPHERE:
                     i = current_prim_start[0];
                     j = current_prim_start[1];
                     depth = vertbuf[i].z + vertbuf[j].z;
-                    if (vertcode[i] + vertcode[j] == 0) {
+                    if (vertcode[i] + vertcode[j] == VERTEX_CLIP_PROJECTED) {
                         shape_polyinfo->points[0] = *projected_point_ptr_table[0];
                         viewvert = vertbuf[i];
                         surfvec = vertbuf[j];
@@ -502,7 +467,7 @@ visible:
                         local.z = viewvert.z - surfvec.z;
                         pixsize = thicknessxp(int3dhypot(&local), viewvert.z);
                         shape_polyinfo->points[1].x = pixsize;
-                        if (obj_flags & 8) {
+                        if (obj_flags & SHAPE3D_FLAG_ACCUMULATE_RECT) {
                             corner.y = projected_point_ptr_table[0]->y - pixsize;
                             corner.x = projected_point_ptr_table[0]->x - pixsize;
                             zonecheck(&corner, current_rect);
@@ -514,13 +479,13 @@ visible:
                         added++;
                     }
                     break;
-                case 5:
+                case POLYINFO_TYPE_PIXEL:
                     i = current_prim_start[0];
                     if (vertcode[i] != 0)
                         break;
                     depth = vertbuf[i].z;
                     shape_polyinfo->points[0] = *projected_point_ptr_table[0];
-                    if (obj_flags & 8)
+                    if (obj_flags & SHAPE3D_FLAG_ACCUMULATE_RECT)
                         zonecheck(projected_point_ptr_table[0], current_rect);
                     transformed_vert_count = 1;
                     added++;
@@ -532,9 +497,9 @@ visible:
         cull2ptr++;
         cullwords++;
         if (added == 0) {
-            if ((primflag & 2) == 0) {
-                while (current_prim_start[1] & 2) {
-                    current_prim_start += NP[*current_prim_start] + current_num_paints + 2;
+            if ((primflag & PRIMITIVE_FLAG_CONTINUATION) == 0) {
+                while (current_prim_start[1] & PRIMITIVE_FLAG_CONTINUATION) {
+                    current_prim_start += NP[*current_prim_start] + current_num_paints + PRIMITIVE_PREFIX_BYTES;
                     cullwords++;
                     cull2ptr++;
                 }
@@ -543,7 +508,7 @@ visible:
             numdrawn++;
             shape_polyinfo->numpoints = transformed_vert_count;
             shape_polyinfo->type = ptype;
-            if (current_paintjob == 0x2D)
+            if (current_paintjob == MATERIAL_BACKLIGHT_DYNAMIC)
                 shape_polyinfo->material = backlightovr8;
             else
                 shape_polyinfo->material = current_paintjob;
@@ -565,13 +530,13 @@ visible:
                 break;
             }
             shape_polyinfo->depth = i;
-            if ((poly_list_insert_result = polysort(i, (obj_flags & 1) || (primflag & 2) ? 0 : 1)) != 0)
-                return 1;
+            if ((poly_list_insert_result = polysort(i, (obj_flags & SHAPE3D_FLAG_KEEP_INSERTION_POSITION) || (primflag & PRIMITIVE_FLAG_CONTINUATION) ? 0 : 1)) != 0)
+                return TRANSFORM_RESULT_POOL_FULL;
         }
-    } while (*current_prim_start != 0);
+    } while (*current_prim_start != SHAPE3D_PRIMITIVE_STREAM_END);
     if (numdrawn == 0)
-        return -1;
-    return 0;
+        return TRANSFORM_RESULT_NOT_VISIBLE;
+    return TRANSFORM_RESULT_SUBMITTED;
 }
 extern unsigned polysort(unsigned depth, unsigned search_sorted_position) { /* PURPOSE: Handle the insert newest poly in poly linked list 40ed6 operation. Params: depth, search_sorted_position. Returns: unsigned. Globals: reads poly_cursor1, poly_info_ptrs, poly_link_list, poly_link_listit4, polygon_link_3_list_iter, polygonnumber, polyinfo_offset, transformed_vert_count; writes facenodeiterator, poly_link_list, poly_link_listit4, polygon_link_3_list_iter, polygonnumber, polyinfo_offset. */
     register I16 remaining;
@@ -599,18 +564,18 @@ extern unsigned polysort(unsigned depth, unsigned search_sorted_position) { /* P
     if (list_index < 0) facenodeiterator = polygonnumber;
     poly_link_listit4 = poly_link_list[poly_link_listit4];
     polygonnumber++;
-    polyinfo_offset += transformed_vert_count * sizeof(struct POINT2D) + 6;
-    return polygonnumber == POLYINFO_CAPACITY || (I16)polyinfo_offset > 0x2872;
+    polyinfo_offset += transformed_vert_count * sizeof(struct POINT2D) + POLYINFO_RECORD_PREFIX_BYTES;
+    return polygonnumber == POLYINFO_CAPACITY || (I16)polyinfo_offset > POLYINFO_LAST_START_OFFSET;
 }
 
 unsigned getoutcode(struct POINT2D *point) { /* PURPOSE: Return the clip-rectangle outcode for one projected point. Params: point. Returns: unsigned. Globals: reads selection_rect; writes none. */
     register struct POINT2D *p = point;
     I8 flag;
-    if (p->y < selection_rect.top) flag=1;
-    else if (p->y > selection_rect.bottom) flag=2;
+    if (p->y < selection_rect.top) flag=CLIP_OUTCODE_TOP;
+    else if (p->y > selection_rect.bottom) flag=CLIP_OUTCODE_BOTTOM;
     else flag=0;
-    if (p->x < selection_rect.left) flag|=4;
-    else if (p->x > selection_rect.right) flag|=8;
+    if (p->x < selection_rect.left) flag|=CLIP_OUTCODE_LEFT;
+    else if (p->x > selection_rect.right) flag|=CLIP_OUTCODE_RIGHT;
     return flag;
 }
 
@@ -649,7 +614,7 @@ void DRAW_OBJECTS(void)
         materialIndex = info->material;
         fill = mat_copy_clr_lst_ptr[materialIndex];
         switch (info->type) {
-        case 0:
+        case POLYINFO_TYPE_POLYGON:
             pointCount = info->numpoints;
             srcpts = info->points;
             out = polypts;
@@ -659,30 +624,30 @@ void DRAW_OBJECTS(void)
                 srcpts++;
             }
             switch (material_patlistptr_copy[materialIndex]) {
-            case 0:
+            case POLYGON_FILL_SOLID:
                 drawpolypt(fill, pointCount, polypts) /* PLATFORM(video): draw a filled polygon. */;
                 break;
-            case 1:
+            case POLYGON_FILL_PATTERNED:
                 if (matpatlistcopypointer2[materialIndex] != 0)
                     preRender_patterned(matpatlistcopypointer2[materialIndex], fill, pointCount, polypts) /* PLATFORM(video): draw a patterned polygon. */;
                 break;
-            case 2:
+            case POLYGON_FILL_SECONDARY_PARAMETERS:
                 sprite_two_color_poly_list(matpatlistcopypointer2[materialIndex], g_mat_clrlist_copy_2_ptr[materialIndex], fill, pointCount, polypts) /* PLATFORM(video): draw a polygon using the secondary fill parameters. */;
                 break;
             }
             break;
-        case 1:
+        case POLYINFO_TYPE_LINE:
             preRender_line(info->points[0].x, info->points[0].y, info->points[1].x, info->points[1].y, fill) /* PLATFORM(video): draw a line primitive. */;
             break;
-        case 3:
+        case POLYINFO_TYPE_WHEEL:
             for (idx = 0; idx < 4; idx++)
                 polypts[idx] = info->points[idx];
-            solidtire(polypts, 0x2500, fill, mat_copy_clr_lst_ptr[materialIndex + 1], mat_copy_clr_lst_ptr[materialIndex + 2]) /* PLATFORM(video): draw a wheel primitive. */;
+            solidtire(polypts, WHEEL_INNER_RADIUS_Q14, fill, mat_copy_clr_lst_ptr[materialIndex + 1], mat_copy_clr_lst_ptr[materialIndex + 2]) /* PLATFORM(video): draw a wheel primitive. */;
             break;
-        case 2:
+        case POLYINFO_TYPE_SPHERE:
             drawcircle(info->points[0].x, info->points[0].y, info->points[1].x, fill) /* PLATFORM(video): draw a sphere primitive. */;
             break;
-        case 5:
+        case POLYINFO_TYPE_PIXEL:
             writepixelc(info->points[0].x, info->points[0].y, fill) /* PLATFORM(video): plot a pixel primitive. */;
             break;
         }
@@ -690,21 +655,20 @@ void DRAW_OBJECTS(void)
     INIT_BUFFERS();
 }
 
-
 struct MATRIX* makematrix(I16 z, I16 x, I16 y, I16 unk) { /* PURPOSE: Compose cached Z, X, and Y rotation matrices in the requested order. Params: z, x, y, unk. Returns: struct MATRIX*. Globals: reads g_matrix_yrot, g_rot_mat_z, mat_half_turn, mat_no_turn and 5 other globals; writes g_matrix_yrot, g_rot_mat_z, mat_half_turn, mat_no_turn and 5 other globals. */
     register I16 rotation_flags = 0;
     register struct MATRIX* result;
 
     if ((z & ANGLE_TURN_MASK) != 0) {
-        rotation_flags |= 4;
+        rotation_flags |= ROTATION_PRESENT_Z;
         xformz(&g_rot_mat_z, z);
     }
     if ((x & ANGLE_TURN_MASK) != 0) {
-        rotation_flags |= 2;
+        rotation_flags |= ROTATION_PRESENT_X;
         xformx(&matrix_x_rotation, x);
     }
     if ((y & ANGLE_TURN_MASK) != 0) {
-        rotation_flags |= 1;
+        rotation_flags |= ROTATION_PRESENT_Y;
         if ((y & ANGLE_TURN_MASK) == mat_y_rot_angle) {
             result = &g_matrix_yrot;
         } else {
@@ -737,7 +701,7 @@ struct MATRIX* makematrix(I16 z, I16 x, I16 y, I16 unk) { /* PURPOSE: Compose ca
         result = &matrix_x_rotation;
         break;
     case 3:
-        if ((unk & 1) != 0)
+        if ((unk & ROTATION_COMPOSE_REVERSED) != 0)
             transmult(result, &matrix_x_rotation, &matrotation_tmp);
         else
             transmult(&matrix_x_rotation, result, &matrotation_tmp);
@@ -747,21 +711,21 @@ struct MATRIX* makematrix(I16 z, I16 x, I16 y, I16 unk) { /* PURPOSE: Compose ca
         result = &g_rot_mat_z;
         break;
     case 5:
-        if ((unk & 1) != 0)
+        if ((unk & ROTATION_COMPOSE_REVERSED) != 0)
             transmult(result, &g_rot_mat_z, &matrotation_tmp);
         else
             transmult(&g_rot_mat_z, result, &matrotation_tmp);
         result = &matrotation_tmp;
         break;
     case 6:
-        if ((unk & 1) != 0)
+        if ((unk & ROTATION_COMPOSE_REVERSED) != 0)
             transmult(&matrix_x_rotation, &g_rot_mat_z, &matrotation_tmp);
         else
             transmult(&g_rot_mat_z, &matrix_x_rotation, &matrotation_tmp);
         result = &matrotation_tmp;
         break;
     case 7:
-        if ((unk & 1) != 0) {
+        if ((unk & ROTATION_COMPOSE_REVERSED) != 0) {
             transmult(result, &matrix_x_rotation, &matrotation_tmp);
             transmult(&matrotation_tmp, &g_rot_mat_z, &matrix_x_rotation);
             result = &matrix_x_rotation;
@@ -802,14 +766,14 @@ norm_zone(struct VECTOR* vec) { /* PURPOSE: Classify a view vector into the rend
 	}
 	
 	if (vec->y < 0) {
-		if (below != 0) return 0x1E;
+		if (below != 0) return CULL_LOWER_POLE_INDEX;
 	} else
 	if (vec->y > 0) {
-		if (below != 0) return 0x1F;
+		if (below != 0) return CULL_UPPER_POLE_INDEX;
 	}
 
 	if (vec->y > 0) {
-		octant = 0x0F;
+		octant = CULL_UPPER_HEMISPHERE_OFFSET;
 	} else {
 		octant = 0;
 	}
@@ -819,7 +783,7 @@ norm_zone(struct VECTOR* vec) { /* PURPOSE: Classify a view vector into the rend
 		angle += ANGLE_UNITS_PER_TURN;
 	}
 	
-	octant += ((angle * 15L) >> 10);
+	octant += ((angle * CULL_AZIMUTH_BIN_COUNT) >> CULL_ANGLE_BIN_SHIFT);
 	
 	return octant;
 }
@@ -833,7 +797,6 @@ void initnm(void) { /* PURPOSE: Cache the sine and cosine values used by view-ve
 
 I32 lgabs(I32 value) { /* PURPOSE: Return the magnitude of a signed long value. Params: value. Returns: long. Globals: none. */ if (value < 0) return -value; return value; }
 
-
 /* Local view: g_vid_flg2_set; type is signed word; another unit uses unsigned word. */
 short g_vid_flg2_set;
 /* Local view: vidflg3is_minus1; type is signed word; another unit uses unsigned word. */
@@ -843,9 +806,6 @@ extern void abortmessage(I8 *);
 
 /* Local view: clipzone; return is signed byte; another unit uses signed word. */
 I8 clipzone(struct RECTANGLE *, struct RECTANGLE *);
-
-
-
 
 /* Local view: makezonelist; parameters[0] is unsigned byte; another unit uses signed byte. */
 void makezonelist(U8 , I8 *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, I8 *, struct RECTANGLE *);
@@ -1047,23 +1007,23 @@ void makezonelist(U8  arg_rectcount, I8* arg_rectarray_indices,
 	for (rect_counter = 0; rect_counter < arg_rectcount; rect_counter++) {
 
 		source_flags = arg_rectarray_indices[rect_counter];
-		if ((source_flags & 1) != 0) {
+		if ((source_flags & RECTLIST_SOURCE_FIRST) != 0) {
 			first_ptr = &arg_rectarray1[rect_counter];
 		}
 
-		if ((source_flags & 2) != 0) {
+		if ((source_flags & RECTLIST_SOURCE_SECOND) != 0) {
 			second_rect_ptr = &arg_rectarray2[rect_counter];
 		}
 
-		if ((source_flags & 1) != 0 && first_ptr->right > first_ptr->left) {
-			if ((source_flags & 2) != 0 && second_rect_ptr->right > second_rect_ptr->left) {
+		if ((source_flags & RECTLIST_SOURCE_FIRST) != 0 && first_ptr->right > first_ptr->left) {
+			if ((source_flags & RECTLIST_SOURCE_SECOND) != 0 && second_rect_ptr->right > second_rect_ptr->left) {
 				mergezones(first_ptr, second_rect_ptr, &cover_rect);
 				selected_rect_ptr = &cover_rect;
 			} else {
 				selected_rect_ptr = first_ptr;
 			}
 			has_result = 1;
-		} else if ((source_flags & 2) != 0 && second_rect_ptr->right > second_rect_ptr->left) {
+		} else if ((source_flags & RECTLIST_SOURCE_SECOND) != 0 && second_rect_ptr->right > second_rect_ptr->left) {
 			selected_rect_ptr = second_rect_ptr;
 			has_result = 1;
 		} else {
@@ -1079,8 +1039,6 @@ void makezonelist(U8  arg_rectcount, I8* arg_rectarray_indices,
 
 }
 
-
-
 void sortzonelist(I8 arg_array_length, struct RECTANGLE* arg_rect_array, I16* arg_array_indices) { /* PURPOSE: Sort rectangle indices by their top coordinate. Params: arg_array_length, arg_rect_array, arg_array_indices. Returns: void. Globals: none. */
     register I16 sortIndex;
     I16 intbuffer[256];
@@ -1095,10 +1053,10 @@ void sortzonelist(I8 arg_array_length, struct RECTANGLE* arg_rect_array, I16* ar
     }
 }
 
-U8  NP[16] = {
+U8  NP[SHAPE3D_PRIMITIVE_TYPE_COUNT] = {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 2, 6, 3, 0, 0
 };
-U8  PT[16] = {
+U8  PT[SHAPE3D_PRIMITIVE_TYPE_COUNT] = {
     0, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 4, 0, 0
 };
 I32 inverse_power_of_two_table[32] = {
@@ -1111,5 +1069,5 @@ I32 inverse_power_of_two_table[32] = {
     128L, 64L, 32L, 16L,
     8L, 4L, 2L, 1L
 };
-unsigned mat_y_rot_angle = 0xFFFF;
+unsigned mat_y_rot_angle = MATRIX_Y_ROTATION_CACHE_INVALID;
 struct RECTANGLE empty_rectangle = { RECT_EMPTY_MIN_SENTINEL, RECT_EMPTY_MAX_SENTINEL, RECT_EMPTY_MIN_SENTINEL, RECT_EMPTY_MAX_SENTINEL };

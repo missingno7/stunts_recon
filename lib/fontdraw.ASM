@@ -7,7 +7,7 @@
 ; describe
 ; ASMDOC(font_shapes) transitive shared exits.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 _DATA segment word public 'DATA'
 _DATA ends
 _BSS segment word public 'BSS'

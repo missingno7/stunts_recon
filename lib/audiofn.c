@@ -1,16 +1,14 @@
 
-#include "audapi.h"
-#include "font.h"
-#include "gfxapi.h"
-#include "uiapi.h"
-#include "resource.h"
+#include "audio.h"
+#include "chartab.h"
 #include "ui.h"
 #include "video.h"
-#include "stunts_types.h"
+#include "dlgcolor.h"
+#include "viewstat.h"
+#include "files.h"
+#include "types.h"
 /* READABILITY: Construct an audio resource path and define the initialized palette, material, and UI color tables owned by this module. */
 char audiofiletmp[UI_AUDIOFILETMP_CAPACITY];
-
-
 
 /* Local view: strlen; return is unsigned word; another unit uses signed word. */
 extern U16 strlen(const I8 *string);

@@ -1,6 +1,15 @@
-/* Shared car declarations; unnamed prototype parameters keep C1 allocation stable. */
 #ifndef STUNTS_CAR_H
 #define STUNTS_CAR_H
+
+/* Car parameters and simulation services. */
+/* Shared carrec declarations; DOS medium-model types. */
+struct car_exp_name_table;
+#pragma pack()
+struct car_exp_name_table {
+    char entry[15][5];
+    char trailing_zero;
+};
+/* Shared car declarations; unnamed prototype parameters keep C1 allocation stable. */
 struct CARSTATE;
 struct SIMD;
 struct VECTOR;
@@ -14,4 +23,5 @@ extern short far *track04_plyraero;
 extern short far *trackdata_05_opp_aerotbl;
 extern unsigned int far calcrpm(unsigned int, unsigned int, unsigned int, int, unsigned int);
 extern void far movecar(struct CARSTATE *, struct SIMD *, struct CARSTATE *, struct SIMD *, char);
+
 #endif

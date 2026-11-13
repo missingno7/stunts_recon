@@ -6,7 +6,7 @@
 ; ASMDOC No exhaustive dynamic call graph. dead=true means no retained source reference in this bounded audit, not
 ; ASMDOC permission to remove bytes.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 name asm012_135290
 MEMCHUNK struc
 resname db 12 dup (?)

@@ -10,7 +10,7 @@
 ; old generic comments are retained.
 ; ASMDOC-GEOMETRY 
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 name asm012_143366
 _DATA segment word public 'DATA'
 _DATA ends

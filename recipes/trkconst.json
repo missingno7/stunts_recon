@@ -13093,6 +13093,11 @@
         "segment": "_DATA"
       },
       {
+        "name": "_loopBae_InnXBounds0",
+        "offset": 9218,
+        "segment": "_DATA"
+      },
+      {
         "name": "_scene2",
         "offset": 8714,
         "segment": "_DATA"
@@ -13103,18 +13108,13 @@
         "segment": "_DATA"
       },
       {
-        "name": "_shape_template_points_a",
-        "offset": 9344,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_loopBae_InnXBounds0",
-        "offset": 9218,
-        "segment": "_DATA"
-      },
-      {
         "name": "_loopBase_OutXBounds0",
         "offset": 9232,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shape_template_points_a",
+        "offset": 9344,
         "segment": "_DATA"
       },
       {
@@ -13123,13 +13123,38 @@
         "segment": "_DATA"
       },
       {
+        "name": "_shape_template_points_b",
+        "offset": 9350,
+        "segment": "_DATA"
+      },
+      {
         "name": "_loopSurface_XBounds0",
         "offset": 9176,
         "segment": "_DATA"
       },
       {
+        "name": "_shape_template_points_c",
+        "offset": 9398,
+        "segment": "_DATA"
+      },
+      {
         "name": "_loopSurface_ZBounds0",
         "offset": 9162,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shape_template_points_d",
+        "offset": 9410,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shape_template_points_e",
+        "offset": 9422,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shape_template_points_f",
+        "offset": 9434,
         "segment": "_DATA"
       },
       {
@@ -13143,18 +13168,18 @@
         "segment": "_DATA"
       },
       {
-        "name": "_shape_template_points_b",
-        "offset": 9350,
-        "segment": "_DATA"
-      },
-      {
         "name": "_shapedata42_2",
         "offset": 622,
         "segment": "_DATA"
       },
       {
-        "name": "_shape_template_points_c",
-        "offset": 9398,
+        "name": "_aCar0",
+        "offset": 9470,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shapeinfos",
+        "offset": 4024,
         "segment": "_DATA"
       },
       {
@@ -13163,8 +13188,8 @@
         "segment": "_DATA"
       },
       {
-        "name": "_shape_template_points_d",
-        "offset": 9410,
+        "name": "_car_wheel_offsets",
+        "offset": 9552,
         "segment": "_DATA"
       },
       {
@@ -13173,18 +13198,13 @@
         "segment": "_DATA"
       },
       {
-        "name": "_shape_template_points_e",
-        "offset": 9422,
-        "segment": "_DATA"
-      },
-      {
         "name": "_shapedata42_4",
         "offset": 778,
         "segment": "_DATA"
       },
       {
-        "name": "_shape_template_points_f",
-        "offset": 9434,
+        "name": "_aGame1",
+        "offset": 9458,
         "segment": "_DATA"
       },
       {
@@ -13198,6 +13218,11 @@
         "segment": "_DATA"
       },
       {
+        "name": "_aGame2",
+        "offset": 9464,
+        "segment": "_DATA"
+      },
+      {
         "name": "_shapedata42_7",
         "offset": 2194,
         "segment": "_DATA"
@@ -13208,8 +13233,13 @@
         "segment": "_DATA"
       },
       {
-        "name": "_aCar0",
-        "offset": 9470,
+        "name": "_aStxxx",
+        "offset": 9546,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_bkRdEntr_triang_zAdjust",
+        "offset": 9246,
         "segment": "_DATA"
       },
       {
@@ -13218,38 +13248,8 @@
         "segment": "_DATA"
       },
       {
-        "name": "_car_wheel_offsets",
-        "offset": 9552,
-        "segment": "_DATA"
-      },
-      {
         "name": "_shapedata42_10",
         "offset": 2788,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_shapeinfos",
-        "offset": 4024,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_aGame1",
-        "offset": 9458,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_aGame2",
-        "offset": 9464,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_aStxxx",
-        "offset": 9546,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_bkRdEntr_triang_zAdjust",
-        "offset": 9246,
         "segment": "_DATA"
       },
       {
@@ -14453,14 +14453,19 @@
   },
   "preprocessor_closure": [
     {
-      "path": "include/carrec.h",
-      "sha256": "8de8f129994cd81e723d939a60133e446ba1217c5d5811de7c898d8702a506f0",
-      "size": 233
+      "path": "include/car.h",
+      "sha256": "2c24e60b40310b7d1a7b21c30f6bc2109806706630fa4b27de37b7dae84bb2f4",
+      "size": 887
     },
     {
-      "path": "include/geom2d.h",
-      "sha256": "2938bb58c7180ac1095c0efa64d0e9b7e1099eab96e8310945cc1cac41253465",
-      "size": 421
+      "path": "include/math3d.h",
+      "sha256": "59a5ed823822b0ec3d7c3dad15159f8dae01f9cfd9b8a105eb89e0f12d4bbc69",
+      "size": 3760
+    },
+    {
+      "path": "include/radius2d.h",
+      "sha256": "097d90d5382c47225c46504009b67e05ba91fb87371aa84b351d101f8693077e",
+      "size": 120
     },
     {
       "path": "include/skybox.h",
@@ -14468,88 +14473,132 @@
       "size": 275
     },
     {
-      "path": "include/stunts_types.h",
-      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
-      "size": 1091
-    },
-    {
       "path": "include/track.h",
-      "sha256": "2acb2f8daa69a0a6842795031dfcffac90ddd0347842192b7506c83cde8bf24f",
-      "size": 3796
+      "sha256": "af0f4ae33a916802c626070cb6a0745e20cb8435ef4d039732913f37e6032a9e",
+      "size": 5927
     },
     {
-      "path": "include/trackrec.h",
-      "sha256": "ce3146e45170c91a45f66e43bf7e46ad9fcd406765f59f38273543c4a134be10",
-      "size": 2145
+      "path": "include/types.h",
+      "sha256": "ee3c95010d95f2bcb0d86f9a877a3ee1f1e495dbab382f33a83b9cf9e456b7db",
+      "size": 1277
     },
     {
-      "path": "include/vec3.h",
-      "sha256": "cbd94805557c2937228598d52eec59dbf495dc79b41229fab6d15ef7158bbc3a",
-      "size": 172
-    },
-    {
-      "line": 14,
-      "path": "include/trackrec.h",
+      "line": 9,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 27,
-      "path": "include/trackrec.h",
+      "line": 16,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 40,
-      "path": "include/trackrec.h",
+      "line": 28,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 55,
-      "path": "include/trackrec.h",
+      "line": 33,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 71,
-      "path": "include/trackrec.h",
+      "line": 38,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 78,
-      "path": "include/trackrec.h",
+      "line": 49,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 83,
-      "path": "include/trackrec.h",
+      "line": 16,
+      "path": "include/track.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 29,
+      "path": "include/track.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 42,
+      "path": "include/track.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 57,
+      "path": "include/track.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 73,
+      "path": "include/track.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 80,
+      "path": "include/track.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 85,
+      "path": "include/track.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
       "line": 7,
-      "path": "include/geom2d.h",
-      "pragma": "pack",
-      "value": null
-    },
-    {
-      "line": 12,
-      "path": "include/geom2d.h",
-      "pragma": "pack",
-      "value": null
-    },
-    {
-      "line": 17,
-      "path": "include/geom2d.h",
-      "pragma": "pack",
-      "value": null
-    },
-    {
-      "line": 5,
-      "path": "include/carrec.h",
+      "path": "include/car.h",
       "pragma": "pack",
       "value": null
     }

@@ -1,6 +1,6 @@
 #define WORLD_COORDINATE_SCALE_SHIFT 6
 #define ANGLE_UNITS_PER_TURN 0x400
-#define ANGLE_TURN_MASK 0x3FF
+#define ANGLE_TURN_MASK 0x03ff
 #define ANGLE_THREE_QUARTERS_TURN 0x300
 #define ANGLE_HALF_TURN 0x200
 #define ANGLE_QUARTER_TURN 0x100
@@ -19,83 +19,36 @@
 #define ENGINE_RPM_DELTA_LIMIT 2000
 /* Exact-object requirement: write back the wheel response even when unchanged. */
 #define WRITE_BACK(value) ((value) = (value))
-#include "stunts_types.h"
+#include "types.h"
 /* Local view: rate_frame; type is signed word; another unit uses unsigned word. */
 extern short rate_frame;
 
+/* PORT: Layout uses MSC /Zp and target scalar widths. */
+
+#include "math3d.h"
 
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
 
-
-#include "geom2d.h"
-
-
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
 
-#include "vec3.h"
-
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
-
-#include "vec3l.h"
-
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-/* Local view: POINT2D; struct[0].name is px; another unit uses x. */
-struct POINT2D {
-	I16 px, py;
-};
 
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
 
 #include "matrix.h"
 
-
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
 
-#include "plane.h"
-
-
-
 /* Local math imports preserve communal LINK ordering; communal order is load-bearing. */
-
-
-
 
 /* Local signed radius view; the shared math API returns an unsigned word. */
 /* Local view: inthypot; return is signed word; another unit uses unsigned word. */
 I16 inthypot(I16 z, I16 y);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Local view: clipzone; return is signed word; another unit uses signed byte. */
 I16 clipzone(struct RECTANGLE* r1, struct RECTANGLE* r2);
 
-
-
-
-
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
-
-
-
 
 /* Local view: GAMEINFO; struct[8].type is unsigned word; another unit uses signed byte. */
 struct GAMEINFO {
@@ -114,7 +67,6 @@ struct GAMEINFO {
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
 
 #include "carstate.h"
-
 
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
 /* Local view: GAMESTATE; struct.count is 45; another unit uses 46. */
@@ -168,21 +120,16 @@ struct GAMESTATE {
 
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
 
-#include "gamerec.h"
-
-
-/* PORT: Layout uses MSC /Zp and target scalar widths. */
-
-#include "simd.h"
-
+#include "game.h"
 
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
 
-#include "trackrec.h"
+/* PORT: Layout uses MSC /Zp and target scalar widths. */
+
+#include "track.h"
 
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
 #include "trkinfo.h"
-
 
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
 /* Local view: TRACKOBJECT; struct[2].type.pointer is void; another unit uses struct SHAPE3D. */
@@ -195,15 +142,6 @@ struct TRACKOBJECT {
     I8 ss_surfaceType, ss_ignoreZBias, ss_multiTileFlag, ss_physicalModel, scene_unk5;
 };
 
-
-
-
-
-
-
-
-
-
 /* Local view: g_vid_flg2_set; type is signed word; another unit uses unsigned word. */
 extern I16S g_vid_flg2_set;
 /* Local view: vidflg3is_minus1; type is signed word; another unit uses unsigned word. */
@@ -214,16 +152,11 @@ extern I16S g_videoflg5;
 /* Local view: g_vid_flag6; type is signed word; another unit uses unsigned byte. */
 extern I16S g_vid_flag6;
 
-
-
 /* Local view: elaptm1; type is unsigned word; another unit uses signed word. */
 extern U16S  elaptm1;
 
-
-
 /* Local view: gm_playmode; type is unsigned byte; another unit uses signed byte. */
 extern U8  gm_playmode; 
-
 
  
  
@@ -237,23 +170,6 @@ extern I8 steerWhlRespTable_10fps[];
 /* Local view: steerWhlRespTable_20fps; type is array[None]; another unit uses near pointer. */
 extern I8 steerWhlRespTable_20fps[];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Local view: popupact; type is signed word; another unit uses signed byte. */
 extern I16 popupact;
 /* Local view: mouse_enabled; type is signed byte; another unit uses unsigned byte. */
@@ -261,33 +177,11 @@ extern I8 mousedrive;
 /* Local view: joystick_enabled; type is signed byte; another unit uses unsigned byte. */
 extern I8 joystick_enabled;
 
-
 /* Local view: input_pushed; type is signed word; another unit uses unsigned word. */
 extern I16 input_pushed;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Local view: g_dastbmpbuf; type is signed word; another unit uses far pointer. */
 extern I16 g_dastbmpbuf;
-
-
-
-
-
-
-
-
 
 /* Local view: mainkey; return is void; another unit uses signed byte. */
 extern void mainkey(I16);
@@ -295,25 +189,13 @@ extern void mainkey(I16);
 /* Local view: flagsdown; type is signed word; another unit uses unsigned byte. */
 extern I16 flagsdown;
 
-
-
 /* Local view: resbuftext; type is signed byte; another unit uses array[80]. */
 extern I8 resbuftext;
-
-
-
 
 /* Local view: main_data_file_addr; pointer is void; another unit uses signed byte. */
 extern void far* main_data_file_addr;
 /* Local view: cvxs_a; segment is huge; another unit uses far. */
 extern struct GAMESTATE huge* cvxs_a;
-
-
-
-
-
-
-
 
  
  
@@ -352,10 +234,8 @@ extern char far* g_column_of_trkdata21_pth;
 extern char far* tdfrompathrow22; 
  
 
-
 /* Local view: g_is_busy; type is signed byte; another unit uses unsigned byte. */
 extern I8 g_is_busy;
-
 
 /* Local view: menutimeout; type is signed byte; another unit uses unsigned byte. */
 extern I8 menutimeout;
@@ -365,81 +245,21 @@ extern U16S  dialog_frame_color;
 /* Local view: endhsdemo; type is signed byte; another unit uses unsigned byte. */
 extern I8 didrace;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Local view: renderlevel; type is unsigned byte; another unit uses signed byte. */
 extern U8  renderlevel;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Local view: is_audioloaded; type is signed word; another unit uses signed byte. */
 extern I16S is_audioloaded;
 
-
  
-
-
 
 /* Local view: material_clrlist_ptr; pointer is signed word; another unit uses struct MATERIALCLRLIST. */
 extern I16* material_clrlist_ptr;
-
-
-
-
-
-
-
-
-
 
 /* Local view: run_intro_looped; return is unsigned word; another unit uses signed word. */
 extern U16S  run_intro_looped(void);
 /* Local view: messagebox; return is unsigned word; another unit uses signed word. */
 extern U16S  messagebox(I16 unk1, I16 unk2, void far* textresptr, U16S  unk3, U16S  unk4, I16 arg, void* unk5, I16 unk6);
-
-
-
-
 
 /* Local view: selectcar; parameters[0].pointer is struct GAMEINFO; another unit uses signed byte. */
 extern void selectcar(struct GAMEINFO* unk, I8* unk2, I8* unk3, U16  unk4);
@@ -451,49 +271,8 @@ extern unsigned run_option_menu(void);
 /* Local view: getprotection; parameters.count is 0; another unit uses 1. */
 extern void getprotection(void);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Local view: initmouse; parameters[0] is signed word; another unit uses unsigned word. */
 extern I16S initmouse(I16S a1, I16S a2);
-
-
-
-
-
-
-
-
 
 /* Local view: sprset1size; parameters[0] is unsigned word; another unit uses signed word. */
 extern void clippix(U16S  left, U16S  right, U16S  top, U16S  height);
@@ -502,116 +281,50 @@ extern void clearwindow(U8 );
 /* Local view: sprite_blit_to_video; return is void; another unit uses signed word. */
 extern void sprite_blit_to_video(struct SPRITE far* sprite);
 
-
-
-
 /* Local view: timer_get_delta_alt; return is unsigned long; another unit uses signed word. */
 extern U32  elticks(void);
-
-
 
 /* Local view: abortmessage; parameters.count is 2; another unit uses 1. */
 extern void abortmessage(const I8*, ...);
 
-
 /* Local view: _memcpy; return is near pointer; another unit uses void. */
 extern void* _memcpy(void*, const void*, unsigned);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
 
-#include "audrec.h"
+#include "audio.h"
 
 /* PORT: Layout uses MSC /Zp and target scalar widths. */
-#include "audapi.h"
-#include "auddrv.h"
 #include "car.h"
-#include "dialog.h"
+#include "viewstat.h"
+#include "ui.h"
 #include "dlgcolor.h"
-#include "mathapi.h"
-#include "game.h"
-#include "gfxapi.h"
+#include "video.h"
 #include "input.h"
-#include "mathops.h"
-#include "memapi.h"
-#include "prim3d.h"
-#include "replay.h"
-#include "resapi.h"
-#include "shape2d.h"
-#include "text.h"
+#include "memory.h"
+#include "shapes3d.h"
+#include "files.h"
 #include "timer.h"
-#include "track.h"
 #include "trig.h"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Local view: g_cursurfacekindvalue; type is signed byte; another unit uses unsigned byte. */
 extern I8 g_cursurfacekindvalue;
-
-
-
-
-
-
 
 /* Local view: g_planlist; pointer is struct PLANE; another unit uses unsigned byte. */
 extern struct PLANE far* g_planlist;
 /* Local view: plncurrptr; pointer is struct PLANE; another unit uses unsigned byte. */
 extern struct PLANE far* plncurrptr;
 
-
-
 /* Local view: test_pln; type is signed byte; another unit uses unsigned byte. */
 extern I8 test_pln;
 
-
-
-
-
-
-
-
 /* Local view: plan_memres; type is array[None]; another unit uses struct PLANE. */
 extern struct PLANE far plan_memres[];
-
-
 
 /* Local view: INIT_OBJECTS_BUFFER; return is unsigned word; another unit uses signed word. */
 extern unsigned INIT_OBJECTS_BUFFER(I16 angX, I16 angY, I16 angZ, struct RECTANGLE* cliprect, I16 unk);
 /* Local view: ADD_OBJECT_TO_BUFFER; return is void; another unit uses unsigned word. */
 extern void ADD_OBJECT_TO_BUFFER(struct TRANSFORMSHAPE3D* shape);
-
-
-
 
 /* Local view: polygonnumber; type is signed word; another unit uses unsigned word. */
 extern I16 polygonnumber;
@@ -624,69 +337,18 @@ extern void drawpolypt(I16 color, I16 vertlinecount, I16* vertlines);
 /* Local view: trklst; array is None; another unit uses 215. */
 extern struct TRACKOBJECT trklst[];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 static struct MATRIX fallback_rotation_cache;
 
 static struct MATRIX plane_rotation_cache;
 
-
-
-
-
-
-
-
-
-
 /* Local view: update_car_speed; parameters[0] is signed byte; another unit uses signed word. */
 void doengine(I8 inputByte, I8 isOpponent, struct CARSTATE* carState, struct SIMD* carSetup);
-
-
-
-
-
 
 /* Local view: myupdatesfx1; parameters[0].pointer is struct AUDIO_CAR_FRAME; another unit uses signed byte. */
 void myupdatesfx1(struct AUDIO_CAR_FRAME *record, I16S value);
 /* Local view: gettlistpoint; return is signed byte; another unit uses signed word. */
 I8 gettlistpoint(I16 trackIndex, struct TRACKRESULT *result, I8 side,
               I8 *opponentSpeed);
-
-
-
-
-
-
-
-
-
-
 
 I16 camerasizeinfo[4] = { 10, 50, 10, 20 };
 struct POINT2D signsizeinfo[2] = { { 5, 40 }, { 5, 10 } };
@@ -1163,7 +825,7 @@ retry:
 					activeCarState->car_36MwhlAngle = found = (found != 0 ? -i : i) << 1;
 					finishgame(1, isOpponent);
 				}
-				activeCarState->car_audio_flags |= 0x10;
+				activeCarState->car_audio_flags |= CAR_AUDIO_WALL_IMPACT;
 				curWhl = whlPos;
 				prev = oldWhls;
 				for (i = 0; i < 4; ++curWhl, ++prev, ++i) {
@@ -1404,7 +1066,7 @@ wheels_done:
 		rotMat = makematrix(-anglerotate_car, -yrotrotveh, -rotxvehicle, 0);
 		for (w = 0; w < 4; w++) {
 			wheelCrd = activeCarSetup->wheel_coords[w];
-			wheelCrd.y = activeCarSetup->collide_points[0].py << WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Map-to-world scale is 64:1. */
+			wheelCrd.y = activeCarSetup->collide_points[0].y << WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Map-to-world scale is 64:1. */
 			mat_vec(&wheelCrd, rotMat, &res);
 			wheelCrd.x = (res.x + centerpos) >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
 			wheelCrd.y = (res.y + veh_position) >> WORLD_COORDINATE_SCALE_SHIFT; /* PORT: Signed world-to-map shift is arithmetic; scale is 64:1. */
@@ -1542,9 +1204,9 @@ void initcar(struct CARSTATE* playerstate, struct SIMD* simd,
     playerstate->car_lastspeed = zero;
     playerstate->car_gearratio = simd->gear_ratios[1];
     playerstate->car_gearratioshr8 = playerstate->car_gearratio >> 8;
-    playerstate->car_knob_x = simd->knob_points[1].px;
+    playerstate->car_knob_x = simd->knob_points[1].x;
     playerstate->car_knob_x2 = playerstate->car_knob_x;
-    playerstate->car_knob_y = simd->knob_points[1].py;
+    playerstate->car_knob_y = simd->knob_points[1].y;
     playerstate->car_knob_y2 = playerstate->car_knob_y;
     playerstate->car_angle_z = zero;
     playerstate->car_40MfrontWhlAngle = zero;
@@ -1675,9 +1337,9 @@ void initsim(I16S arg)
 			&core.playerstate,
 			&simdp7,
 			globalgamesettings.game_playertransmission,
-			(trackctrpos2[idxtrk] + tmpcol) * 64L,
-			terheight[g_hillf] * 64L,
-			(row_ctr_zs[tagtrk] + tmprow) * 64L,
+			(trackctrpos2[idxtrk] + tmpcol) * WORLD_COORDINATE_SCALE,
+			terheight[g_hillf] * WORLD_COORDINATE_SCALE,
+			(row_ctr_zs[tagtrk] + tmprow) * WORLD_COORDINATE_SCALE,
 			-st_hdg);
 
 		core.game_player_route_anchor = zeroValue;
@@ -1713,9 +1375,9 @@ void initsim(I16S arg)
 			&core.opponentstate,
 			&ophys_7,
 			1,
-			(trackctrpos2[idxtrk] + tmpcol) * 64L,
-			terheight[g_hillf] * 64L,
-			(row_ctr_zs[tagtrk] + tmprow) * 64L,
+			(trackctrpos2[idxtrk] + tmpcol) * WORLD_COORDINATE_SCALE,
+			terheight[g_hillf] * WORLD_COORDINATE_SCALE,
+			(row_ctr_zs[tagtrk] + tmprow) * WORLD_COORDINATE_SCALE,
 			-st_hdg);
 
 		if (globalgamesettings.game_opponenttype && arg != -2) {
@@ -2206,8 +1868,8 @@ upshift:
 				carState->car_current_gear++;
 				carState->car_changing_gear = 1;
 				carState->car_fpsmul2 = ((I8)/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame >> 1) + /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame;
-				carState->car_knob_x2 = carSetup->knob_points[carState->car_current_gear].px;
-				carState->car_knob_y2 = carSetup->knob_points[carState->car_current_gear].py;
+				carState->car_knob_x2 = carSetup->knob_points[carState->car_current_gear].x;
+				carState->car_knob_y2 = carSetup->knob_points[carState->car_current_gear].y;
 			}
 		} else if (carState->car_currpm < carSetup->downshift_rpm) {
 downshift:
@@ -2216,8 +1878,8 @@ downshift:
 
 				carState->car_changing_gear = 1;
 				carState->car_fpsmul2 = ((I8)/* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame >> 1) + /* PLATFORM(timer): Uses the timer-selected frame rate or timer position. */ rate_frame;
-				carState->car_knob_x2 = carSetup->knob_points[carState->car_current_gear].px;
-				carState->car_knob_y2 = carSetup->knob_points[carState->car_current_gear].py;
+				carState->car_knob_x2 = carSetup->knob_points[carState->car_current_gear].x;
+				carState->car_knob_y2 = carSetup->knob_points[carState->car_current_gear].y;
 			}
 		}
 	}
@@ -2235,7 +1897,7 @@ downshift:
 			} else {
 				carState->car_knob_y -= knobStep;
 			}
-		} else if (carSetup->knob_points[0].py == carState->car_knob_y) {
+		} else if (carSetup->knob_points[0].y == carState->car_knob_y) {
 			offset = carState->car_knob_x2 - carState->car_knob_x;
 			if (abs(offset) <= knobStep)
 				carState->car_knob_x = carState->car_knob_x2;
@@ -2244,9 +1906,9 @@ downshift:
 			else
 				carState->car_knob_x -= knobStep;
 		} else {
-			offset = carSetup->knob_points[0].py - carState->car_knob_y;
+			offset = carSetup->knob_points[0].y - carState->car_knob_y;
 			if (abs(offset) <= knobStep)
-				carState->car_knob_y = carSetup->knob_points[0].py;
+				carState->car_knob_y = carSetup->knob_points[0].y;
 			else if (offset > 0)
 				carState->car_knob_y += knobStep;
 			else
@@ -2508,9 +2170,9 @@ void dohandling(struct CARSTATE *car, struct SIMD *simd, I16 isOpponent)
                     car->car_surfaceWhl[1] == 1 ||
                     car->car_surfaceWhl[2] == 1 ||
                     car->car_surfaceWhl[3] == 1)
-                    car->car_audio_flags |= 2;
+                    car->car_audio_flags |= CAR_AUDIO_SKID_PRIMARY;
                 else
-                    car->car_audio_flags |= 4;
+                    car->car_audio_flags |= CAR_AUDIO_SKID_OTHER;
             }
         } else {
             car->car_speed = 0;
@@ -2808,9 +2470,9 @@ void myupdatesfx(void)
             soundMode--;
             /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_function2(audioId);
         }
-        if (selectedCar->car_audio_flags & 6) {
-            if ((soundMode & 6) != (selectedCar->car_audio_flags & 6)) {
-                if (soundMode & 6)
+        if (selectedCar->car_audio_flags & CAR_AUDIO_SKID_MASK) {
+            if ((soundMode & CAR_AUDIO_SKID_MASK) != (selectedCar->car_audio_flags & CAR_AUDIO_SKID_MASK)) {
+                if (soundMode & CAR_AUDIO_SKID_MASK)
                     goto stop_skid;
                 if (selectedCar->car_audio_flags & 2) {
                     /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk5(audioId);
@@ -2820,7 +2482,7 @@ void myupdatesfx(void)
                     soundMode += 4;
                 }
             }
-        } else if (soundMode & 6) {
+        } else if (soundMode & CAR_AUDIO_SKID_MASK) {
 stop_skid:
             if (soundMode & 2)
                 soundMode -= 2;
@@ -2835,9 +2497,8 @@ stop_skid:
     }
     sndpendingstate = 1;
     sndposrecord++;
-    if (sndposrecord == 40)
+    if (sndposrecord == AUDIO_CAR_FRAME_RING_COUNT)
         sndposrecord = 0;
-
 
     replay_state_cache = inrepflg;
 }
@@ -2850,7 +2511,7 @@ stop_skid:
  * PLATFORM(audio): Legacy audio service or audio-resource loading.
  */
 
-void audio_dispatch_car_events(I8 flags, I16S audioId) { if (sndpendingstate != 0) { if (flags & 0x10) /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk4(audioId); if (flags & 0x20) /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk3(audioId); } }
+void audio_dispatch_car_events(I8 flags, I16S audioId) { if (sndpendingstate != 0) { if (flags & CAR_AUDIO_OP4_FLAG) /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk4(audioId); if (flags & CAR_AUDIO_OP3_FLAG) /* PLATFORM(audio): Legacy audio service or audio-resource loading. */ audio_op_unk3(audioId); } }
 
 /* Purpose: Applies a recorded audio frame to the player and opponent.
  * Parameters: record, value.
@@ -3010,7 +2671,7 @@ I8 boxcheck(struct POINT2D *pCollPoints,
     struct VECTOR transform[4];
     struct VECTOR result;
 
-    reach = pCollPoints[1].py + oCollPoints[1].py;
+    reach = pCollPoints[1].y + oCollPoints[1].y;
     if ((pWorldCrds[0].x - oWorldCrds[0].x < 0 ? -(pWorldCrds[0].x - oWorldCrds[0].x) : pWorldCrds[0].x - oWorldCrds[0].x) > reach ||
         (pWorldCrds[0].z - oWorldCrds[0].z < 0 ? -(pWorldCrds[0].z - oWorldCrds[0].z) : pWorldCrds[0].z - oWorldCrds[0].z) > reach ||
         (pWorldCrds[0].y - oWorldCrds[0].y < 0 ? -(pWorldCrds[0].y - oWorldCrds[0].y) : pWorldCrds[0].y - oWorldCrds[0].y) > reach)
@@ -3026,14 +2687,14 @@ I8 boxcheck(struct POINT2D *pCollPoints,
                          -pWorldCrds[1].z, 0);
     for (index = 0; index < 4; ++index) {
         if (collision_point_x_signs[index] == 0)
-            point.x = pCollPoints[0].px;
+            point.x = pCollPoints[0].x;
         else
-            point.x = -pCollPoints[0].px;
+            point.x = -pCollPoints[0].x;
         point.y = 0;
         if (collision_point_y_signs[index] == 0)
-            point.z = pCollPoints[1].px;
+            point.z = pCollPoints[1].x;
         else
-            point.z = -pCollPoints[1].px;
+            point.z = -pCollPoints[1].x;
         mat_vec(&point, matrix, &result);
         result.x += pWorldCrds[0].x;
         result.y += pWorldCrds[0].y;
@@ -3048,9 +2709,9 @@ I8 boxcheck(struct POINT2D *pCollPoints,
         point.y = oWorldCrds[0].y - transform[index].y;
         point.z = oWorldCrds[0].z - transform[index].z;
         mat_vec(&point, matrix, &result);
-        if (!(result.y >= 0 && result.y <= oCollPoints[0].py &&
-            result.x >= -oCollPoints[0].px && result.x <= oCollPoints[0].px &&
-            result.z >= -oCollPoints[1].px && result.z <= oCollPoints[1].px))
+        if (!(result.y >= 0 && result.y <= oCollPoints[0].y &&
+            result.x >= -oCollPoints[0].x && result.x <= oCollPoints[0].x &&
+            result.z >= -oCollPoints[1].x && result.z <= oCollPoints[1].x))
             continue;
         return 1;
     }
@@ -3059,14 +2720,14 @@ I8 boxcheck(struct POINT2D *pCollPoints,
                          -oWorldCrds[1].z, 0);
     for (index = 0; index < 4; ++index) {
         if (collision_point_x_signs[index] == 0)
-            point.x = oCollPoints[0].px;
+            point.x = oCollPoints[0].x;
         else
-            point.x = -oCollPoints[0].px;
+            point.x = -oCollPoints[0].x;
         point.y = 0;
         if (collision_point_y_signs[index] == 0)
-            point.z = oCollPoints[1].px;
+            point.z = oCollPoints[1].x;
         else
-            point.z = -oCollPoints[1].px;
+            point.z = -oCollPoints[1].x;
         mat_vec(&point, matrix, &result);
         result.x += oWorldCrds[0].x;
         result.y += oWorldCrds[0].y;
@@ -3081,9 +2742,9 @@ I8 boxcheck(struct POINT2D *pCollPoints,
         point.y = pWorldCrds[0].y - transform[index].y;
         point.z = pWorldCrds[0].z - transform[index].z;
         mat_vec(&point, matrix, &result);
-        if (!(result.y >= 0 && result.y <= pCollPoints[0].py &&
-            result.x >= -pCollPoints[0].px && result.x <= pCollPoints[0].px &&
-            result.z >= -pCollPoints[1].px && result.z <= pCollPoints[1].px))
+        if (!(result.y >= 0 && result.y <= pCollPoints[0].y &&
+            result.x >= -pCollPoints[0].x && result.x <= pCollPoints[0].x &&
+            result.z >= -pCollPoints[1].x && result.z <= pCollPoints[1].x))
             continue;
         return 1;
     }
@@ -3274,7 +2935,7 @@ I16 plane_distance(I16 planeIndex, I16 x, I16 y, I16 z) {
 I16 vec_normalInnerProduct(I16 x, I16 y, I16 z, struct VECTOR far *normal)
 {
     return (((I32)normal->x * x) + ((I32)normal->y * y) +
-            ((I32)normal->z * z)) / 0x2000;
+            ((I32)normal->z * z)) / PLANE_NORMAL_DOT_DIVISOR;
 }
 
 void init_explode(I16 mode, I16S angle, I16S speed)
@@ -3374,9 +3035,6 @@ void update_crash_debris(void)
 /* Local view: locate_shape_alt; return.pointer is signed byte; another unit uses void. */
 extern I8 far *getres(I8 far *data, I8 *name);
 
-
-
-
 /* Local view: setup_aero_trackdata; parameters[0].pointer is void; another unit uses signed byte. */
 void getsimdata(void far *carresptr, I16 is_opponent)
 {
@@ -3463,7 +3121,4 @@ short framerate_pad_0;
 short extra_rclist4[2];
 short spare_td22_1;
 short fontled_free_4[2];
-
-
-
 

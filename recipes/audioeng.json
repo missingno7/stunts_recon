@@ -2330,9 +2330,9 @@
       "size": 457
     },
     {
-      "path": "include/audio.h",
-      "sha256": "8e43ec5da02f720e42c6c41892610f5bdc16792ec42502071a67dbb6ee35bc68",
-      "size": 12748
+      "path": "include/audstate.h",
+      "sha256": "88c5f406a3ac0875ad271248d05d445a4c17297374fa6f15331c03757611339f",
+      "size": 2607
     },
     {
       "path": "include/radius2d.h",
@@ -2341,8 +2341,8 @@
     },
     {
       "path": "include/resource.h",
-      "sha256": "3fafa12cfa876195a622667b9e229ba996312da734411b2b352a6b16ca8ad3aa",
-      "size": 1903
+      "sha256": "052068fa1e24947398e3da537b058f5d5ff43dbf82477ae37f5ff578313ee9e2",
+      "size": 1439
     },
     {
       "path": "include/tmrhook.h",
@@ -2351,8 +2351,8 @@
     },
     {
       "path": "include/types.h",
-      "sha256": "b2534b0d8a3a3cca3fcccb36039a5daccae51153b9c3bc41baa00d2c7fc34172",
-      "size": 238
+      "sha256": "ee3c95010d95f2bcb0d86f9a877a3ee1f1e495dbab382f33a83b9cf9e456b7db",
+      "size": 1277
     },
     {
       "letters": "tl",

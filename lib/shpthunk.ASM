@@ -10,7 +10,7 @@
 ; ASMDOC No self-modification, no local globals and no local interrupt; far forwarding does not make callee
 ; effects empty.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 S012_TEXT segment word public 'CODE'
 S012_TEXT ends
 assume cs:S012_TEXT

@@ -14,7 +14,7 @@
 ; Order\r\n", followed by one padding zero
 ; ASMDOC-GEOMETRY 
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 VECTOR struc
 vx dw ?
 vy dw ?

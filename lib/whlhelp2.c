@@ -1,12 +1,16 @@
-#include "stunts_types.h"
+#include "types.h"
 /* READABILITY: Interpolate the wheel section corners, then derive the paired point rings. */
 
-
+#include "matrix.h"
+#include "trig.h"
+#include "math3d.h"
+#include "radius.h"
+#include "ellipse.h"
 #include "shapes3d.h"
 /* Local three-point wheel view; other units expose a larger rectangle. */
 /* Local view: WheelRect; struct.count is 3; another unit uses 8. */
 struct WheelRect { struct Point p0, p1, p2; };
-#include "prim3d.h"
+#include "viewstat.h"
 
 /* Interpolate the two wheel-section endpoint vectors and generate their point rings.
  * Params and return follow the declared C signature. */

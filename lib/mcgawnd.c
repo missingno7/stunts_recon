@@ -1,15 +1,14 @@
-#include "stunts_types.h"
+#include "types.h"
 
-#include "platform_hw.h"
+#include "input.h"
 /* READABILITY: Create the 320 by 200 window sprite and prepare the two MCGA window draw paths. */
 struct SHAPE2D;
-/* Local view: SPRITE; struct[0].name is sprite_bitmapptr; another unit uses image. */
+/* Local view: SPRITE; thirteen-word suffix differs from the shared fields and near line-offset pointer. */
 struct SPRITE {
     struct SHAPE2D FAR *sprite_bitmapptr;
     U16S sprite_words[13];
 };
-#include "shape2d.h"
-
+#include "video.h"
 
 struct SPRITE far *mcgawnd_window_sprite;
     /* PLATFORM(video): create, select, or draw the MCGA window sprite. */

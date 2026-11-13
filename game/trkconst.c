@@ -362,7 +362,7 @@ unsigned char shapedata42_10[1236] = {
   0, 0, 78, 1,
 };
 
-#include "trackrec.h"
+#include "track.h"
 
 struct track_object_info shapeinfos[120] = {
   {1, 11, 1, 0, 0, 13, 0, shapedata42_7 + 336, 0, 0, 0, 15},
@@ -489,9 +489,6 @@ struct track_object_info shapeinfos[120] = {
 
 /* Local view: SHAPE3D; struct.count is 1; another unit uses 7. */
 struct SHAPE3D { unsigned char opaque_layout[22]; };
-
-#include "track.h"
-
 
 /* Local view: trklst; array is 215; another unit uses None. */
 struct track_object trklst[215] = {
@@ -712,7 +709,6 @@ struct track_object trklst[215] = {
   {0, 0, &g_shapes3d[106], &g_shapes3d[107], 0, 0, 0, 0, 255, 0},
 };
 
-
 /* Local view: scene2; array is 19; another unit uses None. */
 struct scene_shape scene2[19] = {
   {0, 0, &g_shapes3d[108], &g_shapes3d[109], 0, 0, 0, 0, 255, 0},
@@ -790,7 +786,7 @@ short highEntrXOutBounds0[7] = {
 unsigned char shape_template_points_a[6] = {
   0, 0, 0, 0, 0, 0,
 };
-#include "geom2d.h"
+#include "math3d.h"
 
 /* Local view: shape_template_points_b; array is 12; another unit uses None. */
 struct coord_pair shape_template_points_b[12] = {
@@ -836,7 +832,7 @@ struct coord_pair shape_template_points_f[6] = {
 };
 char aGame1[6] = "game1";
 char aGame2[6] = "game2";
-#include "carrec.h"
+#include "car.h"
 
 /* Local view: aCar0; type is struct car_exp_name_table; another unit uses array[None]. */
 struct car_exp_name_table aCar0 = {

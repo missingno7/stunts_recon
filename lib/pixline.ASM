@@ -5,7 +5,7 @@
 ; ASMDOC declarations, old comments or line endings changed.
 ; ASMDOC Public routines: _putpixel_line1_maybe. Stack offsets are post-prologue BP offsets.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 extrn _sprite1:byte

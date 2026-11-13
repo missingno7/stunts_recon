@@ -23,7 +23,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_get_dword",
-      "target_index": 8,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -40,7 +40,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_get_chunk_index",
-      "target_index": 3,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -57,7 +57,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__AHSHIFT",
-      "target_index": 7,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -74,7 +74,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audioresource_compare_chunkname",
-      "target_index": 2,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -91,7 +91,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cap",
-      "target_index": 6,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -108,7 +108,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_cap",
-      "target_index": 6,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -185,13 +185,13 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
+      "_audioresource_get_dword",
       "_audioresource_compare_chunkname",
-      "_audioresource_get_chunk_index",
-      "_audioresource_find",
-      "_audioresource_copy_n_bytes",
       "_cap",
+      "_audioresource_get_chunk_index",
       "__AHSHIFT",
-      "_audioresource_get_dword"
+      "_audioresource_find",
+      "_audioresource_copy_n_bytes"
     ],
     "groups": [
       {
@@ -313,19 +313,42 @@
       "size": 120
     },
     {
-      "path": "include/font.h",
-      "sha256": "6764a13f5316d6a2e05f61bd6ec789ec690155f0086a213350083e183ebb8c8f",
-      "size": 90
+      "path": "include/files.h",
+      "sha256": "c9279c40920d935c04309685a81ccb7f078ae3c8a0d35f28b52c4eead68a3a7a",
+      "size": 1978
     },
     {
-      "path": "include/stunts_types.h",
-      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
-      "size": 1091
+      "path": "include/resource.h",
+      "sha256": "052068fa1e24947398e3da537b058f5d5ff43dbf82477ae37f5ff578313ee9e2",
+      "size": 1439
     },
     {
-      "path": "include/text.h",
-      "sha256": "3127d93aacc187b46df5f4d3bb2b8824567ee1d5393a3b253054e6bed5cfbe49",
-      "size": 1990
+      "path": "include/types.h",
+      "sha256": "ee3c95010d95f2bcb0d86f9a877a3ee1f1e495dbab382f33a83b9cf9e456b7db",
+      "size": 1277
+    },
+    {
+      "path": "include/ui.h",
+      "sha256": "aa9428377377eafee946eb53470bddf273ebaf93c176bb8d00e7a8e2298e8373",
+      "size": 12638
+    },
+    {
+      "line": 45,
+      "path": "include/files.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 194,
+      "path": "include/ui.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 199,
+      "path": "include/ui.h",
+      "pragma": "pack",
+      "value": null
     }
   ],
   "profile": "msc510-medium",

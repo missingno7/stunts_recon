@@ -6,7 +6,7 @@
 ; ASMDOC No self-modifying code or indirect callback. Shared _file_write is an interior implementation label,
 ; not public.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 S012_TEXT segment word public 'CODE'
 S012_TEXT ends
 _DATA segment word public 'DATA'

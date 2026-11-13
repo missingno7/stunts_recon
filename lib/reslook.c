@@ -1,7 +1,7 @@
 
-#include "audapi.h"
-#include "resapi.h"
-#include "stunts_types.h"
+#include "audio.h"
+#include "files.h"
+#include "types.h"
 /* READABILITY: Walk packed four-character resource-name records and fill result pointers with shape or sound lookups. */
 /* Local view: locate_shape_fatal; return.pointer is signed byte; another unit uses struct SHAPE2D. */
 extern I8 FAR * FAR locate_shape_fatal(I8 FAR *data, I8 *name);

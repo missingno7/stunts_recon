@@ -19,7 +19,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_setup1_from_arg_pointer",
-      "target_index": 3,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -36,7 +36,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mcgawnd_window_sprite",
-      "target_index": 5,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -53,7 +53,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mcgawnd_window_sprite",
-      "target_index": 5,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -70,7 +70,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mcgawnd_window_sprite",
-      "target_index": 5,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -87,7 +87,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mcgawnd_window_sprite",
-      "target_index": 5,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -104,7 +104,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 2,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -121,7 +121,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mcgawnd_window_sprite",
-      "target_index": 5,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -138,7 +138,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mcgawnd_window_sprite",
-      "target_index": 5,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -155,7 +155,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcf",
-      "target_index": 4,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -172,7 +172,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mcgawnd_window_sprite",
-      "target_index": 5,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -189,7 +189,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_setup1_from_arg_pointer",
-      "target_index": 3,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -206,7 +206,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite2",
-      "target_index": 6,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -223,7 +223,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite2",
-      "target_index": 6,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -240,7 +240,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mcgawnd_window_sprite",
-      "target_index": 5,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -257,7 +257,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mcgawnd_window_sprite",
-      "target_index": 5,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -274,7 +274,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 2,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -291,7 +291,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mcgawnd_window_sprite",
-      "target_index": 5,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -308,7 +308,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mcgawnd_window_sprite",
-      "target_index": 5,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -378,13 +378,13 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
+      "_setup_mcgawnd1",
+      "_setup_mcgawnd2",
       "_sprite_make_window",
       "_sprite_setup1_from_arg_pointer",
       "_movcf",
       "_mcgawnd_window_sprite",
-      "_sprite2",
-      "_setup_mcgawnd1",
-      "_setup_mcgawnd2"
+      "_sprite2"
     ],
     "groups": [
       {
@@ -484,19 +484,31 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
-      "path": "include/platform_hw.h",
-      "sha256": "e3863a97e9a936f227221b474f085abbd3eb2deb5df33993f7ad00c75baaa9bc",
-      "size": 6111
+      "path": "include/input.h",
+      "sha256": "5bb6b46401f88ad81a22f5ce6446ef118c4716c4abc18b8cfec66ab0167587aa",
+      "size": 7430
     },
     {
-      "path": "include/shape2d.h",
-      "sha256": "78a33e428533c6f18ef18f19d5ed266d6135023711b7892978d33e452e63e8fc",
-      "size": 1825
+      "path": "include/types.h",
+      "sha256": "ee3c95010d95f2bcb0d86f9a877a3ee1f1e495dbab382f33a83b9cf9e456b7db",
+      "size": 1277
     },
     {
-      "path": "include/stunts_types.h",
-      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
-      "size": 1091
+      "path": "include/video.h",
+      "sha256": "4612d335c0be47723bc1d6b24da0f5a2ae49bb7066ef81004b4b81158f5c17c1",
+      "size": 4558
+    },
+    {
+      "line": 91,
+      "path": "include/input.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 91,
+      "path": "include/input.h",
+      "pragma": "pack",
+      "value": null
     }
   ],
   "profile": "msc510-medium",

@@ -1,13 +1,13 @@
-#include "stunts_types.h"
+#include "types.h"
 /* READABILITY: Generate wheel perimeter points and offset their paired ring by the rectangle origin delta. */
 
 #define WHEEL_RING_POINT_COUNT 16
 #define WHEEL_OUTER_RING_OFFSET 32
 #include "wheel.h"
-#include "point.h"
+#include "math3d.h"
 
-#include "prim3d.h"
-
+#include "viewstat.h"
+#include "shapes3d.h"
 
 /* Generate wheel section rings and copy a translated ring using the rectangle origin delta.
  * Params and return follow the declared C signature. */

@@ -6,7 +6,7 @@ INCLUDE include/video.inc
 ; ASMDOC Public routines: _draw_filled_lines, _nopsub_34736, _sprite_clear_shape_alt, _sprite_clear_shape, _shapeexpl,
 ; ASMDOC _font_setup_unknown, _set_fontdefseg. Stack offsets are post-prologue BP offsets.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 name asm012_149180
 _DATA segment word public 'DATA'
 _DATA ends

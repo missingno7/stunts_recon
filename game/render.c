@@ -9,18 +9,7 @@
 #define FAR far
 #define NEAR near
 #define HUGE huge
-#include "stunts_types.h"
-
-
-
-
-
-
-
-
-
-
-
+#include "types.h"
 
 /* obj_seg003 whole-object candidate (s003d).  RECONSTRUCTION NOTE: original identifiers are not
  * recoverable.  Local/parameter names and the scoping of extern declarations (K&R-style
@@ -30,70 +19,28 @@
  * Data shapes: rect_unk[15] (15-iteration copy loop + rect_unk[si], labels at 8-byte stride),
  * hill_offs[9][2] (pair table, see comment); fence pair lists by their pinned labels; plane state kept separate. */ /* PORT: plain char signedness follows the pinned MSC target. */
 
+/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
+#include "math3d.h"
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
-#include "geom2d.h"
-
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
-#include "vec3.h"
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
-#include "vec3l.h"
-
-
-/* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: POINT2D; struct[0].name is px; another unit uses x. */
-struct POINT2D {
-	I16 px, py;
-};
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
 #include "matrix.h"
 
-
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
-#include "plane.h"
-
-
 
 /* Local math imports preserve the original communal LINK ordering. */
-
-
-
 
 /* Local signed radius view; the shared math API returns an unsigned word. */
 /* Local view: inthypot; return is signed word; another unit uses unsigned word. */
 I16 inthypot(I16 z, I16 y);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Local view: clipzone; return is signed byte; another unit uses signed word. */
 I8 clipzone(struct RECTANGLE* r1, struct RECTANGLE* r2);
-
-
-
-
-
-
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: GAMEINFO; struct[8].type is unsigned word; another unit uses signed byte. */
 struct GAMEINFO {
@@ -278,16 +225,6 @@ struct TRKOBJINFO {
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
 #include "trkobj.h"
 
-
-
-
-
-
-
-
-
-
-
 /* Local view: g_vid_flg2_set; type is signed word; another unit uses unsigned word. */
 extern I16S g_vid_flg2_set;
 /* Local view: vidflg3is_minus1; type is signed word; another unit uses unsigned word. */
@@ -298,16 +235,11 @@ extern I8 g_videoflg5;
 /* Local view: g_vid_flag6; type is signed word; another unit uses unsigned byte. */
 extern I16S g_vid_flag6;
 
-
-
 /* Local view: elaptm1; type is unsigned word; another unit uses signed word. */
 extern U16S  elaptm1;
 
-
-
 /* Local view: gm_playmode; type is unsigned byte; another unit uses signed byte. */
 extern U8  gm_playmode; // 0 = playing, 1 = paused, 2 = replay
-
 
  // current frame?
  // fps * 30
@@ -321,23 +253,6 @@ extern void* steerWhlRespTable_10fps;
 /* Local view: steerWhlRespTable_20fps; type is near pointer; another unit uses array[None]. */
 extern void* steerWhlRespTable_20fps;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Local view: popupact; type is signed word; another unit uses signed byte. */
 extern I16 popupact;
 /* Local view: mouse_enabled; type is signed byte; another unit uses unsigned byte. */
@@ -345,36 +260,11 @@ extern I8 mousedrive;
 /* Local view: joystick_enabled; type is signed byte; another unit uses unsigned byte. */
 extern I8 joystick_enabled;
 
-
 /* Local view: input_pushed; type is signed word; another unit uses unsigned word. */
 extern I16 input_pushed;
 
-
-
-
-
-
-
-
-
-
-
-
-
 /* Local view: g_dastbmpbuf; type is signed word; another unit uses far pointer. */
 extern I16 g_dastbmpbuf;
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Local view: mainkey; return is void; another unit uses signed byte. */
 extern void mainkey(I16);
@@ -382,11 +272,8 @@ extern void mainkey(I16);
 /* Local view: flagsdown; type is signed word; another unit uses unsigned byte. */
 extern I16 flagsdown;
 
-
-
 /* Local view: resbuftext; type is signed byte; another unit uses array[80]. */
 extern I8 resbuftext;
-
 
 /* Local view: fntndat; local font import avoids introducing view-state declarations before their original block scopes. */
 extern void far* fntndat;
@@ -395,13 +282,6 @@ extern void far* fntndat;
 extern void far* main_data_file_addr;
 /* Local view: cvxs_a; segment is far; another unit uses huge. */
 extern struct GAMESTATE far* cvxs_a;
-
-
-
-
-
-
-
 
  //trackdata1;
  //trackdata2;
@@ -440,10 +320,8 @@ extern I8 far* g_column_of_trkdata21_pth; //trackdata21;
 extern I8 far* tdfrompathrow22; //trackdata22;
  // indexes into trkObjectList
 
-
 /* Local view: g_is_busy; type is signed byte; another unit uses unsigned byte. */
 extern I8 g_is_busy;
-
 
 /* Local view: menutimeout; type is signed byte; another unit uses unsigned byte. */
 extern I8 menutimeout;
@@ -453,87 +331,27 @@ extern U16S  dialog_frame_color;
 /* Local view: endhsdemo; type is signed byte; another unit uses unsigned byte. */
 extern I8 didrace;
 
-
-
-
-
-
-
-
-
-
-
-
-
 /* Local view: rate_frame; type is unsigned word; another unit uses signed word. */
 extern U16S  rate_frame;
-
-
 
 /* Local view: renderlevel; type is unsigned byte; another unit uses signed byte. */
 extern U8  renderlevel;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Local view: is_audioloaded; type is signed word; another unit uses signed byte. */
 extern I16S is_audioloaded;
 
-
  // = 'e'
-
-
 
 /* Local view: material_clrlist_ptr; pointer is struct MATERIALCLRLIST; another unit uses signed word. */
 extern struct MATERIALCLRLIST *material_clrlist_ptr;
 
-
-
-
-
-
-
-
-
 /* Local view: gettlistpoint; return is signed word; another unit uses signed byte. */
 extern I16S gettlistpoint(I16S car_trackdata3_index, struct VECTOR* car_vec_unk3, I16S field_CE, I16S* unk);
-
 
 /* Local view: run_intro_looped; return is unsigned word; another unit uses signed word. */
 extern U16S  run_intro_looped(void);
 /* Local view: messagebox; return is unsigned word; another unit uses signed word. */
 extern U16S  messagebox(I16 unk1, I16 unk2, void far* textresptr, U16S  unk3, U16S  unk4, I16 arg, void* unk5, I16 unk6);
-
-
-
-
 
 /* Local view: selectcar; parameters[0].pointer is struct GAMEINFO; another unit uses signed byte. */
 extern void selectcar(struct GAMEINFO* unk, I8* unk2, I8* unk3, U16  unk4);
@@ -545,79 +363,20 @@ extern unsigned run_option_menu(void);
 /* Local view: getprotection; parameters.count is 0; another unit uses 1. */
 extern void getprotection(void);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Local view: initmouse; parameters[0] is signed word; another unit uses unsigned word. */
 extern I16S initmouse(I16S a1, I16S a2);
-
-
-
-
-
-
-
 
 /* Local view: sprite_blit_to_video; return is void; another unit uses signed word. */
 extern void sprite_blit_to_video(struct SPRITE far* sprite);
 
-
-
-
 /* Local view: timer_get_delta_alt; return is unsigned long; another unit uses signed word. */
 extern U32  elticks(void);
-
-
 
 /* Local view: abortmessage; parameters.count is 2; another unit uses 1. */
 extern void abortmessage(const I8*, ...);
 
-
 /* Local view: _memcpy; return is near pointer; another unit uses void. */
 extern void* _memcpy(void*, const void*, unsigned);
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: SHAPE3D; struct.count is 7; another unit uses 8. */
 struct SHAPE3D {
@@ -631,8 +390,7 @@ struct SHAPE3D {
 };
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
-#include "shapehdr.h"
-
+#include "shapes3d.h"
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: TRANSFORMEDSHAPE3D; struct[4].type is unsigned word; another unit uses signed word. */
 struct TRANSFORMEDSHAPE3D {
@@ -645,45 +403,17 @@ struct TRANSFORMEDSHAPE3D {
 	U8  material;
 };
 
-
 /* Local view: shape3d_load_all; return is signed word; another unit uses void. */
 I16 init_3dpieces(void);
-
 
 /* Local view: ADD_OBJECT_TO_BUFFER; return is signed byte; another unit uses unsigned word. */
 I8 ADD_OBJECT_TO_BUFFER(struct TRANSFORMEDSHAPE3D* arg_transshapeptr);
 
-
 /* Local view: INIT_OBJECTS_BUFFER; return is unsigned word; another unit uses signed word. */
 unsigned INIT_OBJECTS_BUFFER(I16 angZ, I16 angX, I16 angY, struct RECTANGLE* cliprect, I16 unk);
 
-
-
 /* Local view: settires; parameters[5].pointer is struct VECTOR; another unit uses signed word. */
 void settires(struct VECTOR far* wheel_vertices, I16 steering_angle, I16S* base_heights, I16S* cached_angles_and_heights, struct VECTOR* wheel_offsets, struct VECTOR* car_origin);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Local view: test_pln; type is signed byte; another unit uses unsigned byte. */
 extern I8 test_pln;
@@ -693,46 +423,23 @@ extern I8 test_pln;
 /* Local view: trklst; of is struct TRACKOBJECT; another unit uses struct track_object. */
 extern struct TRACKOBJECT trklst[215]; // 215 entries
 
-
          /* Fence offset pairs are grouped by the 1-, 2-, 3-, and 4-entry extents. */
 
-
-
-
       /* hill (x,z) offsets: 1,2,2,4 pairs at pairs 0,1,3,5; exactly fills [0x3C0A2,0x3C0C6) */
-
-
 
 /* Local view: scene2; array is None; another unit uses 19. */
 extern struct TRACKOBJECT scene2[];
 /* Local view: scene3; array is None; another unit uses 13. */
 extern struct TRACKOBJECT scene3[];
 
-
-
-
-
-
-
 /* Local view: backlightovr8; type is signed byte; another unit uses unsigned byte. */
 extern char backlightovr8;
-
-
-
-
-
 
 /* Local view: dlg_colour; type is signed word; another unit uses unsigned word. */
 extern I16 dlg_colour;
 
-
-
-
 /* Local view: roadupcheck; parameters[0] is unsigned byte; another unit uses unsigned word. */
 U8  roadupcheck(U8  a, U8  b);
-
-
-
 
 /* Local view: shadowtext; return is near pointer; another unit uses void. */
 struct RECTANGLE* shadowtext(I8* str, I16 a, I16 b, I16 c, I16 d);
@@ -740,81 +447,47 @@ struct RECTANGLE* shadowtext(I8* str, I16 a, I16 b, I16 c, I16 d);
 /* Local view: fmtframestr; parameters[1] is signed word; another unit uses unsigned word. */
 void maketime(I8* s, I16 time, I16 c);
 
-
-
-
-
-
 /* Local view: locate_text_resource; parameters[0].pointer is void; another unit uses signed byte. */
 extern I8 far * far getresl(void far *data, I8 *name);
-
-
 
 /* Local view: strlen; return is unsigned word; another unit uses signed word. */
 extern unsigned strlen(I8 *s);
 
-
-
 /* Local view: locate_shape_alt; return.pointer is signed byte; another unit uses void. */
 extern I8 far *getres(I8 far *data, I8 *name);
-
-
-
 
 /* Local view: sprite_putimage_and_alt; parameters[0].pointer is void; another unit uses struct SHAPE2D. */
 extern void movcfxya(void far *shape, I16 x, I16 y);
 
-
-
-
-
-
-
-
-
-
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: SHAPE2D; struct.count is 6; another unit uses 10. */
 struct SHAPE2D { I16S width, height, s2d_hotspot_x, s2d_hotspot_y, pos_x, pos_y; };
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
-#include "primrec.h"
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
-#include "resrec.h"
+#include "files.h"
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ /* Local view: SPRITE; struct.count is 2; another unit uses 14. */
 struct SPRITE { void far *image; U16S  words[13]; };
-#include "audapi.h"
-#include "auddrv.h"
+#include "audio.h"
 #include "car.h"
-#include "dlgapi.h"
+#include "ui.h"
 #include "dlgcolor.h"
-#include "gameapi.h"
-#include "gfxapi.h"
+#include "game.h"
+#include "video.h"
 #include "input.h"
-#include "mathapi.h"
-#include "memapi.h"
-#include "render.h"
-#include "replay.h"
-#include "resapi.h"
-#include "shape2d.h"
+#include "memory.h"
 #include "timer.h"
-#include "trig.h"
-/* Local view: skybox_loaded; type is unsigned byte; another unit uses signed byte. */
-extern unsigned char skybox_loaded;
 /* Local view: initscenery; parameters[0] is signed byte; another unit uses unsigned byte. */
 extern void far initscenery(I8);
 #include "skybox.h"
-#include "mathops.h"
-#include "text.h"
+#include "trig.h"
+/* Local view: skybox_loaded; type is unsigned byte; another unit uses signed byte. */
+extern unsigned char skybox_loaded;
 #include "track.h"
-
-
 
 /* Local view: loadedresourceptr; pointer is signed byte; another unit uses void. */
 extern I8 far *loadedresourceptr;
-
-
 
 /* Local view: fluffyload; return.pointer is void; another unit uses signed byte. */
 extern void far *fluffyload(I8 *);
@@ -833,39 +506,15 @@ extern void far closeresource(I8 far *);
 /* Local view: elapsedticks; return is signed word; another unit uses unsigned long. */
 extern I16 far elapsedticks(void);
 
-
-
-
-
-
 /* Local view: sprite_free_window; parameters[0].pointer is void; another unit uses struct SPRITE. */
 extern void far removewindow(void far *);
 /* Local view: freememory; return is void; another unit uses far pointer. */
 extern void far freememory(void far *);
 
-
-
-
-
-
-
-
-
 /* Local view: TerName; array is None; another unit uses 5. */
 extern I8 TerName[];
 /* Local view: file_load_shape2d_fatal_thunk; return.pointer is void; another unit uses unsigned byte. */
 extern void far *file_load_shape2d_fatal_thunk(I8 *);
-
-
-
-
-
-
-
-
-
-
-
 
 /* Copies a clipped window region. Params: clip rectangle. Returns: none. State: reads the active window sprite and clip state. */
 /* PLATFORM(video): draws to or configures the display surface. */
@@ -883,7 +532,7 @@ void far drawworldflipzones(struct RECTANGLE *clipRect)
 	/* Local view: rect_num3; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 	extern char rect_num3;
 	/* Local view: rects_updt; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
-	extern char rects_updt[15];
+	extern char rects_updt[SPRITE_CLIP_RECT_CAPACITY];
 	/* Local view: makezonelist; parameters[0] is signed byte; another unit uses unsigned byte. */
 	extern void far makezonelist(I8, I8 *, struct RECTANGLE *, struct RECTANGLE *, struct RECTANGLE *, I8 *, struct RECTANGLE *);
 	
@@ -935,7 +584,7 @@ draw_rect_check:
                 } while (rect_num3 > i);
                 goto draw_transparent;
             }
-            /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, 320, clipRect->top, clipRect->bottom);
+            /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, MCGA_SCREEN_WIDTH_PIXELS, clipRect->top, clipRect->bottom);
         } else {
             /* PLATFORM(video): select the sprite clip rectangle. */ clippix(clipRect->left, clipRect->right,
                 clipRect->top, clipRect->bottom);
@@ -1056,7 +705,7 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 	}
 
 	if (statemgmtcpy != 0) {
-		flagbits = 8;
+		flagbits = SHAPE3D_FLAG_ACCUMULATE_RECT;
 		rect_ptr = tparr;
 		for (si = 0; si < 15; si++) {
 			*rect_ptr++ = empty_rectangle;
@@ -1164,7 +813,7 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 		bank = 0;
 	}
 
-	paint = paint_cycle[(core.game_frame == 0 ? g_clocks : core.game_frame) & 0xF];
+	paint = paint_cycle[(core.game_frame == 0 ? g_clocks : core.game_frame) & PAINT_CYCLE_MASK];
 
 	// Select the vector specifying the 23 tiles to draw. The vector contains
 	// 24 elements, each 3 bytes long, in format (east_offset, south_offset,
@@ -1186,7 +835,7 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 	// algo will draw the NW tile before the NE, and vice-versa
 
 	cur_view_heading_val = INIT_OBJECTS_BUFFER(bank, cam_elev, view_rot_x, clip, 0);
-	si = (cur_view_heading_val & FAST_TRIG_ANGLE_MASK) >> 7;
+	si = (cur_view_heading_val & FAST_TRIG_ANGLE_MASK) >> HEADING_OCTANT_SHIFT;
 	tile_table = headingzones[si];
 
 	view_mat = *makematrix(bank, cam_elev, 0, 1);
@@ -1431,7 +1080,6 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 		}
 	}
 //; -----------------------------------------------------------------------------
-
 
 	ovl_pending = 0;
 	
@@ -1924,14 +1572,14 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 		if (core.game_inputmode == 0) {
 			if ((tx == idxtrk || tile_east2 == idxtrk) && (trow == tagtrk || drow == tagtrk)) {
 
-				j = fixedmult(intcos(g_sgateopn), 0x24);
-				nfences = fixedmult(intsin(g_sgateopn), 0x24) + 0x38;
+				j = fixedmult(intcos(g_sgateopn), START_GATE_ARM_LENGTH);
+				nfences = fixedmult(intsin(g_sgateopn), START_GATE_ARM_LENGTH) + START_GATE_PIVOT_HEIGHT;
 
 				vptr = &g_shapes3d[0x98A / sizeof(struct SHAPE3D)].shape3d_verts[8];
-				vptr[0].x = j - 0x24;
-				vptr[1].x = j - 0x24;
-				vptr[2].x = 0x24 - j;
-				vptr[3].x = 0x24 - j;
+				vptr[0].x = j - START_GATE_ARM_LENGTH;
+				vptr[1].x = j - START_GATE_ARM_LENGTH;
+				vptr[2].x = START_GATE_ARM_LENGTH - j;
+				vptr[3].x = START_GATE_ARM_LENGTH - j;
 
 				vptr[0].z = nfences;
 				vptr[1].z = nfences;
@@ -1940,12 +1588,12 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 				 
 				g_curr_tsp->pos.x =
 					fixedmult(intsin(st_hdg + 0x200), 0x1B6) +
-					fixedmult(intsin(st_hdg + 0x100), 0x24) + 
+					fixedmult(intsin(st_hdg + 0x100), START_GATE_ARM_LENGTH) + 
 					trackctrpos2[idxtrk] - viewpoint.x;
 				g_curr_tsp->pos.y = terheight[g_hillf] - viewpoint.y;
 				g_curr_tsp->pos.z =
 					fixedmult(intcos(st_hdg + 0x200), 0x1B6) +
-					fixedmult(intcos(st_hdg + 0x100), 0x24) + 
+					fixedmult(intcos(st_hdg + 0x100), START_GATE_ARM_LENGTH) + 
 					row_ctr_zs[tagtrk] - viewpoint.z;
 
 				g_curr_tsp->shapeptr = &g_shapes3d[0x98A / sizeof(struct SHAPE3D)];
@@ -1977,16 +1625,16 @@ void drawworld(I8 page, struct RECTANGLE* clip) {
 				switch (tshapearrarg2[j2]) {
 				case 2:
 					if (core.playerstate.car_is_braking != 0) {
-						backlightovr8 = 0x2F;
+						backlightovr8 = MATERIAL_BACKLIGHT_ON;
 					} else {
-						backlightovr8 = 0x2E;
+						backlightovr8 = MATERIAL_BACKLIGHT_OFF;
 					}
 					break;
 				case 3:
 					if (core.opponentstate.car_is_braking != 0) {
-						backlightovr8 = 0x2F;
+						backlightovr8 = MATERIAL_BACKLIGHT_ON;
 					} else {
-						backlightovr8 = 0x2E;
+						backlightovr8 = MATERIAL_BACKLIGHT_OFF;
 					}
 					break;
 				}
@@ -2119,16 +1767,14 @@ draw_done:
 /* Local view: g_simprect; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 extern I8 g_simprect;
 
-
-
 /* Local view: rectclip; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
-extern struct RECTANGLE rectclip[15];
+extern struct RECTANGLE rectclip[SPRITE_CLIP_RECT_CAPACITY];
 /* Local view: rcmapix; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 extern I16 rcmapix[45];
 /* Local view: rect_num3; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 extern I8 rect_num3;
 /* Local view: rects_updt; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
-extern I8 rects_updt[15];
+extern I8 rects_updt[SPRITE_CLIP_RECT_CAPACITY];
 /* Local view: full_screen_rectangle; block externs preserve external fixups to the later initialized public; a file declaration changes them to _DATA fixups. */
 extern struct RECTANGLE full_screen_rectangle;
 /* Local view: makezonelist; parameters[0] is signed byte; another unit uses unsigned byte. */
@@ -2240,32 +1886,32 @@ I16 drawhorizon(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
         projectp(&vecs[0], &pts[0]);
         projectp(&vecs[1], &pts[1]);
 
-        if (pts[0].px > PLATFORM_SCREEN_WIDTH_PIXELS && pts[1].px > PLATFORM_SCREEN_WIDTH_PIXELS) {
-            if (pts[0].py < pts[1].py) {
+        if (pts[0].x > PLATFORM_SCREEN_WIDTH_PIXELS && pts[1].x > PLATFORM_SCREEN_WIDTH_PIXELS) {
+            if (pts[0].y < pts[1].y) {
                 temp = g_skybox_sky_clr;
                 goto fill;
             }
             temp = ground_skybox;
             goto fill;
         }
-        if (pts[0].px < 0 && pts[1].px < 0) {
-            if (pts[0].py <= pts[1].py) {
+        if (pts[0].x < 0 && pts[1].x < 0) {
+            if (pts[0].y <= pts[1].y) {
                 temp = ground_skybox;
                 goto fill;
             }
             temp = g_skybox_sky_clr;
             goto fill;
         }
-        if (pts[0].py > clip->bottom && pts[1].py > clip->bottom) {
-            if (pts[0].px <= pts[1].px) {
+        if (pts[0].y > clip->bottom && pts[1].y > clip->bottom) {
+            if (pts[0].x <= pts[1].x) {
                 temp = ground_skybox;
                 goto fill;
             }
             temp = g_skybox_sky_clr;
             goto fill;
         }
-        if (pts[0].py < clip->top && pts[1].py < clip->top) {
-            if (pts[0].px >= pts[1].px) {
+        if (pts[0].y < clip->top && pts[1].y < clip->top) {
+            if (pts[0].x >= pts[1].x) {
                 temp = ground_skybox;
                 goto fill;
             }
@@ -2274,16 +1920,16 @@ I16 drawhorizon(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
         }
 
         found = 0;
-        if (renderlevel != 4 && pts[1].px < 0 && pts[0].px > PLATFORM_SCREEN_WIDTH_PIXELS &&
-            clipline(pts[1].px, pts[1].py,
-                              pts[0].px, pts[0].py, clip_line) == 0) {
+        if (renderlevel != 4 && pts[1].x < 0 && pts[0].x > PLATFORM_SCREEN_WIDTH_PIXELS &&
+            clipline(pts[1].x, pts[1].y,
+                              pts[0].x, pts[0].y, clip_line) == 0) {
             temp = clip_line[3] - clip_line[5];
             if ((temp < 0 ? -temp : temp) < 0x60) {
                 if (clip_line[1] == 0) {
                     start_y = clip_line[3];
                     slope = clip_line[5] - start_y;
                     found = 1;
-                } else if (clip_line[1] == 0x13f) {
+                } else if (clip_line[1] == MCGA_LAST_X) {
                     start_y = clip_line[5];
                     slope = clip_line[3] - start_y;
                     found = 1;
@@ -2360,14 +2006,14 @@ I16 drawhorizon(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
                 }
             }
         } else {
-            i = intatan(pts[0].px - pts[1].px, pts[0].py - pts[1].py) & FAST_TRIG_ANGLE_MASK;
+            i = intatan(pts[0].x - pts[1].x, pts[0].y - pts[1].y) & FAST_TRIG_ANGLE_MASK;
             for (slope = 2; slope < 6; slope++) {
                 if (slope < 4)
                     temp = 0;
                 else
                     temp = 1;
-                pts[slope].px = pts[temp].px + fixedmult(0x3e80, intsin(horizon_angles[slope - 2] + i));
-                pts[slope].py = pts[temp].py + fixedmult(0x3e80, intcos(horizon_angles[slope - 2] + i));
+                pts[slope].x = pts[temp].x + fixedmult(0x3e80, intsin(horizon_angles[slope - 2] + i));
+                pts[slope].y = pts[temp].y + fixedmult(0x3e80, intcos(horizon_angles[slope - 2] + i));
             }
             skybox_op_helper(g_skybox_sky_clr, 4, pts[0], pts[1], pts[3], pts[2]);
             skybox_op_helper(ground_skybox, 4, pts[0], pts[1], pts[4], pts[5]);
@@ -2391,7 +2037,7 @@ I16 drawhorizon(I16 preview_index, struct RECTANGLE *clip, I16 latitude,
         }
 
         projectp(&vecs[0], &pts[0]);
-        horizon = pts[0].py;
+        horizon = pts[0].y;
         if (clip->top > horizon)
             horizon = clip->top;
 
@@ -2492,12 +2138,12 @@ void drawblimpworld(void)
     mat_vec(&track_prev_vec, cam_matrix, &vector);
     projectp(&vector, &screen_point);
 
-    horizon = screen_point.py;
+    horizon = screen_point.y;
     if (horizon < 0)
         horizon = 0;
     /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, horizon - sky_hgt_world);
     /* PLATFORM(video): fill the active clip with a color. */ clearwindow(g_skybox_sky_clr);
-    /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, 0x64);
+    /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, PREVIEW_VIEWPORT_HEIGHT);
     /* PLATFORM(video): blit a shape to the display. */ movcfxya(skypics[2], 0, horizon - scene_3ht);
     /* PLATFORM(video): blit a shape to the display. */ movcfxya(skypics[3], PLATFORM_SCREEN_WIDTH_PIXELS, horizon - scene_4ht);
     /* PLATFORM(video): select the sprite clip rectangle. */ clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, horizon, PLATFORM_SCREEN_HEIGHT_PIXELS);
@@ -2665,12 +2311,12 @@ struct RECTANGLE *drawtext(void)
     if (menutimeout != 0) {
         strcpyfar(&resbuftext, getresl(gamerptrs, aDm1));
         /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
-            shadowtext(&resbuftext, mycenter(&resbuftext), 0xAA, dlg_colour, 0),
+            shadowtext(&resbuftext, mycenter(&resbuftext), HUD_DEMO_MESSAGE_FIRST_Y, dlg_colour, 0),
             &game_rect_txt_in);
 
         strcpyfar(&resbuftext, getresl(gamerptrs, aDm2));
         /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
-            shadowtext(&resbuftext, mycenter(&resbuftext), 0xB6, dlg_colour, 0),
+            shadowtext(&resbuftext, mycenter(&resbuftext), HUD_DEMO_MESSAGE_SECOND_Y, dlg_colour, 0),
             &game_rect_txt_in);
     } else if (gm_playmode == 0) {
         if (core.game_inputmode == 0) {
@@ -2681,7 +2327,7 @@ struct RECTANGLE *drawtext(void)
         } else if (pass_check_flag == 0) {
             strcpyfar(&resbuftext, getresl(gamerptrs, aSe1));
             /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
-                shadowtext(&resbuftext, mycenter(&resbuftext), 0x5D, dlg_colour, 0),
+                shadowtext(&resbuftext, mycenter(&resbuftext), HUD_PRIMARY_MESSAGE_Y, dlg_colour, 0),
                 &game_rect_txt_in);
             strcpyfar(&resbuftext, getresl(gamerptrs, aSe2));
             /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
@@ -2690,17 +2336,17 @@ struct RECTANGLE *drawtext(void)
         } else if (intraffic == 0 && cammd == 0 && core.playerstate.car_crashBmpFlag == 0) {
             switch (core.game_player_guidance) {
             /* PLATFORM(video): blit a transparent shape. */ case 1:
-                tmaskxcfxya(sdgbmp_v[3], 0x94, 0x5D);
+                tmaskxcfxya(sdgbmp_v[3], HUD_PLAYER_MARKER_X, HUD_PRIMARY_MESSAGE_Y);
                 mergezones(&game_rect_txt_in, &rect_ingame_text2, &game_rect_txt_in);
                 break;
             /* PLATFORM(video): blit a transparent shape. */ case 2:
-                tmaskxcfxya(sdgbmp_v[4], 0x94, 0x5D);
+                tmaskxcfxya(sdgbmp_v[4], HUD_PLAYER_MARKER_X, HUD_PRIMARY_MESSAGE_Y);
                 mergezones(&game_rect_txt_in, &rect_ingame_text2, &game_rect_txt_in);
                 break;
             case 3:
                 strcpyfar(&resbuftext, getresl(gamerptrs, aWww));
                 /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
-                    shadowtext(&resbuftext, mycenter(&resbuftext), 0x5D, dlg_colour, 0),
+                    shadowtext(&resbuftext, mycenter(&resbuftext), HUD_PRIMARY_MESSAGE_Y, dlg_colour, 0),
                     &game_rect_txt_in);
                 break;
             }
@@ -2708,12 +2354,12 @@ struct RECTANGLE *drawtext(void)
             resbuftext = 0;
             switch (core.game_opponent_pass_side) {
             /* PLATFORM(video): blit a transparent shape. */ case 1:
-                tmaskxcfxya(sdgbmp_v[3], 0x44, 0x71);
+                tmaskxcfxya(sdgbmp_v[3], 0x44, HUD_OPPONENT_MARKER_Y);
                 mergezones(&game_rect_txt_in, &rect_ingame_text3, &game_rect_txt_in);
                 strcpyfar(&resbuftext, getresl(gamerptrs, aOpp));
                 break;
             /* PLATFORM(video): blit a transparent shape. */ case 2:
-                tmaskxcfxya(sdgbmp_v[4], 0xE4, 0x71);
+                tmaskxcfxya(sdgbmp_v[4], 0xE4, HUD_OPPONENT_MARKER_Y);
                 mergezones(&game_rect_txt_in, &rect_ingame_text4, &game_rect_txt_in);
                 strcpyfar(&resbuftext, getresl(gamerptrs, aOpp_0));
                 break;
@@ -2721,7 +2367,7 @@ struct RECTANGLE *drawtext(void)
 
             if (resbuftext != 0) {
                 /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
-                    shadowtext(&resbuftext, mycenter(&resbuftext), 0x74, dlg_colour, 0),
+                    shadowtext(&resbuftext, mycenter(&resbuftext), HUD_OPPONENT_MESSAGE_Y, dlg_colour, 0),
                     &game_rect_txt_in);
             }
 
@@ -2729,7 +2375,7 @@ struct RECTANGLE *drawtext(void)
                 strcpyfar(&resbuftext, getresl(gamerptrs, aPen));
                 maketime(&resbuftext + strlen(&resbuftext), g_penaltytm, 0);
                 /* PLATFORM(video): use the display text or sprite interface. */ mergezones(&game_rect_txt_in,
-                    shadowtext(&resbuftext, mycenter(&resbuftext), 0x66, dlg_colour, 0),
+                    shadowtext(&resbuftext, mycenter(&resbuftext), HUD_PENALTY_MESSAGE_Y, dlg_colour, 0),
                     &game_rect_txt_in);
             }
         }
@@ -2752,10 +2398,10 @@ struct RECTANGLE *sink(I16 frame, I16 top, I16 height)
 {
     register I16 offset;
 
-    if (frame > (I16)rate_frame * 4)
-        frame = (I16)rate_frame * 4;
+    if (frame > (I16)rate_frame * SINKING_DURATION_SECONDS)
+        frame = (I16)rate_frame * SINKING_DURATION_SECONDS;
 
-    offset = ((I32)height * frame) / ((I16)rate_frame * 4);
+    offset = ((I32)height * frame) / ((I16)rate_frame * SINKING_DURATION_SECONDS);
 
     game_rect_txt_in.left = 0;
     game_rect_txt_in.right = PLATFORM_SCREEN_WIDTH_PIXELS;
@@ -2768,7 +2414,6 @@ struct RECTANGLE *sink(I16 frame, I16 top, I16 height)
 }
 
 /* PORT: aggregate field offsets rely on the pinned MSC default /Zp packing. */ 
-#include "gamerec.h"
 
 I16 fence_offsets[8] = { 30, 200, 320, 400, 530, 700, 880, 960 };
 struct SHAPE3D *fence_shapes[8] = {
@@ -3035,9 +2680,6 @@ struct RECTANGLE rect_ingame_text2 = { 148, 172, 93, 108 };
 struct RECTANGLE rect_ingame_text3 = { 68, 92, 113, 128 };
 struct RECTANGLE rect_ingame_text4 = { 228, 252, 113, 128 };
 
-
-
-
 static char init_crak_resource_names[2][5] = { "crak", "cinf" };
 
 /* Updates the crack/crash overlay. Params: frame, top and height. Returns: affected rectangle. State: reads and updates crash-overlay state. */
@@ -3065,39 +2707,37 @@ static char init_crak_resource_names[2][5] = { "crak", "cinf" };
             start_point = crak_shape[crackIndex].start;
             crack_end = crak_shape[crackIndex].end;
 
-        start_point.py = ((I32)start_point.py * height) / 200;
-        crack_end.py = ((I32)crack_end.py * height) / 200;
+        start_point.y = ((I32)start_point.y * height) / CRACK_SOURCE_CANVAS_HEIGHT;
+        crack_end.y = ((I32)crack_end.y * height) / CRACK_SOURCE_CANVAS_HEIGHT;
 
-        /* PLATFORM(video): draw a preview line. */ preRender_line(start_point.px, start_point.py + top - 1,
-                       crack_end.px, crack_end.py + top - 1, 0);
-        /* PLATFORM(video): draw a preview line. */ preRender_line(start_point.px, start_point.py + top + 1,
-                       crack_end.px, crack_end.py + top + 1, 0);
-        /* PLATFORM(video): draw a preview line. */ preRender_line(start_point.px, start_point.py + top,
-                       crack_end.px, crack_end.py + top, dlg_colour);
+        /* PLATFORM(video): draw a preview line. */ preRender_line(start_point.x, start_point.y + top - 1,
+                       crack_end.x, crack_end.y + top - 1, 0);
+        /* PLATFORM(video): draw a preview line. */ preRender_line(start_point.x, start_point.y + top + 1,
+                       crack_end.x, crack_end.y + top + 1, 0);
+        /* PLATFORM(video): draw a preview line. */ preRender_line(start_point.x, start_point.y + top,
+                       crack_end.x, crack_end.y + top, dlg_colour);
 
         if (statemgmtcpy != 0) {
-            adjust_point.px = start_point.px;
-            adjust_point.py = start_point.py + top - 1;
+            adjust_point.x = start_point.x;
+            adjust_point.y = start_point.y + top - 1;
             zonecheck(&adjust_point, &game_rect_txt_in);
 
-            adjust_point.px = crack_end.px;
-            adjust_point.py = crack_end.py + top + 1;
+            adjust_point.x = crack_end.x;
+            adjust_point.y = crack_end.y + top + 1;
             zonecheck(&adjust_point, &game_rect_txt_in);
 
-            adjust_point.px = start_point.px;
-            adjust_point.py = start_point.py + top + 1;
+            adjust_point.x = start_point.x;
+            adjust_point.y = start_point.y + top + 1;
             zonecheck(&adjust_point, &game_rect_txt_in);
 
-            adjust_point.px = crack_end.px;
-            adjust_point.py = crack_end.py + top - 1;
+            adjust_point.x = crack_end.x;
+            adjust_point.y = crack_end.y + top - 1;
             zonecheck(&adjust_point, &game_rect_txt_in);
         }
     }
 
     return &game_rect_txt_in;
 }
-
-
 
 /* Loads the selected skybox. Params: skybox mode. Returns: none. State: updates the skybox resource handle and loaded-state flag. */
 /* PLATFORM(file): loads, reads, writes or resolves game files. */
@@ -3288,7 +2928,7 @@ I8 far logo(void)
             /* PLATFORM(video): copy the window sprite to the display page. */ else
                 usebuffer();
 
-            carHeadingData = 0xffff;
+            carHeadingData = INTRO_CAR_HEADING_UNSET;
             oldDrawOpponent = 1;
             /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ opponentXPosition = (core.opponentstate.car_posWorld1.lx >> WORLD_COORDINATE_SHIFT);
             /* PORT: negative signed 32-bit world coordinates rely on arithmetic right shift. */ lastOpponentY = (core.opponentstate.car_posWorld1.ly >> WORLD_COORDINATE_SHIFT);
@@ -3308,7 +2948,7 @@ I8 far logo(void)
                 lastGoalY = lastOpponentY;
                 savedGoalZ = savedOpponentZ;
             }
-            if (carHeadingData == 0xffff) {
+            if (carHeadingData == INTRO_CAR_HEADING_UNSET) {
                 carHeadingData = (-intatan(goalXPosition - oldCameraX, savedGoalZ - cameraZPrevious)) & 0x03ff;
                 oldCarDistance = inthypot(goalXPosition - oldCameraX, savedGoalZ - cameraZPrevious);
                 introCloudTilt = intatan(lastGoalY - cameraYIdle, oldCarDistance) & 0x03ff;
@@ -3442,7 +3082,7 @@ logo_complete: /* MSC 5.10: deleting this unused label changes COMDEF order. */
         index = 0;
         while (index < *oldPointCount) {
             projectedPoint = oldPoints[index];
-            /* PLATFORM(video): draw a display pixel. */ writepixelc(projectedPoint.px, projectedPoint.py, 0);
+            /* PLATFORM(video): draw a display pixel. */ writepixelc(projectedPoint.x, projectedPoint.y, 0);
             ++index;
         }
     }
@@ -3471,7 +3111,7 @@ logo_complete: /* MSC 5.10: deleting this unused label changes COMDEF order. */
         mat_vec(&inputPoint, &wkmatx, &relativeVector);
         if (relativeVector.z > PLATFORM_SCREEN_HEIGHT_PIXELS) {
             projectp(&relativeVector, &projectedPoint);
-            /* PLATFORM(video): draw a display pixel. */ writepixelc(projectedPoint.px, projectedPoint.py,
+            /* PLATFORM(video): draw a display pixel. */ writepixelc(projectedPoint.x, projectedPoint.y,
                                   intro_colorvalue);
             if (statemgmtcpy != 0) {
                 oldPoints[count++] = projectedPoint;
@@ -3508,13 +3148,13 @@ I16S frmcs_time;
 void far* gamerptrs;
 /* Local view: rotpr; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 int rotpr[2];
-struct RECTANGLE tparr[15];
+struct RECTANGLE tparr[SPRITE_CLIP_RECT_CAPACITY];
 int ground_skybox;
 struct SHAPE3D brav;
 I16 spdneedlegaugeclr;
 int frmexcess;
 /* Local view: rectclip; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
-struct RECTANGLE rectclip[15];
+struct RECTANGLE rectclip[SPRITE_CLIP_RECT_CAPACITY];
 int maxscnh;
 int g_tdist[29];
 /* Local view: backlightovr8; type is signed byte; another unit uses unsigned byte. */
@@ -3524,14 +3164,14 @@ unsigned short scene_2ht;
 unsigned short scene_3ht;
 unsigned short scene_4ht;
 /* Local view: rects_updt; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
-I8 rects_updt[15];
-struct RECTANGLE rclist[15];
+I8 rects_updt[SPRITE_CLIP_RECT_CAPACITY];
+struct RECTANGLE rclist[SPRITE_CLIP_RECT_CAPACITY];
 int g_skybox_sky_clr;
 /* Local view: rcmapix; MSC 5.10 keeps the original block and file extern scopes; importing the view-state header at file scope changes external indices. */
 I16 rcmapix[45];
 I16S exwd[3];
 struct RECTANGLE rc0_cpy;
-struct RECTANGLE g_savrc[15];
+struct RECTANGLE g_savrc[SPRITE_CLIP_RECT_CAPACITY];
 char tshapearrarg2[30];
 I8 g_ts_num;
 struct SHAPE2D far *skypics[4];

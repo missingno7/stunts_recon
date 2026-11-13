@@ -5,7 +5,7 @@
 ; ASMDOC No hardware service or self-modifying code; existing PLATFORM(video) annotations are false for this
 ; resource transform.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT
 extrn _shapepointer:far

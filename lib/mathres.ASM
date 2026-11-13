@@ -7,7 +7,7 @@
 ; ASMDOC permission to remove bytes.
 .8086
 name math_resource_helpers
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 S012_TEXT segment word public 'CODE'
 S012_TEXT ends
 _DATA segment word public 'DATA'

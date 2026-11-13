@@ -3,7 +3,7 @@
 ; ASMDOC declarations, old comments or line endings changed.
 ; ASMDOC Public routines: _nopsub_339FA, _putpixel_iconMask. Stack offsets are post-prologue BP offsets.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT

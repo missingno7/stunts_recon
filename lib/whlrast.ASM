@@ -14,7 +14,7 @@
 ; ASMDOC-GEOMETRY Data export: _spritefunc: offset=0, segment=S012_TEXT; FAR span callback
 ; ASMDOC-GEOMETRY Data export: _imagefunc: offset=0, segment=S012_TEXT; FAR degenerate-line callback
 ; ASMDOC-GEOMETRY 
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 .model medium
 name asm012_137138
 SPRITE struc

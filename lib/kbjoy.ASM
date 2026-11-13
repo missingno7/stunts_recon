@@ -30,7 +30,7 @@
 ; INPUTDOC Routine _nopsub_307FA -> _joystick_scale_saved_y: Scale the saved Y-axis sample relative to its minimum and
 ; INPUTDOC center by 31.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 name asm012_132056
 DGROUP group _DATA
 assume ds:DGROUP

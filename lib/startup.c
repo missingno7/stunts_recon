@@ -1,17 +1,17 @@
 
-#include "audapi.h"
-#include "font.h"
+#include "audio.h"
+#include "chartab.h"
+#include "ui.h"
+#include "viewstat.h"
 #include "game.h"
-#include "gfxapi.h"
+#include "video.h"
 #include "input.h"
-#include "memapi.h"
-#include "prim3d.h"
-#include "resapi.h"
-#include "shape2d.h"
+#include "memory.h"
+#include "shapes3d.h"
+#include "files.h"
 #include "timer.h"
-#include "uiapi.h"
-#include "stunts_types.h"
-#include "platform_hw.h"
+#include "dlgcolor.h"
+#include "types.h"
 /* READABILITY: Initialize game startup state, set up input/video/audio services, and load the palette and cursor resources. */
 /* MSC 5.10 <ctype.h> macros over the pinned runtime table _ctype */
 #define _UPPER 0x1
@@ -54,9 +54,8 @@ const I8* myfindnext(void) { return findnext(); }
 void nullsub_1(void) {}
 /* Local view: nullsub_2; parameters.count is 0; another unit uses 2. */
 void nullsub_2(void) {}
-/* Local view: POINT2D; struct[0].name is px; another unit uses x. */
-struct POINT2D { I16 px, py; };
-#include "geom2d.h"
+
+#include "math3d.h"
 
 /* Local view: g_vid_flg2_set; type is signed word; another unit uses unsigned word. */
 extern short g_vid_flg2_set;
@@ -87,14 +86,6 @@ extern I16 *material_pattern2_table_ptr, *material_pattern_table_pointer, *mater
 
     /* PLATFORM(input_kb): initialize keyboard service or register a game key callback. */
 
-
-
-
-
-
-
-
-
     /* PLATFORM(memory): use the game-managed far-memory service. */
 
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
@@ -112,13 +103,9 @@ extern I16S FAR initmouse(U16S, U16S);
 
     /* PLATFORM(audio): call the configured DOS audio driver service. */
 
-
     /* PLATFORM(audio): call the configured DOS audio driver service. */
 
     /* PLATFORM(audio): call the configured DOS audio driver service. */
-
-
-
 
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 
@@ -135,12 +122,9 @@ extern void FAR clearwindow(U8);
 /* Local view: sprite_clear_1_color; parameters[0] is unsigned byte; another unit uses signed word. */
 extern void FAR clearwindow(U8);
 
-
 /* Local view: strlen; return is unsigned word; another unit uses signed word. */
 extern U16 FAR strlen(I8*);
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-
-
 
     /* PLATFORM(file): read startup shape resources through the game file service. */
 /* Local view: file_load_shape2d_fatal_thunk; return.pointer is void; another unit uses unsigned byte. */
@@ -170,7 +154,6 @@ void far *spritepointermini;
 void far *mouse_ptr_cursor;
 /* Local view: mouse_unk_sprite_ptr; pointer is void; another unit uses struct SPRITE. */
 extern void FAR *mouse_unk_sprite_ptr;
-
 
 /* Initialize game input, video, timer, mouse, audio, and startup resources; choose timing-dependent detail settings.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
@@ -310,11 +293,11 @@ void initmodes(I16 argc, I8* argv[])
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 		displaywindow();
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-	clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, 120);
+	clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, STARTUP_VIDEO_BENCH_HEIGHT);
 
     /* PLATFORM(timer): use the game timer service. */
 	elticks();
-	for (i = 0; i < 15; ++i) {
+	for (i = 0; i < STARTUP_VIDEO_BENCH_REPEATS; ++i) {
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
 		clearwindow(0); // the c impl is too slow/wrong and produces faulty timing values
 	}
@@ -322,16 +305,16 @@ void initmodes(I16 argc, I8* argv[])
 	timer1 = elticks();
 	
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-	clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, 60);
+	clippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, STARTUP_RECT_BENCH_HEIGHT);
 
-	for (i = 0; i < 15; ++i) {
+	for (i = 0; i < STARTUP_VIDEO_BENCH_REPEATS; ++i) {
 		limits.left = 0;
 		limits.right = 0;
 		limits.top = 0;
 		limits.bottom = 0;
 		
-		for (j = 0; j < 400; ++j) {
-			tmppoint.py = tmppoint.px = j;
+		for (j = 0; j < STARTUP_RECT_BENCH_POINTS; ++j) {
+			tmppoint.y = tmppoint.x = j;
 			zonecheck(&tmppoint, &limits);
 		}
 		
@@ -342,8 +325,8 @@ void initmodes(I16 argc, I8* argv[])
     /* PLATFORM(timer): use the game timer service. */
 	middle_delta = elticks();
 
-	for (i = 0; i < 146; ++i) {
-		for (j = 0; j < 255; ++j) {
+	for (i = 0; i < STARTUP_CPU_BENCH_OUTER; ++i) {
+		for (j = 0; j < STARTUP_CPU_BENCH_INNER; ++j) {
 			zonecheck(&tmppoint, &limits);
 		}
 	}
@@ -360,16 +343,16 @@ void initmodes(I16 argc, I8* argv[])
 	else
 		frm_rate2 = 10;
 
-	if (timerdelta3 < 35) {
+	if (timerdelta3 < STARTUP_DETAIL_THRESHOLD_LOWEST) {
 		renderlevel = 0;
 	}
-	else if (timerdelta3 < 55) {
+	else if (timerdelta3 < STARTUP_DETAIL_THRESHOLD_LOW) {
 		renderlevel = 1;
 	}
-	else if (timerdelta3 < 75) {
+	else if (timerdelta3 < STARTUP_DETAIL_THRESHOLD_MEDIUM) {
 		renderlevel = 2;
 	}
-	else if (timerdelta3 < 100 || !slow_video_mode_state) {
+	else if (timerdelta3 < STARTUP_DETAIL_THRESHOLD_HIGH || !slow_video_mode_state) {
 		renderlevel = 3;
 	}
 	else {
@@ -395,13 +378,13 @@ void seedrandom(void)
     status1 = vsyncstate();
     i = 0;
     /* PLATFORM(video): call the MCGA video or sprite renderer service. */
-    while (status1 == vsyncstate() && i < 12000)
+    while (status1 == vsyncstate() && i < STARTUP_VIDEO_WAIT_LIMIT)
         ++i;
-    if (i == 1024)
+    if (i == STARTUP_RANDOM_FALLBACK_CHECK)
         /* PLATFORM(bios): read the BIOS tick-count byte as the fallback seed. */
         i = *((I8S *)0x046c);
     while (i--) { rand(); myrandom(); }
-    i &= 0xff;
+    i &= STARTUP_RANDOM_SEED_BYTE_MASK;
     while (i--) { myrandom(); rand(); }
 }
 
@@ -462,7 +445,6 @@ void loadpalandmouse(void)
 I16 get_0(void) { return 0; }
     /* PLATFORM(memory): use the game-managed far-memory service. */
 
-
 /* Convert byte count to paragraph count and request pages from the game memory manager.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
  */
@@ -471,9 +453,8 @@ I16 get_0(void) { return 0; }
 void FAR *resmem(const I8 *name, I32 size)
 {
     /* PLATFORM(memory): use the game-managed far-memory service. */
-    return reservememory(name, size / 16 + 1);
+    return reservememory(name, size / DOS_PARAGRAPH_BYTES_I16 + 1);
 }
-
 
 /* Local view: availmem; return is unsigned long; another unit uses signed long. */
 U32 availmem(void)

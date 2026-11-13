@@ -1,6 +1,6 @@
 /* seg007 audio engine - whole-object reconstruction for the MSC 6.00 non-A C6 profile.
    Build: CL /c /AM /Os /Oe /Og /Gs /Zi UNIT.C  (MSC 6.00 non-A, DOS pass chain). Pinned target profile. */
-#include "audio.h"
+#include "audstate.h"
 #include "resource.h"
 
 

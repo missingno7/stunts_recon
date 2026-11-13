@@ -6,7 +6,7 @@
 ; INPUTDOC Routine _keyboard_shift_checking1 -> _keyboard_shift_checking1: Set BDA NumLock bit and peek the normalized
 ; INPUTDOC pending key.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 extrn _nextkey:far
 S018_TEXT segment word public 'CODE'
 assume cs:S018_TEXT

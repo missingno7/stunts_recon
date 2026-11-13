@@ -20,7 +20,7 @@
 ; INPUTDOC Routine _nopsub_30A97 -> _kb_read_with_timeout: Build a local 32-bit deadline from a duration and poll the
 ; INPUTDOC reader until key or timeout.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 name asm012_133660
 DGROUP group CONST,_BSS,_DATA
 assume ds:DGROUP

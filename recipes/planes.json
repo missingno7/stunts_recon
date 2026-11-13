@@ -148,89 +148,211 @@
   "object_segment": "UNIT5_DATA",
   "preprocessor_closure": [
     {
-      "path": "include/audeng.h",
-      "sha256": "9cd04ff48bb7830e929eeef0e13a533fb5548a6d68e43a50e10438b7c230bd73",
-      "size": 240
-    },
-    {
       "path": "include/game.h",
-      "sha256": "0bf7bc4afb9b518f5702334334695ab123f2e69c7c02dd895a65b1ed10e8761f",
-      "size": 94
+      "sha256": "efb4f8ec271fb25fdd21f28316f4300b0de522a08b4fc9734403ea6d0a0829e8",
+      "size": 11658
     },
     {
-      "path": "include/gameapi.h",
-      "sha256": "50e49c283baa693885098a6302c3180b9489601c32874735da3b30c0dabb17f2",
-      "size": 10975
+      "path": "include/gamerec.h",
+      "sha256": "e3bf380bb327eb69feac2c074542c8d778f62f70fd2d0206b03c5d794b6a3826",
+      "size": 1007
     },
     {
-      "path": "include/geom2d.h",
-      "sha256": "2938bb58c7180ac1095c0efa64d0e9b7e1099eab96e8310945cc1cac41253465",
-      "size": 421
+      "path": "include/math3d.h",
+      "sha256": "59a5ed823822b0ec3d7c3dad15159f8dae01f9cfd9b8a105eb89e0f12d4bbc69",
+      "size": 3760
     },
     {
-      "path": "include/plane.h",
-      "sha256": "3cac97191ebde6524620a80a8ce4936b6a8339ddbc8de4759306df0e3c9324ae",
-      "size": 339
+      "path": "include/matrix.h",
+      "sha256": "1e4e297e4bc5f090184fbe8f58c84d0be6651db259ecf39e2506b9358e186e55",
+      "size": 488
     },
     {
-      "path": "include/replay.h",
-      "sha256": "7e3c91591ec83a1bedfedcb2f6ece698e24f2eb902c6fc7cde7a27f22922882d",
-      "size": 466
+      "path": "include/radius2d.h",
+      "sha256": "097d90d5382c47225c46504009b67e05ba91fb87371aa84b351d101f8693077e",
+      "size": 120
     },
     {
-      "path": "include/stunts_types.h",
-      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
-      "size": 1091
-    },
-    {
-      "path": "include/vec3.h",
-      "sha256": "cbd94805557c2937228598d52eec59dbf495dc79b41229fab6d15ef7158bbc3a",
-      "size": 172
+      "path": "include/types.h",
+      "sha256": "ee3c95010d95f2bcb0d86f9a877a3ee1f1e495dbab382f33a83b9cf9e456b7db",
+      "size": 1277
     },
     {
       "path": "include/viewstat.h",
-      "sha256": "a59d13683da45f7e1cc415d8855bad44143d07d95d6806a53cc94321cfda5fe5",
+      "sha256": "bcb9520644dfe17d764d2d5bb1a79bd6b719fe1cf1619cf4b1f1077a71348a44",
       "size": 485
     },
     {
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 13,
+      "path": "include/matrix.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
       "line": 8,
-      "path": "include/plane.h",
+      "path": "include/gamerec.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 7,
-      "path": "include/geom2d.h",
+      "line": 21,
+      "path": "include/gamerec.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 12,
-      "path": "include/geom2d.h",
+      "line": 26,
+      "path": "include/gamerec.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 17,
-      "path": "include/geom2d.h",
+      "line": 32,
+      "path": "include/gamerec.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 7,
-      "path": "include/geom2d.h",
+      "line": 9,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 12,
-      "path": "include/geom2d.h",
+      "line": 16,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 17,
-      "path": "include/geom2d.h",
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     }

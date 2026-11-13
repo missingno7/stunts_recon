@@ -1,6 +1,6 @@
-#include "resource.h"
+#include "files.h"
 #include "memory.h"
-#include "stunts_types.h"
+#include "types.h"
 /* READABILITY: Compute expanded shape-resource storage requirements in paragraph units. */
 
 /* PORT: Resource headers use MSC 16-bit int layout; assert these field offsets in a host port. */

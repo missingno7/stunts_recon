@@ -1,6 +1,7 @@
 
-#include "font.h"
-#include "stunts_types.h"
+#include "chartab.h"
+#include "ui.h"
+#include "types.h"
 /* READABILITY: Convert an ASCII lowercase letter to uppercase; leave all other integer values unchanged. */
 /* Return an uppercase ASCII letter, leaving non-lowercase values unchanged.
  * Params and return follow the declared C signature. */

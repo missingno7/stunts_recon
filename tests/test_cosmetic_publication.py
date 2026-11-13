@@ -134,7 +134,7 @@ class CosmeticPublicationTests(unittest.TestCase):
             (root/'recipes').mkdir()
             (root/'recipes/foo.json').write_text(json.dumps({
                 'id':'foo', 'kind':'asm', 'include_closure':[]}), encoding='utf-8')
-            closure = [{'path':'include/platform_hw.inc', 'size':12, 'sha256':'a'*64}]
+            closure = [{'path':'include/hw.inc', 'size':12, 'sha256':'a'*64}]
             rows = [{'recipe_closure_updates': {
                 'recipes/foo.json': {'include_closure':closure}}}]
             with mock.patch.object(promote, 'ROOT', root):

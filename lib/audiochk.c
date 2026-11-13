@@ -1,6 +1,8 @@
+#include "files.h"
 
-#include "font.h"
-#include "stunts_types.h"
+#include "chartab.h"
+#include "ui.h"
+#include "types.h"
 /* READABILITY: Compare audio chunk names, find a chunk-table index, locate resource bytes, and copy them. */
 
 /* Local view: audioresource_get_dword; parameters[0].pointer is signed byte; another unit uses unsigned long. */
@@ -46,7 +48,7 @@ I16 FAR audioresource_get_chunk_index(I16 stride, I16 numChunks, U8 *chunkName,
             return index;
         chunkNames += stride;
     }
-    return -1;
+    return RESOURCE_NOT_FOUND;
 }
 
 /* Find a named entry in a packed audio resource and return its far data pointer.
@@ -61,13 +63,13 @@ I8 FAR * FAR audioresource_find(I8 HUGE *resource, U8 *chunkName)
     I8 FAR *chunkData;
 
     chunkData = 0;
-    num = *(U16 FAR *)(resource + 4);
-    index = audioresource_get_chunk_index(0, num, chunkName, resource + 6);
+    num = *(U16 FAR *)(resource + RESOURCE_COUNT_OFFSET);
+    index = audioresource_get_chunk_index(0, num, chunkName, resource + RESOURCE_DIRECTORY_HEADER_BYTES);
     if (index >= 0) {
         /* PORT: Huge-pointer addition must preserve segment:offset normalization within this resource. */
-        entry = (I8 FAR *)resource + 6 + num * 4 + index * 4;
+        entry = (I8 FAR *)resource + RESOURCE_DIRECTORY_HEADER_BYTES + num * RESOURCE_OFFSET_BYTES + index * RESOURCE_OFFSET_BYTES;
         offset = audioresource_get_dword(entry);
-        chunkData = (I8 FAR *)resource + 6 + num * 8 + offset;
+        chunkData = (I8 FAR *)resource + RESOURCE_DIRECTORY_HEADER_BYTES + num * 8 + offset;
     }
     return chunkData;
 }

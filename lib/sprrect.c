@@ -1,7 +1,6 @@
 
-#include "sprite2d.h"
 #include "video.h"
-#include "stunts_types.h"
+#include "types.h"
 /* READABILITY: Draw the four one-pixel edges of an axis-aligned rectangle through the sprite renderer. */
 /* Draw the top, bottom, left, and right edges of a rectangle.
  * Params and return follow the declared C signature. */

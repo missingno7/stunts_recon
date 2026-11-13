@@ -7,7 +7,7 @@
 ; bitmap/table
 ; ASMDOC memory is caller-selected; no owned routine calls an application callback.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 extrn _sprite1:byte
 S012_TEXT segment word public 'CODE'
 assume cs:S012_TEXT

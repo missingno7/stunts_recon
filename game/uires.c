@@ -1,4 +1,3 @@
-#include "platform_hw.h"
 /* Explicit register declarations below are required by the matching MSC 5.10 build. */
 #define DIALOG_TEXT_WIDTH_ALIGNMENT_MASK 0xfff8
 #define SHAPE3D_RESOURCE_HEADER_BYTES 4
@@ -6,7 +5,7 @@
 #define SHAPE3D_RESOURCE_CULL_RECORD_BYTES 4
 #define SHAPE3D_RESOURCE_PRIMITIVE_BYTES 8
 #define MOUSE_TRACK_FIXED_POINT_SHIFT 2
-#include "stunts_types.h"
+#include "types.h"
 /* MSC 5.10 <ctype.h> macros over the pinned runtime table _ctype */
 #define _UPPER 0x1
 #define _LOWER 0x2
@@ -18,11 +17,8 @@
 static I16 textboundsleft, text_bounds_right, text_bounds_upper, txt_bounds_bottom;
 static I16 textoutlineleft, text_outline_right, txt_outline_top, text_outline_bottom;
 
-
-
 /* Local view: strlen; return is unsigned word; another unit uses signed word. */
 extern unsigned strlen(I8 *s);
-
 
 /* Local view: freememory; return is far pointer; another unit uses void. */
 extern void far* freememory(I8 far* ptr);
@@ -39,7 +35,6 @@ struct SHAPE2D { U16S  words[6]; U8  bytes[4]; };
 /* Local view: SPRITE; struct.count is 4; another unit uses 2. */
 struct SPRITE { struct SHAPE2D far *sprite_bitmapptr; U16S  words[3]; U16  *lineofs; U16S  words2[9]; };
 
-
 /* Local view: mouse_unk_sprite_ptr; pointer is struct SPRITE; another unit uses void. */
 struct SPRITE far *mouse_unk_sprite_ptr;
 
@@ -49,8 +44,6 @@ extern struct SPRITE far *spritepointermini;
 void sprite_setup1_from_arg_pointer(struct SPRITE far *argsprite);
 /* Local view: sprite_clear_1_color; parameters[0] is unsigned byte; another unit uses signed word. */
 void clearwindow(U8  color);
-
-
 
 /* Local view: sprputimage; parameters[0].pointer is struct SHAPE2D; another unit uses void. */
 void far movcf(struct SHAPE2D far *shape);
@@ -62,8 +55,8 @@ void far andcfxya(struct SHAPE2D far *shape, U16S  x, U16S  y);
 void far orcfxya(struct SHAPE2D far *shape, U16S  x, U16S  y);
 
 /* PORT: Resource headers are read directly; preserve byte fields and 2-byte record alignment. */
-/* Local view: SHAPE3DHEADER; struct[0].name is numverts; another unit uses header_numverts. */
-struct SHAPE3DHEADER { U8  numverts, numprimitives, numpaints, reserved; };
+
+#include "shapes3d.h"
 /* PORT: This resource view contains several far pointers and uses the MSC medium-model layout. */
 /* Local view: SHAPE3D; struct.count is 8; another unit uses 7. */
 struct SHAPE3D { U16S  numverts; I8 far *verts; U16S  numprimitives; U8  numpaints, reserved; I8 far *primitives; I8 far *cull1; I8 far *cull2; };
@@ -74,11 +67,9 @@ int g_hovercolor_idle;
 extern U16  unused_count;
 /* Local view: rate_frame; type is signed word; another unit uses unsigned word. */
 extern I16 rate_frame;
-#include "fontrec.h"
+#include "ui.h"
 
 unsigned int fontdefvalue;
-
-
 
 signed char copy_mouse_modes[8];
 signed char input_device_modestack[8];
@@ -87,28 +78,17 @@ extern U32  elapsedticks(void);
 /* Local view: timer_get_delta_alt; return is signed word; another unit uses unsigned long. */
 extern I16 far elticks(void);
 
-
-
 /* PORT: This compact snapshot is an MSC 16-bit record; host widths and alignment must not alter its byte layout. */
-#include "gamerec.h"
+#include "game.h"
 
+#include "audio.h"
 /* Local view: mouse_ptr_cursor; pointer is struct SPRITE; another unit uses void. */
 extern struct SPRITE far *mouse_ptr_cursor;
-#include "audapi.h"
-#include "auddrv.h"
-#include "dialog.h"
-#include "game.h"
-#include "gfxapi.h"
+#include "viewstat.h"
+#include "video.h"
 #include "input.h"
-#include "prim3d.h"
-#include "resapi.h"
-#include "shape2d.h"
-#include "text.h"
+#include "files.h"
 #include "timer.h"
-
-
-
-
 
 /* Local view: kbjoyflags; type is signed word; another unit uses signed byte. */
 int kbjoyflags;
@@ -124,38 +104,14 @@ extern U16S  dialog_frame_color;
 /* Local view: main_data_file_addr; pointer is void; another unit uses signed byte. */
 void far *main_data_file_addr;
 
-
-
 /* Local view: getmousepos; parameters[0].pointer is signed word; another unit uses unsigned word. */
 extern void far getmousepos(I16 *buttons, I16 *x, I16 *y);
-
-
-
-
-
-
-
-
-
-
 
 /* Local view: file_load_resource_file; return.pointer is void; another unit uses signed byte. */
 extern void far *openresource(I8 *filename);
 
 /* Local view: fluffyload; return.pointer is void; another unit uses signed byte. */
 extern void far *fluffyload(I8 *filename);
-
-
-
-
-
-
-
-
-
-
-
-
 
 short voicefile_gap_c[4];
 void far *openvfile;
@@ -164,10 +120,6 @@ void far *musicfile;
 extern I8 is_audioloaded;
 /* Local view: locate_text_resource; parameters[0].pointer is signed byte; another unit uses void. */
 extern I8 far * far getresl(I8 far *data, I8 *name);
-
-
-
-
 
 I8 *findfiletexts[4] = { "id1", "id2", "id3", "id4" };
 I8 *findfilenames[4] = { "setup.exe", "sdtitl.*", "tedit.*", "opp1.*" };
@@ -181,7 +133,7 @@ I8 far point_in_rectangle(I16 x1, I16 x2, I16 y1, I16 y2)
     
     /* Local view: mouse_buffer_count; type is unsigned byte; another unit uses signed byte. */
     extern U8  mouse_buffer_count;
-    #include "mousebuf.h"
+#include "mousebuf.h"
     /* Local view: savedptr_ms; pointer is struct SPRITE; another unit uses signed byte. */
     extern struct SPRITE far *savedptr_ms;
     /* Local view: availmem; return is signed long; another unit uses unsigned long. */
@@ -194,7 +146,7 @@ I8 far point_in_rectangle(I16 x1, I16 x2, I16 y1, I16 y2)
     extern void far readfxya(struct SHAPE2D far *shape, I16 x, I16 y);
     struct SPRITE saved_sprites[2];
     I32 required;
-    required = ((I32)(x2 - x1) * (y2 - y1)) / (I32)(pixel_scales * vidflg4_is1) + 18L;
+    required = ((I32)(x2 - x1) * (y2 - y1)) / (I32)(pixel_scales * vidflg4_is1) + SPRITE_WINDOW_OVERHEAD_BYTES;
     if (availmem() /* PLATFORM(memory): query available scaled resource memory. */ <= required) return 0;
 
     mouseoff() /* PLATFORM(video): redraw the pointer in opaque mode when needed. */;
@@ -202,8 +154,8 @@ I8 far point_in_rectangle(I16 x1, I16 x2, I16 y1, I16 y2)
     g_mousesave_x_tbl[mouse_buffer_count] = x1;
     g_mouseyposstacktable[mouse_buffer_count] = y1;
     savewindow(&saved_sprites[0]) /* PLATFORM(video): save both active sprite buffers. */;
-    savedptr_ms[mouse_buffer_count * 2] = saved_sprites[0];
-    savedptr_ms[mouse_buffer_count * 2 + 1] = saved_sprites[1];
+    savedptr_ms[mouse_buffer_count * SPRITE_SAVE_PAIR_STRIDE] = saved_sprites[0];
+    savedptr_ms[mouse_buffer_count * SPRITE_SAVE_PAIR_STRIDE + 1] = saved_sprites[1];
     displaywindow() /* PLATFORM(video): copy sprite buffer 2 into buffer 1. */;
     readfxya(mssprite_arrays[mouse_buffer_count]->sprite_bitmapptr,
                            x1, y1) /* PLATFORM(video): clear the requested shape in sprite buffer 1. */;
@@ -243,8 +195,8 @@ void far restoreboxwindow(void)
     movfxya(mssprite_arrays[mouse_buffer_count]->sprite_bitmapptr,
                       g_mousesave_x_tbl[mouse_buffer_count],
                       g_mouseyposstacktable[mouse_buffer_count]) /* PLATFORM(video): copy a shape into sprite buffer 1. */;
-    saved_sprites[0] = savedptr_ms[mouse_buffer_count * 2];
-    saved_sprites[1] = savedptr_ms[mouse_buffer_count * 2 + 1];
+    saved_sprites[0] = savedptr_ms[mouse_buffer_count * SPRITE_SAVE_PAIR_STRIDE];
+    saved_sprites[1] = savedptr_ms[mouse_buffer_count * SPRITE_SAVE_PAIR_STRIDE + 1];
     restorewindow(&saved_sprites[0]) /* PLATFORM(video): restore both active sprite buffers. */;
     removewindow(mssprite_arrays[mouse_buffer_count]) /* PLATFORM(video): release a temporary sprite window. */;
     mouseon() /* PLATFORM(video): redraw the pointer in transparent mode when needed. */;
@@ -284,27 +236,27 @@ extern I16 performGraphColor;
     I8 choice;
     I16 text_w;
     I8 oldchoice;
-    I16 btn_ts[20];
+    I16 btn_ts[UI_DIALOG_BUTTON_CAPACITY];
     I16 i;
     I16 wide;
     I8 labelstr[80];
     U16  key;
     I8 count;
-    I8 far *btn_text[20];
-    I16 btn_bs[20];
-    I16 btn_rs[20];
+    I8 far *btn_text[UI_DIALOG_BUTTON_CAPACITY];
+    I16 btn_bs[UI_DIALOG_BUTTON_CAPACITY];
+    I16 btn_rs[UI_DIALOG_BUTTON_CAPACITY];
     I8 markers;
     I8 far *line_start;
-    I8 lengths[20];
+    I8 lengths[UI_DIALOG_BUTTON_CAPACITY];
     I8 busy;
     I16 pos;
     I8 textbuf[80];
     I16 dlgframe[4];
-    I16 btn_ls[20];
+    I16 btn_ls[UI_DIALOG_BUTTON_CAPACITY];
 
-    linehgt = fontdefvalue + 2;
+    linehgt = fontdefvalue + DIALOG_LINE_SPACING;
     total_h = 0;
-    wide = 32;
+    wide = DIALOG_TEXT_MIN_WIDTH;
     mouseoff() /* PLATFORM(video): redraw the pointer in opaque mode when needed. */;
     textptr = message;
     pos = 0;
@@ -322,29 +274,29 @@ extern I16 performGraphColor;
             if (text_w > wide)
                 wide = text_w;
             pos = 0;
-            total_h += 4;
+            total_h += DIALOG_COMPACT_LINE_SPACING;
         } else {
             textbuf[pos++] = *textptr;
         }
         ++textptr;
     }
-    wide = (wide + 24) & DIALOG_TEXT_WIDTH_ALIGNMENT_MASK;
-    if (x == -1)
+    wide = (wide + DIALOG_WIDTH_PADDING) & DIALOG_TEXT_WIDTH_ALIGNMENT_MASK;
+    if (x == DIALOG_POSITION_CENTER)
         x = ((PLATFORM_SCREEN_WIDTH_PIXELS - wide) / 2) & DIALOG_TEXT_WIDTH_ALIGNMENT_MASK;
-    if (y == -1)
+    if (y == DIALOG_POSITION_CENTER)
         y = (PLATFORM_SCREEN_HEIGHT_PIXELS - total_h) / 2;
     dlgframe[0] = x;
     dlgframe[1] = x + wide;
-    dlgframe[2] = y - 8;
-    dlgframe[3] = y + total_h + 8;
-    x += 8;
-    wide -= 16;
+    dlgframe[2] = y - DIALOG_FRAME_MARGIN;
+    dlgframe[3] = y + total_h + DIALOG_FRAME_MARGIN;
+    x += DIALOG_FRAME_MARGIN;
+    wide -= DIALOG_CONTENT_WIDTH_INSET;
     if (check != 0 && !point_in_rectangle(dlgframe[0], dlgframe[1], dlgframe[2], dlgframe[3]))
         return -1;
     displaywindow() /* PLATFORM(video): copy sprite buffer 2 into buffer 1. */;
     clippix(dlgframe[0], dlgframe[1], dlgframe[2], dlgframe[3]) /* PLATFORM(video): set the active sprite buffer bounds. */;
     clearwindow(0) /* PLATFORM(video): clear the active sprite buffer with the requested color. */;
-    sprite_draw_rect_outline(x - 4, y - 4, x + wide + 4, y + total_h + 4, frame_arg) /* PLATFORM(video): draw through the legacy sprite primitive interface. */;
+    sprite_draw_rect_outline(x - DIALOG_OUTLINE_MARGIN, y - DIALOG_OUTLINE_MARGIN, x + wide + DIALOG_OUTLINE_MARGIN, y + total_h + DIALOG_OUTLINE_MARGIN, frame_arg) /* PLATFORM(video): draw through the legacy sprite primitive interface. */;
     textcolor(dlg_colour, 0) /* PLATFORM(video): select the font and color mode. */;
     font_secondary_color = 0;
     textcolor(dlg_colour, 0) /* PLATFORM(video): select the font and color mode. */;
@@ -365,7 +317,7 @@ extern I16 performGraphColor;
             textbuf[pos] = 0;
             movtxy(textbuf, x, y + total_h) /* PLATFORM(video): draw a text string at screen coordinates. */;
             pos = 0;
-            total_h += 4;
+            total_h += DIALOG_COMPACT_LINE_SPACING;
             line_start = textptr;
         } else if (*textptr == '@') {
             if (type == 3) {
@@ -426,10 +378,10 @@ end_button:
     mouseon() /* PLATFORM(video): redraw the pointer in transparent mode when needed. */;
     ret = 1;
     switch (type) {
-    case 4:
-        waitbios(8L) /* PLATFORM(timer): wait for the requested delay while servicing input. */;
+    case DIALOG_MODE_SHORT_WAIT:
+        waitbios(DIALOG_SHORT_WAIT_TICKS) /* PLATFORM(timer): wait for the requested delay while servicing input. */;
         break;
-    case 1:
+    case DIALOG_MODE_WAIT_KEY:
         do {
             key = mykey(elticks() /* PLATFORM(timer): read the elapsed timer delta through the far entry point. */) /* PLATFORM(input_kb): poll the configured input devices. */;
         } while (key == 0);
@@ -437,11 +389,11 @@ end_button:
             ret = 0;
         clear_keyboardbuffer();
         break;
-    case 0:
+    case DIALOG_MODE_DRAW_ONLY:
         return 0;
-    case 3:
+    case DIALOG_MODE_MEASURE_MARKERS:
         return markers / 2;
-    case 2:
+    case DIALOG_MODE_CHOICE:
         ret = initial;
         oldchoice = -1;
         elticks() /* PLATFORM(timer): read the elapsed timer delta through the far entry point. */;
@@ -1388,12 +1340,12 @@ void far draw3dbutton(I8 far *caption, I16 x, I16 y, I16 width, I16 height,
             line_cnt++;
     pos = 0;
     line_no = 0;
-    text_y = (height - line_cnt * 8) / 2 + 1;
+    text_y = (height - line_cnt * BUTTON_TEXT_LINE_HEIGHT) / 2 + 1;
     for (idx = 0; idx < text_size + 1; idx++) {
         if ((c = resbuftext[idx]) == ']' || c == 0) {
             line[pos] = 0;
             fortextxy(line, x + (width - textpixels(line) /* PLATFORM(video): load or select a named font. */) / 2,
-                           line_no * 8 + y + text_y) /* PLATFORM(video): draw text through the selected font. */;
+                           line_no * BUTTON_TEXT_LINE_HEIGHT + y + text_y) /* PLATFORM(video): draw text through the selected font. */;
             line_no++;
             pos = 0;
         } else {
@@ -1405,9 +1357,9 @@ void far draw3dbutton(I8 far *caption, I16 x, I16 y, I16 width, I16 height,
 
 void makeobjdef(I8 far *shapeptr, struct SHAPE3D *gameshape)
 { /* PURPOSE: Copy the compact 3D shape header into the game shape record. Params: shapeptr, gameshape. Returns: void. Globals: none. */
-    gameshape->numverts = ((struct SHAPE3DHEADER far *)shapeptr)->numverts;
-    gameshape->numprimitives = ((struct SHAPE3DHEADER far *)shapeptr)->numprimitives;
-    gameshape->numpaints = ((struct SHAPE3DHEADER far *)shapeptr)->numpaints;
+    gameshape->numverts = ((struct SHAPE3DHEADER far *)shapeptr)->header_numverts;
+    gameshape->numprimitives = ((struct SHAPE3DHEADER far *)shapeptr)->header_numprimitives;
+    gameshape->numpaints = ((struct SHAPE3DHEADER far *)shapeptr)->header_numpaints;
     gameshape->verts = shapeptr + SHAPE3D_RESOURCE_HEADER_BYTES; /* PORT: far-pointer arithmetic follows 16-bit segment:offset rules and the encoded resource record sizes. */
     gameshape->cull1 = shapeptr + gameshape->numverts * SHAPE3D_RESOURCE_VERTEX_BYTES + SHAPE3D_RESOURCE_HEADER_BYTES; /* PORT: resource offsets must retain 16-bit far-pointer arithmetic and exact record sizes. */ /* PORT: resource offsets must retain 16-bit far-pointer arithmetic and exact record sizes. */
     gameshape->cull2 = shapeptr + gameshape->numprimitives * SHAPE3D_RESOURCE_CULL_RECORD_BYTES
@@ -1460,7 +1412,7 @@ void far loading(void)
     extern I16 far messagebox(I16, I16, I8 far *, I16, I16, I16, I16, I16);
     
     messagebox(0, 0, getresl(main_data_file_addr, "wai") /* PLATFORM(file): locate a named text entry in resource data. */,
-                0xffff, waitm_ms, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
+                UI_DIALOG_CENTER, waitm_ms, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
     mouseoff() /* PLATFORM(video): redraw the pointer in opaque mode when needed. */;
 }
 
@@ -1512,9 +1464,9 @@ I16 far docursor(I16 index, I16 *a, I16 *b, I16 *c, I16 *d,
     extern void far sprite_draw_rect_outline(I16, I16, I16, I16, I16);
     delta = elticks() /* PLATFORM(timer): read the elapsed timer delta through the far entry point. */;
     g_animphase += delta;
-    while (g_animphase > 60)
-        g_animphase -= 60;
-    if (g_animphase > 30) selected = first;
+    while (g_animphase > MENU_CURSOR_BLINK_PERIOD)
+        g_animphase -= MENU_CURSOR_BLINK_PERIOD;
+    if (g_animphase > MENU_CURSOR_BLINK_HALF_PERIOD) selected = first;
     else selected = second;
     if (selected != g_hovercolor_idle) {
         g_hovercolor_idle = selected;
@@ -1527,8 +1479,8 @@ I16 far docursor(I16 index, I16 *a, I16 *b, I16 *c, I16 *d,
 
 void file_load_audio_resource(const I8* songfile, const I8* voicefile, const I8* name) { /* PURPOSE: Load song and voice resources, initialize them, and finish audio setup. Params: songfile, voicefile, name. Returns: void. Globals: reads musicfile, openvfile; writes is_audioloaded, musicfile, openvfile. */ /* PLATFORM(file): uses file and resource services. */ /* PLATFORM(audio): loads, updates, or releases audio resources. */
 	void far* audiores;
-	openvfile = myload(5, voicefile) /* PLATFORM(file): load the requested resource type. */;
-	musicfile = myload(4, songfile) /* PLATFORM(file): load the requested resource type. */;
+	openvfile = myload(RESOURCE_LOAD_VOICE_RETRY, voicefile) /* PLATFORM(file): load the requested resource type. */;
+	musicfile = myload(RESOURCE_LOAD_SONG_RETRY, songfile) /* PLATFORM(file): load the requested resource type. */;
 	audiores = init_audio_resources(musicfile, openvfile, name) /* PLATFORM(audio): resolve song or voice resources for the audio engine. */;
 	load_audio_finalize(audiores) /* PLATFORM(audio): finish audio-resource initialization. */;
 	is_audioloaded = 1;
@@ -1565,19 +1517,19 @@ void far maketime(I8 *destination, U16  frame_count, I16 hundredths)
     register I16 seconds;
     I16 minute_frames;
 
-    minute_frames = 60 * rate_frame;
+    minute_frames = TIME_SECONDS_PER_MINUTE * rate_frame;
     minute_count = frame_count / minute_frames;
     frame_count -= minute_count * minute_frames;
     seconds = frame_count / rate_frame;
     frame_count -= seconds * rate_frame;
-    myitoa(buffer, minute_count, 0, 2);
+    myitoa(buffer, minute_count, 0, TIME_FIELD_DIGITS);
     strcpy(destination, buffer);
     strcat(destination, ":");
-    myitoa(buffer, seconds, 1, 2);
+    myitoa(buffer, seconds, 1, TIME_FIELD_DIGITS);
     strcat(destination, buffer);
     if (hundredths != 0) {
         strcat(destination, ".");
-        myitoa(buffer, frame_count * (100 / rate_frame), 1, 2);
+        myitoa(buffer, frame_count * (TIME_HUNDREDTHS_PER_SECOND / rate_frame), 1, TIME_FIELD_DIGITS);
         strcat(destination, buffer);
     }
 }
@@ -1593,44 +1545,44 @@ void far* myload(I16 type, const I8* filename) { /* PURPOSE: Dispatch loading by
 	void far* result;
 	while (1) {
 		switch (type) {
-			case 0:
+			case RESOURCE_LOAD_BINARY_RETRY:
 				// try load the file, if it fails, show a dialog, and retry
 				result = loadfilez(filename) /* PLATFORM(file): load a binary file without terminating on failure. */;
 				break;
 
-			case 1:
+			case RESOURCE_LOAD_BINARY:
 				return loadfilez(filename) /* PLATFORM(file): load a binary file without terminating on failure. */;
 
-			case 7:
+			case RESOURCE_LOAD_COMPRESSED:
 				// try load a compressed file
 				return loadpackz(filename) /* PLATFORM(file): decompress a resource without terminating on failure. */;
 
-			case 2:
+			case RESOURCE_LOAD_SHAPE2D_RETRY:
 				// try load a 2d shape and retry if it failed
 				result = load_shape2d_nofatal_thunk(filename) /* PLATFORM(file): load a 2D shape without terminating on failure. */;
 				break;
 
-			case 3:
+			case RESOURCE_LOAD_SHAPE2D_RESOURCE_RETRY:
 				// try load a 2d shape and retry if it failed
 				result = load_shape2d_res_nofatal_thunk(filename) /* PLATFORM(file): load a 2D shape from resource data. */;
 				break;
 
-			case 4:
+			case RESOURCE_LOAD_SONG_RETRY:
 				// try load a song file and retry if it failed
 				result = load_song_file(filename) /* PLATFORM(file): load song data. */;
 				break;
 
-			case 5:
+			case RESOURCE_LOAD_VOICE_RETRY:
 				// try load a voice file and retry if it failed
 				result = load_voice_file(filename) /* PLATFORM(file): load voice data. */;
 				break;
 
-			case 6:
+			case RESOURCE_LOAD_SFX_RETRY:
 				// try load an sfx file and retry if it failed
 				result = load_sfx_file(filename) /* PLATFORM(file): load sound-effect data. */;
 				break;
 
-			case 8:
+			case RESOURCE_LOAD_SHAPE2D_ALT_RETRY:
 				// try load a 2d shape and retry if it failed
 				result = file_load_shape2d_nofatal2(filename) /* PLATFORM(file): load a 2D shape without terminating on failure. */;
 				break;
@@ -1652,10 +1604,10 @@ void far *read_file_with_retry(I16 type, U16  first, U16  second, U16  third)
     void far *result;
     for (;;) {
         switch (type) {
-        case 9:
+        case RESOURCE_LOAD_READ_RETRY:
             result = loadfileatz(first, second, third) /* PLATFORM(file): read a file without terminating on failure. */;
             break;
-        case 10:
+        case RESOURCE_LOAD_READ:
             return loadfileatz(first, second, third) /* PLATFORM(file): read a file without terminating on failure. */;
         }
         if (result != 0) return result;
@@ -1787,7 +1739,7 @@ void far mkeyon(void)
     input_pushed = 1;
     audio_pause_playback() /* PLATFORM(audio): read audio option state. */;
     messagebox(4, 1, getresl(main_data_file_addr, "key") /* PLATFORM(file): locate a named text entry in resource data. */,
-                0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
+                UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
     joystick_enabled = 0;
     mousedrive = 0;
     input_pushed = 0;
@@ -1812,7 +1764,7 @@ void far mmouseon(void)
     audio_pause_playback() /* PLATFORM(audio): read audio option state. */;
     mousedrive = 1;
     messagebox(4, 1, getresl(main_data_file_addr, "mou") /* PLATFORM(file): locate a named text entry in resource data. */,
-                0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
+                UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
     input_pushed = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     pullmouse() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
@@ -1832,7 +1784,7 @@ void far msystempause(void)
     input_pushed = 1;
     audio_pause_playback() /* PLATFORM(audio): read audio option state. */;
     messagebox(1, 1, getresl(main_data_file_addr, "pau") /* PLATFORM(file): locate a named text entry in resource data. */,
-                0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
+                UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
     input_pushed = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     pullmouse() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
@@ -1850,10 +1802,10 @@ void far mmusictog(void)
     input_pushed = 1;
     if (audio_toggle_flag2() /* PLATFORM(audio): toggle the music/effects audio option. */)
         messagebox(4, 1, getresl(main_data_file_addr, "mon") /* PLATFORM(file): locate a named text entry in resource data. */,
-                    0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
+                    UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
     else
         messagebox(4, 1, getresl(main_data_file_addr, "mof") /* PLATFORM(file): locate a named text entry in resource data. */,
-                    0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
+                    UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
     input_pushed = 0;
     pullmouse() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
@@ -1870,10 +1822,10 @@ void far msoundtog(void)
     input_pushed = 1;
     if (audio_toggle_flag6() /* PLATFORM(audio): toggle the sound audio option. */)
         messagebox(4, 1, getresl(main_data_file_addr, "son") /* PLATFORM(file): locate a named text entry in resource data. */,
-                    0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
+                    UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
     else
         messagebox(4, 1, getresl(main_data_file_addr, "sof") /* PLATFORM(file): locate a named text entry in resource data. */,
-                    0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
+                    UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
     input_pushed = 0;
     pullmouse() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
 }
@@ -1893,7 +1845,7 @@ void far mdosexit(void)
     input_pushed = 1;
     audio_pause_playback() /* PLATFORM(audio): read audio option state. */;
     if (messagebox(2, 1, getresl(main_data_file_addr, "dos") /* PLATFORM(file): locate a named text entry in resource data. */,
-                    0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */ == 1)
+                    UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */ == 1)
         dsiexit() /* PLATFORM(dos): run the DOS exit-list action. */;
     input_pushed = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
@@ -1939,7 +1891,7 @@ extern I16 performGraphColor;
             ++cursor;
         }
         rc = messagebox(2, 1, menu,
-                         0xffff, 0xffff, performGraphColor, 0, rc) /* PLATFORM(video): present the interactive dialog renderer. */;
+                         UI_DIALOG_CENTER, UI_DIALOG_CENTER, performGraphColor, 0, rc) /* PLATFORM(video): present the interactive dialog renderer. */;
         switch (rc) {
         case -1: break;
         case 5: slow_video_mode_state = 0; continue;
@@ -1955,7 +1907,7 @@ extern I16 performGraphColor;
 after_menu:
     if (saved_rate != frm_rate2)
         messagebox(1, 1, getresl(main_data_file_addr, "mrs") /* PLATFORM(file): locate a named text entry in resource data. */,
-                    0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
+                    UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
     input_pushed = 0;
     restore_audio_volume() /* PLATFORM(audio): restore the configured audio volume. */;
     pullmouse() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
@@ -1967,12 +1919,12 @@ I16S far do_dea_textres(void)
     pushmouse() /* PLATFORM(input_kb): save the active keyboard and mouse modes. */;
     if (g_is_busy != 0) {
         result = messagebox(2, 1, getresl(main_data_file_addr, "dea") /* PLATFORM(file): locate a named text entry in resource data. */,
-                             0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
+                             UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
         if (result != 0) result = 0;
         else result = 1;
     } else {
         messagebox(1, 1, getresl(main_data_file_addr, "der") /* PLATFORM(file): locate a named text entry in resource data. */,
-                    0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
+                    UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
         result = 1;
     }
     pullmouse() /* PLATFORM(input_kb): restore the saved keyboard and mouse modes. */;
@@ -1989,7 +1941,7 @@ void far ensure_file_exists(I16 index)
     extern I16 far findfirst(I8 *filename);
     while (findfirst(findfilenames[index - 1]) /* PLATFORM(file): search for a file by name. */ == 0) {
         messagebox(1, 1, getresl(main_data_file_addr, findfiletexts[index - 1]) /* PLATFORM(file): locate a named text entry in resource data. */,
-                    0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
+                    UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
         mouseoff() /* PLATFORM(video): redraw the pointer in opaque mode when needed. */;
         kbormouse = 0;
     }
@@ -1998,7 +1950,7 @@ void far ensure_file_exists(I16 index)
 void far memerr(void)
 { /* PURPOSE: Show the multiplayer help dialog. Params: none. Returns: void. Globals: reads dialogarg2, main_data_file_addr; writes none. */ /* PLATFORM(video): draws pixels, sprites, or text. */ /* PLATFORM(file): uses file and resource services. */
     messagebox(1, 1, getresl(main_data_file_addr, "mer") /* PLATFORM(file): locate a named text entry in resource data. */,
-                0xffff, 0xffff, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
+                UI_DIALOG_CENTER, UI_DIALOG_CENTER, dialog_frame_color, 0, 0) /* PLATFORM(video): present the interactive dialog renderer. */;
 }
 
 /* target timer_get_delta_alt @ 11648; accepted source src/timer_get_delta_alt.c */

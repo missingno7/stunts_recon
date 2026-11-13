@@ -7,7 +7,7 @@
 ; _sprite_copy_2_to_1. Stack
 ; ASMDOC offsets are post-prologue BP offsets.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 name asm012_150408
 SHAPE2D struc
 s2d_width dw ?

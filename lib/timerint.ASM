@@ -13,7 +13,7 @@
 ; ASMDOC[timers]   byte guard; _input_pushed: word; ISR tests low byte only; _timerintr: far-pointer list plus zero
 ; ASMDOC[timers]   sentinel/storage; _aNoRoomLeftOnTimerInterru: NUL-terminated error text
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 name asm012_131254
 DGROUP group DSEG, _DATA
 DSEG segment byte public 'STUNTSD'

@@ -49,7 +49,7 @@
 ; Routine _video_set_mode4: Select BIOS mode 4, program monochrome CRTC timing and clear 32 KiB at B800:0000.
 ; Private alternate: preRender_unk_mode_1 -> sprite_two_color_poly_args; inline list, mode 1, unreferenced.
 ; Public DATA: _prerender_max_line_width; _video_mode4_active.
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 DSEG segment byte public 'STUNTSD'
 extrn _timer_elapsed_ticks_low:word
 extrn _timer_elapsed_ticks_high:word

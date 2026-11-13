@@ -8,7 +8,7 @@
 ; bitmap/table
 ; ASMDOC memory is caller-selected; no owned routine calls an application callback.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 SHAPE2D struc
 s2d_width dw ?
 s2d_height dw ?

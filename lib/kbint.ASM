@@ -14,7 +14,7 @@
 ; INPUTDOC Routine _kb_get_key_state -> _kb_get_key_state: Read and zero-extend one byte from the held-key table
 ; INPUTDOC without bounds checking.
 .8086
-INCLUDE include\platform_hw.inc
+INCLUDE include\hw.inc
 name asm012_133138
 _DATA segment word public 'DATA'
 old_kb_intr_ofs dw 0

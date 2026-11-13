@@ -62,13 +62,13 @@ class AsmContributionTests(unittest.TestCase):
                 asm_source(source)
 
     def test_tracked_asm_include_closure_and_full_omf_identity(self):
-        source = (b'include include\\platform_hw.inc\n' +
+        source = (b'include include\\hw.inc\n' +
                   VIDEO.replace(b'03DAh', b'R5HW_VIDEO_STATUS_PORT'))
         expanded, closure = prepare_asm(source)
         self.assertNotIn(b'include include', expanded.lower())
         self.assertIn(b'R5HW_VIDEO_STATUS_PORT EQU 3DAh', expanded)
-        self.assertEqual(closure, [{'path':'include/platform_hw.inc',
-                                    **identity((ROOT/'include/platform_hw.inc').read_bytes())}])
+        self.assertEqual(closure, [{'path':'include/hw.inc',
+                                    **identity((ROOT/'include/hw.inc').read_bytes())}])
         included_obj, included_receipt = assemble_source(source, 'masm510-game')
         base_obj, base_receipt = assemble_source(VIDEO, 'masm510-game')
         self.assertEqual(included_receipt['object'], base_receipt['object'])
@@ -76,8 +76,8 @@ class AsmContributionTests(unittest.TestCase):
         self.assertEqual(included_obj.segment_bytes('S012_TEXT'), base_obj.segment_bytes('S012_TEXT'))
 
     def test_platform_c_and_masm_shared_values_match(self):
-        header = (ROOT/'include/platform_hw.h').read_text(encoding='ascii')
-        include = (ROOT/'include/platform_hw.inc').read_text(encoding='ascii')
+        header = (ROOT/'include/input.h').read_text(encoding='ascii')
+        include = (ROOT/'include/hw.inc').read_text(encoding='ascii')
         def number(value):
             return int(value[:-1], 16) if value.lower().endswith('h') else int(value, 0)
         c_values = {name:number(value) for name,value in re.findall(

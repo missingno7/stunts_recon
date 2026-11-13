@@ -13,7 +13,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resizememory",
-      "target_index": 7,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -30,7 +30,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFNalshr",
-      "target_index": 8,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -47,7 +47,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_segtoadr",
-      "target_index": 14,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -64,7 +64,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_segtoadr",
-      "target_index": 14,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -81,7 +81,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_segtoadr",
-      "target_index": 14,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -98,7 +98,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_segtoadr",
-      "target_index": 14,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -115,7 +115,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_adrtoseg",
-      "target_index": 9,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -132,7 +132,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_segtoadr",
-      "target_index": 14,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -166,7 +166,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_parse_shape2d_helper3",
-      "target_index": 19,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -217,7 +217,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_purgememory",
-      "target_index": 12,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -234,7 +234,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_shapepack",
-      "target_index": 2,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -251,7 +251,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_reservememory",
-      "target_index": 13,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -285,7 +285,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_shape2d",
-      "target_index": 15,
+      "target_index": 14,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -302,7 +302,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_checkmodule",
-      "target_index": 10,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -319,7 +319,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mmgr_path_to_name",
-      "target_index": 11,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -336,7 +336,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_loadandshapepacka",
-      "target_index": 17,
+      "target_index": 16,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -353,7 +353,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_loadandshapepacka",
-      "target_index": 17,
+      "target_index": 16,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -516,24 +516,24 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
-      "_shapepack",
+      "_resizememory",
       "_modulesize",
       "_packmemory",
       "_file_get_res_shape_count",
       "_shapepointer",
-      "_resizememory",
-      "__aFNalshr",
       "_adrtoseg",
       "_checkmodule",
       "_mmgr_path_to_name",
       "_purgememory",
       "_reservememory",
       "_segtoadr",
+      "__aFNalshr",
       "_file_load_shape2d",
       "_loadandshapepack",
       "_loadandshapepacka",
       "_loadandshapepackz",
-      "_parse_shape2d_helper3"
+      "_parse_shape2d_helper3",
+      "_shapepack"
     ],
     "groups": [
       {
@@ -553,11 +553,6 @@
     ],
     "publics": [
       {
-        "name": "_shapepack",
-        "offset": 196,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_loadandshapepack",
         "offset": 0,
         "segment": "UNIT_TEXT"
@@ -575,6 +570,11 @@
       {
         "name": "_parse_shape2d_helper3",
         "offset": 948,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_shapepack",
+        "offset": 196,
         "segment": "UNIT_TEXT"
       }
     ],
@@ -648,83 +648,165 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
-      "path": "include/audeng.h",
-      "sha256": "9cd04ff48bb7830e929eeef0e13a533fb5548a6d68e43a50e10438b7c230bd73",
-      "size": 240
+      "path": "include/files.h",
+      "sha256": "c9279c40920d935c04309685a81ccb7f078ae3c8a0d35f28b52c4eead68a3a7a",
+      "size": 1978
     },
     {
       "path": "include/game.h",
-      "sha256": "0bf7bc4afb9b518f5702334334695ab123f2e69c7c02dd895a65b1ed10e8761f",
-      "size": 94
+      "sha256": "efb4f8ec271fb25fdd21f28316f4300b0de522a08b4fc9734403ea6d0a0829e8",
+      "size": 11658
     },
     {
-      "path": "include/gameapi.h",
-      "sha256": "50e49c283baa693885098a6302c3180b9489601c32874735da3b30c0dabb17f2",
-      "size": 10975
+      "path": "include/gamerec.h",
+      "sha256": "e3bf380bb327eb69feac2c074542c8d778f62f70fd2d0206b03c5d794b6a3826",
+      "size": 1007
     },
     {
-      "path": "include/geom2d.h",
-      "sha256": "2938bb58c7180ac1095c0efa64d0e9b7e1099eab96e8310945cc1cac41253465",
-      "size": 421
+      "path": "include/input.h",
+      "sha256": "5bb6b46401f88ad81a22f5ce6446ef118c4716c4abc18b8cfec66ab0167587aa",
+      "size": 7430
     },
     {
-      "path": "include/memapi.h",
-      "sha256": "015c002488a2d0a3d8abb1793b1865accc1dc3731dceaf50bb8092cbca56c280",
-      "size": 506
+      "path": "include/math3d.h",
+      "sha256": "59a5ed823822b0ec3d7c3dad15159f8dae01f9cfd9b8a105eb89e0f12d4bbc69",
+      "size": 3760
     },
     {
-      "path": "include/replay.h",
-      "sha256": "7e3c91591ec83a1bedfedcb2f6ece698e24f2eb902c6fc7cde7a27f22922882d",
-      "size": 466
+      "path": "include/memory.h",
+      "sha256": "b88cb9f43838447756a9a5626f26a61203127ae4a528343e4148f697783c44d2",
+      "size": 891
     },
     {
-      "path": "include/shape2d.h",
-      "sha256": "78a33e428533c6f18ef18f19d5ed266d6135023711b7892978d33e452e63e8fc",
-      "size": 1825
+      "path": "include/radius2d.h",
+      "sha256": "097d90d5382c47225c46504009b67e05ba91fb87371aa84b351d101f8693077e",
+      "size": 120
     },
     {
-      "path": "include/stunts_types.h",
-      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
-      "size": 1091
+      "path": "include/resource.h",
+      "sha256": "052068fa1e24947398e3da537b058f5d5ff43dbf82477ae37f5ff578313ee9e2",
+      "size": 1439
+    },
+    {
+      "path": "include/types.h",
+      "sha256": "ee3c95010d95f2bcb0d86f9a877a3ee1f1e495dbab382f33a83b9cf9e456b7db",
+      "size": 1277
+    },
+    {
+      "path": "include/video.h",
+      "sha256": "4612d335c0be47723bc1d6b24da0f5a2ae49bb7066ef81004b4b81158f5c17c1",
+      "size": 4558
     },
     {
       "path": "include/viewstat.h",
-      "sha256": "a59d13683da45f7e1cc415d8855bad44143d07d95d6806a53cc94321cfda5fe5",
+      "sha256": "bcb9520644dfe17d764d2d5bb1a79bd6b719fe1cf1619cf4b1f1077a71348a44",
       "size": 485
     },
     {
-      "line": 7,
-      "path": "include/geom2d.h",
+      "line": 45,
+      "path": "include/files.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 12,
-      "path": "include/geom2d.h",
+      "line": 9,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 17,
-      "path": "include/geom2d.h",
+      "line": 16,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 7,
-      "path": "include/geom2d.h",
+      "line": 28,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 12,
-      "path": "include/geom2d.h",
+      "line": 33,
+      "path": "include/math3d.h",
       "pragma": "pack",
       "value": null
     },
     {
-      "line": 17,
-      "path": "include/geom2d.h",
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 8,
+      "path": "include/gamerec.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 21,
+      "path": "include/gamerec.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 26,
+      "path": "include/gamerec.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 32,
+      "path": "include/gamerec.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 91,
+      "path": "include/input.h",
       "pragma": "pack",
       "value": null
     }

@@ -201,24 +201,25 @@
   "object_segment": "UNIT_TEXT",
   "preprocessor_closure": [
     {
-      "path": "include/platform_hw.h",
-      "sha256": "e3863a97e9a936f227221b474f085abbd3eb2deb5df33993f7ad00c75baaa9bc",
-      "size": 6111
+      "path": "include/input.h",
+      "sha256": "5bb6b46401f88ad81a22f5ce6446ef118c4716c4abc18b8cfec66ab0167587aa",
+      "size": 7430
     },
     {
-      "path": "include/sprite2d.h",
-      "sha256": "1c64a1146359650dc0291dad206ea15209292d7e6a12731d558aa0ab09e0efad",
-      "size": 1143
-    },
-    {
-      "path": "include/stunts_types.h",
-      "sha256": "c12dffe6ab497c150f64e18db2ada7b2b1271c92cb6cc324d6fed4cbb0944678",
-      "size": 1091
+      "path": "include/types.h",
+      "sha256": "ee3c95010d95f2bcb0d86f9a877a3ee1f1e495dbab382f33a83b9cf9e456b7db",
+      "size": 1277
     },
     {
       "path": "include/video.h",
-      "sha256": "6e35382e1e5cc46df34378e61a6acf6db50dbf60b61752bc745434ce9a4a2f3b",
-      "size": 1056
+      "sha256": "4612d335c0be47723bc1d6b24da0f5a2ae49bb7066ef81004b4b81158f5c17c1",
+      "size": 4558
+    },
+    {
+      "line": 91,
+      "path": "include/input.h",
+      "pragma": "pack",
+      "value": null
     }
   ],
   "profile": "msc510-medium",

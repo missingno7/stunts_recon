@@ -1,21 +1,21 @@
-#include "stunts_types.h"
+#include "types.h"
 /* READABILITY: Generate, rotate, and submit the front/back wheel outline and side faces for rendering. */
 
 #define WHEEL_RING_POINT_COUNT 16
 #define WHEEL_SECOND_RING_OFFSET 16
 #define WHEEL_OUTER_RING_OFFSET 32
 #define WHEEL_POINT_BUFFER_COUNT 48
-#define WHEEL_DRAW_FACE_POINT_COUNT 18
+#define WHEEL_DRAW_FACE_POINT_COUNT 0x12
 #define WHEEL_HALF_RING_POINT_COUNT 8
-#include "point.h"
+#include "math3d.h"
 
 #include "wheel.h"
 
-#include "prim3d.h"
+#include "viewstat.h"
+#include "shapes3d.h"
 
 /* Local view: tire; parameters[1].pointer is signed word; another unit uses struct Point. */
 extern void FAR tire(struct WheelRect *, I16 *, I16);
-
 
 /* Construct the wheel perimeter and submit front, back, and side vertices for drawing.
  * Params and return follow the declared C signature. */
@@ -40,7 +40,7 @@ void FAR solidtire(struct WheelRect *rect, I16 count, I16 color,
     pointPtr = vertices;
     for (position = 0; position < WHEEL_RING_POINT_COUNT - 1; ++position) {
     /* PLATFORM(video): submit generated wheel geometry to the renderer. */
-        preRender_wheel_helper4(color, 4,
+        preRender_wheel_helper4(color, WHEEL_QUAD_POINT_COUNT,
             pointPtr[0].x, pointPtr[0].y,
             pointPtr[1].x, pointPtr[1].y,
             pointPtr[WHEEL_OUTER_RING_OFFSET + 1].x, pointPtr[WHEEL_OUTER_RING_OFFSET + 1].y,
@@ -48,7 +48,7 @@ void FAR solidtire(struct WheelRect *rect, I16 count, I16 color,
         ++pointPtr;
     }
     /* PLATFORM(video): submit generated wheel geometry to the renderer. */
-    preRender_wheel_helper4(color, 4,
+    preRender_wheel_helper4(color, WHEEL_QUAD_POINT_COUNT,
         pointPtr[0].x, pointPtr[0].y,
         vertices[0].x, vertices[0].y,
         vertices[WHEEL_OUTER_RING_OFFSET].x, vertices[WHEEL_OUTER_RING_OFFSET].y,

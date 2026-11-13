@@ -332,7 +332,7 @@ class AssemblyHeaderTests(unittest.TestCase):
     def test_video_geometry_agrees_between_c_and_masm(self):
         import re
         root = Path(__file__).resolve().parents[1]
-        c = (root/'include/platform_hw.h').read_text()
+        c = (root/'include/input.h').read_text()
         asm = (root/'include/video.inc').read_text()
         for name in ('PLATFORM_SCREEN_WIDTH_PIXELS', 'PLATFORM_SCREEN_HEIGHT_PIXELS'):
             c_value = re.search(r'(?m)^#define '+name+r'\s+(\d+)\b', c)

@@ -1,11 +1,12 @@
 
-#include "font.h"
+#include "chartab.h"
+#include "ui.h"
+#include "viewstat.h"
 #include "game.h"
-#include "gfxapi.h"
-#include "memapi.h"
-#include "resapi.h"
-#include "shape2d.h"
-#include "stunts_types.h"
+#include "video.h"
+#include "memory.h"
+#include "files.h"
+#include "types.h"
 /* READABILITY: Find, decompress, unflip, expand, and palette-map shape resources in the game memory manager. */
 
 #define SHAPE2D_HEADER_BYTES 16
@@ -24,7 +25,6 @@ U8 palmap[PALETTE_REMAP_ENTRY_COUNT] = {
     8, 9, 10, 11, 12, 13, 14, 15
 };
 
-
 /* Local view: abortmessage; parameters.count is 2; another unit uses 1. */
 extern void abortmessage(const I8 *, ...);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
@@ -33,7 +33,6 @@ extern void abortmessage(const I8 *, ...);
 /* Local view: findfirst; return is near pointer; another unit uses signed word. */
 extern const I8 *findfirst(const I8 *);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-
 
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
 
@@ -58,7 +57,6 @@ extern I8 FAR *locateshapez(I8 FAR *, const I8 *);
 /* Local view: packmemory; return.pointer is signed byte; another unit uses void. */
 extern I8 FAR *packmemory(I8 FAR *);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
-
 
 /* Load a shape resource with fatal-error reporting enabled.
  * Params and return follow the declared C signature; shared state is noted where the body writes it.
@@ -143,7 +141,7 @@ void FAR* file_load_shape2d(I8* shapename, I16 fatal) {
 		if (!loaded_chunk)
 			return loaded_chunk;
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
-		work_pages = reservememory("UNFLIP", 1000);
+		work_pages = reservememory("UNFLIP", PES_UNFLIP_WORK_PARAGRAPHS);
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 		file_unflip_shape2d_pes(loaded_chunk, work_pages);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
@@ -166,7 +164,7 @@ void FAR* file_load_shape2d(I8* shapename, I16 fatal) {
 	if (palette_data) file_load_shape2d_palmap_init((U8 FAR*)(palette_data + SHAPE2D_HEADER_BYTES));
     /* PLATFORM(memory): use game-managed storage for the shape resource. */
 	work_pages = reservememory(file_buffer, output_size);
-	*(U32 FAR*)work_pages = output_size * 16UL;
+	*(U32 FAR*)work_pages = output_size * DOS_PARAGRAPH_BYTES;
     /* PLATFORM(file): read or transform a shape resource through the game file service. */
 	file_load_shape2d_expand(loaded_chunk, work_pages);
     /* PLATFORM(memory): use game-managed storage for the shape resource. */

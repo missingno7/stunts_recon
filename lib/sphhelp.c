@@ -1,6 +1,7 @@
 
-#include "prim3d.h"
-#include "stunts_types.h"
+#include "viewstat.h"
+#include "shapes3d.h"
+#include "types.h"
 /* READABILITY: Build a sphere point buffer and pass it to the default renderer. */
 
 #define SPHERE_SECTION_POINT_COUNT 32
