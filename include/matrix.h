@@ -4,7 +4,8 @@
 /* Canonical matrix and plane records. */
 #include "types.h"
 #define MATRIX_ELEMENT_COUNT 9
-struct MATRIX { I16 vals[MATRIX_ELEMENT_COUNT]; };
+#include "math3d.h"
+struct MATRIX { struct MAT3 m; };
 /* Shared plane declarations; DOS medium-model types. */
 struct MATRIX;
 struct PLANE;
