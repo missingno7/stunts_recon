@@ -49,6 +49,7 @@ def statements(text):
 def refresh_source_bases(engine, changes, affected):
     """Called only after every affected complete object has compared equal."""
     import cdecls
+    from rename import C_TOKEN
     manifest = json.loads(engine.files['layout/manifest.json'])
     updates = []
     normalized = lambda text: re.sub(r'\s+', ' ', text).strip()
@@ -60,7 +61,12 @@ def refresh_source_bases(engine, changes, affected):
             current = changes[path].decode('ascii')
             located = []
             for statement in statements(current):
-                unit = cdecls.Unit(_PREFIX + statement)
+                # The locator does not run the preprocessor. Recognize the
+                # project's segmented-pointer spellings without changing the
+                # original statement retained as the source citation.
+                parsed = ''.join(token.lower() if token in ('FAR', 'NEAR', 'HUGE') else token
+                                 for token in C_TOKEN.findall(statement))
+                unit = cdecls.Unit(_PREFIX + parsed)
                 for name, rows in unit.decls.items():
                     if any(row.get('defined') and row['type']['k'] != 'fn' and
                            row.get('storage') not in ('extern', 'static') for row in rows):

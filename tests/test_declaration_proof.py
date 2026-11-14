@@ -225,6 +225,28 @@ class CandidateAndHeaderTests(unittest.TestCase):
 
 
 class SourceCitationTests(unittest.TestCase):
+    def test_segmented_pointer_macros_retain_the_original_source_citation(self):
+        from types import SimpleNamespace
+        from declaration_sources import refresh_source_bases
+        for qualifier, size in [('FAR', 4), ('NEAR', 2), ('HUGE', 4)]:
+            with self.subTest(qualifier=qualifier):
+                before = 'void ' + qualifier.lower() + ' *sample;'
+                manifest = {'bss_owners': [{'id': 'c_common', 'communals': [{
+                    'name': '_sample', 'address': 100, 'size': size, 'declarers': ['unit'],
+                    'size_basis': {'kind': 'declared-type', 'declaration': before}}]}]}
+                files = {'layout/manifest.json': json_bytes(manifest),
+                         'lib/unit.c': (before + '\n').encode('ascii')}
+                engine = SimpleNamespace(files=files, recipes={'recipes/unit.json': {
+                    'owners': ['unit'], 'recipe': {'source': 'lib/unit.c'}}})
+                declaration = 'I8 ' + qualifier + ' *sample;'
+                changes = {'lib/unit.c': (declaration + '\n').encode('ascii')}
+                refresh_source_bases(engine, changes, ['recipes/unit.json'])
+                after = json.loads(changes['layout/manifest.json'])
+                self.assertEqual(after['bss_owners'][0]['communals'][0]['size_basis']['declaration'],
+                                 declaration)
+                after['bss_owners'][0]['communals'][0]['size_basis']['declaration'] = before
+                self.assertEqual(after, manifest)
+
     def test_only_the_current_declaration_citation_changes(self):
         from types import SimpleNamespace
         from declaration_sources import refresh_source_bases
