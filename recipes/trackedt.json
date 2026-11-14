@@ -243,7 +243,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_draw_beveled_frame",
-      "target_index": 83,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -311,7 +311,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_draw_beveled_frame",
-      "target_index": 83,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1722,7 +1722,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2249,7 +2249,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 82,
+      "target_index": 84,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2759,7 +2759,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 84,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2793,7 +2793,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 84,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2827,7 +2827,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 84,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2861,7 +2861,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 84,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2878,7 +2878,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2895,7 +2895,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3490,7 +3490,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 84,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3541,7 +3541,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3558,7 +3558,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3813,7 +3813,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 84,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4221,7 +4221,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 84,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4340,7 +4340,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 84,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4527,7 +4527,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 84,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5224,7 +5224,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 84,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5411,7 +5411,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dialog_frame_color",
-      "target_index": 86,
+      "target_index": 87,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5496,7 +5496,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dialog_frame_color",
-      "target_index": 86,
+      "target_index": 87,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5870,7 +5870,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5989,7 +5989,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6006,7 +6006,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6363,7 +6363,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8403,7 +8403,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8692,7 +8692,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 87,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10339,12 +10339,12 @@
       "_globalgamesettings",
       "_savefilez",
       "_usebufferc",
-      "_dlg_colour",
       "_sprite_draw_beveled_frame",
-      "_performGraphColor",
+      "_trklst",
+      "_dlg_colour",
       "_text_cursor_outline_color",
-      "_dialog_frame_color",
-      "_trklst"
+      "_performGraphColor",
+      "_dialog_frame_color"
     ],
     "groups": [
       {
@@ -10584,6 +10584,11 @@
       "size": 276
     },
     {
+      "path": "include/textbuf.h",
+      "sha256": "e084a7601915484380b5cc96aa032faf859e622eadb56f563b3f8de0760c62cb",
+      "size": 140
+    },
+    {
       "path": "include/timer.h",
       "sha256": "f6337402d6312c3d64388962aa0dd66010c1ce0bbfb6e7cc81bc318a4b92f78b",
       "size": 947
@@ -10595,8 +10600,8 @@
     },
     {
       "path": "include/track.h",
-      "sha256": "9d48e3265dda487d1e07d7095547317b450f38903fabf257e1b427c761a2c55c",
-      "size": 6678
+      "sha256": "a43b5ca2e9051eb9e0ae2f91072571dbf8cb08e15230fd4dfb9ad930bf7caafb",
+      "size": 6944
     },
     {
       "path": "include/trkobj.h",
