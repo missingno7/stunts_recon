@@ -1,15 +1,5 @@
-#define SCREEN_WIDTH_PIXELS 0x140
-#define SCREEN_HEIGHT_PIXELS 0xC8
-#define HALF_SCREEN_HEIGHT_PIXELS 0x64
-#define MENU_WINDOW_WIDTH_PIXELS 0xC8
-#define TRACK_MAP_PAIR_BYTES 0x70A
-#define ANGLE_HALF_TURN 0x200
-#define ANGLE_TURN_SHIFT 10
-#define Q8_FRACTION_BITS 8
 #include "types.h"
 /* MSC 5.10 <ctype.h> macros over the pinned runtime table _ctype */
-#define _UPPER 0x1
-#define _LOWER 0x2
 #define isupper(c) ((_ctype+1)[c] & _UPPER)
 #define islower(c) ((_ctype+1)[c] & _LOWER)
 #define _tolower(c) ((c)-'A'+'a')
@@ -133,7 +123,9 @@ void far *g_miscfile_ptr;
 void far *resource_ptropp;
 void far *g_opp_resources[7];
 
-/* Local view: resbuftext; type is array[80]; another unit uses signed byte. */
+
+
+#include "textbuf.h"
 char resbuftext[80];
 struct HighScoreRecord far *hscore_trk11_ptr;
 
@@ -214,6 +206,12 @@ unsigned char opponent_spd_tbl[16];
 #include "audio.h"
 #include "chartab.h"
 
+#define SCREEN_WIDTH_PIXELS 0x140
+#define SCREEN_HEIGHT_PIXELS 0xC8
+#define TRACK_MAP_PAIR_BYTES 0x70A
+#define ANGLE_TURN_SHIFT 10
+
+
 struct GAMEINFO gmconfigbackup;
 
 void far *def_fntadr;
@@ -221,8 +219,9 @@ void far *def_fntadr;
 short track3_gap[2];
 I16S far *td3;
 U16S  far *td6_ptr_b;
-/* Local view: td10checkptr; pointer is signed word; another unit uses struct VECTOR. */
-extern I16 far *trksign;
+
+#include "signbuf.h"
+
 struct SPRITE far *savedptr_ms;
 
 char far *coursedataappend_address;

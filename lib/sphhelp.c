@@ -4,8 +4,6 @@
 #include "types.h"
 /* Build a sphere point buffer and pass it to the default renderer. */
 
-#define SPHERE_SECTION_POINT_COUNT 32
-#define SPHERE_POINT_BUFFER_BYTES 128 /* 32 two-coordinate points at four bytes each. */
 #include "ellipse.h"
 
 /* Build sphere points in a temporary buffer, then submit them to the default renderer.

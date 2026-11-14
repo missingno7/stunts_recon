@@ -1,14 +1,3 @@
-#define PLATFORM_SCREEN_WIDTH_PIXELS 320
-#define PLATFORM_SCREEN_HEIGHT_PIXELS 200
-#define WORLD_COORDINATE_SHIFT 6
-#define FAST_TRIG_ANGLE_MASK 0x3FF
-#define SKYBOX_HORIZONTAL_HALF_WRAP 0x200
-#define SKYBOX_HORIZONTAL_WRAP_SIZE 0x400
-#define SKYBOX_PANEL3_X 0x200
-#define SKYBOX_PANEL4_X 0x340
-#define FAR far
-#define NEAR near
-#define HUGE huge
 #include "types.h"
 
 /* Local/parameter names and the scoping of extern declarations (K&R-style
@@ -145,8 +134,10 @@ extern unsigned short elaptm1;
 #include "mousebuf.h"
 #include "input.h"
 
-/* Local view: resbuftext; type is signed byte; another unit uses array[80]. */
-extern I8 resbuftext;
+
+
+#include "textbuf.h"
+
 
  //trackdata1;
  //trackdata2;
@@ -156,8 +147,9 @@ extern I8 resbuftext;
  //trackdata5;
  //trackdata8;
 
-/* Local view: td10checkptr; pointer is signed word; another unit uses struct VECTOR. */
-extern int far* trksign;// trackdata10;
+
+#include "signbuf.h"
+// trackdata10;
  //trackdata11;
 
  //trackdata13;
@@ -201,8 +193,8 @@ extern I8 test_pln;
 
 //extern struct TRANSFORMEDSHAPE3D transshapeunk;
 
-/* Local view: trklst; of is struct TRACKOBJECT; another unit uses struct track_object. */
-extern struct TRACKOBJECT trklst[215]; // 215 entries
+
+ // 215 entries
 
          /* Fence offset pairs are grouped by the 1-, 2-, 3-, and 4-entry extents. */
 
@@ -1406,12 +1398,12 @@ draw_done:
 	// Show elapsed time
 	if (gm_playmode == 0) {
 		if (core.game_inputmode != 0) {
-			maketime(&resbuftext, elaptm1 + tmr2, 0);
+			maketime(resbuftext, elaptm1 + tmr2, 0);
 			mysetfont(fntled_res);
 			if (statemgmtcpy != 0) {
-				mergezones(shadowtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0), &tparr[6], &tparr[6]);
+				mergezones(shadowtext(resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0), &tparr[6], &tparr[6]);
 			} else {
-				shadowtext(&resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0);
+				shadowtext(resbuftext, 0x8C, rfy5 + 2, dlg_colour, 0);
 			}
 
 			fontsetfontdef();
@@ -1964,29 +1956,29 @@ struct RECTANGLE *drawtext(void)
     game_rect_txt_in = empty_rectangle;
 
     if (menutimeout != 0) {
-        strcpyfar(&resbuftext, getresl(gamerptrs, aDm1));
+        strcpyfar(resbuftext, getresl(gamerptrs, aDm1));
         mergezones(&game_rect_txt_in,
-            shadowtext(&resbuftext, mycenter(&resbuftext), HUD_DEMO_MESSAGE_FIRST_Y, dlg_colour, 0),
+            shadowtext(resbuftext, mycenter(resbuftext), HUD_DEMO_MESSAGE_FIRST_Y, dlg_colour, 0),
             &game_rect_txt_in);
 
-        strcpyfar(&resbuftext, getresl(gamerptrs, aDm2));
+        strcpyfar(resbuftext, getresl(gamerptrs, aDm2));
         mergezones(&game_rect_txt_in,
-            shadowtext(&resbuftext, mycenter(&resbuftext), HUD_DEMO_MESSAGE_SECOND_Y, dlg_colour, 0),
+            shadowtext(resbuftext, mycenter(resbuftext), HUD_DEMO_MESSAGE_SECOND_Y, dlg_colour, 0),
             &game_rect_txt_in);
     } else if (gm_playmode == 0) {
         if (core.game_inputmode == 0) {
-            strcpyfar(&resbuftext, getresl(gamerptrs, aPre));
+            strcpyfar(resbuftext, getresl(gamerptrs, aPre));
             mergezones(&game_rect_txt_in,
-                shadowtext(&resbuftext, mycenter(&resbuftext), 0x5A, dlg_colour, 0),
+                shadowtext(resbuftext, mycenter(resbuftext), 0x5A, dlg_colour, 0),
                 &game_rect_txt_in);
         } else if (pass_check_flag == 0) {
-            strcpyfar(&resbuftext, getresl(gamerptrs, aSe1));
+            strcpyfar(resbuftext, getresl(gamerptrs, aSe1));
             mergezones(&game_rect_txt_in,
-                shadowtext(&resbuftext, mycenter(&resbuftext), HUD_PRIMARY_MESSAGE_Y, dlg_colour, 0),
+                shadowtext(resbuftext, mycenter(resbuftext), HUD_PRIMARY_MESSAGE_Y, dlg_colour, 0),
                 &game_rect_txt_in);
-            strcpyfar(&resbuftext, getresl(gamerptrs, aSe2));
+            strcpyfar(resbuftext, getresl(gamerptrs, aSe2));
             mergezones(&game_rect_txt_in,
-                shadowtext(&resbuftext, mycenter(&resbuftext), 0x69, dlg_colour, 0),
+                shadowtext(resbuftext, mycenter(resbuftext), 0x69, dlg_colour, 0),
                 &game_rect_txt_in);
         } else if (intraffic == 0 && cammd == 0 && core.playerstate.car_crashBmpFlag == 0) {
             switch (core.game_player_guidance) {
@@ -1999,47 +1991,47 @@ struct RECTANGLE *drawtext(void)
                 mergezones(&game_rect_txt_in, &rect_ingame_text2, &game_rect_txt_in);
                 break;
             case 3:
-                strcpyfar(&resbuftext, getresl(gamerptrs, aWww));
+                strcpyfar(resbuftext, getresl(gamerptrs, aWww));
                 mergezones(&game_rect_txt_in,
-                    shadowtext(&resbuftext, mycenter(&resbuftext), HUD_PRIMARY_MESSAGE_Y, dlg_colour, 0),
+                    shadowtext(resbuftext, mycenter(resbuftext), HUD_PRIMARY_MESSAGE_Y, dlg_colour, 0),
                     &game_rect_txt_in);
                 break;
             }
 
-            resbuftext = 0;
+            resbuftext[0] = 0;
             switch (core.game_opponent_pass_side) {
             case 1:
                 tmaskxcfxya(sdgbmp_v[3], 0x44, HUD_OPPONENT_MARKER_Y);
                 mergezones(&game_rect_txt_in, &rect_ingame_text3, &game_rect_txt_in);
-                strcpyfar(&resbuftext, getresl(gamerptrs, aOpp));
+                strcpyfar(resbuftext, getresl(gamerptrs, aOpp));
                 break;
             case 2:
                 tmaskxcfxya(sdgbmp_v[4], 0xE4, HUD_OPPONENT_MARKER_Y);
                 mergezones(&game_rect_txt_in, &rect_ingame_text4, &game_rect_txt_in);
-                strcpyfar(&resbuftext, getresl(gamerptrs, aOpp_0));
+                strcpyfar(resbuftext, getresl(gamerptrs, aOpp_0));
                 break;
             }
 
-            if (resbuftext != 0) {
+            if (resbuftext[0] != 0) {
                 mergezones(&game_rect_txt_in,
-                    shadowtext(&resbuftext, mycenter(&resbuftext), HUD_OPPONENT_MESSAGE_Y, dlg_colour, 0),
+                    shadowtext(resbuftext, mycenter(resbuftext), HUD_OPPONENT_MESSAGE_Y, dlg_colour, 0),
                     &game_rect_txt_in);
             }
 
             if (pen_flag_count != 0) {
-                strcpyfar(&resbuftext, getresl(gamerptrs, aPen));
-                maketime(&resbuftext + strlen(&resbuftext), g_penaltytm, 0);
+                strcpyfar(resbuftext, getresl(gamerptrs, aPen));
+                maketime(resbuftext + strlen(resbuftext), g_penaltytm, 0);
                 mergezones(&game_rect_txt_in,
-                    shadowtext(&resbuftext, mycenter(&resbuftext), HUD_PENALTY_MESSAGE_Y, dlg_colour, 0),
+                    shadowtext(resbuftext, mycenter(resbuftext), HUD_PENALTY_MESSAGE_Y, dlg_colour, 0),
                     &game_rect_txt_in);
             }
         }
     } else if (gm_playmode == 2) {
         remainder = core.game_frame % rate_frame;
         if (remainder < ((I16S)rate_frame >> 1)) {
-            strcpyfar(&resbuftext, getresl(gamerptrs, aRpl_0));
+            strcpyfar(resbuftext, getresl(gamerptrs, aRpl_0));
             mergezones(&game_rect_txt_in,
-                shadowtext(&resbuftext, 0x138 - (strlen(&resbuftext) << 3), 0x0F, dlg_colour, 0),
+                shadowtext(resbuftext, 0x138 - (strlen(resbuftext) << 3), 0x0F, dlg_colour, 0),
                 &game_rect_txt_in);
         }
     }
@@ -2773,8 +2765,9 @@ struct RECTANGLE intro_cliprect = { 0, 320, 0, 200 };
 I16 intro_colorvalue = 1;
 
 /* Communals defined by this module (tentative definitions). */
-/* Local view: td10checkptr; pointer is signed word; another unit uses struct VECTOR. */
-I16 far* trksign;
+
+#include "signbuf.h"
+int far *trksign;
 struct TRANSFORMEDSHAPE3D cur_shps[29];
 I16 runrndx;
 int sky_hgt_world;

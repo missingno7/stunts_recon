@@ -1,11 +1,9 @@
 #include "types.h"
 /* Write fixed-point X, Y, and Z rotation matrices using the fast sine and cosine helpers. */
 
-#define MATRIX_IDENTITY_Q14 0x4000 /* Q14 representation of 1.0. */
 #include "math3d.h"
 
-/* Local view: MATRIX; embedded MAT3 record differs from the shared flat nine-word array. */
-struct MATRIX { struct MAT3 m; };
+#include "matrix.h"
 #include "trig.h"
 
 /* Write a fixed-point X-axis rotation matrix.

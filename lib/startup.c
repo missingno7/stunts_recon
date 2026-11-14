@@ -14,8 +14,6 @@
 #include "types.h"
 /* Initialize game startup state, set up input/video/audio services, and load the palette and cursor resources. */
 /* MSC 5.10 <ctype.h> macros over the pinned runtime table _ctype */
-#define _UPPER 0x1
-#define _LOWER 0x2
 #define isupper(c) ((_ctype+1)[c] & _UPPER)
 #define islower(c) ((_ctype+1)[c] & _LOWER)
 #define _tolower(c) ((c)-'A'+'a')

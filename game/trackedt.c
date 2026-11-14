@@ -1,33 +1,17 @@
+#include "types.h"
+
 #define TRACK_MAP_ROW_COUNT 30
 #define TRACK_MAP_COLUMN_COUNT 30
 #define TRACK_MAP_CELL_COUNT 900
-#define TRACK_PREVIEW_ROW_COUNT 11
-#define TRACK_PREVIEW_COLUMN_COUNT 12
-#define TRACK_EDITOR_CELL_PIXELS 16
-#define TRACK_EDITOR_CELL_SHIFT 4
-#define TRACK_EDITOR_CELL_ORIGIN_X 8
-#define TRACK_EDITOR_CELL_ORIGIN_Y 4
-#define TRACK_EDITOR_CELL_LEFT_X (-8)
-#define TRACK_EDITOR_CELL_RIGHT_X 24
-#define TRACK_EDITOR_CELL_ABOVE_Y (-12)
-#define TRACK_EDITOR_CELL_BELOW_Y 20
-#define TRACK_PALETTE_GRID_SIDE 6
-#define TRACK_PALETTE_PAGE_CELL_COUNT 36
-#define TRACK_EDITOR_GRID_X_ORIGIN 220
-#define TRACK_EDITOR_GRID_Y_ORIGIN 36
-#define TRACK_EDITOR_PALETTE_ROW_Y_ORIGIN 28
 #define TRACK_ELEMENT_SPECIAL_BASE 0xfd /* First byte reserved for multi-cell continuation codes. */
 #define TRACK_ELEMENT_CONTINUATION_BASE 0xfe /* Lowest palette continuation marker used in layout scans. */
 #define TRACK_TILE_CONTINUE_DOWN_RIGHT 0xfd /* Multi-cell piece continues down and right. */
 #define TRACK_TILE_CONTINUE_DOWN 0xfe /* Multi-cell piece continues into the row below. */
 #define TRACK_TILE_CONTINUE_RIGHT 0xff /* Multi-cell piece continues into the next column. */
-#define TRACK_CACHE_INVALID 0xff /* Cached map value has not been drawn yet. */
-#define TRACK_SHAPE_CACHE_INVALID 0xff /* Cached hover shape has not been drawn yet. */
 #define TRACK_PIECE_SHAPE_COUNT 186
 #define TERRAIN_SHAPE_COUNT 19
-#define TRACK_EDITOR_CURSOR_COUNT 4
 #define ROAD_TILE_SHAPE_COUNT 4
-#include "types.h"
+
 /* Local view: SHAPE2D; struct.count is 8; another unit uses 6. */
 struct SHAPE2D {
     I16 s2d_width;
@@ -60,8 +44,8 @@ struct SPRITE {
 #include "track.h"
 #include "dlgcolor.h"
 
-/* Local view: trklst; array is None; another unit uses 215. */
-extern struct TRACKOBJECT trklst[];
+
+
 
 static U8  far *terrain_tile_shapes[TERRAIN_SHAPE_COUNT];
 static struct SHAPE2D far *track_editor_cursors[TRACK_EDITOR_CURSOR_COUNT];
@@ -74,8 +58,10 @@ unsigned char far *td15p_9;
 
 int gterrtrk[30];
 int lnoffsets[30];
-/* Local view: resbuftext; array is None; another unit uses 80. */
-extern I8 resbuftext[];
+
+
+#include "textbuf.h"
+
 unsigned char sampled_trk_column;
 #include "car.h"
 /* Local view: openresource; renderer retains its byte-pointer resource prototype. */

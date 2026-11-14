@@ -1,8 +1,4 @@
 #include "memory.h"
-#define FAR far
-#define NEAR near
-#define HUGE huge
-#define FAST_TRIG_ANGLE_MASK 0x3FF
 #include "types.h"
 #include "matrix.h"
 #include "trig.h"
@@ -37,8 +33,8 @@ int xcols[30];
 
 int z_ctr_pos[30];
 
-/* Local view: trklst; of is struct TRACKOBJECT; another unit uses struct track_object. */
-extern struct TRACKOBJECT trklst[215];
+
+
 
 short pl_i;
 short road_num;
@@ -64,8 +60,9 @@ extern void FAR * FAR locate_shape_fatal(void FAR*, I8*);
 
 struct SHAPE3D g_shapes3d[SHAPE3D_CATALOG_CAPACITY];
 
-/* Local view: aCar0; type is array[None]; another unit uses struct car_exp_name_table. */
-extern I8 aCar0[][5];
+
+#include "carnames.h"
+
 
 char far *pl_carres_3d;
 char far *carcopyresourceptr;
@@ -101,8 +98,9 @@ short gap_trackrow_1;
 unsigned char g_cur_track_row;
 I16 far* g_td08d;
 unsigned short far *trackdat7;
-/* Local view: td10checkptr; pointer is struct VECTOR; another unit uses signed word. */
-extern struct VECTOR far *trksign;
+
+#include "signbuf.h"
+
 struct VECTOR far* trkptrpath;
 /* Local view: openresource; renderer retains its byte-pointer resource prototype. */
 extern void far *far openresource(I8 *);
@@ -1001,8 +999,8 @@ void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 	aStxxx[4] = arg_playercarid[2];
 	aStxxx[5] = arg_playercarid[3];
 	pl_carres_3d = fluffyload(aStxxx);
-	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[0]), &g_shapes3d[SHAPE_PLAYER_BODY]);
-	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[1]), &g_shapes3d[SHAPE_PLAYER_WHEELS]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0.entry[0]), &g_shapes3d[SHAPE_PLAYER_BODY]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0.entry[1]), &g_shapes3d[SHAPE_PLAYER_WHEELS]);
 
 	vertices = &(g_shapes3d[SHAPE_PLAYER_WHEELS].shape3d_verts[SHAPE_WHEEL_VERTEX_START]);
 	pos_pt.z = vertices[0].z;
@@ -1024,11 +1022,11 @@ void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 		ywhlang[loopIndex] = 0;
 	}
 
-	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[2]), &g_shapes3d[SHAPE_PLAYER_AUXILIARY]);
-	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[3]), &g_shapes3d[116]);
-	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[4]), &g_shapes3d[117]);
-	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[5]), &g_shapes3d[118]);
-	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0[6]), &g_shapes3d[119]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0.entry[2]), &g_shapes3d[SHAPE_PLAYER_AUXILIARY]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0.entry[3]), &g_shapes3d[116]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0.entry[4]), &g_shapes3d[117]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0.entry[5]), &g_shapes3d[118]);
+	makeobjdef(locate_shape_fatal(pl_carres_3d, aCar0.entry[6]), &g_shapes3d[119]);
 
 	firstOpponent = arg_opponentcarid[0];
 	if (firstOpponent != -1) {
@@ -1036,7 +1034,7 @@ void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 			arg_playercarid[2] == arg_opponentcarid[2] && arg_playercarid[3] == arg_opponentcarid[3])
 		{
 			sizeBytes = modsize(pl_carres_3d);
-			carcopyresourceptr = resmem(aCar0[7], sizeBytes);
+			carcopyresourceptr = resmem(aCar0.entry[7], sizeBytes);
 			for (copyOffset = 0; copyOffset < sizeBytes; copyOffset++) {
 				carcopyresourceptr[copyOffset] = pl_carres_3d[copyOffset];
 			}
@@ -1048,8 +1046,8 @@ void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 			carcopyresourceptr = fluffyload(aStxxx);
 		}
 
-		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[8]), &g_shapes3d[SHAPE_OPPONENT_BODY]);
-		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[9]), &g_shapes3d[SHAPE_OPPONENT_WHEELS]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0.entry[8]), &g_shapes3d[SHAPE_OPPONENT_BODY]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0.entry[9]), &g_shapes3d[SHAPE_OPPONENT_WHEELS]);
 
 		vertices = &(g_shapes3d[SHAPE_OPPONENT_WHEELS].shape3d_verts[SHAPE_WHEEL_VERTEX_START]);
 		ctrmesh.z = vertices[0].z;
@@ -1070,11 +1068,11 @@ void init_3dcars(I8 arg_playercarid[], I8 arg_opponentcarid[]) {
 		for (loopIndex = 0; loopIndex < 5; loopIndex++) {
 			buf_obase[loopIndex] = 0;
 		}
-		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[10]), &g_shapes3d[SHAPE_OPPONENT_AUXILIARY]);
-		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[11]), &g_shapes3d[120]);
-		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[12]), &g_shapes3d[121]);
-		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[13]), &g_shapes3d[122]);
-		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0[14]), &g_shapes3d[123]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0.entry[10]), &g_shapes3d[SHAPE_OPPONENT_AUXILIARY]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0.entry[11]), &g_shapes3d[120]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0.entry[12]), &g_shapes3d[121]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0.entry[13]), &g_shapes3d[122]);
+		makeobjdef(locate_shape_fatal(carcopyresourceptr, aCar0.entry[14]), &g_shapes3d[123]);
 	} else {
 		carcopyresourceptr = 0;
 	}
@@ -1692,9 +1690,9 @@ I16 compiletrack(void)
       trkd23adr[g_road_piece_id] = arrow;
       if (td15p_9[gterrtrk[oldRow] + oldX] == 6)
         cur_pos.y += 0x1c2;
-      trksign[g_road_piece_id].y = cur_pos.y;
-      trksign[g_road_piece_id].z = ((trklst[prev_elem].ss_multiTileFlag & 1) ? (r_zp[oldRow]) : (row_ctr_zs[oldRow])) + cur_pos.z;
-      trksign[g_road_piece_id].x = ((trklst[prev_elem].ss_multiTileFlag & 2) ? (xcols[oldX + 1]) : (trackctrpos2[oldX])) + cur_pos.x;
+      ((struct VECTOR far *)trksign)[g_road_piece_id].y = cur_pos.y;
+      ((struct VECTOR far *)trksign)[g_road_piece_id].z = ((trklst[prev_elem].ss_multiTileFlag & 1) ? (r_zp[oldRow]) : (row_ctr_zs[oldRow])) + cur_pos.z;
+      ((struct VECTOR far *)trksign)[g_road_piece_id].x = ((trklst[prev_elem].ss_multiTileFlag & 2) ? (xcols[oldX + 1]) : (trackctrpos2[oldX])) + cur_pos.x;
       td19hdl[lnoffsets[oldRow] + oldX] = g_road_piece_id;
       g_road_piece_id++;
     }

@@ -9,8 +9,6 @@
 #include "types.h"
 /* Find, decompress, unflip, expand, and palette-map shape resources in the game memory manager. */
 
-#define SHAPE2D_HEADER_BYTES 16
-#define PALETTE_REMAP_ENTRY_COUNT 16
 I8 shape_extensions[] = ".PVS\0.XVS\0.VSH\0.PES\0.ESH\0";
 I8 *shape2d_extension_suffixes[6] = {
     shape_extensions,

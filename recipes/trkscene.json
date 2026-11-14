@@ -53,6 +53,10 @@
       "size": 2
     },
     {
+      "name": "_g_op_carvector2",
+      "size": 6
+    },
+    {
       "name": "_road_num",
       "size": 2
     },
@@ -63,10 +67,6 @@
     {
       "name": "_trkptrpath",
       "size": 4
-    },
-    {
-      "name": "_g_op_carvector2",
-      "size": 6
     },
     {
       "name": "_secondoveh",
@@ -101,12 +101,12 @@
       "size": 10
     },
     {
-      "name": "_g_game13dresource",
-      "size": 4
-    },
-    {
       "name": "_ctrmesh",
       "size": 6
+    },
+    {
+      "name": "_g_game13dresource",
+      "size": 4
     },
     {
       "name": "_td19hdl",
@@ -203,7 +203,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -220,7 +220,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_roadupcheck",
-      "target_index": 67,
+      "target_index": 65,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -237,7 +237,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_elem_ctrz",
-      "target_index": 51,
+      "target_index": 49,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -271,7 +271,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_elem_ctrz",
-      "target_index": 51,
+      "target_index": 49,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -339,7 +339,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -356,7 +356,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_elem_ctrz",
-      "target_index": 51,
+      "target_index": 49,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -373,7 +373,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_postable",
-      "target_index": 33,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -390,7 +390,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -407,7 +407,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_postable",
-      "target_index": 33,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -424,7 +424,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -441,7 +441,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -458,7 +458,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -492,7 +492,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_postable",
-      "target_index": 33,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -509,7 +509,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -526,7 +526,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -543,7 +543,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -594,7 +594,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -611,7 +611,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_elem_ctrz",
-      "target_index": 51,
+      "target_index": 49,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -628,7 +628,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_postable",
-      "target_index": 33,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -645,7 +645,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -662,7 +662,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -679,7 +679,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -713,7 +713,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -730,7 +730,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -764,7 +764,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -781,7 +781,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intsin",
-      "target_index": 114,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -798,7 +798,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_elem_ctrz",
-      "target_index": 51,
+      "target_index": 49,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -832,7 +832,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -883,7 +883,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_terheight",
-      "target_index": 43,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -900,7 +900,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -917,7 +917,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -934,7 +934,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 34,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -951,7 +951,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_elem_ctrz",
-      "target_index": 51,
+      "target_index": 49,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1036,7 +1036,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_test_pln",
-      "target_index": 70,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1053,7 +1053,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1121,7 +1121,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1138,7 +1138,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1172,7 +1172,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_test_pln",
-      "target_index": 70,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1206,7 +1206,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1223,7 +1223,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1240,7 +1240,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_test_pln",
-      "target_index": 70,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1257,7 +1257,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1308,7 +1308,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1325,7 +1325,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1342,7 +1342,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1359,7 +1359,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1376,7 +1376,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1393,7 +1393,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_test_pln",
-      "target_index": 70,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1410,7 +1410,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1427,7 +1427,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1444,7 +1444,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1461,7 +1461,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1478,7 +1478,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1495,7 +1495,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1529,7 +1529,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFldiv",
-      "target_index": 91,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1699,7 +1699,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFldiv",
-      "target_index": 91,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1903,7 +1903,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1920,7 +1920,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1937,7 +1937,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1954,7 +1954,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1971,7 +1971,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_core",
-      "target_index": 46,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2209,7 +2209,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_test_pln",
-      "target_index": 70,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2226,7 +2226,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2243,7 +2243,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2260,7 +2260,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2277,7 +2277,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intatan",
-      "target_index": 77,
+      "target_index": 70,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2311,7 +2311,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2328,7 +2328,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2345,7 +2345,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2362,7 +2362,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2396,7 +2396,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2413,7 +2413,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intsin",
-      "target_index": 114,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2447,7 +2447,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2464,7 +2464,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2481,7 +2481,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2498,7 +2498,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2515,7 +2515,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2532,7 +2532,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2549,7 +2549,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2566,7 +2566,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2583,7 +2583,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2634,7 +2634,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intatan",
-      "target_index": 77,
+      "target_index": 70,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2651,7 +2651,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_test_pln",
-      "target_index": 70,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2668,7 +2668,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2685,7 +2685,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2736,7 +2736,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2770,7 +2770,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2787,7 +2787,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_test_pln",
-      "target_index": 70,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2821,7 +2821,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2838,7 +2838,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2855,7 +2855,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_test_pln",
-      "target_index": 70,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2872,7 +2872,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2889,7 +2889,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2906,7 +2906,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2923,7 +2923,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2957,7 +2957,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2991,7 +2991,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3008,7 +3008,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intsin",
-      "target_index": 114,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3025,7 +3025,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3042,7 +3042,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3059,7 +3059,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3076,7 +3076,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3093,7 +3093,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3110,7 +3110,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3144,7 +3144,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3161,7 +3161,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3195,7 +3195,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3212,7 +3212,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3229,7 +3229,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3246,7 +3246,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3280,7 +3280,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3297,7 +3297,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3331,7 +3331,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3348,7 +3348,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3365,7 +3365,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3433,7 +3433,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFldiv",
-      "target_index": 91,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3501,7 +3501,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loopBase_ZBounds0",
-      "target_index": 14,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3518,7 +3518,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loopBase_ZBounds0",
-      "target_index": 14,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3535,7 +3535,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loopBase_ZBounds0",
-      "target_index": 14,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3552,7 +3552,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loopBae_InnXBounds0",
-      "target_index": 11,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3569,7 +3569,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFldiv",
-      "target_index": 91,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3603,7 +3603,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loopBae_InnXBounds0",
-      "target_index": 11,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3620,7 +3620,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loopBae_InnXBounds0",
-      "target_index": 11,
+      "target_index": 10,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3637,7 +3637,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loopBase_ZBounds0",
-      "target_index": 14,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3654,7 +3654,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loopBase_ZBounds0",
-      "target_index": 14,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3671,7 +3671,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loopBase_ZBounds0",
-      "target_index": 14,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3688,7 +3688,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loopBase_ZBounds0",
-      "target_index": 14,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3722,7 +3722,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFldiv",
-      "target_index": 91,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3960,7 +3960,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3977,7 +3977,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4011,7 +4011,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFldiv",
-      "target_index": 91,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4113,7 +4113,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_test_pln",
-      "target_index": 70,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4130,7 +4130,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4147,7 +4147,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4164,7 +4164,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intatan",
-      "target_index": 77,
+      "target_index": 70,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4198,7 +4198,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4215,7 +4215,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4232,7 +4232,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4300,7 +4300,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4385,7 +4385,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4402,7 +4402,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4419,7 +4419,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4436,7 +4436,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_corkLR_posZBound",
-      "target_index": 90,
+      "target_index": 88,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4504,7 +4504,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4538,7 +4538,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4555,7 +4555,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4572,7 +4572,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4589,7 +4589,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4606,7 +4606,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4623,7 +4623,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4640,7 +4640,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4657,7 +4657,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4674,7 +4674,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4691,7 +4691,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4708,7 +4708,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4725,7 +4725,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4759,7 +4759,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4776,7 +4776,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4793,7 +4793,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4827,7 +4827,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5847,7 +5847,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5864,7 +5864,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5881,7 +5881,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5898,7 +5898,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5932,7 +5932,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5949,7 +5949,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5966,7 +5966,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5983,7 +5983,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6017,7 +6017,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6034,7 +6034,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6051,7 +6051,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6068,7 +6068,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6102,7 +6102,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6119,7 +6119,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6136,7 +6136,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6153,7 +6153,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6187,7 +6187,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6204,7 +6204,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6221,7 +6221,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6238,7 +6238,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6272,7 +6272,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6289,7 +6289,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6306,7 +6306,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6323,7 +6323,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6357,7 +6357,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6374,7 +6374,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6391,7 +6391,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6408,7 +6408,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6442,7 +6442,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6459,7 +6459,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6476,7 +6476,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6493,7 +6493,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6527,7 +6527,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6544,7 +6544,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6561,7 +6561,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6578,7 +6578,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 34,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6595,7 +6595,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_row_ctr_zs",
-      "target_index": 113,
+      "target_index": 115,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6629,7 +6629,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6646,7 +6646,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6663,7 +6663,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 34,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6697,7 +6697,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_elem_ctrz",
-      "target_index": 51,
+      "target_index": 49,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6765,7 +6765,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_wallrecrecord",
-      "target_index": 63,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6782,7 +6782,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_wallrecrecord",
-      "target_index": 63,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6799,7 +6799,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6833,7 +6833,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_wallrecrecord",
-      "target_index": 63,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6850,7 +6850,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_wallrecrecord",
-      "target_index": 63,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6867,7 +6867,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6901,7 +6901,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_wallrecrecord",
-      "target_index": 63,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6918,7 +6918,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_wallrecrecord",
-      "target_index": 63,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6935,7 +6935,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6986,7 +6986,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_wallrecrecord",
-      "target_index": 63,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7003,7 +7003,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7020,7 +7020,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_wall_facingang",
-      "target_index": 61,
+      "target_index": 64,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7037,7 +7037,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_wallrecrecord",
-      "target_index": 63,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7054,7 +7054,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7071,7 +7071,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_num",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7105,7 +7105,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7122,7 +7122,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7156,7 +7156,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_cursurfacekindvalue",
-      "target_index": 68,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7173,7 +7173,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_plncurrptr",
-      "target_index": 104,
+      "target_index": 102,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7190,7 +7190,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_plncurrptr",
-      "target_index": 104,
+      "target_index": 102,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7207,7 +7207,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_planlist",
-      "target_index": 101,
+      "target_index": 96,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7224,7 +7224,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_planlist",
-      "target_index": 101,
+      "target_index": 96,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7241,7 +7241,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7258,7 +7258,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7292,7 +7292,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7309,7 +7309,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7343,7 +7343,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7360,7 +7360,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intsin",
-      "target_index": 114,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7377,7 +7377,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7394,7 +7394,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7428,7 +7428,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7445,7 +7445,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intsin",
-      "target_index": 114,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7462,7 +7462,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7479,7 +7479,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7496,7 +7496,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7513,7 +7513,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_i",
-      "target_index": 28,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8091,7 +8091,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_aBarn",
-      "target_index": 69,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8108,7 +8108,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ptr_model_active",
-      "target_index": 38,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8125,7 +8125,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ptr_model_active",
-      "target_index": 38,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8142,7 +8142,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locateshapez",
-      "target_index": 30,
+      "target_index": 33,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8159,7 +8159,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_game13dresource",
-      "target_index": 89,
+      "target_index": 93,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8176,7 +8176,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_game13dresource",
-      "target_index": 89,
+      "target_index": 93,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8193,7 +8193,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_aBarn",
-      "target_index": 69,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8244,7 +8244,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fluffyload",
-      "target_index": 19,
+      "target_index": 21,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8278,7 +8278,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_game13dresource",
-      "target_index": 89,
+      "target_index": 93,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8295,7 +8295,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_game13dresource",
-      "target_index": 89,
+      "target_index": 93,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8312,7 +8312,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fluffyload",
-      "target_index": 19,
+      "target_index": 21,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8329,7 +8329,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_aGame1",
-      "target_index": 72,
+      "target_index": 74,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8346,7 +8346,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_availmem",
-      "target_index": 97,
+      "target_index": 95,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8397,7 +8397,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_game13dresource",
-      "target_index": 89,
+      "target_index": 93,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8414,7 +8414,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_game13dresource",
-      "target_index": 89,
+      "target_index": 93,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8431,7 +8431,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8448,7 +8448,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_terheight",
-      "target_index": 43,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8465,7 +8465,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8482,7 +8482,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8516,7 +8516,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_shape_template_points_b",
-      "target_index": 37,
+      "target_index": 39,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8533,7 +8533,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_shape_template_points_a",
-      "target_index": 31,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8550,7 +8550,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_shape_template_points_f",
-      "target_index": 53,
+      "target_index": 56,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8567,7 +8567,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_shape_template_points_e",
-      "target_index": 50,
+      "target_index": 51,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8584,7 +8584,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_shape_template_points_d",
-      "target_index": 45,
+      "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8601,7 +8601,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_shape_template_points_c",
-      "target_index": 41,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8618,7 +8618,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8652,7 +8652,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8669,7 +8669,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_r_zp",
-      "target_index": 47,
+      "target_index": 44,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8686,7 +8686,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8703,7 +8703,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_r_zp",
-      "target_index": 47,
+      "target_index": 44,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8720,7 +8720,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8737,7 +8737,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8754,7 +8754,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8771,7 +8771,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 34,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8788,7 +8788,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_r_zp",
-      "target_index": 47,
+      "target_index": 44,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8805,7 +8805,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8822,7 +8822,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8839,7 +8839,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8856,7 +8856,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 34,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8890,7 +8890,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8907,7 +8907,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_r_zp",
-      "target_index": 47,
+      "target_index": 44,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8924,7 +8924,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9026,7 +9026,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9077,7 +9077,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resmem",
-      "target_index": 49,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9111,7 +9111,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_modsize",
-      "target_index": 36,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9128,7 +9128,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9145,7 +9145,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9162,7 +9162,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9179,7 +9179,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9196,7 +9196,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9213,7 +9213,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9264,7 +9264,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9281,7 +9281,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9298,7 +9298,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9315,7 +9315,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9366,7 +9366,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9383,7 +9383,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9400,7 +9400,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9417,7 +9417,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9468,7 +9468,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9485,7 +9485,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9502,7 +9502,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9519,7 +9519,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9570,7 +9570,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9587,7 +9587,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9604,7 +9604,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9621,7 +9621,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9689,7 +9689,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_car_dvecs",
-      "target_index": 7,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9723,7 +9723,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_secondveccar",
-      "target_index": 62,
+      "target_index": 60,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9740,7 +9740,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_secondveccar",
-      "target_index": 62,
+      "target_index": 60,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9774,7 +9774,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_secondveccar",
-      "target_index": 62,
+      "target_index": 60,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9808,7 +9808,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pts_set",
-      "target_index": 42,
+      "target_index": 40,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9825,7 +9825,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pts_set",
-      "target_index": 42,
+      "target_index": 40,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9859,7 +9859,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pts_set",
-      "target_index": 42,
+      "target_index": 40,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9995,7 +9995,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10012,7 +10012,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10029,7 +10029,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10046,7 +10046,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10097,7 +10097,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10114,7 +10114,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10131,7 +10131,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10182,7 +10182,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10199,7 +10199,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10216,7 +10216,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fluffyload",
-      "target_index": 19,
+      "target_index": 21,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10420,7 +10420,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_game13dresource",
-      "target_index": 89,
+      "target_index": 93,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10437,7 +10437,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_game13dresource",
-      "target_index": 89,
+      "target_index": 93,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10454,7 +10454,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_game13dresource",
-      "target_index": 89,
+      "target_index": 93,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10471,7 +10471,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_game13dresource",
-      "target_index": 89,
+      "target_index": 93,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10488,7 +10488,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10505,7 +10505,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ptr_model_active",
-      "target_index": 38,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10522,7 +10522,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ptr_model_active",
-      "target_index": 38,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10556,7 +10556,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ptr_model_active",
-      "target_index": 38,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10573,7 +10573,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ptr_model_active",
-      "target_index": 38,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10590,7 +10590,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10624,7 +10624,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10641,7 +10641,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10658,7 +10658,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10675,7 +10675,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10692,7 +10692,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10709,7 +10709,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10743,7 +10743,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_intsin",
-      "target_index": 114,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10777,7 +10777,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10794,7 +10794,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pl_carres_3d",
-      "target_index": 25,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10811,7 +10811,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_settires",
-      "target_index": 40,
+      "target_index": 42,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10862,7 +10862,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_car_wheel_offsets",
-      "target_index": 24,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10896,7 +10896,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pts_set",
-      "target_index": 42,
+      "target_index": 40,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10930,7 +10930,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_purgememory",
-      "target_index": 92,
+      "target_index": 91,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10981,7 +10981,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_settires",
-      "target_index": 40,
+      "target_index": 42,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11032,7 +11032,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_car_wheel_offsets",
-      "target_index": 24,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11083,7 +11083,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ctrmesh",
-      "target_index": 93,
+      "target_index": 92,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11168,7 +11168,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11185,7 +11185,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11270,7 +11270,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11287,7 +11287,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11372,7 +11372,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11389,7 +11389,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11474,7 +11474,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11491,7 +11491,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11576,7 +11576,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11593,7 +11593,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11763,7 +11763,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_op_carvector2",
-      "target_index": 58,
+      "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11797,7 +11797,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_op_carvector2",
-      "target_index": 58,
+      "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11848,7 +11848,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ctrmesh",
-      "target_index": 93,
+      "target_index": 92,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11882,7 +11882,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ctrmesh",
-      "target_index": 93,
+      "target_index": 92,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11899,7 +11899,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_op_carvector2",
-      "target_index": 58,
+      "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11916,7 +11916,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_op_carvector2",
-      "target_index": 58,
+      "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11933,7 +11933,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ctrmesh",
-      "target_index": 93,
+      "target_index": 92,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11950,7 +11950,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_ctrmesh",
-      "target_index": 93,
+      "target_index": 92,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12001,7 +12001,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12018,7 +12018,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12103,7 +12103,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makeobjdef",
-      "target_index": 66,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12120,7 +12120,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 71,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12239,7 +12239,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fluffyload",
-      "target_index": 19,
+      "target_index": 21,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12273,7 +12273,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trk_sample_count",
-      "target_index": 115,
+      "target_index": 114,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12324,7 +12324,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12341,7 +12341,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 34,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12358,7 +12358,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12375,7 +12375,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12392,7 +12392,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 34,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12443,7 +12443,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12460,7 +12460,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12494,7 +12494,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_tagtrk",
-      "target_index": 88,
+      "target_index": 87,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12511,7 +12511,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_idxtrk",
-      "target_index": 8,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12528,7 +12528,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_st_hdg",
-      "target_index": 27,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12545,7 +12545,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_st_hdg",
-      "target_index": 27,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12562,7 +12562,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_st_hdg",
-      "target_index": 27,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12579,7 +12579,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_st_hdg",
-      "target_index": 27,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12613,7 +12613,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12630,7 +12630,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12698,7 +12698,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12715,7 +12715,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12800,7 +12800,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resmem",
-      "target_index": 49,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12834,7 +12834,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12851,7 +12851,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fixedmult",
-      "target_index": 73,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12868,7 +12868,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_tdfrompathrow22",
-      "target_index": 48,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12987,7 +12987,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 34,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13004,7 +13004,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13021,7 +13021,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13038,7 +13038,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13055,7 +13055,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 34,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13072,7 +13072,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_roadupcheck",
-      "target_index": 67,
+      "target_index": 65,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13089,7 +13089,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13106,7 +13106,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13140,7 +13140,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13157,7 +13157,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td14tb",
-      "target_index": 32,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13174,7 +13174,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 34,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13191,7 +13191,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_st_hdg",
-      "target_index": 27,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13208,7 +13208,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_tagtrk",
-      "target_index": 88,
+      "target_index": 87,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13225,7 +13225,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_idxtrk",
-      "target_index": 8,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13310,7 +13310,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13327,7 +13327,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13361,7 +13361,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13378,7 +13378,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_trk",
-      "target_index": 23,
+      "target_index": 20,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13395,7 +13395,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_trk",
-      "target_index": 23,
+      "target_index": 20,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13429,7 +13429,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td_18_ref",
-      "target_index": 44,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13446,7 +13446,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td_18_ref",
-      "target_index": 44,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13480,7 +13480,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_tdfrompathrow22",
-      "target_index": 48,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13497,7 +13497,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_tdfrompathrow22",
-      "target_index": 48,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13701,7 +13701,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 34,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13718,7 +13718,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trk_sample_count",
-      "target_index": 115,
+      "target_index": 114,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13769,7 +13769,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_tagtrk",
-      "target_index": 88,
+      "target_index": 87,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13803,7 +13803,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_idxtrk",
-      "target_index": 8,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14041,7 +14041,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14160,7 +14160,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_lnoffsets",
-      "target_index": 34,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14262,7 +14262,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14330,7 +14330,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_row_ctr_zs",
-      "target_index": 113,
+      "target_index": 115,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14347,7 +14347,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_r_zp",
-      "target_index": 47,
+      "target_index": 44,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14364,7 +14364,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14432,7 +14432,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14449,7 +14449,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14534,7 +14534,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_td08d",
-      "target_index": 21,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14551,7 +14551,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_td08d",
-      "target_index": 21,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14585,7 +14585,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_td08d",
-      "target_index": 21,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14602,7 +14602,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_td08d",
-      "target_index": 21,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14670,7 +14670,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_opponent_spd_tbl",
-      "target_index": 74,
+      "target_index": 77,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14687,7 +14687,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getres",
-      "target_index": 22,
+      "target_index": 24,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -14721,7 +14721,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getres",
-      "target_index": 22,
+      "target_index": 24,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -14755,7 +14755,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpyfar",
-      "target_index": 13,
+      "target_index": 14,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -14772,7 +14772,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_opptext_label",
-      "target_index": 87,
+      "target_index": 90,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14789,7 +14789,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_getresl",
-      "target_index": 26,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -14840,7 +14840,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_aOpp1",
-      "target_index": 52,
+      "target_index": 54,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14857,7 +14857,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_aOpp1",
-      "target_index": 52,
+      "target_index": 54,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14874,7 +14874,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_globalgamesettings",
-      "target_index": 95,
+      "target_index": 97,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14891,7 +14891,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_purgememory",
-      "target_index": 92,
+      "target_index": 91,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -14942,7 +14942,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trk_sample_count",
-      "target_index": 115,
+      "target_index": 114,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14959,7 +14959,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14976,7 +14976,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td_18_ref",
-      "target_index": 44,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -14993,7 +14993,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td_18_ref",
-      "target_index": 44,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15010,7 +15010,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td_18_ref",
-      "target_index": 44,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15027,7 +15027,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_trk",
-      "target_index": 23,
+      "target_index": 20,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15044,7 +15044,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_trk",
-      "target_index": 23,
+      "target_index": 20,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15078,7 +15078,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_tdfrompathrow22",
-      "target_index": 48,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15095,7 +15095,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_tdfrompathrow22",
-      "target_index": 48,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15163,7 +15163,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trk_sample_count",
-      "target_index": 115,
+      "target_index": 114,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15180,7 +15180,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trkptrpath",
-      "target_index": 57,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15197,7 +15197,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trkptrpath",
-      "target_index": 57,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15248,7 +15248,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15265,7 +15265,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trkptrpath",
-      "target_index": 57,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15282,7 +15282,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trkptrpath",
-      "target_index": 57,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15299,7 +15299,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_row_ctr_zs",
-      "target_index": 113,
+      "target_index": 115,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15316,7 +15316,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_r_zp",
-      "target_index": 47,
+      "target_index": 44,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15333,7 +15333,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trklst",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15350,7 +15350,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trkptrpath",
-      "target_index": 57,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15367,7 +15367,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trkptrpath",
-      "target_index": 57,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15384,7 +15384,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trackdat7",
-      "target_index": 56,
+      "target_index": 57,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15401,7 +15401,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trackdat7",
-      "target_index": 56,
+      "target_index": 57,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15418,7 +15418,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td6_ptr_b",
-      "target_index": 39,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15435,7 +15435,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td6_ptr_b",
-      "target_index": 39,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15452,7 +15452,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trackdat7",
-      "target_index": 56,
+      "target_index": 57,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15469,7 +15469,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trackdat7",
-      "target_index": 56,
+      "target_index": 57,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15486,7 +15486,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trackdat7",
-      "target_index": 56,
+      "target_index": 57,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15503,7 +15503,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_trackdat7",
-      "target_index": 56,
+      "target_index": 57,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15520,7 +15520,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15537,7 +15537,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td15p_9",
-      "target_index": 20,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15605,7 +15605,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_closeresource",
-      "target_index": 10,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -15622,7 +15622,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td3",
-      "target_index": 35,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15639,7 +15639,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td3",
-      "target_index": 35,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15656,7 +15656,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td3",
-      "target_index": 35,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15673,7 +15673,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td3",
-      "target_index": 35,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15690,7 +15690,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td3",
-      "target_index": 35,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15707,7 +15707,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_td3",
-      "target_index": 35,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -15724,7 +15724,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_road_trk",
-      "target_index": 23,
+      "target_index": 20,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -16411,77 +16411,77 @@
       "_z_ctr_pos",
       "_getpinfo",
       "_getwpinfo",
-      "_car_dvecs",
       "_idxtrk",
+      "_car_dvecs",
       "_opponentcompile",
-      "_closeresource",
       "_loopBae_InnXBounds0",
+      "_closeresource",
       "_loopBase_OutXBounds0",
-      "_strcpyfar",
       "_loopBase_ZBounds0",
+      "_strcpyfar",
       "_loopSurface_XBounds0",
       "_loopSurface_ZBounds0",
       "_g_column_of_trkdata21_pth",
       "_opponent_pointc",
-      "_fluffyload",
-      "_td15p_9",
       "_g_td08d",
-      "_getres",
       "_road_trk",
-      "_car_wheel_offsets",
+      "_fluffyload",
       "_pl_carres_3d",
+      "_td15p_9",
+      "_getres",
+      "_car_wheel_offsets",
+      "_pl_i",
       "_getresl",
       "_st_hdg",
-      "_pl_i",
       "_pos_pt",
-      "_locateshapez",
-      "_shape_template_points_a",
       "_td14tb",
       "_postable",
-      "_lnoffsets",
       "_td3",
-      "_modsize",
-      "_shape_template_points_b",
+      "_locateshapez",
+      "_shape_template_points_a",
+      "_lnoffsets",
       "_ptr_model_active",
       "_td6_ptr_b",
+      "_modsize",
+      "_shape_template_points_b",
+      "_pts_set",
+      "_td_18_ref",
       "_settires",
       "_shape_template_points_c",
-      "_pts_set",
+      "_r_zp",
       "_terheight",
-      "_td_18_ref",
+      "_tdfrompathrow22",
       "_shape_template_points_d",
       "_core",
-      "_r_zp",
-      "_tdfrompathrow22",
+      "_road_elem_ctrz",
       "_resmem",
       "_shape_template_points_e",
-      "_road_elem_ctrz",
-      "_aOpp1",
-      "_shape_template_points_f",
+      "_g_op_carvector2",
       "_road_num",
+      "_aOpp1",
       "_sampled_trk_column",
+      "_shape_template_points_f",
       "_trackdat7",
       "_trkptrpath",
-      "_g_op_carvector2",
       "_secondoveh",
-      "_init_3dpieces",
-      "_wall_facingang",
       "_secondveccar",
       "_wallrecrecord",
       "_compiletrack",
-      "_trklst",
-      "_makeobjdef",
+      "_init_3dpieces",
+      "_wall_facingang",
       "_roadupcheck",
       "_g_cursurfacekindvalue",
+      "_fixedmult",
       "_aBarn",
+      "_makeobjdef",
+      "_intatan",
       "_test_pln",
+      "_trklst",
       "_locate_shape_fatal",
       "_aGame1",
-      "_fixedmult",
-      "_opponent_spd_tbl",
       "_aCar0",
       "_aGame2",
-      "_intatan",
+      "_opponent_spd_tbl",
       "_trksign",
       "_ancv2",
       "_openresource",
@@ -16491,24 +16491,24 @@
       "_buf_obase",
       "_corkLR_negZBound",
       "__aFlmul",
-      "_opptext_label",
       "_tagtrk",
-      "_g_game13dresource",
       "_corkLR_posZBound",
       "__aFldiv",
+      "_opptext_label",
       "_purgememory",
       "_ctrmesh",
+      "_g_game13dresource",
       "_td19hdl",
-      "_globalgamesettings",
-      "_remove_3dpieces",
       "_availmem",
-      "_trackdata_penalty_related",
-      "_remove_3dcars",
-      "_freememory",
       "_g_planlist",
-      "_init_3dcars",
-      "_g_hillf",
+      "_globalgamesettings",
+      "_trackdata_penalty_related",
+      "_remove_3dpieces",
+      "_freememory",
+      "_remove_3dcars",
       "_plncurrptr",
+      "_g_hillf",
+      "_init_3dcars",
       "_wall_wallelement",
       "_trkd23adr",
       "_hgthgt",
@@ -16517,9 +16517,9 @@
       "_g_corkscrew_type_flag",
       "_gap_trackrow_1",
       "_g_cur_track_row",
-      "_row_ctr_zs",
       "_intsin",
       "_trk_sample_count",
+      "_row_ctr_zs",
       "_g_road_piece_id",
       "_intcos",
       "_inthypot",
@@ -16576,13 +16576,13 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_init_3dpieces",
-        "offset": 7412,
+        "name": "_compiletrack",
+        "offset": 9524,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_compiletrack",
-        "offset": 9524,
+        "name": "_init_3dpieces",
+        "offset": 7412,
         "segment": "UNIT_TEXT"
       },
       {
@@ -16682,6 +16682,11 @@
       "size": 3033
     },
     {
+      "path": "include/carnames.h",
+      "sha256": "95f3f4f11934ea6c87e436cadf50ad9c1abda9336537fd43470d791128439f64",
+      "size": 162
+    },
+    {
       "path": "include/chartab.h",
       "sha256": "08cf32e58c51b2b367e5230b770d3591ecddf6ade197ad4a809958deba697c09",
       "size": 134
@@ -16713,8 +16718,8 @@
     },
     {
       "path": "include/matrix.h",
-      "sha256": "1e4e297e4bc5f090184fbe8f58c84d0be6651db259ecf39e2506b9358e186e55",
-      "size": 488
+      "sha256": "8fe081d73507d2f2ea6dedf4d7c31b679482a7094960758e9054c07320fe7911",
+      "size": 514
     },
     {
       "path": "include/memory.h",
@@ -16742,19 +16747,24 @@
       "size": 7995
     },
     {
+      "path": "include/signbuf.h",
+      "sha256": "cc10239a2de176a86fa7c43dc99fc8711ff16dfd8e9801304c1c93db4fdd6b38",
+      "size": 130
+    },
+    {
       "path": "include/skybox.h",
       "sha256": "8f11de8494d20c762320addb89886546a1849890bee26ef3d5130957b809cf8c",
       "size": 276
     },
     {
       "path": "include/track.h",
-      "sha256": "9d48e3265dda487d1e07d7095547317b450f38903fabf257e1b427c761a2c55c",
-      "size": 6678
+      "sha256": "a43b5ca2e9051eb9e0ae2f91072571dbf8cb08e15230fd4dfb9ad930bf7caafb",
+      "size": 6944
     },
     {
       "path": "include/trig.h",
-      "sha256": "5dea9502cd98d21ac44c8dd22c008b264207471d17579efb484af3e4bccffb51",
-      "size": 130
+      "sha256": "dacf3083599a86e90db8a2e7f8e371282c9ec6ea57911e0554070936738f9532",
+      "size": 172
     },
     {
       "path": "include/trkobj.h",
@@ -16813,7 +16823,43 @@
       "value": null
     },
     {
-      "line": 13,
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 14,
       "path": "include/matrix.h",
       "pragma": "pack",
       "value": null
@@ -17139,6 +17185,48 @@
     {
       "line": 45,
       "path": "include/files.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 8,
+      "path": "include/car.h",
       "pragma": "pack",
       "value": null
     }

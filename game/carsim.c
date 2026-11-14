@@ -1,22 +1,3 @@
-#define WORLD_COORDINATE_SCALE_SHIFT 6
-#define ANGLE_UNITS_PER_TURN 0x400
-#define ANGLE_TURN_MASK 0x03ff
-#define ANGLE_THREE_QUARTERS_TURN 0x300
-#define ANGLE_HALF_TURN 0x200
-#define ANGLE_QUARTER_TURN 0x100
-#define ANGLE_EIGHTH_TURN 0x80
-#define ANGLE_SEVEN_EIGHTHS_TURN 0x380
-#define Q8_FRACTION_BITS 8
-#define CAR_SPEED_Q8_ONE_MPH 0x100
-#define CAR_SPEED_Q8_THREE_MPH 0x300
-#define CAR_SPEED_Q8_TWENTY_MPH 0x1400
-#define CAR_SPEED_Q8_MAX_64_MPH 0x4000
-#define CAR_SPEED_Q8_MAX_128_MPH 0x8000
-#define CAR_SPEED_Q8_MAX_245_MPH 0xF500
-#define CAR_SPEED_Q8_MAX_250_MPH 0xFA00
-#define LOW_GEAR_RPM_LIMIT 0xA28
-#define ENGINE_RPM_5000 5000
-#define ENGINE_RPM_DELTA_LIMIT 2000
 /* Exact-object requirement: write back the wheel response even when unchanged. */
 #define WRITE_BACK(value) ((value) = (value))
 #include "types.h"
@@ -97,10 +78,13 @@ struct GAMESTATE {
 #include "mousebuf.h"
 #include "input.h"
 
-/* Local view: resbuftext; type is signed byte; another unit uses array[80]. */
-extern I8 resbuftext;
-/* Local view: td10checkptr; pointer is struct VECTOR; another unit uses signed word. */
-extern struct VECTOR far* trksign;
+
+
+#include "textbuf.h"
+
+
+#include "signbuf.h"
+
 #include "shapes3d.h"
 #include "audio.h"
 
@@ -115,6 +99,20 @@ extern I16 far messagebox();
 #include "dlgcolor.h"
 #include "files.h"
 #include "trig.h"
+
+#define WORLD_COORDINATE_SCALE_SHIFT 6
+#define ANGLE_SEVEN_EIGHTHS_TURN 0x380
+#define CAR_SPEED_Q8_ONE_MPH 0x100
+#define CAR_SPEED_Q8_THREE_MPH 0x300
+#define CAR_SPEED_Q8_TWENTY_MPH 0x1400
+#define CAR_SPEED_Q8_MAX_64_MPH 0x4000
+#define CAR_SPEED_Q8_MAX_128_MPH 0x8000
+#define CAR_SPEED_Q8_MAX_245_MPH 0xF500
+#define CAR_SPEED_Q8_MAX_250_MPH 0xFA00
+#define LOW_GEAR_RPM_LIMIT 0xA28
+#define ENGINE_RPM_5000 5000
+#define ENGINE_RPM_DELTA_LIMIT 2000
+
 /* Local view: g_cursurfacekindvalue; frontend owns unsigned char; trkscene owns char. */
 extern I8 g_cursurfacekindvalue;
 /* Local view: test_pln; frontend owns unsigned char; trkscene owns char. */
@@ -124,8 +122,8 @@ extern void ADD_OBJECT_TO_BUFFER(struct TRANSFORMSHAPE3D* shape);
 
 /* Unused OMF-order declaration: this address is private poly_link_list[0]. */
 
-/* Local view: trklst; array is None; another unit uses 215. */
-extern struct TRACKOBJECT trklst[];
+
+
 
 static struct MATRIX fallback_rotation_cache;
 
@@ -897,9 +895,9 @@ wheels_done:
 		}
 		i = (I8)td19hdl[lnoffsets[res.z] + res.x];
 		if (i != -1 && core.game_track_object_broken[i] == 0) {
-			objPos[0].x = trksign[i].x;
-			objPos[0].y = trksign[i].y;
-			objPos[0].z = trksign[i].z;
+			objPos[0].x = ((struct VECTOR far *)trksign)[i].x;
+			objPos[0].y = ((struct VECTOR far *)trksign)[i].y;
+			objPos[0].z = ((struct VECTOR far *)trksign)[i].z;
 			if (boxcheck(activeCarSetup->collide_points, self, signsizeinfo, objPos)) {
 				core.game_track_object_broken[i] = 1;
 				init_explode(i + 2, -activeCarState->car_rotate.x, (I32)activeCarState->car_speed2 * 0x580 / 0x3C00U);

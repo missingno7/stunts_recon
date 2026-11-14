@@ -1,14 +1,3 @@
-#define ANGLE_UNITS_PER_TURN 0x400
-#define ANGLE_QUARTER_TURN 0x100
-#define ANGLE_HALF_TURN 0x200
-#define ANGLE_THREE_QUARTERS_TURN 0x300
-#define ANGLE_TURN_MASK 0x3ff
-#define ANGLE_EIGHTH_TURN 0x80
-#define POLYINFO_CAPACITY 400
-#define POLYINFO_POOL_BYTES 0x28A0
-#define POLYINFO_RESET_SENTINEL 0xffff
-#define RECT_EMPTY_MIN_SENTINEL 9999
-#define RECT_EMPTY_MAX_SENTINEL -1
 #include "types.h"
 #include "math3d.h"
 #include "matrix.h"

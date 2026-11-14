@@ -263,8 +263,8 @@
     },
     {
       "path": "include/matrix.h",
-      "sha256": "1e4e297e4bc5f090184fbe8f58c84d0be6651db259ecf39e2506b9358e186e55",
-      "size": 488
+      "sha256": "8fe081d73507d2f2ea6dedf4d7c31b679482a7094960758e9054c07320fe7911",
+      "size": 514
     },
     {
       "path": "include/radius.h",
@@ -283,8 +283,8 @@
     },
     {
       "path": "include/trig.h",
-      "sha256": "5dea9502cd98d21ac44c8dd22c008b264207471d17579efb484af3e4bccffb51",
-      "size": 130
+      "sha256": "dacf3083599a86e90db8a2e7f8e371282c9ec6ea57911e0554070936738f9532",
+      "size": 172
     },
     {
       "path": "include/types.h",
@@ -295,6 +295,11 @@
       "path": "include/viewstat.h",
       "sha256": "53294efeade4f735e9e84890c7d6c7ab792e6686c510374ab3de17db1f231210",
       "size": 412
+    },
+    {
+      "path": "include/wheel.h",
+      "sha256": "754fb4cc33dff5ee255e458e9d6c8f108c7495b46173caf0c11a553531f48a5c",
+      "size": 302
     },
     {
       "line": 9,
@@ -333,7 +338,43 @@
       "value": null
     },
     {
-      "line": 13,
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 14,
       "path": "include/matrix.h",
       "pragma": "pack",
       "value": null
@@ -467,6 +508,12 @@
     {
       "line": 170,
       "path": "include/shapes3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 4,
+      "path": "include/wheel.h",
       "pragma": "pack",
       "value": null
     }

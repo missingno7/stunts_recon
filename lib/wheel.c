@@ -1,12 +1,6 @@
 #include "types.h"
 /* Generate, rotate, and submit the front/back wheel outline and side faces for rendering. */
 
-#define WHEEL_RING_POINT_COUNT 16
-#define WHEEL_SECOND_RING_OFFSET 16
-#define WHEEL_OUTER_RING_OFFSET 32
-#define WHEEL_POINT_BUFFER_COUNT 48
-#define WHEEL_DRAW_FACE_POINT_COUNT 0x12
-#define WHEEL_HALF_RING_POINT_COUNT 8
 #include "math3d.h"
 #include "wheel.h"
 #include "viewstat.h"

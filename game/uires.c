@@ -1,14 +1,6 @@
 /* Explicit register declarations below are required by the matching MSC 5.10 build. */
-#define DIALOG_TEXT_WIDTH_ALIGNMENT_MASK 0xfff8
-#define SHAPE3D_RESOURCE_HEADER_BYTES 4
-#define SHAPE3D_RESOURCE_VERTEX_BYTES 6
-#define SHAPE3D_RESOURCE_CULL_RECORD_BYTES 4
-#define SHAPE3D_RESOURCE_PRIMITIVE_BYTES 8
-#define MOUSE_TRACK_FIXED_POINT_SHIFT 2
 #include "types.h"
 /* MSC 5.10 <ctype.h> macros over the pinned runtime table _ctype */
-#define _UPPER 0x1
-#define _LOWER 0x2
 #define isupper(c) ((_ctype+1)[c] & _UPPER)
 #define islower(c) ((_ctype+1)[c] & _LOWER)
 #define _tolower(c) ((c)-'A'+'a')
@@ -52,6 +44,10 @@ signed char input_device_modestack[8];
 #include "files.h"
 int kbjoyflags;
 #include "car.h"
+
+#define SHAPE3D_RESOURCE_PRIMITIVE_BYTES 8
+#define MOUSE_TRACK_FIXED_POINT_SHIFT 2
+
 I16 flagsdown;
 void far* main_data_file_addr;
 /* Local view: openresource; renderer retains its byte-pointer resource prototype. */
@@ -396,8 +392,7 @@ end_button:
 I16 far floadreq(I8 *path, I8 *selected_name, I16 attributes,
                              I8 far *heading)
 {
-    /* Local view: resbuftext; type is array[None]; another unit uses signed byte. */
-    extern I8 resbuftext[];
+    extern char resbuftext[80];
     extern int dlg_colour;
     extern unsigned char _ctype[];
 
@@ -611,8 +606,7 @@ extern I16 far fsavereq(I8 *, I8 *, I8 far *);
 /* Displays the save dialog and returns the selected file name. */
 I16 far fsavereq(I8 *name, I8 *directory, I8 far *title)
 {
-    /* Local view: resbuftext; type is signed byte; another unit uses array[80]. */
-    extern I8 resbuftext;
+    extern char resbuftext[80];
     extern int dlg_colour;
 
     register I16 key;
@@ -626,8 +620,8 @@ I16 far fsavereq(I8 *name, I8 *directory, I8 far *title)
 
     accepted = 0;
     textcolor(dlg_colour, font_secondary_color);
-    strcpyfar(&resbuftext, title);
-    movtxy(&resbuftext, layout[0], layout[1]);
+    strcpyfar(resbuftext, title);
+    movtxy(resbuftext, layout[0], layout[1]);
     textcolor(dlg_colour, font_secondary_color);
     movtxy(name, layout[2], layout[3]);
     movtxy(directory, layout[4], layout[5]);
@@ -1155,8 +1149,7 @@ void far draw3dbutton(I8 far *caption, I16 x, I16 y, I16 width, I16 height,
     register I16 bottom;
     I16 idx;
     I16 text_size;
-    /* Local view: resbuftext; type is array[None]; another unit uses signed byte. */
-    extern I8 resbuftext[];
+    extern char resbuftext[80];
 
 
     rgt = x + width;

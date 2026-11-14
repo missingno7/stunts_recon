@@ -1,32 +1,3 @@
-#define FAR far
-#define NEAR near
-#define HUGE huge
-#define WORLD_COORDINATE_SHIFT 6
-#define CAR_SPEED_Q8_SHIFT 8
-#define SPEEDOMETER_HUNDREDS_BASE 100
-#define SPEEDOMETER_TWO_HUNDREDS_BASE 200
-#define PLATFORM_SCREEN_WIDTH_PIXELS 320
-#define PLATFORM_SCREEN_HEIGHT_PIXELS 200
-#define BIOS_KEY_F1 0x3B00
-#define BIOS_KEY_F2 0x3C00
-#define BIOS_KEY_F3 0x3D00
-#define BIOS_KEY_F4 0x3E00
-#define KEY_SCAN_UP 0x4800
-#define KEY_SCAN_LEFT 0x4B00
-#define KEY_SCAN_RIGHT 0x4D00
-#define KEY_SCAN_DOWN 0x5000
-#define KEY_ASCII_ESCAPE 27
-#define KEY_ASCII_UPPER_C 0x43
-#define KEY_ASCII_UPPER_D 0x44
-#define KEY_ASCII_UPPER_H 0x48
-#define KEY_ASCII_UPPER_M 0x4D
-#define KEY_ASCII_UPPER_R 0x52
-#define KEY_ASCII_LOWER_C 0x63
-#define KEY_ASCII_LOWER_D 0x64
-#define KEY_ASCII_LOWER_H 0x68
-#define KEY_ASCII_LOWER_M 0x6D
-#define KEY_ASCII_LOWER_R 0x72
-#define KEY_ASCII_LOWER_T 0x74
 #include "types.h"
 
 #include "math3d.h"
@@ -150,8 +121,10 @@ int dashbmy9;
 int rfy5;
 #include "input.h"
 
-/* Local view: resbuftext; type is signed byte; another unit uses array[80]. */
-extern I8 resbuftext;
+
+
+#include "textbuf.h"
+
 
  //trackdata1;
  //trackdata2;
@@ -161,8 +134,9 @@ extern I8 resbuftext;
  //trackdata5;
  //trackdata8;
 
-/* Local view: td10checkptr; pointer is signed word; another unit uses struct VECTOR. */
-extern I16 far* trksign;// trackdata10;
+
+#include "signbuf.h"
+// trackdata10;
  //trackdata11;
 
 char far* td13_replay_hdr; //trackdata13;
@@ -210,6 +184,9 @@ I8 replay_axis_magnitude[34] = { 0, 0, 0, 0, 0, 0, 4, 8, 12, 16, 20, 24, 28, 32,
 	60, 64, 68, 72, 76, 84, 90, 98, 106, 114, 121, 127, 127, 127 };
 #include "shp2rec.h"
 #include "sprite.h"
+
+#define CAR_SPEED_Q8_SHIFT 8
+
 
 /* run_game: reconstructed from the target listing () */
 
@@ -519,9 +496,9 @@ replaybar_done:
 				movesim();
 				if (++dialog_result == rate_frame) {
 					dialog_result = 0;
-					maketime(&resbuftext, core.game_frame + elaptm1, 1);
+					maketime(resbuftext, core.game_frame + elaptm1, 1);
 					mouseoff();
-					movtxy(&resbuftext, mycenter(&resbuftext), dialog_values[1]);
+					movtxy(resbuftext, mycenter(resbuftext), dialog_values[1]);
 					mouseon();
 				}
 			} while (hurrykey(1) != 27 && core.opponentstate.car_crashBmpFlag == 0 &&
@@ -1401,19 +1378,19 @@ void doreplay(I16 mode, I16 frame_index, I16 frame_offset)
             movpackf(replayshapes[0]);
             camera_button_tick[cam_idg] = -1;
             camera_button_col_cache[cam_idg] = -1;
-            maketime(&resbuftext, globalgamesettings.game_recordedframes + elaptm1, 1);
+            maketime(resbuftext, globalgamesettings.game_recordedframes + elaptm1, 1);
             textcolor(dlg_colour, 0);
             mysetfont(fntled_res);
-            movtxy(&resbuftext, 0xD8, 0xBB);
+            movtxy(resbuftext, 0xD8, 0xBB);
             fontsetfontdef();
         }
         if (camera_button_tick[cam_idg] != frame_offset + elaptm1) {
             camera_button_tick[cam_idg] = frame_offset + elaptm1;
-            maketime(&resbuftext, frame_offset + elaptm1, 1);
+            maketime(resbuftext, frame_offset + elaptm1, 1);
             textcolor(dlg_colour, 0);
             mouseoff();
             mysetfont(fntled_res);
-            movtxy(&resbuftext, 0x98, 0xBB);
+            movtxy(resbuftext, 0x98, 0xBB);
             fontsetfontdef();
         }
         if (camera_mode_view[cam_idg] != cammd) {
@@ -1807,12 +1784,12 @@ pause_menu:
                     gotosim(i);
                     tmr2 = i;
                     doreplay(UI_REPLAY_OPERATION_SET_PRESSED, 4, 0);
-                    strcpyfar(&resbuftext, getresl(gamerptrs, "wai"));
+                    strcpyfar(resbuftext, getresl(gamerptrs, "wai"));
                     if (statemgmtcpy != 0)
-                        mergezones(active_ui_dirty_rect, shadowtext(&resbuftext, mycenter(&resbuftext), 100, dlg_colour, 0),
+                        mergezones(active_ui_dirty_rect, shadowtext(resbuftext, mycenter(resbuftext), 100, dlg_colour, 0),
                                    active_ui_dirty_rect);
                     else
-                        shadowtext(&resbuftext, mycenter(&resbuftext), 100, dlg_colour, 0);
+                        shadowtext(resbuftext, mycenter(resbuftext), 100, dlg_colour, 0);
                     while (core.game_frame != tmr2) {
                         movesim();
                         doreplay(UI_REPLAY_OPERATION_DRAW, core.game_frame, tmr2);
@@ -1842,12 +1819,12 @@ pause_menu:
                     j = travel / 20;
                     doreplay(UI_REPLAY_OPERATION_SET_PRESSED, 4, 0);
                     if (j != 0) {
-                        strcpyfar(&resbuftext, getresl(gamerptrs, "wai"));
+                        strcpyfar(resbuftext, getresl(gamerptrs, "wai"));
                         if (statemgmtcpy != 0)
-                            mergezones(active_ui_dirty_rect, shadowtext(&resbuftext, mycenter(&resbuftext), 100, dlg_colour, 0),
+                            mergezones(active_ui_dirty_rect, shadowtext(resbuftext, mycenter(resbuftext), 100, dlg_colour, 0),
                                        active_ui_dirty_rect);
                         else
-                            shadowtext(&resbuftext, mycenter(&resbuftext), 100, dlg_colour, 0);
+                            shadowtext(resbuftext, mycenter(resbuftext), 100, dlg_colour, 0);
                         i = tmr2 - j;
                         gotosim(i);
                         tmr2 = i;
