@@ -1,12 +1,12 @@
-# Stunts 1.1 MCGA historical reconstruction
+# Stunts 1.1 (MCGA): source reconstruction and SDL3 port
 
-This workspace replaces explicit raw regions of the original MCGA image with byte-exact historical compiler and runtime output. `HYBRID_EXACT` means the complete hybrid executable and ordered relocations match the immutable oracle. It does not mean the entire program has been recovered from source.
+`game/`, `lib/` and `include/` are source code for the original MS-DOS executable: 38 C files and 40 MASM modules that, built with the original Microsoft toolchain, reproduce the executable byte for byte, including the order of its relocations. No bytes are copied from the original. `port/` builds a native SDL3 version of the game from the same sources.
 
 ## Current status
 
-The final seg007 object is now reconstructed as C with the pinned MSC 6.00 non-A register-gated profile; the unreferenced dword at `[199484,199488)` is accepted at the head of the adjacent ASM module containing the copyright data. The ownership manifest has zero unresolved initialized bytes and zero raw BSS bytes. Full `python tools/validate.py` passes the complete test suite, 90 independent DOSBox-X contribution checks, fresh whole-image equality, and the BSS real-link gate. `python tools/validate.py --image` reports zero image mismatch bytes with relocation set, bank order, and packed image all exact. A fresh `histbuild.py` rebuilds the packed executable exactly through an ordinary library-search link, with zero raw-debt objects.
+The reconstruction is complete in the sense of the proof: `python tools/validate.py` reports `HYBRID_EXACT` and `python tools/histbuild.py` rebuilds the packed executable from sources alone (`BUILT_EXACT`). What that proves about the original, which parts of the tree are our own choices, and what stays unknown is stated in [docs/reconstruction.md](docs/reconstruction.md).
 
-The freeze record and remaining scope are recorded in [the freeze record](docs/freeze.md), [unresolved questions](docs/unresolved.md), and the [Port Forge runtime oracle](docs/porting/runtime-oracle.md). Runtime captures are a bounded SDL3 reference, separate from the byte-exact historical acceptance proof.
+Questions about the running game and its data formats are in [unresolved questions](docs/unresolved.md); the port is described in the [SDL3 handoff](docs/porting/HANDOFF.md) and measured against the [runtime oracle](docs/porting/runtime-oracle.md).
 
 ## Setup
 

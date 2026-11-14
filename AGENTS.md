@@ -12,7 +12,7 @@ Never trim objects, mask acceptance mismatches, ignore inconvenient OMF records,
 
 Work proceeds in this order; do not start a later stage while an earlier one is open unless asked.
 
-1. **Source side.** Settle remaining origin and attribution questions (ASM versus compiled C, compiler versions, natural link order) with one bounded investigation each, then document what stays unknown. Replace placeholder names. Prune superseded sources, recipes, campaign-era tools, tests and docs.
+1. **Source side.** Closed. What is proven, what is our choice and what stays unknown is in `docs/reconstruction.md`. Do not reopen source polish (remaining per-file declarations, rejected original names) unless asked; source changes that the port work requires still go through the gate.
 2. **Faithful port.** The SDL3 port reproduces original behaviour; the indexed 320x200 renderer is its visual oracle.
 3. **Enhanced side.** Native rendering grows from understanding the game's scene and renderer, not from further interception of the DOS pipeline.
 

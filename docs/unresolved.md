@@ -1,10 +1,10 @@
-# Remaining uncertainties at the historical freeze
+# Remaining uncertainties
 
 This is the list of uncertainties that still have a practical consequence. The machine-exact oracle and strict gate are complete; there are no class F freeze blockers. Class A items are genuine historical/runtime evidence gaps; class E items are semantic unknowns that can remain opaque while bytes and extents stay preserved.
 
 ## Historical fidelity
 
-- **Original compiler attribution and translation-unit/link recipe (A).** The canonical matching profile is pinned Microsoft C 5.10 medium model with `/AM /O /Gs`, but accepted functions do not distinguish MSC 5.00 from 5.10. Original TU grouping, general LINK response, arbitrary frame/binding modes, and natural module/library order are not recovered. `histbuild.py` uses a documented combined-library reconstruction assumption; the current diagnostic places 2,023 of 2,588 relocation positions in oracle order (bank 0 exact; banks 1–3 retain the order residual). The strict oracle-ordered image proof is a separate result. Evidence: `evidence/toolchain-hypotheses.json`, `README.md` Historical build, `freeze.md`.
+- **Original compiler attribution and translation-unit/link recipe (A).** The canonical matching profile is pinned Microsoft C 5.10 medium model with `/AM /O /Gs`, but accepted functions do not distinguish MSC 5.00 from 5.10. Original TU grouping, general LINK response, arbitrary frame/binding modes, and natural module/library order are not recovered. `histbuild.py` reproduces the image and the relocation order through a combined-library link whose member order is taken from the image (README, Historical build); that order is an assumption, not a recovered fact. Evidence: `evidence/toolchain-hypotheses.json`, `README.md` Historical build, `freeze.md`.
 
 ## Port-only compile baseline
 
