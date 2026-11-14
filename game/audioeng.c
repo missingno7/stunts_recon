@@ -14,8 +14,8 @@ static char id_buffer[RESOURCE_ID_STRING_BYTES];
 extern void FAR * FAR locate_shape_fatal(void FAR*, I8*);
 /* Local view: abortmessage; ui.h changes _audio_add_driver_timer PUBLIC type index 552 to 645. */
 extern void far abortmessage(char *);
-/* Local view: audio_set_chunk_volume; parameters[1] is signed word; another unit uses unsigned byte. */
-extern void far audio_set_chunk_volume(int handle, int value);
+
+
 /* Local view: set_audio_voice_value; MSC 6 /Zi requires the original ordinary far entry type; the shared entry uses _loadds. */
 extern void far set_audio_voice_value(int channel, int rate);
 /* Local view: debug_printf_text; ui.h changes _audio_add_driver_timer PUBLIC type index 552 to 645. */

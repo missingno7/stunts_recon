@@ -439,4 +439,5 @@ extern unsigned long far audioresource_get_dword(char far *);
 extern unsigned int far audioresource_get_word(unsigned int far *);
 extern void doengine(char, char, struct CARSTATE*, struct SIMD*);
 extern void myupdatesfx1(struct AUDIO_CAR_FRAME *, short);
+extern void far _loadds audio_set_chunk_volume(int voiceIndex, unsigned char type);
 #endif

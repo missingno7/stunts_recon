@@ -25,6 +25,21 @@
       ],
       "publics": [
         {
+          "name": "_palette_window_fill_color",
+          "offset": 66,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_palette_window_line_color",
+          "offset": 64,
+          "segment": "_DATA"
+        },
+        {
+          "name": "_palette_window_line_style",
+          "offset": 68,
+          "segment": "_DATA"
+        },
+        {
           "name": "_camera_select_fill_color",
           "offset": 80,
           "segment": "_DATA"
@@ -195,24 +210,9 @@
           "segment": "_DATA"
         },
         {
-          "name": "_palette_window_fill_color",
-          "offset": 66,
-          "segment": "_DATA"
-        },
-        {
-          "name": "_palette_window_line_color",
-          "offset": 64,
-          "segment": "_DATA"
-        },
-        {
           "name": "_audio_make_filename",
           "offset": 0,
           "segment": "UNIT_TEXT"
-        },
-        {
-          "name": "_palette_window_line_style",
-          "offset": 68,
-          "segment": "_DATA"
         }
       ],
       "segments": [
@@ -676,6 +676,21 @@
     ],
     "publics": [
       {
+        "name": "_palette_window_fill_color",
+        "offset": 66,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_palette_window_line_color",
+        "offset": 64,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_palette_window_line_style",
+        "offset": 68,
+        "segment": "_DATA"
+      },
+      {
         "name": "_camera_select_fill_color",
         "offset": 80,
         "segment": "_DATA"
@@ -846,24 +861,9 @@
         "segment": "_DATA"
       },
       {
-        "name": "_palette_window_fill_color",
-        "offset": 66,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_palette_window_line_color",
-        "offset": 64,
-        "segment": "_DATA"
-      },
-      {
         "name": "_audio_make_filename",
         "offset": 0,
         "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_palette_window_line_style",
-        "offset": 68,
-        "segment": "_DATA"
       }
     ],
     "segments": [
@@ -942,8 +942,8 @@
     },
     {
       "path": "include/audio.h",
-      "sha256": "573aaf8e174efe73f9248b3792f3893316bb264f1e32e1370f5002aae3bd0dfb",
-      "size": 16246
+      "sha256": "f55dc9de82a90817d80548e5e356a2f88db3327d87a197bdea0e62fffc2ce056",
+      "size": 16773
     },
     {
       "path": "include/chartab.h",

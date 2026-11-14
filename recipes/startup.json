@@ -35,7 +35,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_elticks",
-      "target_index": 67,
+      "target_index": 74,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -52,7 +52,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_zonecheck",
-      "target_index": 71,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -69,7 +69,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_elticks",
-      "target_index": 67,
+      "target_index": 74,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -86,7 +86,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clearwindow",
-      "target_index": 49,
+      "target_index": 56,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -103,7 +103,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_zonecheck",
-      "target_index": 71,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -120,7 +120,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clippix",
-      "target_index": 51,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -137,7 +137,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_elticks",
-      "target_index": 67,
+      "target_index": 74,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -154,7 +154,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clearwindow",
-      "target_index": 49,
+      "target_index": 56,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -171,7 +171,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_elticks",
-      "target_index": 67,
+      "target_index": 74,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -188,7 +188,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clippix",
-      "target_index": 51,
+      "target_index": 58,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -205,7 +205,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_displaywindow",
-      "target_index": 12,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -222,7 +222,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_loadpalandmouse",
-      "target_index": 9,
+      "target_index": 16,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -239,7 +239,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_criterr",
-      "target_index": 11,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -256,7 +256,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_dea_textres",
-      "target_index": 70,
+      "target_index": 77,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -273,7 +273,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_dea_textres",
-      "target_index": 70,
+      "target_index": 77,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -290,7 +290,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_toggle_flag6",
-      "target_index": 48,
+      "target_index": 52,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -307,7 +307,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_toggle_flag2",
-      "target_index": 47,
+      "target_index": 51,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -324,7 +324,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_exit",
-      "target_index": 25,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -341,7 +341,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_restoretimer",
-      "target_index": 46,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -358,7 +358,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_load_driver",
-      "target_index": 21,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -392,7 +392,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_initmouse",
-      "target_index": 29,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -409,7 +409,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_usescreenc",
-      "target_index": 13,
+      "target_index": 20,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -426,7 +426,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_timer_setup_interrupt",
-      "target_index": 58,
+      "target_index": 65,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -443,7 +443,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_video_set_mode4",
-      "target_index": 68,
+      "target_index": 75,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -460,7 +460,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_initgraphics",
-      "target_index": 50,
+      "target_index": 57,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -545,7 +545,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__ctype",
-      "target_index": 18,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -562,7 +562,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__ctype",
-      "target_index": 18,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -579,7 +579,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textrespfxchr",
-      "target_index": 61,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -596,7 +596,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_vid_flag6",
-      "target_index": 31,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -613,7 +613,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_videoflg5",
-      "target_index": 36,
+      "target_index": 44,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -630,7 +630,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_initmemory",
-      "target_index": 55,
+      "target_index": 62,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -647,7 +647,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_vidflg4_is1",
-      "target_index": 82,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -664,7 +664,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_vidflg3is_minus1",
-      "target_index": 45,
+      "target_index": 55,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -681,7 +681,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_vid_flg2_set",
-      "target_index": 34,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -698,7 +698,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pixel_scales",
-      "target_index": 80,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -715,7 +715,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 60,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -732,7 +732,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mdosexit",
-      "target_index": 73,
+      "target_index": 80,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -749,7 +749,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mdosexit",
-      "target_index": 73,
+      "target_index": 80,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -766,7 +766,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 60,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -783,7 +783,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msoundtog",
-      "target_index": 81,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -800,7 +800,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msoundtog",
-      "target_index": 81,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -817,7 +817,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 60,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -834,7 +834,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mdosexit",
-      "target_index": 73,
+      "target_index": 80,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -851,7 +851,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mdosexit",
-      "target_index": 73,
+      "target_index": 80,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -868,7 +868,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 60,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -885,7 +885,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msystempause",
-      "target_index": 44,
+      "target_index": 54,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -902,7 +902,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msystempause",
-      "target_index": 44,
+      "target_index": 54,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -919,7 +919,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 60,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -936,7 +936,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msystempause",
-      "target_index": 44,
+      "target_index": 54,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -953,7 +953,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msystempause",
-      "target_index": 44,
+      "target_index": 54,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -970,7 +970,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 60,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -987,7 +987,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mmusictog",
-      "target_index": 76,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1004,7 +1004,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mmusictog",
-      "target_index": 76,
+      "target_index": 2,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1021,7 +1021,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 60,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1038,7 +1038,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mkeyon",
-      "target_index": 39,
+      "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1055,7 +1055,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mkeyon",
-      "target_index": 39,
+      "target_index": 47,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1072,7 +1072,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 60,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1089,7 +1089,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_joystick_resource_text",
-      "target_index": 75,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1106,7 +1106,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_do_joystick_resource_text",
-      "target_index": 75,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1123,7 +1123,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_interpretsub",
-      "target_index": 60,
+      "target_index": 67,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1140,7 +1140,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msetrender",
-      "target_index": 57,
+      "target_index": 64,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1157,7 +1157,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msetrender",
-      "target_index": 57,
+      "target_index": 64,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1174,7 +1174,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_testkey",
-      "target_index": 16,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1191,7 +1191,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kb_shift_checking2",
-      "target_index": 7,
+      "target_index": 14,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1208,7 +1208,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kb_init_interrupt",
-      "target_index": 5,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1225,7 +1225,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_findnext",
-      "target_index": 28,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1242,7 +1242,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_findfirst",
-      "target_index": 19,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1259,7 +1259,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_makename",
-      "target_index": 32,
+      "target_index": 39,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1276,7 +1276,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_load_shape2d_nofatal_thunk",
-      "target_index": 2,
+      "target_index": 9,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1293,7 +1293,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_modulesize",
-      "target_index": 27,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1310,7 +1310,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_unlockedmemory",
-      "target_index": 20,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1327,7 +1327,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_reservememory",
-      "target_index": 72,
+      "target_index": 79,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1344,7 +1344,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFldiv",
-      "target_index": 41,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1361,7 +1361,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_usescreen",
-      "target_index": 10,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1378,7 +1378,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_freememory",
-      "target_index": 79,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1395,7 +1395,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 54,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1412,7 +1412,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 6,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1446,7 +1446,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_setup1_from_arg_pointer",
-      "target_index": 62,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1463,7 +1463,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_ptr_cursor",
-      "target_index": 74,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1480,7 +1480,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_ptr_cursor",
-      "target_index": 74,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1497,7 +1497,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movfxya",
-      "target_index": 54,
+      "target_index": 61,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1514,7 +1514,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 6,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1548,7 +1548,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_setup1_from_arg_pointer",
-      "target_index": 62,
+      "target_index": 69,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1565,7 +1565,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_spritepointermini",
-      "target_index": 43,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1582,7 +1582,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_spritepointermini",
-      "target_index": 43,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1599,7 +1599,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_shape2d_fatal_thunk",
-      "target_index": 17,
+      "target_index": 24,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1633,7 +1633,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_unk_sprite_ptr",
-      "target_index": 24,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1650,7 +1650,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_unk_sprite_ptr",
-      "target_index": 24,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1667,7 +1667,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1684,7 +1684,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_vid_flg2_set",
-      "target_index": 34,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1701,7 +1701,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_ptr_cursor",
-      "target_index": 74,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1718,7 +1718,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_ptr_cursor",
-      "target_index": 74,
+      "target_index": 81,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1735,7 +1735,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1752,7 +1752,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_spritepointermini",
-      "target_index": 43,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1769,7 +1769,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_spritepointermini",
-      "target_index": 43,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1786,7 +1786,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 65,
+      "target_index": 72,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1803,7 +1803,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_freememory",
-      "target_index": 79,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1820,7 +1820,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_vid_flg2_set",
-      "target_index": 34,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1837,7 +1837,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 6,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1871,7 +1871,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_vgapalette",
-      "target_index": 66,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1888,7 +1888,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 6,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1922,7 +1922,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_shape2d_fatal_thunk",
-      "target_index": 17,
+      "target_index": 24,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1956,7 +1956,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rand",
-      "target_index": 8,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1973,7 +1973,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_myrandom",
-      "target_index": 37,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1990,7 +1990,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_myrandom",
-      "target_index": 37,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2007,7 +2007,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rand",
-      "target_index": 8,
+      "target_index": 15,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2024,7 +2024,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_vsyncstate",
-      "target_index": 22,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2041,7 +2041,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_vsyncstate",
-      "target_index": 22,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2058,7 +2058,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_INIT_PALETTE",
-      "target_index": 59,
+      "target_index": 66,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2075,7 +2075,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_material_clrlist_ptr",
-      "target_index": 4,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2092,7 +2092,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_material_color_table_pointer",
-      "target_index": 38,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2109,7 +2109,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_material_pattern_table_pointer",
-      "target_index": 42,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2126,7 +2126,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_material_pattern2_table_ptr",
-      "target_index": 40,
+      "target_index": 49,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2143,7 +2143,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_seedrandom",
-      "target_index": 15,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2160,7 +2160,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_statemgmtcpy",
-      "target_index": 63,
+      "target_index": 70,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2177,7 +2177,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_slow_video_mode_state",
-      "target_index": 56,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2194,7 +2194,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rate_frame",
-      "target_index": 64,
+      "target_index": 71,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2211,7 +2211,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 52,
+      "target_index": 59,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2228,7 +2228,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_renderlevel",
-      "target_index": 23,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2245,7 +2245,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_renderlevel",
-      "target_index": 23,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2262,7 +2262,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_slow_video_mode_state",
-      "target_index": 56,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2279,7 +2279,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_renderlevel",
-      "target_index": 23,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2296,7 +2296,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_renderlevel",
-      "target_index": 23,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2313,7 +2313,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_renderlevel",
-      "target_index": 23,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2330,7 +2330,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 52,
+      "target_index": 59,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2347,7 +2347,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 52,
+      "target_index": 59,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2364,7 +2364,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_slow_video_mode_state",
-      "target_index": 56,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2381,7 +2381,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_slow_video_mode_state",
-      "target_index": 56,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2916,6 +2916,13 @@
   "object_declarations": {
     "externals": [
       "__acrtused",
+      "_mmusictog",
+      "_file_load_shape2d_nofatal2",
+      "_availmem",
+      "_freememory",
+      "_pixel_scales",
+      "_msoundtog",
+      "_vidflg4_is1",
       "_load_shape2d_nofatal_thunk",
       "_nullsub_1",
       "_material_clrlist_ptr",
@@ -2932,10 +2939,10 @@
       "_seedrandom",
       "_testkey",
       "_file_load_shape2d_fatal_thunk",
+      "_audio_load_driver",
       "__ctype",
       "_findfirst",
       "_unlockedmemory",
-      "_audio_load_driver",
       "_vsyncstate",
       "_renderlevel",
       "_mouse_unk_sprite_ptr",
@@ -2950,19 +2957,19 @@
       "_get_0",
       "_g_vid_flg2_set",
       "_nullsub_2",
+      "__aFldiv",
       "_g_videoflg5",
       "_myrandom",
       "_material_color_table_pointer",
       "_mkeyon",
+      "_restoretimer",
       "_material_pattern2_table_ptr",
-      "__aFldiv",
       "_material_pattern_table_pointer",
+      "_audio_toggle_flag2",
+      "_audio_toggle_flag6",
       "_spritepointermini",
       "_msystempause",
       "_vidflg3is_minus1",
-      "_restoretimer",
-      "_audio_toggle_flag2",
-      "_audio_toggle_flag6",
       "_clearwindow",
       "_initgraphics",
       "_clippix",
@@ -2989,14 +2996,7 @@
       "_reservememory",
       "_mdosexit",
       "_mouse_ptr_cursor",
-      "_do_joystick_resource_text",
-      "_mmusictog",
-      "_file_load_shape2d_nofatal2",
-      "_availmem",
-      "_freememory",
-      "_pixel_scales",
-      "_msoundtog",
-      "_vidflg4_is1"
+      "_do_joystick_resource_text"
     ],
     "groups": [
       {
@@ -3015,6 +3015,16 @@
       }
     ],
     "publics": [
+      {
+        "name": "_file_load_shape2d_nofatal2",
+        "offset": 0,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_availmem",
+        "offset": 1648,
+        "segment": "UNIT_TEXT"
+      },
       {
         "name": "_nullsub_1",
         "offset": 62,
@@ -3068,16 +3078,6 @@
       {
         "name": "_myfindnext",
         "offset": 56,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_file_load_shape2d_nofatal2",
-        "offset": 0,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_availmem",
-        "offset": 1648,
         "segment": "UNIT_TEXT"
       }
     ],
@@ -3179,8 +3179,8 @@
     },
     {
       "path": "include/audio.h",
-      "sha256": "573aaf8e174efe73f9248b3792f3893316bb264f1e32e1370f5002aae3bd0dfb",
-      "size": 16246
+      "sha256": "f55dc9de82a90817d80548e5e356a2f88db3327d87a197bdea0e62fffc2ce056",
+      "size": 16773
     },
     {
       "path": "include/chartab.h",

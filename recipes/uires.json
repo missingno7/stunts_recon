@@ -261,7 +261,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 148,
+      "target_index": 163,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -295,7 +295,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clearwindow",
-      "target_index": 32,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -312,7 +312,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clippix",
-      "target_index": 36,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -346,7 +346,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_point_in_rectangle",
-      "target_index": 37,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -363,7 +363,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textpixels",
-      "target_index": 185,
+      "target_index": 184,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -380,7 +380,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textpixels",
-      "target_index": 185,
+      "target_index": 184,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -397,7 +397,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -414,7 +414,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fontdefvalue",
-      "target_index": 67,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -431,7 +431,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseon",
-      "target_index": 25,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -448,7 +448,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_removewindow",
-      "target_index": 62,
+      "target_index": 63,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -465,7 +465,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mssprite_arrays",
-      "target_index": 178,
+      "target_index": 179,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -482,7 +482,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mssprite_arrays",
-      "target_index": 178,
+      "target_index": 179,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -499,7 +499,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_buffer_count",
-      "target_index": 102,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -533,7 +533,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_savedptr_ms",
-      "target_index": 108,
+      "target_index": 117,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -550,7 +550,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_savedptr_ms",
-      "target_index": 108,
+      "target_index": 117,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -567,7 +567,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_buffer_count",
-      "target_index": 102,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -584,7 +584,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_savedptr_ms",
-      "target_index": 108,
+      "target_index": 117,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -601,7 +601,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_savedptr_ms",
-      "target_index": 108,
+      "target_index": 117,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -618,7 +618,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_buffer_count",
-      "target_index": 102,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -652,7 +652,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mssprite_arrays",
-      "target_index": 178,
+      "target_index": 179,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -669,7 +669,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_mousesave_x_tbl",
-      "target_index": 166,
+      "target_index": 164,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -686,7 +686,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_mouseyposstacktable",
-      "target_index": 172,
+      "target_index": 171,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -703,7 +703,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_buffer_count",
-      "target_index": 102,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -720,7 +720,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -737,7 +737,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_buffer_count",
-      "target_index": 102,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -754,7 +754,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_buffer_count",
-      "target_index": 102,
+      "target_index": 113,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -771,7 +771,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_buffer_count",
-      "target_index": 84,
+      "target_index": 95,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -805,7 +805,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mssprite_arrays",
-      "target_index": 178,
+      "target_index": 179,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -822,7 +822,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_buffer_count",
-      "target_index": 84,
+      "target_index": 95,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -856,7 +856,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_savedptr_ms",
-      "target_index": 90,
+      "target_index": 99,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -873,7 +873,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_buffer_count",
-      "target_index": 84,
+      "target_index": 95,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -890,7 +890,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_savedptr_ms",
-      "target_index": 90,
+      "target_index": 99,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -907,7 +907,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_buffer_count",
-      "target_index": 84,
+      "target_index": 95,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -924,7 +924,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_savewindow",
-      "target_index": 6,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -941,7 +941,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_mouseyposstacktable",
-      "target_index": 172,
+      "target_index": 171,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -958,7 +958,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_mousesave_x_tbl",
-      "target_index": 166,
+      "target_index": 164,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -975,7 +975,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_buffer_count",
-      "target_index": 84,
+      "target_index": 95,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -992,7 +992,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mssprite_arrays",
-      "target_index": 178,
+      "target_index": 179,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1009,7 +1009,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mssprite_arrays",
-      "target_index": 178,
+      "target_index": 179,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1026,7 +1026,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_buffer_count",
-      "target_index": 84,
+      "target_index": 95,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1043,7 +1043,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_make_window",
-      "target_index": 76,
+      "target_index": 74,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1060,7 +1060,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1077,7 +1077,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_availmem",
-      "target_index": 155,
+      "target_index": 154,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1094,7 +1094,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFldiv",
-      "target_index": 93,
+      "target_index": 91,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1111,7 +1111,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__aFlmul",
-      "target_index": 89,
+      "target_index": 87,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1128,7 +1128,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_vidflg4_is1",
-      "target_index": 139,
+      "target_index": 138,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1145,7 +1145,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pixel_scales",
-      "target_index": 111,
+      "target_index": 108,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1162,7 +1162,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1196,7 +1196,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_clear_keyboardbuffer",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1213,7 +1213,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mykey",
-      "target_index": 98,
+      "target_index": 100,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1247,7 +1247,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_restoreboxwindow",
-      "target_index": 46,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1264,7 +1264,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_waitbios",
-      "target_index": 27,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1281,7 +1281,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseon",
-      "target_index": 25,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1298,7 +1298,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textpixels",
-      "target_index": 185,
+      "target_index": 184,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1315,7 +1315,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textpixels",
-      "target_index": 185,
+      "target_index": 184,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1332,7 +1332,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textpixels",
-      "target_index": 185,
+      "target_index": 184,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1349,7 +1349,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textpixels",
-      "target_index": 185,
+      "target_index": 184,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1366,7 +1366,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textpixels",
-      "target_index": 185,
+      "target_index": 184,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1383,7 +1383,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movtxy",
-      "target_index": 138,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1400,7 +1400,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movtxy",
-      "target_index": 138,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1434,7 +1434,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 148,
+      "target_index": 163,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1451,7 +1451,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movtxy",
-      "target_index": 138,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1468,7 +1468,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1485,7 +1485,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_strcpyfar",
-      "target_index": 165,
+      "target_index": 162,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1502,7 +1502,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1536,7 +1536,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 15,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1638,7 +1638,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1655,7 +1655,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1672,7 +1672,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1689,7 +1689,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1740,7 +1740,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_clear_keyboardbuffer",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1757,7 +1757,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__ctype",
-      "target_index": 162,
+      "target_index": 178,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1774,7 +1774,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__ctype",
-      "target_index": 162,
+      "target_index": 178,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1791,7 +1791,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mousecursor",
-      "target_index": 5,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1808,7 +1808,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mykey",
-      "target_index": 98,
+      "target_index": 100,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1842,7 +1842,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_clear_keyboardbuffer",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1859,7 +1859,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseon",
-      "target_index": 25,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1876,7 +1876,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 154,
+      "target_index": 170,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1910,7 +1910,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movtxy",
-      "target_index": 138,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -1944,7 +1944,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 148,
+      "target_index": 163,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1995,7 +1995,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 148,
+      "target_index": 163,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2012,7 +2012,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2029,7 +2029,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__ctype",
-      "target_index": 162,
+      "target_index": 178,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2046,7 +2046,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__ctype",
-      "target_index": 162,
+      "target_index": 178,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2063,7 +2063,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__ctype",
-      "target_index": 162,
+      "target_index": 178,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2080,7 +2080,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__ctype",
-      "target_index": 162,
+      "target_index": 178,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2114,7 +2114,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseon",
-      "target_index": 25,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2148,7 +2148,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 15,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2199,7 +2199,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textpixels",
-      "target_index": 185,
+      "target_index": 184,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2216,7 +2216,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2233,7 +2233,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movtxy",
-      "target_index": 138,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2267,7 +2267,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2284,7 +2284,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 161,
+      "target_index": 159,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2301,7 +2301,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2335,7 +2335,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 15,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2369,7 +2369,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2403,7 +2403,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movtxy",
-      "target_index": 138,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2420,7 +2420,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2437,7 +2437,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mycenter",
-      "target_index": 29,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2454,7 +2454,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2471,7 +2471,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_strcpyfar",
-      "target_index": 165,
+      "target_index": 162,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2488,7 +2488,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2505,7 +2505,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2522,7 +2522,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2539,7 +2539,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2573,7 +2573,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movtxy",
-      "target_index": 138,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2590,7 +2590,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2607,7 +2607,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mycenter",
-      "target_index": 29,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2624,7 +2624,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2641,7 +2641,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_strcpyfar",
-      "target_index": 165,
+      "target_index": 162,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2658,7 +2658,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2675,7 +2675,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2692,7 +2692,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2709,7 +2709,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2743,7 +2743,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 161,
+      "target_index": 159,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2760,7 +2760,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2777,7 +2777,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 161,
+      "target_index": 159,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2794,7 +2794,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 161,
+      "target_index": 159,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2811,7 +2811,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 13,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2845,7 +2845,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_nullsub_1",
-      "target_index": 160,
+      "target_index": 158,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2862,7 +2862,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_namecopy",
-      "target_index": 31,
+      "target_index": 33,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2879,7 +2879,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_myfindnext",
-      "target_index": 78,
+      "target_index": 82,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2896,7 +2896,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_namecopy",
-      "target_index": 31,
+      "target_index": 33,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2913,7 +2913,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_instringz",
-      "target_index": 137,
+      "target_index": 136,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2947,7 +2947,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 15,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2981,7 +2981,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_nullsub_1",
-      "target_index": 160,
+      "target_index": 158,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -2998,7 +2998,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_combine_and_find",
-      "target_index": 159,
+      "target_index": 176,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3032,7 +3032,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseon",
-      "target_index": 25,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3049,7 +3049,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movtxy",
-      "target_index": 138,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3083,7 +3083,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 15,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3117,7 +3117,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseon",
-      "target_index": 25,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3134,7 +3134,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movtxy",
-      "target_index": 138,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3151,7 +3151,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movtxy",
-      "target_index": 138,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3185,7 +3185,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 198,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3219,7 +3219,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movtxy",
-      "target_index": 138,
+      "target_index": 137,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3236,7 +3236,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 194,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3253,7 +3253,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_strcpyfar",
-      "target_index": 165,
+      "target_index": 162,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3270,7 +3270,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 194,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3304,7 +3304,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 198,
+      "target_index": 8,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3338,7 +3338,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3355,7 +3355,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3372,7 +3372,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3389,7 +3389,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3440,7 +3440,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcat",
-      "target_index": 147,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3457,7 +3457,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcat",
-      "target_index": 147,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3474,7 +3474,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcat",
-      "target_index": 147,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3508,7 +3508,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strlen",
-      "target_index": 171,
+      "target_index": 169,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3525,7 +3525,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 161,
+      "target_index": 159,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3559,7 +3559,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_restoreboxwindow",
-      "target_index": 46,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3576,7 +3576,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 161,
+      "target_index": 159,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3593,7 +3593,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__ctype",
-      "target_index": 17,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3610,7 +3610,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__ctype",
-      "target_index": 17,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3627,7 +3627,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__ctype",
-      "target_index": 17,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3644,7 +3644,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "__ctype",
-      "target_index": 17,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3661,7 +3661,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3678,7 +3678,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3695,7 +3695,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3712,7 +3712,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mousecursor",
-      "target_index": 5,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3729,7 +3729,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mykey",
-      "target_index": 98,
+      "target_index": 100,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3746,7 +3746,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_myload",
-      "target_index": 80,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3763,7 +3763,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcat",
-      "target_index": 147,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3797,7 +3797,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 161,
+      "target_index": 159,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3814,7 +3814,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_myload",
-      "target_index": 80,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3831,7 +3831,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcat",
-      "target_index": 147,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3865,7 +3865,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 161,
+      "target_index": 159,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -3882,7 +3882,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mykey",
-      "target_index": 98,
+      "target_index": 100,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4001,7 +4001,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kbjoyflags",
-      "target_index": 182,
+      "target_index": 181,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4018,7 +4018,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4035,7 +4035,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kbjoyflags",
-      "target_index": 182,
+      "target_index": 181,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4052,7 +4052,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4069,7 +4069,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4120,7 +4120,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4222,7 +4222,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4256,7 +4256,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4290,7 +4290,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4307,7 +4307,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4358,7 +4358,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_dohidemouse",
-      "target_index": 92,
+      "target_index": 90,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4477,7 +4477,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_doshowmouse",
-      "target_index": 96,
+      "target_index": 94,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4494,7 +4494,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_dohidemouse",
-      "target_index": 92,
+      "target_index": 90,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4528,7 +4528,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseonstat",
-      "target_index": 77,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4596,7 +4596,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pos_y_ms",
-      "target_index": 189,
+      "target_index": 187,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4630,7 +4630,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msecoordx",
-      "target_index": 187,
+      "target_index": 186,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4664,7 +4664,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4698,7 +4698,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pos_y_ms",
-      "target_index": 189,
+      "target_index": 187,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4732,7 +4732,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msecoordx",
-      "target_index": 187,
+      "target_index": 186,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4766,7 +4766,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4783,7 +4783,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msecoordx",
-      "target_index": 187,
+      "target_index": 186,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4800,7 +4800,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pos_y_ms",
-      "target_index": 189,
+      "target_index": 187,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5191,7 +5191,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kbjoyflags",
-      "target_index": 182,
+      "target_index": 181,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5208,7 +5208,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_joystate",
-      "target_index": 107,
+      "target_index": 105,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5361,7 +5361,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strlen",
-      "target_index": 171,
+      "target_index": 169,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5378,7 +5378,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_restoreboxwindow",
-      "target_index": 46,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5395,7 +5395,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_instringz",
-      "target_index": 137,
+      "target_index": 136,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5412,7 +5412,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_instringz",
-      "target_index": 137,
+      "target_index": 136,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5463,7 +5463,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcf",
-      "target_index": 45,
+      "target_index": 44,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5480,7 +5480,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_unk_sprite_ptr",
-      "target_index": 191,
+      "target_index": 190,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5514,7 +5514,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_savewindow",
-      "target_index": 6,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -5531,7 +5531,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_dohidemouse",
-      "target_index": 92,
+      "target_index": 90,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5565,7 +5565,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseonstat",
-      "target_index": 77,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5582,7 +5582,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_doshowmouse",
-      "target_index": 96,
+      "target_index": 94,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5633,7 +5633,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseonstat",
-      "target_index": 77,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5650,7 +5650,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseon",
-      "target_index": 25,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5684,7 +5684,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 170,
+      "target_index": 183,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5701,7 +5701,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 170,
+      "target_index": 183,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5735,7 +5735,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5752,7 +5752,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5769,7 +5769,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseon",
-      "target_index": 25,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5803,7 +5803,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 170,
+      "target_index": 183,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5820,7 +5820,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 170,
+      "target_index": 183,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5854,7 +5854,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5871,7 +5871,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pos_y_ms",
-      "target_index": 189,
+      "target_index": 187,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5888,7 +5888,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msecoordx",
-      "target_index": 187,
+      "target_index": 186,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5905,7 +5905,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mykey",
-      "target_index": 98,
+      "target_index": 100,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5939,7 +5939,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5956,7 +5956,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mykey",
-      "target_index": 98,
+      "target_index": 100,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5990,7 +5990,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pos_y_ms",
-      "target_index": 189,
+      "target_index": 187,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6007,7 +6007,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msecoordx",
-      "target_index": 187,
+      "target_index": 186,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6041,7 +6041,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 170,
+      "target_index": 183,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6058,7 +6058,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 170,
+      "target_index": 183,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6092,7 +6092,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 176,
+      "target_index": 175,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6109,7 +6109,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textrespfxchr",
-      "target_index": 183,
+      "target_index": 182,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6126,7 +6126,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_shape_fatal",
-      "target_index": 176,
+      "target_index": 175,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6143,7 +6143,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_freememory",
-      "target_index": 158,
+      "target_index": 157,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6160,7 +6160,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_do_dea_textres",
-      "target_index": 106,
+      "target_index": 104,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6211,7 +6211,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_hurrykey",
-      "target_index": 101,
+      "target_index": 102,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6262,7 +6262,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strlen",
-      "target_index": 171,
+      "target_index": 169,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6279,7 +6279,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseon",
-      "target_index": 25,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6296,7 +6296,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_get_pstring",
-      "target_index": 134,
+      "target_index": 133,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6313,7 +6313,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kb_line_edit_noop",
-      "target_index": 115,
+      "target_index": 112,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6330,7 +6330,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kb_line_edit_noop",
-      "target_index": 115,
+      "target_index": 112,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6347,7 +6347,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6517,7 +6517,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textpixels",
-      "target_index": 185,
+      "target_index": 184,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6568,7 +6568,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fontdefvalue",
-      "target_index": 67,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6704,7 +6704,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textpixels",
-      "target_index": 185,
+      "target_index": 184,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6755,7 +6755,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fontdefvalue",
-      "target_index": 67,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6789,7 +6789,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clearwindow",
-      "target_index": 32,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6823,7 +6823,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_wndspr",
-      "target_index": 4,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6840,7 +6840,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_wndspr",
-      "target_index": 4,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6874,7 +6874,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_wndspr",
-      "target_index": 4,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6891,7 +6891,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_wndspr",
-      "target_index": 4,
+      "target_index": 11,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6908,7 +6908,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_clearwindow",
-      "target_index": 32,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -6942,7 +6942,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite2",
-      "target_index": 82,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6959,7 +6959,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite2",
-      "target_index": 82,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -6993,7 +6993,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite2",
-      "target_index": 82,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7010,7 +7010,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite2",
-      "target_index": 82,
+      "target_index": 83,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7027,7 +7027,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_clear_keyboardbuffer",
-      "target_index": 88,
+      "target_index": 86,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7044,7 +7044,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mykey",
-      "target_index": 98,
+      "target_index": 100,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7078,7 +7078,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_flagsdown",
-      "target_index": 186,
+      "target_index": 185,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7112,7 +7112,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mykey",
-      "target_index": 98,
+      "target_index": 100,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7146,7 +7146,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_joystate",
-      "target_index": 107,
+      "target_index": 105,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7163,7 +7163,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pos_y_ms",
-      "target_index": 189,
+      "target_index": 187,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7180,7 +7180,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msecoordx",
-      "target_index": 187,
+      "target_index": 186,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7248,7 +7248,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_orcfxya",
-      "target_index": 55,
+      "target_index": 54,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7265,7 +7265,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_spritepointermini",
-      "target_index": 24,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7282,7 +7282,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msecoordx",
-      "target_index": 187,
+      "target_index": 186,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7299,7 +7299,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pos_y_ms",
-      "target_index": 189,
+      "target_index": 187,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7316,7 +7316,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_andcfxya",
-      "target_index": 28,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7333,7 +7333,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_ptr_cursor",
-      "target_index": 83,
+      "target_index": 84,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7350,7 +7350,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msecoordx",
-      "target_index": 187,
+      "target_index": 186,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7367,7 +7367,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pos_y_ms",
-      "target_index": 189,
+      "target_index": 187,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7401,7 +7401,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouse_unk_sprite_ptr",
-      "target_index": 191,
+      "target_index": 190,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7418,7 +7418,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_pos_y_ms",
-      "target_index": 189,
+      "target_index": 187,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7452,7 +7452,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_savewindow",
-      "target_index": 6,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7469,7 +7469,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_vid_flg2_set",
-      "target_index": 11,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7486,7 +7486,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_msecoordx",
-      "target_index": 187,
+      "target_index": 186,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7520,7 +7520,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textpixels",
-      "target_index": 185,
+      "target_index": 184,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7537,7 +7537,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 75,
+      "target_index": 80,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7554,7 +7554,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 75,
+      "target_index": 80,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7571,7 +7571,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strlen",
-      "target_index": 171,
+      "target_index": 169,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -7588,7 +7588,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 75,
+      "target_index": 80,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7605,7 +7605,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_strcpyfar",
-      "target_index": 165,
+      "target_index": 162,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -7622,7 +7622,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_resbuftext",
-      "target_index": 75,
+      "target_index": 80,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8047,7 +8047,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcat",
-      "target_index": 147,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8081,7 +8081,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 161,
+      "target_index": 159,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8098,7 +8098,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_myitoa",
-      "target_index": 150,
+      "target_index": 151,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8115,7 +8115,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rate_frame",
-      "target_index": 30,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8132,7 +8132,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rate_frame",
-      "target_index": 30,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8149,7 +8149,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rate_frame",
-      "target_index": 30,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8166,7 +8166,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mysetfont",
-      "target_index": 130,
+      "target_index": 129,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8217,7 +8217,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_fontdefvalue",
-      "target_index": 67,
+      "target_index": 68,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8251,7 +8251,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_is_audioloaded",
-      "target_index": 149,
+      "target_index": 150,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8268,7 +8268,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_freememory",
-      "target_index": 158,
+      "target_index": 157,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8285,7 +8285,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_openvfile",
-      "target_index": 163,
+      "target_index": 160,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8302,7 +8302,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_openvfile",
-      "target_index": 163,
+      "target_index": 160,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8319,7 +8319,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_freememory",
-      "target_index": 158,
+      "target_index": 157,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8387,7 +8387,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_is_audioloaded",
-      "target_index": 149,
+      "target_index": 150,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8404,7 +8404,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_load_audio_finalize",
-      "target_index": 87,
+      "target_index": 85,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8438,7 +8438,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_openvfile",
-      "target_index": 163,
+      "target_index": 160,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8455,7 +8455,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_openvfile",
-      "target_index": 163,
+      "target_index": 160,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8506,7 +8506,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_myload",
-      "target_index": 80,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8523,7 +8523,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_openvfile",
-      "target_index": 163,
+      "target_index": 160,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8540,7 +8540,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_openvfile",
-      "target_index": 163,
+      "target_index": 160,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8557,7 +8557,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_myload",
-      "target_index": 80,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8574,7 +8574,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseon",
-      "target_index": 25,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8608,7 +8608,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8659,7 +8659,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_animphase",
-      "target_index": 18,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8676,7 +8676,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_animphase",
-      "target_index": 18,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8693,7 +8693,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_animphase",
-      "target_index": 18,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8710,7 +8710,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_animphase",
-      "target_index": 18,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8744,7 +8744,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_unused_count",
-      "target_index": 120,
+      "target_index": 119,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8778,7 +8778,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_animphase",
-      "target_index": 18,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8795,7 +8795,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_itoa",
-      "target_index": 100,
+      "target_index": 101,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8812,7 +8812,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8829,7 +8829,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8846,7 +8846,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8863,7 +8863,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8880,7 +8880,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8948,7 +8948,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseon",
-      "target_index": 25,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -8965,7 +8965,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcf",
-      "target_index": 45,
+      "target_index": 44,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -8999,7 +8999,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_hurrykey",
-      "target_index": 101,
+      "target_index": 102,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9033,7 +9033,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_sprite_blit_dither_phase",
-      "target_index": 146,
+      "target_index": 147,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9050,7 +9050,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseon",
-      "target_index": 25,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9067,7 +9067,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_movcf",
-      "target_index": 45,
+      "target_index": 44,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9084,7 +9084,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9118,7 +9118,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_textpixels",
-      "target_index": 185,
+      "target_index": 184,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9169,7 +9169,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_normkey",
-      "target_index": 144,
+      "target_index": 145,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9186,7 +9186,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_reset_joystick_selection",
-      "target_index": 140,
+      "target_index": 139,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9339,7 +9339,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9356,7 +9356,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_joystick_enabled",
-      "target_index": 124,
+      "target_index": 131,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9373,7 +9373,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9390,7 +9390,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9407,7 +9407,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9424,7 +9424,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9475,7 +9475,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_pause_playback",
-      "target_index": 174,
+      "target_index": 173,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9492,7 +9492,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 123,
+      "target_index": 128,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9509,7 +9509,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pushmouse",
-      "target_index": 136,
+      "target_index": 135,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9526,7 +9526,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9577,7 +9577,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseonstat",
-      "target_index": 77,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9594,7 +9594,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_copy_mouse_modes",
-      "target_index": 33,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9713,7 +9713,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_copy_mouse_modes",
-      "target_index": 33,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9730,7 +9730,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mouseonstat",
-      "target_index": 77,
+      "target_index": 76,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9764,7 +9764,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_do_dea_textres",
-      "target_index": 106,
+      "target_index": 104,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9781,7 +9781,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadfileatz",
-      "target_index": 99,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9798,7 +9798,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadfileatz",
-      "target_index": 99,
+      "target_index": 110,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -9815,7 +9815,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_do_dea_textres",
-      "target_index": 106,
+      "target_index": 104,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -9985,7 +9985,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_file_load_shape2d_nofatal2",
-      "target_index": 94,
+      "target_index": 92,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10002,7 +10002,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_load_sfx_file",
-      "target_index": 86,
+      "target_index": 97,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10019,7 +10019,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_load_voice_file",
-      "target_index": 95,
+      "target_index": 93,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10036,7 +10036,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_load_song_file",
-      "target_index": 91,
+      "target_index": 88,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10053,7 +10053,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_load_shape2d_res_nofatal_thunk",
-      "target_index": 113,
+      "target_index": 111,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10070,7 +10070,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_load_shape2d_nofatal_thunk",
-      "target_index": 110,
+      "target_index": 107,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10087,7 +10087,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadpackz",
-      "target_index": 119,
+      "target_index": 124,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10104,7 +10104,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadfilez",
-      "target_index": 104,
+      "target_index": 116,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10121,7 +10121,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_loadfilez",
-      "target_index": 104,
+      "target_index": 116,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10155,7 +10155,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_race_stats",
-      "target_index": 167,
+      "target_index": 165,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10189,7 +10189,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_myrandom",
-      "target_index": 54,
+      "target_index": 53,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10223,7 +10223,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcat",
-      "target_index": 147,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10240,7 +10240,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_myitoa",
-      "target_index": 150,
+      "target_index": 151,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10257,7 +10257,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_rate_frame",
-      "target_index": 30,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10274,7 +10274,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcat",
-      "target_index": 147,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10308,7 +10308,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcat",
-      "target_index": 147,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10325,7 +10325,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_myitoa",
-      "target_index": 150,
+      "target_index": 151,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10342,7 +10342,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 132,
+      "target_index": 144,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10359,7 +10359,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pushmouse",
-      "target_index": 136,
+      "target_index": 135,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10376,7 +10376,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pullmouse",
-      "target_index": 133,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10410,7 +10410,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 103,
+      "target_index": 114,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10427,7 +10427,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dsiexit",
-      "target_index": 23,
+      "target_index": 24,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10444,7 +10444,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10461,7 +10461,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10478,7 +10478,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10495,7 +10495,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10546,7 +10546,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_pause_playback",
-      "target_index": 174,
+      "target_index": 173,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10563,7 +10563,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 103,
+      "target_index": 114,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10580,7 +10580,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pushmouse",
-      "target_index": 136,
+      "target_index": 135,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10597,7 +10597,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pullmouse",
-      "target_index": 133,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10614,7 +10614,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 85,
+      "target_index": 96,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10631,7 +10631,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10648,7 +10648,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10665,7 +10665,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10682,7 +10682,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10767,7 +10767,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_toggle_flag6",
-      "target_index": 63,
+      "target_index": 64,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -10784,7 +10784,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 85,
+      "target_index": 96,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10801,7 +10801,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pushmouse",
-      "target_index": 136,
+      "target_index": 135,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10818,7 +10818,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pullmouse",
-      "target_index": 133,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10835,7 +10835,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 74,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10852,7 +10852,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10869,7 +10869,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10886,7 +10886,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -10903,7 +10903,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11005,7 +11005,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 74,
+      "target_index": 78,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11022,7 +11022,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pushmouse",
-      "target_index": 136,
+      "target_index": 135,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11039,7 +11039,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pullmouse",
-      "target_index": 133,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11073,7 +11073,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 64,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11090,7 +11090,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11107,7 +11107,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11124,7 +11124,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11141,7 +11141,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11192,7 +11192,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_pause_playback",
-      "target_index": 174,
+      "target_index": 173,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11209,7 +11209,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 64,
+      "target_index": 73,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11226,7 +11226,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pushmouse",
-      "target_index": 136,
+      "target_index": 135,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11243,7 +11243,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pullmouse",
-      "target_index": 133,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11277,7 +11277,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 50,
+      "target_index": 62,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11294,7 +11294,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11311,7 +11311,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11328,7 +11328,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11345,7 +11345,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11396,7 +11396,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mousedrive",
-      "target_index": 53,
+      "target_index": 65,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11413,7 +11413,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_pause_playback",
-      "target_index": 174,
+      "target_index": 173,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11430,7 +11430,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 50,
+      "target_index": 62,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11447,7 +11447,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pushmouse",
-      "target_index": 136,
+      "target_index": 135,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11464,7 +11464,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pullmouse",
-      "target_index": 133,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11498,7 +11498,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 35,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11515,7 +11515,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mousedrive",
-      "target_index": 44,
+      "target_index": 50,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11532,7 +11532,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_joystick_enabled",
-      "target_index": 38,
+      "target_index": 48,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11549,7 +11549,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11566,7 +11566,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11583,7 +11583,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11600,7 +11600,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11651,7 +11651,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_pause_playback",
-      "target_index": 174,
+      "target_index": 173,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11668,7 +11668,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 35,
+      "target_index": 46,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11685,7 +11685,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pushmouse",
-      "target_index": 136,
+      "target_index": 135,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11702,7 +11702,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pullmouse",
-      "target_index": 133,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11719,7 +11719,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 123,
+      "target_index": 128,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11753,7 +11753,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mousedrive",
-      "target_index": 126,
+      "target_index": 134,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11770,7 +11770,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_purgekey",
-      "target_index": 173,
+      "target_index": 172,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -11787,7 +11787,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_joystick_enabled",
-      "target_index": 124,
+      "target_index": 131,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11804,7 +11804,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11821,7 +11821,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11838,7 +11838,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11855,7 +11855,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11906,7 +11906,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_joystick_enabled",
-      "target_index": 124,
+      "target_index": 131,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11923,7 +11923,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_restoreboxwindow",
-      "target_index": 46,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11940,7 +11940,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_joystick_enabled",
-      "target_index": 124,
+      "target_index": 131,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -11974,7 +11974,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_dlg_colour",
-      "target_index": 129,
+      "target_index": 140,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12025,7 +12025,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_do_dea_textres",
-      "target_index": 106,
+      "target_index": 104,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12042,7 +12042,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_myload",
-      "target_index": 80,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12059,7 +12059,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcat",
-      "target_index": 147,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12093,7 +12093,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 161,
+      "target_index": 159,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12110,7 +12110,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_myload",
-      "target_index": 80,
+      "target_index": 89,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12127,7 +12127,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcat",
-      "target_index": 147,
+      "target_index": 148,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12161,7 +12161,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_strcpy",
-      "target_index": 161,
+      "target_index": 159,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12178,7 +12178,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_elapsedticks",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12195,7 +12195,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12212,7 +12212,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12229,7 +12229,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12246,7 +12246,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12297,7 +12297,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_findfirst",
-      "target_index": 179,
+      "target_index": 188,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -12348,7 +12348,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_mouseoff",
-      "target_index": 22,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12365,7 +12365,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12382,7 +12382,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12399,7 +12399,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12416,7 +12416,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12467,7 +12467,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pullmouse",
-      "target_index": 133,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12484,7 +12484,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12501,7 +12501,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12518,7 +12518,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12535,7 +12535,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12586,7 +12586,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12603,7 +12603,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12620,7 +12620,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12637,7 +12637,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12705,7 +12705,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pushmouse",
-      "target_index": 136,
+      "target_index": 135,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12722,7 +12722,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_pullmouse",
-      "target_index": 133,
+      "target_index": 132,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12756,7 +12756,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_input_pushed",
-      "target_index": 132,
+      "target_index": 144,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12773,7 +12773,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12790,7 +12790,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12807,7 +12807,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12824,7 +12824,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12875,7 +12875,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 7,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12892,7 +12892,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 7,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12909,7 +12909,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 7,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12960,7 +12960,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_renderlevel",
-      "target_index": 131,
+      "target_index": 130,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12977,7 +12977,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_messagebox",
-      "target_index": 117,
+      "target_index": 123,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -12994,7 +12994,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_performGraphColor",
-      "target_index": 135,
+      "target_index": 149,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13011,7 +13011,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 7,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13045,7 +13045,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_renderlevel",
-      "target_index": 131,
+      "target_index": 130,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13062,7 +13062,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_strcpyfar",
-      "target_index": 165,
+      "target_index": 162,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13079,7 +13079,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_getresl",
-      "target_index": 190,
+      "target_index": 198,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13096,7 +13096,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13113,7 +13113,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_main_data_file_addr",
-      "target_index": 97,
+      "target_index": 98,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13147,7 +13147,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_frm_rate2",
-      "target_index": 7,
+      "target_index": 6,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -13164,7 +13164,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_pause_playback",
-      "target_index": 174,
+      "target_index": 173,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -14890,28 +14890,30 @@
     "externals": [
       "__acrtused",
       "_draw3dbutton",
-      "_read_file_with_retry",
-      "_g_wndspr",
+      "_resbuftext",
       "_mousecursor",
       "_savewindow",
       "_frm_rate2",
       "_drnd",
+      "_dlg_colour",
       "_displaywindow",
-      "_floadreq",
+      "_read_file_with_retry",
+      "_g_wndspr",
       "_g_vid_flg2_set",
       "_makename",
-      "_resbuftext",
       "_makeobjdef",
-      "_dlg_colour",
+      "_floadreq",
       "_memerr",
-      "__ctype",
       "_g_animphase",
       "_mkeyon",
+      "_resbuftext",
       "_g_hovercolor_idle",
       "_preRender_line",
+      "_dlg_colour",
       "_mouseoff",
       "_dsiexit",
       "_spritepointermini",
+      "__ctype",
       "_mouseon",
       "_msystempause",
       "_waitbios",
@@ -14922,170 +14924,168 @@
       "_clearwindow",
       "_copy_mouse_modes",
       "_elapsedticks",
-      "_input_pushed",
       "_clippix",
       "_point_in_rectangle",
-      "_joystick_enabled",
       "_docursorinit",
       "_drawrect",
       "_g_is_busy",
       "_elticks",
       "_input_device_modestack",
-      "_mousedrive",
       "_movcf",
       "_restoreboxwindow",
-      "_def_fntadr",
-      "_openresource",
-      "_movfxya",
       "_input_pushed",
+      "_def_fntadr",
+      "_joystick_enabled",
+      "_movfxya",
+      "_mousedrive",
       "_get_joy_flags",
       "_slow_video_mode_state",
-      "_mousedrive",
       "_myrandom",
       "_orcfxya",
+      "_openresource",
       "_msetrender",
       "_gettick",
       "_init_audio_resources",
       "_kbormouse",
       "_readfxya",
       "_audio_toggle_flag2",
+      "_input_pushed",
       "_removewindow",
       "_audio_toggle_flag6",
-      "_input_pushed",
+      "_mousedrive",
       "_sprite_blit_to_video",
       "_waitforkey",
       "_fontdefvalue",
       "_audio_unload",
-      "_hiscore_draw_text",
       "_sprite_draw_rect_outline",
       "_sprite_setup1_from_arg_pointer",
       "_dialog_frame_color",
+      "_input_pushed",
+      "_sprite_make_window",
+      "_hiscore_draw_text",
+      "_mouseonstat",
       "_ensure_file_exists",
       "_input_pushed",
-      "_resbuftext",
-      "_sprite_make_window",
-      "_mouseonstat",
-      "_myfindnext",
       "_file_load_audio_resource",
-      "_myload",
+      "_resbuftext",
       "_mouseonscreen",
+      "_myfindnext",
       "_sprite2",
       "_mouse_ptr_cursor",
-      "_mouse_buffer_count",
-      "_input_pushed",
-      "_load_sfx_file",
       "_load_audio_finalize",
       "_clear_keyboardbuffer",
       "__aFlmul",
-      "_savedptr_ms",
       "_load_song_file",
+      "_myload",
       "_dohidemouse",
       "__aFldiv",
       "_file_load_shape2d_nofatal2",
       "_load_voice_file",
       "_doshowmouse",
-      "_main_data_file_addr",
-      "_mykey",
-      "_loadfileatz",
-      "_itoa",
-      "_hurrykey",
       "_mouse_buffer_count",
       "_input_pushed",
-      "_loadfilez",
+      "_load_sfx_file",
+      "_main_data_file_addr",
+      "_savedptr_ms",
+      "_mykey",
+      "_itoa",
+      "_hurrykey",
       "_mykeywait",
       "_do_dea_textres",
       "_joystate",
-      "_savedptr_ms",
       "_mdosexit",
       "_load_shape2d_nofatal_thunk",
       "_pixel_scales",
       "_do_joystick_resource_text",
+      "_loadfileatz",
       "_load_shape2d_res_nofatal_thunk",
-      "_loading",
       "_kb_line_edit_noop",
+      "_mouse_buffer_count",
+      "_input_pushed",
       "_mmusictog",
-      "_messagebox",
+      "_loadfilez",
+      "_savedptr_ms",
       "_mmouseon",
-      "_loadpackz",
       "_unused_count",
       "_msoundtog",
+      "_loading",
       "_restore_audio_volume",
-      "_input_pushed",
-      "_joystick_enabled",
+      "_messagebox",
+      "_loadpackz",
       "_fortextxy",
-      "_mousedrive",
       "_fontsetfontdef",
       "_docursor",
-      "_dlg_colour",
+      "_input_pushed",
       "_mysetfont",
       "_renderlevel",
-      "_input_pushed",
+      "_joystick_enabled",
       "_pullmouse",
       "_get_pstring",
-      "_performGraphColor",
+      "_mousedrive",
       "_pushmouse",
       "_instringz",
       "_movtxy",
       "_vidflg4_is1",
       "_reset_joystick_selection",
+      "_dlg_colour",
       "_setfont",
       "_usescreen",
       "_musicfile",
+      "_input_pushed",
       "_normkey",
       "_maketime",
       "_sprite_blit_dither_phase",
       "_strcat",
-      "_dlg_colour",
+      "_performGraphColor",
       "_is_audioloaded",
       "_myitoa",
-      "_closeresource",
       "_normkeyi",
       "_strcmp",
-      "_performGraphColor",
       "_availmem",
       "_voicefile_gap_c",
       "_usescreenc",
       "_freememory",
-      "_file_combine_and_find",
       "_nullsub_1",
       "_strcpy",
-      "__ctype",
       "_openvfile",
       "_usebuffer",
       "_strcpyfar",
+      "_dlg_colour",
       "_g_mousesave_x_tbl",
       "_race_stats",
       "_shadowtext",
       "_usebufferc",
-      "_dlg_colour",
+      "_closeresource",
       "_strlen",
+      "_performGraphColor",
       "_g_mouseyposstacktable",
       "_purgekey",
       "_audio_pause_playback",
       "_sprite_draw_beveled_frame",
       "_locate_shape_fatal",
+      "_file_combine_and_find",
       "_textcolor",
+      "__ctype",
       "_mssprite_arrays",
-      "_findfirst",
       "_rand",
-      "_fsavereq",
       "_kbjoyflags",
       "_textrespfxchr",
-      "_fluffyload",
+      "_dlg_colour",
       "_textpixels",
       "_flagsdown",
       "_msecoordx",
-      "_getres",
       "_pos_y_ms",
-      "_getresl",
+      "_findfirst",
+      "_fsavereq",
       "_mouse_unk_sprite_ptr",
+      "_fluffyload",
       "_getmousepos",
       "_waitm_ms",
-      "_resbuftext",
+      "_getres",
       "_convertjoy",
       "_audio_driver_func3F",
       "_doslider",
-      "_dlg_colour",
+      "_getresl",
       "_restorewindow"
     ],
     "groups": [
@@ -15111,11 +15111,6 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_read_file_with_retry",
-        "offset": 9686,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_mousecursor",
         "offset": 6624,
         "segment": "UNIT_TEXT"
@@ -15126,8 +15121,8 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_floadreq",
-        "offset": 2596,
+        "name": "_read_file_with_retry",
+        "offset": 9686,
         "segment": "UNIT_TEXT"
       },
       {
@@ -15138,6 +15133,11 @@
       {
         "name": "_makeobjdef",
         "offset": 8362,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_floadreq",
+        "offset": 2596,
         "segment": "UNIT_TEXT"
       },
       {
@@ -15201,11 +15201,6 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_openresource",
-        "offset": 5442,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_input_framecount2",
         "offset": 98,
         "segment": "_DATA"
@@ -15213,11 +15208,6 @@
       {
         "name": "_input_framecount3",
         "offset": 100,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_findfilenames",
-        "offset": 58,
         "segment": "_DATA"
       },
       {
@@ -15229,6 +15219,11 @@
         "name": "_input_status_stack_depth",
         "offset": 138,
         "segment": "_DATA"
+      },
+      {
+        "name": "_openresource",
+        "offset": 5442,
+        "segment": "UNIT_TEXT"
       },
       {
         "name": "_findfiletexts",
@@ -15243,6 +15238,11 @@
       {
         "name": "_font_secondary_color",
         "offset": 66,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_findfilenames",
+        "offset": 58,
         "segment": "_DATA"
       },
       {
@@ -15261,11 +15261,6 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_hiscore_draw_text",
-        "offset": 7000,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_mouse_oldbut",
         "offset": 110,
         "segment": "_DATA"
@@ -15276,14 +15271,14 @@
         "segment": "_DATA"
       },
       {
-        "name": "_ensure_file_exists",
-        "offset": 11510,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_mouse_oldy",
         "offset": 108,
         "segment": "_DATA"
+      },
+      {
+        "name": "_hiscore_draw_text",
+        "offset": 7000,
+        "segment": "UNIT_TEXT"
       },
       {
         "name": "_mousebutinputcode",
@@ -15291,18 +15286,23 @@
         "segment": "_DATA"
       },
       {
+        "name": "_ensure_file_exists",
+        "offset": 11510,
+        "segment": "UNIT_TEXT"
+      },
+      {
         "name": "_file_load_audio_resource",
         "offset": 9036,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_myload",
-        "offset": 9498,
+        "name": "_clear_keyboardbuffer",
+        "offset": 6708,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_clear_keyboardbuffer",
-        "offset": 6708,
+        "name": "_myload",
+        "offset": 9498,
         "segment": "UNIT_TEXT"
       },
       {
@@ -15356,18 +15356,8 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_loading",
-        "offset": 8698,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_mmusictog",
         "offset": 10728,
-        "segment": "UNIT_TEXT"
-      },
-      {
-        "name": "_messagebox",
-        "offset": 470,
         "segment": "UNIT_TEXT"
       },
       {
@@ -15378,6 +15368,16 @@
       {
         "name": "_msoundtog",
         "offset": 10826,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_loading",
+        "offset": 8698,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_messagebox",
+        "offset": 470,
         "segment": "UNIT_TEXT"
       },
       {
@@ -15431,11 +15431,6 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_closeresource",
-        "offset": 5576,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_usescreenc",
         "offset": 6814,
         "segment": "UNIT_TEXT"
@@ -15461,6 +15456,11 @@
         "segment": "UNIT_TEXT"
       },
       {
+        "name": "_closeresource",
+        "offset": 5576,
+        "segment": "UNIT_TEXT"
+      },
+      {
         "name": "_sprite_draw_beveled_frame",
         "offset": 7358,
         "segment": "UNIT_TEXT"
@@ -15481,13 +15481,13 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_getresl",
-        "offset": 5618,
+        "name": "_doslider",
+        "offset": 5726,
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_doslider",
-        "offset": 5726,
+        "name": "_getresl",
+        "offset": 5618,
         "segment": "UNIT_TEXT"
       }
     ],
@@ -15568,8 +15568,8 @@
     },
     {
       "path": "include/audio.h",
-      "sha256": "573aaf8e174efe73f9248b3792f3893316bb264f1e32e1370f5002aae3bd0dfb",
-      "size": 16246
+      "sha256": "f55dc9de82a90817d80548e5e356a2f88db3327d87a197bdea0e62fffc2ce056",
+      "size": 16773
     },
     {
       "path": "include/car.h",

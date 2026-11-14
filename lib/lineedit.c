@@ -15,8 +15,8 @@ static I16S cursor_flash_state, line_text_max_width, line_input_cursor_slot;
 #include "memory.h"
 
 
-/* Local view: setticks; audiores raw-object exclusion retains its prototype. */
-extern void FAR setticks(I16, I16);
+
+
 
 
 /* Edit a bounded text buffer using keyboard input, blink timing, and the line-rendering helpers.

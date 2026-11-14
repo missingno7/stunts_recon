@@ -19,9 +19,11 @@ static U8 saved_effect_chunk_volumes[AUDIO_CHUNK_CAPACITY];
 #pragma pack()
 /* Load and drive the DOS audio module, schedule its timer callback, and resolve audio resources. */
 
-/* Local view: audiochunktable; array is 24; another unit uses None. */
+
+#include "audpool.h"
 struct AUDIOCHUNK audiochunktable[AUDIO_CHUNK_CAPACITY];
-/* Local view: snd_voices_tbl; array is 16; another unit uses None. */
+
+#include "audpool.h"
 struct AUDIOVOICE snd_voices_tbl[AUDIO_VOICE_CAPACITY];
 
 unsigned char block_audio_num;
@@ -33,29 +35,21 @@ unsigned char g_musicvolumesetting;
 unsigned char audiochnk_actflags[AUDIO_CHUNK_CAPACITY];
 
 char g_drvaudiocode[14];
-/* Local view: kick_res; pointer is void; another unit uses signed byte. */
-void far *kick_res;
-/* Local view: g_snaresnd; pointer is void; another unit uses signed byte. */
-void far *g_snaresnd;
-/* Local view: tommsampleresource; pointer is void; another unit uses signed byte. */
-void far *tommsampleresource;
-/* Local view: ride_audio_sound_res; pointer is void; another unit uses signed byte. */
-void far *ride_audio_sound_res;
-/* Local view: audio_opp_res; pointer is void; another unit uses signed byte. */
-void far *audio_opp_res;
-/* Local view: chhtsample; pointer is void; another unit uses signed byte. */
-void far *chhtsample;
-/* Local view: resource_sound_hit; pointer is void; another unit uses signed byte. */
-void far *resource_sound_hit;
+I8 FAR *kick_res;
+I8 FAR *g_snaresnd;
+I8 FAR *tommsampleresource;
+I8 FAR *ride_audio_sound_res;
+I8 FAR *audio_opp_res;
+I8 FAR *chhtsample;
+I8 FAR *resource_sound_hit;
 
-/* Local view: audio_set_chunk_volume; parameters[1] is unsigned byte; another unit uses signed word. */
-void FAR audio_set_chunk_volume(I16 index, U8 value);
+
+
 
 
 #include "ui.h"
 
 
-/* Local view: setticks; parameters.count is 1; another unit uses 2. */
 void FAR setticks(I32 ticks);
 
 #include "files.h"
@@ -65,8 +59,10 @@ void FAR setticks(I32 ticks);
 void FAR audio_init_chunk(I16 first, I16 last, void FAR *res, I16 offset, U8 volume, U8 priority);
 #include "auddrv.h"
 
-/* Local view: timer registration uses an ordinary far callback; the entry definition uses _loadds. */
-extern void far audiodriver_timer(void);
+
+
+#include "audtick.h"
+
 #include "math3d.h"
 #include "viewstat.h"
 #include "game.h"
@@ -437,7 +433,7 @@ I16 FAR audio_load_driver(I8 *filename, I16 unused, I16 signature)
             audio_driver_extension_mode = 0;
         }
         reset_audio_driver_state();
-        addtimer(audiodriver_timer);
+        addtimer((callback_t)audiodriver_timer);
         if (audio_driver_mode != AUDIO_DRIVER_MODE_VOICE) {
             patches = loadfilez("mt32.plb");
             if (patches != 0) {
@@ -464,7 +460,7 @@ void FAR audiodrv_atexit(void)
 {
     audio_update_lock = 1;
     if (audiodriverbinary != 0) {
-        deltimer(audiodriver_timer);
+        deltimer((callback_t)audiodriver_timer);
         audioflag2 = 0;
         audioflag6 = 0;
         if (audio_driver_mode != AUDIO_DRIVER_MODE_VOICE) {

@@ -33,7 +33,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_apply_audio_voice_event",
-      "target_index": 41,
+      "target_index": 40,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -67,7 +67,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_set_chunk_volume",
-      "target_index": 13,
+      "target_index": 45,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -84,7 +84,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mus_samplelimit",
-      "target_index": 40,
+      "target_index": 39,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -101,7 +101,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -118,7 +118,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -135,7 +135,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -152,7 +152,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -169,7 +169,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_mode",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -186,7 +186,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_find_audio_chunk_data",
-      "target_index": 19,
+      "target_index": 18,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -203,7 +203,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_init_chunk",
-      "target_index": 11,
+      "target_index": 12,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -220,7 +220,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_musicvolumesetting",
-      "target_index": 35,
+      "target_index": 32,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -237,7 +237,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_driver_func1E",
-      "target_index": 43,
+      "target_index": 42,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -305,7 +305,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -322,7 +322,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -373,7 +373,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_audio_driver_func1E",
-      "target_index": 43,
+      "target_index": 42,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -475,7 +475,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_read_audio_event",
-      "target_index": 27,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -509,7 +509,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -543,7 +543,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_process_audio_chunk_event",
-      "target_index": 21,
+      "target_index": 20,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -577,7 +577,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_sample_rate_phase",
-      "target_index": 42,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -594,7 +594,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mus_samplelimit",
-      "target_index": 40,
+      "target_index": 39,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -611,7 +611,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_update_audio_voice_state",
-      "target_index": 37,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -628,7 +628,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_sample_rate_phase",
-      "target_index": 42,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -645,7 +645,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_mus_samplelimit",
-      "target_index": 40,
+      "target_index": 39,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -662,7 +662,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_block_audio_num",
-      "target_index": 29,
+      "target_index": 28,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -679,7 +679,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_process_audio_chunk_event",
-      "target_index": 21,
+      "target_index": 20,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -696,7 +696,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_sample_rate_phase",
-      "target_index": 42,
+      "target_index": 41,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -747,7 +747,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_process_effect_audio_chunks",
-      "target_index": 25,
+      "target_index": 24,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -764,7 +764,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_update_audio_voice_state",
-      "target_index": 37,
+      "target_index": 35,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -781,7 +781,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_process_music_audio_chunks",
-      "target_index": 26,
+      "target_index": 25,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -798,7 +798,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_pause_in_progress",
-      "target_index": 20,
+      "target_index": 19,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -815,7 +815,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioflag2",
-      "target_index": 28,
+      "target_index": 27,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -832,7 +832,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_song_ready",
-      "target_index": 22,
+      "target_index": 21,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -849,7 +849,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_reset_audio_event_state",
-      "target_index": 30,
+      "target_index": 29,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -900,7 +900,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_update_lock",
-      "target_index": 38,
+      "target_index": 37,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -917,7 +917,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -934,7 +934,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -968,7 +968,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 32,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -985,7 +985,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1002,7 +1002,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1019,7 +1019,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1036,7 +1036,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1053,7 +1053,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 32,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1070,7 +1070,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_mode",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1087,7 +1087,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1104,7 +1104,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1121,7 +1121,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1138,7 +1138,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1172,7 +1172,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1189,7 +1189,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1206,7 +1206,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 32,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1223,7 +1223,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1240,7 +1240,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1257,7 +1257,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1274,7 +1274,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 32,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1291,7 +1291,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_mode",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1308,7 +1308,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1342,7 +1342,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1359,7 +1359,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1376,7 +1376,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1410,7 +1410,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 32,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1427,7 +1427,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1444,7 +1444,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1461,7 +1461,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_mode",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1478,7 +1478,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1495,7 +1495,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1512,7 +1512,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1529,7 +1529,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 32,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1546,7 +1546,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1563,7 +1563,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1580,7 +1580,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_mode",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1597,7 +1597,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1648,7 +1648,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1716,7 +1716,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_read_audio_event",
-      "target_index": 27,
+      "target_index": 26,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -1750,7 +1750,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_process_audio_event",
-      "target_index": 23,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2141,7 +2141,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_set_audio_voice_parameter",
-      "target_index": 36,
+      "target_index": 33,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2175,7 +2175,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2192,7 +2192,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_mode",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2226,7 +2226,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2243,7 +2243,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2260,7 +2260,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2277,7 +2277,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2311,7 +2311,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_process_audio_event",
-      "target_index": 23,
+      "target_index": 22,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2447,7 +2447,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioblock",
-      "target_index": 24,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2464,7 +2464,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2481,7 +2481,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2498,7 +2498,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_mode",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2515,7 +2515,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2532,7 +2532,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2549,7 +2549,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_mode",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2566,7 +2566,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2583,7 +2583,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2600,7 +2600,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_mode",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2617,7 +2617,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -2634,7 +2634,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_select_audio_voice_slot",
-      "target_index": 31,
+      "target_index": 30,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3093,7 +3093,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_snaresnd",
-      "target_index": 4,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3110,7 +3110,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_snaresnd",
-      "target_index": 4,
+      "target_index": 5,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3127,7 +3127,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kick_res",
-      "target_index": 3,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3144,7 +3144,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_kick_res",
-      "target_index": 3,
+      "target_index": 4,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3178,7 +3178,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3212,7 +3212,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3229,7 +3229,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3246,7 +3246,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3263,7 +3263,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3331,7 +3331,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3348,7 +3348,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3365,7 +3365,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_bit_masks",
-      "target_index": 18,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3382,7 +3382,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3399,7 +3399,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 32,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3416,7 +3416,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3433,7 +3433,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3450,7 +3450,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3467,7 +3467,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3484,7 +3484,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3501,7 +3501,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3518,7 +3518,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3535,7 +3535,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3552,7 +3552,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3569,7 +3569,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_bit_masks",
-      "target_index": 18,
+      "target_index": 17,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3586,7 +3586,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 32,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3603,7 +3603,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3620,7 +3620,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3637,7 +3637,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3654,7 +3654,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3671,7 +3671,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3688,7 +3688,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3705,7 +3705,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3722,7 +3722,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3739,7 +3739,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioblock",
-      "target_index": 24,
+      "target_index": 23,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3756,7 +3756,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3773,7 +3773,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3790,7 +3790,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3824,7 +3824,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3841,7 +3841,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3858,7 +3858,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3892,7 +3892,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 32,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3909,7 +3909,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_clear_audio_voice",
-      "target_index": 14,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3926,7 +3926,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -3943,7 +3943,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 32,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4283,7 +4283,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_get_word",
-      "target_index": 45,
+      "target_index": 44,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4300,7 +4300,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audioresource_get_dword",
-      "target_index": 44,
+      "target_index": 43,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -4317,7 +4317,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4334,7 +4334,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4351,7 +4351,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4368,7 +4368,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4385,7 +4385,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4402,7 +4402,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4419,7 +4419,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4436,7 +4436,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiochunktable",
-      "target_index": 33,
+      "target_index": 34,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4453,7 +4453,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 32,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4470,7 +4470,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4487,7 +4487,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4504,7 +4504,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4521,7 +4521,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4538,7 +4538,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4555,7 +4555,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4572,7 +4572,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 32,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4589,7 +4589,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audio_driver_mode",
-      "target_index": 5,
+      "target_index": 3,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4623,7 +4623,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4640,7 +4640,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4657,7 +4657,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4674,7 +4674,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": true,
       "target": "_clear_audio_voice",
-      "target_index": 14,
+      "target_index": 13,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4691,7 +4691,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_snd_voices_tbl",
-      "target_index": 34,
+      "target_index": 36,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4708,7 +4708,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_g_audiodrvvoices_count",
-      "target_index": 32,
+      "target_index": 31,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4725,7 +4725,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -4742,7 +4742,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_audiodriverbinary",
-      "target_index": 39,
+      "target_index": 38,
       "target_kind": "external",
       "target_method": 2,
       "width": 2
@@ -5081,17 +5081,16 @@
     "externals": [
       "__acrtused",
       "_g_audchnkvalue",
+      "_audio_driver_mode",
       "_kick_res",
       "_g_snaresnd",
-      "_audio_driver_mode",
       "_ride_audio_sound_res",
       "_audio_opp_res",
       "_chhtsample",
       "_resource_sound_hit",
       "_tommsampleresource",
-      "_audio_init_chunk",
       "_send_audio_stop_event",
-      "_audio_set_chunk_volume",
+      "_audio_init_chunk",
       "_clear_audio_voice",
       "_start_audio_voice_sample",
       "_set_audio_voice_value",
@@ -5111,11 +5110,11 @@
       "_reset_audio_event_state",
       "_select_audio_voice_slot",
       "_g_audiodrvvoices_count",
-      "_audiochunktable",
-      "_snd_voices_tbl",
       "_g_musicvolumesetting",
       "_set_audio_voice_parameter",
+      "_audiochunktable",
       "_update_audio_voice_state",
+      "_snd_voices_tbl",
       "_audio_update_lock",
       "_audiodriverbinary",
       "_mus_samplelimit",
@@ -5124,6 +5123,7 @@
       "_audio_driver_func1E",
       "_audioresource_get_dword",
       "_audioresource_get_word",
+      "_audio_set_chunk_volume",
       "_audiodriver_timer"
     ],
     "groups": [
@@ -5149,11 +5149,6 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_audio_set_chunk_volume",
-        "offset": 1552,
-        "segment": "UNIT_TEXT"
-      },
-      {
         "name": "_clear_audio_voice",
         "offset": 4174,
         "segment": "UNIT_TEXT"
@@ -5174,14 +5169,14 @@
         "segment": "UNIT_TEXT"
       },
       {
-        "name": "_audio_timer_reentry_lock",
-        "offset": 0,
-        "segment": "_DATA"
-      },
-      {
         "name": "_find_audio_chunk_data",
         "offset": 1160,
         "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_audio_timer_reentry_lock",
+        "offset": 0,
+        "segment": "_DATA"
       },
       {
         "name": "_process_audio_chunk_event",
@@ -5236,6 +5231,11 @@
       {
         "name": "_audio_driver_func1E",
         "offset": 4906,
+        "segment": "UNIT_TEXT"
+      },
+      {
+        "name": "_audio_set_chunk_volume",
+        "offset": 1552,
         "segment": "UNIT_TEXT"
       },
       {
@@ -5328,8 +5328,13 @@
     },
     {
       "path": "include/audio.h",
-      "sha256": "573aaf8e174efe73f9248b3792f3893316bb264f1e32e1370f5002aae3bd0dfb",
-      "size": 16246
+      "sha256": "f55dc9de82a90817d80548e5e356a2f88db3327d87a197bdea0e62fffc2ce056",
+      "size": 16773
+    },
+    {
+      "path": "include/audpool.h",
+      "sha256": "48047e93e30fb47d1f4e4c815015435b26b5cd2d488de593bcd91776b8f2bcf7",
+      "size": 252
     },
     {
       "path": "include/audstate.h",
@@ -5528,6 +5533,114 @@
     {
       "line": 49,
       "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 25,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": 1
+    },
+    {
+      "line": 55,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 56,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 81,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 89,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 108,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 122,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 150,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 17,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 25,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": 1
+    },
+    {
+      "line": 55,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 56,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 81,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 89,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 108,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 122,
+      "path": "include/audio.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 150,
+      "path": "include/audio.h",
       "pragma": "pack",
       "value": null
     }

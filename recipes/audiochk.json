@@ -314,8 +314,8 @@
     },
     {
       "path": "include/audio.h",
-      "sha256": "573aaf8e174efe73f9248b3792f3893316bb264f1e32e1370f5002aae3bd0dfb",
-      "size": 16246
+      "sha256": "f55dc9de82a90817d80548e5e356a2f88db3327d87a197bdea0e62fffc2ce056",
+      "size": 16773
     },
     {
       "path": "include/chartab.h",

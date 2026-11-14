@@ -35,7 +35,7 @@
       "segment": "UNIT_TEXT",
       "self_relative": false,
       "target": "_locate_sound_fatal",
-      "target_index": 8,
+      "target_index": 7,
       "target_kind": "external",
       "target_method": 2,
       "width": 4
@@ -156,8 +156,8 @@
       "_locate_shape_fatal",
       "_file_find_shapes_optional_alt",
       "_file_find_sounds_required",
-      "_locateshapesz",
-      "_locate_sound_fatal"
+      "_locate_sound_fatal",
+      "_locateshapesz"
     ],
     "groups": [
       {
@@ -273,8 +273,8 @@
     },
     {
       "path": "include/audio.h",
-      "sha256": "573aaf8e174efe73f9248b3792f3893316bb264f1e32e1370f5002aae3bd0dfb",
-      "size": 16246
+      "sha256": "f55dc9de82a90817d80548e5e356a2f88db3327d87a197bdea0e62fffc2ce056",
+      "size": 16773
     },
     {
       "path": "include/files.h",

@@ -181,7 +181,7 @@
           "name": "_trksign",
           "size": 4,
           "size_basis": {
-            "declaration": "int far* trksign;",
+            "declaration": "int far *trksign;",
             "kind": "declared-type"
           }
         },
@@ -193,7 +193,7 @@
           "name": "_kick_res",
           "size": 4,
           "size_basis": {
-            "declaration": "void far *kick_res;",
+            "declaration": "I8 FAR *kick_res;",
             "kind": "declared-type"
           }
         },
@@ -462,7 +462,7 @@
           "name": "_chhtsample",
           "size": 4,
           "size_basis": {
-            "declaration": "void far *chhtsample;",
+            "declaration": "I8 FAR *chhtsample;",
             "kind": "declared-type"
           }
         },
@@ -548,7 +548,7 @@
           "name": "_g_snaresnd",
           "size": 4,
           "size_basis": {
-            "declaration": "void far *g_snaresnd;",
+            "declaration": "I8 FAR *g_snaresnd;",
             "kind": "declared-type"
           }
         },
@@ -585,7 +585,7 @@
           "name": "_tommsampleresource",
           "size": 4,
           "size_basis": {
-            "declaration": "void far *tommsampleresource;",
+            "declaration": "I8 FAR *tommsampleresource;",
             "kind": "declared-type"
           }
         },
@@ -816,7 +816,7 @@
           "name": "_audio_opp_res",
           "size": 4,
           "size_basis": {
-            "declaration": "void far *audio_opp_res;",
+            "declaration": "I8 FAR *audio_opp_res;",
             "kind": "declared-type"
           }
         },
@@ -901,7 +901,7 @@
           "name": "_resource_sound_hit",
           "size": 4,
           "size_basis": {
-            "declaration": "void far *resource_sound_hit;",
+            "declaration": "I8 FAR *resource_sound_hit;",
             "kind": "declared-type"
           }
         },
@@ -2354,7 +2354,7 @@
           "name": "_ride_audio_sound_res",
           "size": 4,
           "size_basis": {
-            "declaration": "void far *ride_audio_sound_res;",
+            "declaration": "I8 FAR *ride_audio_sound_res;",
             "kind": "declared-type"
           }
         },
