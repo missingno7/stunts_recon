@@ -223,4 +223,5 @@ extern struct WALLREC far *wallrecrecord;
 extern int compiletrack(void);
 extern char gettlistpoint(int, struct TRACKRESULT *, char, char *);
 extern unsigned char  roadupcheck(unsigned char, unsigned char);
+extern struct TRACKOBJECT trklst[215];
 #endif
