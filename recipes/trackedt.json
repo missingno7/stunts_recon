@@ -10966,10 +10966,6 @@
     }
   ],
   "profile": "msc510-medium",
-  "review_notes": [
-    "s009bss: the complete file-scope static set of seg009 is six static far-pointer objects (1,600 B _BSS at [205400,207000)); the code bytes outside FIXUPP fields, fixup locations/kinds and relocations are identical to the canonical extern form (control: extern->static storage change alone leaves the object identical apart from the 98 _BSS FIXUPP targets). MSC 5.10 orders file statics by the identifier-spelling bucket sum(b&0xDF) mod 256 ascending (ties newest declaration first; L9-mschash), so piece_fill_shapes, piece_mask_shapes and track_editor_cursors are compiler-hash-constrained reconstruction names (readable, semantic, never recovered originals); palette_piece_layout, terrain_tile_shapes and road_tile_shapes keep their registry spellings",
-    "integ40 communal publication: every reference to a LINK c_common communal uses its program-wide link-hash-constrained registry name (names-registry.json); the communals this unit declares are tentative definitions (COMDEF records listed in communal_declarations) of the accepted LINK_COMMUNAL unit, every other reference stays extern. Code bytes, FIXUPP sites/kinds, the linked address of every FIXUPP and the ordered relocations are unchanged; EXTDEF/COMDEF/PUBDEF record order follows the MSC 5.10 symbol-table walk (name dependent), not source order. Merged variant (nameCfix, supervisor ruling): word_45D3E[i] and word_35D42[i] are lnoffsets[i - 1] and lnoffsets[i + 1] (negative folded index bindings reviewed per FIXUPP)."
-  ],
   "secondary_dgroup_segments": {
     "_BSS": {
       "dgroup_offset": 27368,

@@ -32,7 +32,7 @@
         "stable_id": "load_14e9e",
         "start": 85662
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_ADD_OBJECT_TO_BUFFER"
     },
     "_DRAW_OBJECTS": {
@@ -66,7 +66,7 @@
         "stable_id": "load_15ff6",
         "start": 90102
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_DRAW_OBJECTS"
     },
     "_INIT_MATRIX": {
@@ -91,7 +91,7 @@
         "stable_id": "load_14d64",
         "start": 85348
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_INIT_MATRIX"
     },
     "_INIT_OBJECTS_BUFFER": {
@@ -125,7 +125,7 @@
         "stable_id": "load_14e06",
         "start": 85510
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_INIT_OBJECTS_BUFFER"
     },
     "_INIT_PALETTE": {
@@ -1093,7 +1093,7 @@
         "stable_id": "load_2771e",
         "start": 161566
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_audio_chunk_is_unavailable"
     },
     "_audio_driver_func1E": {
@@ -2209,7 +2209,7 @@
         "stable_id": "load_25c4e",
         "start": 154702
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "proposal_basis": "accepted by workspace-local generalized embedded-data overlay parser; see function_evidence_tables.diff",
       "reviewed_alias": "_clear_rect"
     },
@@ -2365,7 +2365,7 @@
         "stable_id": "load_2327f",
         "start": 143999
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_clippix"
     },
     "_clipzone": {
@@ -2399,7 +2399,7 @@
         "stable_id": "load_165ec",
         "start": 91628
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_clipzone"
     },
     "_closeresource": {
@@ -3604,7 +3604,7 @@
         "stable_id": "load_207d2",
         "start": 133074
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_convertjoy"
     },
     "_cos_fast": {
@@ -3835,7 +3835,7 @@
         "stable_id": "load_19b32",
         "start": 105266
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "pointer_anchors": [
         {
           "caller_task": "load_29e56",
@@ -3976,7 +3976,7 @@
         "stable_id": "load_19786",
         "start": 104326
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_docursor"
     },
     "_docursorinit": {
@@ -4010,7 +4010,7 @@
         "stable_id": "load_19772",
         "start": 104306
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_docursorinit"
     },
     "_doengine": {
@@ -4382,7 +4382,7 @@
         "stable_id": "load_23578",
         "start": 144760
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_drawrectc"
     },
     "_drawworld": {
@@ -4431,7 +4431,7 @@
         "stable_id": "load_09f14",
         "start": 40724
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_drawworldflipzones"
     },
     "_drnd": {
@@ -4650,7 +4650,7 @@
         "stable_id": "load_1cdec",
         "start": 118252
       },
-      "name_provenance": "pinned runtime library public: toolchain/msc510/MLIBCR.LIB member dos\\crt0dat.asm defines _exit at this entry (integ30 program-wide name)",
+      "name_provenance": "pinned runtime library public: toolchain/msc510/MLIBCR.LIB member dos\\crt0dat.asm defines _exit at this entry",
       "reviewed_alias": "_exit"
     },
     "_fflush": {
@@ -4858,7 +4858,7 @@
         "stable_id": "load_197fc",
         "start": 104444
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_file_load_audio_resource"
     },
     "_file_load_audiores": {
@@ -5306,7 +5306,7 @@
         "stable_id": "load_20044",
         "start": 131140
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_fixedmult"
     },
     "_floadreq": {
@@ -5526,7 +5526,7 @@
         "stable_id": "load_198a8",
         "start": 104616
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_fontsetfontdef"
     },
     "_format_frame_as_string": {
@@ -5913,7 +5913,7 @@
         "stable_id": "load_0e1a0",
         "start": 57760
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_getpinfo"
     },
     "_getres": {
@@ -5980,7 +5980,7 @@
         "stable_id": "load_18aa2",
         "start": 101026
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_getresl"
     },
     "_getsimdata": {
@@ -6517,7 +6517,7 @@
         "sha256": "d91499ce16e61bf7b0a7b4d8d112a68251c30437fb3240467a50eef2c039e6d0",
         "start": 40680
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_initialize_div0"
     },
     "_initlogo": {
@@ -6590,7 +6590,7 @@
         "stable_id": "load_29e56",
         "start": 171606
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_initmodes"
     },
     "_initmouse": {
@@ -6681,7 +6681,7 @@
         "stable_id": "load_06b02",
         "start": 27394
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_initsim"
     },
     "_initworld": {
@@ -6706,7 +6706,7 @@
         "stable_id": "load_12532",
         "start": 75058
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_initworld"
     },
     "_instringz": {
@@ -6830,7 +6830,7 @@
         "stable_id": "load_1ea4e",
         "start": 125518
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_intatan"
     },
     "_intcos": {
@@ -6864,7 +6864,7 @@
         "sha256": "f856a560644eff8e9287dee4ca001aa8e3043540f28dddd484a2f449222982ff",
         "start": 141100
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_intcos"
     },
     "_interpretkey": {
@@ -6955,7 +6955,7 @@
         "stable_id": "load_200b6",
         "start": 131254
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_inthypot"
     },
     "_intro_draw_text": {
@@ -7011,7 +7011,7 @@
         "stable_id": "load_226de",
         "start": 141022
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_intsin"
     },
     "_itoa": {
@@ -7207,7 +7207,7 @@
         "stable_id": "load_20883",
         "start": 133251
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_keyboard_exit_handler"
     },
     "_keyboard_shift_checking1": {
@@ -7232,7 +7232,7 @@
         "stable_id": "load_26af4",
         "start": 158452
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_keyboard_shift_checking1"
     },
     "_keystate": {
@@ -7372,7 +7372,7 @@
         "stable_id": "load_23861",
         "start": 145505
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_load_shape2d_nofatal_thunk"
     },
     "_load_shape2d_res_nofatal_thunk": {
@@ -7397,7 +7397,7 @@
         "stable_id": "load_2384d",
         "start": 145485
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_load_shape2d_res_nofatal_thunk"
     },
     "_load_song_file": {
@@ -8054,7 +8054,7 @@
         "sha256": "e6ed6139a9e6338fd9b2cc261b00911351aaf75d90968f4e2665f8148854e702",
         "start": 90618
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_makematrix"
     },
     "_makename": {
@@ -8154,7 +8154,7 @@
         "stable_id": "load_198b8",
         "start": 104632
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_maketime"
     },
     "_makezonelist": {
@@ -8188,7 +8188,7 @@
         "stable_id": "load_16a52",
         "start": 92754
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_makezonelist"
     },
     "_mat_invert": {
@@ -8351,7 +8351,7 @@
         "stable_id": "load_228ee",
         "start": 141550
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_mat_vec"
     },
     "_mdosexit": {
@@ -8364,7 +8364,7 @@
         "stable_id": "load_19f5c",
         "start": 106332
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "pointer_anchors": [
         {
           "caller_task": "load_29e56",
@@ -8434,7 +8434,7 @@
         "stable_id": "load_16572",
         "start": 91506
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_mergezones"
     },
     "_messagebox": {
@@ -8480,7 +8480,7 @@
         "stable_id": "load_19d9a",
         "start": 105882
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "pointer_anchors": [
         {
           "caller_task": "load_29e56",
@@ -8604,7 +8604,7 @@
         "stable_id": "load_19df4",
         "start": 105972
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_mmouseon"
     },
     "_mmusictog": {
@@ -8617,7 +8617,7 @@
         "stable_id": "load_19e98",
         "start": 106136
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "pointer_anchors": [
         {
           "caller_task": "load_29e56",
@@ -8849,7 +8849,7 @@
         "stable_id": "load_18db6",
         "start": 101814
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_mouseoff"
     },
     "_mouseon": {
@@ -8883,7 +8883,7 @@
         "stable_id": "load_18d9e",
         "start": 101790
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_mouseon"
     },
     "_movcf": {
@@ -8917,7 +8917,7 @@
         "stable_id": "load_23bda",
         "start": 146394
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_movcf"
     },
     "_movcfxya": {
@@ -8975,7 +8975,7 @@
         "stable_id": "load_09794",
         "start": 38804
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_move_on_plane"
     },
     "_movehelicopters": {
@@ -9000,7 +9000,7 @@
         "stable_id": "load_1298c",
         "start": 76172
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_movehelicopters"
     },
     "_movelogo": {
@@ -9290,7 +9290,7 @@
         "stable_id": "load_23de2",
         "start": 146914
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_movpackfxya"
     },
     "_movtxy": {
@@ -9324,7 +9324,7 @@
         "sha256": "9616660f37f992025155b2c9edc0bd84af26f6d18e1876fa621205f2ca629c06",
         "start": 148924
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_movtxy"
     },
     "_msetrender": {
@@ -9361,7 +9361,7 @@
         "stable_id": "load_19efa",
         "start": 106234
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "pointer_anchors": [
         {
           "caller_task": "load_29e56",
@@ -9712,7 +9712,7 @@
         "stable_id": "load_1988a",
         "start": 104586
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_mysetfont"
     },
     "_mysetseeds": {
@@ -9737,7 +9737,7 @@
         "stable_id": "load_09e21",
         "start": 40481
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_mysetseeds"
     },
     "_myupdatesfx": {
@@ -9795,7 +9795,7 @@
         "stable_id": "load_08d06",
         "start": 36102
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_myupdatesfx1"
     },
     "_negblockmove": {
@@ -10016,7 +10016,7 @@
         "stable_id": "load_189f2",
         "start": 100850
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_openresource"
     },
     "_opponentcompile": {
@@ -10212,7 +10212,7 @@
         "stable_id": "load_09926",
         "start": 39206
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_plane_distance"
     },
     "_plane_origin_op": {
@@ -10689,7 +10689,7 @@
         "stable_id": "load_19a86",
         "start": 105094
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_read_file_with_retry"
     },
     "_readf": {
@@ -10915,7 +10915,7 @@
         "stable_id": "load_274de",
         "start": 160990
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_release_audio_chunk"
     },
     "_remove_3dcars": {
@@ -11072,7 +11072,7 @@
         "stable_id": "load_224aa",
         "start": 140458
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_removewindow"
     },
     "_replay_axis_value": {
@@ -11097,7 +11097,7 @@
         "stable_id": "load_207e3",
         "start": 133091
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_replay_axis_value"
     },
     "_reserve_audio_chunk": {
@@ -11122,7 +11122,7 @@
         "stable_id": "load_27470",
         "start": 160880
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_reserve_audio_chunk"
     },
     "_reservememory": {
@@ -11180,7 +11180,7 @@
         "stable_id": "load_28178",
         "start": 164216
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_reset_audio_driver_state"
     },
     "_reset_audio_event_state": {
@@ -11214,7 +11214,7 @@
         "stable_id": "load_29700",
         "start": 169728
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_reset_audio_event_state"
     },
     "_reset_audio_voice_length": {
@@ -11239,7 +11239,7 @@
         "stable_id": "load_28156",
         "start": 164182
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_reset_audio_voice_length"
     },
     "_reset_joystick_selection": {
@@ -11264,7 +11264,7 @@
         "stable_id": "load_207b4",
         "start": 133044
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_reset_joystick_selection"
     },
     "_resizememory": {
@@ -11355,7 +11355,7 @@
         "stable_id": "load_272f4",
         "start": 160500
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_restore_audio_volume"
     },
     "_restoreboxwindow": {
@@ -11380,7 +11380,7 @@
         "stable_id": "load_175c6",
         "start": 95686
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_restoreboxwindow"
     },
     "_restoretimer": {
@@ -11405,7 +11405,7 @@
         "stable_id": "load_20268",
         "start": 131688
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_restoretimer"
     },
     "_restorewindow": {
@@ -11496,7 +11496,7 @@
         "stable_id": "load_11a5a",
         "start": 72282
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_roadupcheck"
     },
     "_run_game": {
@@ -11609,7 +11609,7 @@
         "sha256": "a8298ba471419f29e485e9330772ffb68580cc03ad7b6dbf95f53b6af8856c1e",
         "start": 149468
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_scalecfxy"
     },
     "_seedrandom": {
@@ -11714,7 +11714,7 @@
         "stable_id": "load_29050",
         "start": 168016
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_send_audio_stop_event"
     },
     "_set_audio_voice_value": {
@@ -11738,7 +11738,7 @@
         "sha256": "e52d7ae8fb3eb0eed25b70b1a4f25a64e4ae14e2a72d01add54eb47168e72f5f",
         "start": 168072
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_set_audio_voice_value"
     },
     "_set_bios_mode3": {
@@ -11947,7 +11947,7 @@
         "stable_id": "load_104ae",
         "start": 66734
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_settires"
     },
     "_setup_mcgawnd1": {
@@ -12045,7 +12045,7 @@
         "stable_id": "load_18f98",
         "start": 102296
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_shadowtext"
     },
     "_shape2d_op_unk5": {
@@ -12191,7 +12191,7 @@
         "stable_id": "load_26be8",
         "start": 158696
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_shellsort"
     },
     "_sin_fast": {
@@ -12334,7 +12334,7 @@
         "stable_id": "load_16b4a",
         "start": 93002
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_sortzonelist"
     },
     "_sprintf": {
@@ -12359,7 +12359,7 @@
         "stable_id": "load_1e48c",
         "start": 124044
       },
-      "name_provenance": "pinned runtime library public: toolchain/msc510/MLIBCR.LIB member sprintf.c defines _sprintf at this entry (integ30 program-wide name)",
+      "name_provenance": "pinned runtime library public: toolchain/msc510/MLIBCR.LIB member sprintf.c defines _sprintf at this entry",
       "reviewed_alias": "_sprintf"
     },
     "_sprite_1_unk2": {
@@ -12513,7 +12513,7 @@
         "stable_id": "load_1916e",
         "start": 102766
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_sprite_draw_beveled_frame"
     },
     "_sprite_draw_rect_outline": {
@@ -12603,7 +12603,7 @@
         "stable_id": "load_24c0c",
         "start": 150540
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_sprite_make_window"
     },
     "_sprite_make_wnd": {
@@ -12760,7 +12760,7 @@
         "stable_id": "load_25af6",
         "start": 154358
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_sprite_setup1_from_arg_pointer"
     },
     "_sprite_two_color_poly_list": {
@@ -12842,7 +12842,7 @@
         "stable_id": "load_28cf8",
         "start": 167160
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_start_audio_voice_sample"
     },
     "_strcat": {
@@ -13829,7 +13829,7 @@
         "stable_id": "load_1eb07",
         "start": 125703
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_testbiosticks"
     },
     "_testkey": {
@@ -13921,7 +13921,7 @@
         "stable_id": "load_24b0c",
         "start": 150284
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ30 program-wide adoption of the integ28 names registry, build/namefit/names_registry_integ28.json + build/workers/integ30/map_final.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_textcolor"
     },
     "_textnpixels": {
@@ -14130,7 +14130,7 @@
         "stable_id": "load_24526",
         "start": 148774
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_tmaskxf"
     },
     "_trackedit": {
@@ -14402,7 +14402,7 @@
         "stable_id": "load_18f3c",
         "start": 102204
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_usescreen"
     },
     "_usescreenc": {
@@ -14577,7 +14577,7 @@
         "stable_id": "load_1eb1e",
         "start": 125726
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_waitbios"
     },
     "_waitticks": {
@@ -14736,7 +14736,7 @@
         "stable_id": "load_26f80",
         "start": 159616
       },
-      "name_provenance": "pressure-constrained reconstruction name (integ28 names registry proposal, typenames plan C revised for readability: build/namefit/names_registry_integ28.json); binding alias only, not a recovered name",
+      "name_provenance": "pressure-constrained reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_xformy"
     },
     "_xformz": {
@@ -14785,7 +14785,7 @@
         "stable_id": "load_2702e",
         "start": 159790
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_xorbox"
     },
     "_xorrectc": {
@@ -14849,7 +14849,7 @@
         "sha256": "f6c00ce789b24ac416754fc8dbe422282b0ea2cb0beaebe910badcd2d6858be8",
         "start": 154486
       },
-      "name_provenance": "readable reconstruction name (integ33 adoption of the reviewed L7-naming proposal, build/workers/L7-naming/proposed_registry.json + build/workers/integ33/review.json; every accepted TU verified identical by namefit and the strict gate); binding alias only, not a recovered name",
+      "name_provenance": "readable reconstruction name; binding alias only, not a recovered name",
       "reviewed_alias": "_xorrectc"
     },
     "_zclipline": {

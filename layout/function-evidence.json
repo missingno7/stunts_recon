@@ -181,7 +181,6 @@
         }
       ],
       "end": 89902,
-      "evidence_class": "pristine extent/CFG plus pinned Restunts predecessor boundary; compiler proof separate",
       "name": "rect_compare_point",
       "padding_offsets": [
         89881
@@ -702,7 +701,6 @@
         }
       ],
       "end": 90102,
-      "evidence_class": "pristine byte/branch/caller proof; private semantic lead separately referenced",
       "name": "is_facing_camera",
       "padding_offsets": [
         90082,
@@ -2133,7 +2131,6 @@
         }
       ],
       "end": 103942,
-      "evidence_class": "reviewed_pristine_cfg",
       "name": "shape3d_init_shape",
       "padding_offsets": [],
       "reachable_instruction_offsets": [
@@ -2274,7 +2271,6 @@
         }
       ],
       "end": 101004,
-      "evidence_class": "pristine mapped interval, straight-line CFG, relocated far CALL and reviewed address aliases",
       "name": "unload_resource",
       "padding_offsets": [
         101003
@@ -2358,7 +2354,6 @@
         }
       ],
       "end": 101026,
-      "evidence_class": "pristine mapped interval, straight-line CFG, relocated far CALL and reviewed address aliases",
       "name": "locate_shape_alt",
       "padding_offsets": [],
       "reachable_instruction_offsets": [
@@ -2496,7 +2491,6 @@
         }
       ],
       "end": 157668,
-      "evidence_class": "pristine mapped interval, bounded direct CFG, relocated far CALL and reviewed address aliases",
       "name": "locate_many_resources",
       "padding_offsets": [
         157623,
@@ -2606,7 +2600,6 @@
         }
       ],
       "end": 103968,
-      "evidence_class": "pristine mapped interval, bounded direct CFG, relocated far CALL and reviewed address aliases",
       "name": "font_op2_alt",
       "padding_offsets": [],
       "reachable_instruction_offsets": [
@@ -2727,7 +2720,6 @@
         }
       ],
       "end": 171596,
-      "evidence_class": "pristine mapped interval, bounded direct CFG, relocated far CALL and reviewed address aliases",
       "name": "file_combine_and_find",
       "padding_offsets": [],
       "reachable_instruction_offsets": [
@@ -2803,7 +2795,6 @@
         }
       ],
       "end": 55612,
-      "evidence_class": "pristine mapped interval, bounded direct CFG, relocated far CALL and reviewed address aliases",
       "name": "free_sdgame2",
       "padding_offsets": [
         55611
@@ -2944,7 +2935,6 @@
         }
       ],
       "end": 101078,
-      "evidence_class": "pristine mapped interval, bounded direct CFG, relocated far CALL and reviewed address aliases",
       "name": "locate_text_res",
       "padding_offsets": [
         101077
@@ -3040,7 +3030,6 @@
         }
       ],
       "end": 75126,
-      "evidence_class": "pristine mapped interval, bounded direct CFG, relocated far CALL and reviewed address aliases",
       "name": "set_frame_callback",
       "padding_offsets": [],
       "reachable_instruction_offsets": [
@@ -3368,7 +3357,6 @@
         }
       ],
       "end": 92754,
-      "evidence_class": "pristine named far entry, complete mapped interval, direct CFG, no calls or relocations",
       "name": "rect_is_adjacent",
       "padding_offsets": [
         92653,
@@ -4587,7 +4575,6 @@
         }
       ],
       "end": 27394,
-      "evidence_class": "pristine named far entry, complete mapped interval, direct CFG, no calls or relocations",
       "name": "init_carstate_from_simd",
       "padding_offsets": [
         27393
@@ -5513,7 +5500,6 @@
         }
       ],
       "end": 40390,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "setup_aero_trackdata",
       "padding_offsets": [
         40389
@@ -6332,7 +6318,6 @@
         }
       ],
       "end": 72570,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "subst_hillroad_track",
       "padding_offsets": [
         72357,
@@ -6744,7 +6729,6 @@
         }
       ],
       "end": 93102,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "rect_array_sort_by_top",
       "padding_offsets": [
         93021,
@@ -7015,7 +6999,6 @@
         }
       ],
       "end": 143465,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "vector_op_unk",
       "padding_offsets": [],
       "provenance": {
@@ -7160,7 +7143,6 @@
         }
       ],
       "end": 125482,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "polarRadius3D",
       "padding_offsets": [
         125481
@@ -7467,7 +7449,6 @@
         }
       ],
       "end": 156230,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "sprite_1_unk4",
       "padding_offsets": [
         156229
@@ -9297,7 +9278,6 @@
         }
       ],
       "end": 157618,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "preRender_sphere_helper2",
       "padding_offsets": [
         157617
@@ -10033,7 +10013,6 @@
         }
       ],
       "end": 158654,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "preRender_wheel_helper2",
       "padding_offsets": [
         158653
@@ -10339,7 +10318,6 @@
         }
       ],
       "end": 159530,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "preRender_wheel_helper",
       "padding_offsets": [
         159529
@@ -10560,7 +10538,6 @@
         }
       ],
       "end": 159790,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "mat_rot_z",
       "padding_offsets": [
         159789
@@ -10676,7 +10653,6 @@
         }
       ],
       "end": 150408,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "set_fontdefseg",
       "padding_offsets": [],
       "provenance": {
@@ -10856,7 +10832,6 @@
         }
       ],
       "end": 165232,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "audioresource_copy_4_bytes",
       "padding_offsets": [
         165231
@@ -11068,7 +11043,6 @@
         }
       ],
       "end": 168136,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "sub_39088",
       "padding_offsets": [
         168135
@@ -11214,7 +11188,6 @@
         }
       ],
       "end": 173238,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "mmgr_get_chunk_size_bytes",
       "padding_offsets": [
         173237
@@ -11366,7 +11339,6 @@
         }
       ],
       "end": 174550,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "setup_mcgawnd2",
       "padding_offsets": [
         174549
@@ -11513,7 +11485,6 @@
         }
       ],
       "end": 175320,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "file_load_shape2d_palmap_init",
       "padding_offsets": [
         175319
@@ -12230,7 +12201,6 @@
         }
       ],
       "end": 170706,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "audio_driver_func1E",
       "padding_offsets": [
         170705
@@ -12554,7 +12524,6 @@
         }
       ],
       "end": 123685,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "_strcat",
       "padding_offsets": [],
       "provenance": {
@@ -12727,7 +12696,6 @@
         }
       ],
       "end": 123779,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "_strcmp",
       "padding_offsets": [],
       "provenance": {
@@ -12861,7 +12829,6 @@
         }
       ],
       "end": 123807,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "_strlen",
       "padding_offsets": [],
       "provenance": {
@@ -13084,7 +13051,6 @@
         }
       ],
       "end": 124200,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "_stricmp",
       "padding_offsets": [],
       "provenance": {
@@ -13286,7 +13252,6 @@
         }
       ],
       "end": 124987,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "_strrchr",
       "padding_offsets": [],
       "provenance": {
@@ -13380,7 +13345,6 @@
         }
       ],
       "end": 125207,
-      "evidence_class": "pristine interval bytes, direct-entry CFG, independent adjacent boundary anchors; provenance below",
       "name": "__aFlshr",
       "padding_offsets": [],
       "provenance": {
@@ -14456,7 +14420,6 @@
         }
       ],
       "end": 154388,
-      "evidence_class": "pristine locked-image bytes, relocated far-call entry anchors, complete in-range control flow, adjacent procedure boundary",
       "frame_load_address": 125472,
       "name": "sprite_set_1_from_argptr",
       "padding_offsets": [],
@@ -14774,7 +14737,6 @@
         }
       ],
       "end": 144176,
-      "evidence_class": "pristine locked-image bytes, relocated far-call entry anchors, complete in-range control flow, adjacent procedure boundary",
       "frame_load_address": 125472,
       "name": "sprite_clear_1_color",
       "padding_offsets": [],
@@ -15151,7 +15113,6 @@
         }
       ],
       "end": 146878,
-      "evidence_class": "locked pristine bytes, exact relocated far-CALL entry anchors, complete in-range control flow, adjacent mapped boundaries",
       "frame_load_address": 125472,
       "name": "sprite_shape_to_1_alt",
       "padding_offsets": [],
@@ -15225,7 +15186,7 @@
       "start": 146766,
       "terminal_shared_jump": {
         "hex": "ebe5",
-        "reason": "terminal unconditional branch into this function\u2019s pop/RETF epilogue",
+        "reason": "terminal unconditional branch into this function’s pop/RETF epilogue",
         "site": 146875,
         "target": 146850
       }
@@ -15470,7 +15431,6 @@
         }
       ],
       "end": 131254,
-      "evidence_class": "locked pristine bytes, exact relocated far-CALL entry anchors, complete in-range control flow, adjacent mapped boundaries",
       "frame_load_address": 125472,
       "name": "video_set_mode4",
       "padding_offsets": [],
@@ -15926,7 +15886,6 @@
         }
       ],
       "end": 125652,
-      "evidence_class": "locked pristine bytes, relocated far-CALL anchors, adjacent mapped extents, table-aware direct control-flow proof",
       "frame_load_address": 125472,
       "name": "polarAngle",
       "padding_offsets": [],
@@ -16416,7 +16375,6 @@
         }
       ],
       "end": 105094,
-      "evidence_class": "locked pristine bytes, relocated far-CALL anchors, adjacent mapped extents, table-aware direct control-flow proof",
       "frame_load_address": 95408,
       "name": "file_load_resource",
       "padding_offsets": [
@@ -16788,7 +16746,6 @@
       ],
       "dispatch_tables": [],
       "end": 155080,
-      "evidence_class": "locked pristine bytes, relocated far-CALL anchors, adjacent mapped extents, table-aware direct control-flow proof",
       "frame_load_address": 125472,
       "name": "sub_35C4E",
       "padding_offsets": [],
@@ -18591,7 +18548,6 @@
           "target": 90618
         }
       ],
-      "evidence_class": "pristine locked-image bytes, relocated/near-call entry anchors, decoded in-range control flow to RETF, and adjacent verified extents",
       "frame_load_address": 85344,
       "incoming_near_calls": [
         {
@@ -19538,7 +19494,6 @@
         }
       ],
       "entry_near_calls": [],
-      "evidence_class": "pristine locked-image bytes, relocated/near-call entry anchors, decoded in-range control flow to RETF, and adjacent verified extents",
       "frame_load_address": 85344,
       "name": "select_cliprect_rotate",
       "outgoing_near_calls_to_mat_rot_zxy": [
@@ -22669,7 +22624,6 @@
         }
       ],
       "boundary_proof": "Candidate [0x0,0x59a) hashes pristine oracle bytes. Entry anchors: 1 relocated far-call and 0 verified-caller near-call records; 0 preceding and 1 following exact inventory boundaries. CFG reaches 480/490 decoded instructions; returns at ['0x598']; issues=[]; non-NOP unreachable=[]; table islands=[].",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency; see per-target detailed proofs in boundary_audit and table_audit",
       "relocation_sites": [
         17,
         25,
@@ -36457,7 +36411,6 @@
         }
       ],
       "boundary_proof": "Candidate [0xe1a0,0xfae4) hashes pristine oracle bytes. Entry anchors: 4 relocated far-call and 0 verified-caller near-call records; 1 preceding and 1 following exact inventory boundaries. CFG reaches 2023/2126 decoded instructions; returns at ['0xfae3']; issues=[]; non-NOP unreachable=[]; table islands=['0xf750', '0xf87e'].",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency; see per-target detailed proofs in boundary_audit and table_audit",
       "relocation_sites": [
         58058,
         58067,
@@ -52362,7 +52315,6 @@
         }
       ],
       "boundary_proof": "Candidate [0x106d4,0x117ca) hashes pristine oracle bytes. Entry anchors: 6 relocated far-call and 0 verified-caller near-call records; 1 preceding and 1 following exact inventory boundaries. CFG reaches 1435/1473 decoded instructions; returns at ['0x10703', '0x117c8']; issues=[]; non-NOP unreachable=['0x11494']; table islands=['0x1147c'].",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency; see per-target detailed proofs in boundary_audit and table_audit",
       "relocation_sites": [
         67306,
         71609
@@ -57469,7 +57421,6 @@
         }
       ],
       "boundary_proof": "Candidate [0x12698,0x1298c) hashes pristine oracle bytes. Entry anchors: 0 relocated far-call and 4 verified-caller near-call records; 1 preceding and 1 following exact inventory boundaries. CFG reaches 280/289 decoded instructions; returns at ['0x126c5', '0x126e4', '0x12864', '0x1298a']; issues=[]; non-NOP unreachable=[]; table islands=[].",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency; see per-target detailed proofs in boundary_audit and table_audit",
       "relocation_sites": [
         75480,
         75552,
@@ -68612,7 +68563,6 @@
         }
       ],
       "boundary_proof": "Candidate [0x13b4c,0x14d64) hashes pristine oracle bytes. Entry anchors: 0 relocated far-call and 5 verified-caller near-call records; 1 preceding and 1 following exact inventory boundaries. CFG reaches 1681/1720 decoded instructions; returns at ['0x14158', '0x14234', '0x14240', '0x14257', '0x1426d', '0x14d63']; issues=[]; non-NOP unreachable=['0x14d2e']; table islands=['0x14d20', '0x1481a'].",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency; see per-target detailed proofs in boundary_audit and table_audit",
       "relocation_sites": [
         80771,
         80874,
@@ -72509,7 +72459,6 @@
         }
       ],
       "boundary_proof": "Candidate [0x1e588,0x1e59e) hashes pristine oracle bytes. Entry anchors: 11 relocated far-call and 0 verified-caller near-call records; 0 preceding and 0 following exact inventory boundaries. CFG reaches 10/11 decoded instructions; returns at ['0x1e59c']; issues=[]; non-NOP unreachable=[]; table islands=[].",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency; see per-target detailed proofs in boundary_audit and table_audit",
       "relocation_sites": [],
       "verification_kind": "bounded_control_flow",
       "start_evidence": {
@@ -77075,7 +77024,6 @@
         }
       ],
       "boundary_proof": "Four relocated far-call entries plus exact adjacent entries bound [0x1eb56,0x1f314). Table-aware CFG with five complete raw jump tables reaches 689/700 decoded instructions, every return path reaches one of three RETFs, all 11 unvisited instructions are NOP. First 16-word selector table is bounded by mask construction and a zero bypass; four 9-word tables each dispatch only selector values 2..8, established by reachable immediate writes; raw table indices 0,1 are retained and recorded as excluded because they point to frame address 0x1ea20.",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency; see per-target detailed proofs in boundary_audit and table_audit",
       "relocation_sites": [],
       "verification_kind": "embedded_data_dispatch_v1",
       "data_islands": [
@@ -80402,7 +80350,6 @@
         }
       ],
       "boundary_proof": "Candidate [0x28de6,0x29050) hashes pristine oracle bytes. Entry anchors: 0 relocated far-call and 1 verified-caller near-call records; 1 preceding and 1 following exact inventory boundaries. CFG reaches 206/214 decoded instructions; returns at ['0x28eae', '0x2904f']; issues=[]; non-NOP unreachable=[]; table islands=['0x28e7e'].",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency; see per-target detailed proofs in boundary_audit and table_audit",
       "relocation_sites": [
         167407
       ],
@@ -82232,7 +82179,6 @@
         }
       ],
       "boundary_proof": "Two byte-exact PUSH CS; CALL near pairs at 0x28755 and 0x28a7d resolve to this entry. Both caller sites are in the table-aware reachable body rooted at 0x28702; the caller itself is entered by verified near-call sites 0x286a4 and 0x286ec. 18-word guarded table CFG reaches RETF at 0x2963b; the next verified procedure begins at 0x2963c.",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency; see per-target detailed proofs in boundary_audit and table_audit",
       "relocation_sites": [
         169060,
         169280,
@@ -83359,7 +83305,6 @@
         }
       ],
       "boundary_proof": "Candidate [0x29ad4,0x29b5a) hashes pristine oracle bytes. Entry anchors: 1 relocated far-call and 1 verified-caller near-call records; 0 preceding and 1 following exact inventory boundaries. CFG reaches 56/59 decoded instructions; returns at ['0x29b13', '0x29b58']; issues=[]; non-NOP unreachable=[]; table islands=[].",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency; see per-target detailed proofs in boundary_audit and table_audit",
       "relocation_sites": [
         170790,
         170810
@@ -84426,7 +84371,6 @@
         }
       ],
       "boundary_proof": "25 pristine relocated far-call sites resolve exactly to 0x24c0c. Prefix body [0x24c0c,0x24ce4) contains RETF 0x24cd5 and the alternate terminal far CALL fatal_error at 0x24cde, followed by 90 at 0x24ce3. This is followed by 0xE12 bytes with no reachable code before the independent sprite_set_1_from_argptr entry 0x25af6 (30 bytes, ends exactly at verified sprite_copy_2_to_1 0x25b14). Do not assign the 0x24ce4..0x25af6 region.",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency; see per-target detailed proofs in boundary_audit and table_audit",
       "relocation_sites": [
         150582,
         150753
@@ -85001,7 +84945,6 @@
         "name": "sprite_set_1_from_argptr",
         "start": 154358,
         "end": 154388,
-        "evidence_path": "build/workers/wrap2/sprite_helper_boundary_proposal.json",
         "extent": "30 bytes; 14 far-call entries; ends at verified sprite_copy_2_to_1 entry 0x25b14"
       },
       "proposal_disposition": "PROPOSED_COMPLETE_BOUNDARY",
@@ -85042,7 +84985,7 @@
           "hex": "5dcbcb90b840"
         }
       ],
-      "boundary_proof": "Unmapped far procedure between instruction-verified nopsub_36ACA (seg017, ends 158450) and kb_shift_checking1 (seg018, starts 158452): RETF plus the MSC word-alignment NOP. Its code frame is 0x26AF (seg008 call_read_line loads it as the relocated far pointer 26AF:0002), not seg017's 0x268A (integ29).",
+      "boundary_proof": "Unmapped far procedure between instruction-verified nopsub_36ACA (seg017, ends 158450) and kb_shift_checking1 (seg018, starts 158452): RETF plus the MSC word-alignment NOP. Its code frame is 0x26AF (seg008 call_read_line loads it as the relocated far pointer 26AF:0002), not seg017's 0x268A.",
       "gap_entry_proof": {
         "kind": "verified-neighbours-v1",
         "predecessor": "nopsub_36ACA",
@@ -85057,8 +85000,7 @@
       "provenance": {
         "kind": "verified-gap-v1",
         "note": "IDA address 0x36AF2; no pinned reference PROC"
-      },
-      "evidence_class": "pristine interval bytes, direct-entry CFG, verified adjacent boundaries"
+      }
     },
     {
       "name": "nopsub_38570",
@@ -85588,8 +85530,7 @@
       "provenance": {
         "kind": "verified-gap-v1",
         "note": "IDA address 0x38570; inside pinned reference audioresource_copy_4_bytes PROC text"
-      },
-      "evidence_class": "pristine interval bytes, direct-entry CFG, verified adjacent boundaries"
+      }
     },
     {
       "name": "run_option_menu",
@@ -86875,7 +86816,6 @@
         }
       ],
       "boundary_proof": "Candidate [0x2f4a,0x3178) hashes pristine oracle bytes. Entry anchors: 0 relocated far-call and 1 verified-caller near-call records; 1 preceding and 1 following exact inventory boundaries. CFG reaches 193/198 decoded instructions; returns at ['0x3177']; non-NOP unreachable=[]; table islands=['0x314a'].",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency (integ26 generator)",
       "start_evidence": {
         "method": "relocated_far_or_verified_near_call_entries_and_adjacent_start",
         "far_call_count": 0,
@@ -88668,7 +88608,6 @@
         }
       ],
       "boundary_proof": "Candidate [0x28254,0x284fa) hashes pristine oracle bytes. Entry anchors: 0 relocated far-call and 1 verified-caller near-call records; 1 preceding and 1 following exact inventory boundaries. CFG reaches 250/253 decoded instructions; returns at ['0x284f9']; non-NOP unreachable=[]; table islands=['0x283a0'].",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency (integ26 generator)",
       "start_evidence": {
         "method": "relocated_far_or_verified_near_call_entries_and_adjacent_start",
         "far_call_count": 0,
@@ -88945,7 +88884,6 @@
       "size": 138,
       "sha256": "0b61d12bbc7e607a97870e23c4976bf986581ee4101877624585b1ddf1b0554c",
       "stable_id": "load_2b12a",
-      "evidence_class": "reviewed-code-extent-before-link-fill-v1",
       "abi": {
         "arguments": "one far resource pointer",
         "flow": "counted loop over shapes, three far CALLs (count, get shape, __aFNalshr)",
@@ -90305,7 +90243,6 @@
         }
       ],
       "boundary_proof": "Pinned seg012.asm file_decomp_fatal PROC..ENDP (lines 5184..5372) is immediately followed by locate_shape_nofatal PROC at the verified entry 0x20f92; the inventory label mismatch 0x30ee5 is the two-entry far-pointer table compression_type (dd file_decomp_rle, dd file_decomp_vle) after the unconditional JMP at 0x20ee2, read by the returning indirect far CALL cs:[bx+24E4h]. Each entry is a relocated segment:offset naming a verified entry of the same frame.",
-      "evidence_class": "locked pristine bytes, pinned PROC/ENDP bounds, verified neighbour entry, reviewed far-pointer table island, direct control-flow proof",
       "verification_kind": "embedded_far_pointer_table_v1"
     },
     {
@@ -92479,8 +92416,7 @@
           "adjacent_sha256": "75ce79ef353ce5a049704eca470f947bdd5c9bf6b4ebeecbd2981d29d5f99cfa"
         }
       ],
-      "boundary_proof": "Candidate [0x28702,0x28aa8) hashes pristine oracle bytes. Entry anchors: 0 relocated far-call and 2 verified-caller near-call records; 1 preceding and 1 following exact inventory boundaries. CFG reaches 335/348 decoded instructions; returns at ['0x28aa6']; non-NOP unreachable=[]; table islands=['0x28a1e']. integ31 extent correction: the base row [165634,166596) also covered the separate 28-byte static helper after this RETF+90 (MSC local public set_chunk_channel).",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency (integ26 generator)",
+      "boundary_proof": "Original bytes at [0x28702,0x28aa8) match the locked image; entry anchors, inventory boundaries, control flow, return sites, and table islands support the reviewed extent.",
       "start_evidence": {
         "method": "relocated_far_or_verified_near_call_entries_and_adjacent_start",
         "far_call_count": 0,
@@ -92903,7 +92839,6 @@
         }
       ],
       "boundary_proof": "Candidate [0x28aa8,0x28ac4) hashes pristine oracle bytes. Entry anchors: 0 relocated far-call and 0 near-call records (unreferenced static helper); 1 preceding and 1 following exact inventory boundaries. CFG reaches 13/14 decoded instructions; returns at ['0x28ac2']; non-NOP unreachable=[]; table islands=[].",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency (integ26 generator)",
       "start_evidence": {
         "method": "adjacent_verified_return_pad_and_prologue",
         "far_call_count": 0,
@@ -95054,7 +94989,6 @@
         }
       ],
       "boundary_proof": "Candidate [0x290c8,0x2945a) hashes pristine oracle bytes. Entry anchors: 0 relocated far-call and 1 verified-caller near-call records; 1 preceding and 1 following exact inventory boundaries. CFG reaches 329/337 decoded instructions; returns at ['0x29458']; non-NOP unreachable=[]; table islands=[].",
-      "evidence_class": "locked oracle bytes, relocation sites, direct/table-aware CFG, returns and adjacency (integ26 generator)",
       "start_evidence": {
         "method": "relocated_far_or_verified_near_call_entries_and_adjacent_start",
         "far_call_count": 0,

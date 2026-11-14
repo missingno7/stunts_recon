@@ -906,9 +906,6 @@
   "object_segment": "S002_TEXT",
   "original_frame_load_address": 40384,
   "profile": "masm510-game",
-  "review_notes": [
-    "integ40 communal publication: the random seed bytes are the communal `comm near _randomseeds:byte:6` (MASM 5.10 COMM NEAR, the same COMDEF as an MSC tentative definition); the DGROUP-framed references and code bytes are unchanged."
-  ],
   "secondary_dgroup_segments": {
     "_DATA": {
       "dgroup_offset": 1724,

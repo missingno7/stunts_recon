@@ -1,5 +1,4 @@
 {
-  "authority": "Diagnostic real-link unit map for tools/reallink.py only; grants no ownership. Object and module boundaries from the integ-era objmap study (distinct LINK code frames, push-cs near-call closure, shared relocation runs, record cuts), with the integ29 link-fidelity corrections: seg017 ends at 158450; [158450,158452) is its own C object in the 0x26AF frame (nopsub_36AF2).",
   "objects": [
     {
       "end": 18194,

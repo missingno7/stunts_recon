@@ -534,9 +534,6 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "review_notes": [
-    "integ38: whole seg012 module [154486,155464) (sub_35B76 draw_filled_rect, sub_35C4E clear_rect with its CS-resident _incnums table, sub_35DC8, sub_35DE6, sub_35E08), bounded by the zero fill after the RETF at 154484 and its own terminal zero fill. It owns its 2-byte _DATA word_40C1A at DGROUP 54AAh [199706,199708): sub_35E08 is the only code that addresses it (ss:[54AAh] word, ss:[54ABh] high byte, at 155381/155424/155429/155445; formerly numeric operands without a FIXUPP), and it follows seg034's odd 93-byte _DATA after one word-alignment byte. The operands are now DGROUP-framed FIXUPPs to the own _DATA with `assume ss:DGROUP` (SS = DGROUP in the medium model); bytes identical."
-  ],
   "secondary_dgroup_segments": {
     "_DATA": {
       "dgroup_offset": 21674,

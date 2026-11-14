@@ -2371,15 +2371,6 @@
   ],
   "profile": "msc600-medium-zi",
   "public": "_audio_add_driver_timer",
-  "review_notes": [
-    "Whole MSC 6.00 non-A C object; /AM /Os /Oe /Og /Gs /Zi is registered for seg007 only.",
-    "The three BSS statics are complete semantic objects: audio_timer_table[25], audio_timer_count, id_buffer[5]. C6 fixture order is case-folded identifier-byte sum modulo 256, ascending; the chosen readable spellings occupy observed buckets 25, 58, 166 in that order.",
-    "The final inventory row nopsub_27489 includes the linked zero at 95407; object CODE ends at 95407, the RETF is at 95406, and LINK word-aligns the following CODE segment at 95408. The explicit link_fill record owns the one-byte fill.",
-    "raw_16bae_174b0 is the only current code owner intersecting the object; it is unresolved raw, so no accepted code owner is subsumed.",
-    "audio_enabled/audio_busy references use public DGROUP names audioflag6/audio_driver_mode from accepted obj_seg027, grounded at 198195/198196.",
-    "The __AHINCR loader-offset fixup is independently grounded by pinned MSC 5.10 MLIBCR.LIB dos\\diffhlp.asm absolute PUBDEF value 0x1000; scratch binder prototype adds this existing absolute-runtime-word case.",
-    "The one-byte BSS gap at 205383 is LINK word alignment between complete odd-length obj_seg007 _BSS (1,907 B) and accepted obj_seg008 _BSS at 205384; retain reviewed placeholder evidence and derive LINK_FILL from the adjacent complete segments."
-  ],
   "secondary_dgroup_segments": {
     "_BSS": {
       "dgroup_offset": 25444,

@@ -29352,18 +29352,6 @@
     }
   ],
   "profile": "msc510-medium",
-  "review": [
-    "Whole seg005 object (16 members). Source: build/workers/blocklift/cands/obj_seg005_scs_kr.c, copied byte-for-byte.",
-    "setup_car_shapes declares the data externs it alone uses inside the function body (K&R-scoped externs; RULING Opus seg003/seg005 pressure: allowed, period-typical). This is a pressure-constrained declaration-scoping choice, not recovered declaration placement.",
-    "setup_car_shapes passes word_40DF6[byte_4432A] (the value just stored) as the call argument; no redundant (unsigned char) cast is used."
-  ],
-  "review_notes": [
-    "s005bss: the complete static set of seg005 (290 B _BSS at [200042,200332)) is 27 static objects: replay_control (file scope, before replay_unk2), 17 block-scope statics of setup_car_shapes (its former K&R block externs become statics in the same block) and 9 file-scope statics before loop_game. The code bytes outside FIXUPP fields, fixup locations/kinds and relocations are identical to the canonical extern form; only the 198 _BSS FIXUPP targets change.",
-    "MSC 5.10 emits each object's statics in _BSS as it reaches each function definition: pending file-scope statics first, ordered by bucket sum(b&0xDF) mod 256 ascending, then that function's block-scope statics ordered by bucket sum(b) & 15 ascending (the local-slot rule); ties go newest declaration first. The fixture build/workers/s005bss/e1..e4.c and the canonical control ctl.c confirm this. Consequently last_tacho, last_speedo, stdares, stdbres, meters_sprite, wheel_shapes, gnob_sprite, gear_base_sprite, steering_zone, steering_dot_x/y, gear_knob_visible_view, last_steering_step, replayshapes, camera_buttons_pressed, camera_mode_view and camera_buttons_state_per_view are compiler-hash-constrained reconstruction names (readable, semantic, never recovered originals), and the setup_car_shapes block declaration order is chosen for the bucket ties.",
-    "camera_buttons_pressed is char[9]: loop_game clears all nine bytes [256,265) with `for (i = 0; i < 9; i++)` and indexes it by button (0..8). The former scalars replay_back_pending/replay_forward_pending at 258/259 are elements [2]/[3] of that array (declaration merge with target evidence).",
-    "unused_40E73 (1 byte at _BSS+265, load 200307) is unreferenced storage; element type not recoverable (supervisor RULING unreferenced static storage). Its neutral name is chosen to fit the hash order between camera_buttons_pressed and camera_mode_view.",
-    "integ40 communal publication: every reference to a LINK c_common communal uses its program-wide link-hash-constrained registry name (names-registry.json); the communals this unit declares are tentative definitions (COMDEF records listed in communal_declarations) of the accepted LINK_COMMUNAL unit, every other reference stays extern. Code bytes, FIXUPP sites/kinds, the linked address of every FIXUPP and the ordered relocations are unchanged; EXTDEF/COMDEF/PUBDEF record order follows the MSC 5.10 symbol-table walk (name dependent), not source order. The former interior externs word_345CC/word_345CE/byte_349AA are the GAMESTATE members core.game_frame_in_sec (+312) and core.game_frames_per_sec (+314) and the GAMEINFO member globalgamesettings.game_opponenttype (+6): MSC bakes the member offset into the FIXUPP addend (nameBfix; no OMF patching)."
-  ],
   "secondary_dgroup_segments": {
     "_BSS": {
       "dgroup_offset": 22010,

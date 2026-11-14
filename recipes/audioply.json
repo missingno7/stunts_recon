@@ -5646,13 +5646,6 @@
     }
   ],
   "profile": "msc510-medium",
-  "review_notes": [
-    "sub_38702 keeps a redundant `(unsigned char)chunk->channelNumber` cast on the first driver-call argument (channelNumber is already unsigned char): without it MSC 5.10 /Ox keeps the byte in SI across both indirect far calls (26 bytes shorter); plausibly macro/typedef residue, required by FACT-cse-tree-identity-char-cast; no natural alternative found (build/workers/s028cast: lvalue path 944/934, (&x)[0] folded for struct member refs, no spare frame slot). Accepted with review note (supervisor RULING, integ31 item 1)",
-    "set_chunk_channel [166568,166596) is an unreferenced static helper (MSC local public); its name is a reconstruction choice with no program-wide linkage",
-    "extern spellings follow the accepted seg027 _DATA publics at the same addresses (audiodriverbinary, audio_bit_masks) per the names registry principle",
-    "integ35 (L9-bssS): the complete file-scope static set of seg028 is the 260-byte audio_resource_buffer and three 12-byte `struct AudioEvent` records (296 B _BSS at [207086,207382)); audioevent and audio_event_send_buffer are compiler-hash-constrained reconstruction names (MSC 5.10 static-order hash; readable, never recovered originals)",
-    "integ40 communal publication: every reference to a LINK c_common communal uses its program-wide link-hash-constrained registry name (names-registry.json); the communals this unit declares are tentative definitions (COMDEF records listed in communal_declarations) of the accepted LINK_COMMUNAL unit, every other reference stays extern. Code bytes, FIXUPP sites/kinds, the linked address of every FIXUPP and the ordered relocations are unchanged; EXTDEF/COMDEF/PUBDEF record order follows the MSC 5.10 symbol-table walk (name dependent), not source order."
-  ],
   "secondary_dgroup_segments": {
     "_BSS": {
       "dgroup_offset": 29054,

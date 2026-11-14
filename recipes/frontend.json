@@ -37093,11 +37093,6 @@
     }
   ],
   "profile": "msc510-medium",
-  "review_notes": [
-    "integ34 (L8-msstatic, supervisor RULING): the complete file-scope static set of seg000 is six `static short` (12 B _BSS at [199994,200006)); MSC 5.10 allocates file statics in an order that depends on the identifier spelling (compiler symbol hash; declaration and first-use order are irrelevant), so hiscore_rank_prev, hiscore_old_entry, hiscore_opponent_earlier, hiscore_current_place, end_hiscore_random and hiscore_opponent_live are compiler-hash-constrained reconstruction names (readable, semantic, never recovered originals; same class as pressure- and link-hash-constrained names)",
-    "integ37: the ASCII case tests are the MSC 5.10 <ctype.h> macros isupper/islower/tolower over the pinned runtime table _ctype (public __ctype of the hash-pinned ctype.asm member, 257 B at 192414); the former g_ascii_props binding named __ctype+1. Code bytes, fixup sites and relocations are unchanged; the table FIXUPPs now target __ctype with encoded addend 1.",
-    "integ40 communal publication: every reference to a LINK c_common communal uses its program-wide link-hash-constrained registry name (names-registry.json); the communals this unit declares are tentative definitions (COMDEF records listed in communal_declarations) of the accepted LINK_COMMUNAL unit, every other reference stays extern. Code bytes, FIXUPP sites/kinds, the linked address of every FIXUPP and the ordered relocations are unchanged; EXTDEF/COMDEF/PUBDEF record order follows the MSC 5.10 symbol-table walk (name dependent), not source order. Merged variant (nameCfix): word_46172[i] is scrorder_idxs[i + 1]; byte_363E5/byte_363E6/unk_463EA are resbuftext[1], resbuftext[2] and resbuftext + 6 (fields of the merged containers anchored by original operands)."
-  ],
   "secondary_dgroup_segments": {
     "_BSS": {
       "dgroup_offset": 21962,

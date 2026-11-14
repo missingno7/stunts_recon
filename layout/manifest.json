@@ -574,7 +574,7 @@
           "size_basis": {
             "declaration": "short track3_gap[2];",
             "kind": "neutral-unreferenced",
-            "review_note": "unreferenced storage inside the communal unit: no instruction of the program addresses it and no accepted object references it; the preceding object's declared type ends before it and is not a runtime-indexed array whose element size divides the span (communal gap ruling), so it is a separate neutral communal; element type not recoverable (short array by even start and size); declared in obj_seg000 so that its first-sight encounter keeps the LINK bucket order"
+            "review_note": "Unreferenced communal gap after the previous declaration; element type unknown."
           }
         },
         {
@@ -1617,7 +1617,7 @@
           "size_basis": {
             "declaration": "short voicefile_gap_c[4];",
             "kind": "neutral-unreferenced",
-            "review_note": "unreferenced storage inside the communal unit: no instruction of the program addresses it and no accepted object references it; the preceding object's declared type ends before it and is not a runtime-indexed array whose element size divides the span (communal gap ruling), so it is a separate neutral communal; element type not recoverable (short array by even start and size); declared in obj_seg008 so that its first-sight encounter keeps the LINK bucket order"
+            "review_note": "Unreferenced communal gap after the previous declaration; element type unknown."
           }
         },
         {
@@ -2069,7 +2069,7 @@
           "size_basis": {
             "declaration": "short cliprects_spare4[120];",
             "kind": "neutral-unreferenced",
-            "review_note": "unreferenced storage inside the communal unit: no instruction of the program addresses it and no accepted object references it; the preceding object's declared type ends before it and is not a runtime-indexed array whose element size divides the span (communal gap ruling), so it is a separate neutral communal; element type not recoverable (short array by even start and size); declared in obj_seg003 so that its first-sight encounter keeps the LINK bucket order"
+            "review_note": "Unreferenced communal gap after the previous declaration; element type unknown."
           }
         },
         {
@@ -3080,7 +3080,7 @@
           "size_basis": {
             "declaration": "short material_pad_7;",
             "kind": "neutral-unreferenced",
-            "review_note": "unreferenced storage inside the communal unit: no instruction of the program addresses it and no accepted object references it; the preceding object's declared type ends before it and is not a runtime-indexed array whose element size divides the span (communal gap ruling), so it is a separate neutral communal; element type not recoverable (short array by even start and size); declared in obj_seg006 so that its first-sight encounter keeps the LINK bucket order"
+            "review_note": "Unreferenced communal gap after the previous declaration; element type unknown."
           }
         },
         {
@@ -3370,7 +3370,7 @@
           "size_basis": {
             "declaration": "short gap_trackrow_1;",
             "kind": "neutral-unreferenced",
-            "review_note": "unreferenced storage inside the communal unit: no instruction of the program addresses it and no accepted object references it; the preceding object's declared type ends before it and is not a runtime-indexed array whose element size divides the span (communal gap ruling), so it is a separate neutral communal; element type not recoverable (short array by even start and size); declared in obj_seg004 so that its first-sight encounter keeps the LINK bucket order"
+            "review_note": "Unreferenced communal gap after the previous declaration; element type unknown."
           }
         },
         {

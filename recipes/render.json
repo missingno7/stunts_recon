@@ -25475,16 +25475,6 @@
     }
   ],
   "profile": "msc510-medium",
-  "review": [
-    "Whole seg003 object (16 members). Source: src/obj_seg003_prefix.c (accepted prefix owner source) with the fence pair lists referenced through their pinned labels unk_3C0EE/unk_3C0F0/unk_3C0F4/unk_3C0F8 (the _unk_3C0EE container width is refused under RULING: skybox_op reads word_2C0FC[i] for i=2..5, i.e. DS:990h..997h, outside [97Eh,990h)), then renamed with the integ28 names registry proposal (build/namefit/names_registry_integ28.json).",
-    "Global names are pressure-constrained reconstruction names (binding aliases, name_provenance in layout/*-symbols.json); K&R-scoped externs in sub_19F14/init_rect_arrays as in the accepted prefix source.",
-    "integ29 ownership correction: _DATA extent 180578..180662 (84 B, one MSC word-alignment hole at +75). Literals: init_crak 'crak','cinf'; load_skybox 'scensce2sce3sce4'; load_sdgame2_shapes 'sdgame2','ex01ex02ex03leftrigh'; setup_intro 'title','logolog2brav'; char aCarcoun_0[] defined immediately before setup_intro (reviewed alias spelling _aCarcoun_0 at 180654).",
-    "integ32: whole _DATA [179764,180672) (908 B) from L7-s003lit: the init_crak resource IDs are one natural table `static char init_crak_resource_names[2][5] = { \"crak\", \"cinf\" }` (supersedes the L6-s003d NUL-packed form); direct literals move to _DATA offset 0 and separate arrays add an alignment byte (both rejected by the strict gate).",
-    "integ32: the 16-byte label span of unk_3C0F8 is split at the data the code actually uses: the fence list unk_3C0F8 is its 4 (dx,dz) pairs (8 B; nfences 4) and the 4 horizon corner angles 128/384/640/896 (0x80..0x380) at DS:0990h are `short horizon_angles[4]`, read in skybox_op as horizon_angles[slope - 2] inside `for (slope = 2; slope < 6; slope++)` (loop-bounded negative folded index; MSC folds -2*2 into the -4 addend, which is the former reference label word_2C0FC at DS:098Ch). The object no longer references its own data through the external alias _word_2C0FC, so the real link needs no alias shim (integ32)."
-  ],
-  "review_notes": [
-    "integ40 communal publication: every reference to a LINK c_common communal uses its program-wide link-hash-constrained registry name (names-registry.json); the communals this unit declares are tentative definitions (COMDEF records listed in communal_declarations) of the accepted LINK_COMMUNAL unit, every other reference stays extern. Code bytes, FIXUPP sites/kinds, the linked address of every FIXUPP and the ordered relocations are unchanged; EXTDEF/COMDEF/PUBDEF record order follows the MSC 5.10 symbol-table walk (name dependent), not source order. As in seg001, its tentative definitions (and the neutral communal after rectclip) stand after the last function (defining them in place changes update_frame code through symbol-table pressure). rcmapix[45] and sdgbmp_v[5] (both externs updated) absorb the unreferenced tail of the runtime-indexed arrays (communal gap ruling; register-indexed original accesses at 40924, 49328, 49332, 55570; sdgbmp_v[3]/[4] are also indexed by constant)."
-  ],
   "secondary_dgroup_segments": {
     "_DATA": {
       "dgroup_offset": 1732,

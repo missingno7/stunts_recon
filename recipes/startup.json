@@ -3509,13 +3509,6 @@
     }
   ],
   "profile": "msc510-medium",
-  "review": [
-    "integ29 ownership correction: _DATA 199442..199481 (39 B) begins with the defined global audiodriverstring = \"pc15\" (was an extern)."
-  ],
-  "review_notes": [
-    "integ37: the ASCII case tests are the MSC 5.10 <ctype.h> macros isupper/islower/tolower over the pinned runtime table _ctype (public __ctype of the hash-pinned ctype.asm member, 257 B at 192414); the former g_ascii_props binding named __ctype+1. Code bytes, fixup sites and relocations are unchanged; the table FIXUPPs now target __ctype with encoded addend 1.",
-    "integ40 communal publication: every reference to a LINK c_common communal uses its program-wide link-hash-constrained registry name (names-registry.json); the communals this unit declares are tentative definitions (COMDEF records listed in communal_declarations) of the accepted LINK_COMMUNAL unit, every other reference stays extern. Code bytes, FIXUPP sites/kinds, the linked address of every FIXUPP and the ordered relocations are unchanged; EXTDEF/COMDEF/PUBDEF record order follows the MSC 5.10 symbol-table walk (name dependent), not source order."
-  ],
   "secondary_dgroup_segments": {
     "_DATA": {
       "dgroup_offset": 21410,

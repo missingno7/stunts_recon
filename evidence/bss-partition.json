@@ -96,14 +96,11 @@
     },
     {
       "end": 222352,
-      "extent_basis": "integ39: LINK c_common is PARAGRAPH aligned (pinned LINK 3.65 fixture tests/fixtures/masm510_comm_near_fixture.json; commfit staged link of the real program: MAP c_common 207408). CRT0DAT XOB=XO=XOE end the BSS-class sections at 207396 (real-link-v1 anchor); [207396,207408) is LINK paragraph fill (bss_owners LINK_FILL link-communal-paragraph-v1). c_common [207408,_end 222352) (MZ SS) holds the game near communals interleaved with _file.c __bufout/__bufin/__buferr in LINK 3.65 bucket order; one raw unit until the whole unit is accepted at once (tools/communal_unit.py)",
       "id": "raw_bss_c_common",
       "object": null,
       "raw_form": "communal-unit",
       "start": 207408
     }
   ],
-  "rule": "integ35 ruling: raw BSS debt occupies its own place in link order, like raw code. Each object whose _BSS is not accepted keeps one UNRESOLVED_RAW placeholder of its complete extent, linked as a raw _BSS contribution immediately after that object in processing order; the extents are oracle-sized raw debt (L8-bsspre address accounting) and never size or place accepted storage. Word fill is re-created by LINK; [XOE,_end) is LINK paragraph fill then one raw c_common unit (integ39).",
-  "schema": "bss-raw-placeholders-v1",
-  "source": "L8-bsspre partition (address accounting of [_edata, XOB) = 7,401 B + 1 B fill)"
+  "schema": "bss-raw-placeholders-v1"
 }

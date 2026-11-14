@@ -24140,12 +24140,6 @@
     }
   ],
   "profile": "msc510-medium",
-  "review_notes": [
-    "carState_rc_op keeps the literal identity assignment `car->car_rc5[wheel] = car->car_rc5[wheel];`: the target contains the 24-byte load/store-back and no natural alternative among 34 tried forms reproduces it (supervisor RULING, tuflags4); plausibly macro residue",
-    "integ25 verify copy: extern elapsed_time2 spelled word_32D02 (existing alias at DGROUP 0x7592); init_plantrak index trackpos[14] corrected to trackpos[28] (original operand trackpos+38h)",
-    "integ35 (L9-bssS): the complete file-scope static set of seg001 is two `static struct MATRIX` (36 B _BSS at [200006,200042)); fallback_rotation_cache and plane_rotation_cache are compiler-hash-constrained reconstruction names (MSC 5.10 orders file statics by an identifier-spelling hash, L8-msstatic/L9-mschash; readable, semantic, never recovered originals)",
-    "integ40 communal publication: every reference to a LINK c_common communal uses its program-wide link-hash-constrained registry name (names-registry.json); the communals this unit declares are tentative definitions (COMDEF records listed in communal_declarations) of the accepted LINK_COMMUNAL unit, every other reference stays extern. Code bytes, FIXUPP sites/kinds, the linked address of every FIXUPP and the ordered relocations are unchanged; EXTDEF/COMDEF/PUBDEF record order follows the MSC 5.10 symbol-table walk (name dependent), not source order. Its tentative definitions (and three neutral unreferenced communals) stand in one block after the last function while the file-scope extern declarations stay in place: defining them in place raises MSC 5.10 C2 symbol-table pressure and changes the generated code (bisected: cumulative, no single culprit)."
-  ],
   "secondary_dgroup_segments": {
     "_BSS": {
       "dgroup_offset": 21974,

@@ -1,6 +1,5 @@
 {
  "schema": "msc510-static-flush-fixtures-v1",
- "source": "s005bss (e1-e8) and integ37 (e9-e10): pinned MSC 5.10 /AM /O /Gs compiles; `items` is the source order of file-scope statics and function definitions (block statics in declaration order); observed offsets come from the object's own _BSS FIXUPPs; seg005 is the published complete static set (game/race.c, _BSS [200042,200332))",
  "fixtures": [
   {
    "fixture": "e1",
@@ -72,8 +71,7 @@
     "dd": 8,
     "fa": 10
    },
-   "bss_length": 12,
-   "origin": "build/workers/s005bss"
+   "bss_length": 12
   },
   {
    "fixture": "e2",
@@ -113,8 +111,7 @@
     "fa": 2,
     "aa": 0
    },
-   "bss_length": 6,
-   "origin": "build/workers/s005bss"
+   "bss_length": 6
   },
   {
    "fixture": "e3",
@@ -168,8 +165,7 @@
     "aa": 4,
     "bb": 2
    },
-   "bss_length": 8,
-   "origin": "build/workers/s005bss"
+   "bss_length": 8
   },
   {
    "fixture": "e4",
@@ -204,8 +200,7 @@
     "bb": 2,
     "aa": 0
    },
-   "bss_length": 6,
-   "origin": "build/workers/s005bss"
+   "bss_length": 6
   },
   {
    "fixture": "e5",
@@ -237,8 +232,7 @@
     "zz": 2,
     "aa": 0
    },
-   "bss_length": 4,
-   "origin": "build/workers/s005bss"
+   "bss_length": 4
   },
   {
    "fixture": "e6",
@@ -270,8 +264,7 @@
     "zz": 2,
     "aa": 0
    },
-   "bss_length": 4,
-   "origin": "build/workers/s005bss"
+   "bss_length": 4
   },
   {
    "fixture": "e7",
@@ -317,8 +310,7 @@
     "aa": 4,
     "bb": 2
    },
-   "bss_length": 6,
-   "origin": "build/workers/s005bss"
+   "bss_length": 6
   },
   {
    "fixture": "e8",
@@ -353,8 +345,7 @@
     "zz": 0,
     "aa": 2
    },
-   "bss_length": 4,
-   "origin": "build/workers/s005bss"
+   "bss_length": 4
   },
   {
    "fixture": "e9",
@@ -415,8 +406,7 @@
     "bb": 2,
     "mm": 6
    },
-   "bss_length": 10,
-   "origin": "build/workers/integ37/sm"
+   "bss_length": 10
   },
   {
    "fixture": "e10",
@@ -483,8 +473,7 @@
     "ab": 4,
     "yy": 8
    },
-   "bss_length": 10,
-   "origin": "build/workers/integ37/sm"
+   "bss_length": 10
   }
  ],
  "seg005": {

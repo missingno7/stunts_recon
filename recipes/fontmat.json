@@ -770,9 +770,6 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "review_notes": [
-    "integ33: owns DGROUP _DATA [198144,198148): `_fontdefseg dw seg _fontdef_default` (the pinned dseg.asm `fontdefseg dw seg seg039`; relocated paragraph 0x2B1F of the accepted far-data module fardata_11039, whose own reviewed placement anchor is this word) and `_word_30602 dw 10`. Link order places the 4 bytes between timer_counter_deadline_helpers and obj_seg027 data; the only ASM module there is this one, and its own code reads fontdefseg (a C object cannot initialise a segment word)."
-  ],
   "reviewed_code_offsets": [
     "_draw_patterned_lines",
     "_preRender_line"

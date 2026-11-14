@@ -333,6 +333,5 @@
       "start": 464,
       "stop": 464
     }
-  ],
-  "source": "integ39: tools/communal_unit.comm_near_fixture(): pinned MASM 5.10 (/Mx /I.) COMM NEAR, pinned MSC 5.10 /AM /O /Gs tentative definitions, pinned LINK 3.65 /NOD /MAP; test input only, never image ownership"
+  ]
 }

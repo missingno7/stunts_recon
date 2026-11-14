@@ -574,10 +574,6 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "review_notes": [
-    "integ37: DGROUP and assume ds:DGROUP are declared before the module's _DATA segment, so MASM 5.10 emits its data PUBDEFs relative to DGROUP, as an MSC public is. With chksum.asm's NULL linked at the DGROUP base (_DATA no longer starts there) LINK gives F5/external-frame references to these publics the DGROUP frame only in this form; the code, data, publics and FIXUPPs are otherwise unchanged.",
-    "integ38: the high word of the timer module's `_timer_callback_counter` dword is `_timer_callback_counter+2` (formerly the reference-label extern _word_2F87A, which no object defines once timer_video_interrupt_runtime owns its _DATA); bytes identical, only the FIXUPP target/addend and EXTDEF list change."
-  ],
   "secondary_dgroup_segments": {
     "_DATA": {
       "dgroup_offset": 20102,

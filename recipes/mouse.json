@@ -1836,12 +1836,6 @@
     }
   ],
   "profile": "msc510-medium",
-  "review": [
-    "integ29 ownership correction: object ends at 158450 (10 members); nopsub_36AF2 is a separate object in the 0x26AF frame."
-  ],
-  "review_notes": [
-    "integ40 communal publication: every reference to a LINK c_common communal uses its program-wide link-hash-constrained registry name (names-registry.json); the communals this unit declares are tentative definitions (COMDEF records listed in communal_declarations) of the accepted LINK_COMMUNAL unit, every other reference stays extern. Code bytes, FIXUPP sites/kinds, the linked address of every FIXUPP and the ordered relocations are unchanged; EXTDEF/COMDEF/PUBDEF record order follows the MSC 5.10 symbol-table walk (name dependent), not source order. MouseRegs lists all seven int86 WORDREGS words (ax, bx, cx, dx, si, di, cflag), so msregisterms has its 14-byte union REGS extent; the accessed fields are unchanged."
-  ],
   "secondary_dgroup_segments": {
     "_DATA": {
       "dgroup_offset": 19368,

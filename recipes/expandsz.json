@@ -102,9 +102,7 @@
   },
   "end": 176564,
   "evidence": {
-    "candidate": "build/workers/F-s037-A/candidate_all.c (converged independently with F-s037-B)",
-    "function_inventory": "evidence/functions.json + layout/function-evidence.json reviewed 138-byte extent",
-    "link_fill": "12 zero bytes [0x2B1B4,0x2B1C0) are LINK paragraph fill before the paragraph-aligned FAR_DATA segment (RULING Opus integ28)"
+    "function_inventory": "evidence/functions.json + layout/function-evidence.json reviewed 138-byte extent"
   },
   "expected_fixups": [
     {

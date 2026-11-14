@@ -1338,10 +1338,6 @@
   "object_segment": "S012_TEXT",
   "original_frame_load_address": 125472,
   "profile": "masm510-game",
-  "review_notes": [
-    "integ38: whole seg012 module [131254,132056) with its 114-B _DATA [194664,194778) (dseg.asm timer labels byte_3F868..timerintr and the timer error string; L11-misc). DGROUP and assume ds:DGROUP are declared before _DATA so MASM 5.10 emits the data PUBDEFs relative to DGROUP (integ37 convention).",
-    "integ38: the module's own code names the high words of its dwords as `_dword_3F874+2` and `_timerintr+2` (formerly the reference-label externs _word_2F876/_word_2F892, which no object defines); bytes identical, the two FIXUPPs now target the own _DATA segment."
-  ],
   "secondary_dgroup_segments": {
     "_DATA": {
       "dgroup_offset": 16632,

@@ -99,12 +99,11 @@
     "integrity": "Each disk is 737,280 bytes; downloaded SHA-1 equals the Archive.org item metadata SHA-1; SHA-256 recorded locally."
   },
   "extraction": {
-    "media": "FAT12 IMA extraction with worker-local extract_msc600.py.",
-    "compressed_files": "266 DOS SZ20 packed files decoded from the product Packing List with worker-local expand_msc600.py and sz20_expand.py; all expansion records succeeded. Product tree includes BIN, INCLUDE, LIB, STARTUP, DOCS, original mediafiles and expanded payloads. No system-wide installation was run."
+    "media": "FAT12 IMA extraction with extract_msc600.py.",
+    "compressed_files": "266 DOS SZ20 packed files decoded from the product Packing List with expand_msc600.py and sz20_expand.py; all expansion records succeeded. Product tree includes BIN, INCLUDE, LIB, STARTUP, DOCS, original mediafiles and expanded payloads. No system-wide installation was run."
   },
   "banner": "Microsoft (R) C Optimizing Compiler Version 6.00",
   "seg007_test": {
-    "candidate": "build/workers/s007c6/seg007_c6_best.c",
     "source_sha256": "3dcc06003a0fff1f279b12579255f114f876a75f15dcbe867efcdaca908002bb",
     "flags": [
       "/c",

@@ -8125,10 +8125,6 @@
     }
   ],
   "profile": "msc510-medium",
-  "review_notes": [
-    "integ35 (L9-bssS): the complete file-scope static set of seg027 is two `static unsigned char [24]` volume save arrays (48 B _BSS at [207038,207086)); the readable names saved_music_chunk_volumes/saved_effect_chunk_volumes already satisfy the MSC 5.10 static-order hash",
-    "integ40 communal publication: every reference to a LINK c_common communal uses its program-wide link-hash-constrained registry name (names-registry.json); the communals this unit declares are tentative definitions (COMDEF records listed in communal_declarations) of the accepted LINK_COMMUNAL unit, every other reference stays extern. Code bytes, FIXUPP sites/kinds, the linked address of every FIXUPP and the ordered relocations are unchanged; EXTDEF/COMDEF/PUBDEF record order follows the MSC 5.10 symbol-table walk (name dependent), not source order."
-  ],
   "secondary_dgroup_segments": {
     "_BSS": {
       "dgroup_offset": 29006,

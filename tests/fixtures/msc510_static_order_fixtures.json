@@ -1,6 +1,5 @@
 {
  "schema": "msc510-static-order-fixtures-v1",
- "source": "L9-mschash: pinned MSC 5.10 /AM /O /Gs compiles of file-scope statics (search.py observed objects); `static short` sets unless typed; `declared` is the source declaration order",
  "short_fixtures": [
   {
    "fixture": "case_single",
