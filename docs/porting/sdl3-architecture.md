@@ -188,8 +188,7 @@ integer nanoseconds and a separate host timestamp where available.
 | `host_stop` | At normal guest return or an unresolved stub boundary. |
 
 The Port Forge normalizer remains the shared schema normalizer. Regression
-checks compare event shape and deadline rate against
-`docs/evidence/freeze-campaign/F5c-trace_summary.json`; startup-only missing
+checks compare event shape and deadline rate; startup-only missing
 simulation/audio event classes are reported as coverage gaps rather than
 treated as a gameplay mismatch.
 

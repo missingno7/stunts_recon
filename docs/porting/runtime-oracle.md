@@ -77,7 +77,7 @@ In the saved pause/resume workload, the P-key events occur at 89.280 s and 94.30
 - Audio publications count nonempty Port Forge render batches, not host audio callbacks.
 - The F5c exact-capture artifact's internal ring is capped at 4,096 observations (`raw_complete=false`); its separate streamed event trace contains all 4,441 external samples.
 
-These limits remain explicit in [unresolved questions](../unresolved.md) and [runtime measurements](runtime-measurements.md). Evidence details are in `../evidence/freeze-campaign/F5c-runtime-oracle.md`, `trace_summary.json`, and `active_pause_summary.json`.
+These limits remain explicit in [unresolved questions](../unresolved.md) and [runtime measurements](runtime-measurements.md).
 
 ## SDL3 trace producer
 

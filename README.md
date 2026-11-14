@@ -6,7 +6,7 @@ This workspace replaces explicit raw regions of the original MCGA image with byt
 
 The final seg007 object is now reconstructed as C with the pinned MSC 6.00 non-A register-gated profile; the unreferenced dword at `[199484,199488)` is accepted at the head of the adjacent ASM module containing the copyright data. The ownership manifest has zero unresolved initialized bytes and zero raw BSS bytes. Full `python tools/validate.py` passes the complete test suite, 90 independent DOSBox-X contribution checks, fresh whole-image equality, and the BSS real-link gate. `python tools/validate.py --image` reports zero image mismatch bytes with relocation set, bank order, and packed image all exact. A fresh `histbuild.py` rebuilds the packed executable exactly through an ordinary library-search link, with zero raw-debt objects.
 
-The freeze evidence and remaining scope are recorded in [the freeze draft](docs/freeze.md), [unresolved questions](docs/unresolved.md), and the [Port Forge runtime oracle](docs/porting/runtime-oracle.md). Runtime captures are a bounded SDL3 reference, separate from the byte-exact historical acceptance proof.
+The freeze record and remaining scope are recorded in [the freeze record](docs/freeze.md), [unresolved questions](docs/unresolved.md), and the [Port Forge runtime oracle](docs/porting/runtime-oracle.md). Runtime captures are a bounded SDL3 reference, separate from the byte-exact historical acceptance proof.
 
 ## Setup
 
@@ -62,7 +62,6 @@ Full validation independently recompiles active C and reassembles active ASM und
 
 ## Clean-clone reproduction
 
-Provenance citations of the form `build/workers/<worker>/...` in `docs/`, `evidence/` and `layout/` record where a historical investigation ran. That scratch is not retained; the durable evidence is the tracked documentation under `docs/` (notably `docs/evidence/freeze-campaign/`), `evidence/`, and the accepted sources and recipes.
 
 The tests and byte-exact validation gate do not depend on ignored `build/workers/`, `build/references/`, or a pre-generated `build/oracle/` image. Copy the original assets to the clone's ignored `assets/`, install Capstone 5.0.3 into `build/python` as above, and provision the pinned tools at the paths in `layout/toolchain.json`. Then run:
 
@@ -72,9 +71,8 @@ python tools/porting/host_probe.py --mode compat
 python tools/porting/host_probe.py --mode strict-central
 ```
 
-`validate.py` creates the build directory and materializes the derived oracle image before running tests. It does not modify the oracle lock. Clean-clone receipts are recorded in [the freeze draft](docs/freeze.md#reproducibility-correction).
+`validate.py` creates the build directory and materializes the derived oracle image before running tests. It does not modify the oracle lock.
 
-The reproduction correction was verified from local clone revision `24143f7` with the original `assets/` copy, Capstone 5.0.3 in `build/python/`, the pinned toolchain paths, and host GCC available. `validate.py --image` passed 721 tests and produced `HYBRID_EXACT`; both host probes compiled all 38 sources in both modes.
 
 ## Historical build
 
@@ -143,17 +141,10 @@ python tools/reallink.py --order library --runtime libraries --library-order com
 python tools/reallink.py --order library --runtime libraries --library-order combined --game-order image
 # Real link with a candidate composed as promotion would (BSS storage is accepted only when this places it):
 python tools/reallink.py --tag NAME --stage FUNCTION build/workers/NAME/candidate.c build/workers/NAME/candidate.recipe.json
-# Pinned runtime members (integ37: also data-only members, `module_form: data-only`),
-# word-alignment / DOSSEG-lead LINK_FILL rows or (integ36) RUNTIME_STORAGE ownership
+# Pinned runtime members, including data-only members (`module_form: data-only`),
+# word-alignment / DOSSEG-lead LINK_FILL rows or RUNTIME_STORAGE ownership
 # updates, from a JSON list; runs the staged real link that must place all linked storage:
 python tools/promote_runtime.py build/workers/NAME/rows.json [--verify-only]
-# Communals (integ39): the whole c_common unit is one atomic batch, `COMMUNAL UNIT.json`
-# plus every republished declaring TU; judge any link directory without publishing:
-python tools/communal_unit.py dry-run build/commfit/stage/TAG --base-dir build/commfit/reallink/link
-# Diagnostic communal-name solver (data under build/commfit/):
-python tools/linkorder.py --run
-python tools/commfit.py solve --inventory INVENTORY.json
-python tools/stage_link.py --solution build/commfit/out/solution.json --tag TAG
 ```
 
 Declaration/header changes have a separate proof from `--cosmetic`:
@@ -207,14 +198,14 @@ Context reads the function inventory directly. `--history` expands local search 
 
 Promotion accepts an existing recipe or an explicit `--recipe PATH`. Without either, it constructs a no-fixup recipe from independently mapped function boundaries. Contributions with fixups require a recipe using the tested binding modes and independently grounded symbols. A missing production capability does not prevent scratch investigation. No general linker or original TU reconstruction is implied.
 
-Run complete validation at acceptance or tooling-change boundaries. Ordinary source iterations only need search. Optional low-level tools include `audit_function_extents.py` for bounded CFG questions, `inspect_object.py` for explicitly diagnostic OMF inspection, and `import_restunts.py` to reproduce the checked inventory from pinned references and reviewed overlays. These are evidence tools, not task-control commands.
+Run complete validation at acceptance or tooling-change boundaries. Ordinary source iterations only need search. The optional `inspect_object.py` tool provides explicitly diagnostic OMF inspection; it is an evidence tool, not a task-control command.
 
 ## State and proof
 
-`layout/manifest.json` is the sole ownership authority. Its active `recipes/` entries configure complete C contributions from `game/` and `lib/` and ASM contributions from tracked `game/` and `lib/`; runtime owners carry pinned library/member/record policies directly. `layout/oracle.lock.json`, symbol bindings, reviewed function overlays, and `evidence/` supply independent facts. Reports under `build/` are derived and never confer ownership. Raw BSS debt is one reviewed placeholder per object (`evidence/bss-partition.json`), linked where that object's `_BSS` would be; `tools/communal_order.py`, `tools/msc_static_model.py` and the commfit solver (`tools/commfit.py`, `linkorder.py`, `stage_link.py`, `maxkeep.py`) are diagnostic naming aids only. The LINK c_common communals are accepted only as one whole unit (`tools/communal_unit.py`).
+`layout/manifest.json` is the sole ownership authority. Its active `recipes/` entries configure complete C contributions from `game/` and `lib/` and ASM contributions from tracked `game/` and `lib/`; runtime owners carry pinned library/member/record policies directly. `layout/oracle.lock.json`, symbol bindings, reviewed function overlays, and `evidence/` supply independent facts. Reports under `build/` are derived and never confer ownership. Raw BSS debt is one reviewed placeholder per object (`evidence/bss-partition.json`), linked where that object's `_BSS` would be; `tools/communal_order.py` and `tools/msc_static_model.py` are diagnostic naming aids only. LINK c_common communals are accepted only as one whole unit (`tools/communal_unit.py`).
 
 Promotion freezes the candidate, recompiles it, verifies its full contribution, then recompiles the entire staged hybrid image. It protects existing ownership, complete declarations, fixups, and exact ordered relocation obligations. The single publisher checks stable inputs, journals source/recipe/manifest writes, and freshly verifies the canonical image. `--verify-only` exercises the complete staged gate without changing canonical files. Validation also runs focused negative/isolation/transaction tests and the independent compiler backend.
 
 After an interruption, `python tools/promote.py --recover` obtains the same OS lock and rolls back the journal. It refuses to overwrite conflicting user edits. Resolve any reported conflict against `build/publication.json`, then retry recovery and validation. The persistent `build/promotion.lock` file is harmless: the operating system releases its lock when a process exits. Do not delete a live publisher's journal or lock.
 
-Program-wide public names (one per address) are recorded in `layout/names-registry.json`; `tools/namefit.py` checks that every accepted translation unit stays exact under them. Recovered C, matching ASM, pinned runtime (code and owned runtime data), and unresolved/raw bytes are reported separately by validation. See [technical scope](docs/acceptance.md), [selected compiler observations](evidence/compiler-notes.md), and the [toolchain hypothesis register](evidence/toolchain-hypotheses.json).
+Program-wide public names (one per address) are recorded in `layout/names-registry.json`. Recovered C, matching ASM, pinned runtime (code and owned runtime data), and unresolved/raw bytes are reported separately by validation. See [technical scope](docs/acceptance.md) and the [toolchain hypothesis register](evidence/toolchain-hypotheses.json).
