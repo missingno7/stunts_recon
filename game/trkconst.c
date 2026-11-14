@@ -1,3 +1,4 @@
+#include "trkobj.h"
 /* Define track-name identifiers, shape constants, and image-addressed track data as one data-only contribution. */
 /* Candidate interval [0x2C1C0,0x2E718): 9,560 bytes; includes the full aStxxx and code-addressed unk_3E710 objects. */
 /* Track and shape constants: candidate data-only C module; placement remains scratch evidence. */
@@ -489,8 +490,8 @@ struct track_object_info shapeinfos[120] = {
 /* Local view: SHAPE3D; struct.count is 1; another unit uses 7. */
 struct SHAPE3D { unsigned char opaque_layout[22]; };
 
-/* Local view: trklst; array is 215; another unit uses None. */
-struct track_object trklst[215] = {
+
+struct TRACKOBJECT trklst[215] = {
   {0, 0, &g_shapes3d[30], &g_shapes3d[30], 0, 0, 0, 0, 64, 0},
   {&shapeinfos[2], 0, &g_shapes3d[12], &g_shapes3d[13], 4, 0, 0, 0, 0, 0},
   {0, 0, &g_shapes3d[126], &g_shapes3d[128], 0, 0, 0, 0, 64, 0},
@@ -824,7 +825,8 @@ char aGame1[6] = "game1";
 char aGame2[6] = "game2";
 #include "car.h"
 
-/* Local view: aCar0; type is struct car_exp_name_table; another unit uses array[None]. */
+
+#include "carnames.h"
 struct car_exp_name_table aCar0 = {
   {
     "car0", /* aCar0 */

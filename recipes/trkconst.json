@@ -13073,6 +13073,36 @@
     ],
     "publics": [
       {
+        "name": "_corkLR_negZBound",
+        "offset": 9254,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_corkLR_posZBound",
+        "offset": 9278,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shape_template_points_a",
+        "offset": 9344,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shape_template_points_b",
+        "offset": 9350,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shape_template_points_c",
+        "offset": 9398,
+        "segment": "_DATA"
+      },
+      {
+        "name": "_shape_template_points_d",
+        "offset": 9410,
+        "segment": "_DATA"
+      },
+      {
         "name": "_shape_template_points_e",
         "offset": 9422,
         "segment": "_DATA"
@@ -13143,13 +13173,13 @@
         "segment": "_DATA"
       },
       {
-        "name": "_aBarn",
-        "offset": 0,
+        "name": "_trklst",
+        "offset": 5704,
         "segment": "_DATA"
       },
       {
-        "name": "_trklst",
-        "offset": 5704,
+        "name": "_aBarn",
+        "offset": 0,
         "segment": "_DATA"
       },
       {
@@ -13158,13 +13188,13 @@
         "segment": "_DATA"
       },
       {
-        "name": "_shapedata42_2",
-        "offset": 622,
+        "name": "_shapeinfos",
+        "offset": 4024,
         "segment": "_DATA"
       },
       {
-        "name": "_shapeinfos",
-        "offset": 4024,
+        "name": "_shapedata42_2",
+        "offset": 622,
         "segment": "_DATA"
       },
       {
@@ -13208,13 +13238,13 @@
         "segment": "_DATA"
       },
       {
-        "name": "_shapedata42_10",
-        "offset": 2788,
+        "name": "_aGame1",
+        "offset": 9458,
         "segment": "_DATA"
       },
       {
-        "name": "_aGame1",
-        "offset": 9458,
+        "name": "_shapedata42_10",
+        "offset": 2788,
         "segment": "_DATA"
       },
       {
@@ -13230,36 +13260,6 @@
       {
         "name": "_bkRdEntr_triang_zAdjust",
         "offset": 9246,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_corkLR_negZBound",
-        "offset": 9254,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_corkLR_posZBound",
-        "offset": 9278,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_shape_template_points_a",
-        "offset": 9344,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_shape_template_points_b",
-        "offset": 9350,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_shape_template_points_c",
-        "offset": 9398,
-        "segment": "_DATA"
-      },
-      {
-        "name": "_shape_template_points_d",
-        "offset": 9410,
         "segment": "_DATA"
       }
     ],
@@ -14458,6 +14458,11 @@
       "size": 3033
     },
     {
+      "path": "include/carnames.h",
+      "sha256": "95f3f4f11934ea6c87e436cadf50ad9c1abda9336537fd43470d791128439f64",
+      "size": 162
+    },
+    {
       "path": "include/math3d.h",
       "sha256": "569d2d4d31555d6f6973f800ed988d1cbe65126f033f68971fe56060202dd546",
       "size": 4007
@@ -14479,13 +14484,24 @@
     },
     {
       "path": "include/track.h",
-      "sha256": "9d48e3265dda487d1e07d7095547317b450f38903fabf257e1b427c761a2c55c",
-      "size": 6678
+      "sha256": "a43b5ca2e9051eb9e0ae2f91072571dbf8cb08e15230fd4dfb9ad930bf7caafb",
+      "size": 6944
+    },
+    {
+      "path": "include/trkobj.h",
+      "sha256": "7650e94905a874a5e0361ad240d4a11f3a322935f7f55ac0b6d90e91e9765ff5",
+      "size": 490
     },
     {
       "path": "include/types.h",
       "sha256": "ee3c95010d95f2bcb0d86f9a877a3ee1f1e495dbab382f33a83b9cf9e456b7db",
       "size": 1277
+    },
+    {
+      "line": 6,
+      "path": "include/trkobj.h",
+      "pragma": "pack",
+      "value": null
     },
     {
       "line": 9,
@@ -14658,6 +14674,48 @@
     {
       "line": 49,
       "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 9,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 16,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 28,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 33,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 38,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 49,
+      "path": "include/math3d.h",
+      "pragma": "pack",
+      "value": null
+    },
+    {
+      "line": 8,
+      "path": "include/car.h",
       "pragma": "pack",
       "value": null
     },
