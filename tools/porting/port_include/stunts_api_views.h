@@ -2,7 +2,7 @@
    docs/porting/port-headers.md#port_build-adapter-evidence-and-remaining-residuals. */
 #ifndef STUNTS_PORT_API_VIEWS_H
 #define STUNTS_PORT_API_VIEWS_H
-/* These adapters are for the host probe's strict-central overlay only. */
+/* Most adapters are for the host probe's strict-central overlay. */
 #if defined(PORT_BUILD) && defined(STUNTS_PROBE_STRICT_CENTRAL)
 
 #if defined(STUNTS_TU_frontend)
@@ -36,14 +36,6 @@ static inline I16 stunts_port_call_read_line_view(I8 *buffer, I16 first, I16 sec
 }
 #endif
 
-#if defined(STUNTS_TU_lineedit)
-static inline void stunts_port_timer_copy_counter_split_view(I16 low_word, I16 high_word)
-{
-    /* load_227c0 adds BP+6/BP+8 into DX:AX; preserve that two-word input. */
-    setticks((U32)(U16)low_word | ((U32)(U16)high_word << 16));
-}
-#endif
-
 #if defined(STUNTS_TU_audioply)
 extern void *stunts_port_resolve_far_data_pointer(U16 offset, U16 segment);
 static inline void stunts_port_audio_init_chunk_7_view(I16 first, I16 last,
@@ -71,9 +63,13 @@ static inline I16 stunts_port_send_audio_stop_event_value_view(U16 rate, I16 chu
 #if defined(STUNTS_TU_carsim)
 #define plan_memres (&plan_memres) /* PORT_BUILD view: one PLANE object; source use at carsim.c:3101. */
 #endif
-#if defined(STUNTS_TU_trkscene)
-#define aCar0 ((I8 (*)[5])(&aCar0)) /* PORT_BUILD byte-matrix view of the 76-byte aggregate; see aggregate map. */
-#endif
 
 #endif /* PORT_BUILD */
+#if defined(PORT_BUILD) && defined(STUNTS_TU_lineedit)
+static inline void stunts_port_timer_copy_counter_split_view(I16 low_word, I16 high_word)
+{
+    /* load_227c0 adds BP+6/BP+8 into DX:AX; both probe modes need this view. */
+    setticks((U32)(U16)low_word | ((U32)(U16)high_word << 16));
+}
+#endif
 #endif /* STUNTS_PORT_API_VIEWS_H */

@@ -84,7 +84,7 @@ extern char aBra[]; /* ?; accepted-TU declaration consensus; target evidence inc
 extern char aBrp[]; /* ?; accepted-TU declaration consensus; target evidence incomplete; size=? */
 #endif
 #ifndef STUNTS_LOCAL_DATA_aCar0
-extern struct car_exp_name_table aCar0; /* source definition: one 76-byte aggregate, entries[15][5] plus trailing_zero; trkscene.c has a legacy byte-matrix view (PORT note). */
+extern struct car_exp_name_table aCar0; /* source definition: one 76-byte aggregate, entries[15][5] plus trailing_zero; trkscene.c uses the shared entry member. */
 #endif
 #ifndef STUNTS_LOCAL_DATA_aCarcoun
 extern char aCarcoun[]; /* ?; accepted-TU declaration consensus; target evidence incomplete; size=? */
@@ -429,11 +429,7 @@ extern unsigned char audioblock[24]; /* 0x34ACA; state-model; size=24 */
 extern unsigned char audiochnk_actflags[24]; /* 0x35D9A; state-model; size=24 */
 #endif
 #ifndef STUNTS_LOCAL_DATA_audiochunktable
-#if defined(PORT_BUILD) && defined(STUNTS_TU_audioply)
-extern struct AudioChunk audiochunktable[24]; /* PORT_BUILD source-field view; target extent remains the measured 24x76 schema. */
-#else
-extern struct AUDIOCHUNK audiochunktable[24];
-#endif /* 0x3396C; state-model; size=1824 */
+extern struct AUDIOCHUNK audiochunktable[24]; /* Canonical pool; player casts its record view explicitly. */
 #endif
 #ifndef STUNTS_LOCAL_DATA_audiodriverbinary
 extern void far *audiodriverbinary; /* 0x3060A; four-byte far pointer (dseg.asm:20635; lib/audiores.c:153); next 34 bytes are audio_bit_masks[17]. */
@@ -1942,11 +1938,7 @@ extern unsigned short snd_sample_rate_phase; /* 0x34D48; state-model; size=2 */
 extern int16_t snd_tick_clock; /* 0x343F4; state-model; size=2 */
 #endif
 #ifndef STUNTS_LOCAL_DATA_snd_voices_tbl
-#if defined(PORT_BUILD) && defined(STUNTS_TU_audioply)
-extern struct AudioVoice snd_voices_tbl[16]; /* PORT_BUILD source-field view; shared extent/offsets are in AGGREGATE_VIEW_MAP.md. */
-#else
-extern struct AUDIOVOICE snd_voices_tbl[16];
-#endif /* 0x35A26; state-model; size=736 */
+extern struct AUDIOVOICE snd_voices_tbl[16]; /* Canonical pool; player casts its record view explicitly. */
 #endif
 #ifndef STUNTS_LOCAL_DATA_sndpendingstate
 extern char sndpendingstate; /* 0x359D8; state-model; size=1 */
@@ -2010,11 +2002,7 @@ extern char * table_lookup; /* 0x349E8; state-model; size=2 */
 extern char tagtrk; /* 0x3499E; state-model; size=1 */
 #endif
 #ifndef STUNTS_LOCAL_DATA_trksign
-#if defined(PORT_BUILD) && defined(STUNTS_TU_render)
-extern I16 far *trksign; /* PORT_BUILD: render.c:401 and 1662-1681 index target words; other TUs use VECTOR. */
-#else
-extern struct VECTOR far *trksign; /* checkpoints are x/y/z vector records (source: carsim.c and trkscene.c). */
-#endif
+extern I16 far *trksign; /* Canonical word storage; vector consumers cast explicitly. */
 #endif
 #ifndef STUNTS_LOCAL_DATA_td13_replay_hdr
 extern char * td13_replay_hdr; /* 0x36162; state-model; size=4 */

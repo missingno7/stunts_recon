@@ -22,14 +22,18 @@ class SceneTableIndexTests(unittest.TestCase):
         environment = os.environ.copy()
         environment["PATH"] = str(compiler.parent) + os.pathsep + environment.get("PATH", "")
         historical = (ROOT / "game/trkconst.c").read_text(encoding="latin-1")
-        track = re.search(r"struct track_object trklst\[215\] = \{.*?^\};",
+        track = re.search(r"struct TRACKOBJECT trklst\[215\] = \{.*?^\};",
                           historical, re.S | re.M).group(0)
+        # The data owner's info record and the shared pointer view have the
+        # same measured footprint; make that boundary explicit under -Werror.
+        track = re.sub(r"&shapeinfos\[([^]]+)\]",
+                       r"(struct TRKOBJINFO *)&shapeinfos[\1]", track)
         scene2 = scene_array(historical, "scene2", 19)
         scene3 = scene_array(historical, "scene3", 13)
         header = adapt_aggregate_views(legacy_target_widths(
             (PORT_INCLUDE / "stunts_structs.h").read_text(encoding="latin-1")))
         producer_view = "\n".join(selected_view(header, "trkconst", name)
-                                  for name in ("scene_shape", "track_object", "track_object_info"))
+                                  for name in ("scene_shape", "TRACKOBJECT", "track_object_info"))
         consumer_view = selected_view(header, "render", "TRACKOBJECT")
         source = (ROOT / "game/render.c").read_text(encoding="utf-8")
         adapted = adapt_scene_table_indices(source)

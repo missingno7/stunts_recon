@@ -49,7 +49,9 @@ class Sdl3TrackInfoLayoutTests(unittest.TestCase):
         historical = (ROOT / "game" / "trkconst.c").read_text(
             encoding="latin-1")
         info = initialized_array(historical, "struct track_object_info shapeinfos[120]")
-        tracks = initialized_array(historical, "struct track_object trklst[215]")
+        tracks = initialized_array(historical, "struct TRACKOBJECT trklst[215]")
+        tracks = re.sub(r"&shapeinfos\[([^]]+)\]",
+                        r"(struct TRKOBJINFO *)&shapeinfos[\1]", tracks)
         camera_data = initialized_array(historical, "unsigned char shapedata42_10[1236]")
         self.assertEqual(len(re.findall(r"^\s*\{", info, re.M)), 120)
         self.assertEqual(len(re.findall(r"^\s*\{", tracks, re.M)), 215)
@@ -60,7 +62,7 @@ class Sdl3TrackInfoLayoutTests(unittest.TestCase):
             encoding="latin-1")
         derived = adapt_aggregate_views(legacy_target_widths(original_header))
         producer_views = "\n".join(selected_view(derived, "trkconst", name)
-                                   for name in ("track_object_info", "track_object"))
+                                   for name in ("track_object_info", "TRACKOBJECT"))
         consumer_views = "\n".join(selected_view(derived, "carsim", name)
                                    for name in ("VECTOR", "TRKOBJINFO_LINK_BYTES",
                                                 "TRKOBJINFO", "TRACKOBJECT"))

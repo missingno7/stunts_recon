@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 import sys
 sys.path.insert(0, str(ROOT / "tools" / "porting"))
 from host_probe_modes import legacy_target_widths  # noqa: E402
-from project_headers import expand_constant_literals  # noqa: E402
+from project_headers import expand_constant_literals, expand_project_headers  # noqa: E402
 from port.game_abi import adapt_polygon_storage  # noqa: E402
 
 
@@ -80,7 +80,8 @@ class Sdl3PolygonStorageTests(unittest.TestCase):
     def test_list_head_and_polygon_pool_have_separate_storage(self) -> None:
         # Exercise the exact port adapter against the immutable historical TU.
         original = (ROOT / "game" / "polygon.c").read_text(encoding="latin-1")
-        overlay = adapt_polygon_storage(legacy_target_widths(original))
+        overlay = adapt_polygon_storage(legacy_target_widths(
+            expand_project_headers(original, ROOT)))
 
         compiler = Path(r"C:\msys64\mingw32\bin\gcc.exe")
         if not compiler.is_file():

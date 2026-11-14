@@ -460,9 +460,9 @@ def transformed_source(source: str, text: str, local_fns, local_data, shared_tag
     if source == "lib/toupper.c":
         out = re.sub(r"\bI16\s+cap\s*\(\s*I16\s+ch\s*\)",
                      "int cap(int ch)", out, count=1)
+    if source == "lib/lineedit.c":
+        out = rewrite_calls(out, "setticks", "rename:stunts_port_timer_copy_counter_split_view")
     if STRICT_CENTRAL:
-        if source == "lib/lineedit.c":
-            out = rewrite_calls(out, "setticks", "rename:stunts_port_timer_copy_counter_split_view")
         if source == "lib/audioply.c":
             out = rewrite_calls(out, "audio_init_chunk", "rename:stunts_port_audio_init_chunk_7_view")
         if source == "game/audioeng.c":

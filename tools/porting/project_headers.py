@@ -38,7 +38,12 @@ def expand_project_headers(text: str, root: Path) -> str:
                 if scalar:
                     return '\n'
                 scalar = True
-                return '#include "stunts_types.h"\n'
+                # Width spellings belong to the host header; character-class
+                # constants still come from the shared reconstruction header.
+                classes = ''.join(line + '\n' for line in
+                                  path.read_text(encoding='ascii').splitlines()
+                                  if re.match(r'#define\s+_(?:UPPER|LOWER)\s', line))
+                return '#include "stunts_types.h"\n' + classes
             if path in stack:
                 raise ValueError('Recursive project include: ' + name)
             contents = path.read_text(encoding='latin-1')

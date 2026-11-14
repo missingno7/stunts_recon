@@ -456,7 +456,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             if count != 1:
                 raise RuntimeError("Could not locate norm_zone definition after comment cleanup")
         elif source == "lib/lineedit.c":
-            old = "setticks(timerOffset, timerSegment);"
+            old = "stunts_port_timer_copy_counter_split_view(timerOffset, timerSegment);"
             if transformed.count(old) != 2:
                 raise RuntimeError("Could not locate both line-editor timer deadline calls")
             transformed = (

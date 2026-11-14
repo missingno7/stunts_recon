@@ -245,6 +245,8 @@ def host_view_contracts(source: str) -> str:
                       ("TRANSFORMEDSHAPE3D", 24,
                        {"shapeptr": 6, "rectptr": 10, "rotvec": 14,
                         "ts_flags": 22, "material": 23})))
+    if unit == "whlhelp2.c":
+        views.append(("WheelRect", 16, {"left": 0, "top": 2, "section_p1_x": 4, "section_p2_x": 8}))
     if unit == "matrot.c":
         views.append(("MATRIX", 18, {"m._21": 2, "m._12": 6, "m._13": 12}))
     if unit in {"frontend.c", "carsim.c", "render.c",

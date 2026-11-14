@@ -19311,9 +19311,9 @@ struct WALLREC { I16S orientation,x,z; };
 #endif
 
 #if defined(STUNTS_TU_whlhelp2)
-/* lib/whlhelp2.c:6; WheelRect layout. */
+/* include/wheel.h; shared WheelRect layout. */
 #pragma pack(push, 2)
-struct WheelRect { struct Point p0, p1, p2; };
+struct WheelRect { I16 left, top, section_p1_x, section_p1_y, section_p2_x, section_p2_y, x, y; };
 #pragma pack(pop)
 #endif
 
