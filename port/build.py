@@ -415,11 +415,13 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             transformed = ("extern void port_guest_check_stop(void);\n"
                            "extern uint32_t port_guest_activity_snapshot(void);\n"
                            "extern void port_guest_wait_for_activity(uint32_t);\n") + transformed.replace(
-                original, "\t\tfor (;;) {\n\t\t\tport_guest_check_stop();\n"
+                original, "\t\tint port_initial_frame_drawn = 0;\n"
+                          "\t\tfor (;;) {\n\t\t\tport_guest_check_stop();\n"
                           "\t\t\tuint32_t port_activity = port_guest_activity_snapshot();\n"
-                          "\t\t\tif (core.game_frame == tmr2)\n"
+                          "\t\t\tif (port_initial_frame_drawn && core.game_frame == tmr2)\n"
                           "\t\t\t\tport_guest_wait_for_activity(port_activity);\n"
                           "\t\t\tport_guest_check_stop();\n"
+                          "\t\t\tport_initial_frame_drawn = 1;\n"
                           "\t\t\twhile (core.game_frame != tmr2) {")
         elif source == "game/trkscene.c":
             for block in ("blk[sub]", "blk"):

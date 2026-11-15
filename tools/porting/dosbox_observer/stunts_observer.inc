@@ -128,6 +128,12 @@ struct Capture {
                 for(unsigned i=0;i<p.args[0];++i)out<<std::hex<<std::setw(2)<<std::setfill('0')<<unsigned(r8(base+i))<<std::dec;
             }
             out<<"\"}\n";
+        } else if(p.name=="engine_init") {
+            begin("engine_init");out<<",\"game_frame\":"<<r16(state+320)
+                <<",\"game_inputmode\":"<<unsigned(r8(state+1013))<<",\"scope\":"<<BoundaryScope()
+                <<",\"slot\":"<<reg_ax<<",\"values_u16\":[]}\n";
+        } else if(p.name=="dashboard_complete") {
+            if(p.args.at(0)==2)snapshot("race_frame_complete");
         } else if(p.name=="loadfilez") {
             auto path=asset_root / p.filename;
             if(std::filesystem::is_regular_file(path)) {
@@ -192,6 +198,13 @@ struct Capture {
         if(driver_segment && SegValue(cs)==driver_segment && entry<=0x42 && entry%3==0) name="driver";
         if(name=="driver_loaded") {update_driver();return;}
         if(name.empty())return;
+        if(name=="engine_tick" || name=="engine_start" || name=="engine_target") {
+            begin(name.c_str());out<<",\"game_frame\":"<<r16(state+320)
+                <<",\"game_inputmode\":"<<unsigned(r8(state+1013))<<",\"scope\":"<<BoundaryScope()<<",\"values_u16\":[";
+            unsigned count=name=="engine_start"?1:name=="engine_target"?9:0;
+            for(unsigned i=0;i<count;++i)out<<(i?",":"")<<mem_readw(SegPhys(ss)+reg_sp+4+2*i);
+            out<<"]}\n";return;
+        }
         if(name=="update_gamestate")BoundarySimStart();
         Pending p{name,key(mem_readw(SegPhys(ss)+(reg_sp+2)),mem_readw(SegPhys(ss)+(reg_sp))),
                   SegValue(ss),reg_sp,entry,tick,{},r8(busy)!=0,r16(sprite1+2)==0xa000,{}};
@@ -212,6 +225,7 @@ struct Capture {
             static const unsigned counts[]={0,0,0,7,2,2,3,4,0,3,1,5,3,5,0,0,1,0,1,3,0,3,2};
             for(unsigned i=0;i<counts[entry/3];++i)p.args.push_back(mem_readw(SegPhys(ss)+(reg_sp+4+2*i)));
         }
+        if(name=="dashboard_complete")p.args.push_back(mem_readw(SegPhys(ss)+reg_sp+4));
         pending.push_back(p);
     }
 };

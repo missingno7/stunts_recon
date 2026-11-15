@@ -278,15 +278,17 @@ void port_trace_video_publication(const char *reason)
     if (s_trace != NULL) {
         fprintf(s_trace,
                 "{\"trace_schema\":\"stunts-runtime-trace-v1\","
-                "\"event_type\":\"video_publication\",\"frame_id\":%llu,"
+                "\"event_type\":\"%s\",\"frame_id\":%llu,"
                 "\"sim_step_id\":%llu,\"game_frame\":%u,"
-                "\"video_phase\":\"frame_start\",\"raw_tick_id\":%llu,\"machine_tick\":%llu,"
+                "\"video_phase\":\"%s\",\"raw_tick_id\":%llu,\"machine_tick\":%llu,"
                 "\"host_ns\":%llu,\"game_mode\":%u,"
                 "\"game_inputmode\":%u,\"game_replay_mode\":%u,"
                 "\"rate_target_hz\":%u,\"renderer_y_rotation\":%u,\"publication_reason\":",
+                strcmp(reason,"race_frame_complete")==0?"frame_complete":"video_publication",
                 (unsigned long long)s_video_frame_id,
                 (unsigned long long)s_sim_step_id,
                 (unsigned)game_frame,
+                strcmp(reason,"race_frame_complete")==0?"frame_end":"frame_start",
                 (unsigned long long)(game_ns(now) / PORT_TIMER_PERIOD_NS),
                 (unsigned long long)game_ns(now),
                 (unsigned long long)now,

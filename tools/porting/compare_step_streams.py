@@ -45,7 +45,7 @@ def original(folder):
             raise ValueError('unsealed original capture: '+path)
     rows=read_rows(folder/'original.jsonl')
     if rows[-1].get('terminal')!='frame-limit':raise ValueError('original failed to reach frame limit')
-    states={};frames=defaultdict(list);sounds=defaultdict(list);cache={}
+    states={};frames=defaultdict(list);completed=defaultdict(list);sounds=defaultdict(list);cache={}
     active=0
     with (folder/'original.frames').open('rb') as payloads:
         for r in rows:
@@ -61,7 +61,8 @@ def original(folder):
                     payloads.seek(index*64768);raw=payloads.read(64768)
                     if len(raw)!=64768:raise ValueError('truncated frame')
                     cache[index]=dict(indices=fnv(raw[:64000]),palette=fnv(raw[64000:]))
-                frames[f'{active}:{r["game_frame"]}'].append(dict(reason=
+                target=completed if r['reason']=='race_frame_complete' else frames
+                target[f'{active}:{r["game_frame"]}'].append(dict(reason=
                     'palette' if r['reason']=='video_set_palette' else r['reason'],**cache[index]))
             elif r['kind']=='driver':
                 entry=r['entry']
@@ -70,11 +71,11 @@ def original(folder):
                     result=r['return_ax']&255 if entry==0 else r['return_ax'] if entry in (0x36,0x3c) else None,
                     voice=r['voice'],chunk=r['chunk'],resource=r['resource'],payload=r['payload_hex']))
     return dict(boundaries=boundary_groups(read_rows(folder/'boundaries.jsonl')),states=states,
-        frames=dict(frames),sound=dict(sounds),receipt=receipt,
+        frames=dict(frames),completed_frames=dict(completed),sound=dict(sounds),receipt=receipt,
         input=[r['scancode'] for r in rows if r['kind']=='scan'])
 
 def port(folder):
-    folder=Path(folder);rows=read_rows(folder/'trace.jsonl');states={};frames=defaultdict(list);sounds=defaultdict(list)
+    folder=Path(folder);rows=read_rows(folder/'trace.jsonl');states={};frames=defaultdict(list);completed=defaultdict(list);sounds=defaultdict(list)
     for r in rows:
         kind=r.get('event_type')
         if kind=='state_snapshot':
@@ -83,6 +84,9 @@ def port(folder):
                 key=str(value['game_frame'])
                 if key in states:raise ValueError('duplicate active frame; replay requires epoch contract')
                 states[key]=value
+        elif kind=='frame_complete':
+            completed[f'{r["game_inputmode"]}:{r["game_frame"]}'].append(dict(reason=r['publication_reason'],
+                indices=r['indices_fnv1a64'],palette=r['palette_fnv1a64']))
         elif kind=='video_publication':
             # Host-only transition-row publications are outside the named
             # original routine-completion scope, as in the earlier comparator.
@@ -96,7 +100,7 @@ def port(folder):
                 dict(driver=r['driver'],entry=r['entry'],arguments=r['arguments_u16'],result=r['return_u16'],
                     voice=r['voice'],chunk=r['chunk'],resource=r['resource'],payload=r['payload_hex']))
     return dict(boundaries=boundary_groups(read_rows(folder/'boundaries.jsonl')),states=states,
-        frames=dict(frames),sound=dict(sounds),
+        frames=dict(frames),completed_frames=dict(completed),sound=dict(sounds),
         input=[scan for r in rows if r.get('event_type')=='input' and r.get('channel')=='dos.keyboard.scancodes'
             for scan in r['payload']])
 
@@ -110,7 +114,7 @@ def resync(a,b,limit=8):
 
 def compare(expected,actual):
     report={}
-    for stream in ('boundaries','states','frames','sound'):
+    for stream in ('boundaries','states','frames','completed_frames','sound'):
         a,b=expected[stream],actual[stream];keys=sorted(a.keys()|b.keys(),key=lambda k:tuple(
             int(s) if s.isdigit() else s for s in k.split(':')))
         good=[k for k in keys if k in a and k in b and a[k]==b[k]]
@@ -170,6 +174,6 @@ def main():
     report=compare(original(a.original),port(a.port));a.out.write_bytes((json.dumps(report,indent=2)+'\n').encode())
     print(json.dumps({k:{x:v for x,v in r.items() if x not in ('differences','agreeing','first_difference')}
         for k,r in report.items() if k not in ('routines','driver_entries')},indent=2))
-    return 0 if all(report[k]['agrees'] for k in ('boundaries','states','frames','sound','input')) else 1
+    return 0 if all(report[k]['agrees'] for k in ('boundaries','states','frames','completed_frames','sound','input')) else 1
 
 if __name__=='__main__':raise SystemExit(main())

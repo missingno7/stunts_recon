@@ -39,8 +39,10 @@ def bindings():
     aliases={"gameint":"frame_callback", "movcf":"sprite_blit_to_video",
         "movpackf":"shape2d_op_unk", "movpackfxya":"shape2d_op_unknown5",
         "movpackcfxya":"shape2d_op_unk3", "xorrectc":"draw_filled_rect",
-        "drawpolypt":"preRender_polygon", "drawpolyp":"preRender_polygon",
+        "drawpolypt":"preRender_polygon", "drawpolyp":"preRender_polygon", "dodash":"dashboard_complete",
         "preRender_patterned":"preRender_polygon", "sprite_two_color_poly_list":"preRender_polygon",
+        "audio_init_engine":"engine_init", "audio_op_unk":"engine_start",
+        "audio_op_unk2":"engine_target", "audio_driver_timer":"engine_tick",
         "drawrect":"sprite_1_unk", "orfxya":"putpixel_iconFillings", "andfxya":"putpixel_iconMask",
         "orpackf":"shape2d_op_unk4", "andpackf":"shape2d_render_bmp_as_mask", "scalecfxy":"shapeexpl"}
     names=("movcf", "video_set_palette", "sprite_1_unk3", "shape2d_op_unk3",
@@ -170,7 +172,7 @@ def capture(args):
     lines += [f'HOOK {h["address"]:x} {h["name"]}' for h in hooks['hooks']]
     if semantic or getattr(args,'boundaries',False):
         from tools.porting.boundary_bindings import configuration
-        extra,reviewed=configuration(out/'boundaries.jsonl',raw_script if semantic else {'events':[]},getattr(args,'frames',0))
+        extra,reviewed=configuration(out/'boundaries.jsonl',raw_script if semantic else {'events':[]},getattr(args,'frames',0),getattr(args,'graphics',False))
         lines+=extra
         (out/'boundary-bindings.json').write_bytes((json.dumps(reviewed,indent=2)+'\n').encode())
     for event in script['events']:
@@ -245,6 +247,7 @@ def main():
     p.add_argument('--timeout',type=int,default=150)
     p.add_argument('--port-exe',type=Path)
     p.add_argument('--boundaries',action='store_true')
+    p.add_argument('--graphics',action='store_true')
     p.add_argument('--frames',type=int,default=0)
     args=p.parse_args()
     if not 1<=args.ticks<=10000:p.error('--ticks must be in 1..10000')

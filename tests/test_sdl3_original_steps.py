@@ -92,11 +92,11 @@ class OriginalStepTests(unittest.TestCase):
                     data=struct.pack('<64H',*expected)[2*start:2*start+len(region['after'])//2]
                     self.assertEqual(data.hex(),region['after'],'isolated original versus captured original call')
 
-    def test_all_active_race_calls_and_states_and_later_indexed_frames(self):
+    def test_all_active_race_calls_states_completed_frames_and_sound_targets(self):
         assert_build_ready();WORK.mkdir(parents=True,exist_ok=True)
         for audio in ('ad15','pc15'):
             with self.subTest(audio=audio),tempfile.TemporaryDirectory(dir=WORK) as tmp:
-                fixture=json.loads((FIXTURES/f'race-{audio}.json').read_text())
+                fixture=json.loads((FIXTURES/f'completed-race-{audio}.json').read_text())
                 script=FIXTURES/fixture['script'];seal=fixture['provenance']
                 self.assertEqual(hashlib.sha256(script.read_bytes()).hexdigest(),seal['script_sha256'])
                 self.assertEqual(hashlib.sha256((ROOT/'layout/oracle.lock.json').read_bytes()).hexdigest(),seal['oracle_lock_sha256'])
@@ -109,12 +109,34 @@ class OriginalStepTests(unittest.TestCase):
                 observed={k:dict(count=len(v),sha256=digest(v)) for k,v in actual['boundaries'].items() if k.startswith('1:')}
                 self.assertEqual(len(expected),400)
                 self.assertEqual(observed,expected,'ordered calls, scalar returns, bounded reads/writes and aliases')
-                # Explicit agreeing subset. Earlier eight pixel mismatches are
-                # retained in the references/report; no whole-race image PASS.
-                keys=[f'1:{frame}' for frame in range(23,201)]
+                self.assertFalse(any(k.startswith('0:1:') for k in actual['boundaries']),
+                    'initial paint must precede the first update; no injected inactive simulation')
+                # All completed frames, including the dashboard restoration at
+                # frame 1. Intermediate frame-1 blits remain diagnostic only.
+                completed={k:dict(count=len(v),sha256=digest(v)) for k,v in actual['completed_frames'].items() if k.startswith('1:')}
+                self.assertEqual(len(completed),200)
+                self.assertEqual(completed,{k:v for k,v in fixture['groups']['completed_frames'].items() if k.startswith('1:')})
+                keys=[f'1:{frame}' for frame in range(2,201)]
                 for key in keys:
                     self.assertEqual(dict(count=len(actual['frames'][key]),sha256=digest(actual['frames'][key])),
                         fixture['groups']['frames'][key],f'frame group {key}')
+                from tools.porting.compare_tick_streams import read_rows
+                from tools.porting.compare_sound_events import targets
+                self.assertEqual(targets(read_rows(folder/'sound.jsonl')),fixture['engine_targets'])
+                self.assertEqual(len(fixture['engine_targets']),200)
+                from collections import defaultdict
+                sequences=defaultdict(list)
+                for group,values in actual['sound'].items():
+                    if not group.startswith('1:'):continue
+                    for r in values:
+                        resource=(r['resource'] or {}).get('name','none')
+                        sequences[f'{resource}:voice={r["voice"]}:entry={r["entry"]:02x}'].append(r)
+                # The 24h smoothing ramp is an explicit open difference, not
+                # accepted through content search or timing relabeling.
+                observed_sound={k:dict(count=len(v),sha256=digest(v)) for k,v in sequences.items() if not k.endswith(':entry=24')}
+                expected_sound={k:v for k,v in fixture['sound_sequences'].items() if not k.endswith(':entry=24')}
+                self.assertTrue(expected_sound)
+                self.assertEqual(observed_sound,expected_sound,'ordered per voice/resource/entry; no cross-entry interleaving claim')
                 for sparse in fixture['sparse_frames']:
                     payload=zlib.decompress(bytes.fromhex(sparse['zlib_hex']))
                     self.assertEqual(len(payload),64768)
