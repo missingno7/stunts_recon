@@ -8,6 +8,8 @@ The reconstruction is complete in the sense of the proof: `python tools/validate
 
 Questions about the running game and its data formats are in [unresolved questions](docs/unresolved.md); the port is described in the [SDL3 handoff](docs/porting/HANDOFF.md) and measured against the [runtime oracle](docs/porting/runtime-oracle.md).
 
+Two tags mark milestones: `exact-v1` (29 September 2026) is the first state that reproduces the executable byte for byte, with sources still in matching-campaign form ([freeze record](docs/freeze.md)); `source-v1` (14 November 2026) is the readable source tree that closed the reconstruction.
+
 ## Setup
 
 The native SDL3 game lives in `port/`. Build with

@@ -1,13 +1,12 @@
-# Historical freeze: `historical-exact-oracle-v1`
+# First byte-exact freeze: tag `exact-v1`
 
-This record defines the historical source and proof boundary intended for tag `historical-exact-oracle-v1`. The SDL3 port is a separate line of work derived from this frozen historical base; port-only adapters remain outside the historical acceptance source and recipes.
+This record describes the first byte-exact state of the reconstruction (29 September 2026), tagged `exact-v1`. Its sources were still in matching-campaign form; the readable sources are tagged `source-v1` and described in [reconstruction.md](reconstruction.md). The SDL3 port is a separate line of work derived from this frozen historical base; port-only adapters remain outside the historical acceptance source and recipes.
 
 ## Identity
 
 | Item | Value |
 |---|---|
-| Freeze commit | the commit tagged `historical-exact-oracle-v1` (`git rev-parse historical-exact-oracle-v1^{commit}`) |
-| Intended tag | `historical-exact-oracle-v1` |
+| Freeze commit | the commit tagged `exact-v1` (`git rev-parse exact-v1^{commit}`) |
 | Immutable oracle lock SHA-256 | `9F40E20B5A1855DE03760DF68D14AE5455E019172B81173BA76DD0FBA4699804` (`layout/oracle.lock.json`) |
 | Locked packed MZ | 199,125 bytes; SHA-256 `f57ac2775b6156b0413775eb61a1c48743f64248f72d13ca970dc645029eb41d` |
 | Locked unpacked MZ | 210,384 bytes; SHA-256 `1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615` |
