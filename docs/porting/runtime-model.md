@@ -121,8 +121,7 @@ polling. A wait nested inside a callback accepts/counts further ticks and input
 without recursive callback dispatch, preserving the ISR reentry rule. Transition
 work keeps cumulative deadlines on the same tick timeline. Production guest code
 has no `SDL_Delay*`; legacy standalone input/video adapter probes retain their
-isolated non-handshake timing branches. Window presentation and device callbacks
-remain downstream host work; device/audio isolation is a later step.
+isolated non-handshake timing branches. Window presentation and device callbacks remain downstream host work.
 
 The build adapter's yield audit covers race catch-up, shared `mykey`/`hurrykey`
 polls in menu/modal/editor/results/intro/replay loops (including held controls and
@@ -133,11 +132,74 @@ These are port-only generated views; accepted game/library sources are unchanged
 Replay tests assert exactly 50 initial and 56 resumed steps at the scripted tick
 boundaries; selection tests retain the original indexed-image comparisons. The
 sound-record test asserts identical request bytes, GAMESTATE sequences and indexed
-frames by tick on repeat and in two concurrent native sessions. Device-output
-comparison remains an observation because sound state is not yet sink-isolated.
-Compute-only startup benchmarking now sees no elapsed grants; its existing
-branches select the fast profile. Explicit calibration/entropy policy and the
-audio sink remain later steps; their code has not been redesigned.
+frames by tick on repeat and in two concurrent native sessions. Device-output comparisons now also assert AD15 and PC15 equivalence under real,
+dummy and null output, with two requested/obtained device buffer sizes.
+
+### Explicit startup policy and entropy
+
+The generated `initmodes` view replaces only the benchmark block with its
+necessary buffer clear/clip setup and explicit configuration assignments. No
+benchmark timing is simulated. `config.json` defaults to `frame_rate:20`,
+`detail_level:0`, `drawing_path:"dirty_rects"`: the current native fast profile
+(20 Hz/highest detail, original dirty-region path, `slow_video_mode_state=1`).
+Rates 10/20, detail 0..4, and `dirty_rects`/`full` are accepted. CLI overrides
+`--frame-rate`, `--detail-level`, `--drawing-path` are launch-only. Accepted replay
+rate assignments in `run_game`/replay selection are unchanged and keep precedence.
+
+`port/startup.c` obtains a 64-bit launch seed from the OS (`BCryptGenRandom` on
+Windows); unavailable entropy is an initialization error, never a time-based
+fallback. `--seed` fixes it. The trace's `startup_settings` row records the exact
+hex seed, source, rate, detail and drawing path. SplitMix64 derives bounded
+mix counts at `seedrandom`'s status-polling boundary; its original PRNG stirring
+loops remain, using the explicitly seeded Microsoft CRT recurrence and the
+unchanged six-byte Kevin generator. There is no display-status polling or BIOS
+entropy read in that path. Other display-status adapters remain for their own
+contracts. The captured `test_seed.c` fixture preserves its pre-injection mix,
+read-count accounting and post-wait CRT/Kevin/counter state; its source poll loop
+is replaced by equivalent count bookkeeping. A fixture launch defaults to seed
+1 for repeatable pre-injection work; an explicit `--seed` overrides that default.
+A saved replay still does not serialize the Kevin seed; capture the launch seed
+or original-state fixture alongside inputs when comparing random effects.
+
+### Tick-owned sound and output queue
+
+`port/audio.c` owns translated driver state and synthesis on the game thread.
+Before the next raw tick is applied, `port_audio_advance_tick` renders the elapsed
+interval from the previous tick's driver state. Its sample budget is exactly
+`floor(N * 10000154 * 48000 / 1e9)` with carried integer remainder, regardless of
+output demand. PC15 sample offsets, fractional PIT/sample remainders, completion,
+IRQ/byte counters and speaker state therefore advance on that same clock before
+the next callbacks observe them. The retained explicit `port_audio_render_s16`
+API is also used by the original-machine/PCM routine probes; the device never
+calls it. AD15 registers, driver state and OPL synthesis share guest ownership.
+The guest/device spin lock is gone.
+
+`port/audio_sdl.c` receives immutable mono PCM in a bounded single-producer,
+single-consumer queue. Release/acquire cursors publish bytes; neither side waits
+for the other. The SDL callback only copies queued samples to SDL, fills any
+missing output with silence and updates presentation diagnostics. It never reads
+game records, driver globals or resource pointers, and never invokes synthesis
+or game tracing. Playback starts after a small prefill based on the obtained
+device buffer. If a manual run outpaces playback, newly rendered presentation
+samples may be dropped; rendering, logical sound state and game ticks continue
+unchanged. Underruns/drops are diagnostics, not feedback into game behavior.
+`audio_sink` trace rows report submitted/consumed/dropped frames, underrun counts
+and obtained device buffer frames once per 100 raw ticks and after shutdown
+joins the consumer. Counters are cumulative and never reset to hide a gap:
+startup asset loading can stall the producer for several hundred milliseconds.
+Measure steady-race underruns as a counter difference between explicit tick
+boundaries; the startup counters remain visible separately.
+
+`--audio-output=none` renders/discards the same tick budgets with the same selected
+driver/banks/voices/timers; it opens no device. `device` uses SDL's selected device,
+including `SDL_AUDIODRIVER=dummy`. `--audio-buffer-frames` requests a power-of-two
+128..4096 buffer. Device drivers may clamp it: this Windows WASAPI device uses
+480 frames for both requests. The equivalence matrix uses real DirectSound and
+SDL dummy devices at obtained 512/2048 frames; the default WASAPI path is also
+covered by repeat and interactive tests. Legacy `--audio=none` remains a disabled-driver diagnostic mode:
+existing guards skip sound resources/driver callbacks in that mode, so changing
+its meaning would alter established behavior. Equivalence tests use the new null
+sink and compare requests, GAMESTATE and indexed captures at unchanged tick labels.
 
 `--sound-requests=PATH` enables `port/sound_record.c`'s JSON-lines observer;
 it is off by default. A failed open or write/close reports a nonzero exit.
@@ -170,16 +232,13 @@ later voice-only operations with their chunk/resource. Recording observes the
 existing logical engine and translated driver calls; it neither synthesizes
 sound nor changes device ownership, callback timing, or disabled-driver behavior.
 
-`tests/test_sdl3_sound_record.py` repeats the AD15 ELPI instrument/note fixture
-with explicit manual ticks and requires byte-identical requests. Its seeded
-full-game driving fixture also compares repeat and concurrent manual runs by raw
-tick, including all captured GAMESTATE and indexed frames. Streams and results
-are saved under `build/workers/portclock/sound-comparison/`. The step-1 wall-paced
-baseline differed (9109 versus 9116 events); after the handshake the focused
-manual repeat, loaded repeat, and normal/dummy sound streams agreed. That is an
-observed fixture result, not a general proof of device isolation. Device-coupled
-sound state remains for the later sink step. No comparison masks ticks or
-regenerates an original expectation from native output.
+`tests/test_sdl3_sound_record.py` repeats the AD15 fixture and full driving
+session, including concurrent manual runs. `test_sdl3_audio_sink.py` additionally
+compares all sound requests, GAMESTATE and indexed frames for each driver across
+real, dummy and null output and two obtained device buffer sizes. Historical
+step-1 wall-paced streams differed; that finding is preserved in the worker
+reports. Current assertions never remove tick labels or mismatched
+rows to make streams agree, and never regenerate original expectations.
 
 ## Input sampling, normalization, and replay capture
 

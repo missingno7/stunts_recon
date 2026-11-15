@@ -21,6 +21,13 @@ int port_audio_is_active(void);
 const char *port_audio_backend_name(void);
 size_t port_audio_render_s16(int16_t *output, size_t frames,
                              unsigned sample_rate);
+typedef struct PortAudioSinkStats {
+    uint32_t submitted, consumed, dropped, underrun_frames, underrun_callbacks, device_buffer_frames;
+} PortAudioSinkStats;
+int port_audio_sdl_configure(const char *output,unsigned buffer_frames);
+void port_audio_sdl_submit(const int16_t *samples,size_t frames);
+void port_audio_sdl_stats(PortAudioSinkStats *stats);
+void port_audio_advance_tick(void);
 int port_audio_sdl_start(void);
 void port_audio_sdl_stop(void);
 void restoretimer(void);

@@ -1,5 +1,8 @@
 #include "port_runtime.h"
 #include "tick_clock.h"
+#ifdef PORT_AUDIO_TICK_SINK
+#include "audio_backend.h"
+#endif
 
 #include <SDL3/SDL.h>
 
@@ -97,6 +100,9 @@ void port_guest_yield(void)
     SDL_UnlockMutex(s_activity_lock);
     port_guest_check_stop();
     if (s_cancelled) return;
+#ifdef PORT_AUDIO_TICK_SINK
+    port_audio_advance_tick();
+#endif
     port_clock_advance(&s_clock, 1);
     /* Script sequences precede live-event sequences on a same-tick tie. Both
        are queued before this grant and applied by this guest, never the host. */

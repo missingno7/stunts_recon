@@ -313,11 +313,21 @@ class SDL3AudioTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory(prefix="stunts-pc15-audio-") as directory:
             executable = Path(directory) / "pc15-audio-probe.exe"
+            probe = Path(directory) / "tick-pc15-probe.c"
+            source = (ROOT / "tests/sdl3/pc15_audio_probe.c").read_text()
+            source = source.replace("int main(void)\n{", r'''static uint64_t tick_samples;
+void port_audio_sdl_submit(const int16_t *p,size_t n) { (void)p; tick_samples+=n; }
+int main(void)
+{
+    for(unsigned i=0;i<1000;++i) port_audio_advance_tick();
+    if(tick_samples != 480007u) return 96;
+''')
+            probe.write_text(source)
             command = [
                 compiler, "-std=gnu11", "-O0", "-Wall", "-Wextra",
                 "-Wpedantic", "-Werror", "-Wno-unused-parameter",
                 "-I", str(ROOT / "port"), "-I", str(dependency_root),
-                str(ROOT / "tests" / "sdl3" / "pc15_audio_probe.c"),
+                str(probe), "-DPORT_AUDIO_TICK_SINK=1",
                 str(ROOT / "port" / "audio.c"),
                 str(ROOT / "port" / "pc_speaker.c"),
                 str(ROOT / "port" / "ad15_driver.c"),
@@ -348,11 +358,30 @@ class SDL3AudioTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory(prefix="stunts-sdl3-audio-") as directory:
             executable = Path(directory) / "sdl3-audio-probe.exe"
+            probe = Path(directory) / "sink-probe.c"
+            probe.write_text(r'''#include "audio_backend.h"
+#include <SDL3/SDL.h>
+#include <assert.h>
+#include <stdlib.h>
+#include <stdio.h>
+size_t port_audio_render_s16(int16_t *p,size_t n,unsigned r) { abort(); }
+int main(void) {
+    assert(SDL_SetHint(SDL_HINT_AUDIO_DRIVER,"dummy"));
+    assert(port_audio_sdl_configure("device",512));
+    assert(port_audio_sdl_start());
+    int16_t pcm[2048]; for(unsigned i=0;i<2048;++i) pcm[i]=(i&1)?1024:-1024;
+    for(unsigned i=0;i<24;++i) port_audio_sdl_submit(pcm,2048);
+    SDL_Delay(150); port_audio_sdl_stop();
+    PortAudioSinkStats stats; port_audio_sdl_stats(&stats);
+    assert(stats.consumed>0 && stats.underrun_frames==0 && stats.dropped==0);
+    puts("SDL3 dummy playback requested samples from the queue only"); return 0;
+}
+''')
             command = [
                 compiler, "-std=gnu11", "-O0", "-Wall", "-Wextra",
                 "-Wpedantic", "-Werror", "-Wno-unused-parameter",
                 "-I", str(SDL_ROOT / "include"), "-I", str(ROOT / "port"),
-                str(ROOT / "tests" / "sdl3" / "audio_sdl_probe.c"),
+                str(probe),
                 str(ROOT / "port" / "audio_sdl.c"),
                 "-L", str(SDL_ROOT / "lib"), "-lSDL3", "-o", str(executable),
             ]
