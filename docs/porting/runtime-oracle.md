@@ -148,3 +148,45 @@ steps align by frame, never ticks or a search for matching bytes. Missing render
 frames remain differences. The tool gives first differences with context, then
 ordered within-group resynchronisation for diagnosis. Neither resynchronisation
 nor unordered identical-input matches turns a differing full stream into PASS.
+
+### Completed race frames and raster diagnosis (step 8)
+
+Race image acceptance now uses the original `dodash(2)` return, after its scene
+copies and dashboard restoration. The port publishes that same boundary as
+`event_type:frame_complete`, `publication_reason:race_frame_complete`, with
+`video_phase:frame_end`. Existing partial `video_publication` rows remain intact.
+This also updates the displayed immutable snapshot; restoration after the last
+scene blit previously left frame 1's shift graphic on screen. Paused replay UI
+iterations which do not call `dodash(2)` keep their existing publication path.
+
+`--graphics` on `step_oracle.py` enables eleven additional original/native
+contracts during the first 22 race frames. FAR shape arguments and NEAR vertex
+lists use their reviewed original stack widths. Captures include vertex bytes,
+clip words, the active row 9, a 64x56 dashboard-corner hash and unpacked source
+pixel hash. Whole source images are bounded by their shape headers; this is a
+targeted diagnostic span, not complete raster-memory coverage. Hash bytes are
+serialized little-endian on both sides. VGA peeks do not charge guest wait states.
+
+```powershell
+python tools/porting/step_oracle.py --out build/workers/portclock/race-step8-ad --dosbox build/workers/portclock/observer-step7/dosbox-x.exe --audio ad15 --frames 200
+python -m tools.porting.pack_original_steps build/workers/portclock/race-step8-ad/original --out build/workers/portclock/completed-race-ad15.json
+python tools/porting/step_oracle.py --out build/workers/portclock/raster-step8 --dosbox build/workers/portclock/observer-step7/dosbox-x.exe --audio ad15 --frames 24 --graphics
+python -m tools.porting.pack_original_rasters build/workers/portclock/raster-step8/original --out build/workers/portclock/race-horizon.json
+python -m tools.porting.compare_sound_events build/workers/portclock/race-step8-ad/original build/workers/portclock/race-step8-ad/port --out build/workers/portclock/sound-step8.json
+python -m unittest tests.test_sdl3_original_steps tests.test_sdl3_race_horizon -v
+```
+
+Rebuild the observer with the current tracked includes before these commands;
+repeat the 200-frame capture/packer with PC15. The packers refuse overwrite and
+read only sealed original observations. `completed-race-*.json` and
+`race-horizon.json` are the new compact original references; old files retain
+their original provenance. Packer sparse frames now select completed frames.
+
+Sound capture also observes original/native engine initialization, start, timer
+callback entry and the nine scalar arguments to `audio_op_unk2`. Sound comparison
+aligns target records by consumption order within this single-engine race, then
+compares driver sequences by entry/resource/voice without dropping repetitions.
+Render-frame movement can be diagnosed separately from changed content. The
+initial pitch ramp still differs (34 versus one callback before engine start);
+it is not granted PASS by this alignment. See [findings](step-divergences.md) for
+the exact agreeing subsets, remaining tails and the deferred scenarios.

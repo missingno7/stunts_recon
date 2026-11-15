@@ -23,7 +23,7 @@ def _hook(kind, chunk, voice, resource, values):
 
 
 def adapt_sound_observers(source, text, header):
-    if source not in {"lib/audiores.c", "lib/audioply.c"}:
+    if source not in {"lib/audiores.c", "lib/audioply.c", "game/audioeng.c"}:
         return text
     # This is a host header, outside the immutable include/ namespace. Angle
     # inclusion keeps extracted probes' strict project-header scanner intact.
@@ -34,7 +34,19 @@ def adapt_sound_observers(source, text, header):
             raise ValueError(f"Sound observer anchor changed in {source}: {old}")
         return body.replace(old, new)
 
-    if source == "lib/audiores.c":
+    if source == "game/audioeng.c":
+        def engine_init(body):
+            anchor = "        timer->active = 1;"
+            return replace(body, anchor, anchor + _hook("engine_init", "slot", "-1", "0", []))
+        text = _function(text, "audio_init_engine", engine_init)
+        for name, kind, values in [
+            ("audio_op_unk", "engine_start", ["index"]),
+            ("audio_driver_timer", "engine_tick", []),
+            ("audio_op_unk2", "engine_target", ["index", "sample_word", "x2", "y2", "z2", "x", "y", "z", "speed"]),
+        ]:
+            text = _function(text, name, lambda body, k=kind, v=values:
+                _hook(k, "-1", "-1", "0", v) + body)
+    elif source == "lib/audiores.c":
         def chunk_init(body):
             anchor = "            chunk->event_pos = 0;\n        }"
             return replace(body, anchor, anchor + _hook("chunk_init", "i", "-1",
