@@ -2,7 +2,7 @@
 #define STUNTS_BOUNDARY_RECORD_H
 #include <stddef.h>
 #include <stdint.h>
-#define PORT_BOUNDARY_REGIONS 4
+#define PORT_BOUNDARY_REGIONS 5
 #define PORT_BOUNDARY_BYTES 514
 typedef struct PortBoundaryRegion {
     const char *name;
@@ -29,4 +29,10 @@ void port_boundary_sim_end(void);
 void port_boundary_frame_limit(uint16_t frame);
 unsigned port_boundary_scope(void);
 uint32_t port_boundary_frame(void);
+void port_boundary_graphics_enable(int enabled);
+int port_boundary_graphics_enabled(void);
+const uint8_t *port_boundary_graphics_row9(void);
+uint16_t port_boundary_graphics_row9_size(void);
+uint64_t port_boundary_graphics_corner(void);
+uint64_t port_boundary_graphics_source(const void *shape);
 #endif

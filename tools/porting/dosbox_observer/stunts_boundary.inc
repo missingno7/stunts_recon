@@ -1,8 +1,8 @@
 // Bounded original call observations and semantic input. No game code patching.
 struct BoundaryRegionSpec {std::string name;int argument;unsigned size,read,load_offset;};
-struct BoundarySpec {std::string name;uint32_t cookie;unsigned argc,bits,mask;std::vector<BoundaryRegionSpec> regions;};
+struct BoundarySpec {std::string name;uint32_t cookie;unsigned argc,bits,mask;std::vector<BoundaryRegionSpec> regions;unsigned far_mask=0;bool graphics=false;};
 struct BoundaryRegion {BoundaryRegionSpec spec;uint32_t address;std::vector<uint8_t> before;};
-struct BoundaryPending {const BoundarySpec* spec;uint16_t ss,sp;uint32_t ret,frame,scope,active;uint64_t order;std::vector<uint16_t> args;std::vector<BoundaryRegion> regions;};
+struct BoundaryPending {const BoundarySpec* spec;uint16_t ss,sp;uint32_t ret,frame,scope,active;uint64_t order;std::vector<uint16_t> args;std::vector<BoundaryRegion> regions;std::vector<uint16_t> segments;};
 struct SemanticInput {unsigned phase,at;int code;float u,v;unsigned buttons;bool consumed=false;};
 static std::vector<BoundarySpec> boundary_specs;
 static std::vector<BoundaryPending> boundary_pending;
@@ -32,6 +32,31 @@ static void BoundaryHex(const std::vector<uint8_t>& bytes) {
     boundary_output<<'"';for(auto b:bytes)boundary_output<<std::hex<<std::setw(2)<<std::setfill('0')<<unsigned(b);
     boundary_output<<std::dec<<'"';
 }
+static uint8_t BoundaryPixel(uint32_t address){
+    if(address>=0xa0000 && address<0xb0000){auto i=address-0xa0000;return vga.mem.linear[(((i&~3u)<<2)+(i&3u))&vga.mem.memmask];}
+    return mem_readb(address);
+}
+static std::vector<uint8_t> BoundaryGraphic(const BoundaryPending& p,int type){
+    auto sprite=stunts->sprite1;auto segment=stunts->r16(sprite+2);auto pitch=stunts->r16(sprite+20);
+    auto frame=stunts_base+0x1ea20;auto rows=frame+stunts->r16(sprite+10);
+    auto height=segment==0xa000?200:stunts->r16(physical(segment,stunts->r16(sprite))+2);
+    uint64_t hash=14695981039346656037ull;
+    if(type==-2){
+        if(height<=9 || pitch>320)return {};
+        auto start=physical(segment,stunts->r16(rows+18));std::vector<uint8_t> bytes(pitch);
+        for(unsigned x=0;x<pitch;++x)bytes[x]=BoundaryPixel(start+x);return bytes;
+    }
+    if(type==-3){
+        if(height<200 || pitch<320)hash=0;
+        else for(unsigned y=144;y<200;++y){auto start=physical(segment,stunts->r16(rows+2*y));
+            for(unsigned x=256;x<320;++x)hash=(hash^BoundaryPixel(start+x))*1099511628211ull;}
+    } else if(type==-4){
+        auto shape=physical(p.segments.at(0),p.args.at(0));unsigned size=unsigned(stunts->r16(shape))*stunts->r16(shape+2);
+        if(size>65520)abort();
+        for(unsigned i=0;i<size;++i)hash=(hash^BoundaryPixel(shape+16+i))*1099511628211ull;
+    }
+    std::vector<uint8_t> bytes;for(unsigned i=0;i<8;++i)bytes.push_back(uint8_t(hash>>(8*i)));return bytes;
+}
 static bool BoundaryConfigure(const char* line) {
     char name[100],label[100],path[512];unsigned pc,n,bits,mask,size,read,offset,phase,at,buttons;int argument,code;float u,v;
     if(sscanf(line,"BOUNDARY_OUTPUT %511[^\n]",path)==1){
@@ -39,8 +64,10 @@ static bool BoundaryConfigure(const char* line) {
         boundary_output<<"{\"kind\":\"header\",\"schema\":\"stunts-port-boundary-v1\"}\n";return true;}
     if(sscanf(line,"BC %99s %x %u %u %u",name,&pc,&n,&bits,&mask)==5){
         boundary_specs.push_back({name,pc,n,bits,mask,{}});return true;}
+    if(sscanf(line,"BF %99s %u",name,&n)==2){for(auto& spec:boundary_specs)if(spec.name==name){spec.far_mask|=1u<<n;return true;}abort();}
+    if(sscanf(line,"BG %99s",name)==1){for(auto& spec:boundary_specs)if(spec.name==name){spec.graphics=true;return true;}abort();}
     if(sscanf(line,"BR %99s %99s %d %u %u %x",name,label,&argument,&size,&read,&offset)==6){
-        if(size>514)abort();
+        if(size>514 && size<65536)abort();
         for(auto& spec:boundary_specs)if(spec.name==name){spec.regions.push_back({label,argument,size,read,offset});return true;}
         abort();}
     if(sscanf(line,"PHASE %x %u",&pc,&phase)==2){boundary_phases.push_back({pc,phase});return true;}
@@ -114,7 +141,8 @@ static void BoundaryComplete() {
         if(i)boundary_output<<',';
         boundary_output<<"{\"name\":\""<<r.spec.name<<"\",\"read\":"<<r.spec.read<<",\"alias\":"<<alias
             <<",\"offset\":"<<offset<<",\"before\":";
-        BoundaryHex(r.before);boundary_output<<",\"after\":";BoundaryHex(BoundaryRead(r.address,r.spec.size));boundary_output<<'}';
+        BoundaryHex(r.before);boundary_output<<",\"after\":";
+        BoundaryHex(r.spec.argument<-1?BoundaryGraphic(p,r.spec.argument):BoundaryRead(r.address,r.spec.size));boundary_output<<'}';
     }
     boundary_output<<"]}\n";boundary_pending.pop_back();
 }
@@ -153,12 +181,19 @@ static void BoundaryBefore(uint32_t pc) {
     if(boundary_input_site && pc==BoundaryPC(boundary_input_site))BoundaryDeliver(6,stunts->r16(stunts->target_frame));
     if(!boundary_output || !boundary_pending.empty() || stunts->callback_slot>=0)return;
     for(const auto& spec:boundary_specs)if(pc==BoundaryPC(spec.cookie)) {
+        if(spec.graphics && (boundary_phase!=5 || stunts->r16(stunts->state+320)>22))break;
         BoundaryPending p{&spec,SegValue(ss),reg_sp,key(mem_readw(SegPhys(ss)+reg_sp+2),mem_readw(SegPhys(ss)+reg_sp)),
             boundary_scope?boundary_frame:unsigned(stunts->r16(stunts->state+320)),boundary_scope,
             unsigned(mem_readb(stunts->state+1013)),boundary_order++,{}, {}};
-        for(unsigned i=0;i<spec.argc;++i)p.args.push_back(mem_readw(SegPhys(ss)+reg_sp+4+2*i));
-        for(const auto& r:spec.regions){
-            uint32_t address=r.argument<0?stunts_base+r.load_offset:physical(SegValue(ds),p.args.at(r.argument));
+        unsigned word=0;
+        for(unsigned i=0;i<spec.argc;++i){p.args.push_back(mem_readw(SegPhys(ss)+reg_sp+4+2*word++));
+            p.segments.push_back(spec.far_mask&(1u<<i)?mem_readw(SegPhys(ss)+reg_sp+4+2*word++):SegValue(ds));}
+        for(auto r:spec.regions){
+            if(r.argument<-1){auto data=BoundaryGraphic(p,r.argument);r.size=unsigned(data.size());
+                p.regions.push_back({r,0xf00000+unsigned(p.regions.size())*1024,std::move(data)});continue;}
+            if(r.size>=65536)r.size=4*unsigned(p.args.at(r.size-65536));
+            if(r.size>514)abort();
+            uint32_t address=r.argument<0?stunts_base+r.load_offset:physical(p.segments.at(r.argument),p.args.at(r.argument));
             if(r.argument>=0 && unsigned(p.args.at(r.argument))+r.size>65536)abort();
             p.regions.push_back({r,address,BoundaryRead(address,r.size)});
         }

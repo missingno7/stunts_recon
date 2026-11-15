@@ -26,7 +26,7 @@ def race_script(path):
     path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes((json.dumps(script,indent=2)+'\n').encode())
     return script
 
-def run_port(folder,script,audio,frames,timeout=120,*,capture_frames=False):
+def run_port(folder,script,audio,frames,timeout=120,*,capture_frames=False,graphics=False):
     folder=folder.resolve();folder.mkdir(parents=True,exist_ok=False)
     shutil.copytree(ROOT/'build/sdl3/runtime/assets',folder/'assets')
     (folder/'config.json').write_text(json.dumps(dict(manual_word_check=True,renderer='faithful',frame_rate=20,detail_level=0,drawing_path='dirty_rects')))
@@ -38,6 +38,7 @@ def run_port(folder,script,audio,frames,timeout=120,*,capture_frames=False):
         f'--input-script={script.resolve()}',f'--test-startup-seed={ROOT/"tests/fixtures/sdl3/startup-seed.json"}',
         '--seed=1','--clock=manual','--run-ticks=3000',f'--boundary-frames={frames}',f'--audio={audio}','--audio-output=none']
     if capture_frames:command.append(f'--capture-dir={folder/"frames"}')
+    if graphics:command.append('--graphics-boundaries')
     with (folder/'run.log').open('w') as log:
         result=subprocess.run(command,cwd=folder,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=timeout)
     if result.returncode:raise RuntimeError(f'port exited {result.returncode}: {folder/"run.log"}')
@@ -52,14 +53,15 @@ def main():
     p.add_argument('--frames',type=int,default=200);p.add_argument('--dosbox',type=Path)
     p.add_argument('--port-only',action='store_true')
     p.add_argument('--capture-frames',action='store_true',help='diagnostic full port FBRs; never reference input')
+    p.add_argument('--graphics',action='store_true')
     a=p.parse_args();out=a.out.resolve();out.mkdir(parents=True,exist_ok=False)
     script=out/'input.json';race_script(script)
     if not a.port_only:
         if not a.dosbox:p.error('--dosbox required for original capture')
         from tools.porting.original_tick_oracle import capture
         capture(argparse.Namespace(output=out/'original',script=script,dosbox=a.dosbox,ticks=3000,audio=a.audio,
-            cycles=30000,timeout=180,frames=a.frames,boundaries=True))
-    run_port(out/'port',script,a.audio,a.frames,capture_frames=a.capture_frames)
+            cycles=30000,timeout=180,frames=a.frames,boundaries=True,graphics=a.graphics))
+    run_port(out/'port',script,a.audio,a.frames,capture_frames=a.capture_frames,graphics=a.graphics)
     print(out)
 
 if __name__=='__main__':main()

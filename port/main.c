@@ -142,6 +142,7 @@ int main(int argc, char **argv)
     const char *sound_requests_path = "";
     const char *boundary_path = "";
     unsigned boundary_frames=0;
+    int graphics_boundaries=0;
     const char *asset_root = NULL;
     char default_asset_root[1024];
     char default_save_root[1024];
@@ -172,6 +173,7 @@ int main(int argc, char **argv)
     for (i = 1; i < argc; ++i) {
         if (strncmp(argv[i], "--trace=", 8) == 0)
             trace_path = argv[i] + 8;
+        else if (strcmp(argv[i], "--graphics-boundaries") == 0) graphics_boundaries=1;
         else if (strncmp(argv[i], "--boundary-trace=", 17) == 0)
             boundary_path = argv[i] + 17;
         else if (strncmp(argv[i], "--boundary-frames=", 18) == 0) {
@@ -364,6 +366,7 @@ int main(int argc, char **argv)
         port_sound_record_close();port_trace_close();port_sdl_shutdown();return 2;
     }
     port_boundary_frame_limit((uint16_t)boundary_frames);
+    port_boundary_graphics_enable(graphics_boundaries);
     port_timer_start();
     s_guest_thread = SDL_CreateThread(guest_thread_main, "stunts-game", NULL);
     if (s_guest_thread == NULL) {

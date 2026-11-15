@@ -4,7 +4,7 @@ import json
 import sys
 ROOT=Path(__file__).resolve().parents[2]
 sys.path[:0]=[str(ROOT/'port'),str(ROOT/'tools/porting'),str(ROOT/'tools'),str(ROOT/'build/python')]
-from boundary_adapter import CONTRACTS
+from boundary_adapter import CONTRACTS,GRAPHICS_CONTRACTS
 from diffharness.oracle import OracleImage,SymbolMap,RoutineAddress
 
 def resolve(name):
@@ -24,19 +24,27 @@ def resolve(name):
     if len(set(ends))!=1:raise ValueError('No original function extent for '+name)
     return RoutineAddress(name,start,ends[0],frame)
 
-def configuration(output,script,frames):
+def configuration(output,script,frames,graphics=False):
     image=OracleImage.load(ROOT/'assets')
     data=json.loads((ROOT/'layout/data-symbols.json').read_text())['symbols']
     lines=[f'BOUNDARY_OUTPUT {output}',f'FRAME_LIMIT {frames}'];bindings=[]
-    for c in CONTRACTS:
+    for c in CONTRACTS+(GRAPHICS_CONTRACTS if graphics else []):
         r=resolve(c['name']);cs,ip=r.far_at(0x1010)
         mask=sum(1<<i for i,a in enumerate(c['args']) if a is None)
         lines.append(f"BC {c['name']} {(cs<<16)|ip:x} {len(c['args'])} {c['ret']} {mask}")
+        if c.get('graphics'):lines.append(f"BG {c['name']}")
+        for index in c.get('far',[]):lines.append(f"BF {c['name']} {index}")
         for label,expression,size,read in c.get('regions',[]):
+            if label in ('row9','corner','source_pixels'):
+                special={'row9':-2,'corner':-3,'source_pixels':-4}[label]
+                lines.append(f"BR {c['name']} {label} {special} {320 if special==-2 else 8} {read} 0")
+                continue
             arg=c['params'].index(expression) if expression in c['params'] else -1
-            global_name=next((n for n,nbytes,rd in c.get('globals',[]) if nbytes==size and rd==read),None)
+            binding=next((g for g in c.get('globals',[]) if g[1]==size and g[2]==read),None)
+            global_name=binding[0] if binding else None
             if arg<0 and not global_name:raise ValueError('Missing original global span '+label)
-            offset=data[global_name]['load_address'] if arg<0 else 0
+            offset=data[global_name]['load_address']+(binding[3] if len(binding)>3 else 0) if arg<0 else 0
+            if label=='points':size=65536+c['params'].index('point_count')
             lines.append(f"BR {c['name']} {label} {arg} {size} {read} {offset:x}")
         bindings.append(dict(name=c['name'],start=r.start,end=r.end,frame=r.code_base,
             bytes=image.load_image[r.start:r.start+16].hex(),native_source='port/'+c['source']))

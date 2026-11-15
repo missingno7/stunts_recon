@@ -355,3 +355,4 @@ void port_input_script_phase(unsigned phase)
 void port_input_script_poll(void){semantic_deliver(s_phase,s_key_ordinal);}
 void port_input_script_key_consumed(void){++s_key_ordinal;}
 void port_input_script_step(uint16_t frame){semantic_deliver(6,frame);}
+unsigned port_input_script_phase_value(void){return s_phase;}

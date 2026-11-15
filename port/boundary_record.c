@@ -7,6 +7,8 @@ static unsigned s_depth,s_scope;
 static uint32_t s_frame;
 static uint16_t s_limit;
 static uint64_t s_order;
+static int s_graphics;
+extern unsigned port_input_script_phase_value(void);
 extern void port_timer_observation(uint64_t *,int *);
 static void hex(const void *data,size_t bytes)
 {
@@ -31,6 +33,38 @@ void port_boundary_close(void)
 }
 unsigned port_boundary_scope(void){return s_scope;}
 uint32_t port_boundary_frame(void){return s_scope?s_frame:port_game_frame_snapshot();}
+void port_boundary_graphics_enable(int enabled){s_graphics=enabled;}
+int port_boundary_graphics_enabled(void){
+    return s_output && s_graphics && port_input_script_phase_value()==5 && port_game_frame_snapshot()<=22;
+}
+static uint64_t bytes_hash(const uint8_t *p,size_t count,uint64_t h){
+    while(count--)h=(h^*p++)*UINT64_C(1099511628211);
+    return h;
+}
+uint16_t port_boundary_graphics_row9_size(void){
+    PortSprite *sprite;
+    if(!port_sprite_active_view(NULL,NULL,&sprite) || sprite->words2[4]>320 || sprite->sprite_bitmapptr->height<=9)return 0;
+    return sprite->words2[4];
+}
+const uint8_t *port_boundary_graphics_row9(void){
+    static const uint8_t empty[320];uint8_t *pixels;PortSprite *sprite;
+    if(!port_boundary_graphics_row9_size())return empty;
+    port_sprite_active_view(&pixels,NULL,&sprite);return pixels+sprite->lineofs[9];
+}
+uint64_t port_boundary_graphics_corner(void){
+    uint8_t *pixels;PortSprite *sprite;uint64_t h=UINT64_C(14695981039346656037);unsigned y;
+    if(!port_sprite_active_view(&pixels,NULL,&sprite) || sprite->words2[4]<320 || sprite->sprite_bitmapptr->height<200)return 0;
+    for(y=144;y<200;++y)h=bytes_hash(pixels+sprite->lineofs[y]+256,64,h);
+    return h;
+}
+uint64_t port_boundary_graphics_source(const void *data){
+    const PortShape2D *shape=data;size_t size,extent;
+    if(!shape)return 0;
+    size=(size_t)shape->width*shape->height;
+    if(size>65520 || !port_memory_extent(shape,&extent) || extent<16 || size>extent-16)
+        port_guest_unwind("graphics source span exceeds declared backing");
+    return bytes_hash((const uint8_t*)shape+16,size,UINT64_C(14695981039346656037));
+}
 void port_boundary_frame_limit(uint16_t frame){s_limit=frame;}
 void port_boundary_sim_begin(uint16_t frame){
     if(s_limit && frame>=s_limit && port_game_inputmode_snapshot()) {

@@ -1774,6 +1774,12 @@ static void raster_polygon(int16_t color, int16_t point_count,
             return;
         }
 
+        /* whlrast.ASM's shared polygon tail SUBs the clamped y bounds and
+           JLEs before adding one to its span count. A non-flat polygon with
+           only one surviving scan row emits nothing; true flat/vertical
+           primitives above still use the line fallback. */
+        if (first_y == last_y) return;
+
         /* The DOS helper builds one descriptor per ascending edge, then
            processes every forward edge before entering the reverse helper. */
         for (chain = 0; chain < 2; ++chain) {
