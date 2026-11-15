@@ -4,7 +4,9 @@ The current reference executes the locked original MCGA executable and original
 AD15/PC15 drivers in patched DOSBox-X 2026.08.31. The earlier experimental
 interpreter capture route is retired. Its archived static images, protocol names
 and provenance records are historical evidence; they are not new tick references.
-No expectation below is generated from the SDL port.
+No expectation below is generated from the SDL port. Port-layer acceptance now
+uses the semantic-step race comparison below. Absolute IRQ comparisons remain
+diagnostics and explicitly bounded earlier test subsets.
 
 ## Build and capture
 
@@ -91,3 +93,58 @@ matching state by game-frame number is explicitly a content diagnostic, not an
 absolute-tick pass. No complete scenario is silently accepted on image search.
 For instruction logging and manual debugger checks, [CAPTURE.md](CAPTURE.md)
 remains available independently of this observer.
+
+## Port-layer comparison by simulation step
+
+The [joined inventory](port-layer.md) identifies replacements, services and
+semantic adapters. [Race findings](step-divergences.md) describe the first bounded
+slice; it is not coverage of every entry.
+
+```powershell
+python tools/porting/dosbox_observer/build.py --out build/workers/portclock/observer-step7
+python tools/porting/step_oracle.py --out build/workers/portclock/race-step7-ad --dosbox build/workers/portclock/observer-step7/dosbox-x.exe --audio ad15 --frames 200
+python -m tools.porting.compare_step_streams build/workers/portclock/race-step7-ad/original build/workers/portclock/race-step7-ad/port --out build/workers/portclock/race-step7-ad/comparison.json
+python -m tools.porting.pack_original_steps build/workers/portclock/race-step7-ad/original --out build/workers/portclock/new-race-ad15.json
+python -m unittest tests.test_sdl3_original_steps tests.test_sdl3_port_layer -v
+```
+
+Repeat with `--audio pc15` and fresh output. Comparison exits nonzero for open
+differences; tests assert only named agreeing subsets. Packer verifies seals,
+accepts original data only and refuses overwrite. Compact references under
+`tools/porting/step_oracle_cases/` hold original group/state hashes, sparse compressed
+indexed frames, service cases and matrix arguments, never port expectations.
+
+`stunts-step-input-v1` uses `anchor_tick:0` and events with `at`, `phase`, `channel`,
+`payload` (write `at` first, as the shared writer does). Phases 1..5 are intro,
+main menu, protection, line input and race UI. `at:K` delivers at the next input
+poll after K successful key dequeues in that phase, starting at zero. Phase 6
+uses recorded input slot N (`tmr2` at `moveeverything` entry), before keyboard
+state is sampled into replay byte N. That byte drives simulation step N even
+when original CPU work later causes several catch-up steps. The same hooks are
+injected into the private native overlay; no game/proof source or original
+instruction changes. `--boundary-frames=N` stops at the next simulation entry
+after active frame N; a safety tick cap still bounds failure.
+
+For semantic keyboard delivery, normal DOSBox core yields at the initiating call
+frame until the real PIC/INT9 delivers all queued bytes. PIT/IRQ counting continues;
+this is an input-delivery barrier, not a substituted clock. Without a transaction,
+the core takes its unchanged path. `core_normal.cpp.patch` and `stunts_boundary.inc`
+are sealed with the build; capture rejects stale observers. Accepted symbols,
+recipe frames and reviewed bounded spans ground hooks; entry bytes are retained.
+
+`--boundary-trace=PATH` records the shared completed-call JSONL schema on the port:
+unsigned DOS argument bits, defined returns, bounded memory before/after and alias
+offsets. Pointers become null plus region/overlap identity. Output-only initial
+bytes are observations, not input-contract bytes. INT 15h/33h project defined
+request/result registers; unrelated preserved registers are outside the claim.
+Sound rows also carry game frame, active mode and simulation/render scope. Private
+driver memory, arbitrary DOS buffers and callback-internal routine calls remain open.
+
+Acceptance groups by `(active mode, input game frame, simulation/render scope)`
+and preserves call order. Active states align by frame number; inactive startup
+cannot overwrite them. Duplicate active frame numbers reject this single-race
+contract: replay needs a specified epoch/seek contract. Extra original catch-up
+steps align by frame, never ticks or a search for matching bytes. Missing rendered
+frames remain differences. The tool gives first differences with context, then
+ordered within-group resynchronisation for diagnosis. Neither resynchronisation
+nor unordered identical-input matches turns a differing full stream into PASS.

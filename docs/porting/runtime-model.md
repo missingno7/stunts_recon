@@ -1,5 +1,12 @@
 # Runtime execution model for an SDL3 port
 
+The port-layer verification contract is now [semantic game-step comparison](runtime-oracle.md#port-layer-comparison-by-simulation-step).
+Original IRQ time progresses during CPU work; native time progresses at explicit
+host grants, so absolute IRQ equality is not whole-game acceptance. Race input is
+anchored to recorded simulation input slots and menu input to consumed-key ordinals.
+The [port-layer inventory](port-layer.md) and [measured race findings](step-divergences.md)
+keep changed adapters and unexercised debt separate from reconstructed game logic.
+
 > **Correction to the earlier P2c draft:** `.DRV` entry points are called through direct far-call vectors at offsets in the loaded driver image, not through INT 60h-62h. P3a established this from the callers and all four driver images; the observed offsets and unresolved callee semantics are detailed in [audio-drivers.md](audio-drivers.md).
 >
 > **Editor correction:** P3c found the complete in-executable track editor in `trackedt`; see [modes-and-editor.md](modes-and-editor.md).
