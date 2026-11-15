@@ -28,22 +28,45 @@ polygons and additional horizontal visibility in widescreen, or
 To install beside existing game files, run `python port/build.py package`,
 extract `build/sdl3/stunts-sdl3-win32.zip` into the game folder, and launch
 `stunts-sdl3.exe`. The ZIP includes the required SDL DLL.
-First launch creates `config.json` beside the executable with
-`"manual_word_check": false`. Set it to `true` and restart to restore the
-original manual-word prompt. Upgrades preserve your existing config.
-To select the native renderer without a command-line flag, add the renderer
-setting to that file (older configs may contain only `manual_word_check`):
+First launch creates `config.json` beside the executable; upgrades preserve it.
+Older files can omit the new settings and receive the defaults shown here:
 
 ```json
 {
   "manual_word_check": false,
-  "renderer": "modern"
+  "renderer": "faithful",
+  "frame_rate": 20,
+  "detail_level": 0,
+  "drawing_path": "dirty_rects"
 }
 ```
 
-Use `"renderer": "faithful"` for the indexed reference. A `--renderer=...`
-argument overrides the JSON setting for that launch. The native scenery
-panorama uses nearest-neighbour sampling, preserving the original pixel art.
+Set `manual_word_check` to `true` to restore the original manual-word prompt.
+`renderer` accepts `faithful` or `modern`. Startup `frame_rate` accepts 10 or 20;
+`detail_level` ranges from 0 (highest detail) to 4; `drawing_path` accepts
+`dirty_rects` (the original dirty-region optimization) or `full` (full redraw).
+These defaults explicitly retain the current fast-machine profile. The port
+skips timing calibration; a recorded replay retains its rate where the game
+originally uses the replay header. Override settings for a launch with
+`--renderer=... --frame-rate=10 --detail-level=2 --drawing-path=full`.
+Command-line overrides do not rewrite your config. The native panorama uses
+nearest-neighbour sampling, preserving the original pixel art.
+
+Players receive a fresh OS entropy seed each launch. Use `--seed=12345` (decimal
+or `0x` hexadecimal) to reproduce startup randomness; `--debug` records the seed
+and startup settings in the trace. The existing `--test-startup-seed=PATH`
+original-state fixture remains available and takes precedence at its injection
+point. It uses a fixed seed of 1 unless `--seed` is also supplied.
+
+`--audio=ad15` (default) and `--audio=pc15` choose drivers and resource banks.
+Use `--audio-output=none` to mute output while running identical sound logic;
+`--audio-output=device` is the default. Legacy `--audio=none` still disables the
+driver and its game-side callbacks, so it is not the equivalence-test null sink.
+`--audio-buffer-frames=512` or `2048` requests device buffering (128..4096,
+powers of two). The device consumes queued PCM only; all driver state advances
+from game ticks. Queue diagnostics, including underruns, are written to traces.
+These options also work with `python port/build.py run`.
+
 Crash reports go into the executable's `diagnostics` directory. Launch with
 `stunts-sdl3.exe --debug` to also record detailed logs and gameplay/input traces;
 ZIP the newest diagnostics session after a failure. See the SDL3 handoff for details.

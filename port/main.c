@@ -1,5 +1,6 @@
 #include "port_runtime.h"
 #include "sound_record.h"
+#include "audio_backend.h"
 extern void port_timer_observation(uint64_t *, int *);
 extern void port_sound_record_guest_tables(void);
 #include "render/renderer.h"
@@ -146,6 +147,9 @@ int main(int argc, char **argv)
     const char *input_script = NULL;
     const char *test_startup_seed = NULL;
     const char *audio_driver = "ad15";
+    const char *audio_output="device";
+    unsigned audio_buffer=1024;
+    const char *startup_rate=NULL, *startup_detail=NULL, *startup_drawing=NULL, *startup_seed=NULL;
     const char *diagnostics_root = NULL;
     const char *config_path = NULL;
     const char *renderer_name = NULL;
@@ -189,6 +193,16 @@ int main(int argc, char **argv)
             capture_dir = argv[i] + 14;
         else if (strncmp(argv[i], "--input-script=", 15) == 0)
             input_script = argv[i] + 15;
+        else if (strncmp(argv[i], "--frame-rate=", 13) == 0) startup_rate=argv[i]+13;
+        else if (strncmp(argv[i], "--detail-level=", 15) == 0) startup_detail=argv[i]+15;
+        else if (strncmp(argv[i], "--drawing-path=", 15) == 0) startup_drawing=argv[i]+15;
+        else if (strncmp(argv[i], "--seed=", 7) == 0) startup_seed=argv[i]+7;
+        else if (strncmp(argv[i], "--audio-output=", 15) == 0) audio_output=argv[i]+15;
+        else if (strncmp(argv[i], "--audio-buffer-frames=", 22) == 0) {
+            char *end; unsigned long frames=strtoul(argv[i]+22,&end,10);
+            if(end==argv[i]+22 || *end || frames>4096) return 2;
+            audio_buffer=(unsigned)frames;
+        }
         else if (strncmp(argv[i], "--audio=", 8) == 0)
             audio_driver = argv[i] + 8;
         else if (strcmp(argv[i], "--debug") == 0)
@@ -273,6 +287,11 @@ int main(int argc, char **argv)
         config_path = default_config_path;
     }
     port_config_load(config_path);
+    if (!port_config_startup_override(startup_rate,startup_detail,startup_drawing) ||
+        !port_startup_seed_init(startup_seed ? startup_seed : test_startup_seed ? "1" : NULL)) {
+        fprintf(stderr,"Invalid startup settings/seed or OS entropy unavailable\n");
+        port_diagnostics_close(2,"startup settings unavailable"); return 2;
+    }
     if (!port_render_set_mode(renderer_name ? renderer_name : port_config_renderer())) {
         fprintf(stderr,"Invalid renderer (use faithful, modern or projected)\n");
         port_diagnostics_close(2,"invalid renderer"); return 2;
@@ -303,10 +322,14 @@ int main(int argc, char **argv)
             return 1;
         }
     }
+    if(!port_audio_sdl_configure(audio_output,audio_buffer)) {
+        port_diagnostics_close(2,"invalid audio output/buffer setting"); return 2;
+    }
     port_sdl_init("Stunts 1.1 - SDL3 faithful port");
     port_video_set_capture_dir(capture_dir);
     port_video_set_render_capture_dir(render_capture_dir);
     port_trace_open(trace_path, port_runtime_asset_root());
+    port_startup_trace();
     port_video_set_debug_capture_dir(debug ? port_diagnostics_directory() : "");
     port_memory_init();
     port_input_enable_test_auto_protection(test_auto_protection);
@@ -356,6 +379,9 @@ int main(int argc, char **argv)
             port_video_present();
             next_present_ns += 16666667u;
         }
+        /* Presentation diagnostics only: preserve startup stalls separately
+           from a tick-bounded steady race window, without resetting counters. */
+        if (tick % 100 == 0) port_trace_audio_sink();
         if (have_run_ticks && tick >= run_ticks) {
             port_guest_request_stop("requested tick boundary reached");
             break;
@@ -374,6 +400,7 @@ int main(int argc, char **argv)
     }
     port_timer_stop();
     port_audio_shutdown();
+    port_trace_audio_sink();
     if (!port_sound_record_close()) port_guest_set_exit_status(2);
     port_trace_close();
     port_sdl_shutdown();

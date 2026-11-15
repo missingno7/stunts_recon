@@ -10,7 +10,8 @@
 #define CONFIG_FILE_LIMIT 65536u
 static int s_manual_word_check;
 static int s_modern;
-static const char s_defaults[] = "{\n  \"manual_word_check\": false,\n  \"renderer\": \"faithful\"\n}\n";
+static int s_frame_rate=20, s_detail_level, s_dirty_rects=1;
+static const char s_defaults[] = "{\n  \"manual_word_check\": false,\n  \"renderer\": \"faithful\",\n  \"frame_rate\": 20,\n  \"detail_level\": 0,\n  \"drawing_path\": \"dirty_rects\"\n}\n";
 
 typedef struct ConfigJson {
     const char *next;
@@ -18,6 +19,8 @@ typedef struct ConfigJson {
     int manual;
     int found_renderer;
     int modern;
+    int frame_rate, detail_level, dirty_rects;
+    unsigned settings_seen;
 } ConfigJson;
 
 static void whitespace(ConfigJson *json)
@@ -89,7 +92,27 @@ static int json_container(ConfigJson *json, unsigned depth, int object)
             if (*json->next != ':') return 0;
             ++json->next;
         }
-        if (object && depth == 0 && strcmp(key,"renderer") == 0) {
+        if (object && depth == 0 && (!strcmp(key,"frame_rate") ||
+                !strcmp(key,"detail_level") || !strcmp(key,"drawing_path"))) {
+            unsigned bit = !strcmp(key,"frame_rate") ? 1 : !strcmp(key,"detail_level") ? 2 : 4;
+            whitespace(json);
+            if (json->settings_seen & bit) return 0;
+            json->settings_seen |= bit;
+            if (bit == 4) {
+                char path[32];
+                if (!json_string(json,path,sizeof path)) return 0;
+                if (strcmp(path,"dirty_rects") && strcmp(path,"full")) return 0;
+                json->dirty_rects = !strcmp(path,"dirty_rects");
+            } else {
+                char *end;
+                long n = strtol(json->next,&end,10);
+                if (end == json->next || *json->next < '0' || *json->next > '9' ||
+                    (*json->next == '0' && end > json->next+1)) return 0;
+                if (bit == 1) { if (n != 10 && n != 20) return 0; json->frame_rate=(int)n; }
+                else { if (n < 0 || n > 4) return 0; json->detail_level=(int)n; }
+                json->next=end;
+            }
+        } else if (object && depth == 0 && strcmp(key,"renderer") == 0) {
             char renderer[32];
             whitespace(json);
             if (json->found_renderer || !json_string(json,renderer,sizeof renderer)) return 0;
@@ -184,6 +207,7 @@ int port_config_load(const char *path)
     int ok;
     s_manual_word_check = 0;
     s_modern = 0;
+    s_frame_rate=20; s_detail_level=0; s_dirty_rects=1;
     file = SDL_IOFromFile(path, "rb");
     if (!file && !SDL_GetPathInfo(path, &info)) {
         if (create_defaults(path)) fprintf(stderr, "PORT config created: %s\n", path);
@@ -204,14 +228,15 @@ int port_config_load(const char *path)
     ok = SDL_ReadIO(file, text, (size_t)size) == (size_t)size;
     if (!SDL_CloseIO(file)) ok = 0;
     text[size] = 0;
-    json = (ConfigJson){.next=text};
+    json = (ConfigJson){.next=text,.frame_rate=20,.dirty_rects=1};
     if (size >= 3 && memcmp(text, "\xef\xbb\xbf", 3) == 0) json.next += 3;
     whitespace(&json);
     ok = ok && !memchr(text, 0, (size_t)size) && *json.next == '{' &&
          json_container(&json, 0, 1);
     whitespace(&json);
     ok = ok && *json.next == 0;
-    if (ok) { s_manual_word_check = json.manual; s_modern=json.modern; }
+    if (ok) { s_manual_word_check = json.manual; s_modern=json.modern;
+        s_frame_rate=json.frame_rate; s_detail_level=json.detail_level; s_dirty_rects=json.dirty_rects; }
     else fprintf(stderr, "PORT config invalid: %s; preserving file, using defaults\n", path);
     SDL_free(text);
     return ok;
@@ -219,3 +244,23 @@ int port_config_load(const char *path)
 
 int port_config_manual_word_check(void) { return s_manual_word_check; }
 const char *port_config_renderer(void) { return s_modern ? "modern" : "faithful"; }
+
+int port_config_frame_rate(void) { return s_frame_rate; }
+int port_config_detail_level(void) { return s_detail_level; }
+int port_config_dirty_rects(void) { return s_dirty_rects; }
+int port_config_startup_override(const char *rate,const char *detail,const char *drawing)
+{
+    if (rate) {
+        if (strcmp(rate,"10") && strcmp(rate,"20")) return 0;
+        s_frame_rate=atoi(rate);
+    }
+    if (detail) {
+        if (strlen(detail)!=1 || *detail<'0' || *detail>'4') return 0;
+        s_detail_level=*detail-'0';
+    }
+    if (drawing) {
+        if (strcmp(drawing,"dirty_rects") && strcmp(drawing,"full")) return 0;
+        s_dirty_rects=!strcmp(drawing,"dirty_rects");
+    }
+    return 1;
+}

@@ -465,6 +465,25 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
             transformed = adapt_renderer_word_arithmetic(transformed)
 
         if source == "lib/startup.c":
+            a=transformed.index("\telticks();",transformed.index("loadpalandmouse();"))
+            z=transformed.index("\tseedrandom();",a)
+            transformed=transformed[:a]+("\tclearwindow(0);\n"
+                "\tclippix(0, PLATFORM_SCREEN_WIDTH_PIXELS, 0, STARTUP_RECT_BENCH_HEIGHT);\n"
+                "\tclearwindow(0);\n"
+                "\trate_frame = frm_rate2 = port_config_frame_rate();\n"
+                "\trenderlevel = port_config_detail_level();\n"
+                "\tstatemgmtcpy = slow_video_mode_state = port_config_dirty_rects();\n")+transformed[z:]
+            def entropy_boundary(body):
+                a=body.index("    status1 = vsyncstate();")
+                z=body.index("    while (i--)",a)
+                return body[:a]+"    i = port_startup_random_wait_count();\n"+body[z:]
+            transformed=_function(transformed,"seedrandom",entropy_boundary)
+            transformed=transformed.replace("rand();", "port_random_test_rand();")
+            transformed=("extern int port_config_frame_rate(void);\n"
+                "extern int port_config_detail_level(void);\n"
+                "extern int port_config_dirty_rects(void);\n"
+                "extern I16 port_startup_random_wait_count(void);\n"
+                "extern I16 port_random_test_rand(void);\n")+transformed
             if transformed.count("exit(1);") != 1:
                 raise RuntimeError("Could not locate guest audio-failure exit")
             transformed = "extern void port_guest_exit(int status);\n" + transformed.replace("exit(1);", "port_guest_exit(1);")
@@ -599,7 +618,7 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
     port_sources = [
         "main.c", "sdl_host.c", "video.c", "input.c", "timer.c", "tick_clock.c", "memory.c",
         "sound_record.c",
-        "test_seed.c",
+        "test_seed.c", "startup.c",
         "sprite.c", "sprite_aux.c", "legacy_views.c",
         "random.c",
         "font.c",
@@ -632,7 +651,7 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
     common = [
         str(gcc), "-std=gnu11", "-O0", "-g", "-Wall", "-Wextra", "-Wpedantic",
         "-Wno-unused-parameter", "-Werror=int-conversion", "-DPORT_BUILD=1",
-        "-DPORT_RENDER_INSTRUMENT=1", "-DPORT_SOUND_RECORD=1", "-DPORT_TICK_HANDSHAKE=1",
+        "-DPORT_RENDER_INSTRUMENT=1", "-DPORT_SOUND_RECORD=1", "-DPORT_TICK_HANDSHAKE=1", "-DPORT_AUDIO_TICK_SINK=1",
         "-include", str(ROOT / "tools" / "porting" / "host" / "compat.h"),
         "-I", str(ROOT / "port"),
         "-I", str(ROOT / "tools" / "porting" / "port_include"),
@@ -890,6 +909,9 @@ def run(args) -> int:
         command.append(f"--test-startup-seed={Path(args.test_startup_seed).resolve()}")
     if args.stop_after_sim_steps is not None:
         command.append(f"--stop-after-sim-steps={args.stop_after_sim_steps}")
+    for name in ("frame_rate","detail_level","drawing_path","seed","audio_output","audio_buffer_frames","clock","run_ticks"):
+        value=getattr(args,name)
+        if value is not None: command.append(f"--{name.replace('_','-')}={value}")
     command.append(f"--audio={args.audio}")
     prepare_environment(args.gcc)
     return subprocess.run(command, cwd=ROOT, check=False).returncode
@@ -993,6 +1015,14 @@ def main(argv: list[str] | None = None) -> int:
                             help="test only: replay a Port Forge seedrandom/timer/PRNG capture")
     run_parser.add_argument("--stop-after-sim-steps", type=int)
     run_parser.add_argument("--audio", choices=("ad15", "pc15", "none"), default="ad15")
+    run_parser.add_argument("--frame-rate", choices=(10,20), type=int)
+    run_parser.add_argument("--detail-level", choices=range(5), type=int)
+    run_parser.add_argument("--drawing-path", choices=("dirty_rects","full"))
+    run_parser.add_argument("--seed")
+    run_parser.add_argument("--audio-output", choices=("device","none"))
+    run_parser.add_argument("--audio-buffer-frames", type=int)
+    run_parser.add_argument("--clock", choices=("interactive","manual"))
+    run_parser.add_argument("--run-ticks", type=int)
     run_parser.add_argument("--no-build", action="store_true")
     args = parser.parse_args(argv)
     try:

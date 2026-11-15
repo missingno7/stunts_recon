@@ -49,7 +49,7 @@ class Sdl3ConfigTests(unittest.TestCase):
     def test_missing_file_creates_defaults_beside_requested_path(self):
         path = self.root / "First launch ÄąËťlutÄ‚Ëť config.json"
         self.assertEqual(self.probe_file(path), (1, 0))
-        self.assertEqual(json.loads(path.read_text()), {"manual_word_check": False, "renderer": "faithful"})
+        self.assertEqual(json.loads(path.read_text()), {"manual_word_check": False, "renderer": "faithful", "frame_rate":20, "detail_level":0, "drawing_path":"dirty_rects"})
         saved = path.read_bytes()
         self.assertEqual(self.probe_file(path), (1, 0))
         self.assertEqual(path.read_bytes(), saved)
@@ -151,7 +151,7 @@ class Sdl3ConfigTests(unittest.TestCase):
                         self.assertGreater(max(state["frame"] for state in live), 20)
                     self.assertEqual(json.loads(config.read_text()),
                                      ({"manual_word_check": True} if enabled else
-                                      {"manual_word_check": False, "renderer": "faithful"}))
+                                      {"manual_word_check": False, "renderer": "faithful", "frame_rate":20, "detail_level":0, "drawing_path":"dirty_rects"}))
 
     def test_game_uses_renderer_json_and_command_line_override(self):
         assert_build_ready()

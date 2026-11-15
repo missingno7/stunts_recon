@@ -118,7 +118,7 @@ int port_test_startup_seed_load(const char *path)
         uint32_t changed_status;
         if (!parse_u32(json, "random_wait_initial_status", &initial_status) ||
             !parse_u32(json, "random_wait_changed_status", &changed_status) ||
-            s_expected_status_reads < 2u || initial_status > 0xffu ||
+            s_expected_status_reads < 2u || s_expected_status_reads > 12002u || initial_status > 0xffu ||
             changed_status > 0xffu ||
             ((initial_status ^ changed_status) & 0x08u) == 0 ||
             !parse_hex_string(json, "crt_rand_state", rand_bytes,
@@ -182,4 +182,14 @@ void port_test_random_wait_end(void)
 uint32_t port_test_random_wait_read_count(void)
 {
     return s_observed_status_reads;
+}
+
+/* Replaces the status polling at seedrandom's boundary, without a virtual VGA.
+   Before the fixture's injection point retain the previous 12000 mix count. */
+int port_test_random_wait_iterations(void)
+{
+    if (!s_seed_loaded) return -1;
+    if (!s_random_wait_active) return 12000;
+    s_observed_status_reads = s_expected_status_reads;
+    return (int)(s_expected_status_reads - 2u);
 }

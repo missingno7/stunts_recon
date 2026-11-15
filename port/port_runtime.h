@@ -63,6 +63,7 @@ extern uint8_t port_framebuffer[PORT_VIDEO_MEMORY_BYTES];
 struct SDL_Renderer;
 typedef struct SDL_Renderer SDL_Renderer;
 
+void port_trace_startup(uint64_t,const char *,int,int,int);
 void port_trace_open(const char *path, const char *asset_root);
 void port_trace_close(void);
 void port_trace_timer_tick(uint64_t tick_id, uint64_t scheduled_ns,
@@ -77,6 +78,7 @@ void port_trace_input_mouse(uint64_t sequence, uint64_t scheduled_ns,
 void port_trace_video_publication(const char *reason);
 void port_trace_host_present(uint64_t frame_id);
 void port_trace_debug_capture(uint64_t frame_id, const char *directory);
+void port_trace_audio_sink(void);
 void port_trace_audio_publication(uint32_t frame_count);
 void port_trace_host_stop(const char *reason);
 
@@ -87,6 +89,14 @@ const char *port_diagnostics_build_id(void);
 void port_diagnostics_note(const char *label, const char *value);
 void port_diagnostics_close(int status, const char *reason);
 int port_config_load(const char *path);
+int port_config_frame_rate(void);
+int port_config_detail_level(void);
+int port_config_dirty_rects(void);
+int port_config_startup_override(const char *,const char *,const char *);
+int port_startup_seed_init(const char *seed);
+void port_startup_trace(void);
+int16_t port_startup_random_wait_count(void);
+int port_test_random_wait_iterations(void);
 int port_config_manual_word_check(void);
 const char *port_config_renderer(void);
 

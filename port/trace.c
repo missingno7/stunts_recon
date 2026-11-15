@@ -350,3 +350,31 @@ void port_trace_host_stop(const char *reason)
     }
     trace_unlock();
 }
+
+void port_trace_startup(uint64_t seed,const char *source,int rate,int detail,int dirty)
+{
+    trace_lock();
+    if(s_trace) {
+        fprintf(s_trace,"{\"event_type\":\"startup_settings\",\"seed\":\"%016llx\",\"seed_source\":\"%s\",\"frame_rate\":%d,\"detail_level\":%d,\"drawing_path\":\"%s\"}\n",
+            (unsigned long long)seed,source,rate,detail,dirty?"dirty_rects":"full");
+        fflush(s_trace);
+    }
+    trace_unlock();
+}
+
+#ifdef PORT_AUDIO_TICK_SINK
+void port_trace_audio_sink(void)
+{
+    PortAudioSinkStats s; port_audio_sdl_stats(&s);
+    uint64_t tick=port_timer_raw_tick(), host=SDL_GetTicksNS();
+    trace_lock();
+    if(s_trace) {
+        fprintf(s_trace,"{\"event_type\":\"audio_sink\",\"raw_tick_id\":%llu,\"host_ns\":%llu,\"submitted_frames\":%u,\"consumed_frames\":%u,\"dropped_frames\":%u,\"underrun_frames\":%u,\"underrun_callbacks\":%u,\"device_buffer_frames\":%u}\n",
+            (unsigned long long)tick,(unsigned long long)host,
+            s.submitted,s.consumed,s.dropped,s.underrun_frames,s.underrun_callbacks,s.device_buffer_frames);
+        fflush(s_trace);
+    }
+    trace_unlock();
+}
+
+#endif
