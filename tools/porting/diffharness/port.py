@@ -13,6 +13,7 @@ import base64
 
 from .model import CallResult, HarnessError, RoutineCase
 from .oracle import ROOT
+from tools.test_artifact_cache import RAW_RUN, build_cached
 
 
 PACKAGE = Path(__file__).resolve().parent
@@ -65,9 +66,6 @@ class PortLibrary:
                    PORT / "memory.c", PORT / "sincos.c"]
         dependencies = sources + [PORT / "port_runtime.h",
                                   ROOT / "tools/porting/host/compat.h"]
-        newest_source = max(path.stat().st_mtime for path in dependencies)
-        if output.exists() and output.stat().st_mtime >= newest_source and not force:
-            return output
         command = [str(self.gcc), "-m32", "-std=gnu11", "-O2", "-DPORT_BUILD=1",
                    "-ffunction-sections", "-fdata-sections", "-shared",
                    "-static-libgcc", "-Wl,--gc-sections", "-Wl,--no-undefined",
@@ -76,12 +74,19 @@ class PortLibrary:
                    *[str(path) for path in sources], "-o", str(output)]
         env = os.environ.copy()
         env["PATH"] = str(self.gcc.parent) + os.pathsep + env.get("PATH", "")
-        result = subprocess.run(command, cwd=ROOT, capture_output=True, env=env,
-                                text=True, errors="replace", check=False)
+        if force:
+            result = RAW_RUN(command, cwd=ROOT, capture_output=True, env=env,
+                             text=True, errors="replace", check=False)
+            result_path = output if result.returncode == 0 else None
+        else:
+            result_path, result = build_cached(command, output, inputs=dependencies,
+                                               cwd=ROOT, env=env)
         if result.returncode:
             raise HarnessError(f"failed to build the PORT_BUILD test DLL (exit {result.returncode}):\n" +
                                result.stdout + result.stderr)
-        return output
+        if result_path is None:
+            raise HarnessError("PORT_BUILD compiler exited successfully without producing the test DLL")
+        return result_path
 
     def _load_local(self) -> None:
         try:

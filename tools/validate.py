@@ -2,6 +2,13 @@
 plus the tool and port test groups.  Each part is reported on its own."""
 import os
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import redirect_stderr, redirect_stdout
+import json
+import subprocess
+import sys
+import time
+import uuid
 import unittest
 from common import ROOT, read_json, write_json, require, identity
 from build_exact import build, inputs
@@ -90,15 +97,217 @@ def prove(report, before, original, independent, baseline):
                                           'bytes':sum(x['owned_end_offset'] for x in prefixes)}
 
 
-def run_tests(report, group):
+class RecordingTextResult(unittest.TextTestResult):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.statuses = {}
+
+    @staticmethod
+    def _id(test):
+        try:
+            return test.id()
+        except (AttributeError, TypeError):
+            return str(test)
+
+    def addSuccess(self, test):
+        self.statuses[self._id(test)] = 'passed'
+        super().addSuccess(test)
+
+    def addFailure(self, test, err):
+        self.statuses[self._id(test)] = 'failed'
+        super().addFailure(test, err)
+
+    def addError(self, test, err):
+        self.statuses[self._id(test)] = 'error'
+        super().addError(test, err)
+
+    def addSkip(self, test, reason):
+        self.statuses[self._id(test)] = 'skipped'
+        super().addSkip(test, reason)
+
+    def addSubTest(self, test, subtest, err):
+        if err is not None:
+            self.statuses[self._id(test)] = 'failed'
+        super().addSubTest(test, subtest, err)
+
+
+class TimedModuleSuite(unittest.TestSuite):
+    def __init__(self, module, tests, timings, stream):
+        super().__init__(tests)
+        self.module, self.timings, self.stream = module, timings, stream
+
+    def run(self, result, debug=False):
+        self.stream.write('\n===== %s =====\n' % self.module)
+        self.stream.flush()
+        started = time.perf_counter()
+        try:
+            return super().run(result, debug)
+        finally:
+            self.timings[self.module] = time.perf_counter() - started
+
+
+def _test_modules(group):
+    modules = {}
+    for test in select_tests(group):
+        if isinstance(test, unittest.TestSuite):
+            # select_tests() currently returns a flat suite; retain defensive
+            # flattening if discovery changes its outer shape later.
+            children = _flatten(test)
+        else:
+            children = (test,)
+        for leaf in children:
+            module = type(leaf).__module__.split('.')[-1]
+            if type(leaf).__module__ == 'unittest.loader':
+                module = leaf._testMethodName
+            modules.setdefault(module, []).append(leaf)
+    return modules
+
+
+def _flatten(suite):
+    for test in suite:
+        if isinstance(test, unittest.TestSuite):
+            yield from _flatten(test)
+        else:
+            yield test
+
+
+def _run_test_worker(module, group, run_dir):
+    completed = subprocess.run(
+        [sys.executable, str(ROOT/'tools/test_worker.py'), module, str(run_dir)],
+        cwd=ROOT, capture_output=True, text=True, errors='replace', check=False)
+    result_path = run_dir/(module+'.json')
+    log_path = run_dir/(module+'.log')
+    try:
+        result = json.loads(result_path.read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        detail = 'worker exited %d\n%s%s' % (completed.returncode,
+                                             completed.stdout or '', completed.stderr or '')
+        log_path.write_text(detail, encoding='utf-8')
+        result = {'module':module, 'seconds':0.0, 'tests_run':0, 'passed':0,
+                  'failed':1, 'skipped':0, 'statuses':{}, 'failures':[], 'errors':[],
+                  'skips':[], 'worker_error':detail}
+        result_path.write_text(json.dumps(result, indent=2), encoding='utf-8')
+    if completed.stdout or completed.stderr:
+        with log_path.open('a', encoding='utf-8') as log:
+            if completed.stdout:
+                log.write('\n===== worker stdout =====\n' + completed.stdout)
+            if completed.stderr:
+                log.write('\n===== worker stderr =====\n' + completed.stderr)
+    if completed.returncode and not result.get('worker_error'):
+        result['worker_error'] = 'worker exited %d\n%s%s' % (
+            completed.returncode, completed.stdout or '', completed.stderr or '')
+    return module, result, log_path
+
+
+def _write_group_results(run_dir, group, jobs, modules, results):
+    combined_statuses = {}
+    failures, errors, skips = [], [], []
+    module_seconds = {}
+    for module in modules:
+        result = results[module]
+        combined_statuses.update(result.get('statuses', {}))
+        failures.extend(result.get('failures', []))
+        errors.extend(result.get('errors', []))
+        skips.extend(result.get('skips', []))
+        if result.get('worker_error'):
+            errors.append({'test':module, 'traceback':result['worker_error']})
+        module_seconds[module] = result.get('seconds', 0.0)
+    payload = {'group':group, 'jobs':jobs, 'module_seconds':module_seconds,
+               'statuses':combined_statuses, 'failures':failures,
+               'errors':errors, 'skips':skips}
+    path = run_dir/'results.json'
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding='utf-8')
+    return path
+
+
+def run_tests(report, group, jobs=None):
     out = ROOT/'build/validation'; out.mkdir(parents=True, exist_ok=True)
-    with (out/'tests.log').open('w', encoding='utf-8') as log:
-        result = unittest.TextTestRunner(stream=log, verbosity=2).run(select_tests(group))
-    report['tests'] = {'group':group,
-                       'passed':result.testsRun-len(result.errors)-len(result.failures)-len(result.skipped),
-                       'failed':len(result.errors)+len(result.failures), 'skipped':len(result.skipped),
-                       'log':'build/validation/tests.log'}
-    require(result.wasSuccessful() and not result.skipped, 'Tests failed/skipped; see build/validation/tests.log')
+    jobs = max(1, (os.cpu_count() or 1)-1) if jobs is None else jobs
+    require(isinstance(jobs, int) and jobs > 0, '--jobs must be a positive integer')
+    grouped = _test_modules(group)
+    modules = list(grouped)
+    run_id = uuid.uuid4().hex[:12]
+    run_dir = out/'test-runs'/run_id
+    run_dir.mkdir(parents=True, exist_ok=True)
+    module_seconds = {}
+
+    if jobs == 1:
+        from test_artifact_cache import compiler_cache
+        suites = []
+        with (out/'tests.log').open('w', encoding='utf-8') as log:
+            for module in modules:
+                # Keep the old single-process execution mode while preserving
+                # module sections and sharing identical native test artifacts.
+                suite = TimedModuleSuite(module, grouped[module], module_seconds, log)
+                suites.append(suite)
+            class ModuleCacheSuite(unittest.TestSuite):
+                def run(self, result, debug=False):
+                    for suite in self:
+                        with compiler_cache(suite.module):
+                            with redirect_stdout(log), redirect_stderr(log):
+                                suite.run(result, debug)
+                    return result
+            result = unittest.TextTestRunner(stream=log, verbosity=2,
+                                             resultclass=RecordingTextResult).run(
+                                                 ModuleCacheSuite(suites))
+        statuses = result.statuses
+        failures = [{'test':test.id(), 'traceback':detail} for test, detail in result.failures]
+        errors = [{'test':test.id(), 'traceback':detail} for test, detail in result.errors]
+        skips = [{'test':test.id(), 'reason':reason} for test, reason in result.skipped]
+        tests_run = result.testsRun
+        failed_count = len(result.failures) + len(result.errors)
+        skipped_count = len(result.skipped)
+        passed_count = tests_run - failed_count - skipped_count
+        results = None
+    else:
+        results = {}
+        worker_count = min(jobs, max(1, len(modules)))
+        with ThreadPoolExecutor(max_workers=worker_count) as executor:
+            futures = {executor.submit(_run_test_worker, module, group, run_dir): module
+                       for module in modules}
+            for future in as_completed(futures):
+                module, result, _log_path = future.result()
+                results[module] = result
+        with (out/'tests.log').open('w', encoding='utf-8') as log:
+            for module in modules:
+                result = results[module]
+                log.write('\n===== %s (%.3fs) =====\n' %
+                          (module, result.get('seconds', 0.0)))
+                module_log = run_dir/(module+'.log')
+                if module_log.is_file():
+                    log.write(module_log.read_text(encoding='utf-8', errors='replace'))
+                if not module_log.is_file() or not module_log.read_text(
+                        encoding='utf-8', errors='replace').endswith('\n'):
+                    log.write('\n')
+            statuses = {}
+            failures, errors, skips = [], [], []
+            tests_run = failed_count = skipped_count = 0
+            for module in modules:
+                item = results[module]
+                statuses.update(item.get('statuses', {}))
+                failures.extend(item.get('failures', []))
+                errors.extend(item.get('errors', []))
+                skips.extend(item.get('skips', []))
+                if item.get('worker_error'):
+                    errors.append({'test':module, 'traceback':item['worker_error']})
+                tests_run += item.get('tests_run', 0)
+                failed_count += item.get('failed', 0)
+                skipped_count += item.get('skipped', 0)
+            passed_count = tests_run - failed_count - skipped_count
+        _write_group_results(run_dir, group, jobs, modules, results)
+
+    result_path = run_dir/'results.json'
+    if jobs == 1:
+        result_path.write_text(json.dumps({
+            'group':group, 'jobs':jobs, 'module_seconds':module_seconds,
+            'statuses':statuses, 'failures':failures, 'errors':errors, 'skips':skips,
+        }, indent=2, sort_keys=True), encoding='utf-8')
+    report['tests'] = {'group':group, 'passed':passed_count, 'failed':failed_count,
+                       'skipped':skipped_count, 'log':'build/validation/tests.log',
+                       'jobs':jobs, 'run_id':run_id,
+                       'results':'build/validation/test-runs/'+run_id+'/results.json'}
+    require(failed_count == 0 and skipped_count == 0,
+            'Tests failed/skipped; see build/validation/tests.log')
     if group in ('all', 'port'):
         semantic = read_json(ROOT/'build/porting/semantic-audit/report.json')
         require(semantic['status'] == 'PASS', 'SDL3 semantic contracts failed')
@@ -109,7 +318,7 @@ def run_tests(report, group):
         }
 
 
-def validate(independent=True, baseline=None, tests='all', proof=True):
+def validate(independent=True, baseline=None, tests='all', proof=True, jobs=None):
     """Run the selected parts and report each on its own.
 
     The exactness proof and the tests are independent results: a failure in
@@ -140,7 +349,7 @@ def validate(independent=True, baseline=None, tests='all', proof=True):
             print('Exactness proof:', report['proof']['status'], report.get('full_image', ''), flush=True)
         if tests != 'none':
             try:
-                run_tests(report, tests)
+                run_tests(report, tests, jobs)
             except Exception as error:
                 failures.append('tests: '+str(error))
             # Tests exercise locks and scratch builds themselves; canonical inputs must not move.
@@ -184,12 +393,16 @@ def main():
     p.add_argument('--fresh', action='store_true',
                    help='Run every compiler and assembler again instead of reusing identical earlier runs '
                         '(tools/toolcache.py); always the case for the complete gate')
+    p.add_argument('--jobs', type=int, default=None,
+                   help='Test modules to run concurrently (default: cores minus one; 1 is serial)')
     a = p.parse_args()
     require(not (a.proof_only and a.no_proof), '--proof-only and --no-proof exclude each other')
+    require(a.jobs is None or a.jobs > 0, '--jobs must be a positive integer')
     complete_scope = not (a.proof_only or a.no_proof or a.no_independent) and a.tests == 'all'
     if a.fresh or complete_scope:
         os.environ['STUNTS_FRESH'] = '1'
-    report = validate(not a.no_independent, a.baseline, 'none' if a.proof_only else a.tests, not a.no_proof)
+    report = validate(not a.no_independent, a.baseline, 'none' if a.proof_only else a.tests,
+                      not a.no_proof, a.jobs)
     proved = report.get('proof', {}).get('status') == 'PASS'
     if a.image and proved:
         report['real_link'] = real_link_summary()
