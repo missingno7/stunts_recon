@@ -13,7 +13,7 @@ import subprocess
 import sys
 import zipfile
 
-from sound_adapter import adapt_sound_observers
+from sound_adapter import adapt_sound_observers, _function
 from game_abi import route_audio_vectors, adapt_aggregate_views, adapt_polygon_storage, host_view_contracts, adapt_preview_word_arithmetic, adapt_renderer_word_arithmetic, adapt_word_sentinels, adapt_wheel_update_inputs
 from dependencies import NUKED_OPL3_COMMIT, NUKED_OPL3_FILES, nuked_opl3_root
 from render.tile_adapter import adapt_update_frame, adapt_trans_op
@@ -30,109 +30,38 @@ DATA_STUB_BYTES = 65536
 
 
 def adapt_host_idle_waits(source: str, text: str) -> str:
-    """Yield at audited UI backedges, preserving the recovered input routine."""
-    changes: list[tuple[str, str]] = []
-    if source == "game/frontend.c":
-        for variable, epoch in (("mouseDelta", "menu"), ("timerDiff", "track"),
-                                ("rotationDeltaY", "car"), ("timeDelta", "opponent")):
-            assignment = re.compile(
-                rf"(?m)^([ \t]*){re.escape(variable)}\s*=\s*(?=(?:/\*.*?\*/\s*)?docursor\s*\()")
-            matches = list(assignment.finditer(text))
-            if len(matches) != 1:
-                raise RuntimeError(f"Could not locate one mouse activity assignment in {source}: {variable}")
-            old = matches[0].group(0)
-            indent = matches[0].group(1)
-            changes.append((old, f"{indent}uint32_t port_{epoch}_activity = "
-                            "port_guest_activity_snapshot();\n" + old))
-        changes.extend([
-            ("        if (keyCode == 0)\n            continue;",
-             "        if (keyCode == 0) {\n"
-             "            if (selection == oldSelection)\n"
-             "                port_guest_wait_for_activity(port_menu_activity);\n"
-             "            continue;\n        }"),
-            ("    if (keyCodePressed == 0)\n        goto menu_loop;",
-             "    if (keyCodePressed == 0) {\n"
-             "        if (trackSelection == lastSelection)\n"
-             "            port_guest_wait_for_activity(port_track_activity);\n"
-             "        goto menu_loop;\n    }"),
-            ("        if (key == 0)\n            continue;",
-             "        if (key == 0) {\n"
-             "            if (selectionIndex == lastSelection)\n"
-             "                port_guest_wait_for_activity(port_opponent_activity);\n"
-             "            continue;\n        }"),
-            ("    if (keyCode != 0)\n    {\n      switch (keyCode)",
-             "    if (keyCode == 0 && rotationDeltaY == 0 && "
-             "selectedButtonY == previousButton)\n"
-             "        port_guest_wait_for_activity(port_car_activity);\n"
-             "    if (keyCode != 0)\n    {\n      switch (keyCode)"),
-        ])
+    """Audited input-poll boundaries, including held controls and animations.
+
+    mykey covers menu/car/results/intro/modal/editor/replay loops and hurrykey.
+    Line entry polls testkey directly and has its own input-or-tick suspension.
+    Race catch-up is handled separately below; finite seek work stays runnable.
+    """
+    if source == "game/uires.c":
+        old = "I16 mykey(I16 delta)\n{"
+        if text.count(old) != 1: raise RuntimeError("missing shared UI poll")
+        text = "static int port_poll_without_tick;\n" + text.replace(old,
+            old + "\n    if (!port_poll_without_tick) port_guest_yield();", 1)
+        text += "\nI16 port_hurrykey_no_tick(I16 delta) { I16 result; " \
+                "++port_poll_without_tick; result = mykey(delta); " \
+                "--port_poll_without_tick; return result; }\n"
+        old = "    } while (done != 0);"
+        if text.count(old) != 1: raise RuntimeError("missing held-button drain")
+        text = text.replace(old, "        if (done != 0) port_guest_yield();\n" + old, 1)
     elif source == "game/race.c":
-        changes.extend([
-            ("void doreplay(I16 mode, I16 frame_index, I16 frame_offset)\n{",
-             "void doreplay(I16 mode, I16 frame_index, I16 frame_offset)\n{\n"
-             "    uint32_t port_replay_activity;"),
-            ("        key_code = mykey(elticks());",
-             "        port_replay_activity = port_guest_activity_snapshot();\n"
-             "        key_code = mykey(elticks());"),
-            # Only the default case is reached with no key; the key cases redraw and continue themselves.
-            ("            default:\n                doreplay(UI_REPLAY_OPERATION_DRAW, core.game_frame, core.game_frame);\n"
-             "                continue;",
-             "            default:\n                doreplay(UI_REPLAY_OPERATION_DRAW, core.game_frame, core.game_frame);\n"
-             "                if (key_code == 0 && inrepflg != 0 &&\n"
-             "                    camera_buttons_pressed[2] == 0 && camera_buttons_pressed[3] == 0)\n"
-             "                    port_guest_wait_for_activity(port_replay_activity);\n"
-             "                continue;"),
-        ])
-    elif source == "game/uires.c":
-        changes.extend([
-            ("    case DIALOG_MODE_WAIT_KEY:\n        do {\n            key = mykey",
-             "    case DIALOG_MODE_WAIT_KEY:\n        do {\n"
-             "            uint32_t port_activity = port_guest_activity_snapshot();\n"
-             "            key = mykey"),
-            ("        } while (key == 0);",
-             "            if (key == 0) port_guest_wait_for_activity(port_activity);\n"
-             "        } while (key == 0);"),
-            ("        while (busy) {\n            if (ret != oldchoice)",
-             "        while (busy) {\n"
-             "            uint32_t port_activity = port_guest_activity_snapshot();\n"
-             "            if (ret != oldchoice)"),
-            ("            switch (key) {\n            case KEY_SCAN_UP:",
-             "            if (key == 0 && ret == oldchoice)\n"
-             "                port_guest_wait_for_activity(port_activity);\n"
-             "            switch (key) {\n            case KEY_SCAN_UP:"),
-        ])
-    elif source == "game/trackedt.c":
-        changes.extend([
-            ("            stepTime = elticks()",
-             "            uint32_t port_activity = port_guest_activity_snapshot();\n"
-             "            stepTime = elticks()"),
-            ("            if (key == 0 && trackStep != 0)\n"
-             "                key = 1;\n        } while (key == 0);",
-             "            if (key == 0 && trackStep != 0)\n"
-             "                key = 1;\n"
-             "            if (key == 0 && trackStep == 0 && animationCount <= 15)\n"
-             "                port_guest_wait_for_activity(port_activity);\n"
-             "        } while (key == 0);"),
-        ])
+        # Seeking rebuilds already-recorded states as finite work within a tick.
+        text = _function(text, "doreplay", lambda body: body.replace(
+            "hurrykey(1)", "port_hurrykey_no_tick(1)").replace(
+            "hurrykey(1000)", "port_hurrykey_no_tick(1000)"))
+    elif source == "game/frontend.c":
+        old = "keyCode = mykey(rotationDeltaY);"
+        if text.count(old) != 1: raise RuntimeError("missing car geometry/draw boundary")
+        text = text.replace(old, "keyCode = runStateNew == 1 ? "
+            "port_hurrykey_no_tick(rotationDeltaY) : mykey(rotationDeltaY);")
     elif source == "lib/lineedit.c":
-        changes.extend([
-            ("      while ((inputKey = testkey()) == 0) {",
-             "      for (;;) {\n"
-             "        uint32_t port_activity = port_guest_activity_snapshot();\n"
-             "        inputKey = testkey();\n"
-             "        if (inputKey != 0) break;"),
-            ("        readCallback();\n      }",
-             "        readCallback();\n"
-             "        port_guest_wait_for_activity(port_activity);\n      }"),
-        ])
-    if changes:
-        for old, new in changes:
-            if text.count(old) != 1:
-                raise RuntimeError(f"Could not locate unique idle boundary in {source}: {old}")
-            text = text.replace(old, new, 1)
-        text = ("extern uint32_t port_guest_activity_snapshot(void);\n"
-                "extern void port_guest_wait_for_activity(uint32_t);\n" + text)
-    return text
+        old = "        readCallback();\n      }"
+        if text.count(old) != 1: raise RuntimeError("missing line input backedge")
+        text = text.replace(old, "        readCallback();\n        port_guest_yield();\n      }", 1)
+    return "extern void port_guest_yield(void);\nextern I16 port_hurrykey_no_tick(I16);\n" + text
 
 
 def adapt_gameplay_word_arithmetic(source: str) -> str:
@@ -703,7 +632,7 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
     common = [
         str(gcc), "-std=gnu11", "-O0", "-g", "-Wall", "-Wextra", "-Wpedantic",
         "-Wno-unused-parameter", "-Werror=int-conversion", "-DPORT_BUILD=1",
-        "-DPORT_RENDER_INSTRUMENT=1", "-DPORT_SOUND_RECORD=1",
+        "-DPORT_RENDER_INSTRUMENT=1", "-DPORT_SOUND_RECORD=1", "-DPORT_TICK_HANDSHAKE=1",
         "-include", str(ROOT / "tools" / "porting" / "host" / "compat.h"),
         "-I", str(ROOT / "port"),
         "-I", str(ROOT / "tools" / "porting" / "port_include"),

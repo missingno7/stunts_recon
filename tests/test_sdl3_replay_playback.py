@@ -15,6 +15,8 @@ from tests.test_sdl3_driving import (
 
 
 RUN_MS = 25_500
+RUN_TICKS = RUN_MS // 10
+TICK_NS = 10000154
 REWIND_DOWN_NS = 15_700_000_000
 REWIND_UP_NS = 18_200_000_000
 FIRST_PLAY_DOWN_NS = 18_500_000_000
@@ -92,7 +94,7 @@ def run_trace(executable: Path, trace_path: Path,
         f"--input-script={input_path}",
         f"--test-startup-seed={STARTUP_SEED}",
         "--test-auto-protection",
-        f"--run-ms={RUN_MS}",
+        "--clock=manual", f"--run-ticks={RUN_TICKS}",
     ]
     try:
         result = subprocess.run(
@@ -177,8 +179,9 @@ class Sdl3ReplayPlaybackTests(unittest.TestCase):
         self.assertNotIn("unresolved host service:", stderr)
         self.assertNotIn("PORT fatal stub", stderr)
         self.assertEqual(len(stop_events), 1, stop_events)
+        self.assertEqual(stop_events[0]["machine_tick"], RUN_TICKS * TICK_NS)
         self.assertEqual(stop_events[0].get("reason"),
-                         "requested run duration reached", stop_events[0])
+                         "requested tick boundary reached", stop_events[0])
 
         def required_mouse(x: int, y: int, buttons: int, expected_tick: int,
                            description: str) -> dict[str, object]:
@@ -213,19 +216,19 @@ class Sdl3ReplayPlaybackTests(unittest.TestCase):
             return selected
 
         first_playback = replay_steps(first_play_tick, pause_tick)
-        self.assertGreaterEqual(
-            len(first_playback), 35,
+        self.assertEqual(
+            len(first_playback), 50,
             f"real-time replay produced only {len(first_playback)} frames")
         first_play_frames = [state["frame"] for _, state in first_playback]
         self.assertLessEqual(first_play_frames[0], 2,
                              f"rewind did not return to the start: {first_play_frames[:4]}")
-        self.assertGreaterEqual(first_play_frames[-1], 40,
+        self.assertEqual(first_play_frames[-1], 50,
                                 f"replay did not advance: {first_play_frames[-5:]}")
         self.assertTrue(
             all(after == before + 1 for before, after in
                 zip(first_play_frames, first_play_frames[1:])),
-            f"recorded replay frames were not sequential: {first_play_frames[:12]} …")
-        first_play_times = [int(event["host_ns"]) for event, _ in first_playback]
+            f"recorded replay frames were not sequential: {first_play_frames[:12]} â€¦")
+        first_play_times = [int(event["machine_tick"]) for event, _ in first_playback]
         self.assertGreaterEqual(first_play_times[-1] - first_play_times[0],
                                 2_000_000_000,
                                 "replay playback did not sustain real-time advancement")
@@ -243,7 +246,7 @@ class Sdl3ReplayPlaybackTests(unittest.TestCase):
             event for event in paused_publications
             if pause_tick <= int(event.get("machine_tick", -1)) < seek_tick
         ]
-        self.assertGreaterEqual(len(paused_rows), 2,
+        self.assertEqual(len(paused_rows), 12,
                                 "paused replay did not continue publishing its UI")
         paused_frames = {int(event["game_frame"]) for event in paused_rows}
         self.assertEqual(len(paused_frames), 1,
@@ -252,7 +255,7 @@ class Sdl3ReplayPlaybackTests(unittest.TestCase):
             event for event in host_presents
             if pause_tick <= int(event.get("machine_tick", -1)) < seek_tick
         ]
-        self.assertGreaterEqual(len(presented_paused_rows), 1,
+        self.assertEqual(len(presented_paused_rows), 4,
                                 "the paused replay UI was never presented")
         published_paused_ids = {int(event["frame_id"]) for event in paused_rows}
         self.assertTrue(any(int(event["frame_id"]) in published_paused_ids
@@ -269,21 +272,21 @@ class Sdl3ReplayPlaybackTests(unittest.TestCase):
             seek_tick <= int(event.get("machine_tick", -1)) < resume_tick and
             int(event.get("sim_step_id", -1)) in snapshots
         ]
-        self.assertGreaterEqual(len(sought), 20,
+        self.assertEqual(len(sought), 34,
                                 "replay rewind did not rebuild the earlier states")
         self.assertLess(max(state["frame"] for state in sought),
                         next(iter(paused_frames)),
                         "rewind did not move behind the paused frame")
 
-        resumed = replay_steps(resume_tick, RUN_MS * 1_000_000)
-        self.assertGreaterEqual(len(resumed), 30,
+        resumed = replay_steps(resume_tick, RUN_TICKS * TICK_NS + 1)
+        self.assertEqual(len(resumed), 56,
                                 f"replay did not resume: {len(resumed)} frames")
         resumed_frames = [state["frame"] for _, state in resumed]
         self.assertTrue(
             all(after == before + 1 for before, after in
                 zip(resumed_frames, resumed_frames[1:])),
-            f"resumed replay frames were not sequential: {resumed_frames[:12]} …")
-        resumed_times = [int(event["host_ns"]) for event, _ in resumed]
+            f"resumed replay frames were not sequential: {resumed_frames[:12]} â€¦")
+        resumed_times = [int(event["machine_tick"]) for event, _ in resumed]
         self.assertGreaterEqual(resumed_times[-1] - resumed_times[0],
                                 1_500_000_000,
                                 "resumed playback did not sustain real-time advancement")

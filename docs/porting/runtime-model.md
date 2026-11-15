@@ -77,25 +77,67 @@ Replay internal branch 2 advances one recorded step every two target-clock event
 
 Port Forge v7 measured timer deadlines, one 20 Hz active race, game-frame counter deltas between rendered publications, guest audio batches and a pause/resume interval. It did not sample the 10 Hz target, crash/airborne states, retrace phase, palette/retrace I/O, DOS vector state or `.DRV` callback cadence. See the [runtime oracle](runtime-oracle.md), [runtime measurements](runtime-measurements.md) and [interactive capture guide](CAPTURE.md).
 
-## Manual clock core and sound-request observer
+## Host-granted clock, suspension, and sound-request observer
 
-`port/tick_clock.c` / `.h` own the absolute 64-bit raw tick and the derived
-32-bit callback/elapsed counters, setup generation, fifth-tick phase, shared
-and private deadline operations, and five live callback slots. The core uses
-standard C atomics for producer publication and has no SDL, host-time, thread,
-allocation or sleep dependency. Only `port_clock_advance(clock, n)` creates
-ticks. `port_clock_dispatch` materializes already published ticks on the guest,
-sampling the live suppression byte and retaining nested-count-without-callback
-behavior. The SDL adapter in `port/timer.c` still produces ticks on its existing
-thread at 10,000,154 ns and delivers callbacks cooperatively; no host/guest
-handshake, input scheduling, startup calibration or audio isolation is introduced
-here. Setup preserves absolute/elapsed time and resets callback count/delta and
-the next producer phase. Deadlines retain unsigned wrap behavior and the BIOS
-predicate retains independent high/low comparisons. The one intentional behavior
-correction is suppression: the locked ISR tests `input_pushed`'s low byte
-(`lib/timerint.ASM:727`), so 0x0100 now permits callbacks where the earlier native
-word comparison suppressed them. The SDL-free clock test also compiles the
-accepted `gameint` body to check the 5/10 callback countdowns at 20/10 Hz.
+`port/tick_clock.c` / `.h` own absolute 64-bit raw tick N and the derived
+32-bit callback/elapsed counters, setup generation, fifth-tick phase, deadlines,
+and five live callback slots. Only explicit `port_clock_advance` creates ticks;
+the core has no SDL, wall-clock, allocation, thread, or sleep dependency. Setup
+preserves absolute/elapsed time and resets callback count/delta and divider
+phase. Unsigned deadlines and `waitbios`'s independent high/low-word predicate
+remain as reconstructed. Suppression tests `input_pushed`'s low byte, matching
+`lib/timerint.ASM:727`; 0x0100 permits callbacks. The SDL-free unit test compiles
+the accepted `gameint` countdown to check 20/10 Hz schedules.
+
+`port/timer.c` now implements a host/game handshake, with no PIT producer thread.
+The stackful `stunts-game` thread preserves deep ordinary C waits and the existing
+unwind. At its first suspension it acknowledges startup tick zero. The main SDL
+thread waits for that acknowledgement, polls input/presents, then grants exactly
+one tick. The guest advances N, applies queued input, dispatches eligible callbacks
+on its own thread, runs to a suspension, and acknowledges N; no next grant can be
+pipelined. `port_timer_host_wait` / `port_timer_host_grant` are also the test API.
+The interactive host sleeps once toward the absolute N*10,000,154 ns deadline;
+`--clock=manual --run-ticks=N` grants immediately without sleeping and stops at
+acknowledged N. A five-second host watchdog diagnoses a missing yield; it never
+creates game time. Stop wakes a suspended guest before join and teardown.
+
+Input scripts retain their original oracle ns format: load converts timestamps
+to raw ticks with ceiling division by 10,000,154, with zero assigned to first
+grant one. File order breaks equal-tick ties. SDL input is queued for the next
+ungranted tick, or a later observation tick when the interactive host is catching
+up. It cannot affect older overdue ticks. The guest applies script events before
+live events at a tie; sequence ranges reserve 0..4095 for scripts, 2^32 upward
+for FIFO live events, and 2^63 upward for synthetic protection answers. Input
+is applied before callbacks. Traces add `raw_tick_id`; legacy `machine_tick`,
+`scheduled_tick`, and `observed_tick` retain ns units on the canonical profile
+N*10,000,154. `host_ns` is diagnostic only. Original fixtures and diffharness
+remain unchanged: static original images prove pixels/palette, and historical
+wall-clock captures do not acquire independently proven raw-tick labels.
+
+`timedwait` / `waitticks` suspend until their callback-counter predicate holds;
+`waitbios` uses the split-word elapsed-counter predicate; `flush_stdin` suspends
+until input/stop. Suspensions block on the grant condition, not millisecond
+polling. A wait nested inside a callback accepts/counts further ticks and input
+without recursive callback dispatch, preserving the ISR reentry rule. Transition
+work keeps cumulative deadlines on the same tick timeline. Production guest code
+has no `SDL_Delay*`; legacy standalone input/video adapter probes retain their
+isolated non-handshake timing branches. Window presentation and device callbacks
+remain downstream host work; device/audio isolation is a later step.
+
+The build adapter's yield audit covers race catch-up, shared `mykey`/`hurrykey`
+polls in menu/modal/editor/results/intro/replay loops (including held controls and
+pending animations), line-edit `testkey` backedges, and the held-button branch in
+`clear_keyboardbuffer` that bypasses `mykey`. Finite replay reconstruction stays
+within a tick, and car selection completes its transform/draw pair before yielding.
+These are port-only generated views; accepted game/library sources are unchanged.
+Replay tests assert exactly 50 initial and 56 resumed steps at the scripted tick
+boundaries; selection tests retain the original indexed-image comparisons. The
+sound-record test asserts identical request bytes, GAMESTATE sequences and indexed
+frames by tick on repeat and in two concurrent native sessions. Device-output
+comparison remains an observation because sound state is not yet sink-isolated.
+Compute-only startup benchmarking now sees no elapsed grants; its existing
+branches select the fast profile. Explicit calibration/entropy policy and the
+audio sink remain later steps; their code has not been redesigned.
 
 `--sound-requests=PATH` enables `port/sound_record.c`'s JSON-lines observer;
 it is off by default. A failed open or write/close reports a nonzero exit.
@@ -128,16 +170,15 @@ later voice-only operations with their chunk/resource. Recording observes the
 existing logical engine and translated driver calls; it neither synthesizes
 sound nor changes device ownership, callback timing, or disabled-driver behavior.
 
-`tests/test_sdl3_sound_record.py` repeats the existing AD15 ELPI instrument/note
-fixture with explicit manual ticks and requires byte-identical requests. It
-also runs the existing seeded startup input script twice with normal audio and
-once with SDL dummy audio, preserving full streams and comparison results under
-`build/workers/portclock/sound-comparison/`. These full-game comparisons are
-observational: normal-output repeats agreed in the full suite but differed in
-earlier focused runs; normal/dummy output differed, with successfully opened
-devices. Wall-paced foreground/input scheduling remains
-uncontrolled, so this is a later clock-handshake/audio-isolation finding, not
-proof that the device alone caused each mismatch. No comparison masks ticks or
+`tests/test_sdl3_sound_record.py` repeats the AD15 ELPI instrument/note fixture
+with explicit manual ticks and requires byte-identical requests. Its seeded
+full-game driving fixture also compares repeat and concurrent manual runs by raw
+tick, including all captured GAMESTATE and indexed frames. Streams and results
+are saved under `build/workers/portclock/sound-comparison/`. The step-1 wall-paced
+baseline differed (9109 versus 9116 events); after the handshake the focused
+manual repeat, loaded repeat, and normal/dummy sound streams agreed. That is an
+observed fixture result, not a general proof of device isolation. Device-coupled
+sound state remains for the later sink step. No comparison masks ticks or
 regenerates an original expectation from native output.
 
 ## Input sampling, normalization, and replay capture

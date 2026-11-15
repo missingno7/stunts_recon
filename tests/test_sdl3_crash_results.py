@@ -227,7 +227,7 @@ class Sdl3CrashResultsTests(unittest.TestCase):
                 f"--input-script={input_path}",
                 f"--test-startup-seed={STARTUP_SEED}",
                 "--test-auto-protection",
-                f"--run-ms={RUN_MS}",
+                "--clock=manual", f"--run-ticks={RUN_MS // 10}",
                 f"--capture-dir={capture_dir}",
             ]
             try:
@@ -252,10 +252,9 @@ class Sdl3CrashResultsTests(unittest.TestCase):
                            if event.get("event_type") == "host_stop"]
             self.assertEqual(len(stop_events), 1, stop_events)
             self.assertEqual(
-                stop_events[0].get("reason"), "requested run duration reached",
+                stop_events[0].get("reason"), "requested tick boundary reached",
                 f"guest stopped before the bounded run completed: {stop_events[0]}")
-            self.assertGreaterEqual(int(stop_events[0]["machine_tick"]),
-                                    RUN_MS * 1_000_000)
+            self.assertEqual(stop_events[0]["raw_tick_id"], RUN_MS // 10)
 
             inputs = [event for event in events if event.get("event_type") == "input"]
             enter_events = [event for event in inputs
@@ -299,16 +298,16 @@ class Sdl3CrashResultsTests(unittest.TestCase):
                 and down_tick <= int(event.get("machine_tick", -1)) < up_tick
                 and int(event.get("sim_step_id", -1)) in snapshots
             ]
-            self.assertGreaterEqual(
-                len(held_steps), 100,
+            self.assertEqual(
+                len(held_steps), 387,
                 "held throttle did not produce the long live drive needed to reach "
                 f"the obstacle; observed {len(held_steps)} live steps")
             accelerating_steps = [
                 event for event in held_steps
                 if int(event["sim_step_id"]) < first_crash_step_id
             ]
-            self.assertGreaterEqual(
-                len(accelerating_steps), 80,
+            self.assertEqual(
+                len(accelerating_steps), 306,
                 "the crash began before the test observed a sustained acceleration")
             first_state = snapshots[int(accelerating_steps[0]["sim_step_id"])]
             last_accelerating_state = snapshots[
@@ -337,7 +336,7 @@ class Sdl3CrashResultsTests(unittest.TestCase):
             # A global monotonicity assertion would reject original behavior.
             self.assertEqual(crash_states[-1]["speed2"], 0,
                              "crash animation never decelerated to a stop")
-            self.assertGreaterEqual(len(crash_states), 5)
+            self.assertEqual(len(crash_states), 81)
             self.assertTrue(all(state["speed"] == state["speed2"] == 0
                                 for state in crash_states[-5:]),
                             "crash animation did not remain stationary at its end")

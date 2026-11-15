@@ -343,7 +343,11 @@ void port_video_debug_capture(void)
 
 void port_video_transition_begin(PortVideoTransition *transition)
 {
+#ifdef PORT_TICK_HANDSHAKE
+    transition->origin_ns = port_timer_machine_time_ns();
+#else
     transition->origin_ns = SDL_GetTicksNS();
+#endif
     transition->work_units = PORT_TRANSITION_FIXED_WORK;
     transition->next_publication_ns = transition->origin_ns +
         PORT_VGA_FRAME_DOTS * 1000000000ull / PORT_VGA_DOT_CLOCK_HZ;
@@ -356,14 +360,13 @@ void port_video_transition_advance(PortVideoTransition *transition,
     transition->work_units += work_units;
     deadline = transition->origin_ns +
         transition->work_units * 1000000000ull / PORT_DOS_WORK_PER_SECOND;
-    for (;;) {
-        uint64_t now;
-        port_guest_check_stop();
-        now = SDL_GetTicksNS();
-        if (now >= deadline)
-            break;
-        SDL_DelayNS(deadline - now);
-    }
+#ifdef PORT_TICK_HANDSHAKE
+    port_guest_wait_until_ns(deadline);
+#else
+    /* Standalone presentation probe, outside a running game. */
+    uint64_t now = SDL_GetTicksNS();
+    if (now < deadline) SDL_DelayNS(deadline-now);
+#endif
     /* The DOS loop wrote directly to VRAM throughout its CPU work. Publish
        the same row progression at VGA refresh intervals, rather than letting
        the host overwrite all four completed phases before its next present.

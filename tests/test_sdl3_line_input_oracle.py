@@ -98,6 +98,13 @@ def compile_host_probe(overlay: Path) -> tuple[Path, dict[str, str]]:
     translated.write_text(
         overlay.read_text(encoding="latin-1") + r'''
 
+/* This oracle exercises drawing helpers, never the keyboard wait loop. */
+extern void port_guest_unwind(const char *symbol);
+void port_guest_yield(void)
+{
+    port_guest_unwind("drawing-only line-input oracle entered a tick wait");
+}
+
 /* Probe-only bridge into the translated TU's private editor state. */
 void port_line_input_set_state(short x, short y, short cursor_height,
                                short max_width, short cursor_slot, I8 *text)

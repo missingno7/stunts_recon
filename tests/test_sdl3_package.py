@@ -62,7 +62,7 @@ class Sdl3PackageTests(unittest.TestCase):
             result = subprocess.run([
                 str(game_folder / "stunts-sdl3.exe"), f"--trace={trace_path}",
                 f"--input-script={input_path}", f"--test-startup-seed={STARTUP_SEED}",
-                "--test-auto-protection", "--run-ms=22000",
+                "--test-auto-protection", "--clock=manual", "--run-ticks=2200",
             ], cwd=other_cwd, env=environment, capture_output=True,
                 text=True, timeout=60)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -82,14 +82,15 @@ class Sdl3PackageTests(unittest.TestCase):
             stops = [row for row in map(json.loads, trace_path.read_text().splitlines())
                      if row.get("event_type") == "host_stop"]
             self.assertEqual(len(stops), 1)
-            self.assertEqual(stops[0]["reason"], "requested run duration reached")
+            self.assertEqual(stops[0]["reason"], "requested tick boundary reached")
+            self.assertEqual(stops[0]["raw_tick_id"], 2200)
             # An upgrade must never ship defaults over the user's settings.
             custom = b'{"manual_word_check":true,"future_setting":"preserved"}\r\n'
             config.write_bytes(custom)
             with zipfile.ZipFile(archive) as bundle:
                 bundle.extractall(game_folder)
             result = subprocess.run([
-                str(game_folder / "stunts-sdl3.exe"), "--run-ms=250", "--audio=none",
+                str(game_folder / "stunts-sdl3.exe"), "--clock=manual", "--run-ticks=25", "--audio=none",
             ], cwd=other_cwd, env=environment, capture_output=True, text=True, timeout=30)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertEqual(config.read_bytes(), custom)

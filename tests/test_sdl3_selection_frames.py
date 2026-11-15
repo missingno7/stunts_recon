@@ -22,6 +22,8 @@ BUILD = ROOT / "build/sdl3"
 FIXTURES = ROOT / "tests/fixtures/sdl3/original_replay"
 LABELS = ("car-countach", "track-default", "opponent-clock")
 RUN_MS = 38_000
+RUN_TICKS = RUN_MS // 10
+TICK_NS = 10000154
 
 
 def references():
@@ -104,14 +106,16 @@ class SelectionFrameTests(unittest.TestCase):
                 str(exe), f"--trace={trace}", f"--capture-dir={cls.captures}",
                 f"--input-script={script}",
                 f"--test-startup-seed={ROOT / 'tests/fixtures/sdl3/startup-seed.json'}",
-                "--test-auto-protection", f"--run-ms={RUN_MS}",
+                "--test-auto-protection", "--clock=manual", f"--run-ticks={RUN_TICKS}",
             ], cwd=folder, env=env, capture_output=True, text=True, timeout=60)
             if run.returncode:
                 raise AssertionError(f"selection run failed: {run.stdout}\n{run.stderr}")
             events = [json.loads(line) for line in trace.read_text().splitlines()]
             stops = [e for e in events if e.get("event_type") == "host_stop"]
-            if len(stops) != 1 or stops[0].get("reason") != "requested run duration reached":
+            if len(stops) != 1 or stops[0].get("reason") != "requested tick boundary reached":
                 raise AssertionError(f"selection run did not stop cleanly: {stops}")
+            if stops[0]["machine_tick"] != RUN_TICKS * TICK_NS:
+                raise AssertionError("selection did not stop at its exact tick")
             cls.actual = {}
             for path in cls.captures.glob("*.fbr"):
                 pixels, palette = read_port_fbr(path)

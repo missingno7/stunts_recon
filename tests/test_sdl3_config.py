@@ -47,7 +47,7 @@ class Sdl3ConfigTests(unittest.TestCase):
         return tuple(map(int, result.stdout.strip().split()))
 
     def test_missing_file_creates_defaults_beside_requested_path(self):
-        path = self.root / "First launch Ĺ˝lutĂ˝ config.json"
+        path = self.root / "First launch ÄąËťlutÄ‚Ëť config.json"
         self.assertEqual(self.probe_file(path), (1, 0))
         self.assertEqual(json.loads(path.read_text()), {"manual_word_check": False, "renderer": "faithful"})
         saved = path.read_bytes()
@@ -135,7 +135,7 @@ class Sdl3ConfigTests(unittest.TestCase):
                         str(EXECUTABLE), f"--config={config}", f"--assets={ASSETS}",
                         f"--trace={trace}", f"--diagnostics-dir={run_dir / 'diagnostics'}",
                         f"--input-script={input_path}",
-                        f"--test-startup-seed={STARTUP_SEED}", "--run-ms=10000",
+                        f"--test-startup-seed={STARTUP_SEED}", "--clock=manual", "--run-ticks=1000",
                     ], cwd=run_dir, env=self.environment,
                         capture_output=True, text=True, timeout=30)
                     self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -166,7 +166,7 @@ class Sdl3ConfigTests(unittest.TestCase):
                     result = subprocess.run([
                         str(EXECUTABLE), f"--config={config}", f"--assets={ASSETS}",
                         f"--diagnostics-dir={diagnostics}", "--hidden",
-                        f"--test-startup-seed={STARTUP_SEED}", "--run-ms=500", *extra,
+                        f"--test-startup-seed={STARTUP_SEED}", "--clock=manual", "--run-ticks=50", *extra,
                     ], cwd=root, env=self.environment, capture_output=True, text=True, timeout=15)
                     self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
                     logs = list(diagnostics.glob("*/session.log"))

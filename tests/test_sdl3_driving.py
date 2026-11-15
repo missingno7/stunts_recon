@@ -194,7 +194,7 @@ class Sdl3DrivingTests(unittest.TestCase):
                 f"--input-script={input_path}",
                 f"--test-startup-seed={STARTUP_SEED}",
                 "--test-auto-protection",
-                f"--run-ms={RUN_MS}",
+                "--clock=manual", f"--run-ticks={RUN_MS // 10}",
             ]
             try:
                 result = subprocess.run(
@@ -218,9 +218,10 @@ class Sdl3DrivingTests(unittest.TestCase):
                            if event.get("event_type") == "host_stop"]
             self.assertEqual(len(stop_events), 1, stop_events)
             self.assertEqual(
-                stop_events[0].get("reason"), "requested run duration reached",
+                stop_events[0].get("reason"), "requested tick boundary reached",
                 f"guest stopped before the bounded run completed: {stop_events[0]}")
 
+            self.assertEqual(stop_events[0]["raw_tick_id"], RUN_MS // 10)
             inputs = [event for event in events if event.get("event_type") == "input"]
             self.assertGreaterEqual(
                 sum(event.get("payload") == [28, 156] for event in inputs), 3,
@@ -298,26 +299,26 @@ class Sdl3DrivingTests(unittest.TestCase):
                 and down_tick <= int(event.get("machine_tick", -1)) < up_tick
                 and int(event.get("sim_step_id", -1)) in snapshots
             ]
-            self.assertGreaterEqual(
-                len(held), 20,
+            self.assertEqual(
+                len(held), 100,
                 "held throttle did not produce sustained live simulation steps; "
                 f"observed {len(held)} in the five-second key-down window")
-            step_times = [int(event["host_ns"]) for event in held]
-            self.assertGreaterEqual(
-                step_times[-1] - step_times[0], 3_500_000_000,
+            step_times = [int(event["machine_tick"]) for event in held]
+            self.assertEqual(
+                step_times[-1] - step_times[0], 99 * 5 * 10000154,
                 "live steps did not span the held-throttle interval: "
                 f"{step_times[0]} .. {step_times[-1]}")
             largest_gap = max(after - before
                               for before, after in zip(step_times, step_times[1:]))
-            self.assertLessEqual(
-                largest_gap, 500_000_000,
+            self.assertEqual(
+                largest_gap, 5 * 10000154,
                 f"held-throttle simulation stalled for {largest_gap / 1e9:.2f}s")
 
             states = [snapshots[int(event["sim_step_id"])] for event in held]
             frames = [state["frame"] for state in states]
             self.assertTrue(
                 all(after > before for before, after in zip(frames, frames[1:])),
-                f"game frame did not advance on consecutive live steps: {frames[:12]} … {frames[-4:]}")
+                f"game frame did not advance on consecutive live steps: {frames[:12]} Ă˘â‚¬Â¦ {frames[-4:]}")
             self.assertTrue(
                 all(state["inputmode"] == 1 for state in states),
                 "GAMESTATE disagreed with the trace's live input mode")
@@ -344,8 +345,8 @@ class Sdl3DrivingTests(unittest.TestCase):
                     and begin <= int(event.get("machine_tick", -1)) < end
                     and int(event.get("sim_step_id", -1)) in snapshots
                 ]
-                self.assertGreaterEqual(
-                    len(selected), 5,
+                self.assertEqual(
+                    len(selected), (end-begin)//(5*10000154),
                     f"held key window {begin}..{end} produced only {len(selected)} live steps")
                 return selected
 
@@ -385,8 +386,8 @@ class Sdl3DrivingTests(unittest.TestCase):
                 and event.get("game_mode") == 2
                 and event.get("game_replay_mode") == 1
             ]
-            self.assertGreaterEqual(
-                len(replay_publications), 2,
+            self.assertEqual(
+                len(replay_publications), 123,
                 "Escape stopped live physics without publishing the replay UI; "
                 f"post-Escape replay publications: {replay_publications[:3]}")
             first_replay_tick = int(replay_publications[0]["machine_tick"])
@@ -408,13 +409,13 @@ class Sdl3DrivingTests(unittest.TestCase):
                 and int(event.get("sim_step_id", -1)) in snapshots
             ]
             replay_frames = [state["frame"] for state in replay_states]
-            self.assertGreaterEqual(
-                len(replay_states), 20,
+            self.assertEqual(
+                len(replay_states), 142,
                 "the replay seek did not advance recorded GAMESTATE snapshots")
-            self.assertGreaterEqual(
-                max(replay_frames) - min(replay_frames), 50,
+            self.assertEqual(
+                max(replay_frames) - min(replay_frames), 141,
                 "the replay seek did not move substantially through recorded frames: "
-                f"{replay_frames[:5]} … {replay_frames[-5:]}")
+                f"{replay_frames[:5]} Ă˘â‚¬Â¦ {replay_frames[-5:]}")
 
 
 if __name__ == "__main__":

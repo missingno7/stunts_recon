@@ -42,7 +42,7 @@ class RendererEquivalenceTests(unittest.TestCase):
                     "--hidden", f"--config={config}", f"--assets={ASSETS}",
                     f"--trace={run / 'trace.jsonl'}", f"--capture-dir={run}",
                     f"--input-script={script}", f"--test-startup-seed={STARTUP_SEED}",
-                    "--test-auto-protection", "--stop-after-sim-steps=160", "--run-ms=20000",
+                    "--test-auto-protection", "--stop-after-sim-steps=160", "--clock=manual", "--run-ticks=2000",
                 ], cwd=ROOT, env=environment, capture_output=True, text=True, timeout=60)
                 self.assertEqual(process.returncode, 0, process.stderr)
                 self.assertNotIn("contract failure", process.stderr.lower())
@@ -57,7 +57,7 @@ class RendererEquivalenceTests(unittest.TestCase):
                           for e in events if e.get("event_type") == "simulation_step"
                           and e.get("runtime_mode") == "live"
                           and e.get("game_inputmode") == 1}
-                self.assertGreaterEqual(len(states), 100)
+                self.assertEqual(len(states), 125)
                 frames = {}
                 for e in events:
                     if (e.get("event_type") == "video_publication"
@@ -69,18 +69,18 @@ class RendererEquivalenceTests(unittest.TestCase):
                             # completed before the publication stop boundary.
                             if int(e["game_frame"])+1 in states:
                                 frames[int(e["game_frame"])] = file.read_bytes()
-                self.assertGreaterEqual(len(frames), 90)
+                self.assertEqual(len(frames), 123)
                 results.append((states, frames))
             reference_states, reference_frames = results[0]
             for states, frames in results[1:]:
                 common = reference_states.keys() & states.keys()
-                self.assertGreaterEqual(len(common), 100)
+                self.assertEqual(len(common), 125)
                 for frame in common:
                     self.assertEqual(states[frame], reference_states[frame], f"GAMESTATE frame {frame}")
                 common = reference_frames.keys() & frames.keys()
-                self.assertGreaterEqual(len(common), 90)
+                self.assertEqual(len(common), 123)
                 for frame in common:
-                    # FBR's 20-byte header includes the asynchronous publication ID.
+                    # FBR's 20-byte header includes the publication ID.
                     # Compare every indexed pixel and all 768 RGB6 palette bytes.
                     self.assertEqual(frames[frame][20:], reference_frames[frame][20:],
                                      f"faithful framebuffer frame {frame}")
@@ -112,7 +112,7 @@ class RendererEquivalenceTests(unittest.TestCase):
                     "--window=1680x720","--hidden",f"--config={config}",f"--assets={ASSETS}",
                     f"--trace={run / 'trace.jsonl'}",f"--capture-dir={run}",
                     f"--input-script={script}",f"--test-startup-seed={STARTUP_SEED}",
-                    "--test-auto-protection","--run-ms=22000"],
+                    "--test-auto-protection","--clock=manual", "--run-ticks=2200"],
                     cwd=ROOT,env=environment,capture_output=True,text=True,timeout=60)
                 self.assertEqual(result.returncode,0,result.stderr)
                 self.assertNotIn("failed",result.stderr.lower())
@@ -122,7 +122,7 @@ class RendererEquivalenceTests(unittest.TestCase):
                 states = {int(e["game_frame"]):snapshots[int(e["sim_step_id"])]
                           for e in events if e.get("event_type")=="simulation_step"
                           and e.get("runtime_mode")=="live" and e.get("game_inputmode")==1}
-                self.assertGreaterEqual(len(states),180)
+                self.assertEqual(len(states),201)
                 self.assertTrue(any(e.get("game_replay_mode")==1 for e in events))
                 frames = {}
                 for e in events:
@@ -138,8 +138,8 @@ class RendererEquivalenceTests(unittest.TestCase):
                 results.append((states,frames))
             states,frames=results[1];reference_states,reference_frames=results[0]
             common=states.keys()&reference_states.keys()
-            self.assertGreaterEqual(len(common),180)
+            self.assertEqual(len(common),201)
             for frame in common:self.assertEqual(states[frame],reference_states[frame],f"state {frame}")
             common=frames.keys()&reference_frames.keys()
-            self.assertGreaterEqual(len(common),120)
+            self.assertEqual(len(common),150)
             for frame in common:self.assertEqual(frames[frame],reference_frames[frame],f"indexed frame {frame}")

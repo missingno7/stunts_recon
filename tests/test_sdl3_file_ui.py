@@ -129,7 +129,7 @@ class SDL3FileUITests(unittest.TestCase):
                 f"--input-script={input_path}",
                 f"--test-startup-seed={STARTUP_SEED}",
                 "--test-auto-protection",
-                f"--run-ms={RUN_MS}",
+                "--clock=manual", f"--run-ticks={RUN_MS // 10}",
             ]
             try:
                 result = subprocess.run(
@@ -156,7 +156,8 @@ class SDL3FileUITests(unittest.TestCase):
                            if event.get("event_type") == "host_stop"]
             self.assertEqual(len(stop_events), 1, stop_events)
             self.assertEqual(
-                stop_events[0].get("reason"), "requested run duration reached")
+                stop_events[0].get("reason"), "requested tick boundary reached")
+            self.assertEqual(stop_events[0]["raw_tick_id"], RUN_MS // 10)
             input_events = [event for event in trace_events
                             if event.get("event_type") == "input"]
             self.assertTrue(any(event.get("payload") == [44, 172]
