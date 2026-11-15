@@ -58,10 +58,12 @@ def write_editor_file_flow(path: Path) -> None:
         (15_200_000_000, list(pairs(0x50))),         # Save row.
         (15_400_000_000, list(pairs(0x50))),
         (15_600_000_000, [28, 156]),
-        (16_200_000_000, list(pairs(0x0E)) * 8),     # Clear current basename.
-        (16_500_000_000,
-         sum((pairs(scan) for scan in (0x2C, 0x2C, 0x2C, 0x14,
-                                       0x12, 0x1F, 0x14)), [])),
+        # Individual strokes give the original one-word keyboard buffer a
+        # consumer poll between characters; a whole word in one IRQ burst
+        # overwrites everything except its final make code.
+        *[(16_200_000_000+i*20_000_000,list(pairs(0x0E))) for i in range(8)],
+        *[(16_500_000_000+i*20_000_000,list(pairs(scan)))
+          for i,scan in enumerate((0x2C,0x2C,0x2C,0x14,0x12,0x1F,0x14))],
         (16_800_000_000, [28, 156]),                 # Save the scratch track.
         (18_300_000_000, list(pairs(0x48))),         # Select Load row.
         (18_600_000_000, [28, 156]),
@@ -69,7 +71,7 @@ def write_editor_file_flow(path: Path) -> None:
         (19_300_000_000, [28, 156]),                 # Reload it.
     ]
     payload = {
-        "format": "portforge-exact-input-script-v1",
+        "format": "stunts-exact-input-script-v1",
         "anchor_tick": 0,
         "events": [
             {"visible_tick": tick, "channel": "dos.keyboard.scancodes",
@@ -95,7 +97,7 @@ class SDL3FileUITests(unittest.TestCase):
         report = json.loads(BUILD_REPORT.read_text(encoding="utf-8"))
         self.assertEqual(report.get("target"), "i686-w64-mingw32")
         self.assertEqual(report.get("game_c_objects"), 38)
-        self.assertEqual(report.get("port_objects"), 45)
+        self.assertEqual(report.get("port_objects"), 46)
         self.assertEqual(report.get("function_stub_count"), 0)
         self.assertEqual(report.get("data_stub_count"), 0)
         self.assertTrue(STARTUP_SEED.is_file())

@@ -66,13 +66,16 @@ class StartupSettingsTests(unittest.TestCase):
         # startup at 10 Hz, while the independently supplied file records 20 Hz.
         folder=self.root / "replay";folder.mkdir();script=folder / "input.json"
         events=[{"visible_tick":ms*1000000,"channel":"dos.keyboard.scancodes","payload":codes}
-            for ms,codes in [(1500,[28,156]),(4500,[80,208,80,208,80,208]),(5500,[28,156]),(6500,[28,156])]]
+            # A real original INT9 has one pending key word. Three menu moves
+            # must allow three polls; a batch of three makes retains only one.
+            for ms,codes in [(1500,[28,156]),(4500,[80,208]),(4600,[80,208]),(4700,[80,208]),
+                (5500,[28,156]),(6500,[28,156])]]
         events += [{"visible_tick":ms*1000000,"channel":"dos.mouse.normalized",
             "payload":{"u":x/320,"v":y/200,"buttons":buttons}}
             for ms,x,y,buttons in [(2500,285,140,1),(2650,285,140,0),(2800,0,0,0),
                 (3500,285,140,1),(3650,285,140,0),(3800,0,0,0)]]
         events.sort(key=lambda e:e["visible_tick"])
-        script.write_text(json.dumps({"format":"portforge-exact-input-script-v1","anchor_tick":0,"events":events}))
+        script.write_text(json.dumps({"format":"stunts-exact-input-script-v1","anchor_tick":0,"events":events}))
         trace=folder / "trace.jsonl"
         p=subprocess.run([str(EXECUTABLE),f"--assets={ASSETS}",f"--input-script={script}",
             f"--trace={trace}",f"--config={folder / 'config.json'}","--seed=1","--frame-rate=10",

@@ -43,7 +43,7 @@ PLAYER_SPEED2_OFFSET = PLAYER_STATE_OFFSET + 44
 def write_driving_input(path: Path) -> None:
     """Drive the seeded race, enter replay, and seek through recorded frames."""
     script = {
-        "format": "portforge-exact-input-script-v1",
+        "format": "stunts-exact-input-script-v1",
         "anchor_tick": 0,
         "events": [
             {"visible_tick": tick, "channel": "dos.keyboard.scancodes",
@@ -96,7 +96,7 @@ def assert_build_ready() -> None:
     report = json.loads(BUILD_REPORT.read_text(encoding="utf-8"))
     if (report.get("target") != "i686-w64-mingw32" or
             report.get("game_c_objects") != 38 or
-            report.get("port_objects") != 45 or
+            report.get("port_objects") != 46 or
             report.get("compile", {}).get("object_passes") != 38):
         raise AssertionError(
             f"SDL3 build report is not the expected complete host build: {report}")
@@ -119,6 +119,8 @@ def assert_build_ready() -> None:
         ROOT / "port" / "input_script.c",
         ROOT / "port" / "trace.c",
         ROOT / "port" / "trace_hooks.c",
+        ROOT / "port" / "boundary_record.c",
+        ROOT / "port" / "boundary_adapter.py",
         ROOT / "port" / "build.py",
         ROOT / "port" / "dependencies.py",
         ROOT / "port" / "audio.c",

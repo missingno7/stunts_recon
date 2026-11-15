@@ -55,7 +55,7 @@ def read_port_fbr(path: Path) -> tuple[bytes, bytes]:
 def write_startup_input(path: Path) -> None:
     """Let both intro screens render, then enter the menu and align its cursor."""
     script = {
-        "format": "portforge-exact-input-script-v1",
+        "format": "stunts-exact-input-script-v1",
         "anchor_tick": 0,
         "events": [
             # The seeded intro draws the title after about four seconds.

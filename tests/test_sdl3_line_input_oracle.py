@@ -100,6 +100,8 @@ def compile_host_probe(overlay: Path) -> tuple[Path, dict[str, str]]:
 
 /* This oracle exercises drawing helpers, never the keyboard wait loop. */
 extern void port_guest_unwind(const char *symbol);
+/* Observer-only hook from the production overlay, inert in this isolated TU. */
+void port_input_script_phase(unsigned phase) { (void)phase; }
 void port_guest_yield(void)
 {
     port_guest_unwind("drawing-only line-input oracle entered a tick wait");

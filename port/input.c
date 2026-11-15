@@ -3,7 +3,8 @@
 #include <SDL3/SDL.h>
 #include <string.h>
 
-#define PORT_KEY_QUEUE_CAP 32u
+/* Locked kbint.ASM: kb_intr_data3 is two BYTES, i.e. one key word. */
+#define PORT_KEY_QUEUE_CAP 1u
 
 /* These replace the original assembly-owned globals. The source image uses a
    word for input_pushed and a byte for joystick_enabled. */
@@ -35,6 +36,9 @@ static int s_mouse_max_y = PORT_SCREEN_HEIGHT - 1;
 static int s_test_auto_protection;
 static uint64_t s_live_input_sequence;
 static uint64_t s_test_text_sequence;
+static uint8_t s_test_text_codes[48];
+static size_t s_test_text_next, s_test_text_count;
+static void type_next_test_key(void);
 
 #ifdef PORT_TICK_HANDSHAKE
 #define LIVE_EVENT_CAP 4096u
@@ -70,8 +74,10 @@ static void input_unlock(void)
 
 static void enqueue_bios_key(uint16_t key)
 {
-    if (s_key_count == PORT_KEY_QUEUE_CAP)
-        return;
+    if (s_key_count == PORT_KEY_QUEUE_CAP) {
+        s_key_head = (s_key_head + 1u) % PORT_KEY_QUEUE_CAP;
+        --s_key_count; /* The original IRQ overwrites the oldest pending word. */
+    }
     s_key_queue[s_key_tail] = key;
     s_key_tail = (s_key_tail + 1u) % PORT_KEY_QUEUE_CAP;
     ++s_key_count;
@@ -170,6 +176,10 @@ static uint16_t pop_bios_key(int *found)
     if (*found)
         port_trace_key_consumed(key);
 #endif
+#ifdef PORT_BOUNDARY_RECORD
+    if(*found)port_input_script_key_consumed();
+#endif
+    if(*found)type_next_test_key();
     return key;
 }
 
@@ -255,6 +265,7 @@ void port_input_init(void)
     s_extended_prefix = 0;
     s_callback_count = 0;
     s_test_auto_protection = 0;
+    s_test_text_next = s_test_text_count = 0;
 #ifdef PORT_TICK_HANDSHAKE
     s_live_input_sequence = s_live_queue_sequence = 1ull << 32;
     s_live_head = s_live_tail = s_live_count = 0;
@@ -280,6 +291,16 @@ void port_input_init(void)
 void port_input_enable_test_auto_protection(int enabled)
 {
     s_test_auto_protection = enabled != 0;
+}
+
+void port_input_reset_mouse(void)
+{
+    input_lock();
+    s_mouse_min_x=s_mouse_min_y=0;
+    s_mouse_max_x=PORT_SCREEN_WIDTH-1;s_mouse_max_y=PORT_SCREEN_HEIGHT-1;
+    s_mouse_x=PORT_SCREEN_WIDTH/2;s_mouse_y=PORT_SCREEN_HEIGHT/2;
+    s_mouse_buttons=0;
+    input_unlock();
 }
 
 int port_input_test_auto_protection_enabled(void)
@@ -362,12 +383,24 @@ static void clear_pressed_input(void)
 /* Feed a manual answer through the same raw DOS keyboard path as a tester.
    Only this explicit test option enables the helper, and the trace stores key
    scans rather than the answer text. */
+static void type_next_test_key(void)
+{
+    uint8_t codes[2];
+    uint64_t now;
+    if(s_test_text_next>=s_test_text_count)return;
+    codes[0]=s_test_text_codes[s_test_text_next++];
+    codes[1]=s_test_text_codes[s_test_text_next++];
+    port_input_apply_dos_scancode(codes[0]);
+    port_input_apply_dos_scancode(codes[1]);
+    now=input_time_ns();
+    port_trace_input_keyboard(s_test_text_sequence++,now,now,codes,2);
+}
+
 int port_input_type_test_text(const char *text)
 {
     uint8_t codes[48];
     size_t count = 0;
     size_t i;
-    uint64_t now;
     if (!s_test_auto_protection || text == NULL)
         return 0;
     for (i = 0; text[i] != '\0'; ++i) {
@@ -385,10 +418,11 @@ int port_input_type_test_text(const char *text)
     }
     codes[count++] = 0x1c;
     codes[count++] = 0x9c;
-    for (i = 0; i < count; ++i)
-        port_input_apply_dos_scancode(codes[i]);
-    now = input_time_ns();
-    port_trace_input_keyboard(s_test_text_sequence++, now, now, codes, count);
+    /* Test-only text is a producer, not extra BIOS storage. Supply the next
+       character after the prior one is consumed, as a tester would type it. */
+    memcpy(s_test_text_codes,codes,count);
+    s_test_text_next=0;s_test_text_count=count;
+    type_next_test_key();
     return 1;
 }
 
@@ -665,6 +699,9 @@ static int dispatch_key_callback(uint16_t bios_key)
 int16_t normkeyi(void)
 {
     int found;
+#ifdef PORT_BOUNDARY_RECORD
+    port_input_script_poll();
+#endif
     port_guest_check_stop();
     uint16_t key = pop_bios_key(&found);
     uint8_t ascii;
@@ -679,6 +716,9 @@ int16_t normkeyi(void)
 int16_t normkey(void)
 {
     int found;
+#ifdef PORT_BOUNDARY_RECORD
+    port_input_script_poll();
+#endif
     port_guest_check_stop();
     uint16_t key = pop_bios_key(&found);
     uint8_t ascii;

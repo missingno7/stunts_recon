@@ -1,5 +1,8 @@
 #include "port_runtime.h"
 #include "audio_backend.h"
+#ifdef PORT_BOUNDARY_RECORD
+#include "boundary_record.h"
+#endif
 
 #include <stdarg.h>
 #include <stdint.h>
@@ -35,12 +38,29 @@ int int86(int interrupt_number, void *input, void *output)
     memset(&regs, 0, sizeof(regs));
     if (input != NULL)
         memcpy(&regs, input, sizeof(regs));
+#ifdef PORT_BOUNDARY_RECORD
+    PortBoundaryCall observed;
+    uint32_t request[3]={regs.ax,0,0};
+    uint16_t response[3]={0,0,0};
+    PortBoundaryRegion region={"register_result",response,sizeof(response),0};
+    uint16_t selector=regs.ax;
+    if(interrupt_number==0x33 && (selector==4 || selector==7 || selector==8 || selector==15)) {
+        request[1]=regs.cx;request[2]=regs.dx;
+    }
+    int active=port_boundary_begin(&observed,interrupt_number==0x33?"int33":"int15",
+        request,3,0,&region,1);
+#endif
 
     if (interrupt_number == 0x15 && regs.ax == 0xC201) {
-        /* BIOS mouse initialization selector used by lib/mouse.c. */
+        /* PS/2 reset: AH=success, BH=device ID, BL=self-test response.
+           Same BIOS contract observed in the original DOSBox-X run. */
+        regs.ax &= 0x00FF;
+        regs.bx = 0x00AA;
+        regs.cflag = 0;
     } else if (interrupt_number == 0x33) {
         switch (regs.ax) {
         case 0: /* Reset: AX=ffffh if present, BX=button count. */
+            port_input_reset_mouse();
             regs.ax = 0xFFFF;
             regs.bx = 3;
             break;
@@ -89,6 +109,14 @@ int int86(int interrupt_number, void *input, void *output)
 
     if (output != NULL)
         memcpy(output, &regs, sizeof(regs));
+#ifdef PORT_BOUNDARY_RECORD
+    if(interrupt_number==0x33 && selector==3) {
+        response[0]=regs.bx;response[1]=regs.cx;response[2]=regs.dx;
+    } else if(selector==0 || interrupt_number==0x15) {
+        response[0]=regs.ax;response[1]=regs.bx;
+    }
+    port_boundary_end(&observed,UINT32_MAX,active);
+#endif
     return 0;
 }
 

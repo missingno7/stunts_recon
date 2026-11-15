@@ -56,7 +56,7 @@ def write_crash_results_input(path: Path) -> None:
          "channel": "dos.keyboard.scancodes", "payload": [1]},
     ])
     path.write_text(json.dumps({
-        "format": "portforge-exact-input-script-v1",
+        "format": "stunts-exact-input-script-v1",
         "anchor_tick": 0,
         "events": events,
     }, separators=(",", ":")) + "\n", encoding="ascii")
@@ -258,10 +258,16 @@ class Sdl3CrashResultsTests(unittest.TestCase):
 
             inputs = [event for event in events if event.get("event_type") == "input"]
             enter_events = [event for event in inputs
-                            if event.get("payload") == [28, 156]]
+                            if event.get("payload") == [28, 156] and
+                            event.get("sequence") in (0, 1, 2)]
             self.assertEqual(
                 len(enter_events), 3,
                 f"expected three race-entry inputs, observed {enter_events}")
+            helper_enters = [event for event in inputs if
+                             event.get("payload") == [28, 156] and
+                             event.get("sequence", 0) >= (1 << 63)]
+            self.assertEqual(len(helper_enters), 1,
+                             "test-answer producer must finish with one separately traced Enter")
             throttle_down = next(
                 (event for event in inputs if event.get("payload") == [72]), None)
             throttle_up = next(

@@ -44,7 +44,7 @@ class Sdl3InputReplayTests(unittest.TestCase):
     def run_script(self, events):
         path = self.directory / "script.json"
         path.write_text(json.dumps({
-            "format": "portforge-exact-input-script-v1", "anchor_tick": 0,
+            "format": "stunts-exact-input-script-v1", "anchor_tick": 0,
             "events": events}, separators=(",", ":")), encoding="ascii")
         result = subprocess.run([str(self.executable), str(path)],
                                 env=self.environment, capture_output=True,

@@ -51,7 +51,9 @@ int main(int argc,char **argv) {
     port_input_queue_event(SDL_EVENT_KEY_UP,SDL_SCANCODE_C,0);
     assert(!port_input_key_state(0x2e));
     grant(); assert(tick==1 && count==2); /* legacy ns 0 and 1 both round to tick one */
-    assert(testkey()=='a'); assert(testkey()=='b'); assert(!testkey());
+    /* Locked INT9 queue capacity is one word; the later make overwrites a. */
+    assert(port_input_key_state(0x1e)==0 && port_input_key_state(0x30)==0);
+    assert(testkey()=='b'); assert(!testkey());
     grant(); assert(tick==2 && count==3);
     assert(testkey()=='d'); assert(!testkey());
     assert(!port_input_key_state(0x2e));
@@ -73,7 +75,7 @@ class TickInputTests(unittest.TestCase):
             folder = Path(temporary)
             source, exe, script = folder / "probe.c", folder / "probe.exe", folder / "input.json"
             source.write_text(PROBE)
-            script.write_text(json.dumps({"format":"portforge-exact-input-script-v1",
+            script.write_text(json.dumps({"format":"stunts-exact-input-script-v1",
                 "anchor_tick":0,"events":[{"visible_tick":ns,
                 "channel":"dos.keyboard.scancodes","payload":[scan,scan|0x80]}
                 for ns,scan in [(0,0x1e),(1,0x30),(10000155,0x20)]]}))

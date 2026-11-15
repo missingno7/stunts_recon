@@ -23,7 +23,7 @@ class RendererEquivalenceTests(unittest.TestCase):
             root = Path(directory)
             script = root / "input.json"
             script.write_text(json.dumps({
-                "format": "portforge-exact-input-script-v1", "anchor_tick": 0,
+                "format": "stunts-exact-input-script-v1", "anchor_tick": 0,
                 "events": [{"visible_tick": tick, "channel": "dos.keyboard.scancodes",
                             "payload": [28, 156]}
                            for tick in (1500000000, 3000000000, 4500000000)] +
@@ -99,7 +99,7 @@ class RendererEquivalenceTests(unittest.TestCase):
                     (16000,[1,129]),(17500,[60,188]),(18500,[62,190]),
                     (19500,[28]),(20500,[156])]
             script = root / "input.json"
-            script.write_text(json.dumps({"format":"portforge-exact-input-script-v1",
+            script.write_text(json.dumps({"format":"stunts-exact-input-script-v1",
                 "anchor_tick":0,"events":[{"visible_tick":ms*1000000,
                 "channel":"dos.keyboard.scancodes","payload":codes} for ms,codes in keys]}))
             results = []

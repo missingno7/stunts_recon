@@ -76,7 +76,7 @@ def write_input(path):
     # Keep the selected hitbox stable while the guest consumes Enter.
     # A move onto the main-menu Drive hitbox must follow that transition.
     mouse(33, 191, 139)
-    path.write_text(json.dumps({"format": "portforge-exact-input-script-v1",
+    path.write_text(json.dumps({"format": "stunts-exact-input-script-v1",
                                 "anchor_tick": 0, "events": events}) + "\n")
 
 
