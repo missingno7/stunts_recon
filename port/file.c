@@ -1,3 +1,4 @@
+#include "sound_record.h"
 #include "port_runtime.h"
 
 #include <SDL3/SDL.h>
@@ -811,6 +812,7 @@ void *port_fs_load(const char *path, size_t *length_out,
         return NULL;
     }
     ((uint8_t *)data)[size] = 0;
+    PORT_SOUND_RESOURCE(path, data, (size_t)size);
     fclose(file);
     if (length_out != NULL)
         *length_out = (size_t)size;

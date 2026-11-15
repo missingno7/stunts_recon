@@ -77,6 +77,69 @@ Replay internal branch 2 advances one recorded step every two target-clock event
 
 Port Forge v7 measured timer deadlines, one 20 Hz active race, game-frame counter deltas between rendered publications, guest audio batches and a pause/resume interval. It did not sample the 10 Hz target, crash/airborne states, retrace phase, palette/retrace I/O, DOS vector state or `.DRV` callback cadence. See the [runtime oracle](runtime-oracle.md), [runtime measurements](runtime-measurements.md) and [interactive capture guide](CAPTURE.md).
 
+## Manual clock core and sound-request observer
+
+`port/tick_clock.c` / `.h` own the absolute 64-bit raw tick and the derived
+32-bit callback/elapsed counters, setup generation, fifth-tick phase, shared
+and private deadline operations, and five live callback slots. The core uses
+standard C atomics for producer publication and has no SDL, host-time, thread,
+allocation or sleep dependency. Only `port_clock_advance(clock, n)` creates
+ticks. `port_clock_dispatch` materializes already published ticks on the guest,
+sampling the live suppression byte and retaining nested-count-without-callback
+behavior. The SDL adapter in `port/timer.c` still produces ticks on its existing
+thread at 10,000,154 ns and delivers callbacks cooperatively; no host/guest
+handshake, input scheduling, startup calibration or audio isolation is introduced
+here. Setup preserves absolute/elapsed time and resets callback count/delta and
+the next producer phase. Deadlines retain unsigned wrap behavior and the BIOS
+predicate retains independent high/low comparisons. The one intentional behavior
+correction is suppression: the locked ISR tests `input_pushed`'s low byte
+(`lib/timerint.ASM:727`), so 0x0100 now permits callbacks where the earlier native
+word comparison suppressed them. The SDL-free clock test also compiles the
+accepted `gameint` body to check the 5/10 callback countdowns at 20/10 Hz.
+
+`--sound-requests=PATH` enables `port/sound_record.c`'s JSON-lines observer;
+it is off by default. A failed open or write/close reports a nonzero exit.
+The `stunts-sound-requests-v1` header names the guest-dispatched raw tick source,
+which is independent of the seeded callback counter and host nanoseconds.
+Each request has `raw_tick`, a zero-based within-tick `sequence`, foreground or
+callback `source` and `callback_slot`, driver name, stable table indices and
+reuse generations, and resource identity. Indices of -1 mean unassociated or
+unresolved; the bulk +30 call has `voice_array=true`. Resource identity is the
+uppercase basename, FNV-1a-64 of bytes at file/decompression load, and byte
+offset before subsequent game pointer fixups; untracked spans explicitly say
+`resolved:false`. This diagnostic hash does not replace the immutable oracle's
+identity proof. Host pointer values, PCM demand and device timing are absent.
+Typed `port_audio_driver_*` wrappers record even inert requested entries and
+unsigned DOS-word argument bits, optional return bits, and raw byte payloads.
+The +33 capability query is not represented as a driver request. Resource
+registration/free hooks only maintain observer metadata and never modify assets.
+
+`port/sound_adapter.py` adds observer-only hooks to generated audio views;
+`game/` and `lib/` remain untouched. Logical rows include `chunk_init`
+(volume, priority, index), `chunk_event` (named command, parameter, value kind, scalar value or resource
+target, delta and length fields), `chunk_state` (delay, active voices, call depth, loop depth, volume,
+sustain), `chunk_complete` (command, end-callback presence), `voice_progress`
+(position, remaining, active/envelope state/value), and `voice_complete`
+(position, remaining, envelope value), in `values_u32` except the named event
+fields. CALL targets are resolved as resources; unused/stale parser values are
+never serialized as scalar addresses. Chunk initialization
+and voice starts advance their generations; bind/start requests associate
+later voice-only operations with their chunk/resource. Recording observes the
+existing logical engine and translated driver calls; it neither synthesizes
+sound nor changes device ownership, callback timing, or disabled-driver behavior.
+
+`tests/test_sdl3_sound_record.py` repeats the existing AD15 ELPI instrument/note
+fixture with explicit manual ticks and requires byte-identical requests. It
+also runs the existing seeded startup input script twice with normal audio and
+once with SDL dummy audio, preserving full streams and comparison results under
+`build/workers/portclock/sound-comparison/`. These full-game comparisons are
+observational: normal-output repeats agreed in the full suite but differed in
+earlier focused runs; normal/dummy output differed, with successfully opened
+devices. Wall-paced foreground/input scheduling remains
+uncontrolled, so this is a later clock-handshake/audio-isolation finding, not
+proof that the device alone caused each mismatch. No comparison masks ticks or
+regenerates an original expectation from native output.
+
 ## Input sampling, normalization, and replay capture
 
 The keyboard interrupt handler maintains key-down state from scan-code make/break (high bit distinguishes break) and feeds a character ring; its image entry is seg012:0x208C6-0x209A5. get_kb_or_joy_flags maps the configured scan codes in kbinput to action bits and calls the joystick poll only when no configured key bit is active (seg012:0x20538-0x205C8). The joystick helper polls port 201h and applies axis-extrema/hysteresis logic before returning flags (seg012:0x205FC-0x207B4). The game also samples DOS mouse state via mouse_get_state. No separate gameplay debounce timer was found: keyboard uses make/break state, mouse is polled, and joystick filtering occurs in its hardware polling path.

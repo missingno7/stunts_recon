@@ -1,4 +1,7 @@
 #include "port_runtime.h"
+#include "sound_record.h"
+extern void port_timer_observation(uint64_t *, int *);
+extern void port_sound_record_guest_tables(void);
 #include "render/renderer.h"
 
 #include <SDL3/SDL.h>
@@ -132,6 +135,7 @@ static int parse_run_ms(const char *argument)
 int main(int argc, char **argv)
 {
     const char *trace_path = "";
+    const char *sound_requests_path = "";
     const char *asset_root = NULL;
     char default_asset_root[1024];
     char default_save_root[1024];
@@ -156,6 +160,8 @@ int main(int argc, char **argv)
     for (i = 1; i < argc; ++i) {
         if (strncmp(argv[i], "--trace=", 8) == 0)
             trace_path = argv[i] + 8;
+        else if (strncmp(argv[i], "--sound-requests=", 17) == 0)
+            sound_requests_path = argv[i] + 17;
         else if (strncmp(argv[i], "--assets=", 9) == 0)
             asset_root = argv[i] + 9;
         else if (strncmp(argv[i], "--capture-dir=", 14) == 0)
@@ -291,6 +297,14 @@ int main(int argc, char **argv)
         return 1;
     }
     port_guest_set_step_limit(stop_after_sim_steps);
+    if (!port_sound_record_open(sound_requests_path, port_timer_observation)) {
+        fprintf(stderr, "Could not open sound request recording\n");
+        port_trace_close();
+        port_sdl_shutdown();
+        port_diagnostics_close(2, "sound request recording unavailable");
+        return 2;
+    }
+    port_sound_record_guest_tables();
     port_timer_start();
     SDL_SetAtomicInt(&s_guest_done, 0);
     s_guest_thread = SDL_CreateThread(guest_thread_main, "stunts-game", NULL);
@@ -325,6 +339,7 @@ int main(int argc, char **argv)
     }
     port_timer_stop();
     port_audio_shutdown();
+    if (!port_sound_record_close()) port_guest_set_exit_status(2);
     port_trace_close();
     port_sdl_shutdown();
     port_diagnostics_close(SDL_GetAtomicInt(&s_guest_exit_status), s_guest_stop_reason);

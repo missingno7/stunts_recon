@@ -3,6 +3,7 @@
 #include "ad15_driver.h"
 #include "pc_speaker.h"
 #include "port_opl3.h"
+#include "sound_record.h"
 
 #include <stdatomic.h>
 #include <stdio.h>
@@ -62,6 +63,23 @@ extern void audiodrv_atexit(void);
 extern void addtimer(void (*callback)(void));
 extern void deltimer(void (*callback)(void));
 extern char g_drvaudiocode[14];
+
+#ifdef PORT_SOUND_RECORD
+static void record_request(unsigned entry, const void *voice, const void *chunk,
+    const void *resource, unsigned count, uint16_t a, uint16_t b, uint16_t c,
+    int has_result, uint16_t result, const void *payload, size_t bytes)
+{
+    uint16_t words[3] = {a, b, c};
+    if (!port_sound_record_enabled()) return;
+    if (entry == 0x00) resource = s_driver_image;
+    port_sound_record_driver(s_backend == PORT_AUDIO_AD15 ? "ad15" :
+        s_backend == PORT_AUDIO_PC15 ? "pc15" : "none", entry, voice, chunk,
+        resource, words, count, has_result, result, payload, bytes);
+}
+#define SOUND_REQUEST(...) record_request(__VA_ARGS__)
+#else
+#define SOUND_REQUEST(...) ((void)0)
+#endif
 
 static void audio_lock(void)
 {
@@ -790,6 +808,7 @@ uint8_t port_audio_driver_00(void)
     voices = s_backend == PORT_AUDIO_AD15 ? ad15_driver_00(&s_ad15) :
              pc15_entry_00_unlocked();
     audio_unlock();
+    SOUND_REQUEST(0x00, NULL, NULL, NULL, 0, 0, 0, 0, 1, voices, NULL, 0);
     return voices;
 }
 
@@ -801,6 +820,7 @@ void port_audio_driver_03(void)
     else
         pc15_entry_03_unlocked();
     audio_unlock();
+    SOUND_REQUEST(0x03, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, NULL, 0);
 }
 
 void port_audio_driver_06(void)
@@ -811,6 +831,7 @@ void port_audio_driver_06(void)
     else
         pc15_entry_06_unlocked();
     audio_unlock();
+    SOUND_REQUEST(0x06, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, NULL, 0);
 }
 
 void port_audio_driver_09(int16_t channel, void *voice, void *chunk,
@@ -823,6 +844,7 @@ void port_audio_driver_09(int16_t channel, void *voice, void *chunk,
     else
         pc15_entry_09_unlocked(channel, voice, note, sample);
     audio_unlock();
+    SOUND_REQUEST(0x09, voice, chunk, sample, 3, (uint16_t)channel, (uint16_t)note, (uint16_t)value, 0, 0, NULL, 0);
 }
 
 void port_audio_driver_0c(int16_t channel, void *voice)
@@ -831,6 +853,7 @@ void port_audio_driver_0c(int16_t channel, void *voice)
     if (s_backend == PORT_AUDIO_AD15)
         ad15_driver_0c(&s_ad15, channel, voice);
     audio_unlock();
+    SOUND_REQUEST(0x0c, voice, NULL, NULL, 1, (uint16_t)channel, 0, 0, 0, 0, NULL, 0);
 }
 
 void port_audio_driver_0f(int16_t channel, void *voice)
@@ -841,6 +864,7 @@ void port_audio_driver_0f(int16_t channel, void *voice)
     else
         pc15_entry_0f_unlocked(channel);
     audio_unlock();
+    SOUND_REQUEST(0x0f, voice, NULL, NULL, 1, (uint16_t)channel, 0, 0, 0, 0, NULL, 0);
 }
 
 void port_audio_driver_12(int16_t channel, void *voice, int16_t value)
@@ -851,6 +875,7 @@ void port_audio_driver_12(int16_t channel, void *voice, int16_t value)
     else
         pc15_entry_12_unlocked(channel, value);
     audio_unlock();
+    SOUND_REQUEST(0x12, voice, NULL, NULL, 2, (uint16_t)channel, (uint16_t)value, 0, 0, 0, NULL, 0);
 }
 
 void port_audio_driver_15(int16_t channel, void *voice,
@@ -860,10 +885,12 @@ void port_audio_driver_15(int16_t channel, void *voice,
     if (s_backend == PORT_AUDIO_AD15)
         ad15_driver_15(&s_ad15, channel, voice, type, value);
     audio_unlock();
+    SOUND_REQUEST(0x15, voice, NULL, NULL, 3, (uint16_t)channel, (uint16_t)type, (uint16_t)value, 0, 0, NULL, 0);
 }
 
 void port_audio_driver_18(void)
 {
+    SOUND_REQUEST(0x18, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, NULL, 0);
 }
 
 void port_audio_driver_1b(void *chunk, int16_t value, int16_t channel)
@@ -871,6 +898,7 @@ void port_audio_driver_1b(void *chunk, int16_t value, int16_t channel)
     (void)chunk;
     (void)value;
     (void)channel;
+    SOUND_REQUEST(0x1b, NULL, chunk, NULL, 2, (uint16_t)value, (uint16_t)channel, 0, 0, 0, NULL, 0);
 }
 
 void port_audio_driver_1e(int16_t channel)
@@ -881,6 +909,7 @@ void port_audio_driver_1e(int16_t channel)
     else
         pc15_entry_0f_unlocked(channel);
     audio_unlock();
+    SOUND_REQUEST(0x1e, NULL, NULL, NULL, 1, (uint16_t)channel, 0, 0, 0, 0, NULL, 0);
 }
 
 void port_audio_driver_21(int16_t channel, void *voice, void *chunk,
@@ -890,6 +919,7 @@ void port_audio_driver_21(int16_t channel, void *voice, void *chunk,
     if (s_backend == PORT_AUDIO_AD15)
         ad15_driver_21(&s_ad15, channel, voice, chunk, sample);
     audio_unlock();
+    SOUND_REQUEST(0x21, voice, chunk, sample, 1, (uint16_t)channel, 0, 0, 0, 0, NULL, 0);
 }
 
 void port_audio_driver_24(int16_t channel, void *voice, uint16_t value)
@@ -900,6 +930,7 @@ void port_audio_driver_24(int16_t channel, void *voice, uint16_t value)
     else
         pc15_entry_24_unlocked(channel, voice, value);
     audio_unlock();
+    SOUND_REQUEST(0x24, voice, NULL, NULL, 2, (uint16_t)channel, value, 0, 0, 0, NULL, 0);
 }
 
 void port_audio_driver_27(uint16_t channel, void *voice, void *chunk,
@@ -911,6 +942,7 @@ void port_audio_driver_27(uint16_t channel, void *voice, void *chunk,
     else
         pc15_entry_27_unlocked(channel, voice, chunk, sample);
     audio_unlock();
+    SOUND_REQUEST(0x27, voice, chunk, sample, 1, channel, 0, 0, 0, 0, NULL, 0);
 }
 
 void port_audio_driver_30(void *voices)
@@ -919,23 +951,27 @@ void port_audio_driver_30(void *voices)
     audio_lock();
     pc15_entry_30_unlocked();
     audio_unlock();
+    SOUND_REQUEST(0x30, voices, NULL, NULL, 0, 0, 0, 0, 0, 0, NULL, 0);
 }
 
 void port_audio_driver_39(int16_t count, const uint8_t *bytes)
 {
     (void)count;
     (void)bytes;
+    SOUND_REQUEST(0x39, NULL, NULL, NULL, 1, (uint16_t)count, 0, 0, 0, 0, bytes, count > 0 ? (size_t)count : 0);
 }
 
 void port_audio_driver_3f(int16_t count, const void *bytes)
 {
     (void)count;
     (void)bytes;
+    SOUND_REQUEST(0x3f, NULL, NULL, NULL, 1, (uint16_t)count, 0, 0, 0, 0, bytes, count > 0 ? (size_t)count : 0);
 }
 
 void port_audio_driver_42(const void *patches)
 {
     (void)patches;
+    SOUND_REQUEST(0x42, NULL, NULL, patches, 0, 0, 0, 0, 0, 0, NULL, 0);
 }
 
 int port_audio_driver_entry_33_supported(void)
@@ -988,12 +1024,14 @@ uint16_t port_audio_driver_36(int16_t channel)
     else if (s_backend == PORT_AUDIO_PC15 && channel == 0 && s_pc15.active[0] != 0)
         result = 0;
     audio_unlock();
+    SOUND_REQUEST(0x36, NULL, NULL, NULL, 1, (uint16_t)channel, 0, 0, 1, result, NULL, 0);
     return result;
 }
 
 uint16_t port_audio_driver_3c(void)
 {
     /* PC15's +3C vector is `mov ax,0ffffh; retf`. */
+    SOUND_REQUEST(0x3c, NULL, NULL, NULL, 0, 0, 0, 0, 1, 0xffffu, NULL, 0);
     return 0xffffu;
 }
 

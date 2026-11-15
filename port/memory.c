@@ -1,3 +1,4 @@
+#include "sound_record.h"
 #include "port_runtime.h"
 
 #include <ctype.h>
@@ -179,6 +180,7 @@ void port_memory_free(void *pointer)
     PortAllocation *entry = find_allocation(pointer);
     if (entry == NULL)
         return;
+    PORT_SOUND_FORGET(pointer);
     if (entry->space == PORT_FAR_HANDLE)
         free(entry->host);
     s_stats.live_bytes -= (uint32_t)entry->size;

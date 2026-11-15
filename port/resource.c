@@ -1,3 +1,4 @@
+#include "sound_record.h"
 #include "port_runtime.h"
 
 #include <ctype.h>
@@ -562,6 +563,7 @@ void *loadpacka(const char *name, int fatal)
     managed = port_memory_alloc(decoded_size, name, NULL);
     if (managed != NULL)
         memcpy(managed, decoded, decoded_size);
+    if (managed != NULL) PORT_SOUND_RESOURCE(name, managed, decoded_size);
     free(decoded);
     port_memory_free(source_data);
     if (managed == NULL && fatal)

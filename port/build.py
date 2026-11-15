@@ -13,6 +13,7 @@ import subprocess
 import sys
 import zipfile
 
+from sound_adapter import adapt_sound_observers
 from game_abi import route_audio_vectors, adapt_aggregate_views, adapt_polygon_storage, host_view_contracts, adapt_preview_word_arithmetic, adapt_renderer_word_arithmetic, adapt_word_sentinels, adapt_wheel_update_inputs
 from dependencies import NUKED_OPL3_COMMIT, NUKED_OPL3_FILES, nuked_opl3_root
 from render.tile_adapter import adapt_update_frame, adapt_trans_op
@@ -576,7 +577,10 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
         transformed = adapt_aggregate_views(probe.legacy_target_widths(transformed))
         if source == "lib/toupper.c":
             transformed = transformed.replace("I16 cap(I16 ch)", "int cap(int ch)")
+        transformed = adapt_sound_observers(source, transformed,
+            (ROOT / "port" / "sound_record.h").as_posix())
         host_config = probe.legacy_target_widths(config.read_text(encoding="latin-1"))
+        host_config = "#define PORT_SOUND_RECORD 1\n" + host_config
         if source == "game/carsim.c":
             for name in ("centerpos", "veh_position", "veh_z"):
                 host_config = host_config.replace(f"extern I16 {name};", f"extern I32 {name};")
@@ -664,7 +668,8 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
 def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
     opl_source = nuked_opl3_root()
     port_sources = [
-        "main.c", "sdl_host.c", "video.c", "input.c", "timer.c", "memory.c",
+        "main.c", "sdl_host.c", "video.c", "input.c", "timer.c", "tick_clock.c", "memory.c",
+        "sound_record.c",
         "test_seed.c",
         "sprite.c", "sprite_aux.c", "legacy_views.c",
         "random.c",
@@ -698,7 +703,7 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
     common = [
         str(gcc), "-std=gnu11", "-O0", "-g", "-Wall", "-Wextra", "-Wpedantic",
         "-Wno-unused-parameter", "-Werror=int-conversion", "-DPORT_BUILD=1",
-        "-DPORT_RENDER_INSTRUMENT=1",
+        "-DPORT_RENDER_INSTRUMENT=1", "-DPORT_SOUND_RECORD=1",
         "-include", str(ROOT / "tools" / "porting" / "host" / "compat.h"),
         "-I", str(ROOT / "port"),
         "-I", str(ROOT / "tools" / "porting" / "port_include"),
