@@ -30,6 +30,14 @@ arbitrary DOS buffers, callback-internal decomposition and the remaining entries
 are not newly covered. The step-0 clock-site inventory is linked by hash as
 historical evidence; its old line numbers/shared-state model are not current claims.
 
+Step 8 adds eleven optional raster/blit contracts; ten execute in the race's
+first 22 frames. Their bounded observations include scalar arguments, vertex
+lists, clip words, row 9, and hashes of the dashboard corner/source pixels.
+27 real clipped polygon calls additionally run against original machine code.
+The refreshed table has 1393 overlapping rows: 74 with finite agreeing evidence,
+six with differing ordered sound streams, and 1313 without comparable coverage.
+Observed unmatched inputs remain explicit and do not count as agreement.
+
 ```powershell
 python tools/porting/semantic_audit.py --inventory-only --work build/workers/portclock/step7/audit-frozen
 python tools/porting/port_layer.py --audit build/workers/portclock/step7/audit-frozen/report.json --comparison build/workers/portclock/step7/race-ad15-final/comparison.json --comparison build/workers/portclock/step7/race-pc15-final/comparison.json

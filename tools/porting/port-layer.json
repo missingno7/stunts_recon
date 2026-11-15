@@ -1050,7 +1050,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "joystate",
-          "agrees": 10,
+          "agrees": 15,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
@@ -1103,7 +1103,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "normkeyi",
-          "agrees": 420,
+          "agrees": 451,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
@@ -1528,7 +1528,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "normkey",
-          "agrees": 24,
+          "agrees": 36,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
@@ -3900,7 +3900,7 @@
           "source": "port/sprite.c",
           "name": "preRender_patterned",
           "signature": "void preRender_patterned(int16_t pattern_bits, int16_t color,\n                         int16_t point_count, const int16_t *points);",
-          "line": 1946,
+          "line": 1952,
           "match_name": "preRender_patterned",
           "implementation_kind": "portable_manual_c",
           "match_basis": "historical_name_exact"
@@ -3910,8 +3910,49 @@
       "original_module": "lib/fontmat.ASM",
       "exercised": true,
       "status": "exercised and agrees",
-      "evidence": [],
-      "capture_contract": null,
+      "evidence": [
+        {
+          "original_capture": "DOSBox-X semantic race",
+          "name": "preRender_patterned",
+          "agrees": 29,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
+        }
+      ],
+      "capture_contract": {
+        "name": "preRender_patterned",
+        "args": [
+          "pattern_bits",
+          "color",
+          "point_count",
+          null
+        ],
+        "return_bits": 0,
+        "regions": [
+          {
+            "name": "points",
+            "bytes": "(uint16_t)point_count*4u",
+            "read": 1
+          },
+          {
+            "name": "clip",
+            "bytes": 10,
+            "read": 1
+          },
+          {
+            "name": "row9",
+            "bytes": "port_boundary_graphics_row9_size()",
+            "read": 1
+          },
+          {
+            "name": "corner",
+            "bytes": 8,
+            "read": 1
+          }
+        ],
+        "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
+      },
       "prior_original_tests": [
         {
           "contract": "polygon-raster-entries",
@@ -3974,7 +4015,7 @@
           "source": "port/sprite.c",
           "name": "clipline",
           "signature": "unsigned clipline(unsigned x0, unsigned y0, unsigned x1,\n                           unsigned y1, int *record);",
-          "line": 2801,
+          "line": 2807,
           "match_name": "clipline",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -4006,7 +4047,7 @@
           "source": "port/sprite.c",
           "name": "slopeline",
           "signature": "unsigned slopeline(unsigned x0, unsigned y0, unsigned x1,\n                               unsigned y1, int *record);",
-          "line": 2807,
+          "line": 2813,
           "match_name": "slopeline",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -4861,8 +4902,53 @@
       "original_module": "lib/maskblit.ASM",
       "exercised": true,
       "status": "exercised and agrees",
-      "evidence": [],
-      "capture_contract": null,
+      "evidence": [
+        {
+          "original_capture": "DOSBox-X semantic race",
+          "name": "andcfxy",
+          "agrees": 11,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
+        }
+      ],
+      "capture_contract": {
+        "name": "andcfxy",
+        "args": [
+          null,
+          "x",
+          "y"
+        ],
+        "return_bits": 0,
+        "regions": [
+          {
+            "name": "shape",
+            "bytes": 8,
+            "read": 1
+          },
+          {
+            "name": "clip",
+            "bytes": 10,
+            "read": 1
+          },
+          {
+            "name": "row9",
+            "bytes": "port_boundary_graphics_row9_size()",
+            "read": 1
+          },
+          {
+            "name": "corner",
+            "bytes": 8,
+            "read": 1
+          },
+          {
+            "name": "source_pixels",
+            "bytes": 8,
+            "read": 1
+          }
+        ],
+        "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
+      },
       "prior_original_tests": [
         {
           "contract": "sprite-boolean-blits",
@@ -4923,10 +5009,53 @@
       ],
       "mapping_status": "address_alias_unique",
       "original_module": "lib/copyblit.ASM",
-      "exercised": false,
-      "status": "not exercised",
-      "evidence": [],
-      "capture_contract": null,
+      "exercised": true,
+      "status": "exercised and agrees",
+      "evidence": [
+        {
+          "original_capture": "DOSBox-X semantic race",
+          "name": "movcf",
+          "agrees": 22,
+          "differs": 0,
+          "unmatched_inputs": 1,
+          "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
+        }
+      ],
+      "capture_contract": {
+        "name": "movcf",
+        "args": [
+          null
+        ],
+        "return_bits": 0,
+        "regions": [
+          {
+            "name": "shape",
+            "bytes": 12,
+            "read": 1
+          },
+          {
+            "name": "clip",
+            "bytes": 10,
+            "read": 1
+          },
+          {
+            "name": "row9",
+            "bytes": "port_boundary_graphics_row9_size()",
+            "read": 1
+          },
+          {
+            "name": "corner",
+            "bytes": 8,
+            "read": 1
+          },
+          {
+            "name": "source_pixels",
+            "bytes": 8,
+            "read": 1
+          }
+        ],
+        "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
+      },
       "prior_original_tests": []
     },
     {
@@ -4957,8 +5086,53 @@
       "original_module": "lib/copyblit.ASM",
       "exercised": true,
       "status": "exercised and agrees",
-      "evidence": [],
-      "capture_contract": null,
+      "evidence": [
+        {
+          "original_capture": "DOSBox-X semantic race",
+          "name": "movcfxya",
+          "agrees": 136,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
+        }
+      ],
+      "capture_contract": {
+        "name": "movcfxya",
+        "args": [
+          null,
+          "x",
+          "y"
+        ],
+        "return_bits": 0,
+        "regions": [
+          {
+            "name": "shape",
+            "bytes": 4,
+            "read": 1
+          },
+          {
+            "name": "clip",
+            "bytes": 10,
+            "read": 1
+          },
+          {
+            "name": "row9",
+            "bytes": "port_boundary_graphics_row9_size()",
+            "read": 1
+          },
+          {
+            "name": "corner",
+            "bytes": 8,
+            "read": 1
+          },
+          {
+            "name": "source_pixels",
+            "bytes": 8,
+            "read": 1
+          }
+        ],
+        "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
+      },
       "prior_original_tests": [
         {
           "contract": "sprite-boolean-blits",
@@ -5085,8 +5259,48 @@
       "original_module": "lib/shp2ops.ASM",
       "exercised": false,
       "status": "not exercised",
-      "evidence": [],
-      "capture_contract": null,
+      "evidence": [
+        {
+          "original_capture": "DOSBox-X semantic race",
+          "name": "movpackcfxya",
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 2,
+          "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
+        }
+      ],
+      "capture_contract": {
+        "name": "movpackcfxya",
+        "args": [
+          null,
+          "x",
+          "y"
+        ],
+        "return_bits": 0,
+        "regions": [
+          {
+            "name": "shape",
+            "bytes": 4,
+            "read": 1
+          },
+          {
+            "name": "clip",
+            "bytes": 10,
+            "read": 1
+          },
+          {
+            "name": "row9",
+            "bytes": "port_boundary_graphics_row9_size()",
+            "read": 1
+          },
+          {
+            "name": "corner",
+            "bytes": 8,
+            "read": 1
+          }
+        ],
+        "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
+      },
       "prior_original_tests": []
     },
     {
@@ -5117,8 +5331,46 @@
       "original_module": "lib/shp2ops.ASM",
       "exercised": true,
       "status": "exercised and agrees",
-      "evidence": [],
-      "capture_contract": null,
+      "evidence": [
+        {
+          "original_capture": "DOSBox-X semantic race",
+          "name": "movpackcf",
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 2,
+          "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
+        }
+      ],
+      "capture_contract": {
+        "name": "movpackcf",
+        "args": [
+          null
+        ],
+        "return_bits": 0,
+        "regions": [
+          {
+            "name": "shape",
+            "bytes": 12,
+            "read": 1
+          },
+          {
+            "name": "clip",
+            "bytes": 10,
+            "read": 1
+          },
+          {
+            "name": "row9",
+            "bytes": "port_boundary_graphics_row9_size()",
+            "read": 1
+          },
+          {
+            "name": "corner",
+            "bytes": 8,
+            "read": 1
+          }
+        ],
+        "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
+      },
       "prior_original_tests": [
         {
           "contract": "resource-unflip-parser-and-dashboard",
@@ -5667,8 +5919,53 @@
       "original_module": "lib/sprvideo.ASM",
       "exercised": true,
       "status": "exercised and agrees",
-      "evidence": [],
-      "capture_contract": null,
+      "evidence": [
+        {
+          "original_capture": "DOSBox-X semantic race",
+          "name": "orcfxy",
+          "agrees": 11,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
+        }
+      ],
+      "capture_contract": {
+        "name": "orcfxy",
+        "args": [
+          null,
+          "x",
+          "y"
+        ],
+        "return_bits": 0,
+        "regions": [
+          {
+            "name": "shape",
+            "bytes": 8,
+            "read": 1
+          },
+          {
+            "name": "clip",
+            "bytes": 10,
+            "read": 1
+          },
+          {
+            "name": "row9",
+            "bytes": "port_boundary_graphics_row9_size()",
+            "read": 1
+          },
+          {
+            "name": "corner",
+            "bytes": 8,
+            "read": 1
+          },
+          {
+            "name": "source_pixels",
+            "bytes": 8,
+            "read": 1
+          }
+        ],
+        "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
+      },
       "prior_original_tests": [
         {
           "contract": "sprite-boolean-blits",
@@ -5901,10 +6198,46 @@
       ],
       "mapping_status": "address_alias_unique",
       "original_module": "lib/vecspr.ASM",
-      "exercised": false,
-      "status": "not exercised",
-      "evidence": [],
-      "capture_contract": null,
+      "exercised": true,
+      "status": "exercised and agrees",
+      "evidence": [
+        {
+          "original_capture": "DOSBox-X semantic race",
+          "name": "clippix",
+          "agrees": 227,
+          "differs": 0,
+          "unmatched_inputs": 2,
+          "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
+        }
+      ],
+      "capture_contract": {
+        "name": "clippix",
+        "args": [
+          "left",
+          "right",
+          "top",
+          "bottom"
+        ],
+        "return_bits": 0,
+        "regions": [
+          {
+            "name": "clip",
+            "bytes": 10,
+            "read": 1
+          },
+          {
+            "name": "row9",
+            "bytes": "port_boundary_graphics_row9_size()",
+            "read": 1
+          },
+          {
+            "name": "corner",
+            "bytes": 8,
+            "read": 1
+          }
+        ],
+        "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
+      },
       "prior_original_tests": []
     },
     {
@@ -6033,9 +6366,9 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "mat_vec",
-          "agrees": 99448,
+          "agrees": 107396,
           "differs": 0,
-          "unmatched_inputs": 8,
+          "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
         }
       ],
@@ -6110,7 +6443,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "transmult",
-          "agrees": 5892,
+          "agrees": 6218,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
@@ -6187,9 +6520,9 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "fixedmult",
-          "agrees": 1500,
+          "agrees": 1692,
           "differs": 0,
-          "unmatched_inputs": 4,
+          "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
         }
       ],
@@ -6259,7 +6592,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "intatan",
-          "agrees": 2438,
+          "agrees": 2560,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
@@ -6309,10 +6642,47 @@
       ],
       "mapping_status": "name_only_unique",
       "original_module": "lib/gfxres.ASM",
-      "exercised": false,
-      "status": "not exercised",
-      "evidence": [],
-      "capture_contract": null,
+      "exercised": true,
+      "status": "exercised and agrees",
+      "evidence": [
+        {
+          "original_capture": "DOSBox-X semantic race",
+          "name": "preRender_line",
+          "agrees": 20,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
+        }
+      ],
+      "capture_contract": {
+        "name": "preRender_line",
+        "args": [
+          "x1",
+          "y1",
+          "x2",
+          "y2",
+          "color"
+        ],
+        "return_bits": 0,
+        "regions": [
+          {
+            "name": "clip",
+            "bytes": 10,
+            "read": 1
+          },
+          {
+            "name": "row9",
+            "bytes": "port_boundary_graphics_row9_size()",
+            "read": 1
+          },
+          {
+            "name": "corner",
+            "bytes": 8,
+            "read": 1
+          }
+        ],
+        "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
+      },
       "prior_original_tests": []
     },
     {
@@ -6333,7 +6703,7 @@
           "source": "port/sprite.c",
           "name": "sprite_two_color_poly_list",
           "signature": "void sprite_two_color_poly_list(int16_t pattern_bits, int16_t background_color,\n                   int16_t foreground_color, int16_t point_count,\n                   const int16_t *points);",
-          "line": 1954,
+          "line": 1960,
           "match_name": "sprite_two_color_poly_list",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -6531,7 +6901,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "myrandom",
-          "agrees": 41052,
+          "agrees": 61578,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
@@ -6584,7 +6954,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "mygetseeds",
-          "agrees": 4,
+          "agrees": 3,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
@@ -6644,9 +7014,9 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "mysetseeds",
-          "agrees": 2,
+          "agrees": 3,
           "differs": 0,
-          "unmatched_inputs": 2,
+          "unmatched_inputs": 3,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
         }
       ],
@@ -6788,7 +7158,7 @@
           "source": "port/sprite.c",
           "name": "drawpolypt",
           "signature": "void drawpolypt(int16_t color, int16_t point_count,\n                       const int16_t *points);",
-          "line": 1934,
+          "line": 1940,
           "match_name": "drawpolypt",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -6798,8 +7168,48 @@
       "original_module": "lib/whlrast.ASM",
       "exercised": true,
       "status": "exercised and agrees",
-      "evidence": [],
-      "capture_contract": null,
+      "evidence": [
+        {
+          "original_capture": "DOSBox-X semantic race",
+          "name": "drawpolypt",
+          "agrees": 1138,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
+        }
+      ],
+      "capture_contract": {
+        "name": "drawpolypt",
+        "args": [
+          "color",
+          "point_count",
+          null
+        ],
+        "return_bits": 0,
+        "regions": [
+          {
+            "name": "points",
+            "bytes": "(uint16_t)point_count*4u",
+            "read": 1
+          },
+          {
+            "name": "clip",
+            "bytes": 10,
+            "read": 1
+          },
+          {
+            "name": "row9",
+            "bytes": "port_boundary_graphics_row9_size()",
+            "read": 1
+          },
+          {
+            "name": "corner",
+            "bytes": 8,
+            "read": 1
+          }
+        ],
+        "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
+      },
       "prior_original_tests": [
         {
           "contract": "polygon-raster-entries",
@@ -6830,7 +7240,7 @@
           "source": "port/sprite.c",
           "name": "drawpolyp",
           "signature": "void drawpolyp(int16_t color, int16_t point_count,\n                           const int16_t *points);",
-          "line": 1940,
+          "line": 1946,
           "match_name": "drawpolyp",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -6841,7 +7251,38 @@
       "exercised": true,
       "status": "exercised and agrees",
       "evidence": [],
-      "capture_contract": null,
+      "capture_contract": {
+        "name": "drawpolyp",
+        "args": [
+          "color",
+          "point_count",
+          null
+        ],
+        "return_bits": 0,
+        "regions": [
+          {
+            "name": "points",
+            "bytes": "(uint16_t)point_count*4u",
+            "read": 1
+          },
+          {
+            "name": "clip",
+            "bytes": 10,
+            "read": 1
+          },
+          {
+            "name": "row9",
+            "bytes": "port_boundary_graphics_row9_size()",
+            "read": 1
+          },
+          {
+            "name": "corner",
+            "bytes": 8,
+            "read": 1
+          }
+        ],
+        "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
+      },
       "prior_original_tests": [
         {
           "contract": "polygon-raster-entries",
@@ -6938,7 +7379,7 @@
           "source": "port/sprite.c",
           "name": "preRender_wheel_helper4",
           "signature": "void preRender_wheel_helper4(int16_t color, int16_t point_count, ...);",
-          "line": 2915,
+          "line": 2921,
           "match_name": "preRender_wheel_helper4",
           "implementation_kind": "portable_manual_c",
           "match_basis": "historical_name_exact"
@@ -6980,7 +7421,7 @@
           "source": "port/sprite.c",
           "name": "skybox_op_helper",
           "signature": "void skybox_op_helper(uint16_t color, uint16_t point_count,\n                      struct RasterPoint p0, struct RasterPoint p1,\n                      struct RasterPoint p2, struct RasterPoint p3);",
-          "line": 2905,
+          "line": 2911,
           "match_name": "skybox_op_helper",
           "implementation_kind": "portable_manual_c",
           "match_basis": "historical_name_exact"
@@ -7144,7 +7585,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "intcos",
-          "agrees": 4304,
+          "agrees": 4480,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
@@ -7199,7 +7640,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "intsin",
-          "agrees": 4304,
+          "agrees": 4480,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
@@ -7263,7 +7704,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "inthypot",
-          "agrees": 1070,
+          "agrees": 1121,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
@@ -7321,7 +7762,7 @@
           "source": "port/sprite.c",
           "name": "drawcircle",
           "signature": "void drawcircle(int16_t center_x, int16_t center_y, int16_t size,\n                      int16_t color);",
-          "line": 2041,
+          "line": 2047,
           "match_name": "drawcircle",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -7367,7 +7808,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "zclipline",
-          "agrees": 2048,
+          "agrees": 2124,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
@@ -10673,7 +11114,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "normkeyi",
-          "agrees": 420,
+          "agrees": 451,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
@@ -10793,7 +11234,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "normkey",
-          "agrees": 24,
+          "agrees": 36,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
@@ -10872,7 +11313,7 @@
       "evidence": [
         {
           "service": "int33",
-          "agrees": 22,
+          "agrees": 33,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "service calls only; not the complete caller routine"
@@ -10908,7 +11349,7 @@
       "evidence": [
         {
           "service": "int33",
-          "agrees": 22,
+          "agrees": 33,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "service calls only; not the complete caller routine"
@@ -10944,7 +11385,7 @@
       "evidence": [
         {
           "service": "int33",
-          "agrees": 22,
+          "agrees": 33,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "service calls only; not the complete caller routine"
@@ -10980,7 +11421,7 @@
       "evidence": [
         {
           "service": "int33",
-          "agrees": 22,
+          "agrees": 33,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "service calls only; not the complete caller routine"
@@ -11016,7 +11457,7 @@
       "evidence": [
         {
           "service": "int33",
-          "agrees": 22,
+          "agrees": 33,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "service calls only; not the complete caller routine"
@@ -11052,7 +11493,7 @@
       "evidence": [
         {
           "service": "int33",
-          "agrees": 22,
+          "agrees": 33,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "service calls only; not the complete caller routine"
@@ -11088,7 +11529,7 @@
       "evidence": [
         {
           "service": "int33",
-          "agrees": 22,
+          "agrees": 33,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "service calls only; not the complete caller routine"
@@ -11124,7 +11565,7 @@
       "evidence": [
         {
           "service": "int33",
-          "agrees": 22,
+          "agrees": 33,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "service calls only; not the complete caller routine"
@@ -11160,7 +11601,7 @@
       "evidence": [
         {
           "service": "int33",
-          "agrees": 22,
+          "agrees": 33,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "service calls only; not the complete caller routine"
@@ -11196,7 +11637,7 @@
       "evidence": [
         {
           "service": "int33",
-          "agrees": 22,
+          "agrees": 33,
           "differs": 0,
           "unmatched_inputs": 0,
           "claim_limit": "service calls only; not the complete caller routine"
@@ -11685,8 +12126,8 @@
         {
           "source": "game/race.c",
           "name": "dodash",
-          "signature": "void far dodash(I16 mode);",
-          "line": 10665,
+          "signature": "void dodash(I16 mode);",
+          "line": 11688,
           "match_name": "dodash",
           "implementation_kind": "accepted_historical_c",
           "match_basis": "exact_start_registry_canonical"
@@ -12043,10 +12484,53 @@
           "match_basis": "exact_start_registry_canonical"
         }
       ],
-      "exercised": false,
-      "status": "not exercised",
-      "evidence": [],
-      "capture_contract": null,
+      "exercised": true,
+      "status": "exercised and agrees",
+      "evidence": [
+        {
+          "original_capture": "DOSBox-X semantic race",
+          "name": "movcf",
+          "agrees": 22,
+          "differs": 0,
+          "unmatched_inputs": 1,
+          "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
+        }
+      ],
+      "capture_contract": {
+        "name": "movcf",
+        "args": [
+          null
+        ],
+        "return_bits": 0,
+        "regions": [
+          {
+            "name": "shape",
+            "bytes": 12,
+            "read": 1
+          },
+          {
+            "name": "clip",
+            "bytes": 10,
+            "read": 1
+          },
+          {
+            "name": "row9",
+            "bytes": "port_boundary_graphics_row9_size()",
+            "read": 1
+          },
+          {
+            "name": "corner",
+            "bytes": 8,
+            "read": 1
+          },
+          {
+            "name": "source_pixels",
+            "bytes": 8,
+            "read": 1
+          }
+        ],
+        "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
+      },
       "prior_original_tests": []
     },
     {
@@ -12130,8 +12614,46 @@
       ],
       "exercised": true,
       "status": "exercised and agrees",
-      "evidence": [],
-      "capture_contract": null,
+      "evidence": [
+        {
+          "original_capture": "DOSBox-X semantic race",
+          "name": "movpackcf",
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 2,
+          "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
+        }
+      ],
+      "capture_contract": {
+        "name": "movpackcf",
+        "args": [
+          null
+        ],
+        "return_bits": 0,
+        "regions": [
+          {
+            "name": "shape",
+            "bytes": 12,
+            "read": 1
+          },
+          {
+            "name": "clip",
+            "bytes": 10,
+            "read": 1
+          },
+          {
+            "name": "row9",
+            "bytes": "port_boundary_graphics_row9_size()",
+            "read": 1
+          },
+          {
+            "name": "corner",
+            "bytes": 8,
+            "read": 1
+          }
+        ],
+        "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
+      },
       "prior_original_tests": [
         {
           "contract": "resource-unflip-parser-and-dashboard",
@@ -12555,7 +13077,7 @@
         {
           "source": "game/audioeng.c",
           "name": "pad_id",
-          "line": 333,
+          "line": 334,
           "signature": "char * far pad_id(u32 far *id);",
           "body_sha256": "d01d6459e4d2ba3f926671ccd96857ac8c340feb6c450a4950d90c4791efb4a1",
           "global_dependency_candidates": [
@@ -12584,14 +13106,15 @@
         {
           "source": "game/audioeng.c",
           "name": "audio_init_engine",
-          "line": 346,
+          "line": 347,
           "signature": "I16 far audio_init_engine(I16 unused, u8 huge *blob, void far *lookup, void far *resource);",
-          "body_sha256": "1e62df0f58c3ec7f0e371fc18af22fe5ba2b78146f5d5f00f29a5910c2f9fdd8",
+          "body_sha256": "61ab8ba01536fc7a658b098bb3b891e99398768659b76e94e9e485cd8a048746",
           "global_dependency_candidates": [
             "audio_timer_table",
             "handle",
             "i",
             "rate",
+            "shape",
             "unused"
           ],
           "aggregate_dependencies": [
@@ -12619,13 +13142,14 @@
         {
           "source": "game/audioeng.c",
           "name": "audio_op_unk",
-          "line": 397,
+          "line": 404,
           "signature": "void far audio_op_unk(I16 index);",
-          "body_sha256": "5ddb75066df101aed092d614dcd0fdb4bacd9a1c923676d3363064d7cb61db11",
+          "body_sha256": "bd2c7851eb70ce04e3077f84b84ba5db4c76c5bf43c43ddd5085c1c5428f4168",
           "global_dependency_candidates": [
             "audio_timer_table",
             "handle",
-            "rate"
+            "rate",
+            "shape"
           ],
           "aggregate_dependencies": [
             "AudioPayload",
@@ -12652,7 +13176,7 @@
         {
           "source": "game/audioeng.c",
           "name": "audio_function2",
-          "line": 414,
+          "line": 427,
           "signature": "void far audio_function2(I16 index);",
           "body_sha256": "c9a54077d3e30f385ce63574a24ce9bf19cd60400b273c0d79c7b8fb91a33388",
           "global_dependency_candidates": [
@@ -12682,9 +13206,9 @@
         {
           "source": "game/audioeng.c",
           "name": "audio_driver_timer",
-          "line": 430,
+          "line": 443,
           "signature": "void far audio_driver_timer(void);",
-          "body_sha256": "f63ecfebfdf5138ac5438630bd3a5edaddec810e18551e817be6970af55a4b3a",
+          "body_sha256": "7054fa163bc7ceb6d9a84c7713f26b1628e6b9f61e966277841477b5e74b129c",
           "global_dependency_candidates": [
             "audio_driver_mode",
             "audio_tick_divider",
@@ -12718,13 +13242,14 @@
         {
           "source": "game/audioeng.c",
           "name": "audio_op_unk2",
-          "line": 479,
+          "line": 498,
           "signature": "void far audio_op_unk2(I16 index, u16 sample_word, I16 x2, I16 y2, I16 z2, I16 x, I16 y, I16 z, u16 speed);",
-          "body_sha256": "fd0eed7020e174603fefe8e54f68b9c9b0ad3378daae7f8edb9034dfd8247a2b",
+          "body_sha256": "a16d418ed4fdfece5ee58c94012c55e39003977bd8fe1b05b1bbb809b521146a",
           "global_dependency_candidates": [
             "audio_timer_table",
             "int16_t",
             "rate",
+            "shape",
             "temp",
             "uint16_t"
           ],
@@ -12753,7 +13278,7 @@
         {
           "source": "game/audioeng.c",
           "name": "nopsub_27220",
-          "line": 528,
+          "line": 553,
           "signature": "void far nopsub_27220(I16 index);",
           "body_sha256": "9b3fae54c215be78cfff831e873863e6b659d6f8c90a917373a38424c2fb419d",
           "global_dependency_candidates": [
@@ -12784,7 +13309,7 @@
         {
           "source": "game/audioeng.c",
           "name": "nopsub_2726C",
-          "line": 538,
+          "line": 563,
           "signature": "void far nopsub_2726C(I16 index);",
           "body_sha256": "ca0f3e3bc9878121a2c257d6e8db3237c7e23cc432dc4e3797904f26b06f75cd",
           "global_dependency_candidates": [
@@ -12814,7 +13339,7 @@
         {
           "source": "game/audioeng.c",
           "name": "nopsub_272B0",
-          "line": 548,
+          "line": 573,
           "signature": "void far nopsub_272B0(I16 index);",
           "body_sha256": "24df47435e673a8ec99072e59ef991c1fbe76b8e51c20d2418be336fcbdf1774",
           "global_dependency_candidates": [
@@ -12844,7 +13369,7 @@
         {
           "source": "game/audioeng.c",
           "name": "audio_function2_wrap",
-          "line": 558,
+          "line": 583,
           "signature": "void far audio_function2_wrap(I16 index);",
           "body_sha256": "65031986f2246fbd202c07f54e0eeffbc3489b402b2ffcf72def85a16492b215",
           "global_dependency_candidates": [
@@ -12874,7 +13399,7 @@
         {
           "source": "game/audioeng.c",
           "name": "audio_op_unk3",
-          "line": 568,
+          "line": 593,
           "signature": "void far audio_op_unk3(I16 index);",
           "body_sha256": "9c571d69e4738ab8088671a5d980feeb4ef2a092f270c311497bfd354e59063a",
           "global_dependency_candidates": [
@@ -12904,7 +13429,7 @@
         {
           "source": "game/audioeng.c",
           "name": "audio_op_unk4",
-          "line": 577,
+          "line": 602,
           "signature": "void far audio_op_unk4(I16 index);",
           "body_sha256": "9c8d83cd566e92b929a4fe975c9aafd2eec283e9eda0c04468f12b055c347c5a",
           "global_dependency_candidates": [
@@ -12934,7 +13459,7 @@
         {
           "source": "game/audioeng.c",
           "name": "audio_op_unk5",
-          "line": 586,
+          "line": 611,
           "signature": "void far audio_op_unk5(I16 index);",
           "body_sha256": "6eba684bb09e5eeccef9467bd559eee8b6634114d496d27ca2eae0864ef23503",
           "global_dependency_candidates": [
@@ -12965,7 +13490,7 @@
         {
           "source": "game/audioeng.c",
           "name": "audio_op_unk6",
-          "line": 599,
+          "line": 624,
           "signature": "void far audio_op_unk6(I16 index);",
           "body_sha256": "abf0ce88866e05a915e7f517e638b05da2330968ad8076b92093783c6d8e7f0f",
           "global_dependency_candidates": [
@@ -12996,7 +13521,7 @@
         {
           "source": "game/audioeng.c",
           "name": "audio_op_unk7",
-          "line": 612,
+          "line": 637,
           "signature": "void far audio_op_unk7(I16 index);",
           "body_sha256": "ed3414e767bbfa26a3597adf6ec7e3b8e59c93f25afb97a109627f504a398e01",
           "global_dependency_candidates": [
@@ -13025,7 +13550,7 @@
         {
           "source": "game/audioeng.c",
           "name": "nopsub_27489",
-          "line": 618,
+          "line": 643,
           "signature": "I16 far nopsub_27489(I16 index);",
           "body_sha256": "4a4bbcf855d24bb61100aa4c878b5b8d2570e2d37a4d1476c25d664cb959a46a",
           "global_dependency_candidates": [
@@ -13743,6 +14268,7 @@
             "polyinfoptr",
             "projected_point_ptr_table",
             "selection_rect",
+            "shape",
             "shape_polyinfo",
             "shape_prim_next",
             "transformed_shape_material",
@@ -13994,7 +14520,7 @@
           "name": "run_game",
           "line": 9953,
           "signature": "void run_game(void);",
-          "body_sha256": "c456200c4501ad46744ae03123656429cadd179e76dc4539de0ba4fc76253477",
+          "body_sha256": "33692b38cc92448d41c673150e3f490319868ad3bf6773fdf2687bd2e00aac39",
           "global_dependency_candidates": [
             "bitmapdash",
             "boundglassrect",
@@ -14084,7 +14610,7 @@
         {
           "source": "game/race.c",
           "name": "mainkey",
-          "line": 10287,
+          "line": 10289,
           "signature": "I8 mainkey(U16 key);",
           "body_sha256": "3ca35294968a3bb6ad145a8c072138bf1c60c49e50751b3a2a73c38d1bf10220",
           "global_dependency_candidates": [
@@ -14124,7 +14650,7 @@
         {
           "source": "game/race.c",
           "name": "moveeverything",
-          "line": 10448,
+          "line": 10450,
           "signature": "void far moveeverything(I16 mode);",
           "body_sha256": "b69ba37d3f112d91e3998db89e45e0f316cf11167c421cccb8e2e034fe8e7e8d",
           "global_dependency_candidates": [
@@ -14168,6 +14694,32 @@
       "prior_original_tests": []
     },
     {
+      "id": "adapted_c:game/race.c::dodash",
+      "kind": "adapted_c",
+      "name": "dodash",
+      "original_source": "game/race.c",
+      "original_line": 893,
+      "portable": [
+        {
+          "source": "game/race.c",
+          "name": "dodash",
+          "line": 11688,
+          "signature": "void dodash(I16 mode);",
+          "body_sha256": "b2fe3d5e2b838840ddfb08cf2001824d907f8fb7750791517c93aeffa5a2febc",
+          "global_dependency_candidates": [],
+          "aggregate_dependencies": [],
+          "body_changed": true
+        }
+      ],
+      "source_ref": "semantic_audit.functions:game/race.c::dodash",
+      "prior_evidence": [],
+      "exercised": false,
+      "status": "not exercised",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": []
+    },
+    {
       "id": "adapted_c:game/race.c::doreplay",
       "kind": "adapted_c",
       "name": "doreplay",
@@ -14177,7 +14729,7 @@
         {
           "source": "game/race.c",
           "name": "doreplay",
-          "line": 11133,
+          "line": 11135,
           "signature": "void doreplay(I16 mode, I16 frame_index, I16 frame_offset);",
           "body_sha256": "dd286d73b647899e6563204b9a78a3ab26d0ef5a0b2159ccef4b85b6d70cfc69",
           "global_dependency_candidates": [
@@ -14607,6 +15159,7 @@
             "angle",
             "arrowConn0",
             "arrowConn1",
+            "data",
             "g_column_of_trkdata21_pth",
             "g_cur_track_row",
             "g_hillf",
@@ -15317,6 +15870,7 @@
             "audio_resource_buffer",
             "audiochunktable",
             "audioevent",
+            "data",
             "g_audchnkvalue",
             "g_musicvolumesetting",
             "mus_samplelimit"
@@ -15451,6 +16005,7 @@
           "global_dependency_candidates": [
             "audio_driver_mode",
             "audiochunktable",
+            "data",
             "g_audiodrvvoices_count",
             "i",
             "snd_voices_tbl"
@@ -15489,6 +16044,7 @@
             "audioblock",
             "audiochunktable",
             "chhtsample",
+            "data",
             "g_snaresnd",
             "kick_res",
             "resource_sound_hit",
@@ -15606,6 +16162,7 @@
           "body_sha256": "38689456395df595fb9f12795e7062196ebc894ec02994a5bed1e958526132fd",
           "global_dependency_candidates": [
             "audiochunktable",
+            "data",
             "snd_voices_tbl"
           ],
           "aggregate_dependencies": [
@@ -15639,6 +16196,7 @@
           "global_dependency_candidates": [
             "audioblock",
             "audiochunktable",
+            "data",
             "g_audiodrvvoices_count",
             "i",
             "snd_voices_tbl"
@@ -15675,6 +16233,7 @@
           "global_dependency_candidates": [
             "audio_driver_mode",
             "audiochunktable",
+            "data",
             "g_audiodrvvoices_count",
             "i",
             "snd_voices_tbl"
@@ -16047,6 +16606,7 @@
           "body_sha256": "1ef27bf59929898b1adb12dc88c7b4b1e3c851d88678dae849af43d3e300fc18",
           "global_dependency_candidates": [
             "height",
+            "shape",
             "uint16_t",
             "width"
           ],
@@ -16259,17 +16819,17 @@
       "portable": [
         {
           "source": "port/boundary_adapter.py",
-          "line": 45,
+          "line": 68,
           "name": "instrument"
         }
       ],
       "operation": {
-        "line": 45,
+        "line": 68,
         "callee": "re.subn",
         "expression": "re.subn(pattern,lambda m:m[1]+'port_boundary_impl_'+name+m[2],text,count=1)"
       },
-      "function_line": 37,
-      "function_sha256": "7dc770a6c9a3aba12d994f4616d564dbd3b5bb0a9ec920c38ff8a87a573482b4",
+      "function_line": 60,
+      "function_sha256": "93ddb0fc07ceac4ab7834ffe307b5e4ec81384385cc5a98693baa44f7e4cd96e",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16277,21 +16837,23 @@
       "prior_original_tests": []
     },
     {
-      "id": "build_adapter:port/boundary_adapter.py::phase_adapt",
+      "id": "build_adapter:port/boundary_adapter.py::phase_adapt:0",
       "kind": "build_adapter",
       "name": "phase_adapt",
       "portable": [
         {
           "source": "port/boundary_adapter.py",
-          "line": 64,
+          "line": 112,
           "name": "phase_adapt"
         }
       ],
       "operation": {
-        "line": 64,
-        "callee": "generated overlay",
-        "expression": "def phase_adapt(source,text):\n    from semantic_audit import functions\n    from host_probe_declarations import mask_comments\n    def prepend(name,statement):\n        nonlocal text\n        body=functions(text)[name]['body']\n        brace=mask_comments(body).index('{');at=text.index(body)\n        text=text[:at]+body[:brace+1]+'\\n    '+statement+'\\n'+body[brace+1:]+text[at+len(body):]\n    phases={'game/frontend.c':{'run_intro':1,'select':2,'getprotection':3},\n            'lib/lineedit.c':{'get_pstring':4},'game/race.c':{'run_game':5}}\n    for name,phase in phases.get(source,{}).items():\n        prepend(name,'port_input_script_phase('+str(phase)+');')\n    if source=='game/race.c':\n        prepend('moveeverything','port_input_script_step((uint16_t)tmr2);')\n    return 'extern void port_input_script_phase(unsigned);\\nextern void port_input_script_step(uint16_t);\\n'+text"
+        "line": 112,
+        "callee": "re.subn",
+        "expression": "re.subn(pattern,r'\\1port_dodash_impl\\2',text,count=1)"
       },
+      "function_line": 97,
+      "function_sha256": "10e267005b034b3787244bbce0caf3f8f0d75e8d333149dadf01eaa525f91571",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16531,7 +17093,7 @@
         "expression": "adapt_aggregate_views(probe.legacy_target_widths(\n        aggregate_header.read_text(encoding=\"latin-1\")))"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16555,7 +17117,7 @@
         "expression": "re.sub(r\"(?m)^extern [^;]*\\b\" + re.escape(name) + r\"\\([^;]*;\",\n                         lambda _: prototype, central)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16579,7 +17141,7 @@
         "expression": "probe.transformed_source(\n            source, text, local_fns, local_data, shared_tags)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16603,7 +17165,7 @@
         "expression": "adapt_host_idle_waits(source, transformed)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16627,7 +17189,7 @@
         "expression": "adapt_render_layers(source, transformed)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16641,17 +17203,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 463,
+          "line": 465,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 463,
+        "line": 465,
         "callee": "adapt_word_sentinels",
         "expression": "adapt_word_sentinels(transformed, Path(source).name)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16665,17 +17227,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 526,
+          "line": 528,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 526,
+        "line": 528,
         "callee": "adapt_aggregate_views",
         "expression": "adapt_aggregate_views(probe.legacy_target_widths(transformed))"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16689,17 +17251,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 529,
+          "line": 531,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 529,
+        "line": 531,
         "callee": "adapt_sound_observers",
         "expression": "adapt_sound_observers(source, transformed,\n            (ROOT / \"port\" / \"sound_record.h\").as_posix())"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16713,17 +17275,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 564,
+          "line": 566,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 564,
+        "line": 566,
         "callee": "transformed.replace",
         "expression": "transformed.replace(\"((int16_t (*)())instringz)\", \"port_call_read_line\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16737,17 +17299,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 570,
+          "line": 572,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 570,
+        "line": 572,
         "callee": "host_view_contracts",
         "expression": "host_view_contracts(source)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16761,17 +17323,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 571,
+          "line": 573,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 571,
+        "line": 573,
         "callee": "adapt_boundary_phases",
         "expression": "adapt_boundary_phases(source, transformed)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16795,7 +17357,7 @@
         "expression": "cfg.replace(\"norm_zone(struct VECTOR* vec);\",\n                              \"extern I16 norm_zone(struct VECTOR* vec);\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16819,7 +17381,7 @@
         "expression": "transformed.replace(\n                random_wait_call,\n                \"          port_test_random_wait_begin();\\n\"\n                \"          seedrandom();\\n\"\n                \"          port_test_random_wait_end();\\n\"\n                \"          if (pass_check_flag == 0)\", 1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16843,7 +17405,7 @@
         "expression": "transformed.replace(original, original +\n                \"\\n    /* The caller still consumes its original question RNG draw. */\\n\"\n                \"    if (!port_config_manual_word_check() &&\\n\"\n                \"        !port_input_test_auto_protection_enabled()) {\\n\"\n                \"        pass_check_flag = 1; return;\\n    }\", 1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16867,7 +17429,7 @@
         "expression": "transformed.replace(\n                \"        instringz(userInput, textLength, points[0].x, points[0].y, 30000);\",\n                answer_read, 1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16891,7 +17453,7 @@
         "expression": "re.subn(\n                r\"(?m)^(\\s*)(?:int|I16)\\s+main(?=\\s*\\()\",\n                r\"\\1int stunts_game_main\",\n                transformed, count=1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16905,17 +17467,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 441,
+          "line": 443,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 441,
+        "line": 443,
         "callee": "transformed.replace",
         "expression": "transformed.replace(\n                old,\n                \"ellipseh((struct Point *)(uintptr_t)(uint16_t)source, buffer);\",\n                1,\n            )"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16929,17 +17491,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 453,
+          "line": 455,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 453,
+        "line": 455,
         "callee": "transformed.replace",
         "expression": "transformed.replace(old,\n                \"trackData = (struct VECTOR far *)((uint8_t *)\"\n                \"objectInfo->si_cameraDataOffset + sizeof(struct VECTOR) * 7u);\", 1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16953,17 +17515,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 456,
+          "line": 458,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 456,
+        "line": 458,
         "callee": "adapt_gameplay_word_arithmetic",
         "expression": "adapt_gameplay_word_arithmetic(transformed)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -16977,17 +17539,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 459,
+          "line": 461,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 459,
+        "line": 461,
         "callee": "adapt_preview_word_arithmetic",
         "expression": "adapt_preview_word_arithmetic(transformed)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17001,17 +17563,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 461,
+          "line": 463,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 461,
+        "line": 463,
         "callee": "adapt_wheel_update_inputs",
         "expression": "adapt_wheel_update_inputs(transformed)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17025,17 +17587,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 466,
+          "line": 468,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 466,
+        "line": 468,
         "callee": "adapt_renderer_word_arithmetic",
         "expression": "adapt_renderer_word_arithmetic(transformed)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17049,17 +17611,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 481,
+          "line": 483,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 481,
+        "line": 483,
         "callee": "_function",
         "expression": "_function(transformed,\"seedrandom\",entropy_boundary)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17073,17 +17635,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 482,
+          "line": 484,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 482,
+        "line": 484,
         "callee": "transformed.replace",
         "expression": "transformed.replace(\"rand();\", \"port_random_test_rand();\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17097,17 +17659,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 498,
+          "line": 500,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 498,
+        "line": 500,
         "callee": "transformed.replace",
         "expression": "transformed.replace(old,\n                \"void FAR audio_set_chunk_callback(U16 chunk, void (*value)(I16))\", 1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17121,17 +17683,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 509,
+          "line": 511,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 509,
+        "line": 511,
         "callee": "transformed.replace",
         "expression": "transformed.replace(old,\n                \"    sample = resource->data;\\n    if (sample == 0) return -1;\\n\"\n                \"    if (sample[AUDIO_SAMPLE_KIND_OFFSET] == AUDIO_SAMPLE_KIND_PERCUSSION) {\", 1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17145,17 +17707,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 528,
+          "line": 530,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 528,
+        "line": 530,
         "callee": "transformed.replace",
         "expression": "transformed.replace(\"I16 cap(I16 ch)\", \"int cap(int ch)\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17169,17 +17731,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 537,
+          "line": 539,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 537,
+        "line": 539,
         "callee": "host_config.replace",
         "expression": "host_config.replace(\"extern I16 inverse_power_of_two_table[32];\",\n                                               \"extern I32 inverse_power_of_two_table[32];\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17193,17 +17755,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 540,
+          "line": 542,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 540,
+        "line": 542,
         "callee": "host_config.replace",
         "expression": "host_config.replace(\"I16 cap(I16\", \"int cap(int\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17217,17 +17779,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 542,
+          "line": 544,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 542,
+        "line": 544,
         "callee": "re.sub",
         "expression": "re.sub(r\"(?m)^extern [^\\n;]*\\b\" + re.escape(name) +\n                                 r\"\\([^\\n]*;\", lambda _: prototype, host_config)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17241,17 +17803,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 550,
+          "line": 552,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 550,
+        "line": 552,
         "callee": "adapt_polygon_storage",
         "expression": "adapt_polygon_storage(transformed)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17265,17 +17827,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 551,
+          "line": 553,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 551,
+        "line": 553,
         "callee": "adapt_render_stream",
         "expression": "adapt_render_stream(transformed)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17289,17 +17851,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 552,
+          "line": 554,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 552,
+        "line": 554,
         "callee": "adapt_camera_capture",
         "expression": "adapt_camera_capture(transformed)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17313,17 +17875,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 553,
+          "line": 555,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 553,
+        "line": 555,
         "callee": "adapt_trans_op",
         "expression": "adapt_trans_op(transformed)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17337,17 +17899,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 561,
+          "line": 563,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 561,
+        "line": 563,
         "callee": "transformed.replace",
         "expression": "transformed.replace(old, \"read_file_with_retry(I16 type, char *first, void *second)\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17361,17 +17923,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 562,
+          "line": 564,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 562,
+        "line": 564,
         "callee": "transformed.replace",
         "expression": "transformed.replace(\"loadfileatz(first, second, third)\",\n                                              \"loadfileatz(first, second)\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17385,17 +17947,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 566,
+          "line": 568,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 566,
+        "line": 568,
         "callee": "adapt_scene_table_indices",
         "expression": "adapt_scene_table_indices(transformed)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17409,17 +17971,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 567,
+          "line": 569,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 567,
+        "line": 569,
         "callee": "adapt_update_frame",
         "expression": "adapt_update_frame(transformed)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17443,7 +18005,7 @@
         "expression": "transformed.replace(\n                old, \"I16 far floadreq(I8 *path, I8 *selected_name, I8 *attributes,\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17467,7 +18029,7 @@
         "expression": "transformed.replace(\n                \"extern I8 *file_combine_and_find(I8 *, I8 *, I16);\",\n                \"extern I8 *file_combine_and_find(I8 *, I8 *, I8 *);\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17491,7 +18053,7 @@
         "expression": "transformed.replace(\n                file_row, \"        if (files_found >= 127) break; /* Host list bound. */\\n\" + file_row)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17515,7 +18077,7 @@
         "expression": "transformed.replace(old, \"\", 1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17529,17 +18091,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 490,
+          "line": 492,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 490,
+        "line": 492,
         "callee": "transformed.replace",
         "expression": "transformed.replace(\"exit(1);\", \"port_guest_exit(1);\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17553,17 +18115,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 493,
+          "line": 495,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 493,
+        "line": 495,
         "callee": "route_audio_vectors",
         "expression": "route_audio_vectors(transformed)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17577,17 +18139,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 518,
+          "line": 520,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 518,
+        "line": 520,
         "callee": "re.subn",
         "expression": "re.subn(pattern, lambda m: m.group(1) +\n                    \"\\n    if (!port_audio_is_active()) \" + stop, transformed, count=1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17601,17 +18163,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 535,
+          "line": 537,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 535,
+        "line": 537,
         "callee": "host_config.replace",
         "expression": "host_config.replace(f\"extern I16 {name};\", f\"extern I32 {name};\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17635,7 +18197,7 @@
         "expression": "re.subn(\n                    r\"(?m)^void\\s+far\\s+\" + cursor_draw + r\"\\(void\\)\",\n                    \"void far stunts_\" + cursor_draw + \"(void)\", transformed, count=1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17659,7 +18221,7 @@
         "expression": "re.subn(\n                r\"(?m)^void\\s+movesim\\s*\\(\\s*\\)\\s*\\{\",\n                \"void stunts_update_gamestate(void) {\",\n                transformed, count=1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17683,7 +18245,7 @@
         "expression": "body.replace(\"rand()\", \"port_random_test_rand()\", 1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17707,7 +18269,7 @@
         "expression": "re.subn(\n                r\"(?m)^I16\\s+(?:FAR\\s+)?audio_load_driver\\s*\\(\",\n                \"I16 FAR stunts_audio_load_driver_legacy(\",\n                transformed, count=1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17731,7 +18293,7 @@
         "expression": "re.subn(\n                r\"(?m)^(void\\s+FAR\\s+audiodrv_atexit\\s*\\([^\\n]*\\)\\s*\\{)\",\n                r\"\\1\\n    port_audio_shutdown(); return;\", transformed, count=1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17755,7 +18317,7 @@
         "expression": "re.subn(\n                r\"(?m)^(void\\s+FAR\\s+load_audio_finalize\\s*\\([^\\n]*\\)\\s*\\{)\",\n                r\"\\1\\n    /* An unavailable host backend retains resources without dispatch; do not \"\n                \"call the DOS driver image. */\\n    if (port_audio_is_silent()) return;\",\n                transformed, count=1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17779,7 +18341,7 @@
         "expression": "re.subn(\n                r\"(?m)^(void\\s+FAR\\s+audio_driver_func3F\\s*\\([^\\n]*\\)\\s*\\{)\",\n                r\"\\1\\n    /* Dispatch only after the host backend has initialized. */\\n\"\n                \"    if (port_audio_is_silent()) return;\",\n                transformed, count=1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17803,7 +18365,7 @@
         "expression": "transformed.replace(\n                \"norm_zone(struct VECTOR*);\",\n                \"I16 norm_zone(struct VECTOR*);\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17827,7 +18389,7 @@
         "expression": "re.subn(\n                r\"(?m)^(\\s*)norm_zone\\(struct VECTOR\\* vec\\)([ \\t]*\\r?\\n[ \\t]*)\\{\",\n                r\"\\1I16 norm_zone(struct VECTOR* vec)\\2{\", transformed, count=1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17851,7 +18413,7 @@
         "expression": "transformed.replace(\n                old, \"port_timer_copy_counter_words((U16)timerOffset, (U16)timerSegment);\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17875,7 +18437,7 @@
         "expression": "transformed.replace(old,\n                    \"repeat = port_parse_shape2d_helper3((const uint8_t *)src, \"\n                    \"(uint16_t)(page_remaining - literal_cnt));\", 1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17896,10 +18458,10 @@
       "operation": {
         "line": 417,
         "callee": "transformed.replace",
-        "expression": "transformed.replace(\n                original, \"\\t\\tfor (;;) {\\n\\t\\t\\tport_guest_check_stop();\\n\"\n                          \"\\t\\t\\tuint32_t port_activity = port_guest_activity_snapshot();\\n\"\n                          \"\\t\\t\\tif (core.game_frame == tmr2)\\n\"\n                          \"\\t\\t\\t\\tport_guest_wait_for_activity(port_activity);\\n\"\n                          \"\\t\\t\\tport_guest_check_stop();\\n\"\n                          \"\\t\\t\\twhile (core.game_frame != tmr2) {\")"
+        "expression": "transformed.replace(\n                original, \"\\t\\tint port_initial_frame_drawn = 0;\\n\"\n                          \"\\t\\tfor (;;) {\\n\\t\\t\\tport_guest_check_stop();\\n\"\n                          \"\\t\\t\\tuint32_t port_activity = port_guest_activity_snapshot();\\n\"\n                          \"\\t\\t\\tif (port_initial_frame_drawn && core.game_frame == tmr2)\\n\"\n                          \"\\t\\t\\t\\tport_guest_wait_for_activity(port_activity);\\n\"\n                          \"\\t\\t\\tport_guest_check_stop();\\n\"\n                          \"\\t\\t\\tport_initial_frame_drawn = 1;\\n\"\n                          \"\\t\\t\\twhile (core.game_frame != tmr2) {\")"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17913,17 +18475,17 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 435,
+          "line": 437,
           "name": "build_game_objects"
         }
       ],
       "operation": {
-        "line": 435,
+        "line": 437,
         "callee": "transformed.replace",
         "expression": "transformed.replace(old, new, 1)"
       },
       "function_line": 145,
-      "function_sha256": "48881b4ffbd4cd7844dcab7d38ae7a5a0ffab003c60655fa171f86fe1ba89127",
+      "function_sha256": "53a1e1a3b65ee407f4bcf1412e3b805bfa57ae9370b1dd7b5985cf6d2b56eb48",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -17937,16 +18499,16 @@
       "portable": [
         {
           "source": "port/build.py",
-          "line": 922,
+          "line": 924,
           "name": "run"
         }
       ],
       "operation": {
-        "line": 922,
+        "line": 924,
         "callee": "name.replace",
         "expression": "name.replace('_','-')"
       },
-      "function_line": 898,
+      "function_line": 900,
       "function_sha256": "fe1a6c2bd33456e408c98c56e8c987a3cbfe790ea1bcd1bef6bd3bbb61b72283",
       "exercised": false,
       "status": "not exercised",
@@ -18831,7 +19393,7 @@
         "expression": "body.replace(old, new)"
       },
       "function_line": 25,
-      "function_sha256": "d97a0959479670c6837a295394a91fea87571e03c188f4f359396266fedb2810",
+      "function_sha256": "f97441dccea124bdf6902d1f470d05a96e015003b9f9e7ae24857a5d161e4d6d",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -18845,17 +19407,17 @@
       "portable": [
         {
           "source": "port/sound_adapter.py",
-          "line": 42,
+          "line": 41,
           "name": "adapt_sound_observers"
         }
       ],
       "operation": {
-        "line": 42,
+        "line": 41,
         "callee": "_function",
-        "expression": "_function(text, \"audio_init_chunk\", chunk_init)"
+        "expression": "_function(text, \"audio_init_engine\", engine_init)"
       },
       "function_line": 25,
-      "function_sha256": "d97a0959479670c6837a295394a91fea87571e03c188f4f359396266fedb2810",
+      "function_sha256": "f97441dccea124bdf6902d1f470d05a96e015003b9f9e7ae24857a5d161e4d6d",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -18869,17 +19431,17 @@
       "portable": [
         {
           "source": "port/sound_adapter.py",
-          "line": 73,
+          "line": 47,
           "name": "adapt_sound_observers"
         }
       ],
       "operation": {
-        "line": 73,
+        "line": 47,
         "callee": "_function",
-        "expression": "_function(text, \"process_audio_chunk_event\", chunk_event)"
+        "expression": "_function(text, name, lambda body, k=kind, v=values:\n                _hook(k, \"-1\", \"-1\", \"0\", v) + body)"
       },
       "function_line": 25,
-      "function_sha256": "d97a0959479670c6837a295394a91fea87571e03c188f4f359396266fedb2810",
+      "function_sha256": "f97441dccea124bdf6902d1f470d05a96e015003b9f9e7ae24857a5d161e4d6d",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -18893,17 +19455,17 @@
       "portable": [
         {
           "source": "port/sound_adapter.py",
-          "line": 79,
+          "line": 54,
           "name": "adapt_sound_observers"
         }
       ],
       "operation": {
-        "line": 79,
+        "line": 54,
         "callee": "_function",
-        "expression": "_function(text, \"reset_audio_event_state\", voice_complete)"
+        "expression": "_function(text, \"audio_init_chunk\", chunk_init)"
       },
       "function_line": 25,
-      "function_sha256": "d97a0959479670c6837a295394a91fea87571e03c188f4f359396266fedb2810",
+      "function_sha256": "f97441dccea124bdf6902d1f470d05a96e015003b9f9e7ae24857a5d161e4d6d",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -18917,17 +19479,65 @@
       "portable": [
         {
           "source": "port/sound_adapter.py",
-          "line": 87,
+          "line": 85,
           "name": "adapt_sound_observers"
         }
       ],
       "operation": {
-        "line": 87,
+        "line": 85,
+        "callee": "_function",
+        "expression": "_function(text, \"process_audio_chunk_event\", chunk_event)"
+      },
+      "function_line": 25,
+      "function_sha256": "f97441dccea124bdf6902d1f470d05a96e015003b9f9e7ae24857a5d161e4d6d",
+      "exercised": false,
+      "status": "not exercised",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": []
+    },
+    {
+      "id": "build_adapter:port/sound_adapter.py::adapt_sound_observers:5",
+      "kind": "build_adapter",
+      "name": "adapt_sound_observers",
+      "portable": [
+        {
+          "source": "port/sound_adapter.py",
+          "line": 91,
+          "name": "adapt_sound_observers"
+        }
+      ],
+      "operation": {
+        "line": 91,
+        "callee": "_function",
+        "expression": "_function(text, \"reset_audio_event_state\", voice_complete)"
+      },
+      "function_line": 25,
+      "function_sha256": "f97441dccea124bdf6902d1f470d05a96e015003b9f9e7ae24857a5d161e4d6d",
+      "exercised": false,
+      "status": "not exercised",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": []
+    },
+    {
+      "id": "build_adapter:port/sound_adapter.py::adapt_sound_observers:6",
+      "kind": "build_adapter",
+      "name": "adapt_sound_observers",
+      "portable": [
+        {
+          "source": "port/sound_adapter.py",
+          "line": 99,
+          "name": "adapt_sound_observers"
+        }
+      ],
+      "operation": {
+        "line": 99,
         "callee": "_function",
         "expression": "_function(text, \"clear_audio_voice\", voice_progress)"
       },
       "function_line": 25,
-      "function_sha256": "d97a0959479670c6837a295394a91fea87571e03c188f4f359396266fedb2810",
+      "function_sha256": "f97441dccea124bdf6902d1f470d05a96e015003b9f9e7ae24857a5d161e4d6d",
       "exercised": false,
       "status": "not exercised",
       "evidence": [],
@@ -21228,6 +21838,7 @@
           "global_dependency_candidates": [
             "Ad15Driver",
             "core",
+            "data",
             "i",
             "size_t"
           ],
@@ -21785,6 +22396,7 @@
           "body_sha256": "08083c52050854809abd442ba8eef6ffaa7702f55b17db1e78fc9e3eb6a9240e",
           "global_dependency_candidates": [
             "Ad15Driver",
+            "data",
             "pair"
           ],
           "aggregate_dependencies": []
@@ -21925,6 +22537,7 @@
           "body_sha256": "358624d8a13e45a17a9014b8e0f000b8ccdcf6b5fd62fac44ab60f53c6df0d84",
           "global_dependency_candidates": [
             "bytes",
+            "data",
             "g_drvaudiocode",
             "int16_t",
             "unused"
@@ -22399,6 +23012,7 @@
           "signature": "static int pc15_sample_stream_from_record(const uint8_t *sample_record,\n                                          const uint8_t **data_out,\n                                          uint16_t *length_out);",
           "body_sha256": "8d362508daf2b08a648e28c65ed27cf05c2e289aa665eb6d9f3cdf6f8a19332e",
           "global_dependency_candidates": [
+            "shape",
             "size_t",
             "uint16_t"
           ],
@@ -22467,6 +23081,7 @@
           "signature": "static void pc15_start_sample_stream(const uint8_t *sample_record,\n                                     uint16_t rate);",
           "body_sha256": "61974f61a2d76a0dde47102fd865a27fdc5d2c66159dfc6edd88a39046b7c228",
           "global_dependency_candidates": [
+            "data",
             "path",
             "rate",
             "s_pc15",
@@ -22619,7 +23234,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "port_audio_driver_00",
-          "agrees": 2,
+          "agrees": 3,
           "differs": 0,
           "unmatched_inputs": 0,
           "ordered_step_stream_agrees": true,
@@ -22678,7 +23293,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "port_audio_driver_06",
-          "agrees": 2,
+          "agrees": 3,
           "differs": 0,
           "unmatched_inputs": 0,
           "ordered_step_stream_agrees": true,
@@ -22711,15 +23326,15 @@
         }
       ],
       "exercised": true,
-      "status": "exercised and differs",
+      "status": "exercised and agrees",
       "evidence": [
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "port_audio_driver_09",
-          "agrees": 86,
+          "agrees": 151,
           "differs": 0,
           "unmatched_inputs": 0,
-          "ordered_step_stream_agrees": false,
+          "ordered_step_stream_agrees": true,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
         }
       ],
@@ -22754,7 +23369,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "port_audio_driver_0c",
-          "agrees": 324,
+          "agrees": 648,
           "differs": 0,
           "unmatched_inputs": 0,
           "ordered_step_stream_agrees": false,
@@ -22792,7 +23407,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "port_audio_driver_0f",
-          "agrees": 68,
+          "agrees": 121,
           "differs": 0,
           "unmatched_inputs": 0,
           "ordered_step_stream_agrees": false,
@@ -22830,9 +23445,9 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "port_audio_driver_12",
-          "agrees": 921,
+          "agrees": 1677,
           "differs": 0,
-          "unmatched_inputs": 50,
+          "unmatched_inputs": 100,
           "ordered_step_stream_agrees": false,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
         }
@@ -22889,7 +23504,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "port_audio_driver_18",
-          "agrees": 6,
+          "agrees": 9,
           "differs": 0,
           "unmatched_inputs": 0,
           "ordered_step_stream_agrees": true,
@@ -22951,7 +23566,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "port_audio_driver_1e",
-          "agrees": 35,
+          "agrees": 58,
           "differs": 0,
           "unmatched_inputs": 0,
           "ordered_step_stream_agrees": true,
@@ -22984,15 +23599,15 @@
         }
       ],
       "exercised": true,
-      "status": "exercised and differs",
+      "status": "exercised and agrees",
       "evidence": [
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "port_audio_driver_21",
-          "agrees": 32,
+          "agrees": 58,
           "differs": 0,
           "unmatched_inputs": 0,
-          "ordered_step_stream_agrees": false,
+          "ordered_step_stream_agrees": true,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
         }
       ],
@@ -23027,9 +23642,9 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "port_audio_driver_24",
-          "agrees": 1292,
+          "agrees": 1372,
           "differs": 0,
-          "unmatched_inputs": 34,
+          "unmatched_inputs": 49,
           "ordered_step_stream_agrees": false,
           "claim_limit": "finite calls with identical bounded inputs; unmatched inputs are not passes"
         }
@@ -23064,7 +23679,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "port_audio_driver_27",
-          "agrees": 3641,
+          "agrees": 5189,
           "differs": 0,
           "unmatched_inputs": 0,
           "ordered_step_stream_agrees": false,
@@ -23098,7 +23713,7 @@
         {
           "original_capture": "DOSBox-X semantic race",
           "name": "port_audio_driver_30",
-          "agrees": 2534,
+          "agrees": 2918,
           "differs": 0,
           "unmatched_inputs": 0,
           "ordered_step_stream_agrees": false,
@@ -23735,6 +24350,31 @@
       "prior_original_tests": []
     },
     {
+      "id": "native_helper:port/boundary_record.c::bytes_hash",
+      "kind": "native_helper",
+      "name": "bytes_hash",
+      "portable": [
+        {
+          "source": "port/boundary_record.c",
+          "name": "bytes_hash",
+          "line": 40,
+          "signature": "static uint64_t bytes_hash(const uint8_t *p,size_t count,uint64_t h);",
+          "body_sha256": "9387300f73c6cab588f5b29d9ec4804b061c9633066ee84c32ce7b80dd6106d6",
+          "global_dependency_candidates": [
+            "p",
+            "size_t",
+            "uint64_t"
+          ],
+          "aggregate_dependencies": []
+        }
+      ],
+      "exercised": false,
+      "status": "not exercised",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": []
+    },
+    {
       "id": "native_helper:port/boundary_record.c::hex",
       "kind": "native_helper",
       "name": "hex",
@@ -23742,11 +24382,12 @@
         {
           "source": "port/boundary_record.c",
           "name": "hex",
-          "line": 12,
+          "line": 14,
           "signature": "static void hex(const void *data,size_t bytes);",
           "body_sha256": "b5197dc80e203e81010ae990c394899bfe0dcfec4975b7d29d62187d0fa8f34a",
           "global_dependency_candidates": [
             "bytes",
+            "data",
             "hex",
             "i",
             "p",
@@ -23769,10 +24410,11 @@
         {
           "source": "port/boundary_record.c",
           "name": "port_boundary_begin",
-          "line": 44,
+          "line": 78,
           "signature": "int port_boundary_begin(PortBoundaryCall *call,const char *name,const uint32_t *args,\n    unsigned argc,unsigned pointer_mask,const PortBoundaryRegion *regions,unsigned count);",
           "body_sha256": "4b4fe06e916ec863cc9757f92e044d2667d1a0ab25c7aeee4c1a68af90cc78c1",
           "global_dependency_candidates": [
+            "data",
             "i",
             "s_depth",
             "s_scope",
@@ -23795,7 +24437,7 @@
         {
           "source": "port/boundary_record.c",
           "name": "port_boundary_close",
-          "line": 28,
+          "line": 30,
           "signature": "void port_boundary_close(void);",
           "body_sha256": "868a87fc173889d2b537099eb0ae0a0ec22eec3588bbedbf857de5a4ce387e1c",
           "global_dependency_candidates": [],
@@ -23816,10 +24458,11 @@
         {
           "source": "port/boundary_record.c",
           "name": "port_boundary_end",
-          "line": 64,
+          "line": 98,
           "signature": "void port_boundary_end(PortBoundaryCall *call,uint32_t result,int active);",
           "body_sha256": "54a1e8a4e4d67dd66b49380dfd945b0e54410886ff897daf42e708112b369475",
           "global_dependency_candidates": [
+            "data",
             "hex",
             "i",
             "s_depth"
@@ -23841,7 +24484,7 @@
         {
           "source": "port/boundary_record.c",
           "name": "port_boundary_frame",
-          "line": 33,
+          "line": 35,
           "signature": "uint32_t port_boundary_frame(void);",
           "body_sha256": "c8b6fbbd9386fee1370ea667f64e4492c2285685740fc5ef240661fd9bcdc69a",
           "global_dependency_candidates": [
@@ -23865,12 +24508,162 @@
         {
           "source": "port/boundary_record.c",
           "name": "port_boundary_frame_limit",
-          "line": 34,
+          "line": 68,
           "signature": "void port_boundary_frame_limit(uint16_t frame);",
           "body_sha256": "423a6315d7fc661e6aae73a357bfb18e495d3284f83e8736e481cb9a0937b9b1",
           "global_dependency_candidates": [
             "s_limit",
             "uint16_t"
+          ],
+          "aggregate_dependencies": []
+        }
+      ],
+      "exercised": false,
+      "status": "not exercised",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": []
+    },
+    {
+      "id": "native_helper:port/boundary_record.c::port_boundary_graphics_corner",
+      "kind": "native_helper",
+      "name": "port_boundary_graphics_corner",
+      "portable": [
+        {
+          "source": "port/boundary_record.c",
+          "name": "port_boundary_graphics_corner",
+          "line": 54,
+          "signature": "uint64_t port_boundary_graphics_corner(void);",
+          "body_sha256": "db2fb58381f608cb471d307ee2a7a8d5ee94a3ff63c051b19e8f86078dffccc4",
+          "global_dependency_candidates": [
+            "PortSprite",
+            "height",
+            "pixels",
+            "uint64_t"
+          ],
+          "aggregate_dependencies": []
+        }
+      ],
+      "exercised": false,
+      "status": "not exercised",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": []
+    },
+    {
+      "id": "native_helper:port/boundary_record.c::port_boundary_graphics_enable",
+      "kind": "native_helper",
+      "name": "port_boundary_graphics_enable",
+      "portable": [
+        {
+          "source": "port/boundary_record.c",
+          "name": "port_boundary_graphics_enable",
+          "line": 36,
+          "signature": "void port_boundary_graphics_enable(int enabled);",
+          "body_sha256": "2bb8687b65efc99fe8203b682938028b362d3947c19416c1e945d8a1903f4b32",
+          "global_dependency_candidates": [
+            "s_graphics"
+          ],
+          "aggregate_dependencies": []
+        }
+      ],
+      "exercised": false,
+      "status": "not exercised",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": []
+    },
+    {
+      "id": "native_helper:port/boundary_record.c::port_boundary_graphics_enabled",
+      "kind": "native_helper",
+      "name": "port_boundary_graphics_enabled",
+      "portable": [
+        {
+          "source": "port/boundary_record.c",
+          "name": "port_boundary_graphics_enabled",
+          "line": 37,
+          "signature": "int port_boundary_graphics_enabled(void);",
+          "body_sha256": "b0a3916c9c51587bdab488e0424890440838f44d6ac721d6fbaef3ab67678584",
+          "global_dependency_candidates": [
+            "s_graphics"
+          ],
+          "aggregate_dependencies": []
+        }
+      ],
+      "exercised": false,
+      "status": "not exercised",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": []
+    },
+    {
+      "id": "native_helper:port/boundary_record.c::port_boundary_graphics_row9",
+      "kind": "native_helper",
+      "name": "port_boundary_graphics_row9",
+      "portable": [
+        {
+          "source": "port/boundary_record.c",
+          "name": "port_boundary_graphics_row9",
+          "line": 49,
+          "signature": "const uint8_t *port_boundary_graphics_row9(void);",
+          "body_sha256": "e9575378cf28381c346931652f0f8a1147be2fe6f5af15a3b74a9aeeae62e088",
+          "global_dependency_candidates": [
+            "PortSprite",
+            "pixels"
+          ],
+          "aggregate_dependencies": []
+        }
+      ],
+      "exercised": false,
+      "status": "not exercised",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": []
+    },
+    {
+      "id": "native_helper:port/boundary_record.c::port_boundary_graphics_row9_size",
+      "kind": "native_helper",
+      "name": "port_boundary_graphics_row9_size",
+      "portable": [
+        {
+          "source": "port/boundary_record.c",
+          "name": "port_boundary_graphics_row9_size",
+          "line": 44,
+          "signature": "uint16_t port_boundary_graphics_row9_size(void);",
+          "body_sha256": "84d666a9ca536b501d8c587e3cfdffaa484a70d8950e58d0f51ffb29bdea5caf",
+          "global_dependency_candidates": [
+            "PortSprite",
+            "height",
+            "uint16_t"
+          ],
+          "aggregate_dependencies": []
+        }
+      ],
+      "exercised": false,
+      "status": "not exercised",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": []
+    },
+    {
+      "id": "native_helper:port/boundary_record.c::port_boundary_graphics_source",
+      "kind": "native_helper",
+      "name": "port_boundary_graphics_source",
+      "portable": [
+        {
+          "source": "port/boundary_record.c",
+          "name": "port_boundary_graphics_source",
+          "line": 60,
+          "signature": "uint64_t port_boundary_graphics_source(const void *data);",
+          "body_sha256": "d5163f43df29ecd0999f7959e6957dfd6f16b6fd3a001d87f078c400f9897e77",
+          "global_dependency_candidates": [
+            "PortShape2D",
+            "data",
+            "height",
+            "shape",
+            "size_t",
+            "uint64_t",
+            "width"
           ],
           "aggregate_dependencies": []
         }
@@ -23889,7 +24682,7 @@
         {
           "source": "port/boundary_record.c",
           "name": "port_boundary_open",
-          "line": 19,
+          "line": 21,
           "signature": "int port_boundary_open(const char *path);",
           "body_sha256": "dfb93fef2b95cf1303b76b36182ca63891816ac41c004f0766f9960ffbf57df0",
           "global_dependency_candidates": [
@@ -23915,7 +24708,7 @@
         {
           "source": "port/boundary_record.c",
           "name": "port_boundary_scope",
-          "line": 32,
+          "line": 34,
           "signature": "unsigned port_boundary_scope(void);",
           "body_sha256": "1e7869e38937a59d42a5470e0405fd0bcbf1df8b76a29730278f6f1658868724",
           "global_dependency_candidates": [
@@ -23938,7 +24731,7 @@
         {
           "source": "port/boundary_record.c",
           "name": "port_boundary_sim_begin",
-          "line": 35,
+          "line": 69,
           "signature": "void port_boundary_sim_begin(uint16_t frame);",
           "body_sha256": "5865ee0263792e4808df647d5c8cd087549ff214137a54da1805fdcdb0115aac",
           "global_dependency_candidates": [
@@ -23964,7 +24757,7 @@
         {
           "source": "port/boundary_record.c",
           "name": "port_boundary_sim_end",
-          "line": 41,
+          "line": 75,
           "signature": "void port_boundary_sim_end(void);",
           "body_sha256": "3cf0b8699272a8b01956a276a3f5dfb5e4003ac4079d5663ddf930f8b354de43",
           "global_dependency_candidates": [
@@ -25074,6 +25867,7 @@
           "body_sha256": "58e06b5c4a07c4d980d34c34a47a1ca20495cc050ff09e9aeb6ad1feee2ed1b7",
           "global_dependency_candidates": [
             "FILE",
+            "data",
             "path",
             "size_t"
           ],
@@ -26620,6 +27414,29 @@
       "prior_original_tests": []
     },
     {
+      "id": "native_helper:port/input_script.c::port_input_script_phase_value",
+      "kind": "native_helper",
+      "name": "port_input_script_phase_value",
+      "portable": [
+        {
+          "source": "port/input_script.c",
+          "name": "port_input_script_phase_value",
+          "line": 358,
+          "signature": "unsigned port_input_script_phase_value(void);",
+          "body_sha256": "d1cfb61f121552bd616c4de0520ca95f9a63119c056b301298965501f73fd36f",
+          "global_dependency_candidates": [
+            "s_phase"
+          ],
+          "aggregate_dependencies": []
+        }
+      ],
+      "exercised": false,
+      "status": "not exercised",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": []
+    },
+    {
       "id": "native_helper:port/input_script.c::port_input_script_poll",
       "kind": "native_helper",
       "name": "port_input_script_poll",
@@ -26805,7 +27622,7 @@
           "name": "main",
           "line": 140,
           "signature": "int main(int argc, char **argv);",
-          "body_sha256": "f7878bea3c215ff08821d41591ce8b4ecd5a09efd6821eda05820cdfcbf39e06",
+          "body_sha256": "c6e28f059b99cc9694240c800d25f58f4cc2ba1e4c204cac6d6c821b991ccbb0",
           "global_dependency_candidates": [
             "audiodriverstring",
             "below",
@@ -30639,6 +31456,7 @@
           "signature": "static int grow_bytes(uint8_t **data, size_t *capacity, size_t required);",
           "body_sha256": "e821b909210591cfc7af23ead6c5eeedf19b5d24d16f88761411104a3efce634",
           "global_dependency_candidates": [
+            "data",
             "size_t"
           ],
           "aggregate_dependencies": []
@@ -30737,6 +31555,7 @@
             "int16_t",
             "pixels",
             "s_incnums",
+            "shape",
             "size_t",
             "uint16_t",
             "width"
@@ -30762,6 +31581,8 @@
           "signature": "static void *read_binary_resource(const char *name, int fatal);",
           "body_sha256": "39f8d4fe540eca8a898c88dfdf33948885e21851350d5cd787742c8af0011580",
           "global_dependency_candidates": [
+            "data",
+            "shape",
             "size_t"
           ],
           "aggregate_dependencies": []
@@ -30855,6 +31676,7 @@
           "signature": "static void *read_whole_file(const char *name, size_t *size_out, int fatal);",
           "body_sha256": "5788bddc10373fbd606ead78e6c6a7d92b47c2365778d9c631f1851b4ad3fb68",
           "global_dependency_candidates": [
+            "data",
             "size_t"
           ],
           "aggregate_dependencies": []
@@ -30879,6 +31701,7 @@
           "body_sha256": "9e343de90b82b711e599779e95c3bde62b87bccaa7e3430b086c6a100b656d1c",
           "global_dependency_candidates": [
             "PortSprite",
+            "shape",
             "size_t"
           ],
           "aggregate_dependencies": []
@@ -31571,6 +32394,7 @@
           "global_dependency_candidates": [
             "PortShape2D",
             "height",
+            "shape",
             "size_t",
             "width"
           ],
@@ -31591,7 +32415,7 @@
         {
           "source": "port/sprite.c",
           "name": "draw_line_record",
-          "line": 2137,
+          "line": 2143,
           "signature": "static unsigned draw_line_record(unsigned x0_raw, unsigned y0_raw,\n                                 unsigned x1_raw, unsigned y1_raw,\n                                 void *record_pointer,\n                                 int clipping_enabled);",
           "body_sha256": "3f607cd43973bc685fd0c84ca149e7d2c40687e26fbd17cc55cff78d7abe7a94",
           "global_dependency_candidates": [
@@ -31626,6 +32450,7 @@
           "global_dependency_candidates": [
             "PortShape2D",
             "height",
+            "shape",
             "size_t",
             "width"
           ],
@@ -31900,7 +32725,7 @@
         {
           "source": "port/sprite.c",
           "name": "raster_line_div_round",
-          "line": 2121,
+          "line": 2127,
           "signature": "static uint32_t raster_line_div_round(uint32_t numerator, uint16_t slope);",
           "body_sha256": "afc66bbe9ebc0b180f29520df4ab66e231d4e32af07c648adf123d32c0b8d25b",
           "global_dependency_candidates": [
@@ -31923,7 +32748,7 @@
         {
           "source": "port/sprite.c",
           "name": "raster_line_draw_clipped",
-          "line": 2814,
+          "line": 2820,
           "signature": "static void raster_line_draw_clipped(int16_t x1, int16_t y1,\n                                     int16_t x2, int16_t y2,\n                                     int16_t color);",
           "body_sha256": "c20249255054d96f332efff2241d51afbcb4fe9cd8e5ec27656e05a4fd8eca11",
           "global_dependency_candidates": [
@@ -31949,7 +32774,7 @@
         {
           "source": "port/sprite.c",
           "name": "raster_line_fixed",
-          "line": 2104,
+          "line": 2110,
           "signature": "static uint32_t raster_line_fixed(int16_t whole, uint16_t fraction);",
           "body_sha256": "639ee9eed95c40757b562e1a1e5f56bd7918ddafcc70d9c18369f4d51dd5b86c",
           "global_dependency_candidates": [
@@ -31973,7 +32798,7 @@
         {
           "source": "port/sprite.c",
           "name": "raster_line_round_fixed",
-          "line": 2116,
+          "line": 2122,
           "signature": "static int16_t raster_line_round_fixed(int16_t whole, uint16_t fraction);",
           "body_sha256": "2322f980a06fe56d9eb04e93da2a920d89faef3e4f6116bac91ae223448481e5",
           "global_dependency_candidates": [
@@ -32020,7 +32845,7 @@
         {
           "source": "port/sprite.c",
           "name": "raster_line_store_fixed",
-          "line": 2110,
+          "line": 2116,
           "signature": "static void raster_line_store_fixed(int16_t *whole, uint16_t *fraction,\n                                    uint32_t fixed);",
           "body_sha256": "3fd3a1cac9a7b1236cf2b52f015c3c5e013be255d481e488ea59dc5316c94be0",
           "global_dependency_candidates": [
@@ -32093,7 +32918,7 @@
           "name": "raster_polygon",
           "line": 1714,
           "signature": "static void raster_polygon(int16_t color, int16_t point_count,\n                           const int16_t *points, RasterFillMode mode,\n                           int merge_each_row);",
-          "body_sha256": "12931f3380ef5e6b24d225a4d9b791f60f12df4bfd4beea9ad0aa2e693b2df83",
+          "body_sha256": "70a40421c05463cc9a27827018d9a8b3d01d5876bcfb25375b4aa73c4f717683",
           "global_dependency_candidates": [
             "color",
             "i",
@@ -32186,7 +33011,7 @@
         {
           "source": "port/sprite.c",
           "name": "raster_shift_right_signed",
-          "line": 1962,
+          "line": 1968,
           "signature": "static int16_t raster_shift_right_signed(int16_t value, unsigned count);",
           "body_sha256": "1aee967ed44e330d567add5085a3bea6738cbb9a3fc8f77d3487843ee92507a3",
           "global_dependency_candidates": [
@@ -32287,6 +33112,7 @@
             "color",
             "height",
             "int16_t",
+            "shape",
             "size_t",
             "uint16_t",
             "width"
@@ -32313,6 +33139,7 @@
           "body_sha256": "4d8a4912a57335e2cdf3abd94fb31f90ed2f9776aeaa74a316198826d8386714",
           "global_dependency_candidates": [
             "PortShape2D",
+            "shape",
             "size_t"
           ],
           "aggregate_dependencies": []
@@ -32356,7 +33183,7 @@
         {
           "source": "port/sprite.c",
           "name": "sphere_build_ring",
-          "line": 1971,
+          "line": 1977,
           "signature": "static void sphere_build_ring(const int16_t source[6], int16_t output[64]);",
           "body_sha256": "c73b690ece8bb6de5980c18feb3f148bc4220f0c27ba704c9633ee1866c5e069",
           "global_dependency_candidates": [
@@ -32550,9 +33377,11 @@
           "body_sha256": "7af0a81376212aac8dddeb4a5fe7d7f47ffa1b10ca3907f349e9ff66ee957573",
           "global_dependency_candidates": [
             "PortShape2D",
+            "data",
             "height",
             "int16_t",
             "pixels",
+            "shape",
             "size_t",
             "uint16_t",
             "width"
@@ -32603,6 +33432,7 @@
           "global_dependency_candidates": [
             "int16_t",
             "pixels",
+            "shape",
             "uint16_t",
             "window"
           ],
@@ -32654,6 +33484,7 @@
             "bytes",
             "height",
             "pixels",
+            "shape",
             "size_t",
             "uint16_t",
             "width"
@@ -32680,6 +33511,7 @@
           "body_sha256": "3ff888c2c614bb2076f2bb97a308f380b453e0308a97d1e1850766e73d18d1c0",
           "global_dependency_candidates": [
             "PortShape2D",
+            "shape",
             "size_t"
           ],
           "aggregate_dependencies": []
@@ -33999,7 +34831,7 @@
         {
           "source": "port/trace.c",
           "name": "port_trace_audio_publication",
-          "line": 342,
+          "line": 344,
           "signature": "void port_trace_audio_publication(uint32_t frame_count);",
           "body_sha256": "9993119b8792b3e1aba3029c456a537e621149fe2ab448ef0031d2c697e47407",
           "global_dependency_candidates": [
@@ -34022,7 +34854,7 @@
         {
           "source": "port/trace.c",
           "name": "port_trace_audio_sink",
-          "line": 395,
+          "line": 397,
           "signature": "void port_trace_audio_sink(void);",
           "body_sha256": "f0409d2c897dab50cad0214ea04355d8c984bff7e08c5c1872fa89cf2fc3e171",
           "global_dependency_candidates": [
@@ -34066,7 +34898,7 @@
         {
           "source": "port/trace.c",
           "name": "port_trace_debug_capture",
-          "line": 324,
+          "line": 326,
           "signature": "void port_trace_debug_capture(uint64_t frame_id, const char *directory);",
           "body_sha256": "c9eba5f0c3483c3c800288d8e3d6fcccf2ac02d3be3e0bfa5bd04fd708b2dba5",
           "global_dependency_candidates": [
@@ -34089,7 +34921,7 @@
         {
           "source": "port/trace.c",
           "name": "port_trace_host_present",
-          "line": 304,
+          "line": 306,
           "signature": "void port_trace_host_present(uint64_t frame_id);",
           "body_sha256": "ca3847ce249c55ddef58bfa0fb223621d67377a23d9a2fb3a385047230c83e78",
           "global_dependency_candidates": [
@@ -34112,7 +34944,7 @@
         {
           "source": "port/trace.c",
           "name": "port_trace_host_stop",
-          "line": 364,
+          "line": 366,
           "signature": "void port_trace_host_stop(const char *reason);",
           "body_sha256": "42a0300acfce5487602d8668b8edb1d542ff4d853af3939796d6422fe0722bd2",
           "global_dependency_candidates": [
@@ -34284,7 +35116,7 @@
         {
           "source": "port/trace.c",
           "name": "port_trace_startup",
-          "line": 383,
+          "line": 385,
           "signature": "void port_trace_startup(uint64_t seed,const char *source,int rate,int detail,int dirty);",
           "body_sha256": "c2c849f947988808d9627ee9e8a5ce21bf2f6e7919e08efb120ef6f3f5628496",
           "global_dependency_candidates": [
@@ -34333,7 +35165,7 @@
           "name": "port_trace_video_publication",
           "line": 268,
           "signature": "void port_trace_video_publication(const char *reason);",
-          "body_sha256": "9483d51f2c30fec48ceedb8458d1dbec0fdd86acc347c21132bb03bb47924ee4",
+          "body_sha256": "e2160ccb2b6d2b8fdd8ee684473295484ed3f7f9bf4883372b774cb10ab4e54c",
           "global_dependency_candidates": [
             "game_frame",
             "game_mode",
@@ -35722,22 +36554,22 @@
     }
   ],
   "summary": {
-    "boundaries": 1382,
+    "boundaries": 1393,
     "kinds": {
       "asm": 333,
       "host": 113,
-      "adapted_c": 91,
-      "build_adapter": 162,
+      "adapted_c": 92,
+      "build_adapter": 164,
       "semantic_macro": 60,
-      "native_helper": 598,
+      "native_helper": 606,
       "semantic_contract": 25
     },
     "statuses": {
-      "not exercised": 1306,
-      "exercised and agrees": 68,
-      "exercised and differs": 8
+      "not exercised": 1313,
+      "exercised and agrees": 74,
+      "exercised and differs": 6
     },
-    "changed_historical_c_functions": 91,
+    "changed_historical_c_functions": 92,
     "reconstructed_asm_modules": [
       "game/rpmrand.ASM",
       "lib/bmpmask.ASM",
@@ -35782,156 +36614,206 @@
     ],
     "observed_routines": {
       "fixedmult": {
-        "agrees": 1500,
+        "agrees": 1692,
         "differs": 0,
-        "unmatched_inputs": 4
+        "unmatched_inputs": 0
       },
       "int15": {
-        "agrees": 2,
+        "agrees": 3,
         "differs": 0,
         "unmatched_inputs": 0
       },
       "int33": {
-        "agrees": 22,
+        "agrees": 33,
         "differs": 0,
         "unmatched_inputs": 0
       },
       "intatan": {
-        "agrees": 2438,
+        "agrees": 2560,
         "differs": 0,
         "unmatched_inputs": 0
       },
       "intcos": {
-        "agrees": 4304,
+        "agrees": 4480,
         "differs": 0,
         "unmatched_inputs": 0
       },
       "inthypot": {
-        "agrees": 1070,
+        "agrees": 1121,
         "differs": 0,
         "unmatched_inputs": 0
       },
       "intsin": {
-        "agrees": 4304,
+        "agrees": 4480,
         "differs": 0,
         "unmatched_inputs": 0
       },
       "joystate": {
-        "agrees": 10,
+        "agrees": 15,
         "differs": 0,
         "unmatched_inputs": 0
       },
       "mat_vec": {
-        "agrees": 99448,
+        "agrees": 107396,
         "differs": 0,
-        "unmatched_inputs": 8
+        "unmatched_inputs": 0
       },
       "mygetseeds": {
-        "agrees": 4,
+        "agrees": 3,
         "differs": 0,
         "unmatched_inputs": 0
       },
       "myrandom": {
-        "agrees": 41052,
+        "agrees": 61578,
         "differs": 0,
         "unmatched_inputs": 0
       },
       "mysetseeds": {
-        "agrees": 2,
+        "agrees": 3,
         "differs": 0,
-        "unmatched_inputs": 2
+        "unmatched_inputs": 3
       },
       "normkey": {
-        "agrees": 24,
+        "agrees": 36,
         "differs": 0,
         "unmatched_inputs": 0
       },
       "normkeyi": {
-        "agrees": 420,
+        "agrees": 451,
         "differs": 0,
         "unmatched_inputs": 0
       },
       "transmult": {
-        "agrees": 5892,
+        "agrees": 6218,
         "differs": 0,
         "unmatched_inputs": 0
       },
       "zclipline": {
-        "agrees": 2048,
+        "agrees": 2124,
         "differs": 0,
         "unmatched_inputs": 0
       },
       "port_audio_driver_00": {
-        "agrees": 2,
+        "agrees": 3,
         "differs": 0,
         "unmatched_inputs": 0,
         "ordered_step_stream_agrees": true
       },
       "port_audio_driver_06": {
-        "agrees": 2,
+        "agrees": 3,
         "differs": 0,
         "unmatched_inputs": 0,
         "ordered_step_stream_agrees": true
       },
       "port_audio_driver_09": {
-        "agrees": 86,
+        "agrees": 151,
         "differs": 0,
         "unmatched_inputs": 0,
-        "ordered_step_stream_agrees": false
+        "ordered_step_stream_agrees": true
       },
       "port_audio_driver_0c": {
-        "agrees": 324,
+        "agrees": 648,
         "differs": 0,
         "unmatched_inputs": 0,
         "ordered_step_stream_agrees": false
       },
       "port_audio_driver_0f": {
-        "agrees": 68,
+        "agrees": 121,
         "differs": 0,
         "unmatched_inputs": 0,
         "ordered_step_stream_agrees": false
       },
       "port_audio_driver_12": {
-        "agrees": 921,
+        "agrees": 1677,
         "differs": 0,
-        "unmatched_inputs": 50,
+        "unmatched_inputs": 100,
         "ordered_step_stream_agrees": false
       },
       "port_audio_driver_18": {
-        "agrees": 6,
+        "agrees": 9,
         "differs": 0,
         "unmatched_inputs": 0,
         "ordered_step_stream_agrees": true
       },
       "port_audio_driver_1e": {
-        "agrees": 35,
+        "agrees": 58,
         "differs": 0,
         "unmatched_inputs": 0,
         "ordered_step_stream_agrees": true
       },
       "port_audio_driver_21": {
-        "agrees": 32,
+        "agrees": 58,
         "differs": 0,
         "unmatched_inputs": 0,
-        "ordered_step_stream_agrees": false
+        "ordered_step_stream_agrees": true
       },
       "port_audio_driver_24": {
-        "agrees": 1292,
+        "agrees": 1372,
         "differs": 0,
-        "unmatched_inputs": 34,
+        "unmatched_inputs": 49,
         "ordered_step_stream_agrees": false
       },
       "port_audio_driver_27": {
-        "agrees": 3641,
+        "agrees": 5189,
         "differs": 0,
         "unmatched_inputs": 0,
         "ordered_step_stream_agrees": false
       },
       "port_audio_driver_30": {
-        "agrees": 2534,
+        "agrees": 2918,
         "differs": 0,
         "unmatched_inputs": 0,
         "ordered_step_stream_agrees": false
+      },
+      "andcfxy": {
+        "agrees": 11,
+        "differs": 0,
+        "unmatched_inputs": 0
+      },
+      "clippix": {
+        "agrees": 227,
+        "differs": 0,
+        "unmatched_inputs": 2
+      },
+      "drawpolypt": {
+        "agrees": 1138,
+        "differs": 0,
+        "unmatched_inputs": 0
+      },
+      "movcf": {
+        "agrees": 22,
+        "differs": 0,
+        "unmatched_inputs": 1
+      },
+      "movcfxya": {
+        "agrees": 136,
+        "differs": 0,
+        "unmatched_inputs": 0
+      },
+      "movpackcf": {
+        "agrees": 1,
+        "differs": 0,
+        "unmatched_inputs": 2
+      },
+      "movpackcfxya": {
+        "agrees": 0,
+        "differs": 0,
+        "unmatched_inputs": 2
+      },
+      "orcfxy": {
+        "agrees": 11,
+        "differs": 0,
+        "unmatched_inputs": 0
+      },
+      "preRender_line": {
+        "agrees": 20,
+        "differs": 0,
+        "unmatched_inputs": 0
+      },
+      "preRender_patterned": {
+        "agrees": 29,
+        "differs": 0,
+        "unmatched_inputs": 0
       }
     }
   },

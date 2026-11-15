@@ -115,8 +115,8 @@ def build(audit,comparisons=()):
             row.update(status='exercised and agrees',exercised=True,
                 evidence_basis='existing finite original-machine differential tests; not the whole input domain')
     sys.path.insert(0,str(ROOT/'port'))
-    from boundary_adapter import CONTRACTS
-    captured={c['name']:c for c in CONTRACTS};observed={}
+    from boundary_adapter import CONTRACTS,GRAPHICS_CONTRACTS
+    captured={c['name']:c for c in CONTRACTS+GRAPHICS_CONTRACTS};observed={}
     for comparison in comparisons:
         report=json.loads(comparison.read_text())
         for name,counts in (report['routines']|report.get('driver_entries',{})).items():
