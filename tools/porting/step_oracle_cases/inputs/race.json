@@ -1,0 +1,218 @@
+{
+  "format": "stunts-step-input-v1",
+  "anchor_tick": 0,
+  "events": [
+    {
+      "at": 0,
+      "phase": 1,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        28,
+        156
+      ]
+    },
+    {
+      "at": 0,
+      "phase": 2,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        28,
+        156
+      ]
+    },
+    {
+      "at": 1,
+      "phase": 2,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        28,
+        156
+      ]
+    },
+    {
+      "at": 0,
+      "phase": 3,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        28,
+        156
+      ]
+    },
+    {
+      "at": 0,
+      "phase": 4,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        25,
+        153
+      ]
+    },
+    {
+      "at": 1,
+      "phase": 4,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        19,
+        147
+      ]
+    },
+    {
+      "at": 2,
+      "phase": 4,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        18,
+        146
+      ]
+    },
+    {
+      "at": 3,
+      "phase": 4,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        47,
+        175
+      ]
+    },
+    {
+      "at": 4,
+      "phase": 4,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        23,
+        151
+      ]
+    },
+    {
+      "at": 5,
+      "phase": 4,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        18,
+        146
+      ]
+    },
+    {
+      "at": 6,
+      "phase": 4,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        17,
+        145
+      ]
+    },
+    {
+      "at": 7,
+      "phase": 4,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        23,
+        151
+      ]
+    },
+    {
+      "at": 8,
+      "phase": 4,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        49,
+        177
+      ]
+    },
+    {
+      "at": 9,
+      "phase": 4,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        34,
+        162
+      ]
+    },
+    {
+      "at": 10,
+      "phase": 4,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        28,
+        156
+      ]
+    },
+    {
+      "at": 0,
+      "phase": 5,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        72
+      ]
+    },
+    {
+      "at": 80,
+      "phase": 6,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        200,
+        75
+      ]
+    },
+    {
+      "at": 100,
+      "phase": 6,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        203,
+        77
+      ]
+    },
+    {
+      "at": 120,
+      "phase": 6,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        205,
+        72,
+        30
+      ]
+    },
+    {
+      "at": 121,
+      "phase": 6,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        158
+      ]
+    },
+    {
+      "at": 150,
+      "phase": 6,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        44
+      ]
+    },
+    {
+      "at": 151,
+      "phase": 6,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        172
+      ]
+    },
+    {
+      "at": 160,
+      "phase": 6,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        200,
+        80
+      ]
+    },
+    {
+      "at": 180,
+      "phase": 6,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        208
+      ]
+    }
+  ]
+}

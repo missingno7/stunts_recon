@@ -1,0 +1,252 @@
+{
+  "schema": "stunts-dosbox-service-cases-v1",
+  "provenance": {
+    "schema": "stunts-dosbox-tick-receipt-v1",
+    "returncode": 0,
+    "seconds": 13.02783759997692,
+    "audio": "ad15",
+    "requested_ticks": 3000,
+    "cycles": 30000,
+    "executable_sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+    "dosbox_sha256": "b8f3390f4a070be7e6dfb67e65885d6f48f0cca0e0727cbcac54e2089ddc0038",
+    "oracle_lock_sha256": "9f40e20b5a1855de03760df68d14ae5455e019172b81173ba76dd0fba4699804",
+    "script_sha256": "75509ea1137701937810be3328ab88afa3016e4dcc37aa828a0cacfbaa1e2330",
+    "driver_sha256": "e32b44c8ee6bf2046fc93359c225f3d99e559c94926594f6e3468e1c317afe26",
+    "observer_sha256": "81732ea8fab025cd593b861f66072b681fe7f9f3eaccc790031f60ca33d13760",
+    "bindings_sha256": "6088558b051016db554afcff3a0544a1d4db3090aba05fa90dce5bdbe9de1675",
+    "capture_sha256": "ca72c769767e6e52b9dc84176b7917ee1b150b996f2d770c07deeec0ca6b6a4b",
+    "frames_sha256": "96b0a6523158072282920d27af70b21a1b76331c9e525f57facbaa0a7448eaed",
+    "boundary_observer_sha256": "7ada4767851e011c1639bcb0e03436cc60143479ad514e7f8e7944f3764dea58",
+    "boundary_bindings_sha256": "c9b4a5934358b2ca3fa218634bf5b7dbf78392dda25ba13447c0a13f99db8d24",
+    "boundary_capture_sha256": "6b275740df9fba2b88e57b5410bbf8bb83c2d41b9d19261c3a1b9d416a03a263",
+    "requested_frames": 200
+  },
+  "service_calls": [
+    {
+      "name": "int15",
+      "args": [
+        49665,
+        0,
+        0
+      ],
+      "result": null,
+      "regions": [
+        {
+          "name": "register_result",
+          "read": 0,
+          "alias": -1,
+          "offset": 0,
+          "after": "0100aa000000"
+        }
+      ]
+    },
+    {
+      "name": "int33",
+      "args": [
+        0,
+        0,
+        0
+      ],
+      "result": null,
+      "regions": [
+        {
+          "name": "register_result",
+          "read": 0,
+          "alias": -1,
+          "offset": 0,
+          "after": "ffff03000000"
+        }
+      ]
+    },
+    {
+      "name": "int33",
+      "args": [
+        7,
+        0,
+        638
+      ],
+      "result": null,
+      "regions": [
+        {
+          "name": "register_result",
+          "read": 0,
+          "alias": -1,
+          "offset": 0,
+          "after": "000000000000"
+        }
+      ]
+    },
+    {
+      "name": "int33",
+      "args": [
+        8,
+        0,
+        199
+      ],
+      "result": null,
+      "regions": [
+        {
+          "name": "register_result",
+          "read": 0,
+          "alias": -1,
+          "offset": 0,
+          "after": "000000000000"
+        }
+      ]
+    },
+    {
+      "name": "int33",
+      "args": [
+        15,
+        16,
+        16
+      ],
+      "result": null,
+      "regions": [
+        {
+          "name": "register_result",
+          "read": 0,
+          "alias": -1,
+          "offset": 0,
+          "after": "000000000000"
+        }
+      ]
+    },
+    {
+      "name": "int33",
+      "args": [
+        3,
+        0,
+        0
+      ],
+      "result": null,
+      "regions": [
+        {
+          "name": "register_result",
+          "read": 0,
+          "alias": -1,
+          "offset": 0,
+          "after": "000040016400"
+        }
+      ]
+    },
+    {
+      "name": "int33",
+      "args": [
+        3,
+        0,
+        0
+      ],
+      "result": null,
+      "regions": [
+        {
+          "name": "register_result",
+          "read": 0,
+          "alias": -1,
+          "offset": 0,
+          "after": "000040016400"
+        }
+      ]
+    },
+    {
+      "name": "int33",
+      "args": [
+        3,
+        0,
+        0
+      ],
+      "result": null,
+      "regions": [
+        {
+          "name": "register_result",
+          "read": 0,
+          "alias": -1,
+          "offset": 0,
+          "after": "000040016400"
+        }
+      ]
+    },
+    {
+      "name": "int33",
+      "args": [
+        3,
+        0,
+        0
+      ],
+      "result": null,
+      "regions": [
+        {
+          "name": "register_result",
+          "read": 0,
+          "alias": -1,
+          "offset": 0,
+          "after": "000040016400"
+        }
+      ]
+    },
+    {
+      "name": "int33",
+      "args": [
+        3,
+        0,
+        0
+      ],
+      "result": null,
+      "regions": [
+        {
+          "name": "register_result",
+          "read": 0,
+          "alias": -1,
+          "offset": 0,
+          "after": "000040016400"
+        }
+      ]
+    },
+    {
+      "name": "int33",
+      "args": [
+        7,
+        0,
+        640
+      ],
+      "result": null,
+      "regions": [
+        {
+          "name": "register_result",
+          "read": 0,
+          "alias": -1,
+          "offset": 0,
+          "after": "000000000000"
+        }
+      ]
+    },
+    {
+      "name": "int33",
+      "args": [
+        8,
+        0,
+        200
+      ],
+      "result": null,
+      "regions": [
+        {
+          "name": "register_result",
+          "read": 0,
+          "alias": -1,
+          "offset": 0,
+          "after": "000000000000"
+        }
+      ]
+    }
+  ],
+  "keyboard": {
+    "raw_scans": [
+      205,
+      72,
+      30
+    ],
+    "pending_result": 97,
+    "next_result": 0,
+    "authority": "Original INT9 kb_intr_data3=2 bytes; semantic raw input slot 120, normkeyi after frames 121/122"
+  }
+}
