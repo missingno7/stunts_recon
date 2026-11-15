@@ -103,6 +103,23 @@ void port_guest_stop_after_publication(void);
 void port_guest_request_stop(const char *reason);
 void port_guest_check_stop(void);
 void port_timer_pump(void);
+void port_guest_yield(void);
+void port_guest_wait_until_ns(uint64_t deadline);
+void port_timer_guest_begin(void);
+void port_timer_guest_finish(void);
+void port_timer_cancel(void);
+int port_timer_host_wait(void);
+int port_timer_host_grant(void);
+uint64_t port_timer_raw_tick(void);
+void port_input_set_queue_tick(uint64_t tick);
+void port_input_queue_event(int type, int code, int value);
+void port_input_apply_queued(uint64_t tick);
+#ifdef PORT_TICK_HANDSHAKE
+#define port_host_input_event port_input_queue_event
+#else
+#define port_host_input_event port_input_handle_event
+#endif
+
 uint32_t port_guest_activity_snapshot(void);
 void port_guest_notify_activity(void);
 void port_guest_wait_for_activity(uint32_t observed);

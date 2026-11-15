@@ -54,7 +54,21 @@ static void trace_unlock(void)
 
 static uint64_t relative_ns(uint64_t absolute_ns)
 {
+#ifdef PORT_TICK_HANDSHAKE
+    return absolute_ns; /* input timestamps already belong to the tick timeline */
+#else
     return absolute_ns >= s_trace_origin_ns ? absolute_ns - s_trace_origin_ns : 0;
+#endif
+}
+
+static uint64_t game_ns(uint64_t diagnostic_host_ns)
+{
+#ifdef PORT_TICK_HANDSHAKE
+    (void)diagnostic_host_ns;
+    return port_timer_machine_time_ns();
+#else
+    return relative_ns(diagnostic_host_ns);
+#endif
 }
 
 void port_trace_open(const char *path, const char *asset_root)
@@ -101,18 +115,23 @@ void port_trace_timer_tick(uint64_t tick_id, uint64_t scheduled_ns,
                            uint64_t observed_ns)
 {
     uint64_t scheduled = relative_ns(scheduled_ns);
+#ifdef PORT_TICK_HANDSHAKE
+    uint64_t observed = scheduled;
+#else
     uint64_t observed = relative_ns(observed_ns);
+#endif
     trace_lock();
     if (s_trace != NULL) {
         fprintf(s_trace,
                 "{\"trace_schema\":\"stunts-runtime-trace-v1\","
                 "\"event_type\":\"timer_tick\",\"tick_id\":%llu,"
                 "\"scheduled_tick\":%llu,\"observed_tick\":%llu,"
-                "\"machine_tick\":%llu,\"host_ns\":%llu,"
+                "\"raw_tick_id\":%llu,\"machine_tick\":%llu,\"host_ns\":%llu,"
                 "\"timer_target_hz\":99.99846}\n",
                 (unsigned long long)tick_id,
                 (unsigned long long)scheduled,
                 (unsigned long long)observed,
+                (unsigned long long)(observed / PORT_TIMER_PERIOD_NS),
                 (unsigned long long)observed,
                 (unsigned long long)observed_ns);
         fflush(s_trace);
@@ -137,11 +156,12 @@ uint64_t port_trace_sim_step(const uint8_t *game_state, size_t state_size)
         fprintf(s_trace,
                 "{\"trace_schema\":\"stunts-runtime-trace-v1\","
                 "\"event_type\":\"simulation_step\",\"sim_step_id\":%llu,"
-                "\"game_frame\":%u,\"machine_tick\":%llu,\"host_ns\":%llu,"
+                "\"game_frame\":%u,\"raw_tick_id\":%llu,\"machine_tick\":%llu,\"host_ns\":%llu,"
                 "\"runtime_mode\":",
                 (unsigned long long)step_id,
                 (unsigned)game_frame,
-                (unsigned long long)relative_ns(now),
+                (unsigned long long)(game_ns(now) / PORT_TIMER_PERIOD_NS),
+                (unsigned long long)game_ns(now),
                 (unsigned long long)now);
         json_string(s_trace, replay_mode != 0 ? "replay" :
                     (game_mode == 0 ? "live" : "menu"));
@@ -153,10 +173,11 @@ uint64_t port_trace_sim_step(const uint8_t *game_state, size_t state_size)
         fprintf(s_trace,
                 "{\"trace_schema\":\"stunts-runtime-trace-v1\","
                 "\"event_type\":\"state_snapshot\",\"sim_step_id\":%llu,"
-                "\"state_type\":\"GAMESTATE\",\"state_size\":%u,"
+                "\"state_type\":\"GAMESTATE\",\"raw_tick_id\":%llu,\"state_size\":%u,"
                 "\"data_segment\":null,\"dgroup_anchor_ok\":false,"
                 "\"state_origin\":\"SDL3_GUEST_NATIVE\",\"bytes_hex\":\"",
-                (unsigned long long)step_id, (unsigned)state_size);
+                (unsigned long long)step_id,
+                (unsigned long long)(game_ns(now) / PORT_TIMER_PERIOD_NS), (unsigned)state_size);
         if (game_state != NULL) {
             for (i = 0; i < state_size; ++i) {
                 fputc(hex[game_state[i] >> 4], s_trace);
@@ -181,9 +202,10 @@ void port_trace_input_keyboard(uint64_t sequence, uint64_t scheduled_ns,
                 "{\"trace_schema\":\"stunts-runtime-trace-v1\","
                 "\"event_type\":\"input\",\"channel\":\"dos.keyboard.scancodes\","
                 "\"sequence\":%llu,\"scheduled_tick\":%llu,"
-                "\"machine_tick\":%llu,\"payload\":[",
+                "\"raw_tick_id\":%llu,\"machine_tick\":%llu,\"payload\":[",
                 (unsigned long long)sequence,
                 (unsigned long long)relative_ns(scheduled_ns),
+                (unsigned long long)(relative_ns(actual_ns) / PORT_TIMER_PERIOD_NS),
                 (unsigned long long)relative_ns(actual_ns));
         for (i = 0; i < code_count; ++i)
             fprintf(s_trace, "%s%u", i == 0 ? "" : ",", (unsigned)codes[i]);
@@ -203,10 +225,11 @@ void port_trace_input_mouse(uint64_t sequence, uint64_t scheduled_ns,
                 "{\"trace_schema\":\"stunts-runtime-trace-v1\","
                 "\"event_type\":\"input\",\"channel\":\"dos.mouse\","
                 "\"sequence\":%llu,\"scheduled_tick\":%llu,"
-                "\"machine_tick\":%llu,\"payload\":{"
+                "\"raw_tick_id\":%llu,\"machine_tick\":%llu,\"payload\":{"
                 "\"u\":%.9f,\"v\":%.9f,\"buttons\":%u}}\n",
                 (unsigned long long)sequence,
                 (unsigned long long)relative_ns(scheduled_ns),
+                (unsigned long long)(relative_ns(actual_ns) / PORT_TIMER_PERIOD_NS),
                 (unsigned long long)relative_ns(actual_ns),
                 u, v, (unsigned)buttons);
         fflush(s_trace);
@@ -230,14 +253,15 @@ void port_trace_video_publication(const char *reason)
                 "{\"trace_schema\":\"stunts-runtime-trace-v1\","
                 "\"event_type\":\"video_publication\",\"frame_id\":%llu,"
                 "\"sim_step_id\":%llu,\"game_frame\":%u,"
-                "\"video_phase\":\"frame_start\",\"machine_tick\":%llu,"
+                "\"video_phase\":\"frame_start\",\"raw_tick_id\":%llu,\"machine_tick\":%llu,"
                 "\"host_ns\":%llu,\"game_mode\":%u,"
                 "\"game_inputmode\":%u,\"game_replay_mode\":%u,"
                 "\"rate_target_hz\":%u,\"renderer_y_rotation\":%u,\"publication_reason\":",
                 (unsigned long long)s_video_frame_id,
                 (unsigned long long)s_sim_step_id,
                 (unsigned)game_frame,
-                (unsigned long long)relative_ns(now),
+                (unsigned long long)(game_ns(now) / PORT_TIMER_PERIOD_NS),
+                (unsigned long long)game_ns(now),
                 (unsigned long long)now,
                 (unsigned)game_mode, (unsigned)input_mode,
                 (unsigned)replay_mode, (unsigned)rate, (unsigned)y_rotation);
@@ -257,10 +281,11 @@ void port_trace_host_present(uint64_t frame_id)
         fprintf(s_trace,
                 "{\"trace_schema\":\"stunts-runtime-trace-v1\","
                 "\"event_type\":\"host_present\",\"frame_id\":%llu,"
-                "\"present_id\":%llu,\"machine_tick\":%llu,\"host_ns\":%llu}\n",
+                "\"present_id\":%llu,\"raw_tick_id\":%llu,\"machine_tick\":%llu,\"host_ns\":%llu}\n",
                 (unsigned long long)frame_id,
                 (unsigned long long)s_present_id,
-                (unsigned long long)relative_ns(now),
+                (unsigned long long)(game_ns(now) / PORT_TIMER_PERIOD_NS),
+                (unsigned long long)game_ns(now),
                 (unsigned long long)now);
         fflush(s_trace);
     }
@@ -274,9 +299,10 @@ void port_trace_debug_capture(uint64_t frame_id, const char *directory)
     if (s_trace != NULL) {
         fprintf(s_trace, "{\"trace_schema\":\"stunts-runtime-trace-v1\","
                         "\"event_type\":\"debug_capture\",\"frame_id\":%llu,"
-                        "\"machine_tick\":%llu,\"directory\":",
+                        "\"raw_tick_id\":%llu,\"machine_tick\":%llu,\"directory\":",
                 (unsigned long long)frame_id,
-                (unsigned long long)relative_ns(now));
+                (unsigned long long)(game_ns(now) / PORT_TIMER_PERIOD_NS),
+                (unsigned long long)game_ns(now));
         json_string(s_trace, directory);
         fputs("}\n", s_trace);
         fflush(s_trace);
@@ -294,11 +320,12 @@ void port_trace_audio_publication(uint32_t frame_count)
                 "{\"trace_schema\":\"stunts-runtime-trace-v1\","
                 "\"event_type\":\"audio_publication\","
                 "\"audio_publication_id\":%llu,\"audio_frame_count\":%u,"
-                "\"machine_tick\":%llu,\"host_ns\":%llu,"
+                "\"raw_tick_id\":%llu,\"machine_tick\":%llu,\"host_ns\":%llu,"
                 "\"audio_backend\":\"%s\"}\n",
                 (unsigned long long)s_audio_publication_id,
                 (unsigned)frame_count,
-                (unsigned long long)relative_ns(now),
+                (unsigned long long)(game_ns(now) / PORT_TIMER_PERIOD_NS),
+                (unsigned long long)game_ns(now),
                 (unsigned long long)now, port_audio_backend_name());
         fflush(s_trace);
     }
@@ -312,9 +339,10 @@ void port_trace_host_stop(const char *reason)
     if (s_trace != NULL) {
         fprintf(s_trace,
                 "{\"trace_schema\":\"stunts-runtime-trace-v1\","
-                "\"event_type\":\"host_stop\",\"machine_tick\":%llu,"
+                "\"event_type\":\"host_stop\",\"raw_tick_id\":%llu,\"machine_tick\":%llu,"
                 "\"host_ns\":%llu,\"reason\":",
-                (unsigned long long)relative_ns(now),
+                (unsigned long long)(game_ns(now) / PORT_TIMER_PERIOD_NS),
+                (unsigned long long)game_ns(now),
                 (unsigned long long)now);
         json_string(s_trace, reason);
         fputs("}\n", s_trace);

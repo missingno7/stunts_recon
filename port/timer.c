@@ -3,123 +3,146 @@
 
 #include <SDL3/SDL.h>
 
-static SDL_Thread *s_thread;
-static SDL_AtomicInt s_running;
-static SDL_AtomicInt s_activity_generation;
 static SDL_Mutex *s_activity_lock;
-static SDL_Condition *s_activity_changed;
+static SDL_Condition *s_grant_changed, *s_yield_changed;
 static SDL_ThreadID s_guest_thread_id;
 static PortTickClock s_clock;
-static uint64_t s_virtual_clock_origin_ns;
+static uint64_t s_grant;
+static int s_yielded, s_finished, s_cancelled;
+static SDL_AtomicInt s_activity_generation;
 extern volatile uint16_t input_pushed;
 
 uint32_t port_guest_activity_snapshot(void)
-{
-    return (uint32_t)SDL_GetAtomicInt(&s_activity_generation);
-}
+{ return (uint32_t)SDL_GetAtomicInt(&s_activity_generation); }
 
-/* Publish after updating input, IRQ, or shutdown state. Pair the predicate
-   and condition under one mutex so an event between polling and sleeping
-   cannot be lost. No game callbacks execute on the producer threads. */
 void port_guest_notify_activity(void)
 {
-    if (s_activity_lock != NULL)
-        SDL_LockMutex(s_activity_lock);
     SDL_AddAtomicInt(&s_activity_generation, 1);
-    if (s_activity_changed != NULL)
-        SDL_BroadcastCondition(s_activity_changed);
-    if (s_activity_lock != NULL)
-        SDL_UnlockMutex(s_activity_lock);
+}
+
+void port_timer_cancel(void)
+{
+    if (!s_activity_lock) return;
+    SDL_LockMutex(s_activity_lock);
+    s_cancelled = 1;
+    SDL_BroadcastCondition(s_grant_changed);
+    SDL_UnlockMutex(s_activity_lock);
+}
+
+void port_timer_guest_begin(void)
+{ s_guest_thread_id = SDL_GetCurrentThreadID(); }
+
+void port_timer_guest_finish(void)
+{
+    SDL_LockMutex(s_activity_lock);
+    s_finished = 1;
+    SDL_BroadcastCondition(s_yield_changed);
+    SDL_UnlockMutex(s_activity_lock);
+}
+
+/* Main-thread barrier. A timeout is a host watchdog, never a game timer. */
+int port_timer_host_wait(void)
+{
+    int ready;
+    SDL_LockMutex(s_activity_lock);
+    while (!s_yielded && !s_finished) {
+        if (!SDL_WaitConditionTimeout(s_yield_changed, s_activity_lock, 5000)) {
+            SDL_UnlockMutex(s_activity_lock);
+            port_guest_set_exit_status(1);
+            port_guest_request_stop("guest did not reach a tick boundary within 5 seconds");
+            return 0;
+        }
+    }
+    ready = !s_finished;
+    SDL_UnlockMutex(s_activity_lock);
+    return ready;
+}
+
+/* The only production tick grant. Call after host_wait; duplicate or pipelined
+   grants are rejected rather than draining a backlog with newer input. */
+int port_timer_host_grant(void)
+{
+    int ok;
+    SDL_LockMutex(s_activity_lock);
+    ok = s_yielded && !s_finished && !s_cancelled;
+    if (ok) {
+        ++s_grant;
+        s_yielded = 0;
+        SDL_SignalCondition(s_grant_changed);
+    }
+    SDL_UnlockMutex(s_activity_lock);
+    return ok;
+}
+
+uint64_t port_timer_raw_tick(void)
+{ return atomic_load(&s_clock.raw_tick); }
+
+void port_timer_pump(void)
+{
+    if (s_guest_thread_id && SDL_GetCurrentThreadID() == s_guest_thread_id)
+        port_clock_dispatch(&s_clock, &input_pushed);
+}
+
+void port_guest_yield(void)
+{
+    uint64_t before;
+    if (!s_activity_lock || SDL_GetCurrentThreadID() != s_guest_thread_id) return;
+    port_guest_check_stop();
+    before = port_timer_raw_tick();
+    SDL_LockMutex(s_activity_lock);
+    s_yielded = 1;
+    SDL_SignalCondition(s_yield_changed);
+    while (s_grant == before && !s_cancelled)
+        SDL_WaitCondition(s_grant_changed, s_activity_lock);
+    SDL_UnlockMutex(s_activity_lock);
+    port_guest_check_stop();
+    if (s_cancelled) return;
+    port_clock_advance(&s_clock, 1);
+    /* Script sequences precede live-event sequences on a same-tick tie. Both
+       are queued before this grant and applied by this guest, never the host. */
+    port_input_script_pump(port_timer_raw_tick() * PORT_TIMER_PERIOD_NS);
+    port_input_apply_queued(port_timer_raw_tick());
+    port_trace_timer_tick(port_timer_raw_tick(),
+        port_timer_raw_tick() * PORT_TIMER_PERIOD_NS, SDL_GetTicksNS());
+    port_timer_pump(); /* nested dispatch counts ticks but skips callback scan */
 }
 
 void port_guest_wait_for_activity(uint32_t observed)
 {
-    if (s_guest_thread_id == 0 ||
-        SDL_GetCurrentThreadID() != s_guest_thread_id || s_clock.dispatch_depth != 0)
-        return;
-    if (s_activity_lock != NULL && s_activity_changed != NULL) {
-        SDL_LockMutex(s_activity_lock);
-        if (port_guest_activity_snapshot() == observed &&
-            s_clock.dispatched_tick == atomic_load(&s_clock.raw_tick))
-            /* A bounded wait also keeps shutdown cooperative if the clock
-               producer fails. Spurious wakes simply resume the original poll. */
-            SDL_WaitConditionTimeout(s_activity_changed, s_activity_lock,
-                (int32_t)((PORT_TIMER_PERIOD_NS + 999999u) / 1000000u));
-        SDL_UnlockMutex(s_activity_lock);
-    }
-    /* The next original poll owns callback dispatch and timer-delta reads.
-       Returning on shutdown lets that poll reach its cooperative stop check. */
+    if (port_guest_activity_snapshot() == observed) port_guest_yield();
 }
 
-/* The SDL clock thread publishes raw PIT ticks only. DOS timer callbacks run
-   in the guest's address space and touch unsynchronized game/audio globals, so
-   they must execute on the guest thread. The guest drains elapsed IRQs at its
-   cooperative boundaries. */
-void port_timer_pump(void)
+void port_guest_wait_until_ns(uint64_t deadline)
 {
-    if (s_guest_thread_id != 0 &&
-        SDL_GetCurrentThreadID() == s_guest_thread_id)
-        port_clock_dispatch(&s_clock, &input_pushed);
+    while (port_timer_machine_time_ns() < deadline) port_guest_yield();
 }
 
-/* Guest-dispatched epoch, not the producer's possibly-ahead raw publication.
-   Sound requests never read a host clock or advance this observer. */
 void port_timer_observation(uint64_t *tick, int *slot)
 {
     *tick = s_clock.dispatched_tick;
-    *slot = s_clock.dispatch_depth != 0 ? s_clock.callback_slot : -1;
-}
-
-static int timer_thread(void *unused)
-{
-    uint64_t origin = s_virtual_clock_origin_ns;
-    uint64_t tick_id = 0;
-    uint64_t next = origin + PORT_TIMER_PERIOD_NS;
-    (void)unused;
-    while (SDL_GetAtomicInt(&s_running)) {
-        uint64_t now = SDL_GetTicksNS();
-        if (now < next) {
-            SDL_DelayNS(next - now);
-            continue;
-        }
-        do {
-            port_clock_advance(&s_clock, 1);
-            tick_id = atomic_load(&s_clock.raw_tick);
-            port_trace_timer_tick(tick_id, next, now);
-            port_guest_notify_activity();
-            next = origin + (tick_id + 1u) * PORT_TIMER_PERIOD_NS;
-        } while (now >= next && SDL_GetAtomicInt(&s_running));
-    }
-    return 0;
+    *slot = s_clock.dispatch_depth ? s_clock.callback_slot : -1;
 }
 
 void port_timer_start(void)
 {
-    if (s_thread != NULL)
-        return;
-    s_virtual_clock_origin_ns = SDL_GetTicksNS();
-    s_activity_lock = SDL_CreateMutex();
-    s_activity_changed = SDL_CreateCondition();
-    SDL_SetAtomicInt(&s_activity_generation, 0);
-    SDL_SetAtomicInt(&s_running, 1);
     port_clock_init(&s_clock);
+    s_grant = 0; s_yielded = s_finished = s_cancelled = 0;
     s_guest_thread_id = 0;
-    s_thread = SDL_CreateThread(timer_thread, "stunts-pit-clock", NULL);
-    if (s_thread == NULL)
-        SDL_Log("Could not start timer thread: %s", SDL_GetError());
+    SDL_SetAtomicInt(&s_activity_generation, 0);
+    s_activity_lock = SDL_CreateMutex();
+    s_grant_changed = SDL_CreateCondition();
+    s_yield_changed = SDL_CreateCondition();
+    if (!s_activity_lock || !s_grant_changed || !s_yield_changed)
+        port_guest_unwind("could not create tick handshake");
 }
 
 void port_timer_stop(void)
 {
-    if (s_thread != NULL) {
-        SDL_SetAtomicInt(&s_running, 0);
-        SDL_WaitThread(s_thread, NULL);
-        s_thread = NULL;
-    }
     s_guest_thread_id = 0;
-    SDL_DestroyCondition(s_activity_changed);
+    SDL_DestroyCondition(s_grant_changed);
+    SDL_DestroyCondition(s_yield_changed);
     SDL_DestroyMutex(s_activity_lock);
-    s_activity_changed = NULL;
+    s_grant_changed = s_yield_changed = NULL;
     s_activity_lock = NULL;
 }
 
@@ -130,9 +153,7 @@ uint64_t port_timer_tick_count(void)
 
 uint64_t port_timer_machine_time_ns(void)
 {
-    uint64_t now = SDL_GetTicksNS();
-    return now >= s_virtual_clock_origin_ns
-        ? now - s_virtual_clock_origin_ns : 0;
+    return port_timer_raw_tick() * PORT_TIMER_PERIOD_NS;
 }
 
 int port_timer_game_enabled(void)
@@ -193,7 +214,7 @@ void timedwait(uint32_t ticks)
         port_timer_pump();
         if (port_clock_counter_reached(&s_clock, target)) break;
         port_guest_check_stop();
-        SDL_DelayNS(1000000u);
+        port_guest_yield();
     }
 }
 
@@ -241,7 +262,7 @@ void waitbios(int32_t ticks)
         if (port_clock_bios_reached(now, deadline))
             break;
         port_guest_check_stop();
-        SDL_DelayNS(1000000u);
+        port_guest_yield();
     }
 }
 
@@ -249,6 +270,6 @@ void waitticks(void)
 {
     while (gettick() < s_clock.copy_deadline) {
         port_guest_check_stop();
-        SDL_DelayNS(1000000u);
+        port_guest_yield();
     }
 }

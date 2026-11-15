@@ -36,6 +36,26 @@ static int s_test_auto_protection;
 static uint64_t s_live_input_sequence;
 static uint64_t s_test_text_sequence;
 
+#ifdef PORT_TICK_HANDSHAKE
+#define LIVE_EVENT_CAP 4096u
+typedef struct LiveEvent {
+    uint64_t tick, sequence;
+    int type, code, value;
+} LiveEvent;
+static LiveEvent s_live_events[LIVE_EVENT_CAP];
+static unsigned s_live_head, s_live_tail, s_live_count;
+static uint64_t s_live_queue_tick, s_live_queue_sequence;
+#endif
+
+static uint64_t input_time_ns(void)
+{
+#ifdef PORT_TICK_HANDSHAKE
+    return port_timer_machine_time_ns();
+#else
+    return SDL_GetTicksNS();
+#endif
+}
+
 static void input_lock(void)
 {
     if (s_input_lock != NULL)
@@ -231,8 +251,18 @@ void port_input_init(void)
     s_extended_prefix = 0;
     s_callback_count = 0;
     s_test_auto_protection = 0;
+#ifdef PORT_TICK_HANDSHAKE
+    s_live_input_sequence = s_live_queue_sequence = 1ull << 32;
+    s_live_head = s_live_tail = s_live_count = 0;
+    s_live_queue_tick = 0;
+#else
     s_live_input_sequence = 0;
+#endif
+#ifdef PORT_TICK_HANDSHAKE
+    s_test_text_sequence = 1ull << 63;
+#else
     s_test_text_sequence = 0;
+#endif
     s_mouse_x = 0;
     s_mouse_y = 0;
     s_mouse_buttons = 0;
@@ -288,7 +318,7 @@ static void trace_live_mouse(void)
 {
     int x, y;
     uint16_t buttons;
-    uint64_t now = SDL_GetTicksNS();
+    uint64_t now = input_time_ns();
     input_lock();
     x = s_mouse_x;
     y = s_mouse_y;
@@ -319,7 +349,7 @@ static void clear_pressed_input(void)
     s_extended_prefix = 0;
     s_mouse_buttons = 0;
     input_unlock();
-    now = SDL_GetTicksNS();
+    now = input_time_ns();
     if (count != 0)
         port_trace_input_keyboard(s_live_input_sequence++, now, now, releases, count);
     trace_live_mouse();
@@ -353,7 +383,7 @@ int port_input_type_test_text(const char *text)
     codes[count++] = 0x9c;
     for (i = 0; i < count; ++i)
         port_input_apply_dos_scancode(codes[i]);
-    now = SDL_GetTicksNS();
+    now = input_time_ns();
     port_trace_input_keyboard(s_test_text_sequence++, now, now, codes, count);
     return 1;
 }
@@ -395,7 +425,7 @@ void port_input_handle_event(int event_type, int code, int value)
         if (dos_code > 0) {
             uint8_t codes[2];
             size_t count = 0;
-            uint64_t now = SDL_GetTicksNS();
+            uint64_t now = input_time_ns();
             if (dos_code >= 0xE000)
                 codes[count++] = 0xE0;
             codes[count++] = (uint8_t)((dos_code & 0xFF) | (down ? 0 : 0x80));
@@ -574,7 +604,11 @@ void flush_stdin(void)
 {
     while (testkey() == 0) {
         port_guest_check_stop();
-        SDL_DelayNS(1000000u);
+#ifdef PORT_TICK_HANDSHAKE
+        port_guest_yield();
+#else
+        SDL_DelayNS(1000000u); /* standalone input adapter integration probe */
+#endif
     }
 }
 
@@ -769,3 +803,42 @@ void keyboard_exit_handler(void)
        bits; BIOS lock-toggle state survives the restore. */
     kb_init_interrupt();
 }
+
+#ifdef PORT_TICK_HANDSHAKE
+/* Host writes this only while the guest acknowledges a tick. */
+void port_input_set_queue_tick(uint64_t tick) { s_live_queue_tick = tick; }
+void port_input_queue_event(int type, int code, int value)
+{
+    input_lock();
+    if (s_live_count == LIVE_EVENT_CAP) {
+        input_unlock();
+        port_guest_set_exit_status(1);
+        port_guest_request_stop("live input queue overflow");
+        return;
+    }
+    uint64_t due = port_timer_raw_tick() + 1;
+    if (s_live_queue_tick > due) due = s_live_queue_tick;
+    s_live_events[s_live_tail] = (LiveEvent){due, s_live_queue_sequence, type, code, value};
+    /* Focus loss can emit keyboard releases and a mouse snapshot. */
+    s_live_queue_sequence += 2;
+    s_live_tail = (s_live_tail+1)%LIVE_EVENT_CAP;
+    ++s_live_count;
+    input_unlock();
+}
+void port_input_apply_queued(uint64_t tick)
+{
+    for (;;) {
+        LiveEvent event;
+        input_lock();
+        if (!s_live_count || s_live_events[s_live_head].tick > tick) {
+            input_unlock(); return;
+        }
+        event = s_live_events[s_live_head];
+        s_live_head = (s_live_head+1)%LIVE_EVENT_CAP;
+        --s_live_count;
+        input_unlock();
+        s_live_input_sequence = event.sequence;
+        port_input_handle_event(event.type,event.code,event.value);
+    }
+}
+#endif

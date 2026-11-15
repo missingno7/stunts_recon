@@ -93,7 +93,7 @@ int port_sdl_poll(void)
             port_video_request_redraw(1);
         } else if (event.type == SDL_EVENT_WINDOW_FOCUS_LOST) {
             s_fullscreen_keys = 0;
-            port_input_handle_event(event.type, 0, 0);
+            port_host_input_event(event.type, 0, 0);
         } else if ((event.type == SDL_EVENT_KEY_DOWN || event.type == SDL_EVENT_KEY_UP) &&
                    (event.key.scancode == SDL_SCANCODE_RETURN ||
                     event.key.scancode == SDL_SCANCODE_KP_ENTER)) {
@@ -106,7 +106,7 @@ int port_sdl_poll(void)
             } else if (event.type == SDL_EVENT_KEY_UP && (s_fullscreen_keys & key)) {
                 s_fullscreen_keys &= ~key;
             } else {
-                port_input_handle_event(event.type, event.key.scancode,
+                port_host_input_event(event.type, event.key.scancode,
                     event.type == SDL_EVENT_KEY_DOWN && event.key.repeat ? 1 : 0);
             }
         } else if ((event.type == SDL_EVENT_KEY_DOWN || event.type == SDL_EVENT_KEY_UP) &&
@@ -115,22 +115,22 @@ int port_sdl_poll(void)
             if (event.type == SDL_EVENT_KEY_DOWN && !event.key.repeat)
                 port_video_debug_capture();
         } else if (event.type == SDL_EVENT_KEY_DOWN) {
-            port_input_handle_event(event.type, event.key.scancode,
+            port_host_input_event(event.type, event.key.scancode,
                                     event.key.repeat ? 1 : 0);
         } else if (event.type == SDL_EVENT_KEY_UP) {
-            port_input_handle_event(event.type, event.key.scancode, 0);
+            port_host_input_event(event.type, event.key.scancode, 0);
         } else if (event.type == SDL_EVENT_MOUSE_MOTION) {
             int logical_x;
             int logical_y;
             mouse_to_logical(event.motion.x, event.motion.y, &logical_x, &logical_y);
-            port_input_handle_event(event.type, logical_x, logical_y);
+            port_host_input_event(event.type, logical_x, logical_y);
         } else if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN ||
                    event.type == SDL_EVENT_MOUSE_BUTTON_UP) {
             int logical_x;
             int logical_y;
             mouse_to_logical(event.button.x, event.button.y, &logical_x, &logical_y);
-            port_input_handle_event(SDL_EVENT_MOUSE_MOTION, logical_x, logical_y);
-            port_input_handle_event(event.type, event.button.button,
+            port_host_input_event(SDL_EVENT_MOUSE_MOTION, logical_x, logical_y);
+            port_host_input_event(event.type, event.button.button,
                                     event.type == SDL_EVENT_MOUSE_BUTTON_DOWN);
         }
     }

@@ -15,6 +15,7 @@
 typedef struct PortScriptEvent {
     uint64_t sequence;
     uint64_t due_ns;
+    uint64_t due_tick;
     int mouse;
     size_t code_count;
     uint8_t codes[SCRIPT_SCANCODE_CAP];
@@ -240,7 +241,17 @@ static int parse_script(const char *path)
         have_previous = 1;
         scan = event_limit;
     }
+#ifdef PORT_TICK_HANDSHAKE
+    s_origin_ns = 0;
+    for (size_t i = 0; i < s_event_count; ++i) {
+        uint64_t ns = s_events[i].due_ns;
+        uint64_t tick = ns / PORT_TIMER_PERIOD_NS + (ns % PORT_TIMER_PERIOD_NS != 0);
+        s_events[i].due_tick = tick ? tick : 1; /* first grant is tick one */
+        s_events[i].due_ns = s_events[i].due_tick * PORT_TIMER_PERIOD_NS;
+    }
+#else
     s_origin_ns = SDL_GetTicksNS();
+#endif
     ok = 1;
 
 done:
@@ -264,10 +275,15 @@ void port_input_script_pump(uint64_t now_ns)
 {
     while (s_next_event < s_event_count) {
         PortScriptEvent *event = &s_events[s_next_event];
+#ifndef PORT_TICK_HANDSHAKE
         uint64_t elapsed_ns = now_ns >= s_origin_ns ? now_ns - s_origin_ns : 0;
+#endif
         uint64_t scheduled_ns = s_origin_ns + event->due_ns;
-        if (elapsed_ns < event->due_ns)
-            break;
+#ifdef PORT_TICK_HANDSHAKE
+        if (now_ns / PORT_TIMER_PERIOD_NS < event->due_tick) break;
+#else
+        if (elapsed_ns < event->due_ns) break;
+#endif
         if (event->mouse) {
             /* PortForge normalizes the DOS mouse device's inclusive bounds
                0..320 and 0..200, not the last visible pixel coordinates.

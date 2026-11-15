@@ -158,8 +158,9 @@ class SoundRequestTests(unittest.TestCase):
             for a, b in zip(rows, rows[1:]):
                 self.assertGreater((b["raw_tick"], b["sequence"]), (a["raw_tick"], a["sequence"]))
 
-    def test_seeded_session_repeat_and_output_comparisons_are_reported(self):
-        """Step-5 finding, not an assertion of wall-paced whole-game determinism."""
+    def test_manual_session_repeat_loaded_and_output_comparisons(self):
+        from concurrent.futures import ThreadPoolExecutor
+        from tests.test_sdl3_driving import write_driving_input
         assert_build_ready()
         WORK.mkdir(parents=True, exist_ok=True)
         environment = os.environ.copy()
@@ -167,41 +168,56 @@ class SoundRequestTests(unittest.TestCase):
         environment["PATH"] = os.pathsep.join((r"C:\msys64\mingw32\bin",
             r"C:\tools\sdl3-3.4.16-i686\bin", environment.get("PATH", "")))
         environment.pop("SDL_AUDIODRIVER", None)
-        script = WORK / "startup-input.json"
-        write_startup_input(script)
-        streams, status = {}, {}
-        for label in ("output-a", "output-b", "dummy"):
-            path = WORK / f"{label}.jsonl"
+        script = WORK / "manual-driving-input.json"
+        write_driving_input(script)
+
+        def session(label):
+            folder = WORK / label
+            folder.mkdir(exist_ok=True)
+            # Clear only this test's previous frame artifacts, never inputs.
+            for old in folder.glob("frame-*"): old.unlink()
             env = environment.copy()
             if label == "dummy": env["SDL_AUDIODRIVER"] = "dummy"
             result = subprocess.run([str(EXECUTABLE), f"--assets={ASSETS}",
                 f"--input-script={script}", f"--test-startup-seed={STARTUP_SEED}",
-                "--test-auto-protection", "--run-ms=6000", "--audio=ad15",
-                f"--sound-requests={path}", f"--diagnostics-dir={WORK / 'diagnostics'}",
-                f"--config={WORK / 'config.json'}"], cwd=ROOT, env=env,
-                capture_output=True, text=True, timeout=20)
+                "--test-auto-protection", "--clock=manual", "--run-ticks=1800", "--audio=ad15",
+                f"--sound-requests={folder / 'sound.jsonl'}", f"--trace={folder / 'trace.jsonl'}",
+                f"--capture-dir={folder}", f"--diagnostics-dir={folder / 'diagnostics'}",
+                f"--config={folder / 'config.json'}"], cwd=ROOT, env=env,
+                capture_output=True, text=True, timeout=30)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-            streams[label] = [json.loads(line) for line in path.read_text().splitlines()]
-            status[label] = [line for line in result.stderr.splitlines() if "PORT audio:" in line]
-            self.assertTrue(any(r.get("kind") == "chunk_event" for r in streams[label]))
-            self.assertTrue(any(r.get("entry") == 9 for r in streams[label]))
-            for row in streams[label][1:]:
-                self.assertFalse({"host_ns", "machine_tick", "pointer", "pcm_count"} & row.keys())
+            events = list(map(json.loads,(folder / "trace.jsonl").read_text().splitlines()))
+            sounds = (folder / "sound.jsonl").read_bytes()
+            states = [(e["raw_tick_id"],e["bytes_hex"]) for e in events if e.get("event_type")=="state_snapshot"]
+            self.assertTrue(states, "session must reach GAMESTATE, not only startup screens")
+            pictures = []
+            for e in events:
+                if e.get("event_type") != "video_publication": continue
+                f = folder / ("frame-%06d.fbr" % e["frame_id"])
+                if f.exists(): pictures.append((e["machine_tick"],e["frame_id"],f.read_bytes()[20:]))
+            self.assertGreater(len(pictures),100)
+            stop = next(e for e in events if e.get("event_type")=="host_stop")
+            self.assertEqual(stop["machine_tick"],1800*10000154)
+            return sounds,states,pictures,result.stderr
 
-        def compare(a, b):
-            left, right = streams[a], streams[b]
-            first = next((i for i, pair in enumerate(zip(left, right)) if pair[0] != pair[1]),
-                         min(len(left), len(right)))
-            return {"agree": left == right, "counts": [len(left), len(right)],
-                    "first_difference": None if left == right else first,
-                    "left": left[first] if first < len(left) else None,
-                    "right": right[first] if first < len(right) else None}
-        report = {"wall_paced_repeat": compare("output-a", "output-b"),
-            "output_vs_dummy": compare("output-a", "dummy"),
-            "device_status": status,
-            "limit": "Observational comparisons; tick/input handshake and audio isolation are later steps."}
-        (WORK / "comparison.json").write_text(json.dumps(report, indent=2) + "\n")
-        print("Sound comparison:", json.dumps(report))
+        baseline = session("repeat-a")
+        repeat = session("repeat-b")
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            loaded = list(pool.map(session,("loaded-a","loaded-b")))
+        for result in [repeat,*loaded]:
+            self.assertEqual(result[0],baseline[0],"sound requests differ at manual ticks")
+            self.assertEqual(result[1],baseline[1],"GAMESTATE sequence differs")
+            self.assertEqual(result[2],baseline[2],"indexed pixels/palette differ at the same ticks")
+        dummy = session("dummy")
+        self.assertEqual(dummy[1],baseline[1],"device must not affect GAMESTATE")
+        self.assertEqual(dummy[2],baseline[2],"device must not affect indexed frames")
+        report={"repeat":True,"loaded_repeat":True,"states_and_indexed_frames":True,
+                "output_vs_dummy":dummy[0]==baseline[0],"ticks":1800,
+                "state_count":len(baseline[1]),"indexed_frame_count":len(baseline[2]),
+                "device_status":[[s for s in r[3].splitlines() if "PORT audio:" in s]
+                                  for r in [baseline,repeat,*loaded,dummy]]}
+        (WORK / "manual-comparison.json").write_text(json.dumps(report,indent=2)+"\n")
+        print("Manual sound/state/frame comparison:",json.dumps(report))
 
 
 if __name__ == "__main__":

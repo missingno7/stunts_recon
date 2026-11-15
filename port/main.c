@@ -5,6 +5,7 @@ extern void port_sound_record_guest_tables(void);
 #include "render/renderer.h"
 
 #include <SDL3/SDL.h>
+#include <errno.h>
 #include <setjmp.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,7 +16,6 @@ extern char audiodriverstring[];
 
 static SDL_Thread *s_guest_thread;
 static SDL_ThreadID s_guest_thread_id;
-static SDL_AtomicInt s_guest_done;
 static SDL_AtomicInt s_guest_exit_status;
 static jmp_buf s_guest_escape;
 static int s_guest_escape_ready;
@@ -38,6 +38,7 @@ static int guest_thread_main(void *unused)
     args.argv[0] = args.program_name;
     s_guest_thread_id = SDL_GetCurrentThreadID();
     s_guest_escape_ready = 1;
+    port_timer_guest_begin();
     if (setjmp(s_guest_escape) == 0) {
         int16_t result = stunts_game_main(1, args.argv);
         SDL_SetAtomicInt(&s_guest_exit_status, result);
@@ -50,7 +51,7 @@ static int guest_thread_main(void *unused)
                 s_guest_stop_reason);
     }
     s_guest_escape_ready = 0;
-    SDL_SetAtomicInt(&s_guest_done, 1);
+    port_timer_guest_finish();
     return 0;
 }
 
@@ -93,6 +94,7 @@ void port_guest_request_stop(const char *reason)
         port_trace_host_stop(s_guest_requested_stop_reason);
         SDL_SetAtomicInt(&s_guest_stop_pending, 1);
         port_guest_notify_activity();
+        port_timer_cancel();
     }
 }
 
@@ -151,6 +153,9 @@ int main(int argc, char **argv)
     char default_config_path[1024];
     int debug = 0;
     int run_ms = -1;
+    int manual_clock = 0;
+    uint64_t run_ticks = 0;
+    int have_run_ticks = 0;
     int test_auto_protection = 0;
     uint64_t stop_after_sim_steps = 0;
     int i;
@@ -160,6 +165,22 @@ int main(int argc, char **argv)
     for (i = 1; i < argc; ++i) {
         if (strncmp(argv[i], "--trace=", 8) == 0)
             trace_path = argv[i] + 8;
+        else if (strcmp(argv[i], "--clock=manual") == 0) manual_clock = 1;
+        else if (strcmp(argv[i], "--clock=interactive") == 0) manual_clock = 0;
+        else if (strncmp(argv[i], "--clock=", 8) == 0) {
+            fprintf(stderr, "Invalid --clock (use interactive or manual)\n");
+            return 2;
+        }
+        else if (strncmp(argv[i], "--run-ticks=", 12) == 0) {
+            char *end;
+            errno = 0;
+            run_ticks = strtoull(argv[i] + 12, &end, 10);
+            if (errno || end == argv[i] + 12 || *end || argv[i][12] == '-') {
+                fprintf(stderr, "Invalid --run-ticks value\n");
+                return 2;
+            }
+            have_run_ticks = 1;
+        }
         else if (strncmp(argv[i], "--sound-requests=", 17) == 0)
             sound_requests_path = argv[i] + 17;
         else if (strncmp(argv[i], "--assets=", 9) == 0)
@@ -306,7 +327,6 @@ int main(int argc, char **argv)
     }
     port_sound_record_guest_tables();
     port_timer_start();
-    SDL_SetAtomicInt(&s_guest_done, 0);
     s_guest_thread = SDL_CreateThread(guest_thread_main, "stunts-game", NULL);
     if (s_guest_thread == NULL) {
         fprintf(stderr, "Could not create guest thread: %s\n", SDL_GetError());
@@ -316,21 +336,36 @@ int main(int argc, char **argv)
     }
     start_ns = SDL_GetTicksNS();
     next_present_ns = start_ns;
-    while (!should_quit && !SDL_GetAtomicInt(&s_guest_done)) {
-        uint64_t now;
-        port_input_script_pump(SDL_GetTicksNS());
+    while (!should_quit && port_timer_host_wait()) {
+        uint64_t tick = port_timer_raw_tick();
+        /* Live input observed during catch-up belongs to its observation tick,
+           never to an older grant. Manual tests use the next explicit tick. */
+        uint64_t input_tick = tick + 1;
+        if (!manual_clock) {
+            uint64_t elapsed = SDL_GetTicksNS() - start_ns;
+            uint64_t observed = elapsed / PORT_TIMER_PERIOD_NS + 1;
+            if (observed > input_tick) input_tick = observed;
+        }
+        port_input_set_queue_tick(input_tick);
         if (port_sdl_poll()) {
             port_guest_request_stop("SDL quit event");
             break;
         }
-        port_video_present();
-        next_present_ns += 16666667u;
-        port_sdl_sleep_until(next_present_ns);
-        now = SDL_GetTicksNS();
-        if (run_ms >= 0 && now - start_ns >= (uint64_t)run_ms * 1000000u) {
+        /* All snapshots and trace state below belong to an acknowledged tick. */
+        if (manual_clock || SDL_GetTicksNS() >= next_present_ns) {
+            port_video_present();
+            next_present_ns += 16666667u;
+        }
+        if (have_run_ticks && tick >= run_ticks) {
+            port_guest_request_stop("requested tick boundary reached");
+            break;
+        }
+        if (run_ms >= 0 && tick * PORT_TIMER_PERIOD_NS >= (uint64_t)run_ms * 1000000u) {
             port_guest_request_stop("requested run duration reached");
             break;
         }
+        if (!manual_clock) port_sdl_sleep_until(start_ns + (tick + 1) * PORT_TIMER_PERIOD_NS);
+        if (!port_timer_host_grant()) break;
     }
     if (s_guest_thread != NULL) {
         /* Wait for a cooperative guest boundary before SDL teardown. */
