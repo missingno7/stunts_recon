@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#ifdef PORT_BOUNDARY_RECORD
+#include "port_runtime.h"
+#include "boundary_record.h"
+#endif
 
 /* Guest-owned observer. No timer pump, SDL call, device callback, or game-state
    write. Pointer values are used only to resolve stable table/resource views. */
@@ -145,6 +149,11 @@ static void begin(const char *kind, int chunk, int voice, const void *sample)
     if (s_observer) s_observer(&tick, &slot);
     if (tick != s_previous_tick) { s_sequence = 0; s_previous_tick = tick; }
     fprintf(s_output, "{\"kind\":"); string(kind);
+#ifdef PORT_BOUNDARY_RECORD
+    fprintf(s_output,",\"game_frame\":%u,\"scope\":%u,\"game_inputmode\":%u",
+        (unsigned)port_game_frame_snapshot(),port_boundary_scope(),
+        (unsigned)port_game_inputmode_snapshot());
+#endif
     fprintf(s_output, ",\"raw_tick\":%llu,\"sequence\":%u,\"source\":\"%s\","
         "\"callback_slot\":%d,\"driver\":", (unsigned long long)tick,
         (unsigned)s_sequence++, slot < 0 ? "foreground" : "callback", slot);

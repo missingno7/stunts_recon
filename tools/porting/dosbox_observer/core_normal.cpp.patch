@@ -1,0 +1,18 @@
+--- src/cpu/core_normal.cpp
++++ src/cpu/core_normal.cpp
+@@ -24,6 +24,7 @@
+ #include "paging.h"
+ #include "mmx.h"
+ #include "acceptance.h"
++extern bool StuntsBoundaryYield();
+ 
+ extern bool do_lds_wraparound;
+ 
+@@ -225,6 +226,7 @@
+ 		LOADIP;
+ 		if (DOSBOX_AcceptanceExecArmed)
+ 			DOSBOX_AcceptanceOnInstruction();
++		if (StuntsBoundaryYield()) return CBRET_NONE;
+ 		last_prefix=MP_NONE;
+ 		core.opcode_index=cpu.code.big*(Bitu)0x200u;
+ 		core.prefixes=cpu.code.big;

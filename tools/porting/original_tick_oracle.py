@@ -14,7 +14,7 @@ def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 def input_ticks(script):
     """Same ceiling and stable equal-tick order as port/input_script.c."""
-    if script.get("format") not in ("stunts-exact-input-script-v1","portforge-exact-input-script-v1"):
+    if script.get("format") != "stunts-exact-input-script-v1":
         raise ValueError("expected stunts-exact-input-script-v1")
     anchor = script.get("anchor_tick", 0)
     if anchor != 0:
@@ -144,12 +144,22 @@ def capture(args):
     hooks=bindings()
     import oracle
     _,unpacked,_,_=oracle.verify(write=False,asset_dir=ROOT/'assets')
-    script=input_ticks(json.loads(args.script.read_text(encoding='utf-8')))
+    raw_script=json.loads(args.script.read_text(encoding='utf-8'))
+    semantic=raw_script.get('format')=='stunts-step-input-v1'
+    if semantic or getattr(args,'boundaries',False):
+        build_receipt=json.loads(args.dosbox.with_name('observer-build.json').read_text())
+        if digest(args.dosbox)!=build_receipt['sha256']:raise ValueError('unsealed observer binary')
+        for name in ('stunts_observer.inc','stunts_boundary.inc','core_normal.cpp.patch'):
+            source=ROOT/'tools/porting/dosbox_observer'/name
+            if build_receipt['inputs'].get(str(source))!=digest(source):
+                raise ValueError('observer build is stale: '+name)
+    script={'events':[]} if semantic else input_ticks(raw_script)
     out.mkdir(parents=True)
     shutil.copytree(ROOT/'assets',out/'assets')
     (out/'assets/ORIGINAL.EXE').write_bytes(unpacked)
     (out/'original.exe').write_bytes(unpacked)
     (out/'bindings.json').write_text(json.dumps(hooks,indent=2)+'\n',encoding='utf-8')
+    (out/'input-script.json').write_bytes(args.script.read_bytes())
     # Entry signature is read from the locked MZ image, before DOS relocation.
     header=struct.unpack_from('<14H',unpacked)
     entry_ip,entry_cs=header[10],header[11]
@@ -158,6 +168,11 @@ def capture(args):
            f'LIMIT {args.ticks}',f'ENTRY {entry_cs:x} {entry_ip:x}']
     lines += [f'BYTE {i} {b:x}' for i,b in enumerate(unpacked[at:at+16])]
     lines += [f'HOOK {h["address"]:x} {h["name"]}' for h in hooks['hooks']]
+    if semantic or getattr(args,'boundaries',False):
+        from tools.porting.boundary_bindings import configuration
+        extra,reviewed=configuration(out/'boundaries.jsonl',raw_script if semantic else {'events':[]},getattr(args,'frames',0))
+        lines+=extra
+        (out/'boundary-bindings.json').write_bytes((json.dumps(reviewed,indent=2)+'\n').encode())
     for event in script['events']:
         tick=event['raw_tick'];payload=event['payload']
         if event['channel']=='dos.keyboard.scancodes':
@@ -205,11 +220,17 @@ exit
         observer_sha256=digest(ROOT/'tools/porting/dosbox_observer/stunts_observer.inc'),
         bindings_sha256=digest(out/'bindings.json'),capture_sha256=digest(out/'original.jsonl'),
         frames_sha256=digest(out/'original.frames'))
+    if (out/'boundaries.jsonl').exists():
+        receipt.update(boundary_observer_sha256=digest(ROOT/'tools/porting/dosbox_observer/stunts_boundary.inc'),
+            boundary_bindings_sha256=digest(out/'boundary-bindings.json'),
+            boundary_capture_sha256=digest(out/'boundaries.jsonl'),requested_frames=getattr(args,'frames',0))
     (out/'receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
     from tools.porting.compare_tick_streams import read_rows
     rows=read_rows(out/'original.jsonl')
     print(json.dumps(dict(output=str(out),seconds=receipt['seconds'],end=rows[-1])))
     if result.returncode or rows[-1].get('kind')!='end':raise RuntimeError(f'incomplete DOSBox capture: {out}')
+    if semantic and getattr(args,'frames',0) and rows[-1].get('terminal')!='frame-limit':
+        raise RuntimeError(f'semantic scenario failed to reach its requested game frame: {out}')
     return out
 
 
@@ -223,6 +244,8 @@ def main():
     p.add_argument('--cycles',type=int,default=30000)
     p.add_argument('--timeout',type=int,default=150)
     p.add_argument('--port-exe',type=Path)
+    p.add_argument('--boundaries',action='store_true')
+    p.add_argument('--frames',type=int,default=0)
     args=p.parse_args()
     if not 1<=args.ticks<=10000:p.error('--ticks must be in 1..10000')
     sys.path.insert(0,str(ROOT))

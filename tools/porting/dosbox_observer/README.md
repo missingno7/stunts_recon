@@ -13,7 +13,7 @@ Prerequisites are the installed acceptance source/object tree named by `BASE`
 in `build.py` and Visual Studio 2022 Community. `source-pins.json` checks the
 CPU/acceptance/PIT/PIC/input/VRAM sources. The builder copies `src` and `include`
 under its output, checks readable patches against exact replacement contexts,
-recompiles `dosbox.cpp` and `mouse.cpp`, then links unchanged installed objects.
+recompiles `dosbox.cpp`, `mouse.cpp` and `core_normal.cpp`, then links unchanged installed objects.
 `observer-build.json` hashes every reused object and all observer inputs.
 `--rebuild` reuses only the private source/output and its incremental LTCG cache;
 stop the observer before rebuilding. It never writes installed compiler PDBs.
@@ -50,3 +50,10 @@ The actual original benchmark and PRNG loops still execute. No original code or
 driver bytes are patched, no instructions skipped, no tick rebasing performed.
 The fixture is a chosen input setting here, not independent expected behavior.
 The runtime oracle document gives regeneration, comparisons and their limits.
+
+For semantic input, `stunts_boundary.inc` adds bounded routine/INT 15h/33h
+request/result observations, simulation/render scopes and input-slot/key-ordinal
+delivery. `core_normal.cpp.patch` yields only at an initiating semantic input
+frame while queued bytes await the real PIC/INT9; normal PIT time continues.
+This does not skip original instructions or replace its clock. See the runtime
+oracle's game-step section for the race contract and explicit coverage gaps.

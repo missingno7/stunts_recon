@@ -14,6 +14,7 @@ import sys
 import zipfile
 
 from sound_adapter import adapt_sound_observers, _function
+from boundary_adapter import instrument as instrument_boundary, phase_adapt as adapt_boundary_phases
 from game_abi import route_audio_vectors, adapt_aggregate_views, adapt_polygon_storage, host_view_contracts, adapt_preview_word_arithmetic, adapt_renderer_word_arithmetic, adapt_word_sentinels, adapt_wheel_update_inputs
 from dependencies import NUKED_OPL3_COMMIT, NUKED_OPL3_FILES, nuked_opl3_root
 from render.tile_adapter import adapt_update_frame, adapt_trans_op
@@ -567,6 +568,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
         transformed = probe.rewrite_calls(transformed, "instringz", "rename:port_call_read_line")
         transformed = "extern int16_t port_call_read_line(char *, int16_t, int16_t, int16_t, int32_t);\n" + transformed
         transformed += host_view_contracts(source)
+        transformed = adapt_boundary_phases(source, transformed)
 
         overlay = work / "overlay" / source
         overlay.parent.mkdir(parents=True, exist_ok=True)
@@ -618,6 +620,7 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
     port_sources = [
         "main.c", "sdl_host.c", "video.c", "input.c", "timer.c", "tick_clock.c", "memory.c",
         "sound_record.c",
+        "boundary_record.c",
         "test_seed.c", "startup.c",
         "sprite.c", "sprite_aux.c", "legacy_views.c",
         "random.c",
@@ -651,7 +654,7 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
     common = [
         str(gcc), "-std=gnu11", "-O0", "-g", "-Wall", "-Wextra", "-Wpedantic",
         "-Wno-unused-parameter", "-Werror=int-conversion", "-DPORT_BUILD=1",
-        "-DPORT_RENDER_INSTRUMENT=1", "-DPORT_SOUND_RECORD=1", "-DPORT_TICK_HANDSHAKE=1", "-DPORT_AUDIO_TICK_SINK=1",
+        "-DPORT_RENDER_INSTRUMENT=1", "-DPORT_SOUND_RECORD=1", "-DPORT_TICK_HANDSHAKE=1", "-DPORT_AUDIO_TICK_SINK=1", "-DPORT_BOUNDARY_RECORD=1",
         "-include", str(ROOT / "tools" / "porting" / "host" / "compat.h"),
         "-I", str(ROOT / "port"),
         "-I", str(ROOT / "tools" / "porting" / "port_include"),
@@ -662,6 +665,11 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
     objects = []
     for source in port_sources:
         src = ROOT / "port" / source
+        observed = instrument_boundary(source, src.read_text(encoding="utf-8"))
+        if observed != src.read_text(encoding="utf-8"):
+            src = BUILD / "boundary-overlay" / source
+            src.parent.mkdir(parents=True,exist_ok=True)
+            src.write_text(observed,encoding="utf-8")
         obj = out_dir / f"{src.stem}.o"
         flags = [f'-DSTUNTS_BUILD_ID="{build_id}"'] if source == "diagnostics.c" else []
         result = checked_run([*common, *flags, "-c", str(src), "-o", str(obj)], quiet=True)

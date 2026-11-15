@@ -47,6 +47,9 @@ def build(out,rebuild=False):
              '    mouse.y=float((std::max)(mouse.min_y,(std::min)(mouse.max_y,int16_t(y))));\n'
              '    mouse.buttons=buttons&7;\n}\n'
              'void Mouse_AcceptanceMoveMickeys(int32_t dx, int32_t dy) {')],
+        'src/cpu/core_normal.cpp':[
+            ('#include "acceptance.h"','#include "acceptance.h"\nextern bool StuntsBoundaryYield();'),
+            ('\t\t\tDOSBOX_AcceptanceOnInstruction();','\t\t\tDOSBOX_AcceptanceOnInstruction();\n\t\tif (StuntsBoundaryYield()) return CBRET_NONE;')],
     }
     inputs={}
     for relative,replacements in changes.items():
@@ -62,20 +65,21 @@ def build(out,rebuild=False):
         path.write_text(text,encoding='utf-8')
         inputs[str(BASE/relative)]=sha(BASE/relative)
     shutil.copyfile(HERE/'stunts_observer.inc',source/'src/stunts_observer.inc')
+    shutil.copyfile(HERE/'stunts_boundary.inc',source/'src/stunts_boundary.inc')
     obj=BASE/'obj/dosbox-x/x64/Release SDL2';logs=obj/'dosbox-x.tlog'
     clines=(logs/'CL.command.1.tlog').read_text(encoding='utf-16').splitlines()
     jobs={}
     for i,line in enumerate(clines[:-1]):
-        if not line.startswith('^') or Path(line[1:]).name.lower() not in ('dosbox.cpp','mouse.cpp'):continue
+        if not line.startswith('^') or Path(line[1:]).name.lower() not in ('dosbox.cpp','mouse.cpp','core_normal.cpp'):continue
         stem=Path(line[1:]).stem.lower()
-        relative='src/dosbox.cpp' if stem=='dosbox' else 'src/ints/mouse.cpp'
+        relative={'dosbox':'src/dosbox.cpp','mouse':'src/ints/mouse.cpp','core_normal':'src/cpu/core_normal.cpp'}[stem]
         args=clines[i+1]
         args=re.sub(r'/Fo"[^"]*"',lambda m:'/Fo"'+str(out/(stem+'.obj'))+'"',args,flags=re.I)
         args=re.sub(r'/Fd"[^"]*"',lambda m:'/Fd"'+str(out/(stem+'.pdb'))+'"',args,flags=re.I)
         args=args[:args.upper().rfind(' C:\\TOOLS\\')]
         args='/std:c++17 /I"'+str(source/'include')+'" '+args+' "'+str(source/relative)+'"'
         (out/(stem+'.rsp')).write_text(args);jobs[stem]=relative
-    if set(jobs)!={'dosbox','mouse'}:raise ValueError('Missing installed compiler recipe')
+    if set(jobs)!={'dosbox','mouse','core_normal'}:raise ValueError('Missing installed compiler recipe')
     link=(logs/'link.command.1.tlog').read_text(encoding='utf-16').splitlines()
     start=max(i for i,l in enumerate(link) if l.startswith('^'));link='\n'.join(link[start+1:])
     for option,name in [('OUT','dosbox-x.exe'),('PDB','dosbox-x.pdb'),('IMPLIB','dosbox-x.lib'),('LTCGOUT','dosbox-x.iobj')]:

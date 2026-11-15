@@ -1,4 +1,5 @@
 #include "port_runtime.h"
+#include "boundary_record.h"
 #include "sound_record.h"
 #include "audio_backend.h"
 extern void port_timer_observation(uint64_t *, int *);
@@ -139,6 +140,8 @@ int main(int argc, char **argv)
 {
     const char *trace_path = "";
     const char *sound_requests_path = "";
+    const char *boundary_path = "";
+    unsigned boundary_frames=0;
     const char *asset_root = NULL;
     char default_asset_root[1024];
     char default_save_root[1024];
@@ -169,6 +172,13 @@ int main(int argc, char **argv)
     for (i = 1; i < argc; ++i) {
         if (strncmp(argv[i], "--trace=", 8) == 0)
             trace_path = argv[i] + 8;
+        else if (strncmp(argv[i], "--boundary-trace=", 17) == 0)
+            boundary_path = argv[i] + 17;
+        else if (strncmp(argv[i], "--boundary-frames=", 18) == 0) {
+            char *end;unsigned long frame=strtoul(argv[i]+18,&end,10);
+            if(*end || end==argv[i]+18 || frame<1 || frame>12000)return 2;
+            boundary_frames=(unsigned)frame;
+        }
         else if (strcmp(argv[i], "--clock=manual") == 0) manual_clock = 1;
         else if (strcmp(argv[i], "--clock=interactive") == 0) manual_clock = 0;
         else if (strncmp(argv[i], "--clock=", 8) == 0) {
@@ -349,6 +359,11 @@ int main(int argc, char **argv)
         return 2;
     }
     port_sound_record_guest_tables();
+    if (!port_boundary_open(boundary_path)) {
+        fprintf(stderr,"Cannot open boundary recording\n");
+        port_sound_record_close();port_trace_close();port_sdl_shutdown();return 2;
+    }
+    port_boundary_frame_limit((uint16_t)boundary_frames);
     port_timer_start();
     s_guest_thread = SDL_CreateThread(guest_thread_main, "stunts-game", NULL);
     if (s_guest_thread == NULL) {
@@ -402,6 +417,7 @@ int main(int argc, char **argv)
     port_audio_shutdown();
     port_trace_audio_sink();
     if (!port_sound_record_close()) port_guest_set_exit_status(2);
+    port_boundary_close();
     port_trace_close();
     port_sdl_shutdown();
     port_diagnostics_close(SDL_GetAtomicInt(&s_guest_exit_status), s_guest_stop_reason);

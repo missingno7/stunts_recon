@@ -12,6 +12,11 @@ extern void Mouse_StuntsAcceptancePosition(uint16_t,uint16_t,uint8_t);
 extern void KEYBOARD_AddBuffer(uint16_t);
 static uint32_t key(uint16_t cs,uint16_t ip) {return (uint32_t(cs)<<16)|ip;}
 static uint32_t physical(uint16_t cs,uint16_t ip) {return (uint32_t(cs)<<4)+ip;}
+static void BoundarySimStart();
+static void BoundarySimEnd();
+static void BoundaryKeyConsumed();
+static void BoundaryScan(uint8_t);
+static unsigned BoundaryScope();
 struct Hook { std::string name; uint32_t address; };
 struct Pending {
     std::string name; uint32_t ret; uint16_t ss, sp;
@@ -75,7 +80,8 @@ struct Capture {
             frames.write(reinterpret_cast<const char*>(data.data()),data.size());
             frame_payloads.push_back(std::move(data));bucket.push_back(payload);
         }
-        begin("frame");out<<",\"reason\":\""<<reason<<"\",\"ordinal\":"<<frame++<<",\"payload\":"<<payload<<"}\n";
+        begin("frame");out<<",\"reason\":\""<<reason<<"\",\"ordinal\":"<<frame++<<",\"payload\":"<<payload
+            <<",\"game_frame\":"<<r16(state+320)<<"}\n";
     }
     static int index(uint16_t off,uint16_t base,unsigned stride,unsigned capacity) {
         unsigned delta=uint16_t(off-base);
@@ -96,6 +102,8 @@ struct Capture {
     void returned(const Pending& p) {
         if(p.name=="driver") {
             begin("driver");out<<",\"driver\":\""<<driver_name<<"\",\"entry\":"<<p.entry
+              <<",\"game_frame\":"<<r16(state+320)<<",\"scope\":"<<BoundaryScope()
+              <<",\"game_inputmode\":"<<unsigned(r8(state+1013))
               <<",\"entered_tick\":"<<p.entered<<",\"stack_u16\":[";
             for(size_t j=0;j<p.args.size();++j)out<<(j?",":"")<<p.args[j];
             int voice=-1,chunk=-1;uint32_t sample=0;
@@ -142,6 +150,7 @@ struct Capture {
             static const char hex[]="0123456789abcdef";
             for(unsigned i=0;i<1120;++i){auto v=r8(state+i);out<<hex[v>>4]<<hex[v&15];}
             out<<"\"}\n";
+            BoundarySimEnd();
         } else if(p.name=="video_set_palette" || p.name=="doshowmouse" || p.name=="dohidemouse" || p.screen) {
             snapshot(p.name);
         }
@@ -161,7 +170,7 @@ struct Capture {
         }
         if(key_return && SegValue(ss)==key_ss && uint16_t(reg_sp+6)==key_sp &&
            key(mem_readw(SegPhys(ss)+reg_sp+2),mem_readw(SegPhys(ss)+reg_sp))==key_return) {
-            key_return=0;begin("key");out<<",\"bios_word\":"<<reg_ax<<"}\n";
+            key_return=0;BoundaryKeyConsumed();begin("key");out<<",\"bios_word\":"<<reg_ax<<"}\n";
         }
     }
     void observe() {
@@ -183,6 +192,7 @@ struct Capture {
         if(driver_segment && SegValue(cs)==driver_segment && entry<=0x42 && entry%3==0) name="driver";
         if(name=="driver_loaded") {update_driver();return;}
         if(name.empty())return;
+        if(name=="update_gamestate")BoundarySimStart();
         Pending p{name,key(mem_readw(SegPhys(ss)+(reg_sp+2)),mem_readw(SegPhys(ss)+(reg_sp))),
                   SegValue(ss),reg_sp,entry,tick,{},r8(busy)!=0,r16(sprite1+2)==0xa000,{}};
         p.callback_slot=callback_slot;
@@ -218,12 +228,14 @@ static unsigned stunts_buttons=0,stunts_seed_calls=0;
 static bool stunts_seed_patched=false;
 static std::array<uint8_t,16> stunts_entry;
 static uint16_t stunts_entry_cs,stunts_entry_ip;
+#include "stunts_boundary.inc"
 static void StuntsInit() {
     const char* path=getenv("STUNTS_OBSERVER");if(!path)return;
     FILE* f=fopen(path,"r");if(!f)abort();
     char line[1024],name[128],prefix[512],audio[16],assets[512];
     while(fgets(line,sizeof(line),f)) {
         unsigned a,b,c;float u,v;
+        if(BoundaryConfigure(line))continue;
         if(sscanf(line,"OUTPUT %511[^\n]",prefix)==1)continue;
         if(sscanf(line,"ASSETS %511[^\n]",assets)==1)continue;
         if(sscanf(line,"AUDIO %15s",audio)==1)continue;
@@ -292,6 +304,7 @@ static void StuntsInstruction() {
         stunts->stunts_mouse_y=stunts_base+221646;
         stunts->stunts_mouse_buttons=stunts_base+213736;
         stunts->begin("attached");stunts->out<<",\"load_segment\":"<<stunts_base/16<<"}\n";
+        BoundaryAttach();
     }
     uint32_t relative=pc-stunts_base;
     if(relative==0x20329) {
@@ -321,11 +334,13 @@ static void StuntsInstruction() {
         stunts->begin("control");stunts->out<<",\"boundary\":\"seed-fixture\"}\n";
     }
     stunts->completed_return();
+    BoundaryBefore(pc);
     auto k=key(SegValue(cs),reg_ip);
     if(stunts->filter[pc>>3]&(1u<<(pc&7)))stunts->observe();
 }
 static void StuntsIO(uint32_t port,uint32_t value,bool output) {
     if(stunts_attached && !output && port==0x60 && DOSBOX_AcceptanceCpuInstructionActive) {
+        BoundaryScan(uint8_t(value));
         stunts->begin("scan");stunts->out<<",\"scancode\":"<<value<<"}\n";
     }
 }

@@ -22,12 +22,17 @@ typedef struct PortScriptEvent {
     double mouse_u;
     double mouse_v;
     uint16_t mouse_buttons;
+    unsigned phase;
+    int consumed;
 } PortScriptEvent;
 
 static PortScriptEvent s_events[SCRIPT_EVENT_CAP];
 static size_t s_event_count;
 static size_t s_next_event;
 static uint64_t s_origin_ns;
+static int s_semantic;
+static unsigned s_phase;
+static uint64_t s_key_ordinal;
 
 static char *json_key_value(char *begin, char *limit, const char *key)
 {
@@ -156,6 +161,7 @@ static int parse_script(const char *path)
 
     s_event_count = 0;
     s_next_event = 0;
+    s_semantic=0;s_phase=0;s_key_ordinal=0;
     if (path == NULL || path[0] == '\0')
         return 1;
     stream = fopen(path, "rb");
@@ -177,12 +183,14 @@ static int parse_script(const char *path)
     text[bytes_read] = '\0';
     if (!json_read_string(text, text + bytes_read, "\"format\"", format,
                           sizeof(format)) ||
-        (strcmp(format, "stunts-exact-input-script-v1") != 0 &&
-         strcmp(format, "portforge-exact-input-script-v1") != 0)) {
+        (strcmp(format, "stunts-step-input-v1") != 0 &&
+         strcmp(format, "stunts-exact-input-script-v1") != 0)) {
         fprintf(stderr,
                 "PORT input script: expected stunts-exact-input-script-v1\n");
         goto done;
     }
+    s_semantic = strcmp(format,"stunts-step-input-v1")==0;
+    s_phase=0;s_key_ordinal=0;
     anchor_ptr = json_key_value(text, text + bytes_read, "\"anchor_tick\"");
     events_ptr = strstr(text, "\"events\"");
     if (anchor_ptr == NULL || events_ptr == NULL ||
@@ -193,7 +201,8 @@ static int parse_script(const char *path)
 
     scan = events_ptr;
     for (;;) {
-        char *visible = strstr(scan, "\"visible_tick\"");
+        const char *stamp_key=s_semantic?"\"at\"":"\"visible_tick\"";
+        char *visible = strstr(scan, stamp_key);
         char *next_visible;
         char *event_limit;
         char channel[64];
@@ -202,10 +211,10 @@ static int parse_script(const char *path)
         PortScriptEvent event;
         if (visible == NULL)
             break;
-        next_visible = strstr(visible + 1, "\"visible_tick\"");
+        next_visible = strstr(visible + 1, stamp_key);
         event_limit = next_visible != NULL ? next_visible : text + bytes_read;
         memset(&event, 0, sizeof(event));
-        if (!json_read_u64(visible, event_limit, "\"visible_tick\"",
+        if (!json_read_u64(visible, event_limit, stamp_key,
                            &absolute_tick) ||
             !json_read_string(visible, event_limit, "\"channel\"", channel,
                               sizeof(channel))) {
@@ -229,7 +238,7 @@ static int parse_script(const char *path)
             continue;
         }
         due_ns = absolute_tick - anchor_tick;
-        if ((have_previous && due_ns < previous_due) ||
+        if ((!s_semantic && have_previous && due_ns < previous_due) ||
             s_event_count >= SCRIPT_EVENT_CAP) {
             fprintf(stderr,
                     "PORT input script: unordered or excessive event list\n");
@@ -237,6 +246,11 @@ static int parse_script(const char *path)
         }
         event.sequence = s_event_count;
         event.due_ns = due_ns;
+        if(s_semantic) {
+            uint64_t phase;
+            if(!json_read_u64(visible,event_limit,"\"phase\"",&phase) || phase<1 || phase>6)goto done;
+            event.phase=(unsigned)phase;
+        }
         s_events[s_event_count++] = event;
         previous_due = due_ns;
         have_previous = 1;
@@ -248,7 +262,7 @@ static int parse_script(const char *path)
         uint64_t ns = s_events[i].due_ns;
         uint64_t tick = ns / PORT_TIMER_PERIOD_NS + (ns % PORT_TIMER_PERIOD_NS != 0);
         s_events[i].due_tick = tick ? tick : 1; /* first grant is tick one */
-        s_events[i].due_ns = s_events[i].due_tick * PORT_TIMER_PERIOD_NS;
+        if(!s_semantic)s_events[i].due_ns = s_events[i].due_tick * PORT_TIMER_PERIOD_NS;
     }
 #else
     s_origin_ns = SDL_GetTicksNS();
@@ -274,6 +288,7 @@ int port_input_script_load(const char *path)
 
 void port_input_script_pump(uint64_t now_ns)
 {
+    if(s_semantic)return;
     while (s_next_event < s_event_count) {
         PortScriptEvent *event = &s_events[s_next_event];
 #ifndef PORT_TICK_HANDSHAKE
@@ -306,3 +321,37 @@ void port_input_script_pump(uint64_t now_ns)
         ++s_next_event;
     }
 }
+
+static void semantic_deliver(unsigned phase,uint64_t at)
+{
+    size_t i;
+    if(!s_semantic)return;
+    for(i=0;i<s_event_count;++i){
+        PortScriptEvent *event=&s_events[i];
+        uint64_t now;
+        if(event->consumed || event->phase!=phase || event->due_ns!=at)continue;
+        event->consumed=1;
+#ifdef PORT_TICK_HANDSHAKE
+        now=port_timer_machine_time_ns();
+#else
+        now=SDL_GetTicksNS();
+#endif
+        if(event->mouse){
+            port_input_mouse_set((int16_t)(event->mouse_u*PORT_SCREEN_WIDTH),
+                                 (int16_t)(event->mouse_v*PORT_SCREEN_HEIGHT));
+            port_input_mouse_set_buttons(event->mouse_buttons);
+            port_trace_input_mouse(event->sequence,now,now,event->mouse_u,event->mouse_v,event->mouse_buttons);
+        }else{
+            size_t j;
+            for(j=0;j<event->code_count;++j)port_input_apply_dos_scancode(event->codes[j]);
+            port_trace_input_keyboard(event->sequence,now,now,event->codes,event->code_count);
+        }
+    }
+}
+void port_input_script_phase(unsigned phase)
+{
+    if(s_phase!=phase){s_phase=phase;s_key_ordinal=0;}
+}
+void port_input_script_poll(void){semantic_deliver(s_phase,s_key_ordinal);}
+void port_input_script_key_consumed(void){++s_key_ordinal;}
+void port_input_script_step(uint16_t frame){semantic_deliver(6,frame);}
