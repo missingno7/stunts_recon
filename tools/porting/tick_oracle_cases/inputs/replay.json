@@ -1,0 +1,316 @@
+{
+  "format": "stunts-exact-input-script-v1",
+  "anchor_tick": 0,
+  "events": [
+    {
+      "visible_tick": 1500000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        28,
+        156
+      ]
+    },
+    {
+      "visible_tick": 3000000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        28,
+        156
+      ]
+    },
+    {
+      "visible_tick": 4500000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        28,
+        156
+      ]
+    },
+    {
+      "visible_tick": 5000077000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        25,
+        153
+      ]
+    },
+    {
+      "visible_tick": 5020077308,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        19,
+        147
+      ]
+    },
+    {
+      "visible_tick": 5040077616,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        18,
+        146
+      ]
+    },
+    {
+      "visible_tick": 5060077924,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        47,
+        175
+      ]
+    },
+    {
+      "visible_tick": 5080078232,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        23,
+        151
+      ]
+    },
+    {
+      "visible_tick": 5100078540,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        18,
+        146
+      ]
+    },
+    {
+      "visible_tick": 5120078848,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        17,
+        145
+      ]
+    },
+    {
+      "visible_tick": 5140079156,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        23,
+        151
+      ]
+    },
+    {
+      "visible_tick": 5160079464,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        49,
+        177
+      ]
+    },
+    {
+      "visible_tick": 5180079772,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        34,
+        162
+      ]
+    },
+    {
+      "visible_tick": 5200080080,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        28,
+        156
+      ]
+    },
+    {
+      "visible_tick": 6000000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        72
+      ]
+    },
+    {
+      "visible_tick": 11000000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        200
+      ]
+    },
+    {
+      "visible_tick": 11300000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        75
+      ]
+    },
+    {
+      "visible_tick": 12100000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        203
+      ]
+    },
+    {
+      "visible_tick": 12300000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        77
+      ]
+    },
+    {
+      "visible_tick": 13100000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        205
+      ]
+    },
+    {
+      "visible_tick": 13300000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        80
+      ]
+    },
+    {
+      "visible_tick": 14300000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        208
+      ]
+    },
+    {
+      "visible_tick": 15300000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        1
+      ]
+    },
+    {
+      "visible_tick": 15700000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.40752351097178685,
+        "v": 0.9296482412060302,
+        "buttons": 1
+      }
+    },
+    {
+      "visible_tick": 18200000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.40752351097178685,
+        "v": 0.9296482412060302,
+        "buttons": 0
+      }
+    },
+    {
+      "visible_tick": 18300000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.0,
+        "v": 0.0,
+        "buttons": 0
+      }
+    },
+    {
+      "visible_tick": 18500000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.7931034482758621,
+        "v": 0.8241206030150754,
+        "buttons": 1
+      }
+    },
+    {
+      "visible_tick": 18650000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.7931034482758621,
+        "v": 0.8241206030150754,
+        "buttons": 0
+      }
+    },
+    {
+      "visible_tick": 18750000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.0,
+        "v": 0.0,
+        "buttons": 0
+      }
+    },
+    {
+      "visible_tick": 21000000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.6614420062695925,
+        "v": 0.8241206030150754,
+        "buttons": 1
+      }
+    },
+    {
+      "visible_tick": 21150000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.6614420062695925,
+        "v": 0.8241206030150754,
+        "buttons": 0
+      }
+    },
+    {
+      "visible_tick": 21250000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.0,
+        "v": 0.0,
+        "buttons": 0
+      }
+    },
+    {
+      "visible_tick": 21800000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.40752351097178685,
+        "v": 0.9296482412060302,
+        "buttons": 1
+      }
+    },
+    {
+      "visible_tick": 22400000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.40752351097178685,
+        "v": 0.9296482412060302,
+        "buttons": 0
+      }
+    },
+    {
+      "visible_tick": 22500000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.0,
+        "v": 0.0,
+        "buttons": 0
+      }
+    },
+    {
+      "visible_tick": 22700000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.7931034482758621,
+        "v": 0.8241206030150754,
+        "buttons": 1
+      }
+    },
+    {
+      "visible_tick": 22850000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.7931034482758621,
+        "v": 0.8241206030150754,
+        "buttons": 0
+      }
+    },
+    {
+      "visible_tick": 22950000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.0,
+        "v": 0.0,
+        "buttons": 0
+      }
+    }
+  ]
+}

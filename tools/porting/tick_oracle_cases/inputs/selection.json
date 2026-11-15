@@ -1,0 +1,39 @@
+{
+  "format": "stunts-exact-input-script-v1",
+  "anchor_tick": 0,
+  "events": [
+    {
+      "visible_tick": 5000000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        28,
+        156
+      ]
+    },
+    {
+      "visible_tick": 7000000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        75,
+        203
+      ]
+    },
+    {
+      "visible_tick": 7300000000,
+      "channel": "dos.keyboard.scancodes",
+      "payload": [
+        28,
+        156
+      ]
+    },
+    {
+      "visible_tick": 7550000000,
+      "channel": "dos.mouse.normalized",
+      "payload": {
+        "u": 0.8746081504702194,
+        "v": 0.6884422110552764,
+        "buttons": 0
+      }
+    }
+  ]
+}
