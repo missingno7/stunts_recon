@@ -166,6 +166,10 @@ static uint16_t pop_bios_key(int *found)
         --s_key_count;
     }
     input_unlock();
+#ifdef PORT_TICK_HANDSHAKE
+    if (*found)
+        port_trace_key_consumed(key);
+#endif
     return key;
 }
 
@@ -455,7 +459,7 @@ void port_input_handle_event(int event_type, int code, int value)
     port_guest_notify_activity();
 }
 
-/* Apply the raw Set-1 bytes used by Port Forge's exact DOS input channel.
+/* Apply the raw Set-1 bytes used by the exact DOS input channel.
    E0-prefixed navigation keys stay distinct from keypad keys. */
 void port_input_apply_dos_scancode(uint8_t code)
 {

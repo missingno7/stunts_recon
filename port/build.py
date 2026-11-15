@@ -1012,7 +1012,7 @@ def main(argv: list[str] | None = None) -> int:
     run_parser.add_argument("--test-auto-protection", action="store_true",
                             help="test only: type the live protection answer through DOS keyboard input")
     run_parser.add_argument("--test-startup-seed", type=Path,
-                            help="test only: replay a Port Forge seedrandom/timer/PRNG capture")
+                            help="test only: apply explicit seedrandom/timer/PRNG fixture values")
     run_parser.add_argument("--stop-after-sim-steps", type=int)
     run_parser.add_argument("--audio", choices=("ad15", "pc15", "none"), default="ad15")
     run_parser.add_argument("--frame-rate", choices=(10,20), type=int)

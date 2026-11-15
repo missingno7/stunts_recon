@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify an ArtifactV2 replay prefix with its original DOS interpreter.
+"""Read archived ArtifactV2 metadata. Live original capture uses DOSBox-X.
 
 Only source-root inputs are read. Snapshots, logs, receipts, and optional frames
 are written under --output-dir. A boundary count is exclusive: --to 800 means
@@ -29,40 +29,21 @@ def choose_runner(schema: str, source_root: Path, output_dir: Path,
                   v13_runner: Path | None = None, v14_runner: Path | None = None,
                   build_v13: bool = False, compiler: Path | None = None) -> tuple[Path, Path]:
     """Return executable and matching canonical-projection config directory."""
-    port_forge = source_root / "port_forge"
-    if schema == SCHEMA_V13:
-        tree = port_forge / "build/history/pf-391f1dd"
-        if v13_runner and build_v13:
-            raise ValueError("choose either --v13-runner or --build-v13")
-        if build_v13:
-            if compiler is None:
-                raise ValueError("--build-v13 requires --compiler")
-            output_dir.mkdir(parents=True, exist_ok=True)
-            exe = output_dir / "pf_dos_session_v13_391f1dd.exe"
-            if exe.exists():
-                raise ValueError(f"refusing to overwrite interpreter {exe}")
-            compiler_path = Path(compiler).resolve(strict=True)
-            environment = os.environ.copy()
-            environment["PATH"] = str(compiler_path.parent) + os.pathsep + environment.get("PATH", "")
-            subprocess.run([str(compiler_path), "-std=c++17", "-O2", "-Wall", "-Wextra",
-                            "-Werror", "-I", str(tree),
-                            str(tree / "tools/pf_dos_session.cpp"), "-o", str(exe)],
-                           check=True, env=environment)
-        elif v13_runner:
-            exe = v13_runner
-        else:
-            raise ValueError("v13 replay needs --v13-runner or --build-v13 --compiler")
-    elif schema == SCHEMA_V14:
-        tree = port_forge
-        exe = v14_runner or port_forge / "build/pf_dos_session.exe"
-    else:
+    # Compatibility reader for archived receipts and its synthetic tests. This
+    # no longer builds or invokes an interpreter. Live references use DOSBox-X.
+    if schema not in (SCHEMA_V13,SCHEMA_V14):
         raise ValueError(f"unsupported canonical schema {schema}")
-    config = tree / "config/canonical-projections-v1.json"
-    if not exe.is_file():
-        raise FileNotFoundError(f"original interpreter missing: {exe}")
-    if not config.is_file():
-        raise FileNotFoundError(f"canonical projection config missing: {config}")
-    return exe.resolve(), config.resolve()
+    if build_v13:
+        raise ValueError("legacy interpreter builds retired; use original_tick_oracle.py")
+    runner=v13_runner if schema==SCHEMA_V13 else v14_runner
+    if runner is None:
+        raise ValueError("v13 replay needs an explicit archived runner" if schema==SCHEMA_V13 else
+                         "live replay probing retired; use original_tick_oracle.py")
+    configs=[p for p in source_root.rglob('canonical-projections-v1.json')
+             if ('history' in p.parts)==(schema==SCHEMA_V13)]
+    if len(configs)!=1:raise ValueError('ambiguous archived projection configuration')
+    if not runner.is_file():raise FileNotFoundError(runner)
+    return runner.resolve(),configs[0].resolve()
 
 
 def resolve_replay(source_root: Path, name: str) -> Path:
@@ -92,92 +73,8 @@ def resolve_bound_base(source_root: Path, replay_file: Path, replay: dict) -> Pa
     raise FileNotFoundError(f"bound base snapshot missing: {name}")
 
 
-def probe(*, source_root: Path, output_dir: Path, replay_name: str,
-          to_exclusive: int, label: str, v13_runner: Path | None = None,
-          v14_runner: Path | None = None, build_v13: bool = False,
-          compiler: Path | None = None) -> Path:
-    source_root = source_root.resolve(strict=True)
-    output_dir = output_dir.resolve()
-    replay_file = resolve_replay(source_root, replay_name)
-    replay = json.loads(replay_file.read_text(encoding="utf-8"))
-    if replay.get("format") != "portforge-replay-v2":
-        raise ValueError("only ArtifactV2 replays are supported")
-    timeline = replay["timeline"]
-    if not 0 < to_exclusive <= len(timeline):
-        raise ValueError("--to lies outside replay timeline")
-    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", label):
-        raise ValueError("--label must contain only letters, digits, hyphen, underscore")
-    schema = replay["environment"]["base_snapshot"]["canonical_schema"]
-    exe, canonical_config = choose_runner(schema, source_root, output_dir,
-                                           v13_runner, v14_runner, build_v13, compiler)
-    base = resolve_bound_base(source_root, replay_file, replay)
-    stem = f"{label}_b{to_exclusive}"
-    output_dir.mkdir(parents=True, exist_ok=True)
-    snapshot = output_dir / f"{stem}.pfsnapshot"
-    raw = output_dir / f"{stem}.idxdac6"
-    preview = output_dir / f"{stem}.png"
-    receipt_file = output_dir / f"{stem}.json"
-    log = output_dir / f"{stem}.log"
-    if any(path.exists() for path in (snapshot, raw, preview, receipt_file, log)):
-        raise ValueError(f"output {stem} already exists")
-    command = [str(exe), "replay-rm", str(base), str(source_root / "assets"),
-               str(source_root / "game.json"),
-               str(source_root / "profiles/replay-boundaries-v1.json"),
-               str(source_root / "recovery/execution-plan-oracle.json"), POINT,
-               str(replay_file), "--to", str(to_exclusive), "--save-snapshot",
-               str(snapshot), "--canonical-projections", str(canonical_config)]
-    environment = os.environ.copy()
-    if build_v13 and compiler is not None:
-        environment["PATH"] = str(Path(compiler).resolve().parent) + os.pathsep + environment.get("PATH", "")
-    result = subprocess.run(command, cwd=output_dir, text=True, capture_output=True,
-                            env=environment)
-    output = result.stdout + result.stderr
-    log.write_text("$ " + subprocess.list2cmdline(command) + "\n" + output,
-                   encoding="utf-8")
-    if result.returncode:
-        raise RuntimeError(f"replay exited {result.returncode}; see {log}")
-    match = VERIFICATION.search(output)
-    if not match or int(match.group(3)) or "ArtifactV2 replay verified:" not in output:
-        raise RuntimeError(f"canonical verification incomplete; see {log}")
-    capture = load_snapshot(snapshot)
-    mode = capture.metadata["devices"]["video_mode"]
-    if capture.payload is not None:
-        raw.write_bytes(capture.payload)
-        preview.write_bytes(png_preview(capture))
-    checkpoints = [cp for cp in replay["checkpoints"]
-                   if cp["boundary_ordinal"] < to_exclusive]
-    canonical = CANONICAL.search(output)
-    receipt = {
-        "source_replay": str(replay_file),
-        "source_replay_file_sha256": sha256(replay_file.read_bytes()),
-        "base_snapshot": str(base),
-        "base_snapshot_declared_sha256": replay["environment"]["base_snapshot"]["sha256"],
-        "program_sha256": replay["identity"]["program_sha256"],
-        "canonical_schema": schema,
-        "interpreter": str(exe),
-        "interpreter_file_sha256": sha256(exe.read_bytes()),
-        "to_exclusive": to_exclusive,
-        "last_stamp": timeline[to_exclusive - 1]["stamp"],
-        "last_recorded_checkpoint": checkpoints[-1] if checkpoints else None,
-        "verified_canonical_sha256": canonical.group(1) if canonical else None,
-        "canonical_comparisons": int(match.group(1)),
-        "sparse_full_audits": int(match.group(2)),
-        "sparse_mismatches": int(match.group(3)),
-        "snapshot_memory_sha256": capture.metadata["fingerprints"]["memory_sha256"],
-        "snapshot_guest_instructions": capture.metadata["time"]["guest_instructions"],
-        "cpu": {key: capture.metadata["cpu"][key] for key in ("cs", "ip", "ds", "ss")},
-        "video_mode": mode,
-        "width": 320 if mode == 0x13 else None,
-        "height": 200 if mode == 0x13 else None,
-        "indices_sha256": sha256(capture.indices) if capture.indices is not None else None,
-        "dac6_sha256": sha256(capture.dac6) if capture.dac6 is not None else None,
-        "idxdac6_sha256": sha256(capture.payload) if capture.payload is not None else None,
-        "raw": str(raw) if capture.payload is not None else None,
-        "preview": str(preview) if capture.payload is not None else None,
-        "log": str(log),
-    }
-    receipt_file.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
-    return receipt_file
+def probe(**kwargs):
+    raise RuntimeError("Legacy interpreter capture retired; use tools/porting/original_tick_oracle.py with DOSBox-X")
 
 
 def main(argv: list[str] | None = None) -> int:

@@ -1,0 +1,50 @@
+--- src/dosbox.cpp
++++ src/dosbox.cpp
+@@ -1596,8 +1596,11 @@
+     AcceptanceCloseIOWatches();
+ }
+ 
++static bool stunts_enabled=false;
++static void StuntsIO(uint32_t,uint32_t,bool);
+ void DOSBOX_AcceptanceRecordIO(uint32_t port, uint32_t value,
+                                uint32_t width, bool output) {
++    StuntsIO(port,value,output);
+     if (!DOSBOX_AcceptanceIOWatchArmed ||
+         !DOSBOX_AcceptanceCpuInstructionActive || width == 0)
+         return;
+@@ -1658,7 +1661,7 @@
+             any_open = true;
+             break;
+         }
+-    DOSBOX_AcceptanceIOWatchArmed = any_open;
++    DOSBOX_AcceptanceIOWatchArmed = any_open || stunts_enabled;
+ }
+ 
+ static bool AcceptanceWriteTriggerDump(const AcceptanceTrigger &trigger,
+@@ -1723,7 +1726,9 @@
+     return true;
+ }
+ 
++#include "stunts_observer.inc"
+ void DOSBOX_AcceptanceOnInstruction(void) {
++    StuntsInstruction();
+     bool still_armed = false;
+     const uint16_t current_segment = SegValue(cs);
+     const uint32_t current_ip = reg_eip;
+@@ -1741,7 +1746,7 @@
+         ++trigger.hits;
+         AcceptanceWriteTriggerDump(trigger, trigger.hits);
+     }
+-    DOSBOX_AcceptanceExecArmed = still_armed;
++    DOSBOX_AcceptanceExecArmed = still_armed || stunts_enabled;
+ }
+ /* END SIMANT ACCEPTANCE OBSERVATIONS */
+ 
+@@ -1828,6 +1833,7 @@
+ }
+ 
+ void DOSBOX_AcceptanceStart(void) {
++    StuntsInit();
+     Section_prop *section = static_cast<Section_prop *>(control->GetSection("dosbox"));
+     if (section == NULL) return;
+     const char *script_path = section->Get_string("acceptance script");

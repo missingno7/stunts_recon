@@ -1,0 +1,12 @@
+{
+  "src/dosbox.cpp": "2d3d45227858314525d78ee953875d5d60332af50718ddc3c76edf1551b7891d",
+  "src/cpu/core_normal.cpp": "894c425379108af6363cbb4bb2a1db2e9cfaa46680c21901651a46dae4432684",
+  "src/hardware/keyboard.cpp": "971e9ec91851c6b5f74bbf82aa3e2db7b3b8cdfeca03826e07c68129a5adbaba",
+  "src/ints/mouse.cpp": "57bf0c113067fd11e91ed48c716eae470aa5599b4c88317e7c646d04595138d6",
+  "src/hardware/iohandler.cpp": "81f134256677665fd586fcf2b7ddc9ca28b9abb2364d959207548b6970238b11",
+  "include/acceptance.h": "07ff7eedc43804290ca52e24427f2012ccec11c0126614f4d068c359550017b5",
+  "include/pic.h": "7fddfc4d3aae96de85d85d28a8908206dd8fc607637d36957f54d5ce53c96262",
+  "src/hardware/pic.cpp": "782d9aa10822414b891de352944d33eb93b2eee5ccffbb5350babe10afc16f25",
+  "src/hardware/timer.cpp": "d7e8f48f18cc265e8ebeb9c843aa1265b22e9239360176e09f900978e98e77ba",
+  "src/hardware/vga_memory.cpp": "2cc42c20b92a30b52ecad797ab4a6e0d80b6308309117f9012cc232da0bab39d"
+}

@@ -294,6 +294,9 @@ void port_video_publish(const char *reason)
        changed indexed images so captures cannot fill the disk with duplicates. */
     if (changed)
         dump_frame_to_dir(s_capture_dir, frame_id, reason, frame, palette);
+#ifdef PORT_TICK_HANDSHAKE
+    port_trace_indexed_hashes(frame, palette);
+#endif
     port_trace_video_publication(reason);
     port_guest_stop_after_publication();
 }

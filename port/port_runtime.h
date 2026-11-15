@@ -72,6 +72,8 @@ uint64_t port_trace_sim_step(const uint8_t *game_state, size_t state_size);
 void port_trace_input_keyboard(uint64_t sequence, uint64_t scheduled_ns,
                                uint64_t actual_ns, const uint8_t *codes,
                                size_t code_count);
+void port_trace_key_consumed(uint16_t bios_word);
+void port_trace_indexed_hashes(const uint8_t *indices, const uint8_t *palette6);
 void port_trace_input_mouse(uint64_t sequence, uint64_t scheduled_ns,
                             uint64_t actual_ns, double u, double v,
                             uint16_t buttons);

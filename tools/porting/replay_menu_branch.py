@@ -45,43 +45,8 @@ def make_script(replay: dict, target: str) -> dict:
             "events": events}
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source-root", type=Path, required=True)
-    parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--target", choices=sorted(TARGETS), required=True)
-    parser.add_argument("--v14-runner", type=Path)
-    args = parser.parse_args(argv)
-    source_root = args.source_root.resolve(strict=True)
-    output_dir = args.output_dir.resolve()
-    source_file = source_root / "artifacts/replays-v2" / SOURCE_NAME
-    replay = json.loads(source_file.read_text(encoding="utf-8"))
-    script = make_script(replay, args.target)
-    exe, config = choose_runner(SCHEMA_V14, source_root, output_dir,
-                                v14_runner=args.v14_runner)
-    base = resolve_bound_base(source_root, source_file, replay)
-    output_dir.mkdir(parents=True, exist_ok=True)
-    stem = args.target
-    script_file = output_dir / f"{stem}.input.json"
-    artifact = output_dir / f"{stem}.pfreplay.json"
-    log = output_dir / f"{stem}.record.log"
-    if any(path.exists() for path in (script_file, artifact, log)):
-        parser.error(f"output {stem} already exists")
-    script_file.write_text(json.dumps(script, separators=(",", ":")) + "\n",
-                           encoding="utf-8")
-    command = [str(exe), "record-rm", str(base), str(source_root / "assets"),
-               str(source_root / "game.json"),
-               str(source_root / "profiles/replay-boundaries-v1.json"),
-               str(source_root / "recovery/execution-plan-oracle.json"),
-               POINT, "450", str(artifact), "--input-script", str(script_file),
-               "--checkpoint-every", "20", "--canonical-projections", str(config)]
-    result = subprocess.run(command, cwd=output_dir, text=True, capture_output=True)
-    log.write_text("$ " + subprocess.list2cmdline(command) + "\n"
-                   + result.stdout + result.stderr, encoding="utf-8")
-    if result.returncode:
-        parser.exit(result.returncode, f"recording failed; see {log}\n")
-    print(f"{artifact} (source SHA-256 {sha256(source_file.read_bytes())})")
-    return 0
+def main(argv=None):
+    raise RuntimeError("Legacy interpreter recording retired; use original_tick_oracle.py and tick_oracle_scenarios.py")
 
 
 if __name__ == "__main__":

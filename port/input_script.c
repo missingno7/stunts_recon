@@ -177,9 +177,10 @@ static int parse_script(const char *path)
     text[bytes_read] = '\0';
     if (!json_read_string(text, text + bytes_read, "\"format\"", format,
                           sizeof(format)) ||
-        strcmp(format, "portforge-exact-input-script-v1") != 0) {
+        (strcmp(format, "stunts-exact-input-script-v1") != 0 &&
+         strcmp(format, "portforge-exact-input-script-v1") != 0)) {
         fprintf(stderr,
-                "PORT input script: expected portforge-exact-input-script-v1\n");
+                "PORT input script: expected stunts-exact-input-script-v1\n");
         goto done;
     }
     anchor_ptr = json_key_value(text, text + bytes_read, "\"anchor_tick\"");
@@ -285,7 +286,7 @@ void port_input_script_pump(uint64_t now_ns)
         if (elapsed_ns < event->due_ns) break;
 #endif
         if (event->mouse) {
-            /* PortForge normalizes the DOS mouse device's inclusive bounds
+            /* The input protocol uses the DOS mouse device's inclusive bounds
                0..320 and 0..200, not the last visible pixel coordinates.
                The game's mouse bounds handle the endpoint clamp. */
             int16_t x = (int16_t)(event->mouse_u * PORT_SCREEN_WIDTH);

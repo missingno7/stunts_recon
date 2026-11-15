@@ -13,6 +13,7 @@ static uint64_t s_sim_step_id;
 static uint64_t s_video_frame_id;
 static uint64_t s_present_id;
 static uint64_t s_audio_publication_id;
+static uint64_t s_indices_hash, s_palette_hash;
 
 extern uint16_t port_game_frame_snapshot(void);
 extern uint16_t port_game_y_rotation_snapshot(void);
@@ -237,6 +238,32 @@ void port_trace_input_mouse(uint64_t sequence, uint64_t scheduled_ns,
     trace_unlock();
 }
 
+void port_trace_key_consumed(uint16_t bios_word)
+{
+    trace_lock();
+    if (s_trace != NULL)
+        fprintf(s_trace, "{\"trace_schema\":\"stunts-runtime-trace-v1\","
+                "\"event_type\":\"key_consumed\",\"raw_tick_id\":%llu,\"bios_word\":%u}\n",
+                (unsigned long long)(game_ns(0) / PORT_TIMER_PERIOD_NS), (unsigned)bios_word);
+    trace_unlock();
+}
+
+static uint64_t indexed_hash(const uint8_t *bytes, size_t count)
+{
+    uint64_t hash = UINT64_C(14695981039346656037);
+    size_t i;
+    for (i = 0; i < count; ++i)
+        hash = (hash ^ bytes[i]) * UINT64_C(1099511628211);
+    return hash;
+}
+
+void port_trace_indexed_hashes(const uint8_t *indices, const uint8_t *palette6)
+{
+    if (s_trace == NULL) return;
+    s_indices_hash = indexed_hash(indices, 64000);
+    s_palette_hash = indexed_hash(palette6, 768);
+}
+
 void port_trace_video_publication(const char *reason)
 {
     uint64_t now = SDL_GetTicksNS();
@@ -266,7 +293,8 @@ void port_trace_video_publication(const char *reason)
                 (unsigned)game_mode, (unsigned)input_mode,
                 (unsigned)replay_mode, (unsigned)rate, (unsigned)y_rotation);
         json_string(s_trace, reason);
-        fputs("}\n", s_trace);
+        fprintf(s_trace, ",\"indices_fnv1a64\":\"%016llx\",\"palette_fnv1a64\":\"%016llx\"}\n",
+                (unsigned long long)s_indices_hash, (unsigned long long)s_palette_hash);
         fflush(s_trace);
     }
     trace_unlock();

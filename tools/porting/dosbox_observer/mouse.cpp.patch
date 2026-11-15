@@ -1,0 +1,15 @@
+--- src/ints/mouse.cpp
++++ src/ints/mouse.cpp
+@@ -1018,6 +1018,12 @@
+ }
+ 
+ /* BEGIN SIMANT ACCEPTANCE SCRIPT RELATIVE MOUSE */
++void Mouse_StuntsAcceptancePosition(uint16_t x,uint16_t y,uint8_t buttons) {
++    // DOS input channel, independent of PS/2 AUX host capture.
++    mouse.x=float((std::max)(mouse.min_x,(std::min)(mouse.max_x,int16_t(x))));
++    mouse.y=float((std::max)(mouse.min_y,(std::min)(mouse.max_y,int16_t(y))));
++    mouse.buttons=buttons&7;
++}
+ void Mouse_AcceptanceMoveMickeys(int32_t dx, int32_t dy) {
+     acceptance_relative_motion = true;
+     Mouse_CursorMoved((float)dx, (float)dy, 0.0f, 0.0f, true);
