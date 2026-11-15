@@ -187,7 +187,7 @@ integer nanoseconds and a separate host timestamp where available.
 | `audio_publication` | At a guest-side nonempty audio batch boundary. |
 | `host_stop` | At normal guest return or an unresolved stub boundary. |
 
-The Port Forge normalizer remains the shared schema normalizer. Regression
+The historical JSONL normalizer remains a format reader; the live original reference uses the [DOSBox-X observer](runtime-oracle.md). Regression
 checks compare event shape and deadline rate; startup-only missing
 simulation/audio event classes are reported as coverage gaps rather than
 treated as a gameplay mismatch.
@@ -223,7 +223,7 @@ gaps.
 |---|---|---|
 | M0 | i686 build, all active game C objects linked, generated stub inventory, SDL indexed window, measured-rate timer, startup entry, and trace regression. | 38/38 host object compiles; no undefined final-link symbols; trace schema and scheduled/observed timer rate compared with F5c summary and normalizer. Record the exact first stub. |
 | M1 | Close initialization's platform boundary: DOS memory, startup files/resources, palette upload, cursor, and system startup order. | Compare startup call order and resource bytes/extents with accepted Stunts source, asset catalog, and DOSBox-X capture; no raw pointer/segment casts. |
-| M2 | Timer ISR/callback model, input sampling, logical 10/20 Hz pacing, pause, catch-up, and replay. | Compare normalized Port Forge timer/frame/mode/pause trace; keep its unmeasured 10 Hz and PIT mode limits explicit; compare replay state/frame sequence against saved replay oracle. |
+| M2 | Timer ISR/callback model, input sampling, logical 10/20 Hz pacing, pause, catch-up, and replay. | Compare original DOSBox-X IRQ/input/driver/frame/state streams; keep remaining timing divergences explicit. |
 | M3 | Faithful indexed software surfaces, clipping, copy/blit, palette, and migrated renderer ASM capsules. | Compare per-frame 320x200 index bytes and palette against DOSBox-X captures at named publication boundaries; use exact clipping/blit cases from accepted ASM. |
 | M4 | Guest audio driver call adapter and optional SDL audio backend. | Compare guest call offsets, argument bytes, and publication sequence to accepted callers/F5c guest batches; validate host callback separately. Keep vendor `.DRV` semantics unresolved without evidence. |
 | M5 | Menus, track editor, replay/save/high-score paths, and DOS filesystem behavior. | Compare `.TRK`, `.RPL`, `.HIG`, and resource round trips byte-for-byte; replay/menu state transitions against source-derived behavior and runtime traces. |

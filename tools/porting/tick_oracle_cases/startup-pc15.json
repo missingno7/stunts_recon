@@ -1,0 +1,261 @@
+{
+  "schema": "stunts-dosbox-tick-fixture-v1",
+  "scenario": "startup",
+  "audio": "pc15",
+  "script": "inputs/startup.json",
+  "ticks": 1000,
+  "provenance": {
+    "executable_sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+    "oracle_lock_sha256": "9f40e20b5a1855de03760df68d14ae5455e019172b81173ba76dd0fba4699804",
+    "dosbox_sha256": "fc26e8d2baf5021840b31f89a73337d26e1f035abfac9d906fe0698063361cee",
+    "observer_sha256": "c910c71da6a2314e9db567d73f10f112ab7e540c69c8f23df2092072919358ae",
+    "bindings_sha256": "6088558b051016db554afcff3a0544a1d4db3090aba05fa90dce5bdbe9de1675",
+    "script_sha256": "22bc309ac58a5a2253452a165ba43a601cfc7a9f3e272182298c5359998dcc38",
+    "driver_sha256": "4edc71e9bd56885ff8a48d7d4595c6e3a9450274ddf17580adb49d2b86353d67",
+    "capture_sha256": "a66f1954e617e87de27351294a83cae22eb15f6e31492aeb6f3bf83638016c5a",
+    "frames_sha256": "4c24a259a5c5c36d2579895eb429efbb384723a6dfdc03bd5ee12c2aa4f077fd"
+  },
+  "stream_counts": {
+    "sound": 1939,
+    "frames": 53,
+    "states": 0,
+    "keys": 1,
+    "scans": 2
+  },
+  "stream_sha256": {
+    "sound": "29020dfeaa78955dc30ffbaa9a3141fbe1cd37785188a66bc11fe15db217e13c",
+    "frames": "c74ccbce1e12e5ed5fc320fe0fcc8eff998760e79ef474a99c3fe3f36a22ef8c",
+    "states": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "keys": "27dd390ef081b436adc1adfa066c5ae0339e205a8d0c35fe89d096115730d077",
+    "scans": "5aca41efcfd49f7b44996ceecbc891e10567d0deab27aa597464385651c8eedf"
+  },
+  "driver_initialisation": [
+    {
+      "raw_tick": 0,
+      "driver": "pc15",
+      "entry": 0,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": {
+        "name": "PC15.DRV",
+        "offset": 0,
+        "fnv1a64": "7e3188ef31be606e"
+      },
+      "payload": "",
+      "result": 7
+    }
+  ],
+  "driver_startup_observations": [
+    {
+      "raw_tick": 0,
+      "driver": "pc15",
+      "entry": 0,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": {
+        "name": "PC15.DRV",
+        "offset": 0,
+        "fnv1a64": "7e3188ef31be606e"
+      },
+      "payload": "",
+      "result": 7
+    },
+    {
+      "raw_tick": 1,
+      "driver": "pc15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        0
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 1,
+      "driver": "pc15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        1
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 1,
+      "driver": "pc15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        2
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 1,
+      "driver": "pc15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        3
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 1,
+      "driver": "pc15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        4
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 1,
+      "driver": "pc15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        5
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 1,
+      "driver": "pc15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        6
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 1,
+      "driver": "pc15",
+      "entry": 24,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 1,
+      "driver": "pc15",
+      "entry": 6,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 2,
+      "driver": "pc15",
+      "entry": 48,
+      "source": "callback",
+      "callback_slot": 0,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 3,
+      "driver": "pc15",
+      "entry": 48,
+      "source": "callback",
+      "callback_slot": 0,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    }
+  ],
+  "first_frame": {
+    "raw_tick": 1,
+    "reason": "palette",
+    "indices": "dd14fcc6528cab25",
+    "palette": "22c7a7dbb6964022"
+  },
+  "first_frame_zlib_hex": "789cedd2eb52a34a1486e1cf99718b89c6f6003948040c491b22249188c1c3acfbbfab0177edaaf9b12fe17dbaa85a457553ab3f96040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f03f8a6ea9288aefaa08fb32ec59b74233fbaeecfbe9bcbdbdd575bddbed9e9f9fd7ebf56ab57a7c7c4c92248ee3c964d21dbbb9b9198d46c3e13008026b1aab2af3de92c4c66373ceba97522bd552297929936229929c64ef8dbdedec75632f4bdba556cd6c13dafacafce0f818ec1fce8ae9691efe9abb1fd1c5890b64d6985566de2cb1df63fb72f615d897da46f54ee55a7ea16caefb48a1931be8b7355f56bd9b3f5a72b0f1de5c69c193296f95d69a979a78dd65ba8e751969e0d458e3cde71f7976cc1e0e0ff1fe7e5a4da322baf3b7d7b91ba597c3f9f07c16fc139dfebcfd71d2efffbb1b73668159d7a5da5675adb294f7ca32c5b1a248ce351f561dcdbf5af262e3adb96793372dba6e0e9a6f352d14e5ba4d7435d345a873d7c7b9fd8e33b5f1a48f5327ffc67990b6fd0f542e25d24c0abb443f1b6babfe0e87c45ec6b675560656c8566a53d5739513f93b65d78a2f150de4fe8ed3febbc0516dadba52b5d63a579e289969167e276aef6f9faffb76bf69ca55fd94eef2fb320d37b1f3d3d1627c9986c3f876307141383abbbe381d0d7e5953ffaeabaf5df1592e3f8aecddcfdbe5f4b8889af4f6f5c1bddc5fee26c3323c2f6ecefcd5e9f2e267bf73fbf459f97eff73feb179ec4fadd3f7a787feeceabe5dceba2ff4892c9796e7b6585896599a76f3d6b574d82cea75f6e293fd72def5d60ded76bbadaaaa2ccb6e7abb61fe03d7f065ee",
+  "frame_checkpoint_ordinal": 4,
+  "frame_checkpoint": {
+    "raw_tick": 18,
+    "reason": "sprite_1_unk3",
+    "indices": "3574076fca4ef1b7",
+    "palette": "22c7a7dbb6964022"
+  },
+  "frame_checkpoint_zlib_hex": "789ceddc7d5fa24a1806e0675f3ab9bd49b9a894a696465aa0655816edf329f38fcef9b08717c5190650aadd74bdafddf33b300ec3cced0093b5110100000000000000000000000000000000000000000000000000000000000000000000f89c05fb90c9719ccc7d48e5382e85f3cd0d428bef43262f2d3f312748cb75947dc8e686732ebc60fda917df876c4246ae93b00fd98490c2e8e2fb902d4a699a647c1fb2453145773f611f169be6e4e7183c36847d58821b3e6e85755ff800c6f4cb01ebbef751d681900fd67defa3ac032155d1172f8cadfb12ebbcfb24abc6d0fd5eea46bea31287e6caebbe4dc8cf28467225983c3479ddb701f909f1e50b307968e13a70b6eedb80fc8a92bc077e409ddfdbc0ef66c8f9e59880c8cf579ac51606595afe48e4e79bcf3a23675f919f4fe8a0b02964690433b4245cd84618b9585dad530a5e0ceb18c29d21e57c4b9c6435258d67764f24f1f6381b9b7cc38c9518529dd8c3c958743ea501e124ab2a361efffe67ccfb6d888310ae727168ea02689ebf5cd950cf97ddc05ae5175d6542bfe763f0822d12c513292a25629dd4daf2a9d31b58a7fca25bdefccd97a75f69fe94168bd50590307f8bca8b6a7e190dac4b7e62e7e72b1a7171138c5c57963bc5cc9259ebe2ea48cd4f5d41a94dae2e253e6145236e92f04095963b5925692f0aa75eaec9d595929ff0a2503175f80b4a72564fe9c14a92f24b7b42d27426203f859c5f89de31fcd93bb079f9f91bc63b873f7d07128f5aaa81ac92d535efa0319d806f197e24fd06f0d7e7f79edb97181ff27b737e46ca518b1b58a207abe903f333529b5cdcc0123d584d1f959ff0d913f27be3f0539b5cb601e4977cd4b20dfc8df919592f22bf85bda7ac17730cffafcf2ff91392e937e496f9b425ed23969cd593eaacaea883299fd0859ffda57d34e795e872892e35b0f0b3bd253f115c5d4599fcf5af118d4f1e517689d440aeead3cdb77f4fffcf8be547f22d279a0c51a1525d2d911ac8555d2a928e5a59ea5b2df6d9884dbf85df2c531ac8557db6f9e69f69faf394f8628f3ce51bc099dfac551bc8553dda7cebcfd4fd79f38ecebe0293f34bfbd9828c929c0d24e51725b8e2e901c03afb770d7c7646f01b4d5e429345852f736ac9cbbc1649c7a8e7924e24b532492e7ea1153699f67a22f63eb130651cb1e2e9aefc3fb1d9493cc0a8ce24f6762dd3fd4fa70cc727ccb084c294bad26e527e93e94eec8ceb9d5fcaa51adf20e182928f5f3abfd7d929262faff211d9d76fcef17c92d7c44bf523e7df2435a8f0c5b4cb7a4d2446f596fcfe23ffdd08e6d86bf2f149cf1825c035c96f76d379fda0e74770c8ab3fc95e538f4f7c46c7035c93fcf2ac5f128f8f17cfd628ca5a65d11a6722dfebd664fd02eff3d95f9b2de3b333020098fe6e97e0575cc91b4ef40fcfc5a2e96fa17466258e5069334d7f39677c237a295e14c629bf2c54d8380bf393b6c2a986e4e6d2ae5f52afdfa0b61bfc0d8f24a9d26612a6961bdddde215c429e94ea394ea6dee2c8c45e32ad7af7249bb8e7afd22bf5934ee82e72f45bf001ad72f000000000000000000000000000000000000000000000000000000000000000000000000000000000000e4d0f3fe50afd70bb67ababfa9fbd8fba33373b0c5c17f9efbfbfbe17038180caeafafbbddeec5c5c5d9d959a3d1a8d56ad56ad53bece8e8e8e0e0607777b75028f068c4b6cda6c98d06572aac69ec15128d898644169149d422aa11958934227e1cf1fd809d2bbeedf0a0c9f6315fe9dc2db2b9f37056b839ddee195b6dfd7b5dfb5adefba2158879c46c339bcc0dfe55e1678d9f0bfc4ce3110d076475c93ca7569d4ecaa46ba4edd02f1e3db3fdc8e60337eeb872c39ac5854ba6f6989a43aa5b5435e9678b0e6bb45fa61d8d463c32d96c3fb55b0fadd3bbd3dacd89611be55ef9a7593a6c6b07cdfdddfaee8fe3c23fe5ad6fa5af5ffcfa626f58632e307bbda4f1988643b22c324d6ab5a856a37299346df4c4f6039b0e376eb9d267ed9ac9643af77a7347f53e193d2ab7a9d4a0e231ede9f443f3e3ec077136b952f5e3a42f619c77447dff0da4365183e89848f71275473cb6fd31dc35f8b6c27d8dad02f7882f68dca4619dac2a993fa97548b57d2aef9026c6c9b3013cd07848439bec2e75dbd46e50e3988ef520517ebc779d9bf1cdd5c8ba185e3607ed13aba95fd534d33838afec37f5dd5a69a7aa15f483edc3bdad839def3c1afe1adacf839e6b759e7aad47b33eee180fe7e551b3e49c6ab727fb83eaaea5ffe81d6d9bc5adcede37bf66ffd2b54dbffe75fbe9eacc3faadb7cbc3cf58fbd3819778ebd16fc443a1d6eb7f9fc9c5b2d6e36bdf9e675e9eeea7cd86ddd9a8d9b4eddeb9b3769fbfdbe6ddb966579b3d79bccff0362170d3f",
+  "scans": [
+    {
+      "raw_tick": 500,
+      "scancode": 28
+    },
+    {
+      "raw_tick": 500,
+      "scancode": 156
+    }
+  ],
+  "keys": [
+    {
+      "raw_tick": 500,
+      "key_word": 13
+    }
+  ],
+  "active_states": [],
+  "replay_play_states": [],
+  "seek_tick_prefix": []
+}

@@ -1,0 +1,532 @@
+{
+  "schema": "stunts-dosbox-tick-fixture-v1",
+  "scenario": "selection",
+  "audio": "ad15",
+  "script": "inputs/selection.json",
+  "ticks": 2200,
+  "provenance": {
+    "executable_sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+    "oracle_lock_sha256": "9f40e20b5a1855de03760df68d14ae5455e019172b81173ba76dd0fba4699804",
+    "dosbox_sha256": "fc26e8d2baf5021840b31f89a73337d26e1f035abfac9d906fe0698063361cee",
+    "observer_sha256": "c910c71da6a2314e9db567d73f10f112ab7e540c69c8f23df2092072919358ae",
+    "bindings_sha256": "6088558b051016db554afcff3a0544a1d4db3090aba05fa90dce5bdbe9de1675",
+    "script_sha256": "6b7a6a4ab1e1613ee782793f616febf8cc48c38728086d46faf0817f8ab26b10",
+    "driver_sha256": "e32b44c8ee6bf2046fc93359c225f3d99e559c94926594f6e3468e1c317afe26",
+    "capture_sha256": "4410b5c18fd4fa00c1a385a1ac3d33936146c6c3ef25009a94bc50e2959af062",
+    "frames_sha256": "ee3c30b381b3ef166bd602689406b237eaf494983d7149c50e2bb084daa9a57b"
+  },
+  "stream_counts": {
+    "sound": 24828,
+    "frames": 2847,
+    "states": 0,
+    "keys": 3,
+    "scans": 6
+  },
+  "stream_sha256": {
+    "sound": "539e2a56966d75068766577f5497543396ab8eb15cde5613b14a16a09e1bf1e3",
+    "frames": "b3384f3711c6056ec86c62b3152ef2716d0990b6b6d3bfccd08f2bde5283aa88",
+    "states": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "keys": "88d0fd9965a4c9a3270135fd330948b628585fbe68bd616daee6a63d154f0782",
+    "scans": "9e310e2a184fe8a0b2699c052d9a7b16a002986cdb76cd9bd0efea8ec89f56b1"
+  },
+  "driver_initialisation": [
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 0,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": {
+        "name": "AD15.DRV",
+        "offset": 0,
+        "fnv1a64": "2011549a8ebcd8f2"
+      },
+      "payload": "",
+      "result": 10
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        0
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        1
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        2
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        3
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        4
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        5
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        6
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        7
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        8
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        9
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 24,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 6,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 1,
+      "driver": "ad15",
+      "entry": 48,
+      "source": "callback",
+      "callback_slot": 0,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 2,
+      "driver": "ad15",
+      "entry": 48,
+      "source": "callback",
+      "callback_slot": 0,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    }
+  ],
+  "driver_startup_observations": [
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 0,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": {
+        "name": "AD15.DRV",
+        "offset": 0,
+        "fnv1a64": "2011549a8ebcd8f2"
+      },
+      "payload": "",
+      "result": 10
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        0
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        1
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        2
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        3
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        4
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        5
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        6
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        7
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        8
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        9
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 24,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 6,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 1,
+      "driver": "ad15",
+      "entry": 48,
+      "source": "callback",
+      "callback_slot": 0,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 2,
+      "driver": "ad15",
+      "entry": 48,
+      "source": "callback",
+      "callback_slot": 0,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    }
+  ],
+  "first_frame": {
+    "raw_tick": 0,
+    "reason": "palette",
+    "indices": "dd14fcc6528cab25",
+    "palette": "22c7a7dbb6964022"
+  },
+  "first_frame_zlib_hex": "789cedd2eb52a34a1486e1cf99718b89c6f6003948040c491b22249188c1c3acfbbfab0177edaaf9b12fe17dbaa85a457553ab3f96040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f03f8a6ea9288aefaa08fb32ec59b74233fbaeecfbe9bcbdbdd575bddbed9e9f9fd7ebf56ab57a7c7c4c92248ee3c964d21dbbb9b9198d46c3e13008026b1aab2af3de92c4c66373ceba97522bd552297929936229929c64ef8dbdedec75632f4bdba556cd6c13dafacafce0f818ec1fce8ae9691efe9abb1fd1c5890b64d6985566de2cb1df63fb72f615d897da46f54ee55a7ea16caefb48a1931be8b7355f56bd9b3f5a72b0f1de5c69c193296f95d69a979a78dd65ba8e751969e0d458e3cde71f7976cc1e0e0ff1fe7e5a4da322baf3b7d7b91ba597c3f9f07c16fc139dfebcfd71d2efffbb1b73668159d7a5da5675adb294f7ca32c5b1a248ce351f561dcdbf5af262e3adb96793372dba6e0e9a6f352d14e5ba4d7435d345a873d7c7b9fd8e33b5f1a48f5327ffc67990b6fd0f542e25d24c0abb443f1b6babfe0e87c45ec6b675560656c8566a53d5739513f93b65d78a2f150de4fe8ed3febbc0516dadba52b5d63a579e289969167e276aef6f9faffb76bf69ca55fd94eef2fb320d37b1f3d3d1627c9986c3f876307141383abbbe381d0d7e5953ffaeabaf5df1592e3f8aecddcfdbe5f4b8889af4f6f5c1bddc5fee26c3323c2f6ecefcd5e9f2e267bf73fbf459f97eff73feb179ec4fadd3f7a787feeceabe5dceba2ff4892c9796e7b6585896599a76f3d6b574d82cea75f6e293fd72def5d60ded76bbadaaaa2ccb6e7abb61fe03d7f065ee",
+  "frame_checkpoint_ordinal": 3,
+  "frame_checkpoint": {
+    "raw_tick": 14,
+    "reason": "sprite_1_unk3",
+    "indices": "231b1836753c33c6",
+    "palette": "22c7a7dbb6964022"
+  },
+  "frame_checkpoint_zlib_hex": "789ced9c6b43daca168657f7de3da55a4dda34e8280a289a8272510c8a8d5dbf123e78ce8f3db9cd64260937ed5628ef233533933597f532b326441a220000000000000000000000000000000000000000000000000000000000000000000000000000000000000020c25f900773f17d7f6e1eccc4f7034ae75b2c5a3e0fe612aa15ab464178088a79309f20512b5db001513e0fe6e307f3f3603e01b6ded7914d38bf340fe6934d4015fdb23c584caa57ac56b46de879b098c08f775bb56e039f8c3c588ee4ca3948affdc0eaf87efa1904536f65b42987e9f702b42987e9b700cb8a5e79b4fd23b2094d8a36abf5f2ca06de0237f2d315ab552a754cadda74fabdd67d6bfdf513563295561d68b9bd5cb6be32fac3f513d66fd52fba0e8cf6df4019fde1fa25034cc6b9d25097b1fff3e39f807eafc2910314d0ef4544328834b5da5897305ff53d2936f0cafaff3e918b32a50411f19a4e924e74c21146152b925c3377a2946e13d6224bea2774a5cbfb732263a381e8bcd84cfd644c8c9285bd59a8bc2acdf242daa4f58dbd5d2ceacf68e04531f9ed499c4cd3e13c23e94e5caaf9912234bfd2623d1ffb2f547d736f12c5fe2cbd3f4b6b40d37dad05ccfc11d27fed7db70afa59f3f5530565fa5954aa9f515f36b071fa89a21e721d266e38d1fc118bf413c6fccde92796d34f589ba39f3ece64fa39d93a72d43a8ee7a59b9c8c7550fb87a3d6ad3e7d54644cd76da2bb4325f1cf3175775e734df50ee8fac5a265712c594742b32415c728fbe4425ad853fa659b858c0e24675b4ebf7cdcd4f5179baa9f3c6769ab47e9a7f24a3fbd40bfb0b172f6344b3fa33f2de0aebd7e663c4b04b4f282246919bb34d754b457e639f7cdfaeaa2c668bed09fd6eddac73f533f272e7a8d7e621bf58b12c2d807d2932be86759bafbdba35f2156177d9676fa3113445bb3d2a4a8f19cd8b694c66bcb32fe483bfd58ae5f1a3fa19f3cb99a7eeaa265bbf453493974dda3457babda7bd48562f11a474b2dd59f55768f663df95dfa69f79ea0dfcafa994d6e9b7ebf21fe994d6e59fc9beb8ff16117fae559e88f66a71f4bf593126d997e494a6443d73c72343bc37da1c7bff4f689d4ce8c7fc6cd99f82066f7a7e2dfcbfea6f5e6e4f470f2fe24f7fee27bd396ba3527b49b55aeb44ff4708bfa597ac2917acfe84fe997ddcb906fe15a62a5d71fa97f22e78ff22f9d4822675ff85b8528d34fb317f3fbd3f453f37dc5ef35bd2d96e9635c942d196deaa465a63d19e7b5256a5ca3a8f354b037fbd326abf11ead31a61eb9fb7fa4f24a2ce3ef6f7a8cb28cfb37aa01bd7d6d2b9f7fbff1c5df697a7bac723dd4f94c2fed3ebea98728d1c32ad62f59d3f9fe54eaa5dfa97b078c5814179031ea92ef1f3879bf72df3f304fabbdc7302fedcfca16b9d880d80700d86cfe1bbe22287e4589f5cbbfb746e05f643aa14944ae30cc878553bd30318b5e5a419cd7ab4fcc2a8566cd36e30a69fff933aabfb5261db531f6a92c345c2a7724efdf442f354fc6cd4df3cd4c8cd31b47d9a027937c22ce94d75f5a3fa5dcb4a4026daa7ed3740d1a334df934d10b274485959ed74f66cd43c4b3ec624acfb91a690c28448bb4d34de0591ffd0cfd4a2b2ead9f8ca9e1615aac312946bfe506be2e4c4aa57a817eff0b7f3fd3e4794efd923d669a177043f49341e7d91cbedc3fb4a2e5f44bdb0b67d9f3ccfaa533763a6322af3bd334cee4dffdc9eca098b32c6bafe45a65817ef185943982c2b511f8e378efcf664be50100e0dd899fe917fd177d3f7edc904a50fc1fcf4916c96777264fa14c1e4819970499fd56a29ec89968a012a4127a91942e3bed67ad6c25a66cbef1a035cd4a59674f12f3b5fadb4b6e8d06aa2839e9cbb9e6cba7c8aac76025bf93a78a6defa3758cd59ac860ce285f2f8aa5f68b6b767b6761a65fbc17049a2e599833440e8c05acc7c26d44d72f59c0be0c73416e6fce84d47e07d9ba07000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000066d3097fa8d3e9c4a98e1b25dd080e7f5c668e531cff0bb9bfbf1f0e8783c1e0fafabadd6e5f5e5e9e9d9dd5ebf55aad7678781856fbf6eddbfefefeeeee6ea552e1d1887b3df63caed7f9e0806d9bc342a231d190a84be41135896a4455229b881f477c3f60ff8a6f2f78d0e0de115fb9dcb6d8db7938abdc9c7eea888f2df79f13fbafea970f76859847cc3d668fb9cebf0ef8c9e6a70a3fd17844c30175dbe49d53f3848eabe4da64efd02f1e3d71ef91bd07aedff1c10ddb5daefc606a8da931a4932e1d7af4bd495f6bb457a51d9b463cf2d86bfd6c351f9aa777a7b59b63d113d54ef5bbe77c6dd9fb8dbddd93ddcf4795ff543ffeedfcf521b2d747c3367385391c258dc7341c52b74b9e47cd26d56a54ad926d8f7e72ef813d9febb77cd067fb9ac9633a0f477347277d121daab6c8a99375445f5cfa6c4772f663391b7c7018c9491f1239ef88fad11b482da23ad111911b2a1a8c78dc8b7cb8abf3ed01f76dee56b8437c49e3060d4fa87b48de776a7ea5da1e5577c8d6e564e9c0038d8734ec51af4ded16b5ea543fa2233756941fef03ff667c7335ea5e0e7f3406ade36ec3bdaad99ed83f3fd86bb8bb3567e7d0aeb8fb9fbe7ef9b8bff30f8f86bf86bda74127e85efcec341fbd93f1857838af8e1a8e7f6adf1eef0d0e77bbeee7ceb74f9ef5f1e2cbdf9165ff47d0f322fbebd6cfabb3a856bbf1f8e334aa7b793cbe380a5b8814b9b8e0568bcfcfb9d9e446239c6fe190eeaece87ede6ad57bfb93809c7164eda7ebfdfebf5badd6e387bc3c9fc7f0edf685d",
+  "scans": [
+    {
+      "raw_tick": 500,
+      "scancode": 28
+    },
+    {
+      "raw_tick": 500,
+      "scancode": 156
+    },
+    {
+      "raw_tick": 700,
+      "scancode": 75
+    },
+    {
+      "raw_tick": 700,
+      "scancode": 203
+    },
+    {
+      "raw_tick": 730,
+      "scancode": 28
+    },
+    {
+      "raw_tick": 730,
+      "scancode": 156
+    }
+  ],
+  "keys": [
+    {
+      "raw_tick": 500,
+      "key_word": 13
+    },
+    {
+      "raw_tick": 700,
+      "key_word": 19200
+    },
+    {
+      "raw_tick": 730,
+      "key_word": 13
+    }
+  ],
+  "active_states": [],
+  "replay_play_states": [],
+  "seek_tick_prefix": []
+}

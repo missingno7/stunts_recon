@@ -23,6 +23,7 @@ void port_guest_request_stop(const char *s) { (void)s; abort(); }
 void port_guest_unwind(const char *s) { (void)s; abort(); }
 uint64_t port_timer_raw_tick(void) { return tick; }
 uint64_t port_timer_machine_time_ns(void) { return tick * PORT_TIMER_PERIOD_NS; }
+void port_trace_key_consumed(uint16_t word) { (void)word; }
 void port_trace_input_keyboard(uint64_t seq, uint64_t due, uint64_t now,
                                const uint8_t *codes, size_t n) {
     (void)codes; assert(n); assert(due == now && now == tick * PORT_TIMER_PERIOD_NS);

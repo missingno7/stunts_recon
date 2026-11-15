@@ -1,4 +1,4 @@
-"""Check the test-only Port Forge seed injection at its source call boundary."""
+"""Check explicit startup seed injection at its source call boundary."""
 from __future__ import annotations
 
 import os

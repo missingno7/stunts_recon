@@ -1,0 +1,1765 @@
+{
+  "schema": "stunts-dosbox-tick-fixture-v1",
+  "scenario": "race",
+  "audio": "ad15",
+  "script": "inputs/race.json",
+  "ticks": 1800,
+  "provenance": {
+    "executable_sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+    "oracle_lock_sha256": "9f40e20b5a1855de03760df68d14ae5455e019172b81173ba76dd0fba4699804",
+    "dosbox_sha256": "fc26e8d2baf5021840b31f89a73337d26e1f035abfac9d906fe0698063361cee",
+    "observer_sha256": "c910c71da6a2314e9db567d73f10f112ab7e540c69c8f23df2092072919358ae",
+    "bindings_sha256": "6088558b051016db554afcff3a0544a1d4db3090aba05fa90dce5bdbe9de1675",
+    "script_sha256": "ca9a42585dc47fe7f7b19dc499ee36ee32e1f181d1406d5bb454a15684c05b2c",
+    "driver_sha256": "e32b44c8ee6bf2046fc93359c225f3d99e559c94926594f6e3468e1c317afe26",
+    "capture_sha256": "e337a0459925159e8a1673b379ec5348b1874e51194cb02fd3e35908c876d34e",
+    "frames_sha256": "e1f87f985d8c65c0667514108be9f520ca1fdaea02fac917cd31122c27677377"
+  },
+  "stream_counts": {
+    "sound": 9921,
+    "frames": 618,
+    "states": 296,
+    "keys": 22,
+    "scans": 43
+  },
+  "stream_sha256": {
+    "sound": "bc2d833c982cd99665d0434523bff95fd3c760443cc435e5184b072d6a96e9da",
+    "frames": "693476f8329d00c874cf913a6ad22d6b044c7b9a6b06b59a4ae3f18348ae4743",
+    "states": "731ff5e3f1bba9a5d30210a7e2cb0c457d08cec936237e92e43030d24d665fbb",
+    "keys": "2fa1d7930aaaa1e2b6b57bae20316bf503eb1c01ce9280c926b7336c567ebb03",
+    "scans": "2bc4130821239241bc137f2bda01bb48f09feb6c44ab8d51e3c3a01f646c150d"
+  },
+  "driver_initialisation": [
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 0,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": {
+        "name": "AD15.DRV",
+        "offset": 0,
+        "fnv1a64": "2011549a8ebcd8f2"
+      },
+      "payload": "",
+      "result": 10
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        0
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        1
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        2
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        3
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        4
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        5
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        6
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        7
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        8
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        9
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 24,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 6,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 1,
+      "driver": "ad15",
+      "entry": 48,
+      "source": "callback",
+      "callback_slot": 0,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 2,
+      "driver": "ad15",
+      "entry": 48,
+      "source": "callback",
+      "callback_slot": 0,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    }
+  ],
+  "driver_startup_observations": [
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 0,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": {
+        "name": "AD15.DRV",
+        "offset": 0,
+        "fnv1a64": "2011549a8ebcd8f2"
+      },
+      "payload": "",
+      "result": 10
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        0
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        1
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        2
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        3
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        4
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        5
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        6
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        7
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        8
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 30,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [
+        9
+      ],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 24,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 0,
+      "driver": "ad15",
+      "entry": 6,
+      "source": "foreground",
+      "callback_slot": -1,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 1,
+      "driver": "ad15",
+      "entry": 48,
+      "source": "callback",
+      "callback_slot": 0,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    },
+    {
+      "raw_tick": 2,
+      "driver": "ad15",
+      "entry": 48,
+      "source": "callback",
+      "callback_slot": 0,
+      "arguments": [],
+      "voice": -1,
+      "chunk": -1,
+      "resource": null,
+      "payload": "",
+      "result": null
+    }
+  ],
+  "first_frame": {
+    "raw_tick": 0,
+    "reason": "palette",
+    "indices": "dd14fcc6528cab25",
+    "palette": "22c7a7dbb6964022"
+  },
+  "first_frame_zlib_hex": "789cedd2eb52a34a1486e1cf99718b89c6f6003948040c491b22249188c1c3acfbbfab0177edaaf9b12fe17dbaa85a457553ab3f96040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f03f8a6ea9288aefaa08fb32ec59b74233fbaeecfbe9bcbdbdd575bddbed9e9f9fd7ebf56ab57a7c7c4c92248ee3c964d21dbbb9b9198d46c3e13008026b1aab2af3de92c4c66373ceba97522bd552297929936229929c64ef8dbdedec75632f4bdba556cd6c13dafacafce0f818ec1fce8ae9691efe9abb1fd1c5890b64d6985566de2cb1df63fb72f615d897da46f54ee55a7ea16caefb48a1931be8b7355f56bd9b3f5a72b0f1de5c69c193296f95d69a979a78dd65ba8e751969e0d458e3cde71f7976cc1e0e0ff1fe7e5a4da322baf3b7d7b91ba597c3f9f07c16fc139dfebcfd71d2efffbb1b73668159d7a5da5675adb294f7ca32c5b1a248ce351f561dcdbf5af262e3adb96793372dba6e0e9a6f352d14e5ba4d7435d345a873d7c7b9fd8e33b5f1a48f5327ffc67990b6fd0f542e25d24c0abb443f1b6babfe0e87c45ec6b675560656c8566a53d5739513f93b65d78a2f150de4fe8ed3febbc0516dadba52b5d63a579e289969167e276aef6f9faffb76bf69ca55fd94eef2fb320d37b1f3d3d1627c9986c3f876307141383abbbe381d0d7e5953ffaeabaf5df1592e3f8aecddcfdbe5f4b8889af4f6f5c1bddc5fee26c3323c2f6ecefcd5e9f2e267bf73fbf459f97eff73feb179ec4fadd3f7a787feeceabe5dceba2ff4892c9796e7b6585896599a76f3d6b574d82cea75f6e293fd72def5d60ded76bbadaaaa2ccb6e7abb61fe03d7f065ee",
+  "frame_checkpoint_ordinal": 3,
+  "frame_checkpoint": {
+    "raw_tick": 14,
+    "reason": "sprite_1_unk3",
+    "indices": "231b1836753c33c6",
+    "palette": "22c7a7dbb6964022"
+  },
+  "frame_checkpoint_zlib_hex": "789ced9c6b43daca168657f7de3da55a4dda34e8280a289a8272510c8a8d5dbf123e78ce8f3db9cd64260937ed5628ef233533933597f532b326441a220000000000000000000000000000000000000000000000000000000000000000000000000000000000000020c25f900773f17d7f6e1eccc4f7034ae75b2c5a3e0fe612aa15ab464178088a79309f20512b5db001513e0fe6e307f3f3603e01b6ded7914d38bf340fe6934d4015fdb23c584caa57ac56b46de879b098c08f775bb56e039f8c3c588ee4ca3948affdc0eaf87efa1904536f65b42987e9f702b42987e9b700cb8a5e79b4fd23b2094d8a36abf5f2ca06de0237f2d315ab552a754cadda74fabdd67d6bfdf513563295561d68b9bd5cb6be32fac3f513d66fd52fba0e8cf6df4019fde1fa25034cc6b9d25097b1fff3e39f807eafc2910314d0ef4544328834b5da5897305ff53d2936f0cafaff3e918b32a50411f19a4e924e74c21146152b925c3377a2946e13d6224bea2774a5cbfb732263a381e8bcd84cfd644c8c9285bd59a8bc2acdf242daa4f58dbd5d2ceacf68e04531f9ed499c4cd3e13c23e94e5caaf9912234bfd2623d1ffb2f547d736f12c5fe2cbd3f4b6b40d37dad05ccfc11d27fed7db70afa59f3f5530565fa5954aa9f515f36b071fa89a21e721d266e38d1fc118bf413c6fccde92796d34f589ba39f3ece64fa39d93a72d43a8ee7a59b9c8c7550fb87a3d6ad3e7d54644cd76da2bb4325f1cf3175775e734df50ee8fac5a265712c594742b32415c728fbe4425ad853fa659b858c0e24675b4ebf7cdcd4f5179baa9f3c6769ab47e9a7f24a3fbd40bfb0b172f6344b3fa33f2de0aebd7e663c4b04b4f282246919bb34d754b457e639f7cdfaeaa2c668bed09fd6eddac73f533f272e7a8d7e621bf58b12c2d807d2932be86759bafbdba35f2156177d9676fa3113445bb3d2a4a8f19cd8b694c66bcb32fe483bfd58ae5f1a3fa19f3cb99a7eeaa265bbf453493974dda3457babda7bd48562f11a474b2dd59f55768f663df95dfa69f79ea0dfcafa994d6e9b7ebf21fe994d6e59fc9beb8ff16117fae559e88f66a71f4bf593126d997e494a6443d73c72343bc37da1c7bff4f689d4ce8c7fc6cd99f82066f7a7e2dfcbfea6f5e6e4f470f2fe24f7fee27bd396ba3527b49b55aeb44ff4708bfa597ac2917acfe84fe997ddcb906fe15a62a5d71fa97f22e78ff22f9d4822675ff85b8528d34fb317f3fbd3f453f37dc5ef35bd2d96e9635c942d196deaa465a63d19e7b5256a5ca3a8f354b037fbd326abf11ead31a61eb9fb7fa4f24a2ce3ef6f7a8cb28cfb37aa01bd7d6d2b9f7fbff1c5df697a7bac723dd4f94c2fed3ebea98728d1c32ad62f59d3f9fe54eaa5dfa97b078c5814179031ea92ef1f3879bf72df3f304fabbdc7302fedcfca16b9d880d80700d86cfe1bbe22287e4589f5cbbfb746e05f643aa14944ae30cc878553bd30318b5e5a419cd7ab4fcc2a8566cd36e30a69fff933aabfb5261db531f6a92c345c2a7724efdf442f354fc6cd4df3cd4c8cd31b47d9a027937c22ce94d75f5a3fa5dcb4a4026daa7ed3740d1a334df934d10b274485959ed74f66cd43c4b3ec624acfb91a690c28448bb4d34de0591ffd0cfd4a2b2ead9f8ca9e1615aac312946bfe506be2e4c4aa57a817eff0b7f3fd3e4794efd923d669a177043f49341e7d91cbedc3fb4a2e5f44bdb0b67d9f3ccfaa533763a6322af3bd334cee4dffdc9eca098b32c6bafe45a65817ef185943982c2b511f8e378efcf664be50100e0dd899fe917fd177d3f7edc904a50fc1fcf4916c96777264fa14c1e4819970499fd56a29ec89968a012a4127a91942e3bed67ad6c25a66cbef1a035cd4a59674f12f3b5fadb4b6e8d06aa2839e9cbb9e6cba7c8aac76025bf93a78a6defa3758cd59ac860ce285f2f8aa5f68b6b767b6761a65fbc17049a2e599833440e8c05acc7c26d44d72f59c0be0c73416e6fce84d47e07d9ba07000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000066d3097fa8d3e9c4a98e1b25dd080e7f5c668e531cff0bb9bfbf1f0e8783c1e0fafabadd6e5f5e5e9e9d9dd5ebf55aad7678781856fbf6eddbfefefeeeee6ea552e1d1887b3df63caed7f9e0806d9bc342a231d190a84be41135896a4455229b881f477c3f60ff8a6f2f78d0e0de115fb9dcb6d8db7938abdc9c7eea888f2df79f13fbafea970f76859847cc3d668fb9cebf0ef8c9e6a70a3fd17844c30175dbe49d53f3848eabe4da64efd02f1e3d71ef91bd07aedff1c10ddb5daefc606a8da931a4932e1d7af4bd495f6bb457a51d9b463cf2d86bfd6c351f9aa777a7b59b63d113d54ef5bbe77c6dd9fb8dbddd93ddcf4795ff543ffeedfcf521b2d747c3367385391c258dc7341c52b74b9e47cd26d56a54ad926d8f7e72ef813d9febb77cd067fb9ac9633a0f477347277d121daab6c8a99375445f5cfa6c4772f663391b7c7018c9491f1239ef88fad11b482da23ad111911b2a1a8c78dc8b7cb8abf3ed01f76dee56b8437c49e3060d4fa87b48de776a7ea5da1e5577c8d6e564e9c0038d8734ec51af4ded16b5ea543fa2233756941fef03ff667c7335ea5e0e7f3406ade36ec3bdaad99ed83f3fd86bb8bb3567e7d0aeb8fb9fbe7ef9b8bff30f8f86bf86bda74127e85efcec341fbd93f1857838af8e1a8e7f6adf1eef0d0e77bbeee7ceb74f9ef5f1e2cbdf9165ff47d0f322fbebd6cfabb3a856bbf1f8e334aa7b793cbe380a5b8814b9b8e0568bcfcfb9d9e446239c6fe190eeaece87ede6ad57bfb93809c7164eda7ebfdfebf5badd6e387bc3c9fc7f0edf685d",
+  "scans": [
+    {
+      "raw_tick": 150,
+      "scancode": 28
+    },
+    {
+      "raw_tick": 150,
+      "scancode": 156
+    },
+    {
+      "raw_tick": 300,
+      "scancode": 28
+    },
+    {
+      "raw_tick": 300,
+      "scancode": 156
+    },
+    {
+      "raw_tick": 450,
+      "scancode": 28
+    },
+    {
+      "raw_tick": 450,
+      "scancode": 156
+    },
+    {
+      "raw_tick": 500,
+      "scancode": 25
+    },
+    {
+      "raw_tick": 500,
+      "scancode": 153
+    },
+    {
+      "raw_tick": 502,
+      "scancode": 19
+    },
+    {
+      "raw_tick": 502,
+      "scancode": 147
+    },
+    {
+      "raw_tick": 504,
+      "scancode": 18
+    },
+    {
+      "raw_tick": 504,
+      "scancode": 146
+    },
+    {
+      "raw_tick": 506,
+      "scancode": 47
+    },
+    {
+      "raw_tick": 506,
+      "scancode": 175
+    },
+    {
+      "raw_tick": 508,
+      "scancode": 23
+    },
+    {
+      "raw_tick": 508,
+      "scancode": 151
+    },
+    {
+      "raw_tick": 510,
+      "scancode": 18
+    },
+    {
+      "raw_tick": 510,
+      "scancode": 146
+    },
+    {
+      "raw_tick": 512,
+      "scancode": 17
+    },
+    {
+      "raw_tick": 512,
+      "scancode": 145
+    },
+    {
+      "raw_tick": 514,
+      "scancode": 23
+    },
+    {
+      "raw_tick": 514,
+      "scancode": 151
+    },
+    {
+      "raw_tick": 516,
+      "scancode": 49
+    },
+    {
+      "raw_tick": 516,
+      "scancode": 177
+    },
+    {
+      "raw_tick": 518,
+      "scancode": 34
+    },
+    {
+      "raw_tick": 518,
+      "scancode": 162
+    },
+    {
+      "raw_tick": 520,
+      "scancode": 28
+    },
+    {
+      "raw_tick": 520,
+      "scancode": 156
+    },
+    {
+      "raw_tick": 600,
+      "scancode": 72
+    },
+    {
+      "raw_tick": 1100,
+      "scancode": 200
+    },
+    {
+      "raw_tick": 1130,
+      "scancode": 75
+    },
+    {
+      "raw_tick": 1210,
+      "scancode": 203
+    },
+    {
+      "raw_tick": 1230,
+      "scancode": 77
+    },
+    {
+      "raw_tick": 1310,
+      "scancode": 205
+    },
+    {
+      "raw_tick": 1330,
+      "scancode": 80
+    },
+    {
+      "raw_tick": 1430,
+      "scancode": 208
+    },
+    {
+      "raw_tick": 1530,
+      "scancode": 1
+    },
+    {
+      "raw_tick": 1570,
+      "scancode": 80
+    },
+    {
+      "raw_tick": 1590,
+      "scancode": 208
+    },
+    {
+      "raw_tick": 1610,
+      "scancode": 75
+    },
+    {
+      "raw_tick": 1630,
+      "scancode": 203
+    },
+    {
+      "raw_tick": 1650,
+      "scancode": 28
+    },
+    {
+      "raw_tick": 1750,
+      "scancode": 156
+    }
+  ],
+  "keys": [
+    {
+      "raw_tick": 150,
+      "key_word": 13
+    },
+    {
+      "raw_tick": 300,
+      "key_word": 13
+    },
+    {
+      "raw_tick": 450,
+      "key_word": 13
+    },
+    {
+      "raw_tick": 500,
+      "key_word": 112
+    },
+    {
+      "raw_tick": 502,
+      "key_word": 114
+    },
+    {
+      "raw_tick": 504,
+      "key_word": 101
+    },
+    {
+      "raw_tick": 506,
+      "key_word": 118
+    },
+    {
+      "raw_tick": 508,
+      "key_word": 105
+    },
+    {
+      "raw_tick": 510,
+      "key_word": 101
+    },
+    {
+      "raw_tick": 512,
+      "key_word": 119
+    },
+    {
+      "raw_tick": 514,
+      "key_word": 105
+    },
+    {
+      "raw_tick": 516,
+      "key_word": 110
+    },
+    {
+      "raw_tick": 518,
+      "key_word": 103
+    },
+    {
+      "raw_tick": 520,
+      "key_word": 13
+    },
+    {
+      "raw_tick": 683,
+      "key_word": 18432
+    },
+    {
+      "raw_tick": 1134,
+      "key_word": 19200
+    },
+    {
+      "raw_tick": 1234,
+      "key_word": 19712
+    },
+    {
+      "raw_tick": 1334,
+      "key_word": 20480
+    },
+    {
+      "raw_tick": 1534,
+      "key_word": 27
+    },
+    {
+      "raw_tick": 1570,
+      "key_word": 20480
+    },
+    {
+      "raw_tick": 1610,
+      "key_word": 19200
+    },
+    {
+      "raw_tick": 1650,
+      "key_word": 13
+    }
+  ],
+  "active_states": [
+    {
+      "raw_tick": 684,
+      "game_frame": 1,
+      "game_inputmode": 1,
+      "state_sha256": "6c6729e5e986c812c65a4a1b8fea7712fb3230ce04f94bb91ef92e9a5b42e035",
+      "travel_distance": 156,
+      "player_position": [
+        493824,
+        512,
+        347022
+      ]
+    },
+    {
+      "raw_tick": 689,
+      "game_frame": 2,
+      "game_inputmode": 1,
+      "state_sha256": "c508926016d875bc9fa9b81988f69167589d0ecb52afcfcd93e3b729cf60db1f",
+      "travel_distance": 468,
+      "player_position": [
+        493824,
+        512,
+        347050
+      ]
+    },
+    {
+      "raw_tick": 694,
+      "game_frame": 3,
+      "game_inputmode": 1,
+      "state_sha256": "3a149bae2de6124e1a9474c98541964e680402c7ffeab53525ffdea709a24aa4",
+      "travel_distance": 936,
+      "player_position": [
+        493824,
+        512,
+        347092
+      ]
+    },
+    {
+      "raw_tick": 699,
+      "game_frame": 4,
+      "game_inputmode": 1,
+      "state_sha256": "0ab07da61a38fa3d1b3b610a8cf437ee8cd49e2d793244f9f497ab2f918b7d5e",
+      "travel_distance": 1560,
+      "player_position": [
+        493824,
+        512,
+        347149
+      ]
+    },
+    {
+      "raw_tick": 704,
+      "game_frame": 5,
+      "game_inputmode": 1,
+      "state_sha256": "89e2ff9608d8e0cfd25782a3f413b520be6a3159830992262dff6dcef25429fc",
+      "travel_distance": 2340,
+      "player_position": [
+        493824,
+        512,
+        347220
+      ]
+    },
+    {
+      "raw_tick": 709,
+      "game_frame": 6,
+      "game_inputmode": 1,
+      "state_sha256": "46142b5bf4f62683f4ec67f7e9d333fce1672063ba9a603bfb8e594f217026ce",
+      "travel_distance": 3276,
+      "player_position": [
+        493824,
+        512,
+        347305
+      ]
+    },
+    {
+      "raw_tick": 714,
+      "game_frame": 7,
+      "game_inputmode": 1,
+      "state_sha256": "1074ea8775a1d61ce5214c911467d3d88ff91e7b090925e5128fbc58bbfdadfe",
+      "travel_distance": 4368,
+      "player_position": [
+        493824,
+        512,
+        347405
+      ]
+    },
+    {
+      "raw_tick": 719,
+      "game_frame": 8,
+      "game_inputmode": 1,
+      "state_sha256": "94d25a248657b44ad862af61d2bbc2b448a7acc9107208f9128e78c7753bd3a5",
+      "travel_distance": 5616,
+      "player_position": [
+        493824,
+        512,
+        347519
+      ]
+    },
+    {
+      "raw_tick": 724,
+      "game_frame": 9,
+      "game_inputmode": 1,
+      "state_sha256": "2e962d21f7da024acb881e56fce9604d063ab046ab9b5251c0ed5a48fa3d103a",
+      "travel_distance": 7020,
+      "player_position": [
+        493824,
+        512,
+        347647
+      ]
+    },
+    {
+      "raw_tick": 729,
+      "game_frame": 10,
+      "game_inputmode": 1,
+      "state_sha256": "9e97e96c22936faae686796da545554968f624724924457305a3f739977acb7b",
+      "travel_distance": 8580,
+      "player_position": [
+        493824,
+        512,
+        347790
+      ]
+    },
+    {
+      "raw_tick": 734,
+      "game_frame": 11,
+      "game_inputmode": 1,
+      "state_sha256": "9400c6104ac7dc41efec38fc2c96b64eda6d5b0bd9a1f71f97592d2e7b551646",
+      "travel_distance": 10296,
+      "player_position": [
+        493824,
+        512,
+        347947
+      ]
+    },
+    {
+      "raw_tick": 739,
+      "game_frame": 12,
+      "game_inputmode": 1,
+      "state_sha256": "dd0e00c94c0e22ab290317e79081ae6a288957120bc13a075ccd12382cd204bd",
+      "travel_distance": 12168,
+      "player_position": [
+        493824,
+        512,
+        348118
+      ]
+    },
+    {
+      "raw_tick": 744,
+      "game_frame": 13,
+      "game_inputmode": 1,
+      "state_sha256": "1e563752eed238377db2a95abc45669aba9c31fb52ef36c9e5f077eca80a4ab0",
+      "travel_distance": 14196,
+      "player_position": [
+        493824,
+        512,
+        348303
+      ]
+    },
+    {
+      "raw_tick": 749,
+      "game_frame": 14,
+      "game_inputmode": 1,
+      "state_sha256": "6b1b32c0fdef3e8ffb4684e2c2b73cafa772d8eff34318083518bdce102753ec",
+      "travel_distance": 16380,
+      "player_position": [
+        493824,
+        512,
+        348503
+      ]
+    },
+    {
+      "raw_tick": 754,
+      "game_frame": 15,
+      "game_inputmode": 1,
+      "state_sha256": "7f9d9f071b9409ed857ed1720f9aa3deaeee4285ea42366130b71413783f4738",
+      "travel_distance": 18720,
+      "player_position": [
+        493824,
+        512,
+        348717
+      ]
+    },
+    {
+      "raw_tick": 759,
+      "game_frame": 16,
+      "game_inputmode": 1,
+      "state_sha256": "b4810638e5cf2aac88f6511b53d7758e9d3ef18f69f9eaecc6402d07b4b965c5",
+      "travel_distance": 21216,
+      "player_position": [
+        493824,
+        512,
+        348945
+      ]
+    },
+    {
+      "raw_tick": 764,
+      "game_frame": 17,
+      "game_inputmode": 1,
+      "state_sha256": "dfae0986a525d76b31ed76d8324a052a84c6076424a0dba6341071fbd3326bf0",
+      "travel_distance": 23868,
+      "player_position": [
+        493824,
+        512,
+        349188
+      ]
+    },
+    {
+      "raw_tick": 769,
+      "game_frame": 18,
+      "game_inputmode": 1,
+      "state_sha256": "fdb27c88ec91bb1689058b154166ff026d59bae3a4a24b5a74cd3136b75df7ea",
+      "travel_distance": 26676,
+      "player_position": [
+        493824,
+        512,
+        349445
+      ]
+    },
+    {
+      "raw_tick": 774,
+      "game_frame": 19,
+      "game_inputmode": 1,
+      "state_sha256": "1adf01b041c94d30bee018b852150f9c1b28dda6aebbbdadc24ce315831239c5",
+      "travel_distance": 29640,
+      "player_position": [
+        493824,
+        512,
+        349716
+      ]
+    },
+    {
+      "raw_tick": 779,
+      "game_frame": 20,
+      "game_inputmode": 1,
+      "state_sha256": "54e7cd4e7d20ad5aeb1e7772ebe9ca68c476d3e02b7783c57ac355aa55fc1555",
+      "travel_distance": 32760,
+      "player_position": [
+        493824,
+        512,
+        350002
+      ]
+    },
+    {
+      "raw_tick": 784,
+      "game_frame": 21,
+      "game_inputmode": 1,
+      "state_sha256": "587fe466d9e18de761221304988d3c59157f062ddb00853ee899a709071d384c",
+      "travel_distance": 36036,
+      "player_position": [
+        493824,
+        512,
+        350302
+      ]
+    },
+    {
+      "raw_tick": 789,
+      "game_frame": 22,
+      "game_inputmode": 1,
+      "state_sha256": "8cbd2a4a7dbaa8ab6e3fe4d5a27129487504866380bdf0aefa50ff0135476c9f",
+      "travel_distance": 39468,
+      "player_position": [
+        493824,
+        512,
+        350616
+      ]
+    },
+    {
+      "raw_tick": 794,
+      "game_frame": 23,
+      "game_inputmode": 1,
+      "state_sha256": "6e94cf652613bc71fd51272b00e17cc6cc89ceb947803a3135096ed2bfdb478e",
+      "travel_distance": 43056,
+      "player_position": [
+        493824,
+        512,
+        350944
+      ]
+    },
+    {
+      "raw_tick": 799,
+      "game_frame": 24,
+      "game_inputmode": 1,
+      "state_sha256": "fadb14b28aac66d1233b77633bf07094e53e1fd8d18040ed1b6d9a1d8964b2e6",
+      "travel_distance": 46800,
+      "player_position": [
+        493824,
+        512,
+        351287
+      ]
+    },
+    {
+      "raw_tick": 804,
+      "game_frame": 25,
+      "game_inputmode": 1,
+      "state_sha256": "02a47209a56dede718aa06feb4711f4dcde627aa8b20281ae553cb74022f16ce",
+      "travel_distance": 50700,
+      "player_position": [
+        493824,
+        512,
+        351644
+      ]
+    },
+    {
+      "raw_tick": 809,
+      "game_frame": 26,
+      "game_inputmode": 1,
+      "state_sha256": "ee41104d569de2398a488f63ebd5b1a71d5cfbd45ad1747bb9bd3e6a39cf6a47",
+      "travel_distance": 54756,
+      "player_position": [
+        493824,
+        512,
+        352015
+      ]
+    },
+    {
+      "raw_tick": 814,
+      "game_frame": 27,
+      "game_inputmode": 1,
+      "state_sha256": "8a5f5b9ca31c5f21e9c07d9f06570738d548ba7f8453f2952b34da9eba74a20f",
+      "travel_distance": 58968,
+      "player_position": [
+        493824,
+        512,
+        352401
+      ]
+    },
+    {
+      "raw_tick": 819,
+      "game_frame": 28,
+      "game_inputmode": 1,
+      "state_sha256": "59a73f88621d1dce83b0b5a0598b862aaa2298a1716649c3a06fd3230b118955",
+      "travel_distance": 63336,
+      "player_position": [
+        493824,
+        512,
+        352801
+      ]
+    },
+    {
+      "raw_tick": 824,
+      "game_frame": 29,
+      "game_inputmode": 1,
+      "state_sha256": "f8940250075b9b8f5137e1b70995ea43d40e7c01c35a5d70109e9e0ce665d46d",
+      "travel_distance": 67860,
+      "player_position": [
+        493824,
+        512,
+        353215
+      ]
+    },
+    {
+      "raw_tick": 829,
+      "game_frame": 30,
+      "game_inputmode": 1,
+      "state_sha256": "913e621b085c0e626adabc4eca06e6cac97da0e862303b93d30a50c86ace307b",
+      "travel_distance": 72540,
+      "player_position": [
+        493824,
+        512,
+        353644
+      ]
+    },
+    {
+      "raw_tick": 834,
+      "game_frame": 31,
+      "game_inputmode": 1,
+      "state_sha256": "963dc1162754994bd678156ba715128345eb9bbad99feca3311ea9c083169bca",
+      "travel_distance": 77376,
+      "player_position": [
+        493824,
+        512,
+        354087
+      ]
+    },
+    {
+      "raw_tick": 839,
+      "game_frame": 32,
+      "game_inputmode": 1,
+      "state_sha256": "8186e301b80be3864607d02fcfeea03c262e34f1d973c60aecd6d45138e999eb",
+      "travel_distance": 82368,
+      "player_position": [
+        493824,
+        512,
+        354544
+      ]
+    },
+    {
+      "raw_tick": 844,
+      "game_frame": 33,
+      "game_inputmode": 1,
+      "state_sha256": "f0112bc385f23c974f06fa45ff0d9c2efaee5f6b54b747b2816a17c2c5b02d67",
+      "travel_distance": 87516,
+      "player_position": [
+        493824,
+        512,
+        355015
+      ]
+    },
+    {
+      "raw_tick": 849,
+      "game_frame": 34,
+      "game_inputmode": 1,
+      "state_sha256": "979ad02ef85e39c72c39e1841359798c19c86b5ae3182a4514eaae349df72387",
+      "travel_distance": 92826,
+      "player_position": [
+        493824,
+        512,
+        355501
+      ]
+    },
+    {
+      "raw_tick": 854,
+      "game_frame": 35,
+      "game_inputmode": 1,
+      "state_sha256": "6df07de9bd076935ca1d954b5ae5124c06457d53e2347d9f41df44fd92ed1d72",
+      "travel_distance": 98301,
+      "player_position": [
+        493824,
+        512,
+        356002
+      ]
+    },
+    {
+      "raw_tick": 859,
+      "game_frame": 36,
+      "game_inputmode": 1,
+      "state_sha256": "456a7da16b738dd7e8e1332908b528de1d6448cfabdf5e364d2bf7971eb0cc90",
+      "travel_distance": 103941,
+      "player_position": [
+        493824,
+        512,
+        356519
+      ]
+    },
+    {
+      "raw_tick": 864,
+      "game_frame": 37,
+      "game_inputmode": 1,
+      "state_sha256": "0117f7ec6cf282b27a56805d9f2d7a58e2d9fd0192ce4cd88941b464483a15f5",
+      "travel_distance": 109749,
+      "player_position": [
+        493824,
+        512,
+        357051
+      ]
+    },
+    {
+      "raw_tick": 869,
+      "game_frame": 38,
+      "game_inputmode": 1,
+      "state_sha256": "f31e788c9c8d18fba9253cfeb40f19b1a212029d6e3531ee0f3ec5ec810a8fd7",
+      "travel_distance": 115725,
+      "player_position": [
+        493824,
+        512,
+        357598
+      ]
+    },
+    {
+      "raw_tick": 874,
+      "game_frame": 39,
+      "game_inputmode": 1,
+      "state_sha256": "75a784876955866cfd4ba6f10ef25d361f9398d7b675c9b030e58d47c372696b",
+      "travel_distance": 121869,
+      "player_position": [
+        493824,
+        512,
+        358161
+      ]
+    },
+    {
+      "raw_tick": 879,
+      "game_frame": 40,
+      "game_inputmode": 1,
+      "state_sha256": "d0bd70aa18b0e28c433d87afd709fef452e04fe6663f2ddf692a37d329207e57",
+      "travel_distance": 128184,
+      "player_position": [
+        493824,
+        512,
+        358739
+      ]
+    },
+    {
+      "raw_tick": 884,
+      "game_frame": 41,
+      "game_inputmode": 1,
+      "state_sha256": "ff3538b24e06532618e4e5df97f06d9d42fe747d686690b2482e7367b8dca8bd",
+      "travel_distance": 134674,
+      "player_position": [
+        493824,
+        512,
+        359333
+      ]
+    },
+    {
+      "raw_tick": 889,
+      "game_frame": 42,
+      "game_inputmode": 1,
+      "state_sha256": "425fda627ec547be69858f731cfee524384384c39fe598b0ff5bcd352fa549a4",
+      "travel_distance": 141339,
+      "player_position": [
+        493824,
+        512,
+        359943
+      ]
+    },
+    {
+      "raw_tick": 894,
+      "game_frame": 43,
+      "game_inputmode": 1,
+      "state_sha256": "9c0205ee672e2000b2667d2b90722fb0ec1711e89425019ed541c2a18260f591",
+      "travel_distance": 148182,
+      "player_position": [
+        493824,
+        512,
+        360570
+      ]
+    },
+    {
+      "raw_tick": 899,
+      "game_frame": 44,
+      "game_inputmode": 1,
+      "state_sha256": "1be2516c009e7bfad9d7da6405531256639bb68b2e8d0b779a3e2c6e22208b31",
+      "travel_distance": 155206,
+      "player_position": [
+        493824,
+        512,
+        361213
+      ]
+    },
+    {
+      "raw_tick": 904,
+      "game_frame": 45,
+      "game_inputmode": 1,
+      "state_sha256": "5a6119f30ee029fe8b1323753a362f70b67c90714811704ca5cf9e240ce460ff",
+      "travel_distance": 162411,
+      "player_position": [
+        493824,
+        512,
+        361873
+      ]
+    },
+    {
+      "raw_tick": 909,
+      "game_frame": 46,
+      "game_inputmode": 1,
+      "state_sha256": "e2b873033bb2ab6e8fd92f5b5916cec5d7c8eee8bbad77e4a3c29e44dcf66389",
+      "travel_distance": 169799,
+      "player_position": [
+        493824,
+        512,
+        362550
+      ]
+    },
+    {
+      "raw_tick": 914,
+      "game_frame": 47,
+      "game_inputmode": 1,
+      "state_sha256": "8a244c04a0f5484489ded907f13d320fb47b3cc6d2e55fe794e7b7e68c39c64f",
+      "travel_distance": 177370,
+      "player_position": [
+        493824,
+        512,
+        363244
+      ]
+    },
+    {
+      "raw_tick": 919,
+      "game_frame": 48,
+      "game_inputmode": 1,
+      "state_sha256": "76b5bb80d164191bd3fd036c79bcd02ec50896b0f6bcbd9821932845bb55f696",
+      "travel_distance": 185127,
+      "player_position": [
+        493824,
+        512,
+        363955
+      ]
+    },
+    {
+      "raw_tick": 924,
+      "game_frame": 49,
+      "game_inputmode": 1,
+      "state_sha256": "fe1629de4e482dbb38af9eca26635347387c5db0a98241e9aa6ec042267c0c6a",
+      "travel_distance": 193070,
+      "player_position": [
+        493824,
+        512,
+        364683
+      ]
+    },
+    {
+      "raw_tick": 929,
+      "game_frame": 50,
+      "game_inputmode": 1,
+      "state_sha256": "ce5d8a7816ca9246991d4fd1270528d2b014212c11591ec45411f6cfe5e40223",
+      "travel_distance": 201202,
+      "player_position": [
+        493824,
+        512,
+        365428
+      ]
+    },
+    {
+      "raw_tick": 934,
+      "game_frame": 51,
+      "game_inputmode": 1,
+      "state_sha256": "0cf043c2c17e979fa5bc8745f1c2641317b64a26ca0577c929de33fe085b91aa",
+      "travel_distance": 209526,
+      "player_position": [
+        493824,
+        512,
+        366191
+      ]
+    },
+    {
+      "raw_tick": 939,
+      "game_frame": 52,
+      "game_inputmode": 1,
+      "state_sha256": "db3c58db2937522d2ed229ae865d310964ddf01bbbe2cbd8dc47c9c2e6878ffd",
+      "travel_distance": 218045,
+      "player_position": [
+        493824,
+        512,
+        366971
+      ]
+    },
+    {
+      "raw_tick": 944,
+      "game_frame": 53,
+      "game_inputmode": 1,
+      "state_sha256": "7257e46f50aec246b6981bf80e2892b88cd81556dfc5639fb392c41b844df742",
+      "travel_distance": 226759,
+      "player_position": [
+        493824,
+        512,
+        367769
+      ]
+    },
+    {
+      "raw_tick": 949,
+      "game_frame": 54,
+      "game_inputmode": 1,
+      "state_sha256": "01741b76b022feea31a0df0101fd55cf3d55af5bde2630e6543a38692e91f972",
+      "travel_distance": 235671,
+      "player_position": [
+        493824,
+        512,
+        368585
+      ]
+    },
+    {
+      "raw_tick": 954,
+      "game_frame": 55,
+      "game_inputmode": 1,
+      "state_sha256": "30928fc4b67bd061db1317701651444e3f4ad5c913f95542b3864ad859290e24",
+      "travel_distance": 244781,
+      "player_position": [
+        493824,
+        512,
+        369420
+      ]
+    },
+    {
+      "raw_tick": 959,
+      "game_frame": 56,
+      "game_inputmode": 1,
+      "state_sha256": "8db025c2fdd39a84aa6c5bd4f65ead1f4aa1b7d1de836daf24f0f0f9a0f2020e",
+      "travel_distance": 254089,
+      "player_position": [
+        493824,
+        512,
+        370273
+      ]
+    },
+    {
+      "raw_tick": 964,
+      "game_frame": 57,
+      "game_inputmode": 1,
+      "state_sha256": "7157bb14c20338a4c5e0280244aedaa998304a896528083fb0968db198735ebe",
+      "travel_distance": 263595,
+      "player_position": [
+        493824,
+        512,
+        371144
+      ]
+    },
+    {
+      "raw_tick": 969,
+      "game_frame": 58,
+      "game_inputmode": 1,
+      "state_sha256": "9e7b0bd78c0de15a75af54fd63acfca5ccfc847a7601dea093eff814f7fbe6a7",
+      "travel_distance": 273296,
+      "player_position": [
+        493824,
+        512,
+        372033
+      ]
+    },
+    {
+      "raw_tick": 974,
+      "game_frame": 59,
+      "game_inputmode": 1,
+      "state_sha256": "bbc1837d27dc3ba4b7769b3e8b5cebb5710517ea903b3ba40dbb03243cb10d75",
+      "travel_distance": 283189,
+      "player_position": [
+        493824,
+        512,
+        372939
+      ]
+    },
+    {
+      "raw_tick": 979,
+      "game_frame": 60,
+      "game_inputmode": 1,
+      "state_sha256": "1fcd8fadfde45a22daaa408a6ba020c87c9a98c1024fc499528981692dee2e46",
+      "travel_distance": 293268,
+      "player_position": [
+        493824,
+        512,
+        373862
+      ]
+    },
+    {
+      "raw_tick": 984,
+      "game_frame": 61,
+      "game_inputmode": 1,
+      "state_sha256": "11ef6b702ae2debcc3e2d9b1f9437aeda4d1e40c96c951472d408b98a7fc8a39",
+      "travel_distance": 303536,
+      "player_position": [
+        493824,
+        512,
+        374803
+      ]
+    },
+    {
+      "raw_tick": 989,
+      "game_frame": 62,
+      "game_inputmode": 1,
+      "state_sha256": "79f2aa64b25d3e965e5917a4b9bfc5a14e183680cff0db6ba3de883bd24d2891",
+      "travel_distance": 313993,
+      "player_position": [
+        493824,
+        512,
+        375761
+      ]
+    },
+    {
+      "raw_tick": 994,
+      "game_frame": 63,
+      "game_inputmode": 1,
+      "state_sha256": "39c585baff9ba3f413d3b685a360971922f01748e39e9325bf4f534aa4a8e061",
+      "travel_distance": 324632,
+      "player_position": [
+        493824,
+        512,
+        376736
+      ]
+    },
+    {
+      "raw_tick": 999,
+      "game_frame": 64,
+      "game_inputmode": 1,
+      "state_sha256": "97dcde6945248e004ff34e4938445f8053114a52f015259f822d18e5b7ea9cab",
+      "travel_distance": 335453,
+      "player_position": [
+        493824,
+        512,
+        377727
+      ]
+    },
+    {
+      "raw_tick": 1004,
+      "game_frame": 65,
+      "game_inputmode": 1,
+      "state_sha256": "191ae90ee6a8b2b9b5b3d2b51f43f92481cabc5dcb8b0a68456f16f2bf872a3a",
+      "travel_distance": 346456,
+      "player_position": [
+        493824,
+        512,
+        378735
+      ]
+    },
+    {
+      "raw_tick": 1009,
+      "game_frame": 66,
+      "game_inputmode": 1,
+      "state_sha256": "b05c840f08874c4ecd202bfb0f628730a1b55abd8a628c3a91edba9ef356c345",
+      "travel_distance": 357641,
+      "player_position": [
+        493824,
+        512,
+        379760
+      ]
+    },
+    {
+      "raw_tick": 1014,
+      "game_frame": 67,
+      "game_inputmode": 1,
+      "state_sha256": "3fcabbc6a2a4b90903fa299a2f13cc6770b9da397f495f47325826c9db4bbd86",
+      "travel_distance": 369005,
+      "player_position": [
+        493824,
+        512,
+        380801
+      ]
+    },
+    {
+      "raw_tick": 1019,
+      "game_frame": 68,
+      "game_inputmode": 1,
+      "state_sha256": "f6402a9665569efee2e1d8710335d549c650bbdb6d45ed2a8496bd0c383946e2",
+      "travel_distance": 380545,
+      "player_position": [
+        493824,
+        512,
+        381858
+      ]
+    },
+    {
+      "raw_tick": 1024,
+      "game_frame": 69,
+      "game_inputmode": 1,
+      "state_sha256": "bd66cf4d5e17f808379864d550b015b49caa4b567dd15c85e874db8c1adaa98a",
+      "travel_distance": 392261,
+      "player_position": [
+        493824,
+        512,
+        382931
+      ]
+    },
+    {
+      "raw_tick": 1029,
+      "game_frame": 70,
+      "game_inputmode": 1,
+      "state_sha256": "07b80e1ab84d230205896113e003b63d282717e03b0cd12cee9b3693e0293974",
+      "travel_distance": 404150,
+      "player_position": [
+        493824,
+        512,
+        384020
+      ]
+    },
+    {
+      "raw_tick": 1034,
+      "game_frame": 71,
+      "game_inputmode": 1,
+      "state_sha256": "1ad1bad3bfebe91b0f8238efac4c1241d088e164c7863dbecacf5951242756e1",
+      "travel_distance": 416209,
+      "player_position": [
+        493824,
+        512,
+        385125
+      ]
+    },
+    {
+      "raw_tick": 1039,
+      "game_frame": 72,
+      "game_inputmode": 1,
+      "state_sha256": "7c4dce3866fa62fd5510d7f0d0123068667e76c67e9f1879a3f4ff6ed3ebefae",
+      "travel_distance": 428438,
+      "player_position": [
+        493824,
+        512,
+        386245
+      ]
+    },
+    {
+      "raw_tick": 1044,
+      "game_frame": 73,
+      "game_inputmode": 1,
+      "state_sha256": "957a49d361eb8aaf93bfad6751fdfccba3639f87962cbb043f6df6629d5a4eaf",
+      "travel_distance": 440834,
+      "player_position": [
+        493824,
+        512,
+        387381
+      ]
+    },
+    {
+      "raw_tick": 1049,
+      "game_frame": 74,
+      "game_inputmode": 1,
+      "state_sha256": "6fc97188a2261a1acec7cd2dc6326eda6e402860b5792313d703da3592eab12a",
+      "travel_distance": 453396,
+      "player_position": [
+        493824,
+        512,
+        388532
+      ]
+    },
+    {
+      "raw_tick": 1054,
+      "game_frame": 75,
+      "game_inputmode": 1,
+      "state_sha256": "a98174e1d458bf2b847881407f2d8b19a05a5ac9f908aed3f9624ed018bc90d0",
+      "travel_distance": 466124,
+      "player_position": [
+        493824,
+        512,
+        389698
+      ]
+    },
+    {
+      "raw_tick": 1059,
+      "game_frame": 76,
+      "game_inputmode": 1,
+      "state_sha256": "58ad40ea92284ec09553221945751c6ba06a749b606fbd7a47dfcfe92ecab881",
+      "travel_distance": 479015,
+      "player_position": [
+        493824,
+        512,
+        390879
+      ]
+    },
+    {
+      "raw_tick": 1064,
+      "game_frame": 77,
+      "game_inputmode": 1,
+      "state_sha256": "85a6be9e010a2855bcb49ac669b710f0b95369dc2d6b580af2c4682b4e2573e5",
+      "travel_distance": 492066,
+      "player_position": [
+        493824,
+        512,
+        392075
+      ]
+    },
+    {
+      "raw_tick": 1069,
+      "game_frame": 78,
+      "game_inputmode": 1,
+      "state_sha256": "96dcb10f5e5f1ed1e1c639ea9442d8d35c4265a9390454d6497ebbaa44a058da",
+      "travel_distance": 505277,
+      "player_position": [
+        493824,
+        512,
+        393286
+      ]
+    },
+    {
+      "raw_tick": 1074,
+      "game_frame": 79,
+      "game_inputmode": 1,
+      "state_sha256": "654550b7a9f513a791e2dd5607410dffae419f35537cf0cd8152d1414e47f779",
+      "travel_distance": 518642,
+      "player_position": [
+        493824,
+        512,
+        394511
+      ]
+    },
+    {
+      "raw_tick": 1079,
+      "game_frame": 80,
+      "game_inputmode": 1,
+      "state_sha256": "e295337fc1ce43d077863e616ea4f466239883d8168ea714063252b9200fa6e7",
+      "travel_distance": 532157,
+      "player_position": [
+        493824,
+        512,
+        395749
+      ]
+    },
+    {
+      "raw_tick": 1084,
+      "game_frame": 81,
+      "game_inputmode": 1,
+      "state_sha256": "eae4ce4458f5b5eef1bfdcfde8ad06fdc22ec6fd4a35c84c55d2c7e1dfd36253",
+      "travel_distance": 545822,
+      "player_position": [
+        493824,
+        512,
+        397001
+      ]
+    },
+    {
+      "raw_tick": 1089,
+      "game_frame": 82,
+      "game_inputmode": 1,
+      "state_sha256": "fffc125c5fa02904ee989487d36fb76ff5f6b1df187bd2b969fb0679f346bb32",
+      "travel_distance": 559637,
+      "player_position": [
+        493824,
+        512,
+        398267
+      ]
+    },
+    {
+      "raw_tick": 1094,
+      "game_frame": 83,
+      "game_inputmode": 1,
+      "state_sha256": "73da202117b95a7d6af00ef531fe93536ea720ddab43608efe84f7f3714f68f8",
+      "travel_distance": 573602,
+      "player_position": [
+        493824,
+        512,
+        399547
+      ]
+    },
+    {
+      "raw_tick": 1099,
+      "game_frame": 84,
+      "game_inputmode": 1,
+      "state_sha256": "01ec799f6502bb2712900bd4f6e618675a8feeecd2061cfda067314a965057f6",
+      "travel_distance": 587711,
+      "player_position": [
+        493824,
+        512,
+        400840
+      ]
+    }
+  ],
+  "replay_play_states": [],
+  "seek_tick_prefix": []
+}
