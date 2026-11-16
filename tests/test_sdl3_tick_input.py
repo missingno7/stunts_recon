@@ -2,11 +2,16 @@
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import tempfile
 import unittest
 
 from tests.test_sdl3_input import ROOT, SDL_ROOT, host_compiler
+
+WORK = ROOT / "build/tests/test_sdl3_tick_input"
+shutil.rmtree(WORK, ignore_errors=True)
+WORK.mkdir(parents=True, exist_ok=True)
 
 PROBE = r"""
 #include "port_runtime.h"
@@ -69,9 +74,7 @@ class TickInputTests(unittest.TestCase):
     def test_stamped_input_order_and_wait_predicate(self):
         compiler = host_compiler()
         self.assertIsNotNone(compiler)
-        scratch = ROOT / "build/workers/portclock"
-        scratch.mkdir(parents=True, exist_ok=True)
-        with tempfile.TemporaryDirectory(prefix="tick-input-", dir=scratch) as temporary:
+        with tempfile.TemporaryDirectory(prefix="tick-input-", dir=WORK) as temporary:
             folder = Path(temporary)
             source, exe, script = folder / "probe.c", folder / "probe.exe", folder / "input.json"
             source.write_text(PROBE)

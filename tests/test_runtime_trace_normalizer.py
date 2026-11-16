@@ -1,10 +1,14 @@
 import json
 from pathlib import Path
+import shutil
 import sys
 import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
+WORK = ROOT / "build" / "tests" / "test_runtime_trace_normalizer"
+shutil.rmtree(WORK, ignore_errors=True)
+WORK.mkdir(parents=True, exist_ok=True)
 sys.path.insert(0, str(ROOT / "tools" / "porting"))
 
 import normalize_portforge_trace  # noqa: E402
@@ -13,8 +17,7 @@ import normalize_portforge_trace  # noqa: E402
 class RuntimeTraceNormalizerTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.scratch = ROOT / "build" / "workers" / "integ55"
-        cls.scratch.mkdir(parents=True, exist_ok=True)
+        cls.scratch = WORK
 
     def test_fixture_stream_normalizes_ticks_phases_and_frame_deltas(self):
         source = ROOT / "tests" / "fixtures" / "runtime_trace_excerpt.jsonl"

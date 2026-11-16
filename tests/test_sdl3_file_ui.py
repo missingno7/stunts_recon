@@ -127,6 +127,7 @@ class SDL3FileUITests(unittest.TestCase):
             command = [
                 str(EXECUTABLE),
                 f"--trace={trace_path}",
+                f"--diagnostics-dir={run_dir / 'diagnostics'}",
                 f"--assets={asset_root}",
                 f"--input-script={input_path}",
                 f"--test-startup-seed={STARTUP_SEED}",

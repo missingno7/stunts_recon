@@ -1,10 +1,14 @@
 """Smoke coverage for generated state-model artifacts."""
 import importlib.util
 import json
+import shutil
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+WORK = ROOT / "build" / "tests" / "test_porting_state_model"
+shutil.rmtree(WORK, ignore_errors=True)
+WORK.mkdir(parents=True, exist_ok=True)
 SPEC = importlib.util.spec_from_file_location("porting_state_model", ROOT / "tools/porting/state_model.py")
 state_model = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(state_model)
@@ -70,7 +74,7 @@ def fixture_model():
 class StateModelSmokeTests(unittest.TestCase):
     def test_full_artifacts_emit_under_build(self):
         model = fixture_model()
-        output = ROOT / "build/workers/integ55/state-model-smoke"
+        output = WORK / "state-model-smoke"
         md_path, json_path = state_model.emit_model(model, output)
         self.assertEqual(json.loads(json_path.read_text(encoding="utf-8")), model)
         markdown = md_path.read_text(encoding="utf-8")

@@ -11,6 +11,7 @@ import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
+WORK = ROOT / "build" / "tests" / "test_sdl3_font_oracle"
 sys.path[:0] = [
     str(ROOT / "tools"),
     str(ROOT / "tools" / "porting"),
@@ -89,7 +90,7 @@ def prepare_font_data(worker: Path) -> None:
 
 def compile_host_probe() -> tuple[Path, dict[str, str]]:
     compiler = host_compiler()
-    worker = ROOT / "build" / "workers" / "font_oracle" / f"run_{os.getpid()}"
+    worker = WORK / f"run_{os.getpid()}"
     worker.mkdir(parents=True, exist_ok=True)
     prepare_font_data(worker)
     executable = worker / "font_oracle_harness.exe"
@@ -299,6 +300,8 @@ class Sdl3FontOracleTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         from json import loads
 
+        shutil.rmtree(WORK, ignore_errors=True)
+        WORK.mkdir(parents=True, exist_ok=True)
         cls.oracle = OracleImage.load()
         cls.symbols = SymbolMap()
         cls.runner = RealModeRunner(cls.oracle, instruction_budget=500_000)

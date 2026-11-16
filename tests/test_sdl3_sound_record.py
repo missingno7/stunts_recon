@@ -2,6 +2,7 @@
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -10,7 +11,9 @@ from tests.test_sdl3_timer import host_compiler, ROOT
 from tests.test_sdl3_driving import assert_build_ready, ASSETS, STARTUP_SEED, EXECUTABLE
 from tests.sdl3_screen_regression import write_startup_input
 
-WORK = ROOT / "build/workers/portclock/sound-comparison"
+WORK = ROOT / "build/tests/test_sdl3_sound_record"
+shutil.rmtree(WORK, ignore_errors=True)
+WORK.mkdir(parents=True, exist_ok=True)
 
 MANUAL = r'''
 #include "port_runtime.h"

@@ -90,6 +90,7 @@ def run_trace(executable: Path, trace_path: Path,
     command = [
         str(executable),
         f"--trace={trace_path}",
+        f"--diagnostics-dir={trace_path.parent / 'diagnostics'}",
         f"--assets={ASSETS}",
         f"--input-script={input_path}",
         f"--test-startup-seed={STARTUP_SEED}",

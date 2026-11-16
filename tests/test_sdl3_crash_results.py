@@ -223,6 +223,7 @@ class Sdl3CrashResultsTests(unittest.TestCase):
             command = [
                 str(EXECUTABLE),
                 f"--trace={trace_path}",
+                f"--diagnostics-dir={run_dir / 'diagnostics'}",
                 f"--assets={ASSETS}",
                 f"--input-script={input_path}",
                 f"--test-startup-seed={STARTUP_SEED}",

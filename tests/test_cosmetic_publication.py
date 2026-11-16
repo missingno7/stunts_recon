@@ -2,6 +2,7 @@
 import contextlib
 import copy
 import json
+import shutil
 import sys
 import tempfile
 import unittest
@@ -9,6 +10,9 @@ from pathlib import Path
 from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
+WORK = ROOT / 'build' / 'tests' / 'test_cosmetic_publication'
+shutil.rmtree(WORK, ignore_errors=True)
+WORK.mkdir(parents=True, exist_ok=True)
 sys.path.insert(0, str(ROOT / 'tools'))
 
 import batch_publish  # noqa: E402
@@ -23,21 +27,21 @@ class CosmeticPublicationTests(unittest.TestCase):
         (root/'lib').mkdir(parents=True)
         (root/'recipes').mkdir()
         (root/'layout').mkdir()
-        (root/'build/workers/integ44').mkdir(parents=True)
+        (root/'build/tests/test_cosmetic_publication').mkdir(parents=True)
         accepted = b'PUBLIC _foo\nfoo PROC\n  ret\nfoo ENDP\n'
         candidate = b'PUBLIC _foo\nfoo PROC\nreadable_join:\n  ret\nfoo ENDP\n'
         (root/'lib/foo.ASM').write_bytes(accepted)
-        (root/'build/workers/integ44/foo.ASM').write_bytes(candidate)
+        (root/'build/tests/test_cosmetic_publication/foo.ASM').write_bytes(candidate)
         (root/'recipes/foo.json').write_text(json.dumps({
             'id': 'foo', 'start': 0, 'end': 1, 'profile': 'masm510-game',
             'kind': 'asm', 'source': 'lib/foo.ASM'}), encoding='utf-8')
         (root/'layout/manifest.json').write_text(json.dumps({'owners': [{
             'id': 'foo', 'name': 'foo', 'recipe': 'recipes/foo.json',
             'kind': 'MATCHING_ASM', 'start': 0, 'end': 1}]}), encoding='utf-8')
-        return accepted, candidate, root/'build/workers/integ44/foo.ASM'
+        return accepted, candidate, root/'build/tests/test_cosmetic_publication/foo.ASM'
 
     def test_full_object_hash_is_the_cosmetic_gate(self):
-        with tempfile.TemporaryDirectory() as temporary:
+        with tempfile.TemporaryDirectory(dir=WORK) as temporary:
             root = Path(temporary)
             old, new, candidate = self.make_accepted(root)
             with mock.patch.object(promote, 'ROOT', root), \
@@ -58,7 +62,7 @@ class CosmeticPublicationTests(unittest.TestCase):
                     promote.check_cosmetic('foo', candidate, new, {'snapshot': 'same'})
 
     def test_single_publication_changes_only_source_and_keeps_provenance(self):
-        with tempfile.TemporaryDirectory() as temporary:
+        with tempfile.TemporaryDirectory(dir=WORK) as temporary:
             root = Path(temporary)
             old, new, candidate = self.make_accepted(root)
             recipe_before = (root/'recipes/foo.json').read_bytes()
@@ -101,10 +105,10 @@ class CosmeticPublicationTests(unittest.TestCase):
             self.assertEqual(result['object'], identity(b'full OMF'))
 
     def test_batch_records_each_complete_object_identity(self):
-        with tempfile.TemporaryDirectory() as temporary:
+        with tempfile.TemporaryDirectory(dir=WORK) as temporary:
             root = Path(temporary)
-            (root/'build/workers/integ44').mkdir(parents=True)
-            a, b = root/'build/workers/integ44/a.ASM', root/'build/workers/integ44/b.ASM'
+            (root/'build/tests/test_cosmetic_publication').mkdir(parents=True)
+            a, b = root/'build/tests/test_cosmetic_publication/a.ASM', root/'build/tests/test_cosmetic_publication/b.ASM'
             a.write_bytes(b'a'); b.write_bytes(b'b')
             entries = [{'name': 'a', 'candidate': str(a)}, {'name': 'b', 'candidate': str(b)}]
 
@@ -129,7 +133,7 @@ class CosmeticPublicationTests(unittest.TestCase):
                 self.assertEqual(saved['new_source'], row['new_source'])
 
     def test_cosmetic_recipe_changes_are_limited_to_resolved_closures(self):
-        with tempfile.TemporaryDirectory() as temporary:
+        with tempfile.TemporaryDirectory(dir=WORK) as temporary:
             root = Path(temporary)
             (root/'recipes').mkdir()
             (root/'recipes/foo.json').write_text(json.dumps({
@@ -147,7 +151,7 @@ class CosmeticPublicationTests(unittest.TestCase):
         manifest = copy.deepcopy(read_json(ROOT/'layout/manifest.json'))
         accepted = communal_unit.accepted_row(manifest)
         self.assertIsNotNone(accepted)
-        with tempfile.TemporaryDirectory() as temporary:
+        with tempfile.TemporaryDirectory(dir=WORK) as temporary:
             candidate_path = Path(temporary)/'communal_candidate.json'
             candidate_path.write_text(json.dumps({
                 'schema': accepted['schema'], 'start': accepted['start'],

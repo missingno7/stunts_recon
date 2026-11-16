@@ -2,17 +2,21 @@
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import tempfile
 import unittest
 from tests.test_sdl3_driving import ROOT,EXECUTABLE,ASSETS,assert_build_ready,write_driving_input
 from tests.test_sdl3_diagnostics import compiler_path,make_test_environment,SDL_ROOT
 
+WORK=ROOT / "build/tests/test_sdl3_startup_settings"
+shutil.rmtree(WORK,ignore_errors=True)
+WORK.mkdir(parents=True,exist_ok=True)
+
 class StartupSettingsTests(unittest.TestCase):
     def setUp(self):
         assert_build_ready()
-        work=ROOT / "build/workers/portclock";work.mkdir(parents=True,exist_ok=True)
-        self.temp=tempfile.TemporaryDirectory(prefix="startup-settings-",dir=work)
+        self.temp=tempfile.TemporaryDirectory(prefix="startup-settings-",dir=WORK)
         self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name)
         self.env=make_test_environment(compiler_path())
     def session(self,label,extra=(),config=None,ticks=900):
@@ -21,7 +25,8 @@ class StartupSettingsTests(unittest.TestCase):
         if config is not None:settings.write_text(json.dumps(config))
         script=folder / "input.json";write_driving_input(script)
         p=subprocess.run([str(EXECUTABLE),f"--assets={ASSETS}",f"--config={settings}",
-            f"--input-script={script}",f"--trace={folder / 'trace.jsonl'}","--test-auto-protection",
+            f"--input-script={script}",f"--trace={folder / 'trace.jsonl'}",
+            f"--diagnostics-dir={folder / 'diagnostics'}","--test-auto-protection",
             "--clock=manual",f"--run-ticks={ticks}","--audio-output=none",*extra],
             env=self.env,cwd=ROOT,capture_output=True,text=True,timeout=45)
         self.assertEqual(p.returncode,0,p.stdout+p.stderr)
@@ -79,6 +84,7 @@ class StartupSettingsTests(unittest.TestCase):
         trace=folder / "trace.jsonl"
         p=subprocess.run([str(EXECUTABLE),f"--assets={ASSETS}",f"--input-script={script}",
             f"--trace={trace}",f"--config={folder / 'config.json'}","--seed=1","--frame-rate=10",
+            f"--diagnostics-dir={folder / 'diagnostics'}",
             "--audio=ad15","--audio-output=none","--clock=manual","--run-ticks=1600"],env=self.env,cwd=ROOT,capture_output=True,text=True,timeout=45)
         self.assertEqual(p.returncode,0,p.stdout+p.stderr)
         events=list(map(json.loads,trace.read_text().splitlines()))

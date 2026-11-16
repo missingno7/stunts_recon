@@ -6,6 +6,9 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 PORT_INCLUDE = ROOT / "tools" / "porting" / "port_include"
+WORK = ROOT / "build" / "tests" / "test_port_header_layout"
+shutil.rmtree(WORK, ignore_errors=True)
+WORK.mkdir(parents=True, exist_ok=True)
 GCC = shutil.which("gcc")
 DEFAULT_GCC = Path(r"C:\msys64\mingw64\bin\gcc.exe")
 if not GCC and DEFAULT_GCC.is_file():
@@ -30,8 +33,7 @@ class PortHeaderLayoutTests(unittest.TestCase):
 
     @unittest.skipUnless(GCC, "GCC is not installed; compile-time layout checks skipped")
     def test_target_aggregate_size_and_offset_assertions_compile(self):
-        worker = ROOT / "build" / "workers" / "integ55"
-        worker.mkdir(parents=True, exist_ok=True)
+        worker = WORK
         source_text = """#include "stunts_structs.h"
 _Static_assert(sizeof(stunts_GAMESTATE_1014) == 1014, "GAMESTATE prefix size");
 _Static_assert(sizeof(stunts_GAMESTATE_1120) == 1120, "GAMESTATE full size");

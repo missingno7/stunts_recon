@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
+import shutil
 import struct
 import subprocess
 import sys
@@ -11,6 +12,9 @@ import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
+WORK = ROOT / "build" / "tests" / "test_sdl3_line_input_oracle"
+shutil.rmtree(WORK, ignore_errors=True)
+WORK.mkdir(parents=True, exist_ok=True)
 sys.path[:0] = [
     str(ROOT / "tools"),
     str(ROOT / "tools" / "porting"),
@@ -88,7 +92,7 @@ def fresh_transformed_line_input(compiler: Path) -> Path:
 
 def compile_host_probe(overlay: Path) -> tuple[Path, dict[str, str]]:
     compiler = host_compiler()
-    worker = ROOT / "build" / "workers" / "line_cursor_oracle" / f"run_{os.getpid()}"
+    worker = WORK / f"run_{os.getpid()}"
     worker.mkdir(parents=True, exist_ok=True)
     prepare_font_data(worker)
     executable = worker / "line_input_oracle_harness.exe"

@@ -6,6 +6,7 @@ input delivery, bounded driver setup and the initial indexed frame explicitly.
 import hashlib
 import json
 from pathlib import Path
+import shutil
 import tempfile
 import unittest
 import zlib
@@ -15,7 +16,9 @@ from tools.porting.original_tick_oracle import input_ticks,run_port,bindings
 from tools.porting.compare_tick_streams import first_difference,resynchronised_differences,fnv
 
 FIXTURES=ROOT/'tools/porting/tick_oracle_cases'
-WORK=ROOT/'build/workers/portclock/original-tests'
+WORK=ROOT/'build/tests/test_sdl3_original_ticks'
+shutil.rmtree(WORK,ignore_errors=True)
+WORK.mkdir(parents=True,exist_ok=True)
 
 
 class OriginalTickComparisonTests(unittest.TestCase):

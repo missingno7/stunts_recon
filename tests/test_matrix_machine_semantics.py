@@ -15,6 +15,9 @@ import sys
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
+WORK = ROOT / "build" / "tests" / "test_matrix_machine_semantics"
+shutil.rmtree(WORK, ignore_errors=True)
+WORK.mkdir(parents=True, exist_ok=True)
 sys.path.insert(0, str(ROOT / "build" / "python"))
 sys.path.insert(0, str(ROOT / "tools" / "porting"))
 sys.path.insert(0, str(ROOT))
@@ -70,8 +73,7 @@ def compiler_environment(compiler: Path) -> dict[str, str]:
 
 
 def build_host_probe(compiler: Path) -> tuple[Path, dict[str, str]]:
-    worker = ROOT / "build" / "workers" / "matrix_machine_semantics"
-    worker.mkdir(parents=True, exist_ok=True)
+    worker = WORK
     output = worker / "matrix_probe.exe"
     sdl = Path(r"C:\tools\sdl3-3.4.16-i686")
     command = [

@@ -41,6 +41,7 @@ class RendererEquivalenceTests(unittest.TestCase):
                     str(EXECUTABLE), f"--renderer={renderer}", f"--window={size}",
                     "--hidden", f"--config={config}", f"--assets={ASSETS}",
                     f"--trace={run / 'trace.jsonl'}", f"--capture-dir={run}",
+                    f"--diagnostics-dir={run / 'diagnostics'}",
                     f"--input-script={script}", f"--test-startup-seed={STARTUP_SEED}",
                     "--test-auto-protection", "--stop-after-sim-steps=160", "--clock=manual", "--run-ticks=2000",
                 ], cwd=ROOT, env=environment, capture_output=True, text=True, timeout=60)
@@ -111,6 +112,7 @@ class RendererEquivalenceTests(unittest.TestCase):
                 result = subprocess.run([str(EXECUTABLE),f"--renderer={renderer}",
                     "--window=1680x720","--hidden",f"--config={config}",f"--assets={ASSETS}",
                     f"--trace={run / 'trace.jsonl'}",f"--capture-dir={run}",
+                    f"--diagnostics-dir={run / 'diagnostics'}",
                     f"--input-script={script}",f"--test-startup-seed={STARTUP_SEED}",
                     "--test-auto-protection","--clock=manual", "--run-ticks=2200"],
                     cwd=ROOT,env=environment,capture_output=True,text=True,timeout=60)

@@ -105,6 +105,21 @@ def _resolved(path: Path, cwd: Path) -> Path:
     return path.resolve() if path.is_absolute() else (cwd / path).resolve()
 
 
+def _ephemeral_artifact(path: Path) -> bool:
+    """Avoid retaining artifacts tied to paths that change on every test run."""
+    resolved = path.resolve()
+    roots = (Path(tempfile.gettempdir()).resolve(), (ROOT / "build" / "tests").resolve(),
+             (ROOT / "build" / "temp").resolve())
+    for root in roots:
+        try:
+            resolved.relative_to(root)
+            return True
+        except ValueError:
+            pass
+    return any(part.lower().startswith("run_") and part[4:].isdigit()
+               for part in resolved.parts)
+
+
 def _is_gcc(command: list[str]) -> bool:
     if not command:
         return False
@@ -318,6 +333,18 @@ def _cacheable_command(args, kwargs) -> tuple[list[str], int, Path] | None:
         return None
     working = Path(kwargs.get("cwd") or os.getcwd()).resolve()
     output = _resolved(output_arg, working)
+    if _ephemeral_artifact(output):
+        return None
+    for argument in command:
+        value = argument
+        if value.startswith(("-I", "-L", "-o")) and len(value) > 2:
+            value = value[2:]
+        elif value.startswith("-"):
+            continue
+        candidate = Path(value)
+        if candidate.is_absolute() or (working / candidate).exists():
+            if _ephemeral_artifact(_resolved(candidate, working)):
+                return None
     if not any(_resolved(Path(argument), working).is_file()
                and Path(argument).suffix in SOURCE_SUFFIXES for argument in command):
         return None

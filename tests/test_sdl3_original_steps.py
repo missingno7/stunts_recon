@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import struct
 import subprocess
+import shutil
 import tempfile
 import unittest
 import zlib
@@ -14,7 +15,9 @@ from tools.porting.compare_step_streams import port,digest,boundary,resync
 from tools.porting.step_oracle import run_port
 
 FIXTURES=ROOT/'tools/porting/step_oracle_cases'
-WORK=ROOT/'build/workers/portclock/step7/tests'
+WORK=ROOT/'build/tests/test_sdl3_original_steps'
+shutil.rmtree(WORK,ignore_errors=True)
+WORK.mkdir(parents=True,exist_ok=True)
 
 SERVICE_PROBE=r'''
 #include "port_runtime.h"

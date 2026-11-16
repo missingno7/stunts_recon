@@ -2,11 +2,15 @@
 from pathlib import Path
 import json
 import os
+import shutil
 import subprocess
 import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
+WORK = ROOT / "build" / "tests" / "test_sdl3_input_replay"
+shutil.rmtree(WORK, ignore_errors=True)
+WORK.mkdir(parents=True, exist_ok=True)
 SDK = Path(os.environ.get("SDL3_ROOT", r"C:/tools/sdl3-3.4.16-i686"))
 CC = Path(r"C:/msys64/mingw32/bin/gcc.exe")
 
@@ -15,7 +19,7 @@ class Sdl3InputReplayTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.temp = tempfile.TemporaryDirectory(
-            prefix="input-replay-", dir=ROOT / "build" / "workers")
+            prefix="input-replay-", dir=WORK)
         cls.directory = Path(cls.temp.name)
         cls.executable = cls.directory / "input_script_harness.exe"
         cls.environment = os.environ.copy()

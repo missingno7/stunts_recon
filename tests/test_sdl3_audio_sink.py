@@ -3,11 +3,14 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import unittest
 from tests.test_sdl3_driving import ROOT,EXECUTABLE,ASSETS,STARTUP_SEED,assert_build_ready,write_driving_input
 
-WORK=ROOT / "build/workers/portclock/sink-comparison"
+WORK=ROOT / "build/tests/test_sdl3_audio_sink"
+shutil.rmtree(WORK, ignore_errors=True)
+WORK.mkdir(parents=True, exist_ok=True)
 
 class AudioSinkTests(unittest.TestCase):
     def test_ad15_and_pc15_match_real_dummy_null_and_two_buffers(self):
