@@ -2,12 +2,20 @@
 struct BoundaryRegionSpec {std::string name;int argument;unsigned size,read,load_offset;};
 struct BoundarySpec {std::string name;uint32_t cookie;unsigned argc,bits,mask;std::vector<BoundaryRegionSpec> regions;unsigned far_mask=0;bool graphics=false;};
 struct BoundaryRegion {BoundaryRegionSpec spec;uint32_t address;std::vector<uint8_t> before;};
-struct BoundaryPending {const BoundarySpec* spec;uint16_t ss,sp;uint32_t ret,frame,scope,active;uint64_t order;std::vector<uint16_t> args;std::vector<BoundaryRegion> regions;std::vector<uint16_t> segments;};
-struct SemanticInput {unsigned phase,at;int code;float u,v;unsigned buttons;bool consumed=false;};
+struct BoundaryPending {const BoundarySpec* spec;uint16_t ss,sp;uint32_t ret,frame,scope,active;uint64_t order;std::vector<uint16_t> args;std::vector<BoundaryRegion> regions;std::vector<uint16_t> segments;unsigned phase=0,visit=0,key=0;};
+struct SemanticInput {unsigned phase,at;int code;float u,v;unsigned buttons;bool consumed=false;unsigned visit=1;std::string label;bool stop=false;};
+struct ScenarioScope {uint16_t ss,sp;uint32_t ret;unsigned phase,key,visit;};
+static bool boundary_scoped=false;
+static unsigned boundary_visit=0,boundary_input_visit=1;
+static std::array<unsigned,32> boundary_visits{};
+static std::vector<ScenarioScope> boundary_scopes;
+static unsigned boundary_evaluation_score=0,boundary_race_stats=0;
 static std::vector<BoundarySpec> boundary_specs;
 static std::vector<BoundaryPending> boundary_pending;
 static std::vector<std::pair<uint32_t,unsigned>> boundary_phases;
+static uint32_t boundary_mode_phase=0;
 static std::vector<uint32_t> boundary_polls;
+static uint32_t boundary_ui_poll=0;
 static std::vector<SemanticInput> boundary_inputs;
 static std::vector<uint8_t> boundary_keyboard;
 static uint32_t boundary_input_site=0;
@@ -59,6 +67,12 @@ static std::vector<uint8_t> BoundaryGraphic(const BoundaryPending& p,int type){
 }
 static bool BoundaryConfigure(const char* line) {
     char name[100],label[100],path[512];unsigned pc,n,bits,mask,size,read,offset,phase,at,buttons;int argument,code;float u,v;
+    if(strncmp(line,"SCOPED_PHASES",13)==0){boundary_scoped=true;return true;}
+    if(sscanf(line,"EVAL_SCORE %u %x",&n,&offset)==2){boundary_evaluation_score=n;boundary_race_stats=offset;return true;}
+    if(sscanf(line,"VISIT %u",&n)==1){boundary_input_visit=n;return true;}
+    if(sscanf(line,"SCHECK %u %u %u %99s",&phase,&at,&n,label)==4){
+        SemanticInput e{phase,at,-2,0,0,0};e.visit=boundary_input_visit;e.label=label;e.stop=n!=0;
+        boundary_inputs.push_back(e);return true;}
     if(sscanf(line,"BOUNDARY_OUTPUT %511[^\n]",path)==1){
         boundary_output.open(path);if(!boundary_output)abort();
         boundary_output<<"{\"kind\":\"header\",\"schema\":\"stunts-port-boundary-v1\"}\n";return true;}
@@ -71,11 +85,13 @@ static bool BoundaryConfigure(const char* line) {
         for(auto& spec:boundary_specs)if(spec.name==name){spec.regions.push_back({label,argument,size,read,offset});return true;}
         abort();}
     if(sscanf(line,"PHASE %x %u",&pc,&phase)==2){boundary_phases.push_back({pc,phase});return true;}
+    if(sscanf(line,"PHASEARG %x",&pc)==1){boundary_mode_phase=pc;return true;}
     if(sscanf(line,"POLL %x",&pc)==1){boundary_polls.push_back(pc);return true;}
+    if(sscanf(line,"UIPOLL %x",&pc)==1){boundary_ui_poll=pc;return true;}
     if(sscanf(line,"INPUTSITE %x",&boundary_input_site)==1)return true;
     if(sscanf(line,"FRAME_LIMIT %u",&boundary_limit)==1)return true;
-    if(sscanf(line,"SKEY %u %u %d",&phase,&at,&code)==3){boundary_inputs.push_back({phase,at,code,0,0,0});return true;}
-    if(sscanf(line,"SMOUSE %u %u %f %f %u",&phase,&at,&u,&v,&buttons)==5){boundary_inputs.push_back({phase,at,-1,u,v,buttons});return true;}
+    if(sscanf(line,"SKEY %u %u %d",&phase,&at,&code)==3){SemanticInput e{phase,at,code,0,0,0};e.visit=boundary_input_visit;boundary_inputs.push_back(e);return true;}
+    if(sscanf(line,"SMOUSE %u %u %f %f %u",&phase,&at,&u,&v,&buttons)==5){SemanticInput e{phase,at,-1,u,v,buttons};e.visit=boundary_input_visit;boundary_inputs.push_back(e);return true;}
     return false;
 }
 static void BoundaryAttach() {
@@ -83,6 +99,7 @@ static void BoundaryAttach() {
     for(const auto& spec:boundary_specs)mark(BoundaryPC(spec.cookie));
     for(const auto& phase:boundary_phases)mark(BoundaryPC(phase.first));
     for(auto pc:boundary_polls)mark(BoundaryPC(pc));
+    if(boundary_ui_poll)mark(BoundaryPC(boundary_ui_poll));
     if(boundary_input_site)mark(BoundaryPC(boundary_input_site));
 }
 static void BoundaryFinishRun() {
@@ -103,9 +120,13 @@ static void BoundaryScan(uint8_t value) {
 static void BoundaryDeliver(unsigned phase,unsigned at) {
     bool delivered=false;
     for(auto& e:boundary_inputs) {
-        if(e.consumed || e.phase!=phase || e.at!=at)continue;
+        if(e.consumed || e.phase!=phase || e.at!=at || (boundary_scoped && phase!=6 && e.visit!=boundary_visit))continue;
         e.consumed=true;delivered=true;
-        if(e.code>=0){KEYBOARD_AddBuffer(uint16_t(e.code));boundary_keyboard.push_back(uint8_t(e.code));}
+        if(e.code==-2){
+            stunts->snapshot("checkpoint."+e.label);
+            if(e.stop){stunts->begin("end");stunts->out<<",\"terminal\":\"scenario-checkpoint\"}\n";
+                stunts->out.flush();stunts->frames.flush();boundary_output.flush();DOSBOX_AcceptanceExit();}
+        } else if(e.code>=0){KEYBOARD_AddBuffer(uint16_t(e.code));boundary_keyboard.push_back(uint8_t(e.code));}
         else {
             auto shift=mem_readw(stunts_base+197402);
             Mouse_StuntsAcceptancePosition(uint16_t(e.u*320)<<shift,uint16_t(e.v*200),uint8_t(e.buttons));
@@ -129,7 +150,8 @@ static void BoundaryComplete() {
     if(p.ss!=SegValue(ss) || p.sp!=reg_sp ||
        key(mem_readw(SegPhys(ss)+reg_sp+2),mem_readw(SegPhys(ss)+reg_sp))!=p.ret)return;
     boundary_output<<"{\"kind\":\"boundary\",\"name\":\""<<p.spec->name<<"\",\"scope\":"<<p.scope
-        <<",\"frame\":"<<p.frame<<",\"active\":"<<p.active<<",\"order\":"<<p.order<<",\"args\":[";
+        <<",\"frame\":"<<p.frame<<",\"active\":"<<p.active<<",\"order\":"<<p.order
+        <<",\"ui_phase\":"<<p.phase<<",\"ui_visit\":"<<p.visit<<",\"ui_key\":"<<p.key<<",\"args\":[";
     for(unsigned i=0;i<p.args.size();++i){if(i)boundary_output<<',';
         if(p.spec->mask&(1u<<i))boundary_output<<"null";else boundary_output<<p.args[i];}
     boundary_output<<"],\"result\":";
@@ -175,9 +197,31 @@ static void BoundaryBefore(uint32_t pc) {
         }
     }
     BoundaryComplete();
+    if(boundary_scoped && !boundary_scopes.empty()){
+        const auto p=boundary_scopes.back();auto op=mem_readb(pc);
+        if((op==0xcb || op==0xca) && p.ss==SegValue(ss) && p.sp==reg_sp &&
+            p.ret==key(mem_readw(SegPhys(ss)+reg_sp+2),mem_readw(SegPhys(ss)+reg_sp))){
+            BoundaryDeliver(boundary_phase,0xffffffffu);
+            boundary_phase=p.phase;boundary_key=p.key;boundary_visit=p.visit;boundary_scopes.pop_back();}
+    }
     if(!(boundary_filter[pc>>3]&(1u<<(pc&7))))return;
-    for(const auto& p:boundary_phases)if(pc==BoundaryPC(p.first) && boundary_phase!=p.second){boundary_phase=p.second;boundary_key=0;}
-    for(auto p:boundary_polls)if(pc==BoundaryPC(p))BoundaryDeliver(boundary_phase,boundary_key);
+    for(const auto& p:boundary_phases)if(pc==BoundaryPC(p.first)){
+        if(boundary_scoped){
+            boundary_scopes.push_back({SegValue(ss),reg_sp,key(mem_readw(SegPhys(ss)+reg_sp+2),mem_readw(SegPhys(ss)+reg_sp)),boundary_phase,boundary_key,boundary_visit});
+            boundary_phase=p.second+(boundary_mode_phase==p.first?mem_readw(SegPhys(ss)+reg_sp+4):0);
+            boundary_key=0;boundary_visit=++boundary_visits.at(boundary_phase);
+            if(boundary_phase==14 && boundary_evaluation_score){
+                // GAMESTATE_SNAPSHOT: dword sum, frame, finish at +6,
+                // opponent/pEnd/oEnd, penalty at +14 (locked gamerec layout).
+                mem_writew(stunts_base+boundary_race_stats+6,uint16_t(boundary_evaluation_score));
+                mem_writew(stunts_base+boundary_race_stats+14,0);
+                stunts->begin("control");stunts->out<<",\"boundary\":\"prescribed-evaluation-score\",\"frames\":"<<boundary_evaluation_score<<"}\n";
+            }
+            stunts->begin("ui_scope");stunts->out<<",\"phase\":"<<boundary_phase<<",\"visit\":"<<boundary_visit<<"}\n";
+        } else if(boundary_phase!=p.second){boundary_phase=p.second;boundary_key=0;}
+    }
+    for(auto p:boundary_polls)if(pc==BoundaryPC(p) && (!boundary_scoped || boundary_phase==4 || boundary_phase==5))BoundaryDeliver(boundary_phase,boundary_key);
+    if(boundary_ui_poll && pc==BoundaryPC(boundary_ui_poll))BoundaryDeliver(boundary_phase,boundary_key);
     if(boundary_input_site && pc==BoundaryPC(boundary_input_site))BoundaryDeliver(6,stunts->r16(stunts->target_frame));
     if(!boundary_output || !boundary_pending.empty() || stunts->callback_slot>=0)return;
     for(const auto& spec:boundary_specs)if(pc==BoundaryPC(spec.cookie)) {
@@ -185,15 +229,19 @@ static void BoundaryBefore(uint32_t pc) {
         BoundaryPending p{&spec,SegValue(ss),reg_sp,key(mem_readw(SegPhys(ss)+reg_sp+2),mem_readw(SegPhys(ss)+reg_sp)),
             boundary_scope?boundary_frame:unsigned(stunts->r16(stunts->state+320)),boundary_scope,
             unsigned(mem_readb(stunts->state+1013)),boundary_order++,{}, {}};
+        p.phase=boundary_phase;p.visit=boundary_visit;p.key=boundary_key;
         unsigned word=0;
         for(unsigned i=0;i<spec.argc;++i){p.args.push_back(mem_readw(SegPhys(ss)+reg_sp+4+2*word++));
             p.segments.push_back(spec.far_mask&(1u<<i)?mem_readw(SegPhys(ss)+reg_sp+4+2*word++):SegValue(ds));}
         for(auto r:spec.regions){
             if(r.argument<-1){auto data=BoundaryGraphic(p,r.argument);r.size=unsigned(data.size());
                 p.regions.push_back({r,0xf00000+unsigned(p.regions.size())*1024,std::move(data)});continue;}
-            if(r.size>=65536)r.size=4*unsigned(p.args.at(r.size-65536));
-            if(r.size>514)abort();
+            bool filename=r.size==131072;
+            if(r.size>=196608)r.size=1+unsigned(p.args.at(r.size-196608));
+            else if(!filename && r.size>=65536)r.size=4*unsigned(p.args.at(r.size-65536));
             uint32_t address=r.argument<0?stunts_base+r.load_offset:physical(p.segments.at(r.argument),p.args.at(r.argument));
+            if(filename){r.size=0;while(r.size<128 && mem_readb(address+r.size))++r.size;if(r.size>=128)abort();++r.size;}
+            if(r.size>514)abort();
             if(r.argument>=0 && unsigned(p.args.at(r.argument))+r.size>65536)abort();
             p.regions.push_back({r,address,BoundaryRead(address,r.size)});
         }

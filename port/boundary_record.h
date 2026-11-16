@@ -15,6 +15,7 @@ typedef struct PortBoundaryCall {
     uint64_t order;
     uint32_t frame;
     unsigned scope, active, argc, pointer_mask, region_count;
+    unsigned ui_phase,ui_visit;uint64_t ui_key;
     uint32_t args[12];
     PortBoundaryRegion regions[PORT_BOUNDARY_REGIONS];
     uint8_t before[PORT_BOUNDARY_REGIONS][PORT_BOUNDARY_BYTES];

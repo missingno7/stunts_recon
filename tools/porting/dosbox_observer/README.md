@@ -43,7 +43,7 @@ on unsupported modes/banks. It never reads the guest VGA aperture, changes its
 latches, charges guest cycles, or samples the host window. GAMESTATE is read at
 the accepted `movesim` return. A diagnostic mouse-read row uses `mousecursor`.
 
-The only guest-memory writes are explicit shared startup controls: fast-machine
+Guest-memory writes are explicit shared controls: fast-machine
 settings at the benchmark join, fixed stir counts at the seedrandom boundary,
 and the existing seed fixture's CRT/Kevin/counter values at frontend seed return.
 The actual original benchmark and PRNG loops still execute. No original code or
@@ -57,3 +57,9 @@ delivery. `core_normal.cpp.patch` yields only at an initiating semantic input
 frame while queued bytes await the real PIC/INT9; normal PIT time continues.
 This does not skip original instructions or replace its clock. See the runtime
 oracle's game-step section for the race contract and explicit coverage gaps.
+
+Step 9 also supports scoped v2 key visits and explicit completed-call checkpoints.
+Its optional `EVAL_SCORE` control writes the locked `_race_stats` finish/penalty
+words only at `evaluation` entry for a declared qualifying-entry UI fixture.
+This is logged and is not a claim that the scripted crash earned that score.
+See runtime-oracle.md for phases, exact spans, regeneration and open comparisons.

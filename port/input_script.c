@@ -23,6 +23,9 @@ typedef struct PortScriptEvent {
     double mouse_v;
     uint16_t mouse_buttons;
     unsigned phase;
+    unsigned visit;
+    int checkpoint, stop;
+    char label[64];
     int consumed;
 } PortScriptEvent;
 
@@ -33,6 +36,10 @@ static uint64_t s_origin_ns;
 static int s_semantic;
 static unsigned s_phase;
 static uint64_t s_key_ordinal;
+static int s_scoped;
+static unsigned s_evaluation_score;
+static unsigned s_visits[32],s_visit,s_scope_depth;
+static struct {unsigned phase,visit;uint64_t key;} s_scopes[32];
 
 static char *json_key_value(char *begin, char *limit, const char *key)
 {
@@ -161,7 +168,8 @@ static int parse_script(const char *path)
 
     s_event_count = 0;
     s_next_event = 0;
-    s_semantic=0;s_phase=0;s_key_ordinal=0;
+    s_semantic=0;s_scoped=0;s_evaluation_score=0;s_phase=0;s_key_ordinal=0;
+    s_visit=s_scope_depth=0;memset(s_visits,0,sizeof(s_visits));
     if (path == NULL || path[0] == '\0')
         return 1;
     stream = fopen(path, "rb");
@@ -184,13 +192,21 @@ static int parse_script(const char *path)
     if (!json_read_string(text, text + bytes_read, "\"format\"", format,
                           sizeof(format)) ||
         (strcmp(format, "stunts-step-input-v1") != 0 &&
+         strcmp(format, "stunts-step-input-v2") != 0 &&
          strcmp(format, "stunts-exact-input-script-v1") != 0)) {
         fprintf(stderr,
                 "PORT input script: expected stunts-exact-input-script-v1\n");
         goto done;
     }
-    s_semantic = strcmp(format,"stunts-step-input-v1")==0;
+    s_scoped=strcmp(format,"stunts-step-input-v2")==0;
+    s_semantic = s_scoped || strcmp(format,"stunts-step-input-v1")==0;
+    memset(s_visits,0,sizeof(s_visits));s_visit=s_scope_depth=0;
     s_phase=0;s_key_ordinal=0;
+    s_evaluation_score=0;
+    if(s_scoped){uint64_t value=0;
+        json_read_u64(text,text+bytes_read,"\"evaluation_finish_frames\"",&value);
+        if(value>32767)goto done;
+        s_evaluation_score=(unsigned)value;}
     anchor_ptr = json_key_value(text, text + bytes_read, "\"anchor_tick\"");
     events_ptr = strstr(text, "\"events\"");
     if (anchor_ptr == NULL || events_ptr == NULL ||
@@ -227,7 +243,8 @@ static int parse_script(const char *path)
             (strcmp(channel, "dos.mouse.normalized") == 0 &&
              !json_read_mouse(visible, event_limit, &event)) ||
             (strcmp(channel, "dos.keyboard.scancodes") != 0 &&
-             strcmp(channel, "dos.mouse.normalized") != 0)) {
+             strcmp(channel, "dos.mouse.normalized") != 0 &&
+             !(s_scoped && strcmp(channel,"oracle.checkpoint")==0))) {
             fprintf(stderr,
                     "PORT input script: event %zu has an unsupported channel or payload\n",
                     s_event_count);
@@ -248,8 +265,18 @@ static int parse_script(const char *path)
         event.due_ns = due_ns;
         if(s_semantic) {
             uint64_t phase;
-            if(!json_read_u64(visible,event_limit,"\"phase\"",&phase) || phase<1 || phase>6)goto done;
+            if(!json_read_u64(visible,event_limit,"\"phase\"",&phase) || phase<1 || phase>31)goto done;
             event.phase=(unsigned)phase;
+            event.visit=1;
+            if(s_scoped){
+                uint64_t visit,stop=0;
+                if(json_read_u64(visible,event_limit,"\"visit\"",&visit))event.visit=(unsigned)visit;
+                if(strcmp(channel,"oracle.checkpoint")==0){
+                    if(!json_read_string(visible,event_limit,"\"label\"",event.label,sizeof(event.label)))goto done;
+                    json_read_u64(visible,event_limit,"\"stop\"",&stop);
+                    event.checkpoint=1;event.stop=stop!=0;
+                }
+            }
         }
         s_events[s_event_count++] = event;
         previous_due = due_ns;
@@ -329,8 +356,17 @@ static void semantic_deliver(unsigned phase,uint64_t at)
     for(i=0;i<s_event_count;++i){
         PortScriptEvent *event=&s_events[i];
         uint64_t now;
-        if(event->consumed || event->phase!=phase || event->due_ns!=at)continue;
+        if(event->consumed || event->phase!=phase || event->due_ns!=at ||
+           (s_scoped && phase!=6 && event->visit!=s_visit))continue;
         event->consumed=1;
+        if(event->checkpoint){
+#ifdef PORT_BOUNDARY_RECORD
+            char reason[80];snprintf(reason,sizeof(reason),"checkpoint.%s",event->label);
+            port_video_publish(reason);
+            if(event->stop){port_guest_request_stop("scenario checkpoint reached");port_guest_check_stop();}
+#endif
+            continue;
+        }
 #ifdef PORT_TICK_HANDSHAKE
         now=port_timer_machine_time_ns();
 #else
@@ -350,9 +386,29 @@ static void semantic_deliver(unsigned phase,uint64_t at)
 }
 void port_input_script_phase(unsigned phase)
 {
+    if(s_scoped)return;
     if(s_phase!=phase){s_phase=phase;s_key_ordinal=0;}
 }
-void port_input_script_poll(void){semantic_deliver(s_phase,s_key_ordinal);}
+void port_input_script_poll(void){if(!s_scoped || s_phase==4 || s_phase==5)semantic_deliver(s_phase,s_key_ordinal);}
+void port_input_script_ui_poll(void){if(s_scoped)semantic_deliver(s_phase,s_key_ordinal);}
 void port_input_script_key_consumed(void){++s_key_ordinal;}
 void port_input_script_step(uint16_t frame){semantic_deliver(6,frame);}
 unsigned port_input_script_phase_value(void){return s_phase;}
+unsigned port_input_script_evaluation_score(void){return s_evaluation_score;}
+void port_input_script_context(unsigned *phase,unsigned *visit,uint64_t *key){
+    *phase=s_phase;*visit=s_visit;*key=s_key_ordinal;
+}
+void port_input_script_scope_enter(unsigned phase){
+    if(!s_scoped)return;
+    if(phase>=32 || s_scope_depth>=32)port_guest_unwind("scenario scope overflow");
+    s_scopes[s_scope_depth].phase=s_phase;s_scopes[s_scope_depth].visit=s_visit;
+    s_scopes[s_scope_depth++].key=s_key_ordinal;
+    s_phase=phase;s_visit=++s_visits[phase];s_key_ordinal=0;
+}
+void port_input_script_scope_leave(void){
+    if(!s_scoped)return;
+    if(!s_scope_depth)port_guest_unwind("scenario scope underflow");
+    semantic_deliver(s_phase,UINT32_MAX); /* explicit completed-call checkpoint */
+    --s_scope_depth;s_phase=s_scopes[s_scope_depth].phase;
+    s_visit=s_scopes[s_scope_depth].visit;s_key_ordinal=s_scopes[s_scope_depth].key;
+}

@@ -7,7 +7,27 @@ implementation calls need not have the original ASM's decomposition.
 import re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
+SCENARIO_PHASES={
+ 'game/frontend.c':{'run_intro':(1,[]),'select':(2,[]),'getprotection':(3,['selection']),
+    'selectcar':(7,['caridptr','materialofs','transmissionofs','opponenttype']),
+    'selectopponent':(8,[]),'teditmain':(9,['restart']),'evaluation':(14,[]),
+    'drawhighs':(15,[]),'addhighs':(16,['score','text','carStyle'])},
+ 'lib/lineedit.c':{'get_pstring':(4,['flags','buffer','pendingKey','bufferLimit','maxWidth','x','y','readCallback','timerOffset','timerSegment'])},
+ 'game/race.c':{'run_game':(5,[]),'doreplay':(19,['mode','frame_index','frame_offset']),
+    'savereplay':(24,['filename'])},'game/trackedt.c':{'trackedit':(10,[])},
+ 'game/uires.c':{'floadreq':(11,['path','selected_name','attributes','heading']),
+    'fsavereq':(12,['name','directory','title']),
+    'messagebox':(13,['type','check','message','x','y','frame_arg','disabled','initial']),
+    'sprite_blit_to_video':(17,['sprite','mode']),'mykeywait':(18,['timeout']),
+    'clear_keyboardbuffer':(23,[])}}
 CONTRACTS=[
+ dict(name='port_call_read_line',original_name='instringz',source='legacy_views.c',
+      signature='int16_t port_call_read_line(char *buffer, int16_t max_length, int16_t x, int16_t y, int32_t timeout)',
+      params=['buffer','max_length','x','y','timeout'],args=[None,'max_length','x','y','timeout','(timeout >> 16)'],ret=16,
+      regions=[('text','buffer','strlen(buffer)+1u',1),('buffer','buffer','(uint16_t)max_length+1u',0)]),
+ dict(name='savefilez',source='file.c',signature='int savefilez(const char *filename, const void *source, unsigned long length)',
+      params=['filename','source','length'],args=[None,None,'length','(length >> 16)'],ret=16,far=[1],
+      regions=[('filename','filename','filename ? strlen(filename)+1u : 0',1)]),
  dict(name='intsin',source='sincos.c',signature='int16_t intsin(uint16_t angle)',params=['angle'],args=['angle'],ret=16,
       regions=[('sine_table','s_sine_table',514,1)],globals=[('_sinetable',514,1)]),
  dict(name='intcos',source='sincos.c',signature='int16_t intcos(uint16_t angle)',params=['angle'],args=['angle'],ret=16,
@@ -106,6 +126,7 @@ def phase_adapt(source,text):
             'lib/lineedit.c':{'get_pstring':4},'game/race.c':{'run_game':5}}
     for name,phase in phases.get(source,{}).items():
         prepend(name,'port_input_script_phase('+str(phase)+');')
+    if source=='game/uires.c':prepend('mykey','port_input_script_ui_poll();')
     if source=='game/race.c':
         prepend('moveeverything','port_input_script_step((uint16_t)tmr2);')
         pattern=r'(?m)^(void\s+far\s+)dodash(\s*\(I16 mode\))'
@@ -113,4 +134,22 @@ def phase_adapt(source,text):
         if count!=1:raise ValueError('missing dashboard completion boundary')
         text+='\nextern void port_video_publish(const char *);\nvoid dodash(I16 mode) {\n'
         text+='    port_dodash_impl(mode);\n    if(mode==2) port_video_publish("race_frame_complete");\n}\n'
-    return 'extern void port_input_script_phase(unsigned);\nextern void port_input_script_step(uint16_t);\n'+text
+    for name,(phase,params) in SCENARIO_PHASES.get(source,{}).items():
+        f=functions(text)[name];signature=f['signature'].rstrip(';')
+        body=f['body'];at=text.index(body)
+        replacement,count=re.subn(r'\b'+name+r'\s*\(', 'port_scope_impl_'+name+'(',body,count=1)
+        text=text[:at]+replacement+text[at+len(body):]
+        if count!=1:raise ValueError('missing scoped scenario entry: '+name)
+        ret=signature.split(name+'(')[0].strip()
+        call='port_scope_impl_'+name+'('+','.join(params)+')'
+        expression=str(phase)+'+(unsigned)mode' if name=='doreplay' else str(phase)
+        text+='\n'+signature+' {\n    port_input_script_scope_enter('+expression+');\n'
+        if name=='evaluation':
+            text+='    if(port_input_script_evaluation_score()){\n'
+            text+='        race_stats.game_total_finish=(I16)port_input_script_evaluation_score();\n'
+            text+='        race_stats.game_penalty=0;\n    }\n'
+        text+=('    '+call+';\n    port_input_script_scope_leave();\n' if ret=='void' or ret=='void far' else
+               '    '+ret+' result='+call+';\n    port_input_script_scope_leave();\n    return result;\n')+'}\n'
+    return ('extern void port_input_script_phase(unsigned);\nextern void port_input_script_step(uint16_t);\n'
+            'extern void port_input_script_scope_enter(unsigned);\nextern void port_input_script_scope_leave(void);\n'
+            'extern void port_input_script_ui_poll(void);\nextern unsigned port_input_script_evaluation_score(void);\n'+text)

@@ -345,7 +345,11 @@ static void StuntsInstruction() {
         const uint8_t seeds[]={0x9d,0x08,0xea,0x4b,0xfc,0x4d};
         for(unsigned i=0;i<6;++i)mem_writeb(stunts_base+219466+i,seeds[i]);
         mem_writed(stunts_base+194680,592);mem_writed(stunts_base+198138,592);
-        stunts->begin("control");stunts->out<<",\"boundary\":\"seed-fixture\"}\n";
+        stunts->begin("control");stunts->out<<",\"boundary\":\"seed-fixture\",\"timer_counter\":"
+            <<mem_readd(stunts_base+194680)<<",\"crt_rand_state\":\""<<std::hex<<mem_readd(stunts_base+0x2b770+0x3930)
+            <<"\",\"kevin_random_state\":\"";
+        for(unsigned i=0;i<6;++i)stunts->out<<std::setw(2)<<std::setfill('0')<<unsigned(mem_readb(stunts_base+219466+i));
+        stunts->out<<std::dec<<"\"}\n";
     }
     stunts->completed_return();
     BoundaryBefore(pc);

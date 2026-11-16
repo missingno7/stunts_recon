@@ -4,7 +4,7 @@ import json
 import sys
 ROOT=Path(__file__).resolve().parents[2]
 sys.path[:0]=[str(ROOT/'port'),str(ROOT/'tools/porting'),str(ROOT/'tools'),str(ROOT/'build/python')]
-from boundary_adapter import CONTRACTS,GRAPHICS_CONTRACTS
+from boundary_adapter import CONTRACTS,GRAPHICS_CONTRACTS,SCENARIO_PHASES
 from diffharness.oracle import OracleImage,SymbolMap,RoutineAddress
 
 def resolve(name):
@@ -29,7 +29,7 @@ def configuration(output,script,frames,graphics=False):
     data=json.loads((ROOT/'layout/data-symbols.json').read_text())['symbols']
     lines=[f'BOUNDARY_OUTPUT {output}',f'FRAME_LIMIT {frames}'];bindings=[]
     for c in CONTRACTS+(GRAPHICS_CONTRACTS if graphics else []):
-        r=resolve(c['name']);cs,ip=r.far_at(0x1010)
+        r=resolve(c.get('original_name',c['name']));cs,ip=r.far_at(0x1010)
         mask=sum(1<<i for i,a in enumerate(c['args']) if a is None)
         lines.append(f"BC {c['name']} {(cs<<16)|ip:x} {len(c['args'])} {c['ret']} {mask}")
         if c.get('graphics'):lines.append(f"BG {c['name']}")
@@ -45,19 +45,37 @@ def configuration(output,script,frames,graphics=False):
             if arg<0 and not global_name:raise ValueError('Missing original global span '+label)
             offset=data[global_name]['load_address']+(binding[3] if len(binding)>3 else 0) if arg<0 else 0
             if label=='points':size=65536+c['params'].index('point_count')
+            if label in ('filename','text'):size=131072  # bounded NUL-terminated string
+            if label=='buffer':size=196608+c['params'].index('max_length')
             lines.append(f"BR {c['name']} {label} {arg} {size} {read} {offset:x}")
         bindings.append(dict(name=c['name'],start=r.start,end=r.end,frame=r.code_base,
             bytes=image.load_image[r.start:r.start+16].hex(),native_source='port/'+c['source']))
-    for name,phase in [('run_intro',1),('select',2),('getprotection',3),('get_pstring',4),('run_game',5)]:
+    scoped=script.get('format')=='stunts-step-input-v2'
+    if scoped:lines.append('SCOPED_PHASES')
+    if script.get('evaluation_finish_frames'):
+        score=script['evaluation_finish_frames']
+        if type(score)!=int or not 1<=score<=32767:raise ValueError('invalid prescribed evaluation score')
+        lines.append(f'EVAL_SCORE {score} {data["_race_stats"]["load_address"]:x}')
+    phases=[(name,value[0]) for table in SCENARIO_PHASES.values() for name,value in table.items()] if scoped else [
+        ('run_intro',1),('select',2),('getprotection',3),('get_pstring',4),('run_game',5)]
+    for name,phase in phases:
         r=resolve(name);cs,ip=r.far_at(0x1010);lines.append(f'PHASE {(cs<<16)|ip:x} {phase}')
+        if name=='doreplay':lines.append(f'PHASEARG {(cs<<16)|ip:x}')
         bindings.append(dict(name=name,start=r.start,end=r.end,frame=r.code_base,phase=phase))
     for name in ['normkey','normkeyi']:
         r=resolve(name);cs,ip=r.far_at(0x1010);lines.append(f'POLL {(cs<<16)|ip:x}')
+    if scoped:
+        r=resolve('mykey');cs,ip=r.far_at(0x1010);lines.append(f'UIPOLL {(cs<<16)|ip:x}')
     r=resolve('moveeverything');cs,ip=r.far_at(0x1010);lines.append(f'INPUTSITE {(cs<<16)|ip:x}')
     for event in script['events']:
         phase,at=event['phase'],event['at'];payload=event['payload']
+        if scoped:lines.append(f'VISIT {event.get("visit",1)}')
         if event['channel']=='dos.keyboard.scancodes':lines +=[f'SKEY {phase} {at} {b}' for b in payload]
         elif event['channel']=='dos.mouse.normalized':
             lines.append(f'SMOUSE {phase} {at} {payload["u"]} {payload["v"]} {payload["buttons"]}')
+        elif event['channel']=='oracle.checkpoint':
+            label=payload['label']
+            if not label.replace('-','').replace('_','').isalnum():raise ValueError('Unsafe checkpoint label')
+            lines.append(f'SCHECK {phase} {at} {payload.get("stop",0)} {label}')
         else:raise ValueError('Unknown semantic input channel')
     return lines,bindings

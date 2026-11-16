@@ -9,6 +9,7 @@ static uint16_t s_limit;
 static uint64_t s_order;
 static int s_graphics;
 extern unsigned port_input_script_phase_value(void);
+extern void port_input_script_context(unsigned *,unsigned *,uint64_t *);
 extern void port_timer_observation(uint64_t *,int *);
 static void hex(const void *data,size_t bytes)
 {
@@ -84,6 +85,7 @@ int port_boundary_begin(PortBoundaryCall *call,const char *name,const uint32_t *
     if(argc>12 || count>PORT_BOUNDARY_REGIONS)port_guest_unwind("boundary contract exceeds recorder bounds");
     call->name=name;call->order=s_order++;call->scope=s_scope;call->frame=port_boundary_frame();
     call->active=port_game_inputmode_snapshot();
+    port_input_script_context(&call->ui_phase,&call->ui_visit,&call->ui_key);
     call->argc=argc;call->pointer_mask=pointer_mask;call->region_count=count;
     if(argc)memcpy(call->args,args,argc*sizeof(*args));
     for(i=0;i<count;++i){
@@ -99,8 +101,9 @@ void port_boundary_end(PortBoundaryCall *call,uint32_t result,int active)
     unsigned i,j;
     if(!active)return;
     if(active<0){--s_depth;return;}
-    fprintf(s_output,"{\"kind\":\"boundary\",\"name\":\"%s\",\"scope\":%u,\"frame\":%u,\"active\":%u,\"order\":%llu,\"args\":[",
-        call->name,call->scope,call->frame,call->active,(unsigned long long)call->order);
+    fprintf(s_output,"{\"kind\":\"boundary\",\"name\":\"%s\",\"scope\":%u,\"frame\":%u,\"active\":%u,\"order\":%llu,\"ui_phase\":%u,\"ui_visit\":%u,\"ui_key\":%llu,\"args\":[",
+        call->name,call->scope,call->frame,call->active,(unsigned long long)call->order,
+        call->ui_phase,call->ui_visit,(unsigned long long)call->ui_key);
     for(i=0;i<call->argc;++i){if(i)fputc(',',s_output);
         if(call->pointer_mask&(1u<<i))fputs("null",s_output);else fprintf(s_output,"%u",call->args[i]);}
     fputs("],\"result\":",s_output);

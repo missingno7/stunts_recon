@@ -111,7 +111,7 @@ def run_port(executable, out, script, ticks, audio, *, compare_original=True):
     """Same inputs/settings, manual clock, isolated config/assets/save paths."""
     folder=out / "port"
     folder.mkdir()
-    shutil.copytree(ROOT / "build/sdl3/runtime/assets",folder / "assets")
+    shutil.copytree(ROOT / "build/sdl3/runtime/assets",folder / "assets",ignore=shutil.ignore_patterns('diagnostics'))
     (folder / "config.json").write_text(json.dumps(dict(manual_word_check=True,
         renderer="faithful", frame_rate=20, detail_level=0, drawing_path="dirty_rects")),encoding="utf-8")
     env=os.environ.copy()
@@ -147,7 +147,7 @@ def capture(args):
     import oracle
     _,unpacked,_,_=oracle.verify(write=False,asset_dir=ROOT/'assets')
     raw_script=json.loads(args.script.read_text(encoding='utf-8'))
-    semantic=raw_script.get('format')=='stunts-step-input-v1'
+    semantic=raw_script.get('format') in ('stunts-step-input-v1','stunts-step-input-v2')
     if semantic or getattr(args,'boundaries',False):
         build_receipt=json.loads(args.dosbox.with_name('observer-build.json').read_text())
         if digest(args.dosbox)!=build_receipt['sha256']:raise ValueError('unsealed observer binary')
@@ -157,7 +157,7 @@ def capture(args):
                 raise ValueError('observer build is stale: '+name)
     script={'events':[]} if semantic else input_ticks(raw_script)
     out.mkdir(parents=True)
-    shutil.copytree(ROOT/'assets',out/'assets')
+    shutil.copytree(ROOT/'assets',out/'assets',ignore=shutil.ignore_patterns('diagnostics'))
     (out/'assets/ORIGINAL.EXE').write_bytes(unpacked)
     (out/'original.exe').write_bytes(unpacked)
     (out/'bindings.json').write_text(json.dumps(hooks,indent=2)+'\n',encoding='utf-8')

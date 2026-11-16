@@ -28,7 +28,7 @@ def race_script(path):
 
 def run_port(folder,script,audio,frames,timeout=120,*,capture_frames=False,graphics=False):
     folder=folder.resolve();folder.mkdir(parents=True,exist_ok=False)
-    shutil.copytree(ROOT/'build/sdl3/runtime/assets',folder/'assets')
+    shutil.copytree(ROOT/'build/sdl3/runtime/assets',folder/'assets',ignore=shutil.ignore_patterns('diagnostics'))
     (folder/'config.json').write_text(json.dumps(dict(manual_word_check=True,renderer='faithful',frame_rate=20,detail_level=0,drawing_path='dirty_rects')))
     env=os.environ.copy();env.update(SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy')
     env['PATH']=os.pathsep.join(['C:/msys64/mingw32/bin','C:/tools/sdl3-3.4.16-i686/bin',env.get('PATH','')])

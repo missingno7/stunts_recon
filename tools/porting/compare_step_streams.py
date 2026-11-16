@@ -33,17 +33,28 @@ def boundary_groups(rows):
             groups[group_key(r['scope'],r['frame'],r.get('active',0))].append(boundary(r))
     return dict(groups)
 
-def original(folder):
+def sealed_original(folder):
     folder=Path(folder);receipt=json.loads((folder/'receipt.json').read_text())
     if receipt.get('schema')!='stunts-dosbox-tick-receipt-v1' or receipt['returncode']:
         raise ValueError('expected sealed original DOSBox-X capture')
+    locked=Path(__file__).resolve().parents[2]/'layout/oracle.lock.json'
+    if (receipt['oracle_lock_sha256']!=hashlib.sha256(locked.read_bytes()).hexdigest() or
+        receipt['executable_sha256']!=json.loads(locked.read_text())['unpacked']['sha256']):
+        raise ValueError('capture is not the locked original executable')
     for path,field in [('original.exe','executable_sha256'),('original.jsonl','capture_sha256'),
         ('original.frames','frames_sha256'),('bindings.json','bindings_sha256'),
         ('boundary-bindings.json','boundary_bindings_sha256'),('boundaries.jsonl','boundary_capture_sha256'),
         ('input-script.json','script_sha256')]:
-        if hashlib.sha256((folder/path).read_bytes()).hexdigest()!=receipt[field]:
+        with (folder/path).open('rb') as stream:
+            checksum=hashlib.file_digest(stream,'sha256').hexdigest()
+        if checksum!=receipt[field]:
             raise ValueError('unsealed original capture: '+path)
     rows=read_rows(folder/'original.jsonl')
+    if rows[-1].get('kind')!='end':raise ValueError('original capture has no terminal record')
+    return rows,receipt
+
+def original(folder):
+    folder=Path(folder);rows,receipt=sealed_original(folder)
     if rows[-1].get('terminal')!='frame-limit':raise ValueError('original failed to reach frame limit')
     states={};frames=defaultdict(list);completed=defaultdict(list);sounds=defaultdict(list);cache={}
     active=0
