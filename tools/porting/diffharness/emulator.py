@@ -30,11 +30,15 @@ class RealModeRunner:
     def __init__(self, oracle: OracleImage | None = None, *,
                  load_segment: int = DEFAULT_LOAD_SEGMENT,
                  instruction_budget: int = 1_000_000,
-                 io_ports: dict[int, int] | None = None):
+                 io_ports: dict[int, int] | None = None,
+                 interrupt_handlers: dict | None = None):
         self.oracle = oracle or OracleImage.load()
         self.load_segment = load_segment & 0xFFFF
         self.instruction_budget = instruction_budget
         self.io_ports = io_ports or {}
+        # Explicit test inputs at service boundaries. Unlisted interrupts still
+        # trap; a handler must supply registers/flags/buffers itself.
+        self.interrupt_handlers = interrupt_handlers or {}
         self.symbols = SymbolMap()
 
     def call(self, case: RoutineCase) -> CallResult:
@@ -90,6 +94,9 @@ class RealModeRunner:
                 machine.emu_stop()
 
         def on_intr(machine, intno, _user):
+            if intno in self.interrupt_handlers:
+                self.interrupt_handlers[intno](machine)
+                return
             state["trap"] = f"INT {intno:#04x} at {self._pc(machine)}"
             machine.emu_stop()
 

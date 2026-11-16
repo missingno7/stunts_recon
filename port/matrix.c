@@ -97,9 +97,9 @@ void transmult(const int16_t *right_matrix, const int16_t *left_matrix,
     }
 }
 
-/* Semantic translation of the mat_invert lead in src/restunts/c/math.c.
-   context.py reports only PARTIAL_UNMAPPED evidence for this routine, so this
-   port implementation is not claimed as a strict historical match. */
+/* Accepted fontmat OMF public +576 identifies locked load 22a72h. Preserve
+   its column-at-a-time stores as well as the in-place swap path: separate
+   pointers can still refer to partially overlapping matrix storage. */
 void mat_invert(int16_t *input_matrix, int16_t *output_matrix)
 {
     int16_t temp;
@@ -116,13 +116,13 @@ void mat_invert(int16_t *input_matrix, int16_t *output_matrix)
         output_matrix[5] = temp;
     } else {
         output_matrix[0] = input_matrix[0];
-        output_matrix[1] = input_matrix[3];
-        output_matrix[2] = input_matrix[6];
         output_matrix[3] = input_matrix[1];
-        output_matrix[4] = input_matrix[4];
-        output_matrix[5] = input_matrix[7];
         output_matrix[6] = input_matrix[2];
+        output_matrix[1] = input_matrix[3];
+        output_matrix[4] = input_matrix[4];
         output_matrix[7] = input_matrix[5];
+        output_matrix[2] = input_matrix[6];
+        output_matrix[5] = input_matrix[7];
         output_matrix[8] = input_matrix[8];
     }
 }

@@ -733,8 +733,16 @@ int savefilez(const char *filename, const void *source,
         source = (const uint8_t *)source + chunk;
         remaining -= chunk;
     }
-    if (file != NULL && fclose(file) != 0)
-        failed = 1;
+    /* Locked load 2259eh: AH=3Eh is followed by XOR AX,AX, with no
+       carry/status test. Only create/write failures select unlink/error.
+       A buffered host write must be completed while still in that phase. */
+    if (file != NULL) {
+        if (!failed && fflush(file) != 0) {
+            failed = 1;
+            dos_error = 1;
+        }
+        (void)fclose(file);
+    }
     if (failed) {
         if (file != NULL)
             (void)SDL_RemovePath(absolute);

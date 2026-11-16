@@ -80,6 +80,24 @@ class SymbolMap:
         evidence_path = ROOT / "evidence/functions.json"
         self.functions = json.loads(evidence_path.read_text(encoding="utf-8"))["functions"]
 
+    def _accepted_asm_public(self, query):
+        """Entry coordinates from accepted OMF publics, not guessed boundaries."""
+        from tools.porting.semantic_mapping import public_extent
+        manifest = json.loads((ROOT / 'layout/manifest.json').read_text(encoding='utf-8'))
+        owners = {r['id']: r for r in manifest['owners']}
+        asm = json.loads((ROOT / 'docs/porting/asm-migration.json').read_text(encoding='utf-8'))
+        for row in asm['routines']:
+            owner = owners.get(row['owner_id'], {})
+            if not owner.get('recipe'):
+                continue
+            extent = public_extent(row, owners)
+            if not extent or query not in {extent['start'], row['routine'], row['public_symbol']}:
+                continue
+            recipe = json.loads((ROOT / owner['recipe']).read_text(encoding='utf-8'))
+            return RoutineAddress(row['routine'], extent['start'], extent['end'],
+                                  recipe['original_frame_load_address'])
+        raise KeyError(f'no accepted ASM public mapping for {query!r}')
+
     def resolve(self, name_or_address: str | int) -> RoutineAddress:
         if isinstance(name_or_address, int) or str(name_or_address).isdigit():
             start = int(name_or_address)
@@ -88,10 +106,12 @@ class SymbolMap:
             if rows:
                 key, row = rows[0]
                 target = row["mapped_target"]
+                if not isinstance(target.get('end'), int):
+                    return self._accepted_asm_public(start)
                 return RoutineAddress(target.get("name", key), start,
                                       target["end"], row["frame_load_address"],
                                       target.get("stable_id"))
-            raise KeyError(f"no code-symbol mapping at load offset {start:#x}")
+            return self._accepted_asm_public(start)
 
         query = str(name_or_address)
         registry_addresses = [int(address) for address, row in self.names.items()
@@ -107,6 +127,8 @@ class SymbolMap:
             labels = {key, key.lstrip("_"), target.get("name"),
                       target.get("stable_id")}
             if query in labels:
+                if not isinstance(target.get('end'), int):
+                    return self._accepted_asm_public(query)
                 return RoutineAddress(target.get("name", query), target["start"],
                                       target["end"], row["frame_load_address"],
                                       target.get("stable_id"))
@@ -121,7 +143,7 @@ class SymbolMap:
                     return RoutineAddress(target.get("name", query), target["start"],
                                           target["end"], entry["frame_load_address"],
                                           target.get("stable_id", row.get("stable_id")))
-        raise KeyError(f"routine {query!r} is not in the reviewed symbol maps")
+        return self._accepted_asm_public(query)
 
 
 def dgroup_segment(load_segment: int = DEFAULT_LOAD_SEGMENT) -> int:

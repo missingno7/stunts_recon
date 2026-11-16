@@ -512,8 +512,8 @@ def never_note(row: dict, mapping: str, targets: set[tuple[str, str, int | None]
         return "The old DOS service has no mapped native entry; its scenario requires a direct service adapter."
     if row.get("kind") == "asm" and not targets:
         if row.get("category") == "HISTORICAL_CRT-DEAD-NOP":
-            return "No game caller reaches this historical CRT/dead/no-op routine; it is retained only in the image inventory."
-        return "This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it."
+            return "No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement."
+        return "No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe."
     if any(token in route for token in ("modern", "wheel")):
         return "Reach it with --renderer=modern during a race scene containing the corresponding wheel geometry."
     if any(token in route for token in ("file", "save", "load", "resource")):

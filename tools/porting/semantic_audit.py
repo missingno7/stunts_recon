@@ -360,12 +360,24 @@ def main():
     parser.add_argument("--work", type=Path, default=DEFAULT_WORK)
     parser.add_argument("--gcc", type=Path, default=Path(r"C:\msys64\mingw32\bin\gcc.exe"))
     parser.add_argument("--inventory-only", action="store_true", help="Omit compiler checks; no static verification claim")
+    parser.add_argument("--six-classes", action="store_true",
+                        help="Screen every port-layer row against locked operands; unresolved obligations remain explicit")
+    parser.add_argument("--port-layer", type=Path, default=ROOT / "tools/porting/port-layer.json")
     args = parser.parse_args()
     report = audit(args.work, args.gcc, not args.inventory_only)
     print(report["status"], json.dumps(report["summary"], sort_keys=True))
     for error in report["errors"][:15]:
         print(error)
     print("Report:", args.work / "report.json")
+    if args.six_classes:
+        from semantic_detectors import six_class_audit
+        # prepare() uses the same production generator as the main audit.
+        screen = six_class_audit(ROOT, json.loads(args.port_layer.read_text(encoding="utf-8")),
+                                 report, prepare(args.work, args.gcc))
+        path = args.work / "six-classes.json"
+        path.write_text(json.dumps(screen, indent=2) + "\n", encoding="utf-8")
+        print(screen["status"], json.dumps(screen["summary"], sort_keys=True))
+        print("Six-class evidence:", path)
     return 0 if report["status"] == "PASS" else 1
 
 

@@ -8,6 +8,9 @@ from __future__ import annotations
 
 import argparse
 import ast
+from collections import Counter, defaultdict
+import hashlib
+from bisect import bisect_right
 import json
 import re
 import sys
@@ -22,6 +25,237 @@ import cdecls  # noqa: E402
 import host_probe_declarations as declarations  # noqa: E402
 import host_probe_modes as modes  # noqa: E402
 from semantic_bounds import pointer_max_index_scoped, scope_env_at
+
+
+AUDIT_CLASSES = ("width-signedness", "alias-layout", "service-results",
+                 "initial-state", "msc-runtime", "added-glue")
+
+
+def class_source_signals(text):
+    """Candidate sites only; never use these lexical matches as a verdict."""
+    code = modes.mask_comments(text)
+    patterns = {
+        'width-signedness': r'>>|<<|[!=<>]=|\b(?:int|long|char|int8_t|uint8_t|int16_t|uint16_t)\b',
+        'alias-layout': r'\[[^\]\n]+\]|\b(?:memcpy|memmove|offsetof|sizeof)\b|&\s*[A-Za-z_]',
+        'service-results': r'\b(?:int86|errno|cflag|ferror|fclose|fflush|fread|fwrite|port_fs_\w+|port_audio_driver_\w+)\b',
+        'initial-state': r'\b\w*(?:init|reset|startup|palette|mouse|keyboard|environment|handle|directory)\w*\b',
+        'msc-runtime': r'\b(?:rand|srand|strcmp|stricmp|strcmpi|strcpy|strcat|strlen|strrchr|itoa|ultoa|sprintf|printf|malloc|calloc|realloc|free|fopen|fseek|ftell|fread|fwrite|fflush|fclose|ctype|port_msc_ctype)\b',
+        'added-glue': r'\b[A-Za-z_]\w*\s*\(',
+    }
+    return {cls: [dict(offset=m.start(), snippet=short_snippet(
+        text[max(0, text.rfind('\n', 0, m.start()) + 1):
+             text.find('\n', m.end()) if text.find('\n', m.end()) >= 0 else len(text)]))
+        for m in re.finditer(pattern, code, re.I)] for cls, pattern in patterns.items()}
+
+
+def machine_signals(image, start, end):
+    """Lossless *linear* instruction evidence, never a CFG/equivalence claim.
+
+    Preserve undecoded tails explicitly. Jump tables/embedded data can decode
+    as instructions, so callers must confirm any signal before fixing code.
+    """
+    from capstone import Cs, CS_ARCH_X86, CS_MODE_16
+    from capstone.x86_const import X86_OP_MEM
+    decoder = Cs(CS_ARCH_X86, CS_MODE_16)
+    decoder.detail = True
+    signals = {key: [] for key in AUDIT_CLASSES}
+    decoded = start
+    instructions = list(decoder.disasm(image[start:end], start))
+    for index, ins in enumerate(instructions):
+        decoded = ins.address + ins.size
+        fact = dict(address=ins.address, hex=ins.bytes.hex(),
+                    instruction=ins.mnemonic + " " + ins.op_str,
+                    operand_bytes=[o.size for o in ins.operands])
+        if ins.mnemonic in {"cmp", "test", "xor", "and", "or", "cbw", "cwd", "sar", "shr", "shl",
+                            "sal", "rcr", "rcl", "div", "idiv", "imul", "mul",
+                            "adc", "sbb", "neg", "add", "sub", "inc", "dec"} or (
+                ins.mnemonic.startswith('j') and ins.mnemonic != 'jmp'):
+            signals['width-signedness'].append(fact)
+        memory = [o for o in ins.operands if o.type == X86_OP_MEM]
+        if memory:
+            signals['alias-layout'].append(dict(fact, memory=[dict(
+                segment=ins.reg_name(o.mem.segment) or 'implicit/flow-dependent',
+                base=ins.reg_name(o.mem.base), index=ins.reg_name(o.mem.index),
+                displacement=o.mem.disp, bytes=o.size, access=o.access) for o in memory]))
+        if ins.mnemonic in {'int', 'in', 'out', 'insb', 'insw', 'outsb', 'outsw', 'iret'}:
+            window = instructions[index + 1:index + 9]
+            signals['service-results'].append(dict(fact, following=[dict(
+                address=x.address, instruction=x.mnemonic + ' ' + x.op_str)
+                for x in window], limit='linear successor window; register/flag liveness across branches and calls requires review'))
+            signals['initial-state'].append(fact)
+        if ins.mnemonic in {'call', 'lcall'}:
+            signals['added-glue'].append(fact)
+    return dict(start=start, end=end, decoded_end=decoded,
+                undecoded_tail_hex=image[decoded:end].hex(),
+                sha256=hashlib.sha256(image[start:end]).hexdigest(),
+                instruction_count=len(instructions), signals=signals,
+                authority='locked image; linear disassembly, reachability unproved')
+
+
+def six_class_audit(root, layer, semantic, overlays=(), image=None):
+    """Screen every inventory row in priority order; keep unresolved obligations.
+
+    This extends the existing semantic risk scan with original operands and
+    public/member placement. A no-signal result is never a semantic pass.
+    Reports are scratch artifacts, not acceptance records.
+    """
+    from semantic_mapping import public_extent
+    from semantic_audit import functions as portable_functions
+    from diffharness.oracle import OracleImage, DGROUP_PARAGRAPH
+    image = image if image is not None else OracleImage.load().load_image
+    root = Path(root)
+    manifest = read_json(root / 'layout/manifest.json')
+    owners = {r['id']: r for r in manifest['owners']}
+    asm = read_json(root / 'docs/porting/asm-migration.json')['routines']
+    asm_by_id = {'asm:' + r['owner_id'] + '::' + r['public_symbol']: r for r in asm}
+    platform = read_json(root / 'docs/porting/platform-boundary.json')['entries']
+    host = {'host:' + r['function'] + '@' + str(r.get('image_load_offset')): r for r in platform}
+    historical = semantic['historical_mapping']
+    by_address = {r['address']: r for r in historical if r['address'] is not None}
+    by_name = defaultdict(list)
+    for r in historical:
+        for name in {r.get('original_name'), r.get('canonical_name'), r.get('registry_inventory_name')} - {None}:
+            by_name[name].append(r)
+    source_text, source_functions = {}, {}
+    overlay_paths = {r['source']: Path(r['overlay']) for r in overlays}
+    cache, entries = {}, []
+    data_symbols = read_json(root / 'layout/data-symbols.json')['symbols']
+    # These are layout facts only. Extents of unsized labels stay unknown.
+    at_address = defaultdict(list)
+    for name, spec in data_symbols.items():
+        if isinstance(spec.get('load_address'), int):
+            at_address[spec['load_address']].append(name)
+    alias_groups = [dict(address=a, names=sorted(names)) for a, names in sorted(at_address.items()) if len(names) > 1]
+    data_addresses = sorted(at_address)
+    runtime_owners = [r for r in manifest['owners'] if r.get('classification') == 'RUNTIME_LIBRARY']
+
+    def enrich_machine(facts):
+        for owner in runtime_owners:
+            if owner['start'] <= facts['start'] < owner['end']:
+                facts['signals']['msc-runtime'].append(dict(owner=owner['id'],
+                    start=owner['start'], end=owner['end'],
+                    basis='accepted pinned MSC member placement; compare caller observables separately'))
+        for fact in facts['signals']['alias-layout']:
+            for operand in fact['memory']:
+                # Code-island and segment-register data flow are deliberately
+                # not guessed from a numeric displacement alone.
+                if operand['segment'] not in {'ds', 'implicit/flow-dependent'} or operand['base'] == 'bp':
+                    continue
+                address = (DGROUP_PARAGRAPH << 4) + (operand['displacement'] & 0xffff)
+                at = bisect_right(data_addresses, address) - 1
+                candidates = []
+                for anchor in data_addresses[max(0, at):at + 2]:
+                    for name in at_address[anchor]:
+                        spec = data_symbols[name]
+                        candidates.append(dict(name=name, address=anchor,
+                            width=spec.get('width'), storage=spec.get('storage'),
+                            displacement_from_symbol=address - anchor))
+                operand['dgroup_candidates'] = candidates
+                operand['binding_limit'] = 'DGROUP hypothesis only; prove DS and indexed range at this site before treating a neighbour as an alias'
+                facts['signals']['initial-state'].append(dict(address=fact['address'],
+                    instruction=fact['instruction'], memory_operand=operand,
+                    limit='possible initial-state access; read-before-write and hardware provenance unproved'))
+
+    def priority(row):
+        route = ' '.join([row['name'], row.get('category', ''), row.get('subsystem', '')] +
+                         [p['source'] for p in row.get('portable', [])]).lower()
+        phase = (0 if row.get('execution_coverage', {}).get('classification') == 'never_executed'
+                 else 1 if row['kind'] == 'host' else 2 if 'library_' in row['id']
+                 else 3 if any(s in route for s in ('audio', 'speaker', 'opl'))
+                 else 4 if any(s in route for s in ('sprite', 'render', 'video', 'font', 'graphics')) else 5)
+        return phase, row['id']
+
+    for ordinal, row in enumerate(sorted(layer['rows'], key=priority)):
+        extents, notes = [], []
+        original_data = None
+        if row['kind'] == 'semantic_data' and isinstance(row.get('original_address'), int):
+            a, size = row['original_address'], row.get('bytes')
+            if not isinstance(size, int) or not 0 <= a < a + size <= len(image):
+                raise ValueError(f"invalid original data interval {row['id']}")
+            original_data = dict(address=a, bytes=size, hex=image[a:a + size].hex(),
+                                 authority='locked image data; not decoded as instructions')
+        if row['id'] in asm_by_id:
+            extent = public_extent(asm_by_id[row['id']], owners)
+            if extent:
+                extents.append(extent)
+        elif row['id'] in host:
+            h = host[row['id']]
+            if h.get('image_load_offset') and h.get('image_end_exclusive'):
+                extents.append(dict(start=int(h['image_load_offset'], 0),
+                    end=int(h['image_end_exclusive'], 0), basis='platform-boundary reviewed interval'))
+        else:
+            candidates = []
+            if isinstance(row.get('original_address'), int):
+                candidates += [by_address[row['original_address']]] if row['original_address'] in by_address else []
+            for name in set([row['name']] + row.get('routines', []) +
+                            [p['name'] for p in row.get('portable', [])]):
+                candidates.extend(by_name.get(name, []))
+            for h in candidates:
+                a, b = h['address'], h['end']
+                if isinstance(a, int) and isinstance(b, int) and a < b:
+                    extent = dict(start=a, end=b, basis='semantic_mapping exact name/address candidate; join is not equivalence')
+                    if not any(x['start'] == a and x['end'] == b for x in extents):
+                        extents.append(extent)
+        evidence_keys = []
+        for ex in extents:
+            a, b = ex['start'], ex['end']
+            if not 0 <= a < b <= len(image):
+                raise ValueError(f"invalid original interval {row['id']}: {ex}")
+            key = f'{a:x}:{b:x}'
+            if key not in cache:
+                cache[key] = machine_signals(image, a, b)
+                enrich_machine(cache[key])
+            evidence_keys.append(dict(key=key, basis=ex['basis']))
+        portable, risks = [], []
+        source_signals = {c: [] for c in AUDIT_CLASSES}
+        for p in row.get('portable', []):
+            source = p['source']
+            if source not in source_text:
+                path = overlay_paths.get(source, root / source)
+                source_text[source] = path.read_text(encoding='latin-1')
+                source_functions[source] = ({} if path.suffix == '.py' else portable_functions(source_text[source]))
+            fn = source_functions[source].get(p['name'])
+            text = fn['body'] if fn else row.get('expression', row.get('operation', {}).get('expression', ''))
+            if not text:
+                notes.append(f"{source}::{p['name']}: no isolated body (macro/data/Python adapter or unresolved join)")
+            portable.append(dict(source=source, name=p['name'], signature=p.get('signature'),
+                body_sha256=hashlib.sha256(text.encode('latin-1')).hexdigest(),
+                source_sha256=hashlib.sha256(source_text[source].encode('latin-1')).hexdigest()))
+            risks.extend(scan_function(source, p['name'], text, p.get('line', 1)))
+            for cls, signals in class_source_signals(text).items():
+                source_signals[cls].extend(dict(s, source=source, function=p['name']) for s in signals)
+        checks = {}
+        for cls in AUDIT_CLASSES:
+            count = sum(len(cache[e['key']]['signals'][cls]) for e in evidence_keys)
+            checks[cls] = dict(original_signal_count=count,
+                portable_signals=source_signals[cls],
+                status='requires-review' if evidence_keys or original_data else 'original-unmapped',
+                obligation={
+                    'width-signedness': 'Compare operand widths, signed branches, extensions, wrap, shift/divide with host types and promotions.',
+                    'alias-layout': 'Resolve effective segment and indexed spans against link/data map, including stack-local aliases; compare host storage and write order.',
+                    'service-results': 'Trace each service result register/flag/buffer into consumers across branches/callees, including failures.',
+                    'initial-state': 'Establish read-before-write paths from DOS/BIOS/driver startup to first consumer, including PSP/environment/handles/CWD.',
+                    'msc-runtime': 'Join pinned runtime public and caller uses to host CRT/adapters; compare defined input domains and failures.',
+                    'added-glue': 'Compare native call/state order and generated rewrites with original call graph and observed transitions.',
+                }[cls])
+        entries.append(dict(id=row['id'], ordinal=ordinal, phase=priority(row)[0],
+            kind=row['kind'], execution_coverage=row.get('execution_coverage'),
+            original=evidence_keys, original_data=original_data, portable=portable, source_risks=risks,
+            checks=checks, notes=notes,
+            limit='Screened only; neither absence of a linear signal nor a passing scenario closes these obligations.'))
+    return dict(schema='stunts-port-six-class-screen-v1',
+        status='SCREENED; semantic review incomplete',
+        inputs={p: hashlib.sha256((root / p).read_bytes()).hexdigest() for p in (
+            'tools/porting/semantic_audit.py', 'tools/porting/semantic_detectors.py',
+            'tools/porting/semantic_mapping.py', 'tools/porting/semantic_bounds.py',
+            'docs/porting/asm-migration.json', 'docs/porting/platform-boundary.json',
+            'layout/manifest.json', 'layout/data-symbols.json', 'layout/names-registry.json')},
+        oracle_lock_sha256=hashlib.sha256((root / 'layout/oracle.lock.json').read_bytes()).hexdigest(),
+        summary=dict(rows=len(entries), never_executed_first=sum(r['phase'] == 0 for r in entries),
+            per_class={c: dict(Counter(r['checks'][c]['status'] for r in entries)) for c in AUDIT_CLASSES},
+            original_intervals=len(cache), original_mapped_rows=sum(bool(r['original'] or r['original_data']) for r in entries),
+            intervals_with_undecoded_tail=sum(bool(r['undecoded_tail_hex']) for r in cache.values())),
+        layout_alias_groups=alias_groups, machine_evidence=cache, rows=entries)
 
 
 def read_json(path: Path):

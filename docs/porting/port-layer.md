@@ -4,6 +4,13 @@
 of native substitutions and adaptations, including enhanced-renderer helpers.
 Unchanged reconstructed C is outside it; its width/layout adaptations are inside.
 
+The [static audit](static-audit.md) corrected missing-address joins and grounded
+runtime/ASM public entries in accepted OMF declarations. The current table has
+1,422 rows (93 with finite agreeing evidence, seven differing, 1,322 without
+comparable evidence). The step-9 counts below describe the earlier snapshot.
+The added transpose regression has a finite contract; the six-class static
+review remains incomplete.
+
 | View | Authority and scope |
 |---|---|
 | ASM replacements | `asm-migration.json`: 241 public entries in 40 reconstructed MASM modules, plus 92 pinned-runtime entries |
@@ -63,6 +70,11 @@ finite agreeing cases, CPU-dependent observations and still-unproven sound state
 
 ## Measured execution coverage
 
+These profiles predate the static audit. Rejoining their existing function
+counts to corrected entry mappings changes the never-executed count from 438 to
+435; no new coverage run is claimed. A missing native mapping does not establish
+that the original game cannot call a pinned runtime entry.
+
 The SDL3 executable was built with GCC `--coverage` in a separate build directory. The first profile covers the original-reference scenario tests; the second covers the remaining port tests. GCC function counts are joined to each row's portable function, generated overlay target or affected translation unit, or macro expansion users. `status` above remains the original observation status.
 
 A row is in the agreeing bucket when its mapped code ran during the selected original-reference tests and those asserted comparisons passed. Rows whose existing status records a known difference are counted separately. This does not prove every row's full domain.
@@ -70,251 +82,247 @@ A row is in the agreeing bucket when its mapped code ran during the selected ori
 | Port-layer kind | Agreeing original scenarios | Other tests only | Never executed | Original runs with known differences |
 |---|---:|---:|---:|---:|
 | `adapted_c` | 79 | 0 | 21 | 0 |
-| `asm` | 110 | 0 | 223 | 0 |
+| `asm` | 114 | 0 | 219 | 0 |
 | `build_adapter` | 173 | 0 | 3 | 0 |
 | `host` | 39 | 0 | 74 | 0 |
-| `native_helper` | 508 | 2 | 94 | 7 |
+| `native_helper` | 506 | 2 | 95 | 7 |
 | `semantic_contract` | 24 | 0 | 5 | 0 |
 | `semantic_data` | 1 | 0 | 0 | 0 |
 | `semantic_macro` | 42 | 0 | 18 | 0 |
-| **Total (1423)** | 976 | 2 | 438 | 7 |
+| **Total (1422)** | 978 | 2 | 435 | 7 |
 
 Never-executed rows are grouped below. Each note names a likely way to reach the path or explains when the native game has no corresponding entry.
 
-### HISTORICAL_CRT-DEAD-NOP (82)
+### HISTORICAL_CRT-DEAD-NOP (81)
 
-- `asm:library__getbuf_119742::__getbuf` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_abort_123846::_abort` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_abs::_abs` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_amalloc_123070::__amalloc` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_amalloc_123070::__amallocbrk` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_amalloc_123070::__amexpand` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_amalloc_123070::__amlink` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_chkstk_118452::__chkstk` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_chksum_118488::__nullcheck` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_crt0fp_118446::__fptrap` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_brkctl_123426::_brkctl` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_crt0_117858::__amsg_exit` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_crt0_117858::__astart` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_crt0_117858::__cintDIV` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_crt0dat_118056::__cinit` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_crt0dat_118056::__ctermsub` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_crt0dat_118056::__exit` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_crt0dat_118056::_exit` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_crt0msg_118410::__FF_MSGBANNER` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_dosret_119190::__dosret0` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_dosret_119190::__dosretax` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_dosret_119190::__dosreturn` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_dosret_119190::__maperror` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_int86_123916::_int86` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_lseek_122542::_lseek` — Reach it after entering replay, then pause, seek, or save the replay.
-- `asm:library_dos_nmsghdr_119038::__NMSG_TEXT` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_nmsghdr_119038::__NMSG_WRITE` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_raise_124318::_raise` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_signal_124534::__sigentry` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_signal_124534::_signal` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_stdalloc_119124::__myalloc` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_stdargv_118526::__setargv` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_dos_stdenvp_118928::__setenvp` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_fflush_120142::_fflush` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_flsbuf_119392::__flsbuf` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_flushall_119274::_flushall` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_isatty_123880::_isatty` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_itoa_123808::_itoa` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_nmalloc_122982::__nfree` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_nmalloc_122982::__nmalloc` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_nmalloc_122982::_free` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_nmalloc_122982::_malloc` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_oldnorm_124904::__aldiv` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_oldnorm_124904::__ldiv` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_oldnorm_124914::__almul` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_oldnorm_124914::__aulmul` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_oldnorm_124914::__lmul` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_oldnorm_124914::__ulmul` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_oldnorm_124934::__auldiv` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_oldnorm_124934::__uldiv` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_oldshift_124924::__alshr` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_oldshift_124924::__lshr` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_output_120254::__output` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_output_120254::_out` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_output_120254::_outc` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_output_120254::flagchar` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_output_120254::fprint` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_output_120254::getnum` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_output_120254::iprint` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_output_120254::putbuf` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_output_120254::putpad` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_output_120254::putprefix` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_output_120254::putsign` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_output_120254::sprint` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_printf_119326::_printf` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_rand_124476::_rand` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_rand_124476::_srand` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_sftbuf_119852::__ftbuf` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_sftbuf_119852::__stbuf` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_sprintf_124044::_sprintf` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_stackava_122962::_stackavail` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_strcat::_strcat` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_strcmp::_strcmp` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_strcpy::_strcpy` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_stricmp::_strcmpi` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_stricmp::_stricmp` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_strlen::_strlen` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_strrchr::_strrchr` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_ultoa_123836::_ultoa` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_write_122664::_write` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_xtoa::__cltoasub` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_xtoa::__cxtoa` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
+- `asm:library__getbuf_119742::__getbuf` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_abort_123846::_abort` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_abs::_abs` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_amalloc_123070::__amalloc` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_amalloc_123070::__amallocbrk` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_amalloc_123070::__amexpand` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_amalloc_123070::__amlink` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_chkstk_118452::__chkstk` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_chksum_118488::__nullcheck` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_crt0fp_118446::__fptrap` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_brkctl_123426::_brkctl` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_crt0_117858::__amsg_exit` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_crt0_117858::__astart` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_crt0_117858::__cintDIV` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_crt0dat_118056::__cinit` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_crt0dat_118056::__ctermsub` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_crt0dat_118056::__exit` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_crt0dat_118056::_exit` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_crt0msg_118410::__FF_MSGBANNER` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_dosret_119190::__dosret0` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_dosret_119190::__dosretax` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_dosret_119190::__dosreturn` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_dosret_119190::__maperror` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_lseek_122542::_lseek` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_nmsghdr_119038::__NMSG_TEXT` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_nmsghdr_119038::__NMSG_WRITE` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_raise_124318::_raise` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_signal_124534::__sigentry` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_signal_124534::_signal` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_stdalloc_119124::__myalloc` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_stdargv_118526::__setargv` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_dos_stdenvp_118928::__setenvp` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_fflush_120142::_fflush` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_flsbuf_119392::__flsbuf` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_flushall_119274::_flushall` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_isatty_123880::_isatty` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_itoa_123808::_itoa` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_nmalloc_122982::__nfree` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_nmalloc_122982::__nmalloc` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_nmalloc_122982::_free` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_nmalloc_122982::_malloc` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_oldnorm_124904::__aldiv` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_oldnorm_124904::__ldiv` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_oldnorm_124914::__almul` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_oldnorm_124914::__aulmul` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_oldnorm_124914::__lmul` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_oldnorm_124914::__ulmul` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_oldnorm_124934::__auldiv` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_oldnorm_124934::__uldiv` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_oldshift_124924::__alshr` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_oldshift_124924::__lshr` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_output_120254::__output` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_output_120254::_out` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_output_120254::_outc` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_output_120254::flagchar` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_output_120254::fprint` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_output_120254::getnum` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_output_120254::iprint` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_output_120254::putbuf` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_output_120254::putpad` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_output_120254::putprefix` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_output_120254::putsign` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_output_120254::sprint` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_printf_119326::_printf` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_rand_124476::_rand` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_rand_124476::_srand` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_sftbuf_119852::__ftbuf` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_sftbuf_119852::__stbuf` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_sprintf_124044::_sprintf` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_stackava_122962::_stackavail` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_strcat::_strcat` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_strcmp::_strcmp` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_strcpy::_strcpy` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_stricmp::_strcmpi` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_stricmp::_stricmp` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_strlen::_strlen` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_strrchr::_strrchr` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_ultoa_123836::_ultoa` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_write_122664::_write` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_xtoa::__cltoasub` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
+- `asm:library_xtoa::__cxtoa` — No native semantic mapping is established. The mixed CRT/dead/no-op category does not prove guest unreachability; compare the original entry with its host replacement.
 
-### LEGACY_SOFTWARE_RENDERER (6)
+### LEGACY_SOFTWARE_RENDERER (4)
 
 - `asm:gfxres::_slopeline` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
 - `asm:linerend::_readf` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:patlines::_sprite_make_window` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:patlines::sprite_setup1_from_arg_pointer` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
 - `asm:scalblit::_clear_rect` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:whlrast::polycmn` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
+- `asm:whlrast::polycmn` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 
 ### PLATFORM (106)
 
 - `asm:bmpmask::_andpackf` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:bmpmask::_andpackfxy` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:bmpmask::_andpackfxya` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:copyblit::_shape2d_blit_bitmap_hotspot` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:bmpmask::_andpackfxy` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:bmpmask::_andpackfxya` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:copyblit::_shape2d_blit_bitmap_hotspot` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:fileio::_loadfilea` — Reach it from track/replay load or save; a missing asset exercises the error path.
-- `asm:fileio::_loadfileata` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:fileio::_loadpack` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:fileio::_loadfileata` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:fileio::_loadpack` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:fileio::_locate_sound_fatal` — Reach it from track/replay load or save; a missing asset exercises the error path.
-- `asm:filewrit::_savefile` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:fontmat::_file_decomp_vle` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:fontmat::_sprite_pattern_poly_args` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:fontmat::_sprite_pattern_poly_args_alt` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:fontmat::_vertsync` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:filewrit::_savefile` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:fontmat::_file_decomp_vle` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:fontmat::_sprite_pattern_poly_args` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:fontmat::_sprite_pattern_poly_args_alt` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:fontmat::_vertsync` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:fontmat::_vsyncstate` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
 - `asm:gfxres::_abortmessage` — Candidate route: startup/race/UI candidate; inspect the named caller before choosing a scenario; the required caller or operand case is not present in the selected runs.
 - `asm:gfxres::_addexit` — Candidate route: startup/race/UI candidate; inspect the named caller before choosing a scenario; the required caller or operand case is not present in the selected runs.
 - `asm:gfxres::_call_exitlist` — Candidate route: startup/race/UI candidate; inspect the named caller before choosing a scenario; the required caller or operand case is not present in the selected runs.
-- `asm:gfxres::_criterr_interrupt_handler` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:gfxres::_criterr_interrupt_handler` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:gfxres::_dsiexit` — Candidate route: startup/race/UI candidate; inspect the named caller before choosing a scenario; the required caller or operand case is not present in the selected runs.
-- `asm:gfxres::_filesize` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:gfxres::_filesizea` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:gfxres::_filesizez` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:gfxres::_getbiostick` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:gfxres::_resetcriterr` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:gfxres::_sprite_two_color_poly_args_alt` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:gfxres::_filesize` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:gfxres::_filesizea` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:gfxres::_filesizez` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:gfxres::_getbiostick` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:gfxres::_resetcriterr` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:gfxres::_sprite_two_color_poly_args_alt` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:gfxres::_sprite_two_color_poly_list` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:gfxres::_unpacksize` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:gfxres::_unpacksizea` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:gfxres::_unpacksizez` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:gfxres::_unpacksize` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:gfxres::_unpacksizea` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:gfxres::_unpacksizez` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:gfxres::_video_set_mode4` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
 - `asm:gfxres::_waitbios` — Reach it during timer callbacks or a manual-clock wait in startup, a menu, or a race.
-- `asm:iconmask::_andfxy` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:kbcalls::_currentkeysub` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.
+- `asm:iconmask::_andfxy` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:kbcalls::_currentkeysub` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:kbcalls::_flush_stdin` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.
-- `asm:kbcalls::_kb_read_until_deadline` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:kbcalls::_kb_read_with_timeout` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:kbcalls::_keysub` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.
-- `asm:kbcalls::_nextkey` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:kbcalls::_nopsub_kb_get_readchar_callbac` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:kbcalls::_nopsub_kb_set_readchar_callbac` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:kbcalls::_kb_read_until_deadline` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:kbcalls::_kb_read_with_timeout` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:kbcalls::_keysub` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:kbcalls::_nextkey` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:kbcalls::_nopsub_kb_get_readchar_callbac` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:kbcalls::_nopsub_kb_set_readchar_callbac` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:kbcalls::_purgekey` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.
-- `asm:kbint::_kb_int16_handler` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:kbint::_kb_int9_handler` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:kbint::_kb_int16_handler` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:kbint::_kb_int9_handler` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:kbint::_keyboard_exit_handler` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.
 - `asm:kbjoy::_convertjoy` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.
-- `asm:kbjoy::_input_read_char_or_joystick` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:kbjoy::_interpretclear` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:kbjoy::_interpretkey` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:kbjoy::_joybuttons` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:kbjoy::_joystick_scale_saved_y` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:kbjoy::_input_read_char_or_joystick` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:kbjoy::_interpretclear` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:kbjoy::_interpretkey` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:kbjoy::_joybuttons` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:kbjoy::_joystick_scale_saved_y` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:kbjoy::_replay_axis_value` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.
 - `asm:kbjoy::_reset_joystick_selection` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.
-- `asm:kbjoy::_set_bios_mode3` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:kbjoy::_set_bios_mode3` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:kbshift1::_keyboard_shift_checking1` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.
-- `asm:linedisp::_draw_unknown_lines` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:linedisp::_sprite_fill_two_color_spans_at` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:linerend::_draw_filled_lines` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:linerend::_readfxy` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:linedisp::_draw_unknown_lines` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:linedisp::_sprite_fill_two_color_spans_at` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:linerend::_draw_filled_lines` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:linerend::_readfxy` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:linerend::_scalecfxy` — Reach it from track/replay load or save; a missing asset exercises the error path.
-- `asm:mathres::_tickcount` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:memmgr::_freetotop` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:memmgr::_ifmodule` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:memmgr::_initmemsize` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:memmgr::_lockedmemory` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:memmgr::_mmgr_alloc_resmem` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:memmgr::_mmgr_find_free` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:memmgr::_mmgr_init_video_reserve` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:memmgr::_negblockmove` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:memmgr::_poolmemory` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:memmgr::_posblockmove` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:patlines::_draw_patterned_lines` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:pixline::_drawcline` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:rpmrand::_intr0_handler` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:rpmrand::_nopsub_19DFF` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:rpmrand::_nopsub_19E09` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:rpmrand::_nopsub_19E13` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:rpmrand::_restore_div_zero_vector` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
+- `asm:mathres::_tickcount` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:memmgr::_freetotop` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:memmgr::_ifmodule` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:memmgr::_initmemsize` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:memmgr::_lockedmemory` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:memmgr::_mmgr_alloc_resmem` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:memmgr::_mmgr_find_free` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:memmgr::_mmgr_init_video_reserve` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:memmgr::_negblockmove` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:memmgr::_poolmemory` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:memmgr::_posblockmove` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:patlines::_draw_patterned_lines` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:pixline::_drawcline` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:rpmrand::_intr0_handler` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:rpmrand::_nopsub_19DFF` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:rpmrand::_nopsub_19E09` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:rpmrand::_nopsub_19E13` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:rpmrand::_restore_div_zero_vector` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:scalblit::_mcgatranslation` — Reach it from track/replay load or save; a missing asset exercises the error path.
 - `asm:scalblit::_mcgatransrange` — Reach it from track/replay load or save; a missing asset exercises the error path.
-- `asm:scalblit::_scalefxy` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:shp2ops::_movpackcfxy` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:shp2ops::_movpackfxy` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:shpcopy::_movfxy` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:shpthunk::_file_load_shape2d_res_fatal_th` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:shpthunk::_file_load_shape2d_res_thunk` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:shpthunk::_file_load_shape2d_thunk` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:shpthunk::_parse_shape2d_thunk` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:scalblit::_scalefxy` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:shp2ops::_movpackcfxy` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:shp2ops::_movpackfxy` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:shpcopy::_movfxy` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:shpthunk::_file_load_shape2d_res_fatal_th` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:shpthunk::_file_load_shape2d_res_thunk` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:shpthunk::_file_load_shape2d_thunk` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:shpthunk::_parse_shape2d_thunk` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:sprvideo::_orpackf` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:textcon::_console_clear_mono_screen` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:textcon::_console_delete_current_row` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:textcon::_console_set_text_attribute` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:textcon::_console_clear_mono_screen` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:textcon::_console_delete_current_row` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:textcon::_console_set_text_attribute` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:textcon::_debug_printf_text` — Candidate route: startup/race/UI candidate; inspect the named caller before choosing a scenario; the required caller or operand case is not present in the selected runs.
-- `asm:timerhlp::_resettick` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:timerhlp::_resettick` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:timerint::_restoretimer` — Reach it with AD15/PC15 playback; the device-specific branch needs that hardware option.
-- `asm:timerint::_timer_intr_callback` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:timerint::_timer_setup_sound_countdown` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:timerint::_timer_tick_sound_and_chain` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:timerint::_timer_intr_callback` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:timerint::_timer_setup_sound_countdown` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:timerint::_timer_tick_sound_and_chain` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:timerint::_video_set_mode7` — Reach it during timer callbacks or a manual-clock wait in startup, a menu, or a race.
-- `asm:vecspr::_clearscreen` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:vecspr::_clippixwindow` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:vecspr::_clearscreen` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:vecspr::_clippixwindow` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:vecspr::_drawcircle` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:vidmode::_video_add_exithandler` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:vidmode::_video_on_exit` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:whlrast::_preRender_helper` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:whlrast::_preRender_helper2` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:whlrast::_preRender_helper3` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:vidmode::_video_add_exithandler` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:vidmode::_video_on_exit` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:whlrast::_preRender_helper` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:whlrast::_preRender_helper2` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:whlrast::_preRender_helper3` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 
-### PORTABLE_ALGORITHM (29)
+### PORTABLE_ALGORITHM (28)
 
-- `asm:fileio::_file_decomp_rle` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:fileio::_file_decomp_rle_seq` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:fileio::_file_decomp_rle_single` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:fontmat::_mat_invert` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_aldiv_125208::__aFNaldiv` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_almul_125244::__aFNalmul` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_almul_125244::__aFNaulmul` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_alshr_125280::__aFNalshr` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_auldiv_125314::__aFNauldiv` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_ldiv::__aFldiv` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_lmul::__aFlmul` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_lmul::__aFulmul` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_lshr::__aFlshr` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:library_uldiv::__aFuldiv` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:mathres::_nopsub_326BA` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:mathres::_scalethicknessxp` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:mathres::_scalethicknessyp` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:mathres::_thickness` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:fileio::_file_decomp_rle` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:fileio::_file_decomp_rle_seq` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:fileio::_file_decomp_rle_single` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:library_aldiv_125208::__aFNaldiv` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:library_almul_125244::__aFNalmul` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:library_almul_125244::__aFNaulmul` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:library_alshr_125280::__aFNalshr` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:library_auldiv_125314::__aFNauldiv` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:library_ldiv::__aFldiv` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:library_lmul::__aFlmul` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:library_lmul::__aFulmul` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:library_lshr::__aFlshr` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:library_uldiv::__aFuldiv` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:mathres::_nopsub_326BA` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:mathres::_scalethicknessxp` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:mathres::_scalethicknessyp` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:mathres::_thickness` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:mathres::_thicknessxp` — Candidate route: startup/race/UI candidate; inspect the named caller before choosing a scenario; the required caller or operand case is not present in the selected runs.
-- `asm:mathres::_thicknessyp` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:project::_projectorgp` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:project::_setprojectpb` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:rpmrand::_sgn` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:scalblit::shape2d_scale_blit_tail` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:shpthunk::_file_load_shape2d_res_fatal_thunk` — Reach it from track/replay load or save; a missing asset exercises the error path.
-- `asm:vecspr::_zclip` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:mathres::_thicknessyp` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:project::_projectorgp` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:project::_setprojectpb` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:rpmrand::_sgn` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:scalblit::shape2d_scale_blit_tail` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:shpthunk::_file_load_shape2d_res_fatal_thunk` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:vecspr::_zclip` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 - `asm:whlrast::_skybox_op_helper` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
-- `asm:whlrast::_sprite_fill_line_records` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
-- `asm:whlrast::_sprite_fill_line_records_alt` — This pinned routine is not linked as native code; only an isolated original-machine routine probe can reach it.
+- `asm:whlrast::_sprite_fill_line_records` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
+- `asm:whlrast::_sprite_fill_line_records_alt` — No native implementation mapping is established; inspect the accepted public entry and its host replacement before choosing a routine probe.
 
 ### audio (40)
 
@@ -446,7 +454,7 @@ Never-executed rows are grouped below. Each note names a likely way to reach the
 - `adapted_c:game/uires.c::mmusictog` — Candidate route: startup/race/UI candidate; inspect the named caller before choosing a scenario; the required caller or operand case is not present in the selected runs.
 - `adapted_c:game/uires.c::msystempause` — Candidate route: startup/race/UI candidate; inspect the named caller before choosing a scenario; the required caller or operand case is not present in the selected runs.
 
-### graphics (25)
+### graphics (26)
 
 - `adapted_c:game/render.c::logo` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
 - `adapted_c:game/uires.c::msetrender` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
@@ -464,6 +472,7 @@ Never-executed rows are grouped below. Each note names a likely way to reach the
 - `native_helper:port/sprite.c::raster_shift_right_signed` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
 - `native_helper:port/sprite.c::sphere_build_ring` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
 - `native_helper:port/sprite.c::sprite_copy_2_to_1_2` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
+- `native_helper:port/sprite.c::sprite_set_1_from_argptr` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
 - `native_helper:port/sprite_aux.c::shape2d_combine_runs` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
 - `native_helper:port/sprite_aux.c::signed_word` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
 - `native_helper:port/sprite_aux.c::source_view` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.

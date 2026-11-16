@@ -13,6 +13,44 @@ from collections import defaultdict
 from pathlib import Path
 
 
+def public_extent(row, owners, root=None):
+    """Resolve a public entry from accepted member placement, never a null join.
+
+    Runtime inventory rows have no target_extent. Their pinned OMF public
+    offsets and the accepted owner's placement still identify the entry. The
+    next public is an interval bound, not a control-flow/function boundary.
+    """
+    if row.get("target_extent"):
+        return dict(row["target_extent"], basis="asm-migration target extent")
+    owner = owners.get(row.get("owner_id"), {})
+    public = row.get("module_entry_offset") or {}
+    declarations = owner.get("binding", {}).get("declarations", {})
+    if not public and owner.get("recipe"):
+        recipe = json.loads((_root(root) / owner['recipe']).read_text(encoding='utf-8'))
+        declarations = recipe.get('object_declarations', {})
+        matches = [p for p in declarations.get('publics', [])
+                   if p.get('name') == row.get('public_symbol') and
+                   p.get('segment') == recipe.get('object_segment')]
+        if len(matches) == 1:
+            public = matches[0]
+    offset = public.get("offset")
+    start, end = owner.get("start"), owner.get("end")
+    if not all(isinstance(x, int) for x in (start, end, offset)):
+        return None
+    exports = declarations.get("publics", [])
+    if not any(p.get("name") == row.get("public_symbol") and
+               p.get("offset") == offset and p.get("segment") == public.get("segment")
+               for p in exports):
+        return None
+    following = [p["offset"] for p in exports if p.get("segment") == public.get("segment")
+                 and isinstance(p.get("offset"), int) and p["offset"] > offset]
+    bound = min([end] + [start + x for x in following])
+    if not start <= start + offset < bound <= end:
+        return None
+    return dict(start=start + offset, end=bound, size=bound - start - offset,
+                basis="accepted owner placement + OMF public; next-public interval, CFG unproved")
+
+
 def _root(root=None):
     return Path(root).resolve() if root else Path(__file__).resolve().parents[2]
 

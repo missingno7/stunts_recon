@@ -15,6 +15,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(Path(__file__).parent))
 from semantic_audit import functions
+from semantic_mapping import public_extent
 
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -22,17 +23,29 @@ def build(audit,comparisons=()):
     asm=json.loads((ROOT/'docs/porting/asm-migration.json').read_text())
     platform=json.loads((ROOT/'docs/porting/platform-boundary.json').read_text())
     contracts=json.loads((ROOT/'port/semantic-contracts.json').read_text())
-    mappings={r['address']:r for r in audit['historical_mapping']}
+    mappings={r['address']:r for r in audit['historical_mapping'] if r['address'] is not None}
+    owners={r['id']:r for r in json.loads((ROOT/'layout/manifest.json').read_text())['owners']}
+    native_by_name={}
+    for function in audit['functions']:
+        for p in function['portable_counterparts']:
+            if p['source'].startswith('port/'):
+                native_by_name.setdefault(p['name'],{})[p['source'],p['name']]=p
     rows=[]
     def add(kind,identifier,**fields):
         row=dict(id=f'{kind}:{identifier}',kind=kind,**fields)
         row.update(exercised=False,status='not exercised',evidence=[],capture_contract=None)
         rows.append(row);return row
     for i,r in enumerate(asm['routines']):
-        address=(r.get('target_extent') or {}).get('start')
+        extent=public_extent(r,owners)
+        address=(extent or {}).get('start')
         mapped=mappings.get(address,{})
+        if extent and not mapped.get('portable_names'):
+            candidates=native_by_name.get(r['routine'],{})
+            if len(candidates)==1:
+                mapped=dict(portable_names=list(candidates.values()),
+                    mapping_status='accepted_public_exact_name_candidate')
         add('asm',r['owner_id']+'::'+r['public_symbol'],name=r['routine'],
-            original_address=address,original_extent=r.get('target_extent'),
+            original_address=address,original_extent=extent,
             source_ref=f'docs/porting/asm-migration.json#/routines/{i}',
             category=r['category'],entry_abi=r.get('entry_abi'),
             portable=mapped.get('portable_names',[]),mapping_status=mapped.get('mapping_status','unmapped'),
@@ -163,7 +176,9 @@ def build(audit,comparisons=()):
         if not row['exercised']:
             row['reachability']=unexercised_route(row)
     inputs=['docs/porting/asm-migration.json','docs/porting/platform-boundary.json','port/semantic-contracts.json',
-            'tools/porting/semantic_audit.py','tools/porting/platform-services.json']
+            'tools/porting/semantic_audit.py','tools/porting/platform-services.json',
+            'tools/porting/port_layer.py','tools/porting/semantic_mapping.py',
+            'tools/porting/semantic_detectors.py']
     report=dict(schema='stunts-port-layer-v1',scope='all source replacements/adaptations and native helpers, not unchanged reconstructed C',
         claim_limit='Inventory plus named finite original tests; observed call coverage is merged separately. Never a whole-domain proof.',
         inputs={p:sha(ROOT/p) for p in inputs},rows=rows,

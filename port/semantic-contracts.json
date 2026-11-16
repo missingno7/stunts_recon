@@ -55,15 +55,15 @@
       ]
     },
     {
-      "authority": "none",
-      "claim_limit": "C implementation exists, but the test itself says it is not oracle evidence.",
+      "authority": "locked_image_live_execution",
+      "claim_limit": "Finite in-place, disjoint and partial-overlap cases only; not all matrix values or byte-misaligned pointers.",
       "evidence_scope": "direct-routine-cases",
       "historical_route": [
-        "symbol-map extent is not verified; semantic lead is from Restunts math.c"
+        "fontmat accepted OMF public _mat_invert at member +576; locked load0x22a72"
       ],
-      "id": "matrix-invert-gap",
+      "id": "matrix-invert-overlap",
       "observables": [
-        "no verified observable"
+        "complete 128-byte surrounding workspace after RETF"
       ],
       "portable_route": [
         "port/matrix.c:mat_invert"
@@ -71,14 +71,14 @@
       "routines": [
         "mat_invert"
       ],
-      "scope": "No locked routine differential found.",
+      "scope": "19 word-aligned layouts: output at input-9 through input+9 words, one deterministic 64-word surrounding workspace.",
       "source_scope": [
         "port/matrix.c"
       ],
-      "status": "unverified/high-risk",
+      "status": "differential-oracle",
       "subject_type": "routine",
       "tests": [
-        "tests/test_matrix_machine_semantics.py"
+        "tests/test_sdl3_static_audit.py::test_matrix_transpose_preserves_original_partial_overlap_order"
       ]
     },
     {
