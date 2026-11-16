@@ -133,8 +133,10 @@ class OriginalStepTests(unittest.TestCase):
                         sequences[f'{resource}:voice={r["voice"]}:entry={r["entry"]:02x}'].append(r)
                 # The 24h smoothing ramp is an explicit open difference, not
                 # accepted through content search or timing relabeling.
-                observed_sound={k:dict(count=len(v),sha256=digest(v)) for k,v in sequences.items() if not k.endswith(':entry=24')}
-                expected_sound={k:v for k,v in fixture['sound_sequences'].items() if not k.endswith(':entry=24')}
+                pitch_entries=set(fixture['engine_pitch_entries'])
+                self.assertTrue(pitch_entries)
+                observed_sound={k:dict(count=len(v),sha256=digest(v)) for k,v in sequences.items() if k not in pitch_entries}
+                expected_sound={k:v for k,v in fixture['sound_sequences'].items() if k not in pitch_entries}
                 self.assertTrue(expected_sound)
                 self.assertEqual(observed_sound,expected_sound,'ordered per voice/resource/entry; no cross-entry interleaving claim')
                 for sparse in fixture['sparse_frames']:

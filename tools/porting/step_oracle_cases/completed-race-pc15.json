@@ -9416,5 +9416,8 @@
       "count": 2,
       "sha256": "6b52435dbc3cad12e6cceefe3d2ac76bac89e2b771bd5a08d17a649377608aa0"
     }
-  }
+  },
+  "engine_pitch_entries": [
+    "PCENG1.VCE:voice=2:entry=24"
+  ]
 }

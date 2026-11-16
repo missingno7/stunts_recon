@@ -105,25 +105,35 @@ def build(audit,comparisons=()):
             source_ref=f'port/semantic-contracts.json#/contracts/{i}',
             original_authority=c['authority'],routines=c.get('routines',[]),
             portable_routes=c['portable_route'],claim_limit=c['claim_limit'])
+    add('semantic_data','port/msc_ctype.h::port_msc_ctype',name='port_msc_ctype',
+        portable=[dict(source='port/msc_ctype.h',name='port_msc_ctype',line=3)],
+        original_address=192414,bytes=257,contract='msc-ctype-byte-data')
     for row in rows:
         names={row['name']}|{p['name'] for p in row.get('portable',[])}
+        if row['kind']=='semantic_contract':names.update(row['routines'])
         evidence=[c for c in contracts['contracts'] if names & set(c.get('routines',[]))
                   and c['authority']=='locked_image_live_execution' and c['status']=='differential-oracle']
+        if row['kind']=='semantic_contract' or row['kind']=='semantic_data':
+            evidence += [c for c in contracts['contracts'] if c['id']==row.get('contract',row['name'])
+                and c['authority'] in ('locked_image_data','original_run_frame_or_trace')
+                and c['status'] in ('original-data-oracle','original-scenario-cases')]
         row['prior_original_tests']=[dict(contract=c['id'],scope=c['evidence_scope'],tests=c['tests'],
             claim_limit=c['claim_limit']) for c in evidence]
         if evidence:
             row.update(status='exercised and agrees',exercised=True,
-                evidence_basis='existing finite original-machine differential tests; not the whole input domain')
+                evidence_basis='named finite original data/execution/scenario cases; scope retained below, not the whole input domain')
     sys.path.insert(0,str(ROOT/'port'))
     from boundary_adapter import CONTRACTS,GRAPHICS_CONTRACTS
     captured={c['name']:c for c in CONTRACTS+GRAPHICS_CONTRACTS};observed={}
     for comparison in comparisons:
         report=json.loads(comparison.read_text())
-        for name,counts in (report['routines']|report.get('driver_entries',{})).items():
-            item=observed.setdefault(name,dict(agrees=0,differs=0,unmatched_inputs=0))
-            for key in ('agrees','differs','unmatched_inputs'):item[key]+=counts.get(key,0)
-            if 'ordered_step_stream_agrees' in counts:
-                item['ordered_step_stream_agrees']=item.get('ordered_step_stream_agrees',True) and counts['ordered_step_stream_agrees']
+        reports=list(report['scenarios'].values()) if 'scenarios' in report else [report]
+        for report in reports:
+            for name,counts in (report.get('routines',report.get('bounded_routines',{}))|report.get('driver_entries',{})).items():
+                item=observed.setdefault(name,dict(agrees=0,differs=0,unmatched_inputs=0))
+                for key in ('agrees','differs','unmatched_inputs'):item[key]+=counts.get(key,0)
+                if 'ordered_step_stream_agrees' in counts:
+                    item['ordered_step_stream_agrees']=item.get('ordered_step_stream_agrees',True) and counts['ordered_step_stream_agrees']
     for row in rows:
         names={row['name']}|{p['name'] for p in row.get('portable',[])}
         for name in sorted(names&captured.keys()):
@@ -150,6 +160,8 @@ def build(audit,comparisons=()):
                 counts=observed[service];row['capture_contract']=dict(service=service,scope='defined request/result register projection only')
                 row['evidence'].append(dict(service=service,**counts,claim_limit='service calls only; not the complete caller routine'))
                 row.update(exercised=True,status='exercised and differs' if counts['differs'] else 'exercised and agrees')
+        if not row['exercised']:
+            row['reachability']=unexercised_route(row)
     inputs=['docs/porting/asm-migration.json','docs/porting/platform-boundary.json','port/semantic-contracts.json',
             'tools/porting/semantic_audit.py','tools/porting/platform-services.json']
     report=dict(schema='stunts-port-layer-v1',scope='all source replacements/adaptations and native helpers, not unchanged reconstructed C',
@@ -166,6 +178,37 @@ def build(audit,comparisons=()):
         report['prior_clock_audit']=dict(path=old.relative_to(ROOT).as_posix(),sha256=sha(old),
             scope='step-0 time/thread sites; historical line numbers, not current call coverage')
     return report
+
+
+def unexercised_route(row):
+    """Per-row triage, explicitly candidates rather than a guessed call graph.
+
+    'Not exercised' means no comparable original evidence, not that the native
+    function never executed. Do not mark CRT/dead mixtures unreachable by name.
+    """
+    kind=row['kind'];route=' '.join([row['name'],row.get('original_module') or '',
+        row.get('subsystem') or '']+[p['source'] for p in row.get('portable',[])]).lower()
+    if kind=='build_adapter':return dict(runtime_entry=False,scenario='build plus generated-path probe',
+        reason='Python source transformation has no guest call; generated code may execute. Needs a grounded operand/ABI case for this rewrite.')
+    if kind=='semantic_macro':return dict(runtime_entry=False,scenario='compile/operand probe of macro expansion',
+        reason='Macro/width declaration has no standalone runtime entry; caller scenarios alone cannot isolate its semantics.')
+    if kind=='semantic_contract':return dict(runtime_entry=None,scenario='the contract names its own required operands',
+        reason='Registered unverified/static/invariant claim lacks comparable original execution/data evidence at its stated scope.')
+    if kind=='asm' and not (row.get('original_module') or '').startswith(('game/','lib/')):
+        return dict(runtime_entry=None,scenario='isolated original-runtime machine case plus native semantic adapter',
+            reason='Pinned MSC member is not linked as that routine in the native build; historical CRT/dead/no-op category is mixed, not proof of unreachability.')
+    candidates=[('modern','enhanced renderer scene'),('audio','race/music with AD15 and PC15'),('speaker','PC speaker device probe'),
+        ('opl','AD15 device/register probe'),('file','load/save dialogs, missing file and host I/O failure'),
+        ('tedit','track editor load/place/remove/save'),('track','track editor and race'),('replay','replay pause/seek/save'),
+        ('mouse','menu mouse/buttons/bounds'),('input','keyboard/mouse/joystick device cases'),('key','keyboard scan/BIOS cases'),
+        ('timer','manual-clock/wait/callback operand cases'),('tick','manual-clock/wait/callback operand cases'),
+        ('sprite','menus and isolated indexed raster operands'),('raster','isolated clipped raster operands'),
+        ('render','race/selection plus isolated raster operands'),('polygon','race plus clipped geometry operands'),
+        ('font','text entry and isolated glyph spans'),('mem','allocation, overlap and exhausted-memory cases'),
+        ('window','window resize/focus/presentation device cases'),('video','indexed presentation and transition cases')]
+    scenario=next((s for key,s in candidates if key in route),'startup/race/UI candidate; inspect the named caller before choosing a scenario')
+    return dict(runtime_entry=None,scenario=scenario,
+        reason='Runtime reachability not established by this inventory. A candidate scenario may reach the path, but its ABI/span or original/native observation mapping is absent; no comparable coverage is claimed.')
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)

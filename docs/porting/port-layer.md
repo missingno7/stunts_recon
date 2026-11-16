@@ -11,7 +11,7 @@ Unchanged reconstructed C is outside it; its width/layout adaptations are inside
 | Adapted C | Fresh `semantic_audit.py` historical/production-overlay join, including observation/input hooks |
 | Build adaptations | Rewrite sites in `port/build.py`, adapters and delegated declaration/header/width transforms; source line and enclosing-function hash retained |
 | Native helpers/macros | Existing function scanner plus recursive renderer/header helpers and explicit width/qualifier macros |
-| Semantic contracts | All 25 existing contracts, with authority, tests and finite claim limits preserved |
+| Semantic contracts | All 29 scoped contracts, with authority, tests and finite claim limits preserved |
 
 Rows overlap: their sum is not a count of independent DOS APIs. Existing
 original-machine differential cases count as finite evidence. Lexical similarity,
@@ -34,15 +34,29 @@ Step 8 adds eleven optional raster/blit contracts; ten execute in the race's
 first 22 frames. Their bounded observations include scalar arguments, vertex
 lists, clip words, row 9, and hashes of the dashboard corner/source pixels.
 27 real clipped polygon calls additionally run against original machine code.
-The refreshed table has 1393 overlapping rows: 74 with finite agreeing evidence,
-six with differing ordered sound streams, and 1313 without comparable coverage.
-Observed unmatched inputs remain explicit and do not count as agreement.
+The refreshed step-9 table has 1423 overlapping rows: 92 with finite agreeing
+evidence, seven differing raw ordered sound streams, and 1324 without comparable
+coverage. New typed `savefilez` and `instringz` cases cover error returns, line
+buffer spans and marker XY; a separate data row covers all 257 MSC ctype bytes.
+Scope-specific semantic-contract rows now inherit their named evidence. Full
+results-music/replay transition streams are still open, even where a bounded
+race sound projection agrees. Unmatched operands never count as passes.
+
+Every remaining row carries `reachability.runtime_entry`, `scenario` and `reason`.
+False means no standalone guest entry (build rewrite/macro). Null means runtime
+reachability is not established: the suggested scenario/probe is a triage route,
+not a fabricated call graph. Missing comparable ABI/span capture does not mean a
+function never ran. Pinned MSC routines need a native semantic mapping/direct
+machine test; merely replaying a native scenario cannot call the absent MSC entry.
+Extract the complete per-row remaining list (1324 entries), without truncation:
 
 ```powershell
-python tools/porting/semantic_audit.py --inventory-only --work build/workers/portclock/step7/audit-frozen
-python tools/porting/port_layer.py --audit build/workers/portclock/step7/audit-frozen/report.json --comparison build/workers/portclock/step7/race-ad15-final/comparison.json --comparison build/workers/portclock/step7/race-pc15-final/comparison.json
+python -c "import json; r=json.load(open('tools/porting/port-layer.json')); [print(x['id'], json.dumps(x['reachability'])) for x in r['rows'] if not x['exercised']]" > build/workers/portclock/step9/unexercised.txt
+python tools/porting/semantic_audit.py --work build/workers/portclock/step9/audit
+python tools/porting/port_layer.py --audit build/workers/portclock/step9/audit/report.json --comparison tools/porting/step_oracle_cases/race-boundary-results.json --comparison tools/porting/step_oracle_cases/scenario-results.json
 ```
 
-[Race findings](step-divergences.md) separate measurements, fixes, attribution
-leads and unexercised work. Remaining ABI/span review and opponent, crash, replay,
-editor, dialog and high-score captures are further work, not a whole-port PASS.
+The compact result files contain paired comparison counts, not candidate-derived
+expected values. Original executable/observer/log seals remain in the corresponding
+original fixtures. [Findings](step-divergences.md) distinguish fixed defects,
+finite agreeing cases, CPU-dependent observations and still-unproven sound state.

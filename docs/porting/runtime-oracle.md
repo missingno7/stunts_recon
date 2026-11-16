@@ -187,6 +187,90 @@ callback entry and the nine scalar arguments to `audio_op_unk2`. Sound compariso
 aligns target records by consumption order within this single-engine race, then
 compares driver sequences by entry/resource/voice without dropping repetitions.
 Render-frame movement can be diagnosed separately from changed content. The
-initial pitch ramp still differs (34 versus one callback before engine start);
-it is not granted PASS by this alignment. See [findings](step-divergences.md) for
-the exact agreeing subsets, remaining tails and the deferred scenarios.
+initial pitch ramp retains its raw 34-versus-one callback prehistory. Step 9's
+agreed contract compares exact engine pitch targets instead of smoothed entry
+24h values, only for voices bound with note FFFFh to ADENG/PCENG resources.
+Every other per-resource/voice/entry request remains ordered and exact; different
+entries are not asserted to interleave identically. Both 200-frame race streams
+agree under that rule. Startup and later crash/replay tails are separate open
+comparisons, not exempted by it. See [findings](step-divergences.md).
+
+
+### Scoped menu, editor and replay cases (step 9)
+
+`scenario_oracle.py` adds `stunts-step-input-v2`. It retains phase 6's recorded
+simulation input-slot meaning; menus use a stack of `(phase, visit, key ordinal)`.
+Nested dialogs restore their parent's ordinal. An event's `visit` defaults to 1;
+`at:K` is delivered at the named UI's `mykey` entry after K consumed keys. Direct
+line/race input uses the underlying input poll. Delivery is suppressed during
+`clear_keyboardbuffer` and video transitions, so a future key cannot be injected
+into a flush. Real PIC/INT9 consumes original scan bytes as before. Event-array
+order resolves simultaneous events. Neither implementation uses host time here.
+
+| Phase | Original boundary |
+|---|---|
+| 1..6 | v1 meanings retained (intro/menu/protection/line/race/input slot) |
+| 7,8,9,10 | selectcar, selectopponent, teditmain, trackedit |
+| 11,12,13 | floadreq, fsavereq, messagebox |
+| 14,15,16 | evaluation, drawhighs, addhighs |
+| 17,18 | sprite_blit_to_video, mykeywait |
+| 19..22 | doreplay modes 0..3 |
+| 23,24 | clear_keyboardbuffer, savereplay |
+
+`oracle.checkpoint` payloads contain `label`, integer `stop`, and optional
+`optional`. A checkpoint publishes exact VGA indices/DAC6 on both sides before
+its next input event. `at:4294967295` means the scoped function's completed-call
+boundary; save tests stop after the file writer returns. A terminal checkpoint
+is required; reaching the safety tick cap is failure, not a shortened success.
+The original observer uses accepted FAR entries and matching SS:SP returns;
+`boundary-bindings.json` seals those addresses and argument widths.
+
+Replay state/frame comparison uses a new epoch on a repeated/decreasing committed
+simulation frame, never by matching contents. A direct seek repaint without a
+new simulation commit is a named UI checkpoint, not an invented state step.
+The first completed dashboard frame after each committed active state is compared;
+extra idle repaints are diagnostic. `compare_scenarios.py` reports exact ordered
+scan/key input, all state hashes, all completed frame hashes, checkpoint pixels,
+whole saved-file hashes and bounded call returns/regions for identical inputs.
+UI idle calls have no fixed CPU-independent count, so those finite operand
+matches do not grant whole ordered-call-stream equality. Unmatched inputs remain
+explicit. `savefilez` captures its filename, length and defined status, and
+`instringz` captures the original XY, initial string, bounded output and result.
+Saved file content is checked independently, not represented by a host pointer.
+
+```powershell
+python tools/porting/dosbox_observer/build.py --out build/workers/portclock/observer9
+python tools/porting/scenario_oracle.py editor --out build/workers/portclock/new-editor --dosbox build/workers/portclock/observer9/dosbox-x.exe --audio ad15 --ticks 1000
+python -m tools.porting.compare_scenarios build/workers/portclock/new-editor --out build/workers/portclock/new-editor/comparison.json
+python tools/porting/pack_original_scenarios.py build/workers/portclock/new-editor --out build/workers/portclock/new-cases --name editor --audio ad15
+python -m unittest tests.test_sdl3_scenarios tests.test_sdl3_framebuffer tests.test_sdl3_selection_frames -v
+```
+
+Use fresh outputs; repeat `opponent`, `selection`, `editor`, `file-error`,
+`manual-crash`, `replay`, `highscore` with both `--audio ad15` and `pc15`.
+Use `--ticks 4000` for crash/highscore, 1700 for replay, 1000 for other cases.
+`startup` needs only AD15 for the three original startup screen fixtures. The
+stored cases embed the exact original script; export its `script` object to JSON
+and pass `--script=PATH` to reproduce that input even if the generator changes.
+Packers verify all original seals and never read candidate outputs. Compact cases
+store state/frame hashes and at most eight distinct original operand cases per
+routine; raw comparison has more calls. Receipts retain the original binary,
+observer, bindings and capture identities. Hashes of raw HIG files remain stored
+even though unwritten stack tails prevent byte equality; defined-field tests are
+explicitly narrower. New references total about 1 MiB, excluding old race cases.
+
+The high-score scenario is an explicit post-race UI fixture: root
+`evaluation_finish_frames:200` supplies finish/penalty words at `evaluation`
+entry in both original and native runs. The original still executes its score
+insertion, text entry and file routines. This tests qualifying-score presentation
+and saving; it is not evidence of an earned qualifying lap. Without this opt-in
+v2 field no result words are changed. `stunts_observer.inc`/`stunts_boundary.inc`
+record every prescribed startup/score control. The six-byte Kevin and CRT/counter
+seed vector is a shared input, not independently measured entropy.
+
+All ten legacy screen fixtures are now sealed DOSBox-X checkpoints. The
+[fixture README](../../tests/fixtures/sdl3/README.md) gives original-only repacking.
+Tests compare named checkpoint images directly, rather than searching the run for
+matching pixels. PC15 Lancia rotation and raw score string tails remain declared
+open cases in `step_oracle_cases/scenario-results.json`; they were not regenerated
+from native output or silently converted into full-scene passes.

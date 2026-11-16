@@ -36,6 +36,9 @@ def pack(folder):
             resource=(r['resource'] or {}).get('name','none')
             sequences[f'{resource}:voice={r["voice"]}:entry={r["entry"]:02x}'].append(r)
     result['sound_sequences']={k:dict(count=len(v),sha256=digest(v)) for k,v in sequences.items()}
+    result['engine_pitch_entries']=sorted(k[:-2]+'24' for k,values in sequences.items()
+        if k.endswith(':entry=09') and any(r['arguments'][1]==65535 for r in values)
+        and k.startswith(('ADENG','PCENG')))
     with (folder/'original.frames').open('rb') as payloads:
         for frame in (1,5,18,50,120,200):
             choices=[r for r in rows if r['kind']=='frame' and r['game_frame']==frame

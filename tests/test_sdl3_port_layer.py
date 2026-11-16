@@ -22,6 +22,10 @@ class PortLayerInventoryTests(unittest.TestCase):
             self.assertIn(row['status'],('not exercised','exercised and agrees','exercised and differs'))
             if row['status']!='not exercised':
                 self.assertTrue(row['evidence'] or row['prior_original_tests'],row['id'])
+            else:
+                self.assertIn('runtime_entry',row['reachability'],row['id'])
+                self.assertTrue(row['reachability']['scenario'],row['id'])
+                self.assertTrue(row['reachability']['reason'],row['id'])
         # The race is a bounded first slice, not fabricated whole-port coverage.
         self.assertTrue(any(r['status']=='not exercised' and r['kind']=='asm' for r in rows))
         self.assertTrue(any(r['status']=='exercised and differs' for r in rows))

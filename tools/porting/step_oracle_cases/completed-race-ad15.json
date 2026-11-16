@@ -9412,5 +9412,8 @@
       "count": 1,
       "sha256": "3b5d58ce8f300d8846fe56abcef56107d8bb8bb19e2043548e9023a4c175e627"
     }
-  }
+  },
+  "engine_pitch_entries": [
+    "ADENG1.VCE:voice=1:entry=24"
+  ]
 }

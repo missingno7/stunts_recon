@@ -1,0 +1,3417 @@
+{
+  "schema": "stunts-scenario-findings-v1",
+  "claim": "Finite observed checkpoints/operands only. Whole sound, idle UI ordering and raw HIG tails retain differences.",
+  "scenarios": {
+    "startup-ad15": {
+      "reference": "scenarios/startup-ad15.json",
+      "agrees": true,
+      "checkpoints": {
+        "splash": {
+          "agrees": true
+        },
+        "title": {
+          "agrees": true
+        },
+        "menu": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 2,
+          "port_count": 2
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 1,
+          "port_count": 1
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "files": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        }
+      },
+      "bounded_routines": {
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 521758,
+          "agrees": 420,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intcos": {
+          "original_calls": 6,
+          "agrees": 6,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intsin": {
+          "original_calls": 6,
+          "agrees": 6,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "joystate": {
+          "original_calls": 521754,
+          "agrees": 416,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "myrandom": {
+          "original_calls": 12255,
+          "agrees": 12255,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkey": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 521754,
+          "agrees": 416,
+          "differs": 0,
+          "unmatched_inputs": 0
+        }
+      }
+    },
+    "opponent-ad15": {
+      "reference": "scenarios/opponent-ad15.json",
+      "agrees": true,
+      "checkpoints": {
+        "opponent-clock": {
+          "agrees": true
+        },
+        "opponent-selected": {
+          "agrees": true
+        },
+        "opponent-car": {
+          "agrees": true
+        },
+        "opponent-done": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 20,
+          "port_count": 20
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 10,
+          "port_count": 10
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "files": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        }
+      },
+      "bounded_routines": {
+        "fixedmult": {
+          "original_calls": 124,
+          "agrees": 124,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 38,
+          "agrees": 38,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intatan": {
+          "original_calls": 3,
+          "agrees": 3,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intcos": {
+          "original_calls": 16,
+          "agrees": 16,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "inthypot": {
+          "original_calls": 9,
+          "agrees": 9,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intsin": {
+          "original_calls": 16,
+          "agrees": 16,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "joystate": {
+          "original_calls": 36,
+          "agrees": 36,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mat_vec": {
+          "original_calls": 160,
+          "agrees": 160,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "myrandom": {
+          "original_calls": 12255,
+          "agrees": 12255,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkey": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 34,
+          "agrees": 34,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "transmult": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        }
+      }
+    },
+    "selection-ad15": {
+      "reference": "scenarios/selection-ad15.json",
+      "agrees": true,
+      "checkpoints": {
+        "car-countach": {
+          "agrees": true
+        },
+        "car-lancia": {
+          "agrees": true
+        },
+        "track-default": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 22,
+          "port_count": 22
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 11,
+          "port_count": 11
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "files": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        }
+      },
+      "bounded_routines": {
+        "fixedmult": {
+          "original_calls": 508,
+          "agrees": 504,
+          "differs": 0,
+          "unmatched_inputs": 4
+        },
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 38,
+          "agrees": 38,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intatan": {
+          "original_calls": 20,
+          "agrees": 19,
+          "differs": 0,
+          "unmatched_inputs": 1
+        },
+        "intcos": {
+          "original_calls": 59,
+          "agrees": 56,
+          "differs": 0,
+          "unmatched_inputs": 1
+        },
+        "inthypot": {
+          "original_calls": 265,
+          "agrees": 259,
+          "differs": 0,
+          "unmatched_inputs": 6
+        },
+        "intsin": {
+          "original_calls": 59,
+          "agrees": 56,
+          "differs": 0,
+          "unmatched_inputs": 1
+        },
+        "joystate": {
+          "original_calls": 35,
+          "agrees": 35,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mat_vec": {
+          "original_calls": 3425,
+          "agrees": 2926,
+          "differs": 0,
+          "unmatched_inputs": 499
+        },
+        "myrandom": {
+          "original_calls": 12255,
+          "agrees": 12255,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkey": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 34,
+          "agrees": 34,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "transmult": {
+          "original_calls": 216,
+          "agrees": 215,
+          "differs": 0,
+          "unmatched_inputs": 1
+        }
+      }
+    },
+    "editor-ad15": {
+      "reference": "scenarios/editor-ad15.json",
+      "agrees": true,
+      "checkpoints": {
+        "track-default": {
+          "agrees": true
+        },
+        "load-track": {
+          "agrees": true
+        },
+        "track-loaded": {
+          "agrees": true
+        },
+        "editor-loaded": {
+          "agrees": true
+        },
+        "piece-placed": {
+          "agrees": true
+        },
+        "piece-removed": {
+          "agrees": true
+        },
+        "save-dialog": {
+          "agrees": true
+        },
+        "editor-saved": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 86,
+          "port_count": 86
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 43,
+          "port_count": 43
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "files": {
+          "agrees": true,
+          "original_count": 2,
+          "port_count": 2
+        }
+      },
+      "bounded_routines": {
+        "fixedmult": {
+          "original_calls": 24,
+          "agrees": 24,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 58,
+          "agrees": 58,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intatan": {
+          "original_calls": 4,
+          "agrees": 4,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intcos": {
+          "original_calls": 28,
+          "agrees": 28,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "inthypot": {
+          "original_calls": 422,
+          "agrees": 422,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intsin": {
+          "original_calls": 28,
+          "agrees": 28,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "joystate": {
+          "original_calls": 59,
+          "agrees": 59,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mat_vec": {
+          "original_calls": 5020,
+          "agrees": 5020,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "myrandom": {
+          "original_calls": 12255,
+          "agrees": 12255,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkey": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 54,
+          "agrees": 54,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "port_call_read_line": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "savefilez": {
+          "original_calls": 2,
+          "agrees": 2,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "transmult": {
+          "original_calls": 420,
+          "agrees": 420,
+          "differs": 0,
+          "unmatched_inputs": 0
+        }
+      }
+    },
+    "file-error-ad15": {
+      "reference": "scenarios/file-error-ad15.json",
+      "agrees": true,
+      "checkpoints": {
+        "track-default": {
+          "agrees": true
+        },
+        "load-track": {
+          "agrees": true
+        },
+        "track-loaded": {
+          "agrees": true
+        },
+        "editor-loaded": {
+          "agrees": true
+        },
+        "piece-placed": {
+          "agrees": true
+        },
+        "piece-removed": {
+          "agrees": true
+        },
+        "save-dialog": {
+          "agrees": true
+        },
+        "save-error": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 88,
+          "port_count": 88
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 44,
+          "port_count": 44
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "files": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        }
+      },
+      "bounded_routines": {
+        "fixedmult": {
+          "original_calls": 24,
+          "agrees": 24,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 57,
+          "agrees": 57,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intatan": {
+          "original_calls": 4,
+          "agrees": 4,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intcos": {
+          "original_calls": 28,
+          "agrees": 28,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "inthypot": {
+          "original_calls": 422,
+          "agrees": 422,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intsin": {
+          "original_calls": 28,
+          "agrees": 28,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "joystate": {
+          "original_calls": 57,
+          "agrees": 57,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mat_vec": {
+          "original_calls": 5020,
+          "agrees": 5020,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "myrandom": {
+          "original_calls": 12255,
+          "agrees": 12255,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkey": {
+          "original_calls": 18,
+          "agrees": 18,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 53,
+          "agrees": 53,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "savefilez": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "transmult": {
+          "original_calls": 420,
+          "agrees": 420,
+          "differs": 0,
+          "unmatched_inputs": 0
+        }
+      }
+    },
+    "manual-crash-ad15": {
+      "reference": "scenarios/manual-crash-ad15.json",
+      "agrees": true,
+      "checkpoints": {
+        "car-countach": {
+          "agrees": true
+        },
+        "race-driving": {
+          "agrees": true
+        },
+        "race-result": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 53,
+          "port_count": 53
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 27,
+          "port_count": 27
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 434,
+          "port_count": 434
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 434,
+          "port_count": 434
+        },
+        "files": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        }
+      },
+      "bounded_routines": {
+        "fixedmult": {
+          "original_calls": 1557,
+          "agrees": 1551,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 45,
+          "agrees": 45,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intatan": {
+          "original_calls": 4589,
+          "agrees": 4584,
+          "differs": 0,
+          "unmatched_inputs": 3
+        },
+        "intcos": {
+          "original_calls": 4042,
+          "agrees": 4035,
+          "differs": 0,
+          "unmatched_inputs": 2
+        },
+        "inthypot": {
+          "original_calls": 3428,
+          "agrees": 3421,
+          "differs": 0,
+          "unmatched_inputs": 6
+        },
+        "intsin": {
+          "original_calls": 4040,
+          "agrees": 4033,
+          "differs": 0,
+          "unmatched_inputs": 2
+        },
+        "joystate": {
+          "original_calls": 40,
+          "agrees": 40,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mat_vec": {
+          "original_calls": 134432,
+          "agrees": 133565,
+          "differs": 0,
+          "unmatched_inputs": 555
+        },
+        "mygetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "myrandom": {
+          "original_calls": 20580,
+          "agrees": 20580,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 1
+        },
+        "normkey": {
+          "original_calls": 12,
+          "agrees": 12,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 473,
+          "agrees": 472,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "transmult": {
+          "original_calls": 8633,
+          "agrees": 8616,
+          "differs": 0,
+          "unmatched_inputs": 3
+        },
+        "zclipline": {
+          "original_calls": 3071,
+          "agrees": 3069,
+          "differs": 0,
+          "unmatched_inputs": 0
+        }
+      },
+      "sound": {
+        "agrees": false,
+        "rule": "exact engine targets plus ordered per-driver/resource/voice/entry content; raw cross-entry ISR interleaving remains diagnostic",
+        "targets": {
+          "original_count": 433,
+          "port_count": 433,
+          "agrees": true,
+          "first_difference": null
+        },
+        "differences": {
+          "ADSKIDMS.VCE:voice=1:entry=27": {
+            "original_count": 4,
+            "port_count": 16,
+            "first_difference": {
+              "index": 4,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 39,
+                "arguments": [
+                  1
+                ],
+                "result": null,
+                "voice": 1,
+                "chunk": 3,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 1906
+                },
+                "payload": ""
+              }
+            }
+          },
+          "ADSKIDMS.VCE:voice=2:entry=27": {
+            "original_count": 4,
+            "port_count": 16,
+            "first_difference": {
+              "index": 4,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 39,
+                "arguments": [
+                  2
+                ],
+                "result": null,
+                "voice": 2,
+                "chunk": 2,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 2506
+                },
+                "payload": ""
+              }
+            }
+          },
+          "ADSKIDMS.VCE:voice=8:entry=0c": {
+            "original_count": 0,
+            "port_count": 1,
+            "first_difference": {
+              "index": 0,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 12,
+                "arguments": [
+                  8
+                ],
+                "result": null,
+                "voice": 8,
+                "chunk": 1,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 2306
+                },
+                "payload": ""
+              }
+            }
+          },
+          "ADSKIDMS.VCE:voice=8:entry=0f": {
+            "original_count": 0,
+            "port_count": 1,
+            "first_difference": {
+              "index": 0,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 15,
+                "arguments": [
+                  8
+                ],
+                "result": null,
+                "voice": 8,
+                "chunk": 1,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 2306
+                },
+                "payload": ""
+              }
+            }
+          },
+          "ADSKIDMS.VCE:voice=8:entry=27": {
+            "original_count": 4,
+            "port_count": 11,
+            "first_difference": {
+              "index": 4,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 39,
+                "arguments": [
+                  8
+                ],
+                "result": null,
+                "voice": 8,
+                "chunk": 1,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 2306
+                },
+                "payload": ""
+              }
+            }
+          },
+          "ADSKIDMS.VCE:voice=9:entry=0c": {
+            "original_count": 0,
+            "port_count": 5,
+            "first_difference": {
+              "index": 0,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 12,
+                "arguments": [
+                  9
+                ],
+                "result": null,
+                "voice": 9,
+                "chunk": 0,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 806
+                },
+                "payload": ""
+              }
+            }
+          },
+          "ADSKIDMS.VCE:voice=9:entry=27": {
+            "original_count": 4,
+            "port_count": 16,
+            "first_difference": {
+              "index": 4,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 39,
+                "arguments": [
+                  9
+                ],
+                "result": null,
+                "voice": 9,
+                "chunk": 0,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 806
+                },
+                "payload": ""
+              }
+            }
+          },
+          "none:voice=-1:entry=30": {
+            "original_count": 2183,
+            "port_count": 2194,
+            "first_difference": {
+              "index": 2183,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 48,
+                "arguments": [],
+                "result": null,
+                "voice": -1,
+                "chunk": -1,
+                "resource": null,
+                "payload": ""
+              }
+            }
+          }
+        }
+      },
+      "race_sound_through_frame_433_agrees": true,
+      "driver_entries": {
+        "port_audio_driver_09": {
+          "agrees": 10,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_0c": {
+          "agrees": 141,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_0f": {
+          "agrees": 4,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_12": {
+          "agrees": 39,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_21": {
+          "agrees": 9,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_24": {
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_27": {
+          "agrees": 2133,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_06": {
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_18": {
+          "agrees": 2,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_1e": {
+          "agrees": 13,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_30": {
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        }
+      }
+    },
+    "replay-ad15": {
+      "reference": "scenarios/replay-ad15.json",
+      "agrees": true,
+      "checkpoints": {
+        "replay-paused": {
+          "agrees": true
+        },
+        "replay-seek": {
+          "agrees": true
+        },
+        "pause-menu": {
+          "agrees": true
+        },
+        "replay-save-dialog": {
+          "agrees": true
+        },
+        "replay-saved": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 78,
+          "port_count": 78
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 39,
+          "port_count": 39
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 201,
+          "port_count": 201
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 201,
+          "port_count": 201
+        },
+        "files": {
+          "agrees": true,
+          "original_count": 1,
+          "port_count": 1
+        }
+      },
+      "bounded_routines": {
+        "fixedmult": {
+          "original_calls": 778,
+          "agrees": 772,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 29,
+          "agrees": 29,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intatan": {
+          "original_calls": 1514,
+          "agrees": 1512,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intcos": {
+          "original_calls": 1010,
+          "agrees": 1005,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "inthypot": {
+          "original_calls": 939,
+          "agrees": 938,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intsin": {
+          "original_calls": 1010,
+          "agrees": 1005,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "joystate": {
+          "original_calls": 23,
+          "agrees": 23,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mat_vec": {
+          "original_calls": 57244,
+          "agrees": 56932,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mygetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "myrandom": {
+          "original_calls": 20526,
+          "agrees": 20526,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 1
+        },
+        "normkey": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 225,
+          "agrees": 224,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "port_call_read_line": {
+          "original_calls": 2,
+          "agrees": 2,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "savefilez": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "transmult": {
+          "original_calls": 2772,
+          "agrees": 2758,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "zclipline": {
+          "original_calls": 776,
+          "agrees": 774,
+          "differs": 0,
+          "unmatched_inputs": 0
+        }
+      },
+      "sound": {
+        "agrees": false,
+        "rule": "exact engine targets plus ordered per-driver/resource/voice/entry content; raw cross-entry ISR interleaving remains diagnostic",
+        "targets": {
+          "original_count": 201,
+          "port_count": 200,
+          "agrees": false,
+          "first_difference": {
+            "index": 200,
+            "original": [
+              0,
+              6016,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              5
+            ],
+            "port": null,
+            "original_context": [
+              [
+                0,
+                6003,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                5
+              ],
+              [
+                0,
+                6022,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                5
+              ],
+              [
+                0,
+                6016,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                5
+              ]
+            ],
+            "port_context": [
+              [
+                0,
+                6003,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                5
+              ],
+              [
+                0,
+                6022,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                5
+              ]
+            ]
+          }
+        },
+        "differences": {
+          "ADENG1.VCE:voice=1:entry=24": {
+            "original_count": 744,
+            "port_count": 751,
+            "first_difference": {
+              "index": 1,
+              "original": {
+                "driver": "ad15",
+                "entry": 36,
+                "arguments": [
+                  1,
+                  44
+                ],
+                "result": null,
+                "voice": 1,
+                "chunk": 16,
+                "resource": {
+                  "name": "ADENG1.VCE",
+                  "offset": 270,
+                  "fnv1a64": "7997cac3fe7dc6a0"
+                },
+                "payload": ""
+              },
+              "port": {
+                "driver": "ad15",
+                "entry": 36,
+                "arguments": [
+                  1,
+                  10
+                ],
+                "result": null,
+                "voice": 1,
+                "chunk": 16,
+                "resource": {
+                  "name": "ADENG1.VCE",
+                  "fnv1a64": "7997cac3fe7dc6a0",
+                  "offset": 270
+                },
+                "payload": ""
+              }
+            }
+          },
+          "ADENG1.VCE:voice=1:entry=27": {
+            "original_count": 1002,
+            "port_count": 1001,
+            "first_difference": {
+              "index": 1001,
+              "original": {
+                "driver": "ad15",
+                "entry": 39,
+                "arguments": [
+                  1
+                ],
+                "result": null,
+                "voice": 1,
+                "chunk": 16,
+                "resource": {
+                  "name": "ADENG1.VCE",
+                  "offset": 270,
+                  "fnv1a64": "7997cac3fe7dc6a0"
+                },
+                "payload": ""
+              },
+              "port": null
+            }
+          },
+          "none:voice=-1:entry=30": {
+            "original_count": 1003,
+            "port_count": 1002,
+            "first_difference": {
+              "index": 1002,
+              "original": {
+                "driver": "ad15",
+                "entry": 48,
+                "arguments": [],
+                "result": null,
+                "voice": -1,
+                "chunk": -1,
+                "resource": null,
+                "payload": ""
+              },
+              "port": null
+            }
+          }
+        }
+      },
+      "race_sound_through_frame_200_agrees": true,
+      "driver_entries": {
+        "port_audio_driver_09": {
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_12": {
+          "agrees": 30,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_21": {
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_24": {
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_27": {
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_06": {
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_18": {
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_1e": {
+          "agrees": 10,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_30": {
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        }
+      }
+    },
+    "highscore-ad15": {
+      "reference": "scenarios/highscore-ad15.json",
+      "agrees": false,
+      "checkpoints": {
+        "car-countach": {
+          "agrees": true
+        },
+        "race-driving": {
+          "agrees": true
+        },
+        "highscore-entry": {
+          "agrees": true
+        },
+        "highscore-saved": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 113,
+          "port_count": 113
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 57,
+          "port_count": 57
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 434,
+          "port_count": 434
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 434,
+          "port_count": 434
+        },
+        "files": {
+          "agrees": false,
+          "original_count": 1,
+          "port_count": 1
+        }
+      },
+      "bounded_routines": {
+        "fixedmult": {
+          "original_calls": 1557,
+          "agrees": 1551,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 50,
+          "agrees": 50,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intatan": {
+          "original_calls": 4589,
+          "agrees": 4584,
+          "differs": 0,
+          "unmatched_inputs": 3
+        },
+        "intcos": {
+          "original_calls": 4042,
+          "agrees": 4035,
+          "differs": 0,
+          "unmatched_inputs": 2
+        },
+        "inthypot": {
+          "original_calls": 3428,
+          "agrees": 3421,
+          "differs": 0,
+          "unmatched_inputs": 6
+        },
+        "intsin": {
+          "original_calls": 4040,
+          "agrees": 4033,
+          "differs": 0,
+          "unmatched_inputs": 2
+        },
+        "joystate": {
+          "original_calls": 46,
+          "agrees": 46,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mat_vec": {
+          "original_calls": 134432,
+          "agrees": 133565,
+          "differs": 0,
+          "unmatched_inputs": 555
+        },
+        "mygetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "myrandom": {
+          "original_calls": 20580,
+          "agrees": 20580,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 1
+        },
+        "normkey": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 478,
+          "agrees": 477,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "port_call_read_line": {
+          "original_calls": 2,
+          "agrees": 2,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "savefilez": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "transmult": {
+          "original_calls": 8633,
+          "agrees": 8616,
+          "differs": 0,
+          "unmatched_inputs": 3
+        },
+        "zclipline": {
+          "original_calls": 3071,
+          "agrees": 3069,
+          "differs": 0,
+          "unmatched_inputs": 0
+        }
+      },
+      "sound": {
+        "agrees": false,
+        "rule": "exact engine targets plus ordered per-driver/resource/voice/entry content; raw cross-entry ISR interleaving remains diagnostic",
+        "targets": {
+          "original_count": 433,
+          "port_count": 433,
+          "agrees": true,
+          "first_difference": null
+        },
+        "differences": {
+          "ADSKIDMS.VCE:voice=1:entry=27": {
+            "original_count": 12,
+            "port_count": 33,
+            "first_difference": {
+              "index": 12,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 39,
+                "arguments": [
+                  1
+                ],
+                "result": null,
+                "voice": 1,
+                "chunk": 3,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 1906
+                },
+                "payload": ""
+              }
+            }
+          },
+          "ADSKIDMS.VCE:voice=2:entry=27": {
+            "original_count": 12,
+            "port_count": 33,
+            "first_difference": {
+              "index": 12,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 39,
+                "arguments": [
+                  2
+                ],
+                "result": null,
+                "voice": 2,
+                "chunk": 2,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 2506
+                },
+                "payload": ""
+              }
+            }
+          },
+          "ADSKIDMS.VCE:voice=8:entry=09": {
+            "original_count": 1,
+            "port_count": 2,
+            "first_difference": {
+              "index": 1,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 9,
+                "arguments": [
+                  8,
+                  57,
+                  64
+                ],
+                "result": null,
+                "voice": 8,
+                "chunk": 1,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 2306
+                },
+                "payload": ""
+              }
+            }
+          },
+          "ADSKIDMS.VCE:voice=8:entry=0c": {
+            "original_count": 1,
+            "port_count": 2,
+            "first_difference": {
+              "index": 1,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 12,
+                "arguments": [
+                  8
+                ],
+                "result": null,
+                "voice": 8,
+                "chunk": 1,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 2306
+                },
+                "payload": ""
+              }
+            }
+          },
+          "ADSKIDMS.VCE:voice=8:entry=0f": {
+            "original_count": 1,
+            "port_count": 2,
+            "first_difference": {
+              "index": 1,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 15,
+                "arguments": [
+                  8
+                ],
+                "result": null,
+                "voice": 8,
+                "chunk": 1,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 2306
+                },
+                "payload": ""
+              }
+            }
+          },
+          "ADSKIDMS.VCE:voice=8:entry=27": {
+            "original_count": 11,
+            "port_count": 22,
+            "first_difference": {
+              "index": 11,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 39,
+                "arguments": [
+                  8
+                ],
+                "result": null,
+                "voice": 8,
+                "chunk": 1,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 2306
+                },
+                "payload": ""
+              }
+            }
+          },
+          "ADSKIDMS.VCE:voice=9:entry=0c": {
+            "original_count": 2,
+            "port_count": 16,
+            "first_difference": {
+              "index": 2,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 12,
+                "arguments": [
+                  9
+                ],
+                "result": null,
+                "voice": 9,
+                "chunk": 0,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 806
+                },
+                "payload": ""
+              }
+            }
+          },
+          "ADSKIDMS.VCE:voice=9:entry=27": {
+            "original_count": 12,
+            "port_count": 33,
+            "first_difference": {
+              "index": 12,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 39,
+                "arguments": [
+                  9
+                ],
+                "result": null,
+                "voice": 9,
+                "chunk": 0,
+                "resource": {
+                  "name": "ADSKIDMS.VCE",
+                  "fnv1a64": "264d334c24ff413d",
+                  "offset": 806
+                },
+                "payload": ""
+              }
+            }
+          },
+          "none:voice=-1:entry=30": {
+            "original_count": 2191,
+            "port_count": 2211,
+            "first_difference": {
+              "index": 2191,
+              "original": null,
+              "port": {
+                "driver": "ad15",
+                "entry": 48,
+                "arguments": [],
+                "result": null,
+                "voice": -1,
+                "chunk": -1,
+                "resource": null,
+                "payload": ""
+              }
+            }
+          }
+        }
+      },
+      "highscore_defined_fields_agree": true,
+      "raw_hig_file_agrees": false,
+      "race_sound_through_frame_433_agrees": true,
+      "driver_entries": {
+        "port_audio_driver_09": {
+          "agrees": 9,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_0c": {
+          "agrees": 141,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_0f": {
+          "agrees": 4,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_12": {
+          "agrees": 39,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_21": {
+          "agrees": 9,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_24": {
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_27": {
+          "agrees": 2133,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_06": {
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_18": {
+          "agrees": 2,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_1e": {
+          "agrees": 13,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_30": {
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        }
+      }
+    },
+    "opponent-pc15": {
+      "reference": "scenarios/opponent-pc15.json",
+      "agrees": true,
+      "checkpoints": {
+        "opponent-clock": {
+          "agrees": true
+        },
+        "opponent-selected": {
+          "agrees": true
+        },
+        "opponent-car": {
+          "agrees": true
+        },
+        "opponent-done": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 20,
+          "port_count": 20
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 10,
+          "port_count": 10
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "files": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        }
+      },
+      "bounded_routines": {
+        "fixedmult": {
+          "original_calls": 124,
+          "agrees": 124,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 38,
+          "agrees": 38,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intatan": {
+          "original_calls": 3,
+          "agrees": 3,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intcos": {
+          "original_calls": 16,
+          "agrees": 16,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "inthypot": {
+          "original_calls": 9,
+          "agrees": 9,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intsin": {
+          "original_calls": 16,
+          "agrees": 16,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "joystate": {
+          "original_calls": 36,
+          "agrees": 36,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mat_vec": {
+          "original_calls": 160,
+          "agrees": 160,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "myrandom": {
+          "original_calls": 12255,
+          "agrees": 12255,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkey": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 34,
+          "agrees": 34,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "transmult": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        }
+      }
+    },
+    "selection-pc15": {
+      "reference": "scenarios/selection-pc15.json",
+      "agrees": false,
+      "checkpoints": {
+        "car-countach": {
+          "agrees": true
+        },
+        "car-lancia": {
+          "agrees": false,
+          "indices_differ": 137,
+          "palette_bytes_differ": 0
+        },
+        "track-default": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 22,
+          "port_count": 22
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 11,
+          "port_count": 11
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "files": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        }
+      },
+      "bounded_routines": {
+        "fixedmult": {
+          "original_calls": 508,
+          "agrees": 504,
+          "differs": 0,
+          "unmatched_inputs": 4
+        },
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 38,
+          "agrees": 38,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intatan": {
+          "original_calls": 20,
+          "agrees": 16,
+          "differs": 0,
+          "unmatched_inputs": 4
+        },
+        "intcos": {
+          "original_calls": 59,
+          "agrees": 56,
+          "differs": 0,
+          "unmatched_inputs": 1
+        },
+        "inthypot": {
+          "original_calls": 265,
+          "agrees": 257,
+          "differs": 0,
+          "unmatched_inputs": 8
+        },
+        "intsin": {
+          "original_calls": 59,
+          "agrees": 56,
+          "differs": 0,
+          "unmatched_inputs": 1
+        },
+        "joystate": {
+          "original_calls": 35,
+          "agrees": 35,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mat_vec": {
+          "original_calls": 3425,
+          "agrees": 2708,
+          "differs": 0,
+          "unmatched_inputs": 717
+        },
+        "myrandom": {
+          "original_calls": 12255,
+          "agrees": 12255,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkey": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 34,
+          "agrees": 34,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "transmult": {
+          "original_calls": 216,
+          "agrees": 212,
+          "differs": 0,
+          "unmatched_inputs": 4
+        }
+      }
+    },
+    "editor-pc15": {
+      "reference": "scenarios/editor-pc15.json",
+      "agrees": true,
+      "checkpoints": {
+        "track-default": {
+          "agrees": true
+        },
+        "load-track": {
+          "agrees": true
+        },
+        "track-loaded": {
+          "agrees": true
+        },
+        "editor-loaded": {
+          "agrees": true
+        },
+        "piece-placed": {
+          "agrees": true
+        },
+        "piece-removed": {
+          "agrees": true
+        },
+        "save-dialog": {
+          "agrees": true
+        },
+        "editor-saved": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 86,
+          "port_count": 86
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 43,
+          "port_count": 43
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "files": {
+          "agrees": true,
+          "original_count": 2,
+          "port_count": 2
+        }
+      },
+      "bounded_routines": {
+        "fixedmult": {
+          "original_calls": 24,
+          "agrees": 24,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 58,
+          "agrees": 58,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intatan": {
+          "original_calls": 4,
+          "agrees": 4,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intcos": {
+          "original_calls": 28,
+          "agrees": 28,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "inthypot": {
+          "original_calls": 422,
+          "agrees": 422,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intsin": {
+          "original_calls": 28,
+          "agrees": 28,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "joystate": {
+          "original_calls": 59,
+          "agrees": 59,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mat_vec": {
+          "original_calls": 5020,
+          "agrees": 5020,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "myrandom": {
+          "original_calls": 12255,
+          "agrees": 12255,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkey": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 54,
+          "agrees": 54,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "port_call_read_line": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "savefilez": {
+          "original_calls": 2,
+          "agrees": 2,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "transmult": {
+          "original_calls": 420,
+          "agrees": 420,
+          "differs": 0,
+          "unmatched_inputs": 0
+        }
+      }
+    },
+    "file-error-pc15": {
+      "reference": "scenarios/file-error-pc15.json",
+      "agrees": true,
+      "checkpoints": {
+        "track-default": {
+          "agrees": true
+        },
+        "load-track": {
+          "agrees": true
+        },
+        "track-loaded": {
+          "agrees": true
+        },
+        "editor-loaded": {
+          "agrees": true
+        },
+        "piece-placed": {
+          "agrees": true
+        },
+        "piece-removed": {
+          "agrees": true
+        },
+        "save-dialog": {
+          "agrees": true
+        },
+        "save-error": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 88,
+          "port_count": 88
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 44,
+          "port_count": 44
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        },
+        "files": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        }
+      },
+      "bounded_routines": {
+        "fixedmult": {
+          "original_calls": 24,
+          "agrees": 24,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 57,
+          "agrees": 57,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intatan": {
+          "original_calls": 4,
+          "agrees": 4,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intcos": {
+          "original_calls": 28,
+          "agrees": 28,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "inthypot": {
+          "original_calls": 422,
+          "agrees": 422,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intsin": {
+          "original_calls": 28,
+          "agrees": 28,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "joystate": {
+          "original_calls": 57,
+          "agrees": 57,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mat_vec": {
+          "original_calls": 5020,
+          "agrees": 5020,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "myrandom": {
+          "original_calls": 12255,
+          "agrees": 12255,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkey": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 53,
+          "agrees": 53,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "port_call_read_line": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "savefilez": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "transmult": {
+          "original_calls": 420,
+          "agrees": 420,
+          "differs": 0,
+          "unmatched_inputs": 0
+        }
+      }
+    },
+    "manual-crash-pc15": {
+      "reference": "scenarios/manual-crash-pc15.json",
+      "agrees": true,
+      "checkpoints": {
+        "car-countach": {
+          "agrees": true
+        },
+        "race-driving": {
+          "agrees": true
+        },
+        "race-result": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 53,
+          "port_count": 53
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 27,
+          "port_count": 27
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 434,
+          "port_count": 434
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 434,
+          "port_count": 434
+        },
+        "files": {
+          "agrees": true,
+          "original_count": 0,
+          "port_count": 0
+        }
+      },
+      "bounded_routines": {
+        "fixedmult": {
+          "original_calls": 1557,
+          "agrees": 1551,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 45,
+          "agrees": 45,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intatan": {
+          "original_calls": 4589,
+          "agrees": 4584,
+          "differs": 0,
+          "unmatched_inputs": 3
+        },
+        "intcos": {
+          "original_calls": 4042,
+          "agrees": 4035,
+          "differs": 0,
+          "unmatched_inputs": 2
+        },
+        "inthypot": {
+          "original_calls": 3428,
+          "agrees": 3421,
+          "differs": 0,
+          "unmatched_inputs": 6
+        },
+        "intsin": {
+          "original_calls": 4040,
+          "agrees": 4033,
+          "differs": 0,
+          "unmatched_inputs": 2
+        },
+        "joystate": {
+          "original_calls": 40,
+          "agrees": 40,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mat_vec": {
+          "original_calls": 134432,
+          "agrees": 133565,
+          "differs": 0,
+          "unmatched_inputs": 555
+        },
+        "mygetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "myrandom": {
+          "original_calls": 20580,
+          "agrees": 20580,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 1
+        },
+        "normkey": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 473,
+          "agrees": 472,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "port_call_read_line": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "transmult": {
+          "original_calls": 8633,
+          "agrees": 8616,
+          "differs": 0,
+          "unmatched_inputs": 3
+        },
+        "zclipline": {
+          "original_calls": 3071,
+          "agrees": 3069,
+          "differs": 0,
+          "unmatched_inputs": 0
+        }
+      },
+      "sound": {
+        "agrees": false,
+        "rule": "exact engine targets plus ordered per-driver/resource/voice/entry content; raw cross-entry ISR interleaving remains diagnostic",
+        "targets": {
+          "original_count": 433,
+          "port_count": 433,
+          "agrees": true,
+          "first_difference": null
+        },
+        "differences": {
+          "PCSKIDMS.VCE:voice=4:entry=0f": {
+            "original_count": 0,
+            "port_count": 1,
+            "first_difference": {
+              "index": 0,
+              "original": null,
+              "port": {
+                "driver": "pc15",
+                "entry": 15,
+                "arguments": [
+                  4
+                ],
+                "result": null,
+                "voice": 4,
+                "chunk": 3,
+                "resource": {
+                  "name": "PCSKIDMS.VCE",
+                  "fnv1a64": "e63f2491ccb29a65",
+                  "offset": 838
+                },
+                "payload": ""
+              }
+            }
+          },
+          "PCSKIDMS.VCE:voice=4:entry=27": {
+            "original_count": 4,
+            "port_count": 10,
+            "first_difference": {
+              "index": 4,
+              "original": null,
+              "port": {
+                "driver": "pc15",
+                "entry": 39,
+                "arguments": [
+                  4
+                ],
+                "result": null,
+                "voice": 4,
+                "chunk": 3,
+                "resource": {
+                  "name": "PCSKIDMS.VCE",
+                  "fnv1a64": "e63f2491ccb29a65",
+                  "offset": 838
+                },
+                "payload": ""
+              }
+            }
+          },
+          "none:voice=-1:entry=30": {
+            "original_count": 2183,
+            "port_count": 2194,
+            "first_difference": {
+              "index": 2183,
+              "original": null,
+              "port": {
+                "driver": "pc15",
+                "entry": 48,
+                "arguments": [],
+                "result": null,
+                "voice": -1,
+                "chunk": -1,
+                "resource": null,
+                "payload": ""
+              }
+            }
+          }
+        }
+      },
+      "race_sound_through_frame_433_agrees": true,
+      "driver_entries": {
+        "port_audio_driver_09": {
+          "agrees": 7,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_0c": {
+          "agrees": 3,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_0f": {
+          "agrees": 6,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_12": {
+          "agrees": 39,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_21": {
+          "agrees": 7,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_24": {
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_27": {
+          "agrees": 1964,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_06": {
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_18": {
+          "agrees": 2,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_1e": {
+          "agrees": 9,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_30": {
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        }
+      }
+    },
+    "replay-pc15": {
+      "reference": "scenarios/replay-pc15.json",
+      "agrees": true,
+      "checkpoints": {
+        "replay-paused": {
+          "agrees": true
+        },
+        "replay-seek": {
+          "agrees": true
+        },
+        "pause-menu": {
+          "agrees": true
+        },
+        "replay-save-dialog": {
+          "agrees": true
+        },
+        "replay-saved": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 78,
+          "port_count": 78
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 39,
+          "port_count": 39
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 201,
+          "port_count": 201
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 201,
+          "port_count": 201
+        },
+        "files": {
+          "agrees": true,
+          "original_count": 1,
+          "port_count": 1
+        }
+      },
+      "bounded_routines": {
+        "fixedmult": {
+          "original_calls": 778,
+          "agrees": 772,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 29,
+          "agrees": 29,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intatan": {
+          "original_calls": 1514,
+          "agrees": 1512,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intcos": {
+          "original_calls": 1010,
+          "agrees": 1005,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "inthypot": {
+          "original_calls": 939,
+          "agrees": 938,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intsin": {
+          "original_calls": 1010,
+          "agrees": 1005,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "joystate": {
+          "original_calls": 23,
+          "agrees": 23,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mat_vec": {
+          "original_calls": 57244,
+          "agrees": 56932,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mygetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "myrandom": {
+          "original_calls": 20526,
+          "agrees": 20526,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 1
+        },
+        "normkey": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 225,
+          "agrees": 224,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "port_call_read_line": {
+          "original_calls": 2,
+          "agrees": 2,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "savefilez": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "transmult": {
+          "original_calls": 2772,
+          "agrees": 2758,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "zclipline": {
+          "original_calls": 776,
+          "agrees": 774,
+          "differs": 0,
+          "unmatched_inputs": 0
+        }
+      },
+      "sound": {
+        "agrees": false,
+        "rule": "exact engine targets plus ordered per-driver/resource/voice/entry content; raw cross-entry ISR interleaving remains diagnostic",
+        "targets": {
+          "original_count": 201,
+          "port_count": 200,
+          "agrees": false,
+          "first_difference": {
+            "index": 200,
+            "original": [
+              0,
+              6016,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              5
+            ],
+            "port": null,
+            "original_context": [
+              [
+                0,
+                6003,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                5
+              ],
+              [
+                0,
+                6022,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                5
+              ],
+              [
+                0,
+                6016,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                5
+              ]
+            ],
+            "port_context": [
+              [
+                0,
+                6003,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                5
+              ],
+              [
+                0,
+                6022,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                5
+              ]
+            ]
+          }
+        },
+        "differences": {
+          "PCENG1.VCE:voice=2:entry=12": {
+            "original_count": 31,
+            "port_count": 30,
+            "first_difference": {
+              "index": 30,
+              "original": {
+                "driver": "pc15",
+                "entry": 18,
+                "arguments": [
+                  2,
+                  126
+                ],
+                "result": null,
+                "voice": 2,
+                "chunk": 16,
+                "resource": {
+                  "name": "PCENG1.VCE",
+                  "offset": 86,
+                  "fnv1a64": "171c87e94715d723"
+                },
+                "payload": ""
+              },
+              "port": null
+            }
+          },
+          "PCENG1.VCE:voice=2:entry=24": {
+            "original_count": 904,
+            "port_count": 910,
+            "first_difference": {
+              "index": 1,
+              "original": {
+                "driver": "pc15",
+                "entry": 36,
+                "arguments": [
+                  2,
+                  82
+                ],
+                "result": null,
+                "voice": 2,
+                "chunk": 16,
+                "resource": {
+                  "name": "PCENG1.VCE",
+                  "offset": 86,
+                  "fnv1a64": "171c87e94715d723"
+                },
+                "payload": ""
+              },
+              "port": {
+                "driver": "pc15",
+                "entry": 36,
+                "arguments": [
+                  2,
+                  19
+                ],
+                "result": null,
+                "voice": 2,
+                "chunk": 16,
+                "resource": {
+                  "name": "PCENG1.VCE",
+                  "fnv1a64": "171c87e94715d723",
+                  "offset": 86
+                },
+                "payload": ""
+              }
+            }
+          },
+          "PCENG1.VCE:voice=2:entry=27": {
+            "original_count": 1002,
+            "port_count": 1001,
+            "first_difference": {
+              "index": 1001,
+              "original": {
+                "driver": "pc15",
+                "entry": 39,
+                "arguments": [
+                  2
+                ],
+                "result": null,
+                "voice": 2,
+                "chunk": 16,
+                "resource": {
+                  "name": "PCENG1.VCE",
+                  "offset": 86,
+                  "fnv1a64": "171c87e94715d723"
+                },
+                "payload": ""
+              },
+              "port": null
+            }
+          }
+        }
+      },
+      "race_sound_through_frame_200_agrees": true,
+      "driver_entries": {
+        "port_audio_driver_09": {
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_12": {
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_21": {
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_24": {
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_27": {
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_06": {
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_18": {
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_1e": {
+          "agrees": 7,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_30": {
+          "agrees": 1002,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        }
+      }
+    },
+    "highscore-pc15": {
+      "reference": "scenarios/highscore-pc15.json",
+      "agrees": false,
+      "checkpoints": {
+        "car-countach": {
+          "agrees": true
+        },
+        "race-driving": {
+          "agrees": true
+        },
+        "highscore-entry": {
+          "agrees": true
+        },
+        "highscore-saved": {
+          "agrees": true
+        }
+      },
+      "streams": {
+        "input": {
+          "agrees": true,
+          "original_count": 113,
+          "port_count": 113
+        },
+        "keys": {
+          "agrees": true,
+          "original_count": 57,
+          "port_count": 57
+        },
+        "states": {
+          "agrees": true,
+          "original_count": 434,
+          "port_count": 434
+        },
+        "completed_frames": {
+          "agrees": true,
+          "original_count": 434,
+          "port_count": 434
+        },
+        "files": {
+          "agrees": false,
+          "original_count": 1,
+          "port_count": 1
+        }
+      },
+      "bounded_routines": {
+        "fixedmult": {
+          "original_calls": 1557,
+          "agrees": 1551,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int15": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "int33": {
+          "original_calls": 50,
+          "agrees": 50,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "intatan": {
+          "original_calls": 4589,
+          "agrees": 4584,
+          "differs": 0,
+          "unmatched_inputs": 3
+        },
+        "intcos": {
+          "original_calls": 4042,
+          "agrees": 4035,
+          "differs": 0,
+          "unmatched_inputs": 2
+        },
+        "inthypot": {
+          "original_calls": 3428,
+          "agrees": 3421,
+          "differs": 0,
+          "unmatched_inputs": 6
+        },
+        "intsin": {
+          "original_calls": 4040,
+          "agrees": 4033,
+          "differs": 0,
+          "unmatched_inputs": 2
+        },
+        "joystate": {
+          "original_calls": 46,
+          "agrees": 46,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mat_vec": {
+          "original_calls": 134432,
+          "agrees": 133565,
+          "differs": 0,
+          "unmatched_inputs": 555
+        },
+        "mygetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "myrandom": {
+          "original_calls": 20580,
+          "agrees": 20580,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "mysetseeds": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 1
+        },
+        "normkey": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "normkeyi": {
+          "original_calls": 478,
+          "agrees": 477,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "port_call_read_line": {
+          "original_calls": 2,
+          "agrees": 2,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "savefilez": {
+          "original_calls": 1,
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0
+        },
+        "transmult": {
+          "original_calls": 8633,
+          "agrees": 8616,
+          "differs": 0,
+          "unmatched_inputs": 3
+        },
+        "zclipline": {
+          "original_calls": 3071,
+          "agrees": 3069,
+          "differs": 0,
+          "unmatched_inputs": 0
+        }
+      },
+      "sound": {
+        "agrees": false,
+        "rule": "exact engine targets plus ordered per-driver/resource/voice/entry content; raw cross-entry ISR interleaving remains diagnostic",
+        "targets": {
+          "original_count": 433,
+          "port_count": 433,
+          "agrees": true,
+          "first_difference": null
+        },
+        "differences": {
+          "none:voice=-1:entry=30": {
+            "original_count": 2190,
+            "port_count": 2211,
+            "first_difference": {
+              "index": 2190,
+              "original": null,
+              "port": {
+                "driver": "pc15",
+                "entry": 48,
+                "arguments": [],
+                "result": null,
+                "voice": -1,
+                "chunk": -1,
+                "resource": null,
+                "payload": ""
+              }
+            }
+          }
+        }
+      },
+      "highscore_defined_fields_agree": true,
+      "raw_hig_file_agrees": false,
+      "race_sound_through_frame_433_agrees": true,
+      "driver_entries": {
+        "port_audio_driver_09": {
+          "agrees": 7,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_0c": {
+          "agrees": 3,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_0f": {
+          "agrees": 7,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_12": {
+          "agrees": 39,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_21": {
+          "agrees": 7,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_24": {
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        },
+        "port_audio_driver_27": {
+          "agrees": 1974,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_06": {
+          "agrees": 1,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_18": {
+          "agrees": 2,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_1e": {
+          "agrees": 9,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": true
+        },
+        "port_audio_driver_30": {
+          "agrees": 0,
+          "differs": 0,
+          "unmatched_inputs": 0,
+          "ordered_step_stream_agrees": false
+        }
+      }
+    }
+  }
+}
