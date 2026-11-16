@@ -11,6 +11,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT))
 from tools.porting.original_tick_oracle import capture
+from tools.porting.capture_storage import byte_size
 
 
 class Script:
@@ -104,7 +105,8 @@ def run_port(folder,script,audio,ticks=4000):
     (folder/'config.json').write_text(json.dumps(dict(manual_word_check=True,renderer='faithful',frame_rate=20,detail_level=0,drawing_path='dirty_rects')))
     env=os.environ.copy();env.update(SDL_VIDEODRIVER='dummy',SDL_AUDIODRIVER='dummy')
     env['PATH']=os.pathsep.join(['C:/msys64/mingw32/bin','C:/tools/sdl3-3.4.16-i686/bin',env.get('PATH','')])
-    command=[str(ROOT/'build/sdl3/stunts.exe'),f'--assets={folder/"assets"}',f'--config={folder/"config.json"}',
+    executable=Path(os.environ.get('STUNTS_TEST_EXECUTABLE',ROOT/'build/sdl3/stunts.exe'))
+    command=[str(executable.resolve()),f'--assets={folder/"assets"}',f'--config={folder/"config.json"}',
         f'--diagnostics-dir={folder/"diagnostics"}',f'--trace={folder/"trace.jsonl"}',
         f'--boundary-trace={folder/"boundaries.jsonl"}',f'--sound-requests={folder/"sound.jsonl"}',
         f'--capture-dir={folder/"frames"}',f'--input-script={script}',
@@ -119,9 +121,15 @@ def run_port(folder,script,audio,ticks=4000):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('scenario',choices=['startup','opponent','selection','editor','file-error','manual-crash','replay','highscore'])
-    p.add_argument('--out',type=Path,required=True);p.add_argument('--audio',choices=['ad15','pc15'],default='ad15')
+    p.add_argument('--out',type=Path,help='run directory; the default is replaced on each run')
     p.add_argument('--dosbox',type=Path);p.add_argument('--script',type=Path);p.add_argument('--original-only',action='store_true');p.add_argument('--port-only',action='store_true')
-    p.add_argument('--ticks',type=int,default=4000);a=p.parse_args();out=a.out.resolve();out.mkdir(parents=True,exist_ok=False)
+    p.add_argument('--ticks',type=int,default=4000);a=p.parse_args()
+    if a.out is None:
+        out=ROOT/'build'/'port-captures'/'scenario'
+        shutil.rmtree(out,ignore_errors=True)
+        out.mkdir(parents=True,exist_ok=True)
+    else:
+        out=a.out.resolve();out.mkdir(parents=True,exist_ok=False)
     path=out/'input.json'
     if a.script:shutil.copyfile(a.script,path)
     else:script(a.scenario,path)
@@ -130,6 +138,7 @@ def main():
         capture(argparse.Namespace(output=out/'original',script=path,dosbox=a.dosbox,ticks=a.ticks,audio=a.audio,
             cycles=30000,timeout=180,frames=0,boundaries=True,graphics=False))
     if not a.original_only:run_port(out/'port',path,a.audio,a.ticks)
+    print(f"scenario run size: {byte_size(out)} bytes")
     print(out)
 
 if __name__=='__main__':main()

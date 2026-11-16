@@ -6,7 +6,7 @@ ideal-clock patches. The normal CPU core executes every game instruction.
 Installed sources, objects, executables and both repositories' `.git` stay read-only.
 
 ```powershell
-python tools/porting/dosbox_observer/build.py --out build/workers/portclock/dosbox-observer
+python tools/porting/dosbox_observer/build.py
 ```
 
 Prerequisites are the installed acceptance source/object tree named by `BASE`
@@ -14,6 +14,8 @@ in `build.py` and Visual Studio 2022 Community. `source-pins.json` checks the
 CPU/acceptance/PIT/PIC/input/VRAM sources. The builder copies `src` and `include`
 under its output, checks readable patches against exact replacement contexts,
 recompiles `dosbox.cpp`, `mouse.cpp` and `core_normal.cpp`, then links unchanged installed objects.
+The default output is the reusable `build/porting/dosbox-observer` directory; use
+`--rebuild` there for an incremental rebuild instead of creating another attempt directory.
 `observer-build.json` hashes every reused object and all observer inputs.
 `--rebuild` reuses only the private source/output and its incremental LTCG cache;
 stop the observer before rebuilding. It never writes installed compiler PDBs.

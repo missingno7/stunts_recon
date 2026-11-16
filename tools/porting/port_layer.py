@@ -173,10 +173,6 @@ def build(audit,comparisons=()):
             reconstructed_asm_modules=sorted({r['original_module'] for r in rows if r['kind']=='asm' and
                 (r.get('original_module') or '').startswith(('game/','lib/'))}),
             observed_routines=observed))
-    old=ROOT/'build/workers/portclock/inventory.json'
-    if old.exists():
-        report['prior_clock_audit']=dict(path=old.relative_to(ROOT).as_posix(),sha256=sha(old),
-            scope='step-0 time/thread sites; historical line numbers, not current call coverage')
     return report
 
 
@@ -212,7 +208,8 @@ def unexercised_route(row):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--audit',type=Path,default=ROOT/'build/workers/portclock/step7/audit/report.json')
+    p.add_argument('--audit',type=Path,required=True,
+        help='explicit semantic_audit.py report to join into the inventory')
     p.add_argument('--out',type=Path,default=ROOT/'tools/porting/port-layer.json')
     p.add_argument('--comparison',type=Path,action='append',default=[])
     a=p.parse_args();report=build(json.loads(a.audit.read_text()),a.comparison)

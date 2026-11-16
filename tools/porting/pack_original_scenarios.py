@@ -16,9 +16,10 @@ from tools.porting.compare_scenarios import original_data
 from tools.porting.compare_step_streams import boundary,input_identity,digest
 from tools.porting.compare_sound_events import compact_sound
 from tools.porting.compare_tick_streams import read_rows
+from tools.porting.capture_storage import byte_size,discard_raw_frames
 
 
-def pack(capture,out,name,audio,replace=False):
+def pack(capture,out,name,audio,replace=False,keep_raw=False):
     data=original_data(capture/'original',include_boundaries=False)
     script=json.loads((capture/'input.json').read_text())
     if digest(script)!=digest(json.loads((capture/'original/input-script.json').read_text())):
@@ -44,12 +45,16 @@ def pack(capture,out,name,audio,replace=False):
     out.mkdir(parents=True,exist_ok=True);target=out/(name+'-'+audio+'.json')
     if target.exists() and not replace:raise FileExistsError(target)
     target.write_bytes((json.dumps(result,sort_keys=True,separators=(',',':'))+'\n').encode())
+    removed=0 if keep_raw else discard_raw_frames(capture)
     print(target,len(result['states']),len(result['completed_frames']),sum(map(len,samples.values())))
+    print(f"packed {target.stat().st_size} bytes; removed {removed} raw frame bytes; "
+          f"capture directory now {byte_size(capture)} bytes")
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('capture',type=Path);p.add_argument('--out',type=Path,required=True)
     p.add_argument('--name',required=True);p.add_argument('--audio',choices=['ad15','pc15'],required=True);p.add_argument('--replace',action='store_true')
-    a=p.parse_args();pack(a.capture,a.out,a.name,a.audio,a.replace)
+    p.add_argument('--keep-raw',action='store_true',help='retain uncompressed original frame dumps')
+    a=p.parse_args();pack(a.capture,a.out,a.name,a.audio,a.replace,a.keep_raw)
 
 if __name__=='__main__':main()

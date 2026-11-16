@@ -8,6 +8,7 @@ from pathlib import Path
 import zlib
 
 from replay_snapshot import DAC_BYTES, FRAME_BYTES, sha256
+from capture_storage import byte_size, discard_raw_file
 
 
 def pack(receipt_file: Path, fixture_dir: Path, label: str,
@@ -92,6 +93,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--provenance", choices=("unmodified-corpus", "controlled-menu-branch"),
                         required=True)
     parser.add_argument("--parent-corpus-replay")
+    parser.add_argument("--keep-raw", action="store_true",
+                        help="retain the raw indexed frame payload in the receipt directory")
     args = parser.parse_args(argv)
     row = pack(args.receipt, args.fixture_dir, args.label, args.description,
                args.provenance, args.parent_corpus_replay)
@@ -100,6 +103,12 @@ def main(argv: list[str] | None = None) -> int:
         parser.error(f"refusing to overwrite {sidecar}")
     sidecar.write_text(json.dumps(row, indent=2, sort_keys=True) + "\n",
                        encoding="utf-8")
+    receipt = json.loads(args.receipt.read_text(encoding="utf-8"))
+    removed = 0 if args.keep_raw else discard_raw_file(
+        Path(receipt["raw"]), within=args.receipt.parent)
+    print(f"packed {row['compressed_bytes'] + sidecar.stat().st_size} bytes; "
+          f"removed {removed} raw frame bytes; receipt directory now "
+          f"{byte_size(args.receipt.parent)} bytes")
     print(sidecar)
     return 0
 

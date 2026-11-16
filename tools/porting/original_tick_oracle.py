@@ -10,6 +10,7 @@ import subprocess
 import sys
 ROOT=Path(__file__).resolve().parents[2]
 PERIOD=10_000_154
+DEFAULT_OUTPUT=ROOT/'build'/'port-captures'/'original'
 def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 def input_ticks(script):
@@ -229,7 +230,8 @@ exit
     (out/'receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
     from tools.porting.compare_tick_streams import read_rows
     rows=read_rows(out/'original.jsonl')
-    print(json.dumps(dict(output=str(out),seconds=receipt['seconds'],end=rows[-1])))
+    from tools.porting.capture_storage import byte_size
+    print(json.dumps(dict(output=str(out),seconds=receipt['seconds'],bytes_written=byte_size(out),end=rows[-1])))
     if result.returncode or rows[-1].get('kind')!='end':raise RuntimeError(f'incomplete DOSBox capture: {out}')
     if semantic and getattr(args,'frames',0) and rows[-1].get('terminal')!='frame-limit':
         raise RuntimeError(f'semantic scenario failed to reach its requested game frame: {out}')
@@ -240,7 +242,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--dosbox',type=Path,required=True)
     p.add_argument('--script',type=Path,required=True)
-    p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--output',type=Path,help=f'run directory (default: {DEFAULT_OUTPUT})')
     p.add_argument('--ticks',type=int,default=1000)
     p.add_argument('--audio',choices=('ad15','pc15'),default='ad15')
     p.add_argument('--cycles',type=int,default=30000)
@@ -251,9 +253,17 @@ def main():
     p.add_argument('--frames',type=int,default=0)
     args=p.parse_args()
     if not 1<=args.ticks<=10000:p.error('--ticks must be in 1..10000')
+    if args.output is None:
+        args.output=DEFAULT_OUTPUT
+        shutil.rmtree(args.output,ignore_errors=True)
+    elif args.output.exists():
+        p.error(f'output already exists: {args.output}; use a new run directory explicitly')
     sys.path.insert(0,str(ROOT))
     out=capture(args)
-    if args.port_exe:run_port(args.port_exe,out,args.script,args.ticks,args.audio)
+    if args.port_exe:
+        run_port(args.port_exe,out,args.script,args.ticks,args.audio)
+        from tools.porting.capture_storage import byte_size
+        print(json.dumps(dict(output=str(out),bytes_written=byte_size(out),stage='original-plus-port')))
 
 
 if __name__=='__main__':main()

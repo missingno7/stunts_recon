@@ -10,8 +10,10 @@ from pathlib import Path
 import zlib
 try:
     from .compare_tick_streams import original_streams,read_rows,FRAME_BYTES
+    from .capture_storage import byte_size,discard_raw_frames
 except ImportError:
     from compare_tick_streams import original_streams,read_rows,FRAME_BYTES
+    from capture_storage import byte_size,discard_raw_frames
 
 
 def canonical_hash(value):
@@ -60,8 +62,12 @@ if __name__=='__main__':
     p.add_argument('capture',type=Path)
     p.add_argument('--scenario',choices=('startup','selection','race','replay'),required=True)
     p.add_argument('--out',type=Path,required=True)
+    p.add_argument('--keep-raw',action='store_true',help='retain the uncompressed original.frames dump')
     a=p.parse_args()
     if a.out.exists():p.error('refusing to overwrite an expectation')
     fixture=pack(a.capture.resolve(),a.scenario)
     a.out.parent.mkdir(parents=True,exist_ok=True)
     a.out.write_text(json.dumps(fixture,indent=2)+'\n',encoding='utf-8')
+    removed=0 if a.keep_raw else discard_raw_frames(a.capture.resolve())
+    print(f"packed {a.out.stat().st_size} bytes; removed {removed} raw frame bytes; "
+          f"capture directory now {byte_size(a.capture.resolve())} bytes")

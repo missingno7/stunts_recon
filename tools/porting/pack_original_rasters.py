@@ -6,6 +6,7 @@ from pathlib import Path
 import struct
 from .compare_step_streams import original
 from .compare_tick_streams import read_rows
+from .capture_storage import byte_size,discard_raw_frames
 
 
 def pack(folder):
@@ -28,9 +29,12 @@ def pack(folder):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('capture',type=Path);p.add_argument('--out',type=Path,required=True)
+    p.add_argument('--keep-raw',action='store_true',help='retain the uncompressed original.frames dump')
     a=p.parse_args()
     if a.out.exists():p.error('refusing to overwrite an expectation')
     result=pack(a.capture);a.out.write_bytes((json.dumps(result,indent=2)+'\n').encode())
-    print(f"{len(result['cases'])} original calls: {a.out}")
+    removed=0 if a.keep_raw else discard_raw_frames(a.capture)
+    print(f"{len(result['cases'])} original calls: {a.out}; packed {a.out.stat().st_size} bytes; "
+          f"removed {removed} raw frame bytes; capture directory now {byte_size(a.capture)} bytes")
 
 if __name__=='__main__':main()

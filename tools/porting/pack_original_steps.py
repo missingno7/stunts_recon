@@ -7,6 +7,7 @@ from pathlib import Path
 import zlib
 from .compare_step_streams import original,digest,boundary,input_identity
 from .compare_tick_streams import read_rows
+from .capture_storage import byte_size,discard_raw_frames
 
 def pack(folder):
     streams=original(folder);receipt=streams.pop('receipt')
@@ -51,6 +52,7 @@ def pack(folder):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('capture',type=Path);p.add_argument('--out',type=Path,required=True)
+    p.add_argument('--keep-raw',action='store_true',help='retain the uncompressed original.frames dump')
     a=p.parse_args()
     if a.out.exists():p.error('refusing to overwrite an expectation')
     result=pack(a.capture);a.out.parent.mkdir(parents=True,exist_ok=True)
@@ -58,6 +60,8 @@ def main():
     target=a.out.parent/result['script'];source=a.capture/'input-script.json'
     if target.exists() and target.read_bytes()!=source.read_bytes():raise ValueError('fixture script differs')
     target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(source.read_bytes())
-    print(a.out)
+    removed=0 if a.keep_raw else discard_raw_frames(a.capture)
+    print(f"packed {a.out.stat().st_size} bytes; removed {removed} raw frame bytes; "
+          f"capture directory now {byte_size(a.capture)} bytes")
 
 if __name__=='__main__':main()

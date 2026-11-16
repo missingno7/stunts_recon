@@ -22,6 +22,9 @@ ROOT=HERE.parents[2]
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
+def directory_bytes(path):
+    return sum(p.stat().st_size for p in path.rglob('*') if p.is_file())
+
 def build(out,rebuild=False):
     out=out.resolve();out.mkdir(parents=True,exist_ok=rebuild)
     pins=json.loads((HERE/'source-pins.json').read_text())
@@ -109,8 +112,10 @@ def build(out,rebuild=False):
         compiled_units=sorted(jobs.values()))
     (out/'observer-build.json').write_text(json.dumps(receipt,indent=2)+'\n')
     print(json.dumps({k:v for k,v in receipt.items() if k!='inputs'},indent=2))
+    print(f"observer build directory size: {directory_bytes(out)} bytes")
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,required=True)
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--out',type=Path,default=ROOT/'build'/'porting'/'dosbox-observer')
     p.add_argument('--rebuild',action='store_true',help='reuse only this private build and its LTCG cache')
     a=p.parse_args();build(a.out,a.rebuild)
