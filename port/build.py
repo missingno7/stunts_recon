@@ -14,6 +14,7 @@ import sys
 import zipfile
 
 from sound_adapter import adapt_sound_observers, _function
+from game_abi import adapt_result_track_comparison, adapt_highscore_dialog_alias
 from boundary_adapter import instrument as instrument_boundary, phase_adapt as adapt_boundary_phases
 from game_abi import route_audio_vectors, adapt_aggregate_views, adapt_polygon_storage, host_view_contracts, adapt_preview_word_arithmetic, adapt_renderer_word_arithmetic, adapt_word_sentinels, adapt_wheel_update_inputs
 from dependencies import NUKED_OPL3_COMMIT, NUKED_OPL3_FILES, nuked_opl3_root
@@ -526,6 +527,13 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
         # int/unsigned/long storage still needs its original scalar width.
         # This also covers private tables which central declarations cannot fix.
         transformed = adapt_aggregate_views(probe.legacy_target_widths(transformed))
+        # The pinned MSC macros index a byte table; the Windows CRT exports
+        # a different-width _ctype. Keep the original table in a private name.
+        transformed = ('extern unsigned char port_msc_ctype[257];\n' +
+                       re.sub(r'\b_ctype\b', 'port_msc_ctype', transformed))
+        if source == "game/frontend.c":
+            transformed = adapt_result_track_comparison(transformed)
+            transformed = adapt_highscore_dialog_alias(transformed)
         if source == "lib/toupper.c":
             transformed = transformed.replace("I16 cap(I16 ch)", "int cap(int ch)")
         transformed = adapt_sound_observers(source, transformed,

@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include "msc_ctype.h"
 
 /* Recovered seg012:6397 compares SS with DS and returns one only when equal.
    The i686 Windows host uses a flat data/stack selector model, so observing

@@ -1,4 +1,5 @@
 #include "port_runtime.h"
+#include <string.h>
 
 /* The recovered SCREEN_RECT is a view of the selected font header. The DOS
    far pointer at word_405FE consists of offset zero followed by fontdefseg;

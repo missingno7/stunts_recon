@@ -3,6 +3,7 @@
 
 #include <SDL3/SDL.h>
 #include <ctype.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -591,15 +592,11 @@ static int resolve_save_destination(const char *path, char *absolute,
         component[part_length] = '\0';
         exists = find_component(current, component, actual, sizeof(actual), &type);
         if (separator != NULL) {
-            if (exists) {
-                if (type != SDL_PATHTYPE_DIRECTORY)
-                    return 0;
-            } else {
-                memcpy(actual, component, part_length + 1u);
-            }
-            if (!append_path(next, sizeof(next), current, actual))
+            /* DOS AH=3Ch creates a file, never missing parent directories.
+               Only the host-owned save root above is created implicitly. */
+            if (!exists || type != SDL_PATHTYPE_DIRECTORY)
                 return 0;
-            if (!exists && !SDL_CreateDirectory(next))
+            if (!append_path(next, sizeof(next), current, actual))
                 return 0;
             memcpy(current, next, strlen(next) + 1u);
             part = separator + 1;
@@ -704,18 +701,24 @@ int savefilez(const char *filename, const void *source,
     size_t extent;
     int bounded;
     int failed = 0;
+    int dos_error = 2; /* Observed AH=3Ch failure for a missing parent/name. */
     absolute[0] = '\0';
-    if (source == NULL && length != 0u)
-        failed = 1;
-    if (!failed) {
-        bounded = port_memory_extent(source, &extent);
-        if (bounded && (size_t)length > extent)
-            failed = 1;
+    if (source == NULL && length != 0u) {
+        failed = 1; dos_error = 5;
     }
     if (!failed) {
+        bounded = port_memory_extent(source, &extent);
+        if (bounded && (size_t)length > extent) {
+            failed = 1; dos_error = 5;
+        }
+    }
+    if (!failed) {
+        errno = 0;
         file = open_save_write(filename, absolute, sizeof(absolute));
-        if (file == NULL)
+        if (file == NULL) {
             failed = 1;
+            if (errno == EACCES) dos_error = 5;
+        }
     }
     remaining = failed ? 0u : (size_t)length;
     while (!failed && remaining != 0u) {
@@ -724,6 +727,7 @@ int savefilez(const char *filename, const void *source,
         size_t written = fwrite(source, 1u, chunk, file);
         if (written != chunk) {
             failed = 1;
+            dos_error = 1; /* Original short-write branch returns AX=1. */
             break;
         }
         source = (const uint8_t *)source + chunk;
@@ -734,8 +738,9 @@ int savefilez(const char *filename, const void *source,
     if (failed) {
         if (file != NULL)
             (void)SDL_RemovePath(absolute);
-        abortmessage("%s FILE ERROR", filename != NULL ? filename : "(null)");
-        return -1;
+        /* _savefilez selects policy 1: return the DOS error to its caller.
+           The older descriptive fatal/nofatal aliases are inverted. */
+        return dos_error;
     }
     return 0;
 }

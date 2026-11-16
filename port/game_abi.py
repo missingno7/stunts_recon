@@ -228,6 +228,29 @@ static I16S port_wheel_height_div64(I16S value)
     return source.replace(signature, helper + signature + staged, 1)
 
 
+def adapt_result_track_comparison(text):
+    """Locked evaluation +398d compares bytes, without signed-char promotion."""
+    old='trackFile[i] != td14tb[i]'
+    if text.count(old)!=1:raise ValueError('missing result track-byte comparison')
+    return ('/* PORT_BUILD: locked load 399d CMP ES:[BX+DI],AL. */\n'
+            'static int port_track_byte_equal(char left, uint8_t right) {\n'
+            '    return (uint8_t)left == right;\n}\n' +
+            text.replace(old,'!port_track_byte_equal(trackFile[i], td14tb[i])'))
+
+
+def adapt_highscore_dialog_alias(text):
+    """addhighs passes one two-word marker result at SS:BP-3Ch/-3Ah."""
+    try:from .sound_adapter import _function
+    except ImportError:from sound_adapter import _function
+    def edit(body):
+        declaration='    I16 dialogX;\n    I16 dialogY;'
+        if body.count(declaration)!=1:raise ValueError('missing highscore marker locals')
+        body=body.replace(declaration,'    I16 port_dialog_xy[2];')
+        body=re.sub(r'\bdialogY\b','port_dialog_xy[0]',body)
+        return re.sub(r'\bdialogX\b','port_dialog_xy[1]',body)
+    return _function(text,'addhighs',edit)
+
+
 def host_view_contracts(source: str) -> str:
     """Compile the established i686 shared-layout contracts in their owners.
 

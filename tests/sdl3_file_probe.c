@@ -179,8 +179,16 @@ int main(int argc, char **argv)
                                  (unsigned long)sizeof(large_data)) == 0,
                 "write across multiple 16 KiB DOS chunks");
     ok &= check(savefilez("nested/new.rpl", exact_extent_data,
+                                 (unsigned long)sizeof(exact_extent_data)) != 0,
+                "DOS file create rejects a missing parent directory");
+    {
+        char nested_directory[1024];
+        ok &= check(path_join(nested_directory, sizeof(nested_directory), save_root, "nested") &&
+                    SDL_CreateDirectory(nested_directory), "create an existing save directory fixture");
+    }
+    ok &= check(savefilez("nested/new.rpl", exact_extent_data,
                                  (unsigned long)sizeof(exact_extent_data)) == 0,
-                "create nested save directories");
+                "write inside an existing save directory");
     ok &= check(!port_fs_exists("../assets/large.rpl"),
                 "asset-root traversal is rejected");
     ok &= check(port_fs_exists("DUP.HIG"), "saved file is visible to reads");
@@ -244,9 +252,9 @@ int main(int argc, char **argv)
     s_bounded = NULL;
     s_bounded_size = 0;
     ok &= check(savefilez("../escape.hig", saved_override,
-                                 (unsigned long)sizeof(saved_override)) == -1,
-                "invalid save path reports a fatal write failure");
-    ok &= check(s_fatal_count == 2u, "write failure follows fatal-error path");
+                                 (unsigned long)sizeof(saved_override)) != 0,
+                "invalid save path reports an error to the caller");
+    ok &= check(s_fatal_count == 1u, "savefilez must not abort on a write failure");
     ok &= check(!port_fs_exists("escape.hig"), "invalid save path creates no file");
 
     if (!ok)

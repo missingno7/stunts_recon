@@ -810,6 +810,117 @@
       "status": "unverified/high-risk",
       "subject_type": "behavior_gap",
       "tests": []
+    },
+    {
+      "id": "msc-ctype-byte-data",
+      "authority": "locked_image_data",
+      "status": "original-data-oracle",
+      "subject_type": "data",
+      "evidence_scope": "257-byte-table",
+      "routines": [],
+      "source_scope": [
+        "port/msc_ctype.h"
+      ],
+      "historical_route": [
+        "DATA __ctype, load192414, width257"
+      ],
+      "portable_route": [
+        "port/msc_ctype.h:port_msc_ctype",
+        "port/build.py:build_game_objects"
+      ],
+      "scope": "EOF plus all 256 byte classification entries; no host CRT ABI",
+      "observables": [
+        "all 257 original data bytes"
+      ],
+      "claim_limit": "Exact table data only; no whole character-processing routine claim.",
+      "tests": [
+        "tests/test_sdl3_ctype.py::test_all_eof_and_byte_classifications_match_the_locked_runtime"
+      ]
+    },
+    {
+      "id": "evaluation-track-byte-equality",
+      "authority": "locked_image_live_execution",
+      "status": "differential-oracle",
+      "subject_type": "expression",
+      "evidence_scope": "instruction-window-only",
+      "routines": [
+        "port_track_byte_equal"
+      ],
+      "source_scope": [
+        "game/frontend.c",
+        "port/game_abi.py"
+      ],
+      "historical_route": [
+        "evaluation load399d CMP ES:[BX+DI],AL"
+      ],
+      "portable_route": [
+        "port/game_abi.py:adapt_result_track_comparison"
+      ],
+      "scope": "all 65536 pairs of bytes at the result-track comparison",
+      "observables": [
+        "equality from original ZF versus generated helper result"
+      ],
+      "claim_limit": "One byte comparison; not the complete evaluation routine.",
+      "tests": [
+        "tests/test_sdl3_result_track_bytes.py::test_all_byte_pairs_match_original_cmp_and_adapter_changes_one_site"
+      ]
+    },
+    {
+      "id": "highscore-marker-pair",
+      "authority": "original_run_frame_or_trace",
+      "status": "original-scenario-cases",
+      "subject_type": "composite",
+      "evidence_scope": "composite-path-only",
+      "routines": [
+        "addhighs"
+      ],
+      "source_scope": [
+        "game/frontend.c",
+        "port/game_abi.py"
+      ],
+      "historical_route": [
+        "addhighs load1b26 BP-3Ch marker, load1b40 messagebox, load1b53/-56 paired loads"
+      ],
+      "portable_route": [
+        "port/game_abi.py:adapt_highscore_dialog_alias"
+      ],
+      "scope": "prescribed evaluation finish200; both sound drivers; original instringz XY64,106, limit16",
+      "observables": [
+        "typed marker XY, completed text buffer, return, full indexed UI and defined HIG fields"
+      ],
+      "claim_limit": "Finite qualifying-entry UI fixture; not an earned lap or original stack-tail byte equality.",
+      "tests": [
+        "tests/test_sdl3_scenarios.py::test_highscore_ad15",
+        "tests/test_sdl3_scenarios.py::test_highscore_pc15"
+      ]
+    },
+    {
+      "id": "savefile-error-return",
+      "authority": "original_run_frame_or_trace",
+      "status": "original-scenario-cases",
+      "subject_type": "routine",
+      "evidence_scope": "finite-service-cases",
+      "routines": [
+        "savefilez"
+      ],
+      "source_scope": [
+        "port/file.c"
+      ],
+      "historical_route": [
+        "lib/filewrit.ASM _savefilez policy1; AH3Ch error AX2"
+      ],
+      "portable_route": [
+        "port/file.c:savefilez"
+      ],
+      "scope": "save bad/file.trk with missing parent; return2; both original drivers",
+      "observables": [
+        "typed filename, length1802, return2, error dialog, no created subdirectory"
+      ],
+      "claim_limit": "This create failure and successful editor/replay saves, not all DOS errno mappings or disk failures.",
+      "tests": [
+        "tests/test_sdl3_scenarios.py::test_file_error_ad15",
+        "tests/test_sdl3_scenarios.py::test_file_error_pc15"
+      ]
     }
   ],
   "policy": {
