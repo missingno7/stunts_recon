@@ -12,7 +12,8 @@ import zlib
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / "tests" / "fixtures" / "sdl3"
-EXECUTABLE = ROOT / "build" / "sdl3" / "stunts.exe"
+EXECUTABLE = Path(os.environ.get("STUNTS_TEST_EXECUTABLE",
+                                 ROOT / "build" / "sdl3" / "stunts.exe"))
 ASSETS = ROOT / "build" / "sdl3" / "runtime" / "assets"
 STARTUP_SEED = FIXTURES / "startup-seed.json"
 SCREEN_NAMES = ("splash", "title", "menu")

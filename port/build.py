@@ -144,7 +144,8 @@ def prepare_environment(gcc: Path) -> None:
 
 
 def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
-                       prepare_only: bool = False) -> tuple[list[Path], dict[str, object]]:
+                       prepare_only: bool = False,
+                       coverage: bool = False) -> tuple[list[Path], dict[str, object]]:
     """Prepare the production views; optionally compile them.
 
     The semantic audit uses this same path in its own output directory. Its
@@ -214,6 +215,8 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
     ]
     if "-Werror=int-conversion" not in probe.FLAGS:
         probe.FLAGS = list(probe.FLAGS) + executable_flags
+    if coverage and "--coverage" not in probe.FLAGS:
+        probe.FLAGS = list(probe.FLAGS) + ["--coverage"]
     work = probe.WORK
     for source_dir in ("game", "lib"):
         (work / "overlay" / source_dir).mkdir(parents=True, exist_ok=True)
@@ -625,7 +628,7 @@ def build_game_objects(gcc: Path, *, work_dir: Path | None = None,
     return objects, report
 
 
-def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
+def compile_port_sources(gcc: Path, sdl_root: Path, *, coverage: bool = False) -> list[Path]:
     opl_source = nuked_opl3_root()
     port_sources = [
         "main.c", "sdl_host.c", "video.c", "input.c", "timer.c", "tick_clock.c", "memory.c",
@@ -672,6 +675,8 @@ def compile_port_sources(gcc: Path, sdl_root: Path) -> list[Path]:
         "-I", str(sdl_root / "include"),
         "-I", str(opl_source),
     ]
+    if coverage:
+        common.append("--coverage")
     objects = []
     for source in port_sources:
         src = ROOT / "port" / source
@@ -756,11 +761,14 @@ def render_stubs(entries: list[dict[str, object]]) -> str:
 
 
 def link_executable(gcc: Path, sdl_root: Path, objects: list[Path],
-                    port_objects: list[Path], stub_object: Path | None) -> subprocess.CompletedProcess[str]:
+                    port_objects: list[Path], stub_object: Path | None,
+                    *, coverage: bool = False) -> subprocess.CompletedProcess[str]:
     exe = BUILD / "stunts.exe"
     command = [str(gcc), "-mconsole", "-static-libgcc", "-Wl,--no-undefined",
                *[str(path) for path in objects],
                *[str(path) for path in port_objects]]
+    if coverage:
+        command.insert(1, "--coverage")
     if stub_object is not None:
         command.append(str(stub_object))
     command += ["-L", str(sdl_root / "lib"), "-lSDL3", "-o", str(exe)]
@@ -769,7 +777,7 @@ def link_executable(gcc: Path, sdl_root: Path, objects: list[Path],
 
 
 def generate_link_stubs(gcc: Path, sdl_root: Path, objects: list[Path],
-                        port_objects: list[Path]) -> list[dict[str, object]]:
+                        port_objects: list[Path], *, coverage: bool = False) -> list[dict[str, object]]:
     objdump = gcc.parent / "objdump.exe"
     calls = call_relocations(objdump, [*objects, *port_objects])
     search_paths = [BUILD / "host-build" / "overlay", BUILD / "host-build" / "config",
@@ -785,7 +793,7 @@ def generate_link_stubs(gcc: Path, sdl_root: Path, objects: list[Path],
     stub_object = BUILD / "generated-stubs.o"
     (BUILD / "link-first.log").write_text("", encoding="utf-8")
 
-    first = link_executable(gcc, sdl_root, objects, port_objects, None)
+    first = link_executable(gcc, sdl_root, objects, port_objects, None, coverage=coverage)
     (BUILD / "link-first.log").write_text(first.stdout + first.stderr, encoding="utf-8")
     if first.returncode == 0:
         inventory = []
@@ -820,14 +828,18 @@ def generate_link_stubs(gcc: Path, sdl_root: Path, objects: list[Path],
             }
         inventory = list(entries.values())
         stub_c.write_text(render_stubs(inventory), encoding="utf-8")
-        compile_result = checked_run([
+        compile_command = [
             str(gcc), "-std=gnu11", "-O0", "-DPORT_BUILD=1", "-I", str(ROOT / "port"),
-            "-c", str(stub_c), "-o", str(stub_object)], quiet=True)
+            "-c", str(stub_c), "-o", str(stub_object)]
+        if coverage:
+            compile_command.insert(1, "--coverage")
+        compile_result = checked_run(compile_command, quiet=True)
         if compile_result.returncode != 0:
             raise RuntimeError("Generated unresolved-symbol stubs did not compile")
         if compile_result.stderr:
             print(compile_result.stderr, end="", file=sys.stderr)
-        linked = link_executable(gcc, sdl_root, objects, port_objects, stub_object)
+        linked = link_executable(gcc, sdl_root, objects, port_objects, stub_object,
+                                 coverage=coverage)
         current_output = linked.stdout + linked.stderr
         (BUILD / "link-final.log").write_text(current_output, encoding="utf-8")
         if linked.returncode == 0:
@@ -862,6 +874,14 @@ def prepare_assets(source: Path) -> Path:
 
 
 def build(args) -> Path:
+    global BUILD
+    coverage = bool(getattr(args, "coverage", False))
+    requested_build_dir = getattr(args, "build_dir", None)
+    default_build_dir = (ROOT / "build" / "coverage" / "sdl3" if coverage
+                         else ROOT / "build" / "sdl3")
+    BUILD = (requested_build_dir or default_build_dir).resolve()
+    if coverage and BUILD == (ROOT / "build" / "sdl3").resolve():
+        raise RuntimeError("coverage builds must use a separate directory")
     gcc = args.gcc.resolve()
     sdl_root = args.sdl_root.resolve()
     if not gcc.is_file():
@@ -870,9 +890,13 @@ def build(args) -> Path:
         raise RuntimeError(f"SDL3 i686 development package is incomplete: {sdl_root}")
     prepare_environment(gcc)
     BUILD.mkdir(parents=True, exist_ok=True)
-    game_objects, compile_report = build_game_objects(gcc)
-    port_objects = compile_port_sources(gcc, sdl_root)
-    stubs = generate_link_stubs(gcc, sdl_root, game_objects, port_objects)
+    if coverage:
+        for data_file in BUILD.rglob("*.gcda"):
+            data_file.unlink()
+    game_objects, compile_report = build_game_objects(gcc, coverage=coverage)
+    port_objects = compile_port_sources(gcc, sdl_root, coverage=coverage)
+    stubs = generate_link_stubs(gcc, sdl_root, game_objects, port_objects,
+                                coverage=coverage)
     if stubs:
         raise RuntimeError(
             f"SDL3 build has {len(stubs)} unresolved services/data bindings; "
@@ -896,6 +920,7 @@ def build(args) -> Path:
         "assets_source": str(args.assets_source),
         "assets_runtime_copy": str(assets),
         "executable": str(BUILD / "stunts.exe"),
+        "coverage_instrumented": coverage,
     }
     (BUILD / "build-report.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print(f"Build complete: {BUILD / 'stunts.exe'}")
@@ -1011,6 +1036,10 @@ def main(argv: list[str] | None = None) -> int:
     build_parser.add_argument("--gcc", type=Path, default=DEFAULT_GCC)
     build_parser.add_argument("--sdl-root", type=Path, default=DEFAULT_SDL)
     build_parser.add_argument("--assets-source", type=Path, default=DEFAULT_ASSETS)
+    build_parser.add_argument("--build-dir", type=Path,
+                              help="separate output directory (coverage defaults to build/coverage/sdl3)")
+    build_parser.add_argument("--coverage", action="store_true",
+                              help="compile and link with GCC --coverage")
     package_parser = sub.add_parser("package", help="build a ZIP to extract into an existing game folder")
     package_parser.add_argument("--gcc", type=Path, default=DEFAULT_GCC)
     package_parser.add_argument("--sdl-root", type=Path, default=DEFAULT_SDL)

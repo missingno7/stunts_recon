@@ -12,7 +12,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / "build" / "sdl3"
-EXECUTABLE = BUILD / "stunts.exe"
+EXECUTABLE = Path(os.environ.get("STUNTS_TEST_EXECUTABLE", BUILD / "stunts.exe"))
 BUILD_REPORT = BUILD / "build-report.json"
 ASSETS = BUILD / "runtime" / "assets"
 STARTUP_SEED = ROOT / "tests" / "fixtures" / "sdl3" / "startup-seed.json"
@@ -192,6 +192,7 @@ class Sdl3DrivingTests(unittest.TestCase):
             command = [
                 str(EXECUTABLE),
                 f"--trace={trace_path}",
+                f"--diagnostics-dir={run_dir / 'diagnostics'}",
                 f"--assets={ASSETS}",
                 f"--input-script={input_path}",
                 f"--test-startup-seed={STARTUP_SEED}",
