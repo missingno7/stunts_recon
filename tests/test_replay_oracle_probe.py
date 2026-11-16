@@ -130,7 +130,15 @@ class ReplayOracleProbeTest(unittest.TestCase):
             self.assertEqual(digest(payload[:64000]), row["indices_sha256"])
             self.assertEqual(digest(payload[64000:]), row["palette_rgb6_sha256"])
             self.assertEqual(digest(payload), row["payload_sha256"])
-            self.assertEqual(row["sparse_mismatches"], 0)
+            self.assertEqual(row["schema"], "stunts-original-screen-v2")
+            root = Path(__file__).resolve().parents[1]
+            locked = root / "layout/oracle.lock.json"
+            receipt = row["original_receipt"]
+            self.assertEqual(receipt["schema"], "stunts-dosbox-tick-receipt-v1")
+            self.assertEqual(receipt["returncode"], 0)
+            self.assertEqual(receipt["oracle_lock_sha256"], digest(locked.read_bytes()))
+            self.assertEqual(receipt["executable_sha256"], json.loads(locked.read_text())["unpacked"]["sha256"])
+            self.assertEqual(receipt["driver_sha256"], digest((root / "assets" / (receipt["audio"].upper() + ".DRV")).read_bytes()))
 
 
 if __name__ == "__main__":

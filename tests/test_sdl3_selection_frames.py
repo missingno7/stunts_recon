@@ -1,7 +1,7 @@
 """Full indexed selection screens from independently verified DOS replays.
 
-Animated car poses are matched by the complete frame, not host time or a
-capture ordinal. This verifies rendering; it does not claim timer equivalence.
+Each frame is compared at its named scoped key checkpoint. No image search or
+IRQ equivalence is used.
 """
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ from tests.test_sdl3_file_ui import newest_build_input
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / "build/sdl3"
 FIXTURES = ROOT / "tests/fixtures/sdl3/original_replay"
-LABELS = ("car-countach", "track-default", "opponent-clock")
+LABELS = ("car-countach", "car-lancia", "track-default", "opponent-clock")
 RUN_MS = 38_000
 RUN_TICKS = RUN_MS // 10
 TICK_NS = 10000154
@@ -92,37 +92,16 @@ class SelectionFrameTests(unittest.TestCase):
             raise AssertionError(f"SDL3 build predates {newest.relative_to(ROOT)}")
         cls.temporary = tempfile.TemporaryDirectory(prefix="stunts-selection-")
         folder = Path(cls.temporary.name)
-        cls.captures = folder / "frames"
-        script, trace = folder / "input.json", folder / "trace.jsonl"
-        write_input(script)
-        env = os.environ.copy()
-        env.pop("STUNTS_ASSET_ROOT", None)
-        env.update(SDL_VIDEODRIVER="dummy", SDL_AUDIODRIVER="dummy")
-        env["PATH"] = os.pathsep.join((r"C:\msys64\mingw32\bin",
-                                      r"C:\tools\sdl3-3.4.16-i686\bin",
-                                      env.get("PATH", "")))
+        from tools.porting.scenario_oracle import script,run_port
+        from tools.porting.compare_scenarios import port_data
+        cls.actual={}
         try:
-            run = subprocess.run([
-                str(exe), f"--trace={trace}", f"--capture-dir={cls.captures}",
-                f"--input-script={script}",
-                f"--test-startup-seed={ROOT / 'tests/fixtures/sdl3/startup-seed.json'}",
-                "--test-auto-protection", "--clock=manual", f"--run-ticks={RUN_TICKS}",
-            ], cwd=folder, env=env, capture_output=True, text=True, timeout=60)
-            if run.returncode:
-                raise AssertionError(f"selection run failed: {run.stdout}\n{run.stderr}")
-            events = [json.loads(line) for line in trace.read_text().splitlines()]
-            stops = [e for e in events if e.get("event_type") == "host_stop"]
-            if len(stops) != 1 or stops[0].get("reason") != "requested tick boundary reached":
-                raise AssertionError(f"selection run did not stop cleanly: {stops}")
-            if stops[0]["machine_tick"] != RUN_TICKS * TICK_NS:
-                raise AssertionError("selection did not stop at its exact tick")
-            cls.actual = {}
-            for path in cls.captures.glob("*.fbr"):
-                pixels, palette = read_port_fbr(path)
-                payload = pixels + palette
-                cls.actual.setdefault(hashlib.sha256(payload).hexdigest(), payload)
-            if not cls.actual:
-                raise AssertionError("selection run produced no frame captures")
+            for name in ('selection','opponent'):
+                input_path=folder/(name+'.json');script(name,input_path)
+                actual=port_data(run_port(folder/name,input_path,'ad15',1000))
+                if actual['terminal']!='scenario checkpoint reached':
+                    raise AssertionError(name+' did not reach its semantic terminal')
+                cls.actual.update(actual['payloads'])
         except Exception:
             cls.temporary.cleanup()
             raise
@@ -133,16 +112,14 @@ class SelectionFrameTests(unittest.TestCase):
 
     def assert_exact(self, label):
         expected = self.expected[label]
-        digest = hashlib.sha256(expected).hexdigest()
-        if digest not in self.actual:
-            nearest = min((sum(a != b for a, b in zip(value[:64000], expected[:64000])),
-                           sum(a != b for a, b in zip(value[64000:], expected[64000:])))
-                          for value in self.actual.values())
-            self.fail(f"{label}: nearest complete frame differs at {nearest[0]} indexed "
-                      f"pixels and {nearest[1]} palette bytes")
+        self.assertIn(label,self.actual)
+        self.assertEqual(self.actual[label],expected,label+' named checkpoint indices and palette')
 
     def test_car_countach_matches_original(self):
         self.assert_exact("car-countach")
+
+    def test_car_lancia_matches_original(self):
+        self.assert_exact("car-lancia")
 
     def test_default_track_matches_original(self):
         self.assert_exact("track-default")

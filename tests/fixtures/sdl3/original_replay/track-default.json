@@ -1,100 +1,36 @@
 {
-  "boundary_exclusive": 800,
-  "canonical_comparisons": 21,
-  "compressed_bytes": 4392,
+  "checkpoint": "track-default",
+  "compressed_bytes": 4363,
   "compression": "zlib",
-  "controlled_edit": {
-    "channel": "dos.mouse.normalized",
-    "checkpoint_every": 20,
-    "copied_input_before_occurrence": 450,
-    "occurrences": [
-      264,
-      270
-    ],
-    "original_uv": [
-      0.5302083333333333,
-      0.7541666666666667
-    ],
-    "recorded_frames": 450,
-    "replacement_uv": [
-      0.68,
-      0.5
-    ]
-  },
-  "dac6_sha256": "5e8dc3e868d0c6c25856455bef24acf291686b2b6ab2c7efd7b359188ed2bd9c",
-  "description": "DEFAULT track preview; controlled menu-click branch",
+  "fixture": "track-default",
   "height": 200,
-  "idxdac6_sha256": "6f4f1a2a044ba70e3abd7021f931f7589be89b552e9f44d0e62d5c13ea124628",
-  "indices_sha256": "780ec3a82f9c84df06611f9a26cd0d3e23b02e44e19c241196012dba456e4697",
-  "interpreter_file_sha256": "82b87fc070569a03ee21196aa9782ae09baabce814e1e7813f9696bcc7951ebd",
+  "indices_sha256": "425ca5a65641f00eaf77f402c019cb751dadd6483cea627c5e87b441c7981f65",
   "label": "track-default",
-  "last_recorded_checkpoint": {
-    "at": {
-      "occurrence": 399,
-      "phase": "after",
-      "point": "stunts.global.task"
-    },
-    "boundary_ordinal": 799,
-    "canonical_schema": "pf-canonical-rm-v14",
-    "canonical_sha256": "84f3933106a06644895126229f152f2c0e718643a7b77d93c70f6dea2a4cfa36",
-    "claim": "observable-interval-equivalence",
-    "event_cursor": 286,
-    "expectations": {
-      "next_audio_sequence": 1193,
-      "next_effect_sequence": 0,
-      "next_video_sequence": 279,
-      "rolling_effect_sha256": "b89a4ee317300dc52392ee472b5c578f06761b95e6897ba8ab70d6c3b41f8401",
-      "rolling_output_sha256": "b33d44bdc9d6beb2e10c6b4d03d5f80d674e09cc35cda329fd4715191d73256f",
-      "video_presentation_schema": "pf-dos-rm-vga-frame-presentation-v1"
-    },
-    "schema": "pf-replay-checkpoint-v2",
-    "sequence": 20
-  },
-  "last_stamp": {
-    "evidence": {
-      "cs": 14451,
-      "frame_boundary": "semantic-point",
-      "frame_driver_ordinal": 400,
-      "guest_instructions": 50431559,
-      "ip": 88,
-      "platform": "dos-rm",
-      "semantic_point_key": 947060824
-    },
-    "global_ordinal": 799,
-    "machine_time": {
-      "domain": "dos.machine-nanosecond",
-      "units_per_second_den": 1,
-      "units_per_second_num": 1000000000,
-      "value": 5603506555
-    },
-    "outcome": "reached",
-    "schema": "pf-boundary-stamp-v1",
-    "selector": {
-      "occurrence": 399,
-      "phase": "after",
-      "point": "stunts.global.task"
-    }
+  "original_receipt": {
+    "audio": "ad15",
+    "bindings_sha256": "d85235f3047440e3df4868af4ffea786517086bb01d824e7cd98314e56bdc533",
+    "boundary_bindings_sha256": "728775f1c69178232a7549c04466b376fd38b64c0b192ac3bb554b6a74c8d21b",
+    "boundary_capture_sha256": "990950762fba16b48c25d4587203d83fe53832d615977b093a567f59e1eb8686",
+    "boundary_observer_sha256": "97971a748bc25fcb4768226f3f3c27cf3c3a5fd34910137e6c19655cd01a8b82",
+    "capture_sha256": "09f48c5fbcdb4f5f32c334b421a83037311f56a56ef8ac5b97712d9b38041667",
+    "cycles": 30000,
+    "dosbox_sha256": "ca2c97f23aebaa6853ea6d1231e5a6d2aa3760b3317ab7065b5c737c157f8111",
+    "driver_sha256": "e32b44c8ee6bf2046fc93359c225f3d99e559c94926594f6e3468e1c317afe26",
+    "executable_sha256": "1adb8259b3f6634062b94826e1f167649d9f2deeb6cedc9989127fc37e9ce615",
+    "frames_sha256": "cc4f8dfc5d35b3b9bbcc0a4f3178b4fb66da0236bceacf17f848c13220b60a62",
+    "observer_sha256": "3168af0b340104f1f7954538a5a3c1bc9410bee1f0a03cf999178ac5c3ae813d",
+    "oracle_lock_sha256": "9f40e20b5a1855de03760df68d14ae5455e019172b81173ba76dd0fba4699804",
+    "requested_frames": 0,
+    "requested_ticks": 1000,
+    "returncode": 0,
+    "schema": "stunts-dosbox-tick-receipt-v1",
+    "script_sha256": "ba96978e39891e25e0d25f49f9505fc35b3fedf028cd2681149dd906be306e54",
+    "seconds": 2.293942899967078
   },
   "palette_rgb6_sha256": "5e8dc3e868d0c6c25856455bef24acf291686b2b6ab2c7efd7b359188ed2bd9c",
-  "parent_corpus_replay": "rec_20260827_013930.pfreplay.json",
   "payload": "track-default.idxz",
-  "payload_sha256": "6f4f1a2a044ba70e3abd7021f931f7589be89b552e9f44d0e62d5c13ea124628",
-  "provenance_kind": "controlled-menu-branch",
-  "snapshot_cpu": {
-    "cs": 14451,
-    "ds": 15239,
-    "ip": 88,
-    "ss": 15239
-  },
-  "snapshot_guest_instructions": 50431559,
-  "snapshot_memory_sha256": "b69c8a1d3b85489f962567738c744c87f721695e8077303f6f212836cb03059f",
-  "source_base_snapshot_file": "rec_20260827_013930.pfreplay.json.base.pfsnapshot",
-  "source_base_snapshot_sha256": "f7ceebda6fec3d85f3ea3ed676d941bfa8dd87093743ba27c712d79d8a96dea3",
-  "source_canonical_schema": "pf-canonical-rm-v14",
-  "source_file_sha256": "50c0a11bbb6bb8eb7b0a819761bc3261ed85fd948c3d8a51c2ea8cc28adce0fe",
-  "source_program_sha256": "09fe56fc50bad3a28267e27acf46ba67a20eae0199764a5958e9892bf92be2c2",
-  "source_replay": "rec27_track_branch.pfreplay.json",
-  "sparse_mismatches": 0,
+  "payload_sha256": "6377334a172eb2541bc9754c6b19653d2f8dd90fb647ab14fc6454a07d73e164",
+  "schema": "stunts-original-screen-v2",
   "uncompressed_bytes": 64768,
   "width": 320
 }

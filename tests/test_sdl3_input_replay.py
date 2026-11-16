@@ -54,7 +54,7 @@ class Sdl3InputReplayTests(unittest.TestCase):
 
     def test_recorded_mouse_position_uses_original_device_bounds(self):
         # sdltst2 checkpoint 2699: devices.mouse=(102,130), last applied
-        # input seq2978. PortForge normalizes inclusive 0..320/0..200 bounds.
+        # input seq2978. the original capture normalizes inclusive 0..320/0..200 bounds.
         positions = [(0.31875, 0.6513888889), (0, 0), (1, 1)]
         events = [{"visible_tick": i, "channel": "dos.mouse.normalized",
                    "payload": {"u": u, "v": v, "buttons": i % 2}}

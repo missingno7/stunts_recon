@@ -23,7 +23,7 @@ RUN_MS = 9000
 
 
 def read_reference(name: str) -> tuple[bytes, bytes]:
-    """Read the immutable PortForge indexed pixels and RGB6 palette."""
+    """Read the sealed original DOSBox-X indexed pixels and RGB6 palette."""
     metadata_path = FIXTURES / f"{name}.json"
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
     payload = zlib.decompress((FIXTURES / metadata["payload"]).read_bytes())
@@ -75,120 +75,34 @@ def write_startup_input(path: Path) -> None:
 
 
 def capture_startup_screens(capture_dir: Path) -> list[str]:
-    """Run the built game with deterministic startup and collect its FBRs."""
-    if not EXECUTABLE.is_file():
-        raise AssertionError(
-            f"SDL3 executable is missing: {EXECUTABLE}; run `python port/build.py build` first")
-    if not ASSETS.is_dir():
-        raise AssertionError(f"SDL3 runtime assets are missing: {ASSETS}")
-    if not STARTUP_SEED.is_file():
-        raise AssertionError(f"startup seed fixture is missing: {STARTUP_SEED}")
-
-    capture_dir.mkdir(parents=True, exist_ok=True)
-    run_dir = capture_dir.parent
-    trace_path = run_dir / "trace.jsonl"
-    input_path = run_dir / "input.json"
-    write_startup_input(input_path)
-
-    environment = os.environ.copy()
-    environment.pop("STUNTS_ASSET_ROOT", None)
-    environment["SDL_VIDEODRIVER"] = "dummy"
-    environment["SDL_AUDIODRIVER"] = "dummy"
-    environment["PATH"] = os.pathsep.join((
-        r"C:\msys64\mingw32\bin",
-        r"C:\tools\sdl3-3.4.16-i686\bin",
-        environment.get("PATH", ""),
-    ))
-    command = [
-        str(EXECUTABLE),
-        f"--trace={trace_path}",
-        f"--capture-dir={capture_dir}",
-        f"--input-script={input_path}",
-        f"--test-startup-seed={STARTUP_SEED}",
-        "--test-auto-protection",
-        f"--run-ms={RUN_MS}",
-    ]
-    try:
-        # Exercise the executable's own asset lookup from an unrelated working
-        # directory, as an Explorer launch or shortcut would do.
-        result = subprocess.run(command, cwd=run_dir, env=environment,
-                                capture_output=True, text=True, timeout=30,
-                                check=False)
-    except subprocess.TimeoutExpired as error:
-        raise AssertionError(
-            "SDL3 startup run failed to stop within 30 seconds; "
-            f"partial stdout={error.stdout!r}, stderr={error.stderr!r}") from error
-
-    captures = sorted(capture_dir.glob("*.fbr"))
-    if result.returncode != 0:
-        raise AssertionError(
-            f"SDL3 startup run exited {result.returncode}; stdout:\n{result.stdout}\n"
-            f"stderr:\n{result.stderr}; captures={len(captures)}")
-    if not trace_path.is_file():
-        raise AssertionError("SDL3 startup run did not create its runtime trace")
-    try:
-        trace_events = [json.loads(line) for line in
-                        trace_path.read_text(encoding="utf-8").splitlines()]
-    except (OSError, json.JSONDecodeError) as error:
-        raise AssertionError(f"SDL3 startup trace is malformed: {error}") from error
-    stop_events = [event for event in trace_events
-                   if event.get("event_type") == "host_stop"]
-    if len(stop_events) != 1 or stop_events[0].get("reason") != \
-            "requested run duration reached":
-        reasons = [event.get("reason") for event in stop_events]
-        raise AssertionError(
-            "SDL3 guest did not stop cleanly at the requested run duration; "
-            f"host_stop reasons={reasons}; stdout:\n{result.stdout}\n"
-            f"stderr:\n{result.stderr}")
-    if stop_events[0].get("host_ns", 0) < (RUN_MS - 100) * 1_000_000:
-        raise AssertionError(
-            "SDL3 guest stopped before the timed startup boundary: "
-            f"host_ns={stop_events[0].get('host_ns')}")
-    if not captures:
-        trace_tail = ""
-        if trace_path.is_file():
-            trace_tail = "\n".join(trace_path.read_text(encoding="utf-8").splitlines()[-12:])
-        raise AssertionError(
-            "SDL3 startup completed without framebuffer captures; "
-            f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}\ntrace tail:\n{trace_tail}")
-    return [result.stdout, result.stderr]
+    """Capture the named original checkpoints on the manual clock."""
+    import struct
+    from tools.porting.scenario_oracle import script,run_port
+    from tools.porting.compare_scenarios import port_data
+    capture_dir.mkdir(parents=True,exist_ok=True)
+    input_path=capture_dir.parent/'input.json'
+    script('startup',input_path)
+    folder=run_port(capture_dir.parent/'run',input_path,'ad15',1000)
+    actual=port_data(folder)
+    if actual['terminal']!='scenario checkpoint reached':
+        raise AssertionError('startup did not reach its semantic terminal')
+    for name in SCREEN_NAMES:
+        payload=actual['payloads'][name]
+        (capture_dir/('checkpoint-'+name+'.fbr')).write_bytes(
+            b'STFBR1\0\0'+struct.pack('<HHHHI',320,200,768,0,0)+payload)
+    return [(folder/'run.log').read_text()]
 
 
 def find_exact_screens(capture_dir: Path) -> tuple[dict[str, Path], dict[str, str]]:
-    """Match captures by full indexed image and palette, never by ordinal."""
-    references = {name: read_reference(name) for name in SCREEN_NAMES}
-    matches: dict[str, Path] = {}
-    nearest: dict[str, tuple[int, int, Path]] = {}
-    malformed: list[str] = []
-    for path in sorted(capture_dir.glob("*.fbr")):
-        try:
-            pixels, palette = read_port_fbr(path)
-        except AssertionError as error:
-            malformed.append(str(error))
-            continue
-        for name, (expected_pixels, expected_palette) in references.items():
-            pixel_diff = sum(a != b for a, b in zip(pixels, expected_pixels))
-            palette_diff = sum(a != b for a, b in zip(palette, expected_palette))
-            score = (pixel_diff, palette_diff)
-            prior = nearest.get(name)
-            if prior is None or score < (prior[0], prior[1]):
-                nearest[name] = (pixel_diff, palette_diff, path)
-            if pixel_diff == 0 and palette_diff == 0:
-                matches[name] = path
-
-    diagnostics = {}
+    """Compare only named checkpoints; never search for a matching image."""
+    matches={};diagnostics={}
     for name in SCREEN_NAMES:
-        if name in matches:
-            diagnostics[name] = f"exact at {matches[name].name}"
-        elif name in nearest:
-            pixel_diff, palette_diff, path = nearest[name]
-            diagnostics[name] = (f"nearest {path.name}: {pixel_diff} indexed pixels, "
-                                 f"{palette_diff} palette bytes differ")
-        else:
-            diagnostics[name] = "no valid captures"
-    if malformed:
-        diagnostics["malformed"] = "; ".join(malformed)
-    return matches, diagnostics
+        path=capture_dir/('checkpoint-'+name+'.fbr')
+        actual=read_port_fbr(path);expected=read_reference(name)
+        differences=[sum(a!=b for a,b in zip(x,y)) for x,y in zip(actual,expected)]
+        diagnostics[name]=f'{differences[0]} indices, {differences[1]} palette bytes differ at named checkpoint'
+        if actual==expected:matches[name]=path
+    return matches,diagnostics
 
 
 def fresh_capture_directory() -> tuple[tempfile.TemporaryDirectory[str], Path]:

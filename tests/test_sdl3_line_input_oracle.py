@@ -102,6 +102,8 @@ def compile_host_probe(overlay: Path) -> tuple[Path, dict[str, str]]:
 extern void port_guest_unwind(const char *symbol);
 /* Observer-only hook from the production overlay, inert in this isolated TU. */
 void port_input_script_phase(unsigned phase) { (void)phase; }
+void port_input_script_scope_enter(unsigned phase) { (void)phase; }
+void port_input_script_scope_leave(void) { }
 void port_guest_yield(void)
 {
     port_guest_unwind("drawing-only line-input oracle entered a tick wait");

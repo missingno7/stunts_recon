@@ -26,23 +26,23 @@ class Sdl3FramebufferTests(unittest.TestCase):
     def tearDownClass(cls) -> None:
         cls._temporary.cleanup()
 
-    def assert_screen_matches_portforge(self, name: str) -> None:
+    def assert_screen_matches_original(self, name: str) -> None:
         self.assertIn(name, SCREEN_NAMES)
         self.assertIn(
             name, self.matches,
-            f"{name} screen did not match the immutable PortForge reference; "
+            f"{name} screen did not match the immutable original DOSBox-X reference; "
             f"{self.diagnostics[name]}; captures={len(list(self.capture_dir.glob('*.fbr')))}; "
             f"run output={self.run_output!r}",
         )
 
-    def test_splash_matches_portforge_exactly(self) -> None:
-        self.assert_screen_matches_portforge("splash")
+    def test_splash_matches_original_exactly(self) -> None:
+        self.assert_screen_matches_original("splash")
 
-    def test_title_matches_portforge_exactly(self) -> None:
-        self.assert_screen_matches_portforge("title")
+    def test_title_matches_original_exactly(self) -> None:
+        self.assert_screen_matches_original("title")
 
-    def test_menu_matches_portforge_exactly(self) -> None:
-        self.assert_screen_matches_portforge("menu")
+    def test_menu_matches_original_exactly(self) -> None:
+        self.assert_screen_matches_original("menu")
 
 
 if __name__ == "__main__":

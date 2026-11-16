@@ -3,6 +3,11 @@
 #include "../../port/input_script.c"
 
 static int16_t mouse_x, mouse_y;
+void port_guest_unwind(const char *reason)
+{
+    fprintf(stderr, "unexpected script scope failure: %s\n", reason);
+    abort();
+}
 
 void port_input_mouse_set(int16_t x, int16_t y)
 {
