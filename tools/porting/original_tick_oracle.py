@@ -159,6 +159,8 @@ def capture(args):
     script={'events':[]} if semantic else input_ticks(raw_script)
     out.mkdir(parents=True)
     shutil.copytree(ROOT/'assets',out/'assets',ignore=shutil.ignore_patterns('diagnostics'))
+    if getattr(args,'replay',None):
+        shutil.copyfile(args.replay,out/'assets/CORPUS.RPL')
     (out/'assets/ORIGINAL.EXE').write_bytes(unpacked)
     (out/'original.exe').write_bytes(unpacked)
     (out/'bindings.json').write_text(json.dumps(hooks,indent=2)+'\n',encoding='utf-8')
@@ -171,6 +173,9 @@ def capture(args):
            f'LIMIT {args.ticks}',f'ENTRY {entry_cs:x} {entry_ip:x}']
     lines += [f'BYTE {i} {b:x}' for i,b in enumerate(unpacked[at:at+16])]
     lines += [f'HOOK {h["address"]:x} {h["name"]}' for h in hooks['hooks']]
+    if getattr(args,'no_rasters',False):lines.append('NO_RASTERS')
+    if getattr(args,'steps',0):lines.append(f'STEP_LIMIT {args.steps}')
+    if getattr(args,'simulation_boundaries',False):lines.append('SIMULATION_BOUNDARIES')
     if semantic or getattr(args,'boundaries',False):
         from tools.porting.boundary_bindings import configuration
         extra,reviewed=configuration(out/'boundaries.jsonl',raw_script if semantic else {'events':[]},getattr(args,'frames',0),getattr(args,'graphics',False))
@@ -182,7 +187,7 @@ def capture(args):
             lines += [f'KEY {tick} {s}' for s in payload]
         else:lines.append(f'MOUSE {tick} {payload["u"]:.12g} {payload["v"]:.12g} {payload["buttons"]}')
     (out/'observer.txt').write_text('\n'.join(lines)+'\n')
-    (out/'safety.txt').write_text('60000 exit\n')
+    (out/'safety.txt').write_text(f'{max(60000,int(args.timeout*1000))} exit\n')
     config=f'''[sdl]
 fullscreen=false
 output=surface
@@ -213,8 +218,12 @@ exit
     import time
     started=time.perf_counter()
     with (out/'run.log').open('w') as log:
-        result=subprocess.run(command,cwd=out,env=env,stdout=log,stderr=subprocess.STDOUT,
-            timeout=args.timeout,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+        try:
+            result=subprocess.run(command,cwd=out,env=env,stdout=log,stderr=subprocess.STDOUT,
+                timeout=args.timeout,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+        except subprocess.TimeoutExpired:
+            if not getattr(args,'allow_partial',False):raise
+            result=argparse.Namespace(returncode=-1)
     receipt=dict(schema='stunts-dosbox-tick-receipt-v1',returncode=result.returncode,
         seconds=time.perf_counter()-started,audio=args.audio,requested_ticks=args.ticks,cycles=args.cycles,
         executable_sha256=hashlib.sha256(unpacked).hexdigest(),dosbox_sha256=digest(args.dosbox),
@@ -223,16 +232,27 @@ exit
         observer_sha256=digest(ROOT/'tools/porting/dosbox_observer/stunts_observer.inc'),
         bindings_sha256=digest(out/'bindings.json'),capture_sha256=digest(out/'original.jsonl'),
         frames_sha256=digest(out/'original.frames'))
+    if getattr(args,'replay',None):
+        receipt.update(replay_sha256=digest(args.replay),requested_steps=getattr(args,'steps',0),
+                       no_rasters=getattr(args,'no_rasters',False),timeout_seconds=args.timeout)
     if (out/'boundaries.jsonl').exists():
         receipt.update(boundary_observer_sha256=digest(ROOT/'tools/porting/dosbox_observer/stunts_boundary.inc'),
             boundary_bindings_sha256=digest(out/'boundary-bindings.json'),
             boundary_capture_sha256=digest(out/'boundaries.jsonl'),requested_frames=getattr(args,'frames',0))
     (out/'receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
     from tools.porting.compare_tick_streams import read_rows
-    rows=read_rows(out/'original.jsonl')
+    if result.returncode and getattr(args,'allow_partial',False):
+        rows=[]
+        with (out/'original.jsonl').open() as stream:
+            for line in stream:
+                try:rows.append(json.loads(line))
+                except json.JSONDecodeError:continue
+    else:rows=read_rows(out/'original.jsonl')
     from tools.porting.capture_storage import byte_size
     print(json.dumps(dict(output=str(out),seconds=receipt['seconds'],bytes_written=byte_size(out),end=rows[-1])))
-    if result.returncode or rows[-1].get('kind')!='end':raise RuntimeError(f'incomplete DOSBox capture: {out}')
+    if result.returncode or rows[-1].get('kind')!='end':
+        if getattr(args,'allow_partial',False):return out
+        raise RuntimeError(f'incomplete DOSBox capture: {out}')
     if semantic and getattr(args,'frames',0) and rows[-1].get('terminal')!='frame-limit':
         raise RuntimeError(f'semantic scenario failed to reach its requested game frame: {out}')
     return out

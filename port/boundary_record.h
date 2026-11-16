@@ -28,6 +28,7 @@ void port_boundary_end(PortBoundaryCall *,uint32_t,int);
 void port_boundary_sim_begin(uint16_t frame);
 void port_boundary_sim_end(void);
 void port_boundary_frame_limit(uint16_t frame);
+void port_boundary_simulation_only(int enabled);
 unsigned port_boundary_scope(void);
 uint32_t port_boundary_frame(void);
 void port_boundary_graphics_enable(int enabled);

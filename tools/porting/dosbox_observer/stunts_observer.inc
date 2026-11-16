@@ -7,9 +7,11 @@
 #include <iomanip>
 #include <unordered_map>
 #include <cctype>
+#include <chrono>
 extern void Mouse_CursorMoved(float,float,float,float,bool);
 extern void Mouse_StuntsAcceptancePosition(uint16_t,uint16_t,uint8_t);
 extern void KEYBOARD_AddBuffer(uint16_t);
+static bool stunts_no_rasters=false;
 static uint32_t key(uint16_t cs,uint16_t ip) {return (uint32_t(cs)<<16)|ip;}
 static uint32_t physical(uint16_t cs,uint16_t ip) {return (uint32_t(cs)<<4)+ip;}
 static void BoundarySimStart();
@@ -30,6 +32,7 @@ struct Capture {
     std::vector<Pending> pending;
     std::vector<uint8_t> filter=std::vector<uint8_t>(0x20000,0);
     uint64_t tick=0, sequence=0, frame=0; uint32_t timer, driver_pointer, state;
+    std::chrono::steady_clock::time_point wall_start=std::chrono::steady_clock::now();
     uint16_t driver_segment=0, driver_offset=0;
     uint32_t busy,sprite1;
     uint16_t voice_near,chunk_near;
@@ -55,12 +58,14 @@ struct Capture {
     uint16_t r16(uint32_t a) const { return r8(a)|(uint16_t(r8(a+1))<<8); }
     void begin(const char* kind) {
         out<<"{\"kind\":\""<<kind<<"\",\"raw_tick\":"<<tick<<",\"sequence\":"<<sequence++;
+        out<<",\"wall_us\":"<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now()-wall_start).count();
     }
     void update_driver() {
         driver_offset=r16(driver_pointer);driver_segment=r16(driver_pointer+2);
         if(driver_segment) for(unsigned e=0;e<=0x42;e+=3) site(key(driver_segment,driver_offset+e));
     }
     void snapshot(const std::string& reason) {
+        if(stunts_no_rasters)return;
         std::vector<uint8_t> data(64768);
         // Peek host VRAM: guest aperture reads charge VGA wait states and can
         // change latches. DOSBox-X's compatible chain-4 map is grounded in
@@ -250,6 +255,7 @@ static void StuntsInit() {
     while(fgets(line,sizeof(line),f)) {
         unsigned a,b,c;float u,v;
         if(BoundaryConfigure(line))continue;
+        if(strncmp(line,"NO_RASTERS",10)==0){stunts_no_rasters=true;continue;}
         if(sscanf(line,"OUTPUT %511[^\n]",prefix)==1)continue;
         if(sscanf(line,"ASSETS %511[^\n]",assets)==1)continue;
         if(sscanf(line,"AUDIO %15s",audio)==1)continue;

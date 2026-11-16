@@ -20,6 +20,8 @@ static std::vector<SemanticInput> boundary_inputs;
 static std::vector<uint8_t> boundary_keyboard;
 static uint32_t boundary_input_site=0;
 static unsigned boundary_phase=0,boundary_key=0,boundary_scope=0,boundary_frame=0,boundary_limit=0;
+static unsigned boundary_step_limit=0,boundary_steps=0;
+static bool boundary_simulation_only=false;
 static unsigned BoundaryScope(){return boundary_scope;}
 static uint64_t boundary_order=0;
 static std::ofstream boundary_output;
@@ -68,6 +70,7 @@ static std::vector<uint8_t> BoundaryGraphic(const BoundaryPending& p,int type){
 static bool BoundaryConfigure(const char* line) {
     char name[100],label[100],path[512];unsigned pc,n,bits,mask,size,read,offset,phase,at,buttons;int argument,code;float u,v;
     if(strncmp(line,"SCOPED_PHASES",13)==0){boundary_scoped=true;return true;}
+    if(strncmp(line,"SIMULATION_BOUNDARIES",21)==0){boundary_simulation_only=true;return true;}
     if(sscanf(line,"EVAL_SCORE %u %x",&n,&offset)==2){boundary_evaluation_score=n;boundary_race_stats=offset;return true;}
     if(sscanf(line,"VISIT %u",&n)==1){boundary_input_visit=n;return true;}
     if(sscanf(line,"SCHECK %u %u %u %99s",&phase,&at,&n,label)==4){
@@ -90,6 +93,7 @@ static bool BoundaryConfigure(const char* line) {
     if(sscanf(line,"UIPOLL %x",&pc)==1){boundary_ui_poll=pc;return true;}
     if(sscanf(line,"INPUTSITE %x",&boundary_input_site)==1)return true;
     if(sscanf(line,"FRAME_LIMIT %u",&boundary_limit)==1)return true;
+    if(sscanf(line,"STEP_LIMIT %u",&boundary_step_limit)==1)return true;
     if(sscanf(line,"SKEY %u %u %d",&phase,&at,&code)==3){SemanticInput e{phase,at,code,0,0,0};e.visit=boundary_input_visit;boundary_inputs.push_back(e);return true;}
     if(sscanf(line,"SMOUSE %u %u %f %f %u",&phase,&at,&u,&v,&buttons)==5){SemanticInput e{phase,at,-1,u,v,buttons};e.visit=boundary_input_visit;boundary_inputs.push_back(e);return true;}
     return false;
@@ -110,7 +114,10 @@ static void BoundarySimStart() {
     boundary_frame=stunts->r16(stunts->state+320);boundary_scope=1;
     if(boundary_limit && boundary_frame>=boundary_limit && mem_readb(stunts->state+1013))BoundaryFinishRun();
 }
-static void BoundarySimEnd() {boundary_scope=2;boundary_frame=stunts->r16(stunts->state+320);}
+static void BoundarySimEnd() {
+    boundary_scope=2;boundary_frame=stunts->r16(stunts->state+320);
+    if(boundary_step_limit && ++boundary_steps>=boundary_step_limit)BoundaryFinishRun();
+}
 static void BoundaryKeyConsumed() {++boundary_key;}
 static void BoundaryScan(uint8_t value) {
     if(boundary_keyboard.empty())return;
@@ -225,6 +232,7 @@ static void BoundaryBefore(uint32_t pc) {
     if(boundary_input_site && pc==BoundaryPC(boundary_input_site))BoundaryDeliver(6,stunts->r16(stunts->target_frame));
     if(!boundary_output || !boundary_pending.empty() || stunts->callback_slot>=0)return;
     for(const auto& spec:boundary_specs)if(pc==BoundaryPC(spec.cookie)) {
+        if(boundary_simulation_only && boundary_scope!=1)break;
         if(spec.graphics && (boundary_phase!=5 || stunts->r16(stunts->state+320)>22))break;
         BoundaryPending p{&spec,SegValue(ss),reg_sp,key(mem_readw(SegPhys(ss)+reg_sp+2),mem_readw(SegPhys(ss)+reg_sp)),
             boundary_scope?boundary_frame:unsigned(stunts->r16(stunts->state+320)),boundary_scope,

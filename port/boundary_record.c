@@ -8,6 +8,7 @@ static uint32_t s_frame;
 static uint16_t s_limit;
 static uint64_t s_order;
 static int s_graphics;
+static int s_simulation_only;
 extern unsigned port_input_script_phase_value(void);
 extern void port_input_script_context(unsigned *,unsigned *,uint64_t *);
 extern void port_timer_observation(uint64_t *,int *);
@@ -67,6 +68,7 @@ uint64_t port_boundary_graphics_source(const void *data){
     return bytes_hash((const uint8_t*)shape+16,size,UINT64_C(14695981039346656037));
 }
 void port_boundary_frame_limit(uint16_t frame){s_limit=frame;}
+void port_boundary_simulation_only(int enabled){s_simulation_only=enabled;}
 void port_boundary_sim_begin(uint16_t frame){
     if(s_limit && frame>=s_limit && port_game_inputmode_snapshot()) {
         port_guest_request_stop("requested game frame reached");port_guest_check_stop();
@@ -78,7 +80,7 @@ int port_boundary_begin(PortBoundaryCall *call,const char *name,const uint32_t *
     unsigned argc,unsigned pointer_mask,const PortBoundaryRegion *regions,unsigned count)
 {
     unsigned i;uint64_t tick;int slot;
-    if(!s_output)return 0;
+    if(!s_output || (s_simulation_only && s_scope!=1))return 0;
     ++s_depth;
     port_timer_observation(&tick,&slot);
     if(s_depth>1 || slot>=0)return -1; /* cross-layer calls, not implementation decomposition */
