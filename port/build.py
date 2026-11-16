@@ -100,9 +100,21 @@ static int16_t port_game_wall_hit_threshold(int16_t angle)
     return port_game_s16_from_u16((uint16_t)(base << 8));
 }
 
+/* Original update_car_speed load7e5e..7e6d calls the unsigned long
+   divider even for a negative sign-extended speed delta. The mass is an
+   unsigned word; preserve MSC's conversion before truncation and SAR. */
+static int16_t port_game_engine_delta(int16_t delta, uint16_t mass)
+{
+    uint32_t quotient = (uint32_t)((int32_t)delta * 25) / mass;
+    int16_t word = port_game_s16_from_u16((uint16_t)quotient);
+    return word >= 0 ? word / 2 : -((-(int32_t)word + 1) / 2);
+}
+
 '''
     transformed = source.replace(include, include + helpers, 1)
     replacements = (
+        ("speedDelta = (I16)((I32)speedDelta * 25 / carSetup->car_mass) >> 1;",
+         "speedDelta = port_game_engine_delta(speedDelta, carSetup->car_mass);"),
         ("threshold = (100 - ((70 * i) >> 8)) << Q8_FRACTION_BITS;",
          "threshold = port_game_wall_hit_threshold(i); "
          "/* PORT_BUILD: locked IMUL/SAR and unsigned speed comparison. */"),
