@@ -66,6 +66,7 @@ class StaticAuditOriginalTests(unittest.TestCase):
 #include <stddef.h>
 #include <errno.h>
 #include <stdlib.h>
+#include <string.h>
 #define PORT_FULL_PATH_BYTES 3072u
 #define PORT_FILE_CHUNK_BYTES 0x4000u
 static int fail_close, short_write, fail_create, removed;
@@ -74,6 +75,8 @@ static FILE *open_save_write(const char *p,char *a,size_t n){
  if(fail_create){errno=fail_create==5?EACCES:ENOENT;return NULL;}
  a[0]='X';a[1]=0;return tmpfile();}
 static int SDL_RemovePath(const char *p){++removed;return 1;}
+static void unlink_save_destination(const char *p){if(*p)SDL_RemovePath(p);}
+static int save_destination_readonly(const char *p){return 0;}
 static size_t audit_write(const void *p,size_t s,size_t n,FILE *f){
  return fwrite(p,s,n-short_write,f);}
 static int audit_close(FILE *f){int r=fclose(f);return fail_close?EOF:r;}

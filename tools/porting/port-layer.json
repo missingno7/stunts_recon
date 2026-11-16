@@ -5,12 +5,12 @@
   "inputs": {
     "docs/porting/asm-migration.json": "4f58db25b0dcfd4ce4a0898f284fc832cdf45db3873dddd265ed6280d8392f07",
     "docs/porting/platform-boundary.json": "542c39904dc175d835fde0124f39728e22cd3f19abffc9af3defb48cebd7274f",
-    "port/semantic-contracts.json": "c564dedca6ff1d5eac96e09f152f21acc70ac73bd4e3cb309c2ba9e9a151fb12",
+    "port/semantic-contracts.json": "ec8fc9b7192ac384543058f28f836479e62013f84646036d97e84368d9854cb8",
     "tools/porting/semantic_audit.py": "897d65876cbcea90e7e4a4a825f372935919447dd6491e519c1b3b67adf34e3b",
     "tools/porting/platform-services.json": "b1bce6e9cf4dd1f7e0f8883c45d3958f6bfd3631863dbbe353cf0c3bb9b90adf",
     "tools/porting/port_layer.py": "f086f6fc3a80a6abc23d95592644344e1b10d62a2d0d4cd157b56ce26244bda6",
-    "tools/porting/semantic_mapping.py": "4f6175f37bc483640cb562a720fc358a0a30e83c4ec7ad4b38a8aabccbecafb1",
-    "tools/porting/semantic_detectors.py": "8af99a9d36ec55228427dbc14d961a3fb76911934d18b39904649f373cabe431"
+    "tools/porting/semantic_mapping.py": "79deb6185449a53f38a2321c6376154eb12ce533970b720adb953588f3b29cc0",
+    "tools/porting/semantic_detectors.py": "223ea48f88b5406119777afde88f44a912e153c43486d9b3a554113b0533215f"
   },
   "rows": [
     {
@@ -250,8 +250,13 @@
       "id": "asm:shpthunk::_file_load_shape2d_res_fatal_thunk",
       "kind": "asm",
       "name": "file_load_shape2d_res_fatal_thunk",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 145480,
+      "original_extent": {
+        "start": 145480,
+        "end": 145485,
+        "size": 5,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/5",
       "category": "PORTABLE_ALGORITHM",
       "entry_abi": "FAR",
@@ -458,7 +463,7 @@
           "source": "port/file.c",
           "name": "savefilez",
           "signature": "int savefilez(const char *filename, const void *source,\n                     unsigned long length);",
-          "line": 697,
+          "line": 719,
           "match_name": "savefilez",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -496,7 +501,17 @@
         ],
         "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
       },
-      "prior_original_tests": [],
+      "prior_original_tests": [
+        {
+          "contract": "save-create-cleanup",
+          "scope": "finite-service-cases",
+          "tests": [
+            "tests/test_sdl3_static_candidates.py::test_save_create_cleanup_matches_real_dosbox_filesystem_effects"
+          ],
+          "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim."
+        }
+      ],
+      "evidence_basis": "named finite original data/execution/scenario cases; scope retained below, not the whole input domain",
       "execution_coverage": {
         "classification": "executed_in_agreeing_original_scenarios",
         "mapping": "portable-function-name",
@@ -871,7 +886,7 @@
           "source": "port/platform.c",
           "name": "abortmessage",
           "signature": "void abortmessage(const char *format, ...);",
-          "line": 212,
+          "line": 214,
           "match_name": "abortmessage",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -1079,7 +1094,7 @@
           "source": "port/file.c",
           "name": "findnext",
           "signature": "const char *findnext(void);",
-          "line": 556,
+          "line": 557,
           "match_name": "findnext",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -1390,7 +1405,7 @@
           "source": "port/platform.c",
           "name": "criterr",
           "signature": "int16_t criterr(int16_t (*handler)(void));",
-          "line": 125,
+          "line": 127,
           "match_name": "criterr",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -1574,7 +1589,7 @@
           "source": "port/input.c",
           "name": "get_joy_flags",
           "signature": "int16_t get_joy_flags(void);",
-          "line": 748,
+          "line": 809,
           "match_name": "get_joy_flags",
           "implementation_kind": "portable_manual_c",
           "match_basis": "historical_name_exact"
@@ -1582,16 +1597,23 @@
       ],
       "mapping_status": "name_only_unique",
       "original_module": "lib/kbjoy.ASM",
-      "exercised": false,
-      "status": "not exercised",
+      "exercised": true,
+      "status": "exercised and agrees",
       "evidence": [],
       "capture_contract": null,
-      "prior_original_tests": [],
-      "reachability": {
-        "runtime_entry": null,
-        "scenario": "keyboard/mouse/joystick device cases",
-        "reason": "Runtime reachability not established by this inventory. A candidate scenario may reach the path, but its ABI/span or original/native observation mapping is absent; no comparable coverage is claimed."
-      },
+      "prior_original_tests": [
+        {
+          "contract": "absent-joystick-contract",
+          "scope": "finite-service-cases",
+          "tests": [
+            "tests/test_sdl3_static_candidates.py::test_absent_joystick_calibration_reset_and_saved_axis_match_original",
+            "tests/test_sdl3_static_candidates.py::test_no_device_dosbox_calibration_matches_native",
+            "tests/test_sdl3_static_candidates.py::test_replay_playback_prefix_does_not_sample_live_joystick"
+          ],
+          "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim."
+        }
+      ],
+      "evidence_basis": "named finite original data/execution/scenario cases; scope retained below, not the whole input domain",
       "execution_coverage": {
         "classification": "executed_in_agreeing_original_scenarios",
         "mapping": "portable-function-name",
@@ -1624,7 +1646,7 @@
           "source": "port/input.c",
           "name": "joystate",
           "signature": "int16_t joystate(void);",
-          "line": 821,
+          "line": 875,
           "match_name": "joystate",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -1690,7 +1712,7 @@
           "source": "port/input.c",
           "name": "normkeyi",
           "signature": "int16_t normkeyi(void);",
-          "line": 700,
+          "line": 714,
           "match_name": "normkeyi",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -1787,7 +1809,7 @@
           "source": "port/input.c",
           "name": "interpretsub",
           "signature": "void interpretsub(uint16_t key, void (*callback)(void));",
-          "line": 654,
+          "line": 668,
           "match_name": "interpretsub",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -2022,7 +2044,7 @@
           "source": "port/input.c",
           "name": "reset_joystick_selection",
           "signature": "void reset_joystick_selection(void);",
-          "line": 764,
+          "line": 828,
           "match_name": "reset_joystick_selection",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -2030,16 +2052,23 @@
       ],
       "mapping_status": "address_alias_unique",
       "original_module": "lib/kbjoy.ASM",
-      "exercised": false,
-      "status": "not exercised",
+      "exercised": true,
+      "status": "exercised and agrees",
       "evidence": [],
       "capture_contract": null,
-      "prior_original_tests": [],
-      "reachability": {
-        "runtime_entry": null,
-        "scenario": "keyboard/mouse/joystick device cases",
-        "reason": "Runtime reachability not established by this inventory. A candidate scenario may reach the path, but its ABI/span or original/native observation mapping is absent; no comparable coverage is claimed."
-      },
+      "prior_original_tests": [
+        {
+          "contract": "absent-joystick-contract",
+          "scope": "finite-service-cases",
+          "tests": [
+            "tests/test_sdl3_static_candidates.py::test_absent_joystick_calibration_reset_and_saved_axis_match_original",
+            "tests/test_sdl3_static_candidates.py::test_no_device_dosbox_calibration_matches_native",
+            "tests/test_sdl3_static_candidates.py::test_replay_playback_prefix_does_not_sample_live_joystick"
+          ],
+          "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim."
+        }
+      ],
+      "evidence_basis": "named finite original data/execution/scenario cases; scope retained below, not the whole input domain",
       "execution_coverage": {
         "classification": "never_executed",
         "mapping": "portable-function-name",
@@ -2069,7 +2098,7 @@
           "source": "port/input.c",
           "name": "convertjoy",
           "signature": "int16_t convertjoy(int16_t flags);",
-          "line": 754,
+          "line": 818,
           "match_name": "convertjoy",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -2116,7 +2145,7 @@
           "source": "port/input.c",
           "name": "replay_axis_value",
           "signature": "int8_t replay_axis_value(void);",
-          "line": 771,
+          "line": 835,
           "match_name": "replay_axis_value",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -2124,16 +2153,23 @@
       ],
       "mapping_status": "address_alias_unique",
       "original_module": "lib/kbjoy.ASM",
-      "exercised": false,
-      "status": "not exercised",
+      "exercised": true,
+      "status": "exercised and agrees",
       "evidence": [],
       "capture_contract": null,
-      "prior_original_tests": [],
-      "reachability": {
-        "runtime_entry": null,
-        "scenario": "keyboard/mouse/joystick device cases",
-        "reason": "Runtime reachability not established by this inventory. A candidate scenario may reach the path, but its ABI/span or original/native observation mapping is absent; no comparable coverage is claimed."
-      },
+      "prior_original_tests": [
+        {
+          "contract": "absent-joystick-contract",
+          "scope": "finite-service-cases",
+          "tests": [
+            "tests/test_sdl3_static_candidates.py::test_absent_joystick_calibration_reset_and_saved_axis_match_original",
+            "tests/test_sdl3_static_candidates.py::test_no_device_dosbox_calibration_matches_native",
+            "tests/test_sdl3_static_candidates.py::test_replay_playback_prefix_does_not_sample_live_joystick"
+          ],
+          "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim."
+        }
+      ],
+      "evidence_basis": "named finite original data/execution/scenario cases; scope retained below, not the whole input domain",
       "execution_coverage": {
         "classification": "never_executed",
         "mapping": "portable-function-name",
@@ -2163,7 +2199,7 @@
           "source": "port/input.c",
           "name": "flush_stdin",
           "signature": "void flush_stdin(void);",
-          "line": 642,
+          "line": 656,
           "match_name": "flush_stdin",
           "implementation_kind": "portable_manual_c",
           "match_basis": "historical_name_exact"
@@ -2210,7 +2246,7 @@
           "source": "port/input.c",
           "name": "testkey",
           "signature": "int16_t testkey(void);",
-          "line": 634,
+          "line": 648,
           "match_name": "testkey",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -2260,7 +2296,7 @@
           "source": "port/input.c",
           "name": "purgekey",
           "signature": "int16_t purgekey(void);",
-          "line": 732,
+          "line": 746,
           "match_name": "purgekey",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -2344,7 +2380,7 @@
           "source": "port/input.c",
           "name": "normkey",
           "signature": "int16_t normkey(void);",
-          "line": 717,
+          "line": 731,
           "match_name": "normkey",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -2626,7 +2662,7 @@
           "source": "port/input.c",
           "name": "keyboard_exit_handler",
           "signature": "void keyboard_exit_handler(void);",
-          "line": 845,
+          "line": 899,
           "match_name": "keyboard_exit_handler",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -2673,7 +2709,7 @@
           "source": "port/input.c",
           "name": "keystate",
           "signature": "int16_t keystate(int16_t scan_code);",
-          "line": 742,
+          "line": 756,
           "match_name": "keystate",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -2723,7 +2759,7 @@
           "source": "port/input.c",
           "name": "kb_init_interrupt",
           "signature": "void kb_init_interrupt(void);",
-          "line": 613,
+          "line": 627,
           "match_name": "kb_init_interrupt",
           "implementation_kind": "portable_manual_c",
           "match_basis": "historical_name_exact"
@@ -3082,7 +3118,7 @@
           "source": "port/input.c",
           "name": "keyboard_shift_checking1",
           "signature": "void keyboard_shift_checking1(void);",
-          "line": 810,
+          "line": 864,
           "match_name": "keyboard_shift_checking1",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -3091,7 +3127,7 @@
           "source": "port/input.c",
           "name": "kb_shift_checking1",
           "signature": "void kb_shift_checking1(void);",
-          "line": 816,
+          "line": 870,
           "match_name": "kb_shift_checking1",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_inventory"
@@ -3138,7 +3174,7 @@
           "source": "port/input.c",
           "name": "kb_shift_checking2",
           "signature": "void kb_shift_checking2(void);",
-          "line": 839,
+          "line": 893,
           "match_name": "kb_shift_checking2",
           "implementation_kind": "portable_manual_c",
           "match_basis": "historical_name_exact"
@@ -3188,7 +3224,7 @@
           "source": "port/platform.c",
           "name": "initialize_div0",
           "signature": "void initialize_div0(void);",
-          "line": 131,
+          "line": 133,
           "match_name": "initialize_div0",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -3855,7 +3891,7 @@
           "source": "port/file.c",
           "name": "loadfileat",
           "signature": "void *loadfileat(const char *filename, void *destination);",
-          "line": 798,
+          "line": 829,
           "match_name": "loadfileat",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -3905,7 +3941,7 @@
           "source": "port/file.c",
           "name": "loadfileatz",
           "signature": "void *loadfileatz(const char *filename, void *destination);",
-          "line": 688,
+          "line": 710,
           "match_name": "loadfileatz",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -7105,13 +7141,30 @@
       "id": "asm:patlines::sprite_setup1_from_arg_pointer",
       "kind": "asm",
       "name": "sprite_setup1_from_arg_pointer",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 154358,
+      "original_extent": {
+        "start": 154358,
+        "end": 154388,
+        "size": 30,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/157",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "entry_abi": "public label; exact ABI/boundary not cross-verified",
-      "portable": [],
-      "mapping_status": "unmapped",
+      "portable": [
+        {
+          "source": "port/sprite.c",
+          "name": "sprite_setup1_from_arg_pointer",
+          "line": 242,
+          "signature": "void sprite_setup1_from_arg_pointer(const PortSprite *sprite);",
+          "body_sha256": "54277090bbbf8719559b245ddf47635320f63f9ee55c5673b24290c4627c054e",
+          "global_dependency_candidates": [
+            "PortSprite"
+          ],
+          "aggregate_dependencies": []
+        }
+      ],
+      "mapping_status": "accepted_public_exact_name_candidate",
       "original_module": "lib/patlines.ASM",
       "exercised": false,
       "status": "not exercised",
@@ -7140,8 +7193,13 @@
       "id": "asm:whlrast::polycmn",
       "kind": "asm",
       "name": "polycmn",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 137226,
+      "original_extent": {
+        "start": 137226,
+        "end": 137677,
+        "size": 451,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/158",
       "category": "LEGACY_SOFTWARE_RENDERER",
       "entry_abi": "public label; exact ABI/boundary not cross-verified",
@@ -8491,8 +8549,13 @@
       "id": "asm:scalblit::shape2d_scale_blit_tail",
       "kind": "asm",
       "name": "shape2d_scale_blit_tail",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 155353,
+      "original_extent": {
+        "start": 155353,
+        "end": 155464,
+        "size": 111,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/183",
       "category": "PORTABLE_ALGORITHM",
       "entry_abi": "public label; exact ABI/boundary not cross-verified",
@@ -11641,8 +11704,13 @@
       "id": "asm:library_abs::_abs",
       "kind": "asm",
       "name": "abs",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 124296,
+      "original_extent": {
+        "start": 124296,
+        "end": 124318,
+        "size": 22,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/243",
       "category": "HISTORICAL_CRT-DEAD-NOP",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -12614,15 +12682,18 @@
           "name": "int86",
           "line": 37,
           "signature": "int int86(int interrupt_number, void *input, void *output);",
-          "body_sha256": "76629b9e5a819ed854e9583ec9eb8358e08b92cdb4bdf70799c19b8f6be041bf",
+          "body_sha256": "dca3b520d2cf85bb973917d5bce98a3b2f8cb286c9e4feb35ea0fd694e38d734",
           "global_dependency_candidates": [
             "int16_t",
             "mousehorscale",
             "output",
             "pixels",
-            "uint16_t"
+            "uint16_t",
+            "width"
           ],
-          "aggregate_dependencies": []
+          "aggregate_dependencies": [
+            "cflag"
+          ]
         }
       ],
       "mapping_status": "accepted_public_exact_name_candidate",
@@ -12640,7 +12711,18 @@
         "service": "INT15 C201/INT33",
         "scope": "original finite request/result register cases, not arbitrary interrupts"
       },
-      "prior_original_tests": [],
+      "prior_original_tests": [
+        {
+          "contract": "msc-int86-ax-result",
+          "scope": "finite-service-cases",
+          "tests": [
+            "tests/test_sdl3_static_candidates.py::test_int86_returns_original_ax_and_register_buffer_including_alias",
+            "tests/test_sdl3_static_candidates.py::test_int86_call_inventory_covers_every_retained_source_call"
+          ],
+          "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim."
+        }
+      ],
+      "evidence_basis": "named finite original data/execution/scenario cases; scope retained below, not the whole input domain",
       "execution_coverage": {
         "classification": "executed_in_agreeing_original_scenarios",
         "mapping": "portable-function-name",
@@ -13176,8 +13258,13 @@
       "id": "asm:library_ldiv::__aFldiv",
       "kind": "asm",
       "name": "aFldiv",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 124988,
+      "original_extent": {
+        "start": 124988,
+        "end": 125144,
+        "size": 156,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/284",
       "category": "PORTABLE_ALGORITHM",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -13208,8 +13295,13 @@
       "id": "asm:library_lmul::__aFlmul",
       "kind": "asm",
       "name": "aFlmul",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 125144,
+      "original_extent": {
+        "start": 125144,
+        "end": 125196,
+        "size": 52,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/285",
       "category": "PORTABLE_ALGORITHM",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -13240,8 +13332,13 @@
       "id": "asm:library_lmul::__aFulmul",
       "kind": "asm",
       "name": "aFulmul",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 125144,
+      "original_extent": {
+        "start": 125144,
+        "end": 125196,
+        "size": 52,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/286",
       "category": "PORTABLE_ALGORITHM",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -13272,8 +13369,13 @@
       "id": "asm:library_lshr::__aFlshr",
       "kind": "asm",
       "name": "aFlshr",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 125196,
+      "original_extent": {
+        "start": 125196,
+        "end": 125207,
+        "size": 11,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/287",
       "category": "PORTABLE_ALGORITHM",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -14525,8 +14627,13 @@
       "id": "asm:library_strcat::_strcat",
       "kind": "asm",
       "name": "strcat",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 123622,
+      "original_extent": {
+        "start": 123622,
+        "end": 123685,
+        "size": 63,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/321",
       "category": "HISTORICAL_CRT-DEAD-NOP",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -14557,8 +14664,13 @@
       "id": "asm:library_strcmp::_strcmp",
       "kind": "asm",
       "name": "strcmp",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 123736,
+      "original_extent": {
+        "start": 123736,
+        "end": 123779,
+        "size": 43,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/322",
       "category": "HISTORICAL_CRT-DEAD-NOP",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -14589,8 +14701,13 @@
       "id": "asm:library_strcpy::_strcpy",
       "kind": "asm",
       "name": "strcpy",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 123686,
+      "original_extent": {
+        "start": 123686,
+        "end": 123736,
+        "size": 50,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/323",
       "category": "HISTORICAL_CRT-DEAD-NOP",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -14621,8 +14738,13 @@
       "id": "asm:library_stricmp::_strcmpi",
       "kind": "asm",
       "name": "strcmpi",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 124134,
+      "original_extent": {
+        "start": 124134,
+        "end": 124200,
+        "size": 66,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/324",
       "category": "HISTORICAL_CRT-DEAD-NOP",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -14653,8 +14775,13 @@
       "id": "asm:library_stricmp::_stricmp",
       "kind": "asm",
       "name": "stricmp",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 124134,
+      "original_extent": {
+        "start": 124134,
+        "end": 124200,
+        "size": 66,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/325",
       "category": "HISTORICAL_CRT-DEAD-NOP",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -14685,8 +14812,13 @@
       "id": "asm:library_strlen::_strlen",
       "kind": "asm",
       "name": "strlen",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 123780,
+      "original_extent": {
+        "start": 123780,
+        "end": 123807,
+        "size": 27,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/326",
       "category": "HISTORICAL_CRT-DEAD-NOP",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -14717,8 +14849,13 @@
       "id": "asm:library_strrchr::_strrchr",
       "kind": "asm",
       "name": "strrchr",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 124944,
+      "original_extent": {
+        "start": 124944,
+        "end": 124987,
+        "size": 43,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/327",
       "category": "HISTORICAL_CRT-DEAD-NOP",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -14749,8 +14886,13 @@
       "id": "asm:library_uldiv::__aFuldiv",
       "kind": "asm",
       "name": "aFuldiv",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 125350,
+      "original_extent": {
+        "start": 125350,
+        "end": 125447,
+        "size": 97,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/328",
       "category": "PORTABLE_ALGORITHM",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -14855,8 +14997,13 @@
       "id": "asm:library_xtoa::__cltoasub",
       "kind": "asm",
       "name": "cltoasub",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 124200,
+      "original_extent": {
+        "start": 124200,
+        "end": 124212,
+        "size": 12,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/331",
       "category": "HISTORICAL_CRT-DEAD-NOP",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -14887,8 +15034,13 @@
       "id": "asm:library_xtoa::__cxtoa",
       "kind": "asm",
       "name": "cxtoa",
-      "original_address": null,
-      "original_extent": null,
+      "original_address": 124212,
+      "original_extent": {
+        "start": 124212,
+        "end": 124295,
+        "size": 83,
+        "basis": "accepted owner placement + OMF public; next-public interval, CFG unproved"
+      },
       "source_ref": "docs/porting/asm-migration.json#/routines/332",
       "category": "HISTORICAL_CRT-DEAD-NOP",
       "entry_abi": "Pinned runtime public code symbol; prototype/stack contract requires caller evidence.",
@@ -14957,7 +15109,7 @@
           "source": "port/platform.c",
           "name": "initialize_div0",
           "signature": "void initialize_div0(void);",
-          "line": 131,
+          "line": 133,
           "match_name": "initialize_div0",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -15025,7 +15177,7 @@
           "source": "port/platform.c",
           "name": "criterr",
           "signature": "int16_t criterr(int16_t (*handler)(void));",
-          "line": 125,
+          "line": 127,
           "match_name": "criterr",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -15370,7 +15522,7 @@
           "source": "port/file.c",
           "name": "findnext",
           "signature": "const char *findnext(void);",
-          "line": 556,
+          "line": 557,
           "match_name": "findnext",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -15441,7 +15593,7 @@
           "source": "port/file.c",
           "name": "loadfileatz",
           "signature": "void *loadfileatz(const char *filename, void *destination);",
-          "line": 688,
+          "line": 710,
           "match_name": "loadfileatz",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -15481,7 +15633,7 @@
           "source": "port/file.c",
           "name": "loadfileat",
           "signature": "void *loadfileat(const char *filename, void *destination);",
-          "line": 798,
+          "line": 829,
           "match_name": "loadfileat",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -15552,7 +15704,7 @@
           "source": "port/file.c",
           "name": "savefilez",
           "signature": "int savefilez(const char *filename, const void *source,\n                     unsigned long length);",
-          "line": 697,
+          "line": 719,
           "match_name": "savefilez",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -15588,7 +15740,17 @@
         ],
         "scope": "outermost foreground calls; known bounded spans, not interrupt implementation internals"
       },
-      "prior_original_tests": [],
+      "prior_original_tests": [
+        {
+          "contract": "save-create-cleanup",
+          "scope": "finite-service-cases",
+          "tests": [
+            "tests/test_sdl3_static_candidates.py::test_save_create_cleanup_matches_real_dosbox_filesystem_effects"
+          ],
+          "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim."
+        }
+      ],
+      "evidence_basis": "named finite original data/execution/scenario cases; scope retained below, not the whole input domain",
       "execution_coverage": {
         "classification": "executed_in_agreeing_original_scenarios",
         "mapping": "same-name-native-function",
@@ -16061,22 +16223,29 @@
           "source": "port/input.c",
           "name": "get_joy_flags",
           "signature": "int16_t get_joy_flags(void);",
-          "line": 748,
+          "line": 809,
           "match_name": "get_joy_flags",
           "implementation_kind": "portable_manual_c",
           "match_basis": "historical_name_exact"
         }
       ],
-      "exercised": false,
-      "status": "not exercised",
+      "exercised": true,
+      "status": "exercised and agrees",
       "evidence": [],
       "capture_contract": null,
-      "prior_original_tests": [],
-      "reachability": {
-        "runtime_entry": null,
-        "scenario": "keyboard/mouse/joystick device cases",
-        "reason": "Runtime reachability not established by this inventory. A candidate scenario may reach the path, but its ABI/span or original/native observation mapping is absent; no comparable coverage is claimed."
-      },
+      "prior_original_tests": [
+        {
+          "contract": "absent-joystick-contract",
+          "scope": "finite-service-cases",
+          "tests": [
+            "tests/test_sdl3_static_candidates.py::test_absent_joystick_calibration_reset_and_saved_axis_match_original",
+            "tests/test_sdl3_static_candidates.py::test_no_device_dosbox_calibration_matches_native",
+            "tests/test_sdl3_static_candidates.py::test_replay_playback_prefix_does_not_sample_live_joystick"
+          ],
+          "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim."
+        }
+      ],
+      "evidence_basis": "named finite original data/execution/scenario cases; scope retained below, not the whole input domain",
       "execution_coverage": {
         "classification": "executed_in_agreeing_original_scenarios",
         "mapping": "same-name-native-function",
@@ -16161,7 +16330,7 @@
           "source": "port/input.c",
           "name": "normkeyi",
           "signature": "int16_t normkeyi(void);",
-          "line": 700,
+          "line": 714,
           "match_name": "normkeyi",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -16213,7 +16382,7 @@
           "source": "port/input.c",
           "name": "kb_init_interrupt",
           "signature": "void kb_init_interrupt(void);",
-          "line": 613,
+          "line": 627,
           "match_name": "kb_init_interrupt",
           "implementation_kind": "portable_manual_c",
           "match_basis": "historical_name_exact"
@@ -16255,7 +16424,7 @@
           "source": "port/input.c",
           "name": "keyboard_exit_handler",
           "signature": "void keyboard_exit_handler(void);",
-          "line": 845,
+          "line": 899,
           "match_name": "keyboard_exit_handler",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -16352,7 +16521,7 @@
           "source": "port/input.c",
           "name": "normkey",
           "signature": "int16_t normkey(void);",
-          "line": 717,
+          "line": 731,
           "match_name": "normkey",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -16433,7 +16602,7 @@
           "source": "port/input.c",
           "name": "purgekey",
           "signature": "int16_t purgekey(void);",
-          "line": 732,
+          "line": 746,
           "match_name": "purgekey",
           "implementation_kind": "portable_manual_c",
           "match_basis": "exact_start_registry_canonical"
@@ -36457,14 +36626,12 @@
       "execution_coverage": {
         "classification": "executed_in_agreeing_original_scenarios",
         "mapping": "expanded-or-referenced-functions",
-        "mapped_function_count": 3,
+        "mapped_function_count": 2,
         "original_compared_functions": [
-          "port/platform.c::initialize_div0",
           "port/platform.c::int86",
           "port/timer.c::addtimer"
         ],
         "other_test_functions": [
-          "port/platform.c::initialize_div0",
           "port/platform.c::int86",
           "port/timer.c::addtimer"
         ],
@@ -43795,7 +43962,7 @@
         {
           "source": "port/file.c",
           "name": "append_path",
-          "line": 33,
+          "line": 34,
           "signature": "static int append_path(char *output, size_t capacity,\n                       const char *directory, const char *name);",
           "body_sha256": "1a4fde9b78e4fe0d34d41c28b065f0e3fd9e4250a5cca0acc93de21abc82163b",
           "global_dependency_candidates": [
@@ -43836,7 +44003,7 @@
         {
           "source": "port/file.c",
           "name": "dos_83_filename",
-          "line": 362,
+          "line": 363,
           "signature": "static int dos_83_filename(const char *name);",
           "body_sha256": "b452a702780b1833757247e36e80e727e63838de5679c48427ec7b7bc33598e6",
           "global_dependency_candidates": [
@@ -43877,7 +44044,7 @@
         {
           "source": "port/file.c",
           "name": "dos_case_equal",
-          "line": 49,
+          "line": 50,
           "signature": "static int dos_case_equal(const char *left, const char *right);",
           "body_sha256": "14e66b605d5e840e9de7023229272b16aa0ec5e234bed335efe2dce6589e92df",
           "global_dependency_candidates": [],
@@ -43915,7 +44082,7 @@
         {
           "source": "port/file.c",
           "name": "dos_filename_uppercase",
-          "line": 62,
+          "line": 63,
           "signature": "static void dos_filename_uppercase(char *name);",
           "body_sha256": "06318f38f5154af7fd55e11aa3083a11c483a28750effc236d722755a2a5302b",
           "global_dependency_candidates": [],
@@ -43953,7 +44120,7 @@
         {
           "source": "port/file.c",
           "name": "dos_pattern_match",
-          "line": 333,
+          "line": 334,
           "signature": "static int dos_pattern_match(const char *pattern, const char *name);",
           "body_sha256": "8d266a7580acbcb299f32691140a24a5c99d4b024eadb79390d7f3dc92c2691a",
           "global_dependency_candidates": [
@@ -43993,7 +44160,7 @@
         {
           "source": "port/file.c",
           "name": "enumerate_matching_entry",
-          "line": 420,
+          "line": 421,
           "signature": "static SDL_EnumerationResult SDLCALL enumerate_matching_entry(\n    void *userdata, const char *dirname, const char *filename);",
           "body_sha256": "7f1e44de6e3e35aadc491b488b79366b36c60b89c3a4fed6e9ff6b0500582b21",
           "global_dependency_candidates": [
@@ -44036,7 +44203,7 @@
         {
           "source": "port/file.c",
           "name": "file_from_handle",
-          "line": 757,
+          "line": 788,
           "signature": "static FILE *file_from_handle(int handle);",
           "body_sha256": "fa8cf7b531ea4c160a85b7ee1ad1c1a4f0ae57fc80eab3690d83ae1b179c171d",
           "global_dependency_candidates": [
@@ -44078,7 +44245,7 @@
         {
           "source": "port/file.c",
           "name": "find_case_component",
-          "line": 103,
+          "line": 104,
           "signature": "static SDL_EnumerationResult SDLCALL find_case_component(\n    void *userdata, const char *dirname, const char *filename);",
           "body_sha256": "d5607831175d4a364e12a29cb31bb9a4a11ecff602331237bfcf47218f4dc353",
           "global_dependency_candidates": [
@@ -44121,7 +44288,7 @@
         {
           "source": "port/file.c",
           "name": "find_component",
-          "line": 174,
+          "line": 175,
           "signature": "static int find_component(const char *directory, const char *requested,\n                          char *actual, size_t capacity,\n                          SDL_PathType *type_out);",
           "body_sha256": "78aff20149dbb7cd16071ff8a96dd8a9a92748a40eb8cc70e08920029db0f221",
           "global_dependency_candidates": [
@@ -44159,7 +44326,7 @@
         {
           "source": "port/file.c",
           "name": "find_ordinal_in_root",
-          "line": 458,
+          "line": 459,
           "signature": "static int find_ordinal_in_root(const char *root, const char *directory,\n                                const char *pattern, const char *save_root,\n                                size_t skip, int exclude_saved_duplicates,\n                                char *found, size_t capacity, size_t *count_out);",
           "body_sha256": "5c74eb8a381a12d5bac08b2e8e7f4f405e47d77885c958954f93f388e9a778a5",
           "global_dependency_candidates": [
@@ -44200,7 +44367,7 @@
         {
           "source": "port/file.c",
           "name": "find_wildcard_ordinal",
-          "line": 483,
+          "line": 484,
           "signature": "static int find_wildcard_ordinal(const char *directory, const char *pattern,\n                                 size_t ordinal, char *found, size_t capacity);",
           "body_sha256": "861d7ecb60fe55cb38fc2b438b3b003a2949fc655340a4993c6a4aa25942539b",
           "global_dependency_candidates": [
@@ -44242,7 +44409,7 @@
         {
           "source": "port/file.c",
           "name": "open_asset",
-          "line": 232,
+          "line": 233,
           "signature": "static FILE *open_asset(const char *path);",
           "body_sha256": "78f962b6d95571745c42877fb8e245695de58d8da8ca60f5a04bd0a599a6a5bf",
           "global_dependency_candidates": [
@@ -44286,7 +44453,7 @@
         {
           "source": "port/file.c",
           "name": "open_game_file",
-          "line": 303,
+          "line": 304,
           "signature": "static int open_game_file(const char *path);",
           "body_sha256": "39362f3b233b1eca7332c51510dbb83c75f2511644b76878c4df9bb24c010378",
           "global_dependency_candidates": [
@@ -44329,7 +44496,7 @@
         {
           "source": "port/file.c",
           "name": "open_resolved_read",
-          "line": 206,
+          "line": 207,
           "signature": "static FILE *open_resolved_read(char *absolute);",
           "body_sha256": "f8928644a9800dc9b694f1239820160ca2253571b2d301d7941b154032f2b863",
           "global_dependency_candidates": [
@@ -44371,7 +44538,7 @@
         {
           "source": "port/file.c",
           "name": "open_root_read",
-          "line": 223,
+          "line": 224,
           "signature": "static FILE *open_root_read(const char *root, const char *path);",
           "body_sha256": "c6f811f2dfda1c7dfe7a7dfa91fefcdc6c4779bc6eb154d40df2ac184cd37172",
           "global_dependency_candidates": [
@@ -44414,7 +44581,7 @@
         {
           "source": "port/file.c",
           "name": "open_save_write",
-          "line": 619,
+          "line": 620,
           "signature": "static FILE *open_save_write(const char *path, char *absolute,\n                             size_t capacity);",
           "body_sha256": "73ba939d0f8a4afcdd1235bf4878b6342954ae5eb496d41d74fbbe409fc48d5b",
           "global_dependency_candidates": [
@@ -44456,7 +44623,7 @@
         {
           "source": "port/file.c",
           "name": "port_fs_close",
-          "line": 786,
+          "line": 817,
           "signature": "void port_fs_close(int handle);",
           "body_sha256": "251a361cf8c03c8beeaa0ccb933a9c03bfdef862a10485b33aad8ad3e2d70665",
           "global_dependency_candidates": [
@@ -44498,7 +44665,7 @@
         {
           "source": "port/file.c",
           "name": "port_fs_exists",
-          "line": 324,
+          "line": 325,
           "signature": "int port_fs_exists(const char *path);",
           "body_sha256": "226ba5333dab3a34e149d2fef735a5701a38a43042d8738b42fb232b4161da47",
           "global_dependency_candidates": [
@@ -44536,7 +44703,7 @@
         {
           "source": "port/file.c",
           "name": "port_fs_find",
-          "line": 497,
+          "line": 498,
           "signature": "int port_fs_find(const char *pattern, char *found, size_t capacity);",
           "body_sha256": "17113228987258d48e2f15e7fbfd922273eaba5b3e50e90d9a649d5bad3d2964",
           "global_dependency_candidates": [
@@ -44579,7 +44746,7 @@
         {
           "source": "port/file.c",
           "name": "port_fs_load",
-          "line": 806,
+          "line": 837,
           "signature": "void *port_fs_load(const char *path, size_t *length_out,\n                   PortFarPtr *address_out);",
           "body_sha256": "58e06b5c4a07c4d980d34c34a47a1ca20495cc050ff09e9aeb6ad1feee2ed1b7",
           "global_dependency_candidates": [
@@ -44622,7 +44789,7 @@
         {
           "source": "port/file.c",
           "name": "port_fs_open_read",
-          "line": 319,
+          "line": 320,
           "signature": "int port_fs_open_read(const char *path);",
           "body_sha256": "54130129b89003bc2e1cfc3e51a47634109ccd0e3867110b990718bf84869ae1",
           "global_dependency_candidates": [
@@ -44662,7 +44829,7 @@
         {
           "source": "port/file.c",
           "name": "port_fs_read",
-          "line": 764,
+          "line": 795,
           "signature": "int32_t port_fs_read(int handle, void *buffer, uint32_t bytes);",
           "body_sha256": "89eacf7ccb78d7f5c7eef16cc9d1fec82f428dec89b97da9ee9c06dac3ba6f1e",
           "global_dependency_candidates": [
@@ -44705,7 +44872,7 @@
         {
           "source": "port/file.c",
           "name": "port_fs_seek",
-          "line": 776,
+          "line": 807,
           "signature": "int32_t port_fs_seek(int handle, int32_t offset, int origin);",
           "body_sha256": "28e6f4de055878b1cf46c22d3913372c52ade20b41e3bfcc8c74719da65410fc",
           "global_dependency_candidates": [
@@ -44743,7 +44910,7 @@
         {
           "source": "port/file.c",
           "name": "port_runtime_asset_root",
-          "line": 285,
+          "line": 286,
           "signature": "const char *port_runtime_asset_root(void);",
           "body_sha256": "206d767938928eb062eca0f6a76085a71a51b32e3d10e68466dddafd2619e09f",
           "global_dependency_candidates": [
@@ -44783,7 +44950,7 @@
         {
           "source": "port/file.c",
           "name": "port_runtime_set_asset_root",
-          "line": 241,
+          "line": 242,
           "signature": "void port_runtime_set_asset_root(const char *root);",
           "body_sha256": "57ed1a59d077a3bfc07aa992e8bbf34e33d4c49b985c53192e9f174a56623201",
           "global_dependency_candidates": [
@@ -44827,7 +44994,7 @@
         {
           "source": "port/file.c",
           "name": "port_runtime_set_save_root",
-          "line": 290,
+          "line": 291,
           "signature": "int port_runtime_set_save_root(const char *root);",
           "body_sha256": "0dacc280def731c5f4b582071a74585450c06af3d5dad995fdf37c164fc50aba",
           "global_dependency_candidates": [
@@ -44868,7 +45035,7 @@
         {
           "source": "port/file.c",
           "name": "read_file_to_host",
-          "line": 644,
+          "line": 666,
           "signature": "static int read_file_to_host(const char *filename, void *destination);",
           "body_sha256": "e0c40e385ab14757ac47fb35694ccd45074b66b865a656d124e767317a1496ee",
           "global_dependency_candidates": [
@@ -44909,7 +45076,7 @@
         {
           "source": "port/file.c",
           "name": "resolve_directory",
-          "line": 191,
+          "line": 192,
           "signature": "static int resolve_directory(const char *root, const char *relative,\n                             char *resolved, size_t capacity);",
           "body_sha256": "32dd6825ad5ca7e6a9b3de64e5382744f90fa169fc6d7a896ab95cd238a77799",
           "global_dependency_candidates": [
@@ -44950,7 +45117,7 @@
         {
           "source": "port/file.c",
           "name": "resolve_existing_path",
-          "line": 126,
+          "line": 127,
           "signature": "static int resolve_existing_path(const char *root, const char *relative,\n                                 SDL_PathType required_type, char *resolved,\n                                 size_t capacity);",
           "body_sha256": "39d7e6e64d9ad5cc51bbfea1ca250459fdbb6b033b09140c1569a0f1c2bb1620",
           "global_dependency_candidates": [
@@ -44993,7 +45160,7 @@
         {
           "source": "port/file.c",
           "name": "resolve_save_destination",
-          "line": 571,
+          "line": 572,
           "signature": "static int resolve_save_destination(const char *path, char *absolute,\n                                    size_t capacity);",
           "body_sha256": "0ae91e0741be8317727b68232578be857accc7295e255a64aa1529339ac1b385",
           "global_dependency_candidates": [
@@ -45035,7 +45202,7 @@
         {
           "source": "port/file.c",
           "name": "safe_relative_path",
-          "line": 70,
+          "line": 71,
           "signature": "static int safe_relative_path(const char *path, char *out, size_t capacity);",
           "body_sha256": "62dcb3316a912053bc13911306c3ac266fc48d45e06d22011456b51b86ba8355",
           "global_dependency_candidates": [
@@ -45070,6 +45237,45 @@
       }
     },
     {
+      "id": "native_helper:port/file.c::save_destination_readonly",
+      "kind": "native_helper",
+      "name": "save_destination_readonly",
+      "portable": [
+        {
+          "source": "port/file.c",
+          "name": "save_destination_readonly",
+          "line": 645,
+          "signature": "static int save_destination_readonly(const char *absolute);",
+          "body_sha256": "26e598d4f7f8b9a066ea534874f381ed057d81e031aa7f0aa779486336a4c963",
+          "global_dependency_candidates": [
+            "absolute"
+          ],
+          "aggregate_dependencies": [
+            "stat"
+          ]
+        }
+      ],
+      "exercised": false,
+      "status": "not exercised",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": [],
+      "reachability": {
+        "runtime_entry": null,
+        "scenario": "load/save dialogs, missing file and host I/O failure",
+        "reason": "Runtime reachability not established by this inventory. A candidate scenario may reach the path, but its ABI/span or original/native observation mapping is absent; no comparable coverage is claimed."
+      },
+      "execution_coverage": {
+        "classification": "never_executed",
+        "mapping": "no-portable-function-match",
+        "mapped_function_count": 0,
+        "original_compared_functions": [],
+        "other_test_functions": [],
+        "agreement_scope": "selected original-reference test assertions only; no whole-domain claim",
+        "never_executed_note": "Reach it from track/replay load or save; a missing asset exercises the error path."
+      }
+    },
+    {
       "id": "native_helper:port/file.c::saved_file_shadows",
       "kind": "native_helper",
       "name": "saved_file_shadows",
@@ -45077,7 +45283,7 @@
         {
           "source": "port/file.c",
           "name": "saved_file_shadows",
-          "line": 403,
+          "line": 404,
           "signature": "static int saved_file_shadows(const PortFindRun *run, const char *filename);",
           "body_sha256": "78ef8e5e05f3a70e9a9f0b918d291b6921049270127e8baf17cb982c5477be21",
           "global_dependency_candidates": [
@@ -45107,6 +45313,43 @@
           "port/file.c::saved_file_shadows"
         ],
         "agreement_scope": "selected original-reference test assertions only; no whole-domain claim"
+      }
+    },
+    {
+      "id": "native_helper:port/file.c::unlink_save_destination",
+      "kind": "native_helper",
+      "name": "unlink_save_destination",
+      "portable": [
+        {
+          "source": "port/file.c",
+          "name": "unlink_save_destination",
+          "line": 657,
+          "signature": "static void unlink_save_destination(const char *absolute);",
+          "body_sha256": "ee9084574e8099a21a7c0d468bd003287f7629e8c5971f64508addfd95068491",
+          "global_dependency_candidates": [
+            "absolute"
+          ],
+          "aggregate_dependencies": []
+        }
+      ],
+      "exercised": false,
+      "status": "not exercised",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": [],
+      "reachability": {
+        "runtime_entry": null,
+        "scenario": "load/save dialogs, missing file and host I/O failure",
+        "reason": "Runtime reachability not established by this inventory. A candidate scenario may reach the path, but its ABI/span or original/native observation mapping is absent; no comparable coverage is claimed."
+      },
+      "execution_coverage": {
+        "classification": "never_executed",
+        "mapping": "no-portable-function-match",
+        "mapped_function_count": 0,
+        "original_compared_functions": [],
+        "other_test_functions": [],
+        "agreement_scope": "selected original-reference test assertions only; no whole-domain claim",
+        "never_executed_note": "Reach it from track/replay load or save; a missing asset exercises the error path."
       }
     },
     {
@@ -45365,7 +45608,7 @@
         {
           "source": "port/input.c",
           "name": "ascii_for_scan",
-          "line": 92,
+          "line": 102,
           "signature": "static uint8_t ascii_for_scan(int scan);",
           "body_sha256": "cb722d19eefa9b97ddf2c8502e08375371be6f4ce51d5a352bd0f86320339c5d",
           "global_dependency_candidates": [
@@ -45403,6 +45646,45 @@
       }
     },
     {
+      "id": "native_helper:port/input.c::calibrate_absent_axis",
+      "kind": "native_helper",
+      "name": "calibrate_absent_axis",
+      "portable": [
+        {
+          "source": "port/input.c",
+          "name": "calibrate_absent_axis",
+          "line": 762,
+          "signature": "static uint16_t calibrate_absent_axis(PortAbsentAxis *axis, int y_axis);",
+          "body_sha256": "b6c41f07a47731126dfcd4dd8ac99efe4bcec2dda21a3122f0cfc8e52080f8f6",
+          "global_dependency_candidates": [
+            "below",
+            "int16_t",
+            "uint16_t"
+          ],
+          "aggregate_dependencies": []
+        }
+      ],
+      "exercised": false,
+      "status": "not exercised",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": [],
+      "reachability": {
+        "runtime_entry": null,
+        "scenario": "keyboard/mouse/joystick device cases",
+        "reason": "Runtime reachability not established by this inventory. A candidate scenario may reach the path, but its ABI/span or original/native observation mapping is absent; no comparable coverage is claimed."
+      },
+      "execution_coverage": {
+        "classification": "never_executed",
+        "mapping": "no-portable-function-match",
+        "mapped_function_count": 0,
+        "original_compared_functions": [],
+        "other_test_functions": [],
+        "agreement_scope": "selected original-reference test assertions only; no whole-domain claim",
+        "never_executed_note": "Reach it with the named keyboard, mouse, or joystick path in menus or a race."
+      }
+    },
+    {
       "id": "native_helper:port/input.c::clear_pressed_input",
       "kind": "native_helper",
       "name": "clear_pressed_input",
@@ -45410,7 +45692,7 @@
         {
           "source": "port/input.c",
           "name": "clear_pressed_input",
-          "line": 358,
+          "line": 372,
           "signature": "static void clear_pressed_input(void);",
           "body_sha256": "c3fbf4e7390a49c4b3d1fd5fac23b6fda7c846a4265f5e5116f2a4d6a569b2d6",
           "global_dependency_candidates": [
@@ -45455,7 +45737,7 @@
         {
           "source": "port/input.c",
           "name": "dispatch_key_callback",
-          "line": 674,
+          "line": 688,
           "signature": "static int dispatch_key_callback(uint16_t bios_key);",
           "body_sha256": "c869faf696a9fc5266ae15becf8efee92240aa85fd191a2d12065c3f9abebf91",
           "global_dependency_candidates": [
@@ -45499,7 +45781,7 @@
         {
           "source": "port/input.c",
           "name": "enqueue_bios_key",
-          "line": 76,
+          "line": 86,
           "signature": "static void enqueue_bios_key(uint16_t key);",
           "body_sha256": "b4719c8fd7318fd531435f45781c3a07f9903161feeee7efb702d687bbd0eb9c",
           "global_dependency_candidates": [
@@ -45543,7 +45825,7 @@
         {
           "source": "port/input.c",
           "name": "input_lock",
-          "line": 64,
+          "line": 74,
           "signature": "static void input_lock(void);",
           "body_sha256": "2fadee9bac035431ec67eae6b5f9ed1be6197b711fcdfe422c9fae3122d85934",
           "global_dependency_candidates": [],
@@ -45581,7 +45863,7 @@
         {
           "source": "port/input.c",
           "name": "input_time_ns",
-          "line": 55,
+          "line": 65,
           "signature": "static uint64_t input_time_ns(void);",
           "body_sha256": "9b6f13038578144c57a10f7b6cb2056e4cbe7a3ae3780ab8c2fe48cd6463fc02",
           "global_dependency_candidates": [
@@ -45621,7 +45903,7 @@
         {
           "source": "port/input.c",
           "name": "input_unlock",
-          "line": 70,
+          "line": 80,
           "signature": "static void input_unlock(void);",
           "body_sha256": "7c00c05e4b4b75e6522f6d2de2b1553cfed137ffec33af54306fed710c33b333",
           "global_dependency_candidates": [],
@@ -45659,7 +45941,7 @@
         {
           "source": "port/input.c",
           "name": "is_lock_or_modifier_scan",
-          "line": 333,
+          "line": 347,
           "signature": "static int is_lock_or_modifier_scan(int scan, int extended);",
           "body_sha256": "301fd76a389f8d633edcf0735112a13936872148c481884d4ba02998fcba6edd",
           "global_dependency_candidates": [],
@@ -45697,7 +45979,7 @@
         {
           "source": "port/input.c",
           "name": "peek_keyboard_char",
-          "line": 796,
+          "line": 850,
           "signature": "static int16_t peek_keyboard_char(void);",
           "body_sha256": "b2adf0cbba511b23c1ab20ae73847c52ddb0368cb462fa4ddaf850ae38c482d3",
           "global_dependency_candidates": [
@@ -45741,7 +46023,7 @@
         {
           "source": "port/input.c",
           "name": "pop_bios_key",
-          "line": 165,
+          "line": 175,
           "signature": "static uint16_t pop_bios_key(int *found);",
           "body_sha256": "7b6c17968187bc70068c44d77b4307491f8465c47739ee1f071cb3aeba579fdf",
           "global_dependency_candidates": [
@@ -45784,7 +46066,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_apply_dos_scancode",
-          "line": 499,
+          "line": 513,
           "signature": "void port_input_apply_dos_scancode(uint8_t code);",
           "body_sha256": "69a4c45f98baa8d60c96424bf611e84e8b45c113e5c45369b6178403e66c8147",
           "global_dependency_candidates": [
@@ -45831,7 +46113,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_apply_queued",
-          "line": 873,
+          "line": 927,
           "signature": "void port_input_apply_queued(uint64_t tick);",
           "body_sha256": "7b01d361fccd0d0c7d98aa05d2aec5cbb3f2554aa84760cea4791209d90405fa",
           "global_dependency_candidates": [
@@ -45874,7 +46156,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_dos_scan",
-          "line": 187,
+          "line": 197,
           "signature": "int port_input_dos_scan(int scancode);",
           "body_sha256": "f7bf8e907d55b74ea2e40ab9e414c405875d2ea97376d7f13f28cbf786eb4249",
           "global_dependency_candidates": [],
@@ -45909,7 +46191,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_enable_test_auto_protection",
-          "line": 292,
+          "line": 306,
           "signature": "void port_input_enable_test_auto_protection(int enabled);",
           "body_sha256": "680f456af3a193eb248446c7417b21535139f315197e4af4058a53b4c1ce2da8",
           "global_dependency_candidates": [
@@ -45949,7 +46231,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_handle_event",
-          "line": 430,
+          "line": 444,
           "signature": "void port_input_handle_event(int event_type, int code, int value);",
           "body_sha256": "58c5f77bba9f50dc06d23afa93a572b33979a1ab7d3696ad13000ab31974fa84",
           "global_dependency_candidates": [
@@ -46000,10 +46282,14 @@
         {
           "source": "port/input.c",
           "name": "port_input_init",
-          "line": 250,
+          "line": 260,
           "signature": "void port_input_init(void);",
-          "body_sha256": "a69caaecafab5f746724f56f5fffb4dc09f06d4c678012413f68c3a30d8d7d0f",
+          "body_sha256": "fc33fe952f456dc470648f82f450e2fc849683d45aa88210e416ec70eebccf63",
           "global_dependency_candidates": [
+            "joystick_enabled",
+            "s_absent_sample",
+            "s_absent_x",
+            "s_absent_y",
             "s_callback_count",
             "s_caps_lock",
             "s_extended_down",
@@ -46061,7 +46347,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_key_state",
-          "line": 553,
+          "line": 567,
           "signature": "uint8_t port_input_key_state(uint16_t dos_scan);",
           "body_sha256": "6689cdfa180280efd9c6123d2139adb0eda84ab638c07cbb2ad675ff75e7eae9",
           "global_dependency_candidates": [
@@ -46103,7 +46389,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_mouse_get",
-          "line": 565,
+          "line": 579,
           "signature": "void port_input_mouse_get(int16_t *x, int16_t *y, uint16_t *buttons);",
           "body_sha256": "a02a200c85deb53e6eb23f08f48f5312cd5dbdeb1f138afd605738365fac8b5c",
           "global_dependency_candidates": [
@@ -46147,7 +46433,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_mouse_set",
-          "line": 574,
+          "line": 588,
           "signature": "void port_input_mouse_set(int16_t x, int16_t y);",
           "body_sha256": "5d25ddf5a48b893ecca7d5bfbac21bda09e628434939635eef158e7c6a29fbdf",
           "global_dependency_candidates": [
@@ -46193,7 +46479,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_mouse_set_buttons",
-          "line": 585,
+          "line": 599,
           "signature": "void port_input_mouse_set_buttons(uint16_t buttons);",
           "body_sha256": "bafeb4b950c1d5e49dd04732cd2a604dad584f95541325ff1cd7726cd662eaac",
           "global_dependency_candidates": [
@@ -46234,7 +46520,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_mouse_set_x_bounds",
-          "line": 593,
+          "line": 607,
           "signature": "void port_input_mouse_set_x_bounds(int16_t min_x, int16_t max_x);",
           "body_sha256": "00540334a8f6ecfe14657efb3b4c3607293530edb6ef8c736b8153a93b02e942",
           "global_dependency_candidates": [
@@ -46277,7 +46563,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_mouse_set_y_bounds",
-          "line": 603,
+          "line": 617,
           "signature": "void port_input_mouse_set_y_bounds(int16_t min_y, int16_t max_y);",
           "body_sha256": "444944dfc497c52997e6ae3f6fbbbb7444066f7d0293a1767a69c4af83cf4815",
           "global_dependency_candidates": [
@@ -46320,7 +46606,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_queue_event",
-          "line": 855,
+          "line": 909,
           "signature": "void port_input_queue_event(int type, int code, int value);",
           "body_sha256": "e09cff2e0780939ef1d57cc7cc36ea59ff83caf7b7424e8815bff133504d504b",
           "global_dependency_candidates": [
@@ -46360,7 +46646,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_reset_mouse",
-          "line": 297,
+          "line": 311,
           "signature": "void port_input_reset_mouse(void);",
           "body_sha256": "115a9a2eaf11dc9b7f0463eeef580542f58043bafe532b9db1787dad7f03c10b",
           "global_dependency_candidates": [
@@ -46406,7 +46692,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_set_queue_tick",
-          "line": 853,
+          "line": 907,
           "signature": "void port_input_set_queue_tick(uint64_t tick);",
           "body_sha256": "57404b590f1cc024595c5fb247a005c708c8976990980b1c940635c199b94c7b",
           "global_dependency_candidates": [
@@ -46446,7 +46732,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_shutdown",
-          "line": 623,
+          "line": 637,
           "signature": "void port_input_shutdown(void);",
           "body_sha256": "a5a577fbbab68ed197159fd726616ed9c4b34b3e2a06f0af1e71333b8879f522",
           "global_dependency_candidates": [],
@@ -46484,7 +46770,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_test_auto_protection_enabled",
-          "line": 307,
+          "line": 321,
           "signature": "int port_input_test_auto_protection_enabled(void);",
           "body_sha256": "139e6f5105460760a6e1ff1c348f86ec2253f71f3aec862149e0f22d20398b44",
           "global_dependency_candidates": [
@@ -46524,7 +46810,7 @@
         {
           "source": "port/input.c",
           "name": "port_input_type_test_text",
-          "line": 400,
+          "line": 414,
           "signature": "int port_input_type_test_text(const char *text);",
           "body_sha256": "2bcca609df49541a5670cd76fd87c41f28e9542b59e0cc82f8d0fa9f665c31f1",
           "global_dependency_candidates": [
@@ -46567,7 +46853,7 @@
         {
           "source": "port/input.c",
           "name": "set_num_lock",
-          "line": 789,
+          "line": 843,
           "signature": "static void set_num_lock(int enabled);",
           "body_sha256": "3ba49472871700de9164701395344f4cdefd73fac80a6466fe917eb88899d246",
           "global_dependency_candidates": [
@@ -46607,7 +46893,7 @@
         {
           "source": "port/input.c",
           "name": "shifted",
-          "line": 87,
+          "line": 97,
           "signature": "static int shifted(void);",
           "body_sha256": "2dc9f0666c02033152df2fe75d8b3188ba600acf7e183c4f28e565a9df8d2091",
           "global_dependency_candidates": [
@@ -46647,7 +46933,7 @@
         {
           "source": "port/input.c",
           "name": "test_text_scan",
-          "line": 312,
+          "line": 326,
           "signature": "static int test_text_scan(unsigned char character);",
           "body_sha256": "14239722226889638730fbd4e2c1f79e30b91ff0ad25cec7f9bf1a07727e8b9d",
           "global_dependency_candidates": [],
@@ -46685,7 +46971,7 @@
         {
           "source": "port/input.c",
           "name": "trace_live_mouse",
-          "line": 343,
+          "line": 357,
           "signature": "static void trace_live_mouse(void);",
           "body_sha256": "2c297aa0389f56a2f62bd8b9693c457ea4ed392b66152a856556075937c34649",
           "global_dependency_candidates": [
@@ -46729,7 +47015,7 @@
         {
           "source": "port/input.c",
           "name": "type_next_test_key",
-          "line": 387,
+          "line": 401,
           "signature": "static void type_next_test_key(void);",
           "body_sha256": "6535ac6943ffb8f00aa3c591efe87806cc8708b890c26ffbb8a6a7b6f8d71464",
           "global_dependency_candidates": [
@@ -49486,7 +49772,7 @@
         {
           "source": "port/platform.c",
           "name": "port_audio_dispatch",
-          "line": 137,
+          "line": 139,
           "signature": "void port_audio_dispatch(uint8_t entry_offset, const void *packet, size_t bytes);",
           "body_sha256": "d018c4888c8118599450472ba2538875119f4fe55edd0e751fa1761c0afded22",
           "global_dependency_candidates": [
@@ -57571,46 +57857,6 @@
       }
     },
     {
-      "id": "native_helper:port/sprite.c::sprite_setup1_from_arg_pointer",
-      "kind": "native_helper",
-      "name": "sprite_setup1_from_arg_pointer",
-      "portable": [
-        {
-          "source": "port/sprite.c",
-          "name": "sprite_setup1_from_arg_pointer",
-          "line": 242,
-          "signature": "void sprite_setup1_from_arg_pointer(const PortSprite *sprite);",
-          "body_sha256": "54277090bbbf8719559b245ddf47635320f63f9ee55c5673b24290c4627c054e",
-          "global_dependency_candidates": [
-            "PortSprite"
-          ],
-          "aggregate_dependencies": []
-        }
-      ],
-      "exercised": false,
-      "status": "not exercised",
-      "evidence": [],
-      "capture_contract": null,
-      "prior_original_tests": [],
-      "reachability": {
-        "runtime_entry": null,
-        "scenario": "menus and isolated indexed raster operands",
-        "reason": "Runtime reachability not established by this inventory. A candidate scenario may reach the path, but its ABI/span or original/native observation mapping is absent; no comparable coverage is claimed."
-      },
-      "execution_coverage": {
-        "classification": "executed_in_agreeing_original_scenarios",
-        "mapping": "portable-function-name",
-        "mapped_function_count": 1,
-        "original_compared_functions": [
-          "port/sprite.c::sprite_setup1_from_arg_pointer"
-        ],
-        "other_test_functions": [
-          "port/sprite.c::sprite_setup1_from_arg_pointer"
-        ],
-        "agreement_scope": "selected original-reference test assertions only; no whole-domain claim"
-      }
-    },
-    {
       "id": "native_helper:port/sprite.c::sub_signed_words",
       "kind": "native_helper",
       "name": "sub_signed_words",
@@ -63381,6 +63627,14 @@
       "capture_contract": null,
       "prior_original_tests": [
         {
+          "contract": "save-create-cleanup",
+          "scope": "finite-service-cases",
+          "tests": [
+            "tests/test_sdl3_static_candidates.py::test_save_create_cleanup_matches_real_dosbox_filesystem_effects"
+          ],
+          "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim."
+        },
+        {
           "contract": "savefile-error-return",
           "scope": "finite-service-cases",
           "tests": [
@@ -63388,6 +63642,132 @@
             "tests/test_sdl3_scenarios.py::test_file_error_pc15"
           ],
           "claim_limit": "This create failure and successful editor/replay saves, not all DOS errno mappings or disk failures."
+        }
+      ],
+      "evidence_basis": "named finite original data/execution/scenario cases; scope retained below, not the whole input domain",
+      "execution_coverage": {
+        "classification": "executed_in_agreeing_original_scenarios",
+        "mapping": "portable-function-name",
+        "mapped_function_count": 1,
+        "original_compared_functions": [
+          "port/file.c::savefilez"
+        ],
+        "other_test_functions": [],
+        "agreement_scope": "selected original-reference test assertions only; no whole-domain claim"
+      }
+    },
+    {
+      "id": "semantic_contract:msc-int86-ax-result",
+      "kind": "semantic_contract",
+      "name": "msc-int86-ax-result",
+      "source_ref": "port/semantic-contracts.json#/contracts/29",
+      "original_authority": "locked_image_live_execution",
+      "routines": [
+        "int86"
+      ],
+      "portable_routes": [
+        "port/platform.c"
+      ],
+      "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim.",
+      "exercised": true,
+      "status": "exercised and agrees",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": [
+        {
+          "contract": "msc-int86-ax-result",
+          "scope": "finite-service-cases",
+          "tests": [
+            "tests/test_sdl3_static_candidates.py::test_int86_returns_original_ax_and_register_buffer_including_alias",
+            "tests/test_sdl3_static_candidates.py::test_int86_call_inventory_covers_every_retained_source_call"
+          ],
+          "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim."
+        }
+      ],
+      "evidence_basis": "named finite original data/execution/scenario cases; scope retained below, not the whole input domain",
+      "execution_coverage": {
+        "classification": "executed_in_agreeing_original_scenarios",
+        "mapping": "portable-function-name",
+        "mapped_function_count": 1,
+        "original_compared_functions": [
+          "port/platform.c::int86"
+        ],
+        "other_test_functions": [
+          "port/platform.c::int86"
+        ],
+        "agreement_scope": "selected original-reference test assertions only; no whole-domain claim"
+      }
+    },
+    {
+      "id": "semantic_contract:absent-joystick-contract",
+      "kind": "semantic_contract",
+      "name": "absent-joystick-contract",
+      "source_ref": "port/semantic-contracts.json#/contracts/30",
+      "original_authority": "locked_image_live_execution",
+      "routines": [
+        "get_joy_flags",
+        "reset_joystick_selection",
+        "replay_axis_value"
+      ],
+      "portable_routes": [
+        "port/input.c"
+      ],
+      "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim.",
+      "exercised": true,
+      "status": "exercised and agrees",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": [
+        {
+          "contract": "absent-joystick-contract",
+          "scope": "finite-service-cases",
+          "tests": [
+            "tests/test_sdl3_static_candidates.py::test_absent_joystick_calibration_reset_and_saved_axis_match_original",
+            "tests/test_sdl3_static_candidates.py::test_no_device_dosbox_calibration_matches_native",
+            "tests/test_sdl3_static_candidates.py::test_replay_playback_prefix_does_not_sample_live_joystick"
+          ],
+          "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim."
+        }
+      ],
+      "evidence_basis": "named finite original data/execution/scenario cases; scope retained below, not the whole input domain",
+      "execution_coverage": {
+        "classification": "executed_in_agreeing_original_scenarios",
+        "mapping": "portable-function-name",
+        "mapped_function_count": 3,
+        "original_compared_functions": [
+          "port/input.c::get_joy_flags"
+        ],
+        "other_test_functions": [
+          "port/input.c::get_joy_flags"
+        ],
+        "agreement_scope": "selected original-reference test assertions only; no whole-domain claim"
+      }
+    },
+    {
+      "id": "semantic_contract:save-create-cleanup",
+      "kind": "semantic_contract",
+      "name": "save-create-cleanup",
+      "source_ref": "port/semantic-contracts.json#/contracts/31",
+      "original_authority": "locked_image_live_execution",
+      "routines": [
+        "savefilez"
+      ],
+      "portable_routes": [
+        "port/file.c"
+      ],
+      "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim.",
+      "exercised": true,
+      "status": "exercised and agrees",
+      "evidence": [],
+      "capture_contract": null,
+      "prior_original_tests": [
+        {
+          "contract": "save-create-cleanup",
+          "scope": "finite-service-cases",
+          "tests": [
+            "tests/test_sdl3_static_candidates.py::test_save_create_cleanup_matches_real_dosbox_filesystem_effects"
+          ],
+          "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim."
         }
       ],
       "evidence_basis": "named finite original data/execution/scenario cases; scope retained below, not the whole input domain",
@@ -63448,20 +63828,20 @@
     }
   ],
   "summary": {
-    "boundaries": 1422,
+    "boundaries": 1427,
     "kinds": {
       "asm": 333,
       "host": 113,
       "adapted_c": 100,
       "build_adapter": 176,
       "semantic_macro": 60,
-      "native_helper": 610,
-      "semantic_contract": 29,
+      "native_helper": 612,
+      "semantic_contract": 32,
       "semantic_data": 1
     },
     "statuses": {
-      "not exercised": 1322,
-      "exercised and agrees": 93,
+      "not exercised": 1320,
+      "exercised and agrees": 100,
       "exercised and differs": 7
     },
     "changed_historical_c_functions": 100,
@@ -63732,9 +64112,9 @@
       "other_port_tests": "build\\coverage\\other-functions.json"
     },
     "counts": {
-      "executed_in_agreeing_original_scenarios": 978,
+      "executed_in_agreeing_original_scenarios": 980,
       "executed_only_in_other_tests": 2,
-      "never_executed": 435,
+      "never_executed": 438,
       "executed_in_original_scenarios_with_known_differences": 7
     },
     "by_kind": {
@@ -63763,13 +64143,13 @@
         "executed_in_original_scenarios_with_known_differences": 0
       },
       "native_helper": {
-        "executed_in_agreeing_original_scenarios": 506,
+        "executed_in_agreeing_original_scenarios": 505,
         "executed_only_in_other_tests": 2,
-        "never_executed": 95,
+        "never_executed": 98,
         "executed_in_original_scenarios_with_known_differences": 7
       },
       "semantic_contract": {
-        "executed_in_agreeing_original_scenarios": 24,
+        "executed_in_agreeing_original_scenarios": 27,
         "executed_only_in_other_tests": 0,
         "never_executed": 5,
         "executed_in_original_scenarios_with_known_differences": 0
@@ -63802,10 +64182,10 @@
       "dos.file": 10,
       "dos.memory": 5,
       "dos.runtime": 8,
-      "files and game data": 8,
+      "files and game data": 10,
       "game logic": 4,
       "graphics": 26,
-      "input": 9,
+      "input": 10,
       "input.joystick": 1,
       "input.keyboard": 7,
       "input.mouse": 6,
@@ -65681,6 +66061,18 @@
           "note": "Reach it from track/replay load or save; a missing asset exercises the error path."
         },
         {
+          "id": "native_helper:port/file.c::save_destination_readonly",
+          "name": "save_destination_readonly",
+          "kind": "native_helper",
+          "note": "Reach it from track/replay load or save; a missing asset exercises the error path."
+        },
+        {
+          "id": "native_helper:port/file.c::unlink_save_destination",
+          "name": "unlink_save_destination",
+          "kind": "native_helper",
+          "note": "Reach it from track/replay load or save; a missing asset exercises the error path."
+        },
+        {
           "id": "native_helper:port/resource.c::file_load_binary_nofatal_thunk",
           "name": "file_load_binary_nofatal_thunk",
           "kind": "native_helper",
@@ -65912,6 +66304,12 @@
           "id": "adapted_c:game/uires.c::mmouseon",
           "name": "mmouseon",
           "kind": "adapted_c",
+          "note": "Reach it with the named keyboard, mouse, or joystick path in menus or a race."
+        },
+        {
+          "id": "native_helper:port/input.c::calibrate_absent_axis",
+          "name": "calibrate_absent_axis",
+          "kind": "native_helper",
           "note": "Reach it with the named keyboard, mouse, or joystick path in menus or a race."
         },
         {

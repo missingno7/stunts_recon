@@ -99,13 +99,14 @@ def six_class_audit(root, layer, semantic, overlays=(), image=None):
     public/member placement. A no-signal result is never a semantic pass.
     Reports are scratch artifacts, not acceptance records.
     """
-    from semantic_mapping import public_extent
+    from semantic_mapping import public_extent, port_correspondence, int86_call_sites
     from semantic_audit import functions as portable_functions
     from diffharness.oracle import OracleImage, DGROUP_PARAGRAPH
     image = image if image is not None else OracleImage.load().load_image
     root = Path(root)
     manifest = read_json(root / 'layout/manifest.json')
     owners = {r['id']: r for r in manifest['owners']}
+    correspondence = port_correspondence(root, layer, semantic, overlays)
     asm = read_json(root / 'docs/porting/asm-migration.json')['routines']
     asm_by_id = {'asm:' + r['owner_id'] + '::' + r['public_symbol']: r for r in asm}
     platform = read_json(root / 'docs/porting/platform-boundary.json')['entries']
@@ -196,15 +197,32 @@ def six_class_audit(root, layer, semantic, overlays=(), image=None):
                     extent = dict(start=a, end=b, basis='semantic_mapping exact name/address candidate; join is not equivalence')
                     if not any(x['start'] == a and x['end'] == b for x in extents):
                         extents.append(extent)
+        mapping = correspondence[row['id']]
+        if mapping['classification'] == 'host-only':
+            extents = []
+            original_data = None
+        for target in mapping['targets']:
+            if target.get('data'):
+                a, size = target['start'], target['end'] - target['start']
+                original_data = dict(address=a, bytes=size, hex=image[a:a + size].hex(),
+                                     authority=target['basis'])
+            elif not any(x['start'] == target['start'] and x['end'] == target['end'] and
+                         x.get('asset') == target.get('asset') for x in extents):
+                extents.append(target)
         evidence_keys = []
         for ex in extents:
             a, b = ex['start'], ex['end']
-            if not 0 <= a < b <= len(image):
+            original = (root / ex['asset']).read_bytes() if ex.get('asset') else image
+            if not 0 <= a < b <= len(original):
                 raise ValueError(f"invalid original interval {row['id']}: {ex}")
-            key = f'{a:x}:{b:x}'
+            key = (ex.get('asset', '') + ':' if ex.get('asset') else '') + f'{a:x}:{b:x}'
             if key not in cache:
-                cache[key] = machine_signals(image, a, b)
-                enrich_machine(cache[key])
+                cache[key] = machine_signals(original, a, b)
+                if ex.get('asset'):
+                    cache[key]['asset'] = ex['asset']
+                    cache[key]['asset_sha256'] = hashlib.sha256(original).hexdigest()
+                else:
+                    enrich_machine(cache[key])
             evidence_keys.append(dict(key=key, basis=ex['basis']))
         portable, risks = [], []
         source_signals = {c: [] for c in AUDIT_CLASSES}
@@ -238,9 +256,14 @@ def six_class_audit(root, layer, semantic, overlays=(), image=None):
                     'msc-runtime': 'Join pinned runtime public and caller uses to host CRT/adapters; compare defined input domains and failures.',
                     'added-glue': 'Compare native call/state order and generated rewrites with original call graph and observed transitions.',
                 }[cls])
+            if mapping['classification'] == 'host-only':
+                checks[cls]['status'] = 'host-only/state-order-review' if cls in (
+                    'initial-state', 'added-glue') else 'host-only/no-direct-original'
+                checks[cls]['review'] = mapping['class4' if cls == 'initial-state' else 'class6']
         entries.append(dict(id=row['id'], ordinal=ordinal, phase=priority(row)[0],
             kind=row['kind'], execution_coverage=row.get('execution_coverage'),
             original=evidence_keys, original_data=original_data, portable=portable, source_risks=risks,
+            correspondence=mapping,
             checks=checks, notes=notes,
             limit='Screened only; neither absence of a linear signal nor a passing scenario closes these obligations.'))
     return dict(schema='stunts-port-six-class-screen-v1',
@@ -251,8 +274,10 @@ def six_class_audit(root, layer, semantic, overlays=(), image=None):
             'docs/porting/asm-migration.json', 'docs/porting/platform-boundary.json',
             'layout/manifest.json', 'layout/data-symbols.json', 'layout/names-registry.json')},
         oracle_lock_sha256=hashlib.sha256((root / 'layout/oracle.lock.json').read_bytes()).hexdigest(),
+        int86_calls=int86_call_sites(root),
         summary=dict(rows=len(entries), never_executed_first=sum(r['phase'] == 0 for r in entries),
             per_class={c: dict(Counter(r['checks'][c]['status'] for r in entries)) for c in AUDIT_CLASSES},
+            correspondence=dict(Counter(r['correspondence']['classification'] for r in entries)),
             original_intervals=len(cache), original_mapped_rows=sum(bool(r['original'] or r['original_data']) for r in entries),
             intervals_with_undecoded_tail=sum(bool(r['undecoded_tail_hex']) for r in cache.values())),
         layout_alias_groups=alias_groups, machine_evidence=cache, rows=entries)

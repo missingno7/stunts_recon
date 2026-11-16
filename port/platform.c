@@ -59,6 +59,7 @@ int int86(int interrupt_number, void *input, void *output)
         regs.bx = 0x00AA;
         regs.cflag = 0;
     } else if (interrupt_number == 0x33) {
+        regs.cflag = 0; /* Input union cflag is not an input to MSC int86. */
         switch (regs.ax) {
         case 0: /* Reset: AX=ffffh if present, BX=button count. */
             port_input_reset_mouse();
@@ -118,7 +119,8 @@ int int86(int interrupt_number, void *input, void *output)
     }
     port_boundary_end(&observed,UINT32_MAX,active);
 #endif
-    return 0;
+    /* MSC int is signed 16-bit; preserve AX before host-width promotion. */
+    return (int16_t)regs.ax;
 }
 
 int16_t criterr(int16_t (*handler)(void))

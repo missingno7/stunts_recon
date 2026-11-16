@@ -35,11 +35,26 @@ class SDL3InputTests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory(prefix="stunts-sdl3-input-") as directory:
             executable = Path(directory) / "sdl3-input-probe.exe"
+            # Keep every assertion in the older probe, updating its analog
+            # assumptions to the original no-device contract. The independent
+            # machine differential is in test_sdl3_static_candidates.
+            probe = (ROOT / "tests/sdl3_input_probe.c").read_text()
+            self.assertEqual(probe.count("replay_axis_value() == 0"), 2)
+            self.assertEqual(probe.count("replay_axis_value() == 33"), 1)
+            self.assertEqual(probe.count("joystick_enabled == 0 && get_joy_flags() == 0"), 1)
+            probe = probe.replace("replay_axis_value() == 0", "replay_axis_value() == -31")
+            probe = probe.replace("replay_axis_value() == 33", "replay_axis_value() == -31")
+            probe = probe.replace("joystick_enabled == 0 && get_joy_flags() == 0",
+                                  "joystick_enabled == 1 && get_joy_flags() == 6")
+            probe = probe.replace('#include "../port/port_runtime.h"',
+                                  '#include "' + (ROOT / 'port/port_runtime.h').as_posix() + '"')
+            probe_path = Path(directory) / 'input_probe.c'
+            probe_path.write_text(probe)
             command = [
                 compiler, "-std=gnu11", "-O0", "-Wall", "-Wextra",
                 "-Wpedantic", "-Werror", "-Wno-unused-parameter",
                 "-I", str(SDL_ROOT / "include"),
-                str(ROOT / "tests" / "sdl3_input_probe.c"),
+                str(probe_path),
                 str(ROOT / "port" / "input.c"),
                 "-L", str(SDL_ROOT / "lib"), "-lSDL3", "-o", str(executable),
             ]

@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 #define PORT_FILE_HANDLES 64u
 #define PORT_PATH_BYTES 1024u
@@ -640,6 +641,27 @@ static FILE *open_save_write(const char *path, char *absolute,
     return file;
 }
 
+static int save_destination_readonly(const char *absolute)
+{
+    struct stat info;
+    if (absolute == NULL || absolute[0] == '\0' || stat(absolute, &info) != 0)
+        return 0;
+#ifdef _WIN32
+    return (info.st_mode & _S_IWRITE) == 0;
+#else
+    return (info.st_mode & S_IWUSR) == 0;
+#endif
+}
+
+static void unlink_save_destination(const char *absolute)
+{
+    /* DOS unlink refuses a read-only file even on hosts where directory
+       permissions alone would allow removal. Never unlink immutable assets. */
+    if (absolute == NULL || absolute[0] == '\0' || save_destination_readonly(absolute))
+        return;
+    (void)SDL_RemovePath(absolute);
+}
+
 static int read_file_to_host(const char *filename, void *destination)
 {
     uint8_t probe;
@@ -717,7 +739,14 @@ int savefilez(const char *filename, const void *source,
         file = open_save_write(filename, absolute, sizeof(absolute));
         if (file == NULL) {
             failed = 1;
-            if (errno == EACCES) dos_error = 5;
+            if (errno == EACCES) {
+                /* The pinned DOSBox-X directory-drive reference leaves AX=2
+                   on a read-only destination; generic denied-create is AX=5. */
+                dos_error = save_destination_readonly(absolute) ? 2 : 5;
+            }
+            else if (errno == EMFILE || errno == ENFILE) dos_error = 4;
+            else if (errno == 0 && filename != NULL && strchr(filename, '\\') != NULL)
+                dos_error = 3; /* DOS path-not-found; '/' remains a DOS-invalid name. */
         }
     }
     remaining = failed ? 0u : (size_t)length;
@@ -744,8 +773,10 @@ int savefilez(const char *filename, const void *source,
         (void)fclose(file);
     }
     if (failed) {
-        if (file != NULL)
-            (void)SDL_RemovePath(absolute);
+        /* Original load22570h cleans up after failed create too. The local
+           DOS handle is uninitialised on that path; no host handle is closed,
+           but unlink still targets the requested, resolved save destination. */
+        unlink_save_destination(absolute);
         /* _savefilez selects policy 1: return the DOS error to its caller.
            The older descriptive fatal/nofatal aliases are inverted. */
         return dos_error;

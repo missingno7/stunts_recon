@@ -11,6 +11,16 @@
 volatile uint16_t input_pushed;
 uint8_t joystick_enabled;
 
+/* Only the original no-device case is supplied: port 201h stays FFh and both
+   RC loops time out with their preset 0050h samples. Calibration still runs. */
+typedef struct PortAbsentAxis {
+    uint16_t minimum, sample_minimum, maximum, sample_maximum;
+    uint16_t ticks, low, high, scale;
+} PortAbsentAxis;
+static PortAbsentAxis s_absent_x = {0x50, 0, 0, 0, 20, 0, 0, 0};
+static PortAbsentAxis s_absent_y = {0x50, 0, 0, 0, 20, 0, 0, 0};
+static uint16_t s_absent_sample;
+
 static uint8_t s_key_down[128];
 static uint8_t s_extended_down[128];
 #define PORT_KEY_CALLBACK_CAP 64u
@@ -264,6 +274,10 @@ void port_input_init(void)
     s_scroll_lock = 0;
     s_extended_prefix = 0;
     s_callback_count = 0;
+    joystick_enabled = 0;
+    s_absent_x = (PortAbsentAxis){0x50, 0, 0, 0, 20, 0, 0, 0};
+    s_absent_y = s_absent_x;
+    s_absent_sample = 0;
     s_test_auto_protection = 0;
     s_test_text_next = s_test_text_count = 0;
 #ifdef PORT_TICK_HANDSHAKE
@@ -744,10 +758,60 @@ int16_t keystate(int16_t scan_code)
     return (int16_t)port_input_key_state((uint16_t)scan_code);
 }
 
+static uint16_t calibrate_absent_axis(PortAbsentAxis *axis, int y_axis)
+{
+    uint16_t sample = 0x50;
+    uint16_t span, half, quarter;
+    int below = y_axis ? sample < axis->minimum :
+                        (int16_t)sample < (int16_t)axis->minimum;
+    if (below) {
+        --axis->ticks;
+        if ((int16_t)axis->ticks <= 0) {
+            axis->minimum = axis->sample_minimum;
+            goto thresholds;
+        }
+        if ((int16_t)sample >= (int16_t)axis->sample_minimum)
+            axis->sample_minimum = sample;
+        goto classify;
+    }
+    if ((int16_t)sample <= (int16_t)axis->maximum)
+        goto restart;
+    --axis->ticks;
+    if (y_axis ? axis->ticks == 0 : (int16_t)axis->ticks <= 0) {
+        axis->maximum = axis->sample_maximum;
+        goto thresholds;
+    }
+    if ((int16_t)sample < (int16_t)axis->sample_maximum)
+        axis->sample_maximum = sample;
+    goto classify;
+thresholds:
+    span = (uint16_t)(axis->maximum - axis->minimum);
+    if ((int16_t)span > 0)
+        axis->scale = (uint16_t)(0x4000u / span);
+    half = (uint16_t)(span >> 1);
+    quarter = (uint16_t)(half >> 1);
+    axis->high = (uint16_t)(axis->minimum + half + quarter);
+    axis->low = (uint16_t)(axis->minimum + half - quarter);
+restart:
+    axis->ticks = 20;
+    axis->sample_maximum = 0x4e20;
+    axis->sample_minimum = 0;
+classify:
+    if (y_axis) {
+        if (sample < axis->low) return 1;
+        return sample >= axis->high ? 2 : 0;
+    }
+    if ((int16_t)sample < (int16_t)axis->low) return 8;
+    return (int16_t)sample >= (int16_t)axis->high ? 4 : 0;
+}
+
 int16_t get_joy_flags(void)
 {
-    /* No joystick device is enabled in the M1 keyboard-only input adapter. */
-    return 0;
+    if ((joystick_enabled & 1u) == 0)
+        return 0;
+    s_absent_sample = 0x50;
+    return (int16_t)(calibrate_absent_axis(&s_absent_x, 0) |
+                     calibrate_absent_axis(&s_absent_y, 1));
 }
 
 int16_t convertjoy(int16_t flags)
@@ -762,27 +826,17 @@ int16_t convertjoy(int16_t flags)
 
 void reset_joystick_selection(void)
 {
-    /* The legacy routine enabled its gameport unconditionally. SDL3 has no
-       joystick backend yet, so reset to the only valid host selection. */
-    joystick_enabled = 0;
+    joystick_enabled = 1;
+    s_absent_x.minimum = s_absent_y.minimum = 0x50;
+    s_absent_x.maximum = s_absent_y.maximum = 0;
 }
 
 int8_t replay_axis_value(void)
 {
-    int left;
-    int right;
-
-    /* Keyboard movement uses the same keypad scans as get_kb_or_joy_flags:
-       7/4/1 steer left and 9/6/3 steer right. A keyboard has no analog
-       travel, so map its held direction to the original axis endpoints
-       (-31 at minimum, +33 at maximum); opposing keys cancel. */
-    left = port_input_key_state(0x47u) || port_input_key_state(0x4bu) ||
-           port_input_key_state(0x4fu);
-    right = port_input_key_state(0x49u) || port_input_key_state(0x4du) ||
-            port_input_key_state(0x51u);
-    if (left == right)
-        return 0;
-    return left ? (int8_t)-31 : (int8_t)33;
+    uint16_t delta = (uint16_t)(s_absent_sample - s_absent_x.minimum);
+    if ((int16_t)s_absent_sample < (int16_t)s_absent_x.minimum)
+        delta = 0;
+    return (int8_t)(uint8_t)((((uint32_t)delta * s_absent_x.scale) >> 8) - 31u);
 }
 
 static void set_num_lock(int enabled)

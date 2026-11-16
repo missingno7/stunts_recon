@@ -1,32 +1,55 @@
 # Static audit of the port boundary
 
-Status: **partial**. Every baseline row was screened for all six classes, with
-the 438 never-executed rows first. This is not a completed semantic review of
-every replacement. Two new port defects were confirmed against original machine
-code and fixed; inventory defects were also corrected. Four concrete candidates
-remain unconfirmed and were not changed.
+Status: **partial semantic review; correspondence gaps closed**. The follow-up
+closes F06/F07/F08/F09 with original-machine/DOSBox-X cases. Every current row
+has either an original scope or an explicit host-only reason; none is left
+unmapped. A caller/expansion scope is broader than an isolated routine proof.
+The report continues to distinguish static signals, reviewed contracts and
+finite execution evidence; general whole-domain equivalence is not asserted.
 
-The baseline has 1,423 overlapping rows. Correcting original-entry joins produces
-1,422: the separate native-helper rows for `int86` and `mat_invert` are now
-represented by their ASM replacement rows, and `sprite_set_1_from_argptr` gains
-its own helper row. No implementation was removed. The existing GCC profiles,
-rejoined to these corrected mappings, mark 435 rows never executed. Those
-profiles predate this audit; this audit did not collect new execution coverage.
+Follow-up decisions: four confirmed bugs fixed (F06-F09), one rejected candidate
+(F10), and no named finding still unconfirmed. The general semantic-review
+obligations below remain separate from those closed findings.
 
-The screen accounts for **1,423 baseline / 1,422 current rows per class**. It
-joins 550 rows to original instruction/data intervals; 872 current rows lack an
-isolated original mapping. There are 430 distinct code intervals, 38 with an
-undecoded linear tail, and 499 groups of data-symbol names sharing an address.
-All remaining obligations stay visible, including those on mapped rows. Counts
-of screened rows must not be reported as counts of verified replacements.
+The first pass (`51668aa`) screened 1,423 baseline / 1,422 corrected rows, with
+438 / 435 respectively marked never executed by the earlier GCC profiles.
+The current inventory has **1,427 overlapping rows**: 1,036 mapped and 391
+host-only. Its earlier-profile join marks 438 never executed; these rows are
+processed first. No new GCC coverage run is claimed. New focused tests execute
+paths absent from those older profiles.
+
+Of the previous **872** unmapped rows, **483** now have original scopes and
+**389** are explicitly host-only. The old native-helper row for
+`port/sprite.c::sprite_setup1_from_arg_pointer` is folded into its now-grounded
+`asm:patlines::sprite_setup1_from_arg_pointer` row (load `0x25af6`); it was not
+silently dropped. Six new helper/contract rows and that deduplication account
+for the net inventory increase of five.
+
+| Class | Mapped original scope | Host-only | Still unmapped |
+|---|---:|---:|---:|
+| Width/signedness | 1036 | 391 | 0 |
+| Aliasing/layout | 1036 | 391 | 0 |
+| Host-service results | 1036 | 391 | 0 |
+| Initial state | 1036 | 391 | 0 |
+| MSC runtime | 1036 | 391 | 0 |
+| Added glue | 1036 | 391 | 0 |
+
+Host-only rows have no direct historical routine counterpart; classes 4 and 6
+record the state they expose and the ordering they add. The other four classes
+are marked `host-only/no-direct-original`, not credited with a machine-equivalence
+pass. There is no remaining unmapped-row reason list because its count is zero.
+There are 660 diagnostic code intervals (including the four original driver
+images), 49 undecoded linear tails and 499 same-address data-symbol groups.
+Undecoded bytes are retained; a linear tail or a scoped mapping never becomes a
+claim about executable reachability or whole-domain behaviour.
 
 ## Rerunning and evidence
 
 From the repository root:
 
 ```powershell
-python tools/porting/semantic_audit.py --six-classes --work build/workers/portaudit/audit
-python -m unittest tests.test_sdl3_static_audit -v
+python tools/porting/semantic_audit.py --six-classes --work build/workers/portaudit/round2/audit
+python -m unittest tests.test_sdl3_static_audit tests.test_sdl3_static_candidates -v
 ```
 
 The first command runs the existing production-overlay/compiler/span audit and
@@ -38,7 +61,8 @@ report's `SCREENED; semantic review incomplete` status.
 
 Each row retains its ID, review ordinal, priority phase, coverage, portable source
 and body hashes, original interval references, lexical risks, and six explicit
-obligations. Each original interval retains its complete byte hash, instruction
+obligations, correspondence classification and reason. Host additions include
+their observable state and required ordering. Each original interval retains its complete byte hash, instruction
 addresses/bytes/operand widths and any undecoded tail. The data table is retained
 as data, never disassembled as code. Report inputs are sealed by hashes.
 
@@ -90,7 +114,8 @@ compare all 128 bytes of the surrounding workspace, not just the result matrix.
    The save probe supplies successful create/write/close, failed close, short
    write, short write plus failed close, and create errors 2/5. Existing original
    mouse/INT15, file/scenario and AD15/PC15 observations are retained at their
-   stated finite scopes. Other error-code translations remain open.
+   stated finite scopes. Real DOSBox-X directory/FAT12 cleanup cases below extend those supplied
+   results. Other error-code translations remain open.
 4. **Initial state.** Service sites and possible DGROUP accesses expose startup
    review points; they do not prove read-before-write. Compare original driver
    initialization and first consumers with `port/main.c`, `input.c`, `video.c`,
@@ -116,7 +141,7 @@ compare all 128 bytes of the surrounding workspace, not just the result matrix.
 
 ## Findings
 
-“Not a bug” below is limited to the named original/native cases. Existing ten
+"Not a bug" below is limited to the named original/native cases. Existing ten
 scenario-discovered fixes are regression anchors above, not counted as new bugs.
 
 | Finding / row | Class | Original behaviour and evidence | Port behaviour | Verdict | Test / remaining evidence |
@@ -126,44 +151,171 @@ scenario-discovered fixes are regression anchors above, not counted as new bugs.
 | F03: `asm:fontmat::_mat_invert` / `port/matrix.c::mat_invert` | Aliasing/layout | `0x22aa3..0x22ada` writes output indices 0,3,6,1,4,7,2,5,8 and rereads source after each store. Accepted public offset locates the entry independently of the old incomplete function inventory. | Previously wrote 0,1,2,3,4,5,6,7,8: six partial-overlap cases differed. Now preserves the original store order. | **bug fixed** | `test_matrix_transpose_preserves_original_partial_overlap_order`: 19 layouts, complete surrounding memory; pre-fix `transpose-before.log` |
 | F04: `asm:kbjoy::_convertjoy` | Width/signedness | `0x207d8` AND BX,0Fh; byte table load at `0x207db`; XOR AH,AH at `0x207df`. | Masks to low four bits and zero-extends the same table byte. | **not a bug** | `test_direction_table_and_msc_random_match_original_machine_cases`: 48 calls including high-bit flags |
 | F05: `asm:library_rand_124476::_rand` / `port/random.c::port_random_test_rand` | MSC runtime; width/signedness | `0x1e64e..0x1e675` multiplies 32-bit state by 343FDh, adds 269EC3h modulo 2^32, returns high word masked to 15 bits. Original state is read after each call. | The enabled production compatibility generator agrees for zero, 8000h and FFFFFFF0h initial states. Host fallback outside enabled startup is outside these cases. | **not a bug** | Same runtime test: 36 consecutive-state/return comparisons |
-| F06: `asm:kbjoy::_replay_axis_value` | Width/signedness; initial state | `0x207e3..0x207f9` consumes saved analog sample/minimum/scale, signed comparison, unsigned MUL, bits 8..23, subtracts 31; retained C consumes AL. | Synthesizes -31/0/+33 from held keypad keys; no analog backend supplies comparable saved samples. | **unconfirmed** | Original operands recorded; need a specified connected-controller input/calibration case and native sample mapping. No fix. |
-| F07: `asm:kbjoy::_reset_joystick_selection` | Initial state | `0x207b4..0x207d1` enables sampling and resets four extrema, retaining other calibration state. | Disables joystick selection because the host backend is keyboard-only. | **unconfirmed** | Hardware/backend contract is missing. An absent native device is not comparable to supplied original joystick samples. No fix. |
-| F08: `asm:library_dos_int86_123916::_int86` | Host-service results | `0x1e45f..0x1e480` stores result registers/carry and normally retains returned AX as scalar result. | Writes the register structure but returns scalar zero. Reconstructed mouse callers use the structure; full original caller-consumer liveness is not established here. | **unconfirmed** | Needs a machine-backed caller case proving whether scalar AX can affect the game. Existing INT33/INT15 projections cover only defined structure fields. No fix. |
-| F09: `asm:filewrit::_savefilez` create-error cleanup | Host-service results; initial state | `0x22573..0x2258c` attempts close with a local handle set only on successful create, then unlink, retaining the create error. | Skips close/unlink if no host file opened. Return errors 2/5 agree; effects on a pre-existing destination are not established. | **unconfirmed** | Save test records original cleanup attempts; need DOSBox-X failure injection with a pre-existing destination and corresponding host failure. No fix. |
+| F06: `asm:kbjoy::_replay_axis_value` | Width/signedness; initial state | `0x207e3..0x207f9` scales the saved analog X sample; keypad state is not an input. AL is consumed as a signed byte. In the no-device case the scale remains zero and AL is E1h (-31). | Removed invented keypad endpoint/centering synthesis; uses saved timeout sample and original word multiply/extraction. | **bug fixed** | `test_absent_joystick_calibration_reset_and_saved_axis_match_original`; playback-prefix bypass test |
+| F07: `asm:kbjoy::_reset_joystick_selection` / `_get_joy_flags` | Initial state; width/signedness | Reset at `0x207b4` sets enable=1 and four extrema only. With no controller, port201h stays FFh, samples time out at 0050h and calibration still advances: flags 6, then 9, then 6. | Replaced forced disable/constant-zero return with the original no-response calibration path; no connected-device sampler was added. | **bug fixed** | Actual DOSBox-X `joysticktype=none` 80-call stream and 80 reset/enable-bit machine cases |
+| F08: `asm:library_dos_int86_123916::_int86` | Host-service results | `0x1e45f..0x1e480` stores result words/carry and returns AX. All 12 retained source calls discard the scalar, but this is still the MSC ABI. | Returns signed16 AX promoted to host int; successful INT33 output carry does not inherit the input union field. | **bug fixed** | Six original/native scalar/union cases, including aliased buffers and an initial nonzero cflag; complete call list below |
+| F09: `asm:filewrit::_savefilez` create-error cleanup | Host-service results; initial state | `0x22570..0x2258c` preserves create AX, attempts close using an uninitialised local handle, then unlinks the requested filename through SS:BP+6. Real DOSBox-X exhausted handles returns 4 and deletes an existing writable destination; read-only and missing-path unlink attempts fail. | Attempts unlink of the resolved mutable save destination even if create failed, preserves read-only files, returns measured directory-drive read-only=2, handle exhaustion=4 and backslash path-not-found=3. | **bug fixed** | Real DOSBox-X directory/FAT12 cases versus native file results and bytes; details below |
 
-## Remaining work and validation
+| F10: `savefilez` destination is an existing directory | Host-service results | Original load `0x22570..0x2258c` attempts AH41h after failed create; the pinned directory drive returns AX2 and retains the directory. | Path resolution rejects the directory as a file destination and leaves it intact, also returning 2. | **not a bug** | `test_save_create_cleanup_matches_real_dosbox_filesystem_effects`: real directory fixture, return, kind and file bytes compared |
 
-The JSON's six obligations on each row are the untruncated review backlog.
-In particular, linear instruction windows do not settle every result consumer,
-same-address labels do not settle indexed cross-object spans, and passing scenario
-assertions do not settle initial hardware state or arbitrary host failures.
-Unmapped helper/build/macro rows need a caller/expansion mapping, not an invented
-original function. Thus the exhaustive static audit requested is still open.
+## Correspondence and host review
 
-Scratch evidence and the file-changing step ledger are under
-`build/workers/portaudit/`. The baseline screen is `audit/six-classes-baseline.json`;
-the corrected inventory screen is `audit/six-classes.json`. Nothing in `game/`,
-`lib/`, `recipes/` or `layout/` was edited. Git metadata is untouched.
+`semantic_mapping.port_correspondence()` joins accepted recipe members and OMF
+publics, current canonical aliases, actual native direct-call/callback-reference
+scopes, macro expansion users and Python old-source anchors. Shared rewrite
+helpers retain their enclosing adapter scopes. Declaration-wide transforms are
+mapped to the retained C ABI view, not falsely attributed to one routine.
+Diagnostic scopes remain explicit and may contain data or several routines.
+The AD15/PC15 helper roots name original driver entries and sealed complete
+`.DRV` images; the MT15/TD15 debt contract retains those original images too.
+Driver coordinates are file-relative and are never interpreted as MCGA load
+offsets. Whole-driver linear decoding does not prove all internal paths.
 
-Requested verification passed:
+Explicit host policies cover process/SDL setup, config, diagnostics, observation,
+input queues, entropy, the tick clock, sound-device sinks, projection snapshots
+and enhanced rendering. Each row records its one-line reason, class-4 state and
+class-6 ordering. Host classification requires an existing definition; an
+invented helper in a host-policy file remains unmapped. No unmatched row defaults
+to host-only. Regression checks reject missing mappings, invalid spans and the
+old incorrect arithmetic-helper association.
 
-- `python port/build.py build`: 38 game / 46 host objects, zero function/data stubs.
-- `python tools/validate.py --tests port --no-proof`: 186 passed, no failures or
-  skips; final exit 0, 147.1 seconds. The earlier run passed the tests but was
-  rejected by the input-drift guard because audit files were edited during it;
-  that receipt remains in `port-tests-input-drift.log`.
-- `python tools/validate.py --proof-only`: `HYBRID_EXACT`, independent compiler
-  PASS, BSS/runtime placement PASS; exit 0, 38.6 seconds.
-- Focused audit/inventory regression: eight tests passed. `git diff --check`
-  passes with `core.whitespace=cr-at-eol` for the existing CRLF detector source.
+The six-class report now records every row's correspondence and all six checks,
+with original operands and portable type/risk sites where applicable. The
+production audit still runs 672 compiler/layout assertions and existing bounded
+span checks. Rows retain `requires-review` or `host-only/state-order-review`
+when these mechanical checks cannot settle every consumer, alias or schedule.
+This is the remaining semantic-review debt, distinct from the closed mapping
+and candidate lists. No warning, differing stream or undecoded tail is masked.
 
-Image ownership remains C code 137,978 / C data 16,640 bytes; ASM code 30,977 /
-ASM data 5,575; pinned runtime code 7,576 / data 1,192; unresolved raw **0**.
-The other image bytes are 56 link fill and six BSS-in-image bytes. The proof also
-reports zero raw BSS debt. These prove the reconstruction invariant separately
-from port behaviour and from the unfinished static review.
+## Every retained int86 call
 
-Detailed outputs are in `build.log`, `focused.log`, `port-tests.log`, `proof.log`
-and adjacent result receipts under the scratch directory. The port and proof
-commands are scoped runs; no claim is made that the unrequested reconstruction
-tool test group was rerun.
+`semantic_mapping.int86_call_sites()` reruns this list. All are in `lib/mouse.c`;
+there are no calls in `game/` or other `lib/` C units. Each discards the scalar:
+
+- line 22, `mouse_set_pixratio`: INT33 pixel ratio, scalar discarded.
+- line 32, `initmouse`: INT15 C201, scalar discarded.
+- line 34, `initmouse`: INT33 reset, scalar discarded; AX/BX read from the union.
+- line 56, `setmousebounds`: horizontal bounds, scalar discarded.
+- line 60, `setmousebounds`: vertical bounds, scalar discarded.
+- line 69, `mouse_get_position`: position/buttons, scalar discarded.
+- line 85, `mouse_show_cursor`: show, scalar discarded.
+- line 96, `mouse_hide_cursor`: hide, scalar discarded.
+- line 109, `setmousepos`: move, scalar discarded.
+- line 118, `getmousepos`: position/buttons, scalar discarded.
+- line 132, `setmousex`: horizontal bounds, scalar discarded.
+- line 143, `setmousey`: vertical bounds, scalar discarded.
+
+The new test executes the original MSC wrapper, not a rewritten approximation.
+Its supplied successful BIOS/mouse responses are inputs. Native output compares
+all seven register words and signed scalar AX, with separate and aliased unions.
+
+## Create failure, deletion and full disks
+
+`diffharness.dos_services.capture()` builds a small COM loader under ignored
+`build/`, reads the complete locked load image as data, applies all ordered
+relocations and calls the original FAR entry with DS=SS=DGROUP. It records DOS
+requests through a private INT21 observer. The requested destination is copied
+unchanged to the original near filename argument. The original routine itself
+is never patched. The runner is bounded and terminates DOSBox-X after each case.
+No original asset or expected image is regenerated from native output.
+
+The original always attempts AH3Eh and AH41h after a failed create. The close
+handle is unspecified stack residue on that path; the port does not invent a
+host handle from that residue. Unlink uses the requested name, not a fallback
+basename or source asset path. With a pre-existing writable destination and
+exhausted DOS handles, the failed create returns AX4, cleanup frees a handle and
+unlink deletes the file. An explicitly injected AX5 create failure likewise
+reaches real DOS deletion and removes the writable destination.
+
+On the pinned directory drive a read-only destination yields AX2 and survives
+unlink. A backslash missing parent yields AX3 and the same unlink name fails;
+a sibling file in the current directory remains unchanged. An existing directory
+at the destination returns AX2 and survives the failed unlink; the native
+resolver rejects it before a file handle is opened and retains the directory. The existing
+forward-slash invalid-name AX2 scenario is preserved. Generic denied-create
+AX5 remains a separate supplied result. Native cleanup is confined to the
+mutable save root and retains read-only files even on hosts whose directory
+permissions would otherwise permit unlink.
+
+Full disk does not imply that create of an existing writable file fails. A
+fully allocated FAT12 image with a three-byte old destination frees/reuses that
+file's allocation and successfully saves `abc` (AX0). With an empty existing
+file and no free clusters, create succeeds, write is short, AX becomes 1 and
+cleanup removes the incomplete destination. Tests compare these original file
+bytes/existence and returns against native successful/short-write service inputs.
+
+The capture also preserves a DOSBox-X backend diagnostic: its FAT driver permits
+an existing read-only file to be created/truncated, whereas the directory-drive
+case fails. That FAT case is not mislabeled as a create failure or used to claim
+a universal DOS errno mapping. The native file adapter follows the measured
+directory-drive contract used by this port's original scenario oracle. DOSBox
+backend quirks and unspecified stack-handle effects remain explicit limits of
+these finite comparisons.
+
+## Future feature: joystick device support
+
+No SDL joystick device backend or invented connected-controller model was added.
+Current support is the original with no responding controller. A real DOSBox-X
+capture with `joysticktype=none` executes the original reset and 80 polling calls;
+its 6/9/6 flag sequence agrees with the native calibration and with Unicorn's
+explicit FFh port input. Reset also agrees under retained calibration state and
+nontrivial enable-byte values. The integration probe keeps all its assertions
+and updates its former keypad/disable assumptions to this original contract.
+
+For a future connected-device implementation, preserve this original contract:
+
+- `_joystick_enabled` bit 0 gates sampling. Reset sets it to 1 and sets X/Y
+  minima to 0050h and maxima to zero; it retains previous samples, thresholds,
+  scale factors and calibration countdowns.
+- A write to port201h starts RC measurement; bits 0/1 are sampled with a bounded
+  signed count below 0FA0h after the 14h-loop delay. Both sample words start at
+  0050h and retain that timeout value when no axis responds.
+- Calibration has independent 14h countdowns. X uses signed minimum/direction
+  comparisons; Y uses an unsigned minimum and unsigned direction comparisons,
+  and its maximum countdown tests zero rather than signed <=0. Preserve the
+  actual word SUB/SHR/ADD wrap and update order.
+- Positive span sets scale to unsigned 4000h/span. Thresholds are minimum plus
+  half-span plus/minus quarter-span. Sample extrema/countdown reset rules are
+  those in `lib/kbjoy.ASM`; they are not generic joystick dead zones.
+- Buttons are active low: the first and last port samples contribute
+  `((first & last) & 30h) ^ 30h`. Keyboard control flags take precedence when
+  nonzero. Keypad presses do not overwrite the saved analog sample.
+- `_replay_axis_value` clamps according to the original signed comparison,
+  multiplies the word difference by the unsigned scale, extracts bits 8..23,
+  subtracts 31 modulo 65536 and exposes AL as a signed byte to the retained C.
+
+Joystick help/calibration requires visiting all nine direction indices. With no
+controller only the timeout-derived indices appear; on leaving the dialog the
+retained C rejects the selection and disables joystick input. There is no
+separate successful no-device detection that should be fabricated by reset.
+Recorded steering is converted into replay input bytes by `mousesteer`; replay
+playback consumes the recorded stream through unchanged reconstructed C. The
+original `moveeverything` gm_playmode=2 prefix advances playback without calling
+live joystick sampling, independently checked for enable bytes 0,1,2,FFh.
+Joystick-recorded replays therefore do not require a live controller backend.
+
+## Validation and scope
+
+Focused candidate/audit/input tests: **15 passed**. Reconstruction proof:
+**PASS HYBRID_EXACT**, including the independent DOSBox-X compiler gate for 78
+contributions; 2,588 ordered relocations, raw bytes zero.
+
+The requested verification passed:
+
+- `python port/build.py build`: 38 game C objects, 46 host objects, zero function
+  or data stubs (`round2/build-pass.log`, `build-pass.result.json`).
+- `python tools/validate.py --tests port --no-proof`: **193 passed, 0 failed,
+  0 skipped**, including the final directory case (`round2/port-tests-pass.log`,
+  `port-tests-pass.result.json`).
+- `python tools/validate.py --proof-only`: **PASS HYBRID_EXACT** and independent
+  compiler PASS (`round2/proof.log`, `proof.result.json`).
+
+All receipts and the eight original DOS filesystem fixtures plus the 80-sample
+no-device capture are under `build/workers/portaudit/round2/`. The file-changing
+ledger is `build/workers/portaudit/steps2.json`: 15 paths, each in exactly one
+step. The pre-existing game and DOSBox-X processes were preserved; loaded build
+files were moved to scratch to allow rebuilding, and no audit subprocess remains.
+No `game/`, `lib/`, `recipes/`, `layout/`, original asset or Git metadata was
+edited. The existing original results-music/replay-transition differences remain
+listed in step-divergences; this audit does not turn those finite failing streams
+into passes.

@@ -6,10 +6,11 @@ Unchanged reconstructed C is outside it; its width/layout adaptations are inside
 
 The [static audit](static-audit.md) corrected missing-address joins and grounded
 runtime/ASM public entries in accepted OMF declarations. The current table has
-1,422 rows (93 with finite agreeing evidence, seven differing, 1,322 without
+1,427 rows (100 with finite agreeing evidence, seven differing, 1,320 without
 comparable evidence). The step-9 counts below describe the earlier snapshot.
-The added transpose regression has a finite contract; the six-class static
-review remains incomplete.
+The follow-up maps 1,036 rows to original scopes and classifies 391 as host-only;
+none remains unmapped. The transpose, absent-joystick, MSC int86 and save-cleanup
+regressions have finite contracts; the six-class semantic review remains incomplete.
 
 | View | Authority and scope |
 |---|---|
@@ -18,7 +19,7 @@ review remains incomplete.
 | Adapted C | Fresh `semantic_audit.py` historical/production-overlay join, including observation/input hooks |
 | Build adaptations | Rewrite sites in `port/build.py`, adapters and delegated declaration/header/width transforms; source line and enclosing-function hash retained |
 | Native helpers/macros | Existing function scanner plus recursive renderer/header helpers and explicit width/qualifier macros |
-| Semantic contracts | All 29 scoped contracts, with authority, tests and finite claim limits preserved |
+| Semantic contracts | All 32 scoped contracts, with authority, tests and finite claim limits preserved |
 
 Rows overlap: their sum is not a count of independent DOS APIs. Existing
 original-machine differential cases count as finite evidence. Lexical similarity,
@@ -70,11 +71,6 @@ finite agreeing cases, CPU-dependent observations and still-unproven sound state
 
 ## Measured execution coverage
 
-These profiles predate the static audit. Rejoining their existing function
-counts to corrected entry mappings changes the never-executed count from 438 to
-435; no new coverage run is claimed. A missing native mapping does not establish
-that the original game cannot call a pinned runtime entry.
-
 The SDL3 executable was built with GCC `--coverage` in a separate build directory. The first profile covers the original-reference scenario tests; the second covers the remaining port tests. GCC function counts are joined to each row's portable function, generated overlay target or affected translation unit, or macro expansion users. `status` above remains the original observation status.
 
 A row is in the agreeing bucket when its mapped code ran during the selected original-reference tests and those asserted comparisons passed. Rows whose existing status records a known difference are counted separately. This does not prove every row's full domain.
@@ -85,11 +81,11 @@ A row is in the agreeing bucket when its mapped code ran during the selected ori
 | `asm` | 114 | 0 | 219 | 0 |
 | `build_adapter` | 173 | 0 | 3 | 0 |
 | `host` | 39 | 0 | 74 | 0 |
-| `native_helper` | 506 | 2 | 95 | 7 |
-| `semantic_contract` | 24 | 0 | 5 | 0 |
+| `native_helper` | 505 | 2 | 98 | 7 |
+| `semantic_contract` | 27 | 0 | 5 | 0 |
 | `semantic_data` | 1 | 0 | 0 | 0 |
 | `semantic_macro` | 42 | 0 | 18 | 0 |
-| **Total (1422)** | 978 | 2 | 435 | 7 |
+| **Total (1427)** | 980 | 2 | 438 | 7 |
 
 Never-executed rows are grouped below. Each note names a likely way to reach the path or explains when the native game has no corresponding entry.
 
@@ -436,11 +432,13 @@ Never-executed rows are grouped below. Each note names a likely way to reach the
 - `host:start@0x01CC62` — Reach it through the named C runtime startup/exit path; game scenarios do not call this unmapped helper.
 - `host:sub_2CE4A@0x01CE4A` — Reach it through the named C runtime startup/exit path; game scenarios do not call this unmapped helper.
 
-### files and game data (8)
+### files and game data (10)
 
 - `native_helper:port/file.c::port_fs_exists` — Reach it from track/replay load or save; a missing asset exercises the error path.
 - `native_helper:port/file.c::port_fs_seek` — Reach it from track/replay load or save; a missing asset exercises the error path.
 - `native_helper:port/file.c::port_runtime_set_save_root` — Reach it from track/replay load or save; a missing asset exercises the error path.
+- `native_helper:port/file.c::save_destination_readonly` — Reach it from track/replay load or save; a missing asset exercises the error path.
+- `native_helper:port/file.c::unlink_save_destination` — Reach it from track/replay load or save; a missing asset exercises the error path.
 - `native_helper:port/resource.c::file_load_binary_nofatal_thunk` — Reach it from track/replay load or save; a missing asset exercises the error path.
 - `native_helper:port/resource.c::signed_hotspot_offset` — Reach it from track/replay load or save; a missing asset exercises the error path.
 - `native_helper:tools/porting/port_include/stunts_api_views.h::stunts_port_read_file_with_retry_view` — Reach it from track/replay load or save; a missing asset exercises the error path.
@@ -483,11 +481,12 @@ Never-executed rows are grouped below. Each note names a likely way to reach the
 - `native_helper:port/video.c::port_video_read_status_1` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
 - `native_helper:tools/porting/port_include/stunts_api_views.h::stunts_port_locate_shape_fatal_shape_view` — Reach it while drawing the matching startup/menu/race scene; clipped and transition cases need a matching scene.
 
-### input (9)
+### input (10)
 
 - `adapted_c:game/uires.c::do_joystick_resource_text` — Reach it from track/replay load or save; a missing asset exercises the error path.
 - `adapted_c:game/uires.c::mkeyon` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.
 - `adapted_c:game/uires.c::mmouseon` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.
+- `native_helper:port/input.c::calibrate_absent_axis` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.
 - `native_helper:port/input.c::port_input_dos_scan` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.
 - `native_helper:port/input.c::port_input_handle_event` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.
 - `native_helper:port/input.c::port_input_queue_event` — Reach it with the named keyboard, mouse, or joystick path in menus or a race.

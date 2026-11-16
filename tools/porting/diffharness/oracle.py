@@ -81,10 +81,24 @@ class SymbolMap:
         self.functions = json.loads(evidence_path.read_text(encoding="utf-8"))["functions"]
 
     def _accepted_asm_public(self, query):
-        """Entry coordinates from accepted OMF publics, not guessed boundaries."""
+        """Entry coordinates from accepted members/publics, not guessed boundaries."""
         from tools.porting.semantic_mapping import public_extent
         manifest = json.loads((ROOT / 'layout/manifest.json').read_text(encoding='utf-8'))
         owners = {r['id']: r for r in manifest['owners']}
+        for owner in owners.values():
+            if owner.get('kind') != 'MATCHING_C' or not owner.get('recipe'):
+                continue
+            recipe = json.loads((ROOT / owner['recipe']).read_text(encoding='utf-8'))
+            for member in recipe.get('members', []):
+                if query not in {member.get('start'), member.get('name'), member.get('public'),
+                                 (member.get('public') or '').lstrip('_')}:
+                    continue
+                if not all(isinstance(member.get(k), int) for k in ('start', 'end')):
+                    continue
+                if not owner['start'] <= member['start'] < member['end'] <= owner['end']:
+                    raise ValueError('accepted member outside owner')
+                return RoutineAddress(member['name'], member['start'], member['end'],
+                                      recipe['original_frame_load_address'])
         asm = json.loads((ROOT / 'docs/porting/asm-migration.json').read_text(encoding='utf-8'))
         for row in asm['routines']:
             owner = owners.get(row['owner_id'], {})

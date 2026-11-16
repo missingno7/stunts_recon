@@ -31,11 +31,13 @@ class RealModeRunner:
                  load_segment: int = DEFAULT_LOAD_SEGMENT,
                  instruction_budget: int = 1_000_000,
                  io_ports: dict[int, int] | None = None,
-                 interrupt_handlers: dict | None = None):
+                 interrupt_handlers: dict | None = None,
+                 writable_ports: set[int] | None = None):
         self.oracle = oracle or OracleImage.load()
         self.load_segment = load_segment & 0xFFFF
         self.instruction_budget = instruction_budget
         self.io_ports = io_ports or {}
+        self.writable_ports = writable_ports or set()
         # Explicit test inputs at service boundaries. Unlisted interrupts still
         # trap; a handler must supply registers/flags/buffers itself.
         self.interrupt_handlers = interrupt_handlers or {}
@@ -108,6 +110,8 @@ class RealModeRunner:
             return self.io_ports[port] & ((1 << (size * 8)) - 1)
 
         def on_out(machine, port, size, value, _user):
+            if port in self.writable_ports:
+                return
             state["trap"] = f"OUT port {port:#06x}={value:#x} width {size} at {self._pc(machine)}"
             machine.emu_stop()
 

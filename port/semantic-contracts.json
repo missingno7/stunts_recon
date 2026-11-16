@@ -921,6 +921,92 @@
         "tests/test_sdl3_scenarios.py::test_file_error_ad15",
         "tests/test_sdl3_scenarios.py::test_file_error_pc15"
       ]
+    },
+    {
+      "id": "msc-int86-ax-result",
+      "authority": "locked_image_live_execution",
+      "status": "differential-oracle",
+      "subject_type": "routine",
+      "evidence_scope": "finite-service-cases",
+      "routines": [
+        "int86"
+      ],
+      "source_scope": [
+        "port/platform.c"
+      ],
+      "historical_route": [
+        "MSC _int86 load0x1e40c; retained 12 source calls"
+      ],
+      "portable_route": [
+        "port/platform.c"
+      ],
+      "scope": "AX and seven output register words, separate and aliased union; reset, position and C201 cases",
+      "observables": [
+        "named register/state/file effects"
+      ],
+      "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim.",
+      "tests": [
+        "tests/test_sdl3_static_candidates.py::test_int86_returns_original_ax_and_register_buffer_including_alias",
+        "tests/test_sdl3_static_candidates.py::test_int86_call_inventory_covers_every_retained_source_call"
+      ]
+    },
+    {
+      "id": "absent-joystick-contract",
+      "authority": "locked_image_live_execution",
+      "status": "differential-oracle",
+      "subject_type": "routine",
+      "evidence_scope": "finite-service-cases",
+      "routines": [
+        "get_joy_flags",
+        "reset_joystick_selection",
+        "replay_axis_value"
+      ],
+      "source_scope": [
+        "port/input.c"
+      ],
+      "historical_route": [
+        "kbjoy load0x207b4 reset, load0x207e3 saved axis, original port201h sampling; DOSBox-X joysticktype=none"
+      ],
+      "portable_route": [
+        "port/input.c"
+      ],
+      "scope": "80 timeout/calibration samples with resets and enable-bit cases; actual DOSBox-X no-device 80-call stream; playback prefix bypass",
+      "observables": [
+        "named register/state/file effects"
+      ],
+      "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim.",
+      "tests": [
+        "tests/test_sdl3_static_candidates.py::test_absent_joystick_calibration_reset_and_saved_axis_match_original",
+        "tests/test_sdl3_static_candidates.py::test_no_device_dosbox_calibration_matches_native",
+        "tests/test_sdl3_static_candidates.py::test_replay_playback_prefix_does_not_sample_live_joystick"
+      ]
+    },
+    {
+      "id": "save-create-cleanup",
+      "authority": "locked_image_live_execution",
+      "status": "differential-oracle",
+      "subject_type": "routine",
+      "evidence_scope": "finite-service-cases",
+      "routines": [
+        "savefilez"
+      ],
+      "source_scope": [
+        "port/file.c"
+      ],
+      "historical_route": [
+        "filewrit load0x22570 error cleanup; real DOSBox-X directory and full FAT12 file services"
+      ],
+      "portable_route": [
+        "port/file.c"
+      ],
+      "scope": "Read-only directory-drive file, missing path, exhausted handles, injected create error, full disk overwrite/short write; return and resulting file bytes",
+      "observables": [
+        "named register/state/file effects"
+      ],
+      "claim_limit": "Named finite cases and service inputs only; no whole-domain or whole-game claim.",
+      "tests": [
+        "tests/test_sdl3_static_candidates.py::test_save_create_cleanup_matches_real_dosbox_filesystem_effects"
+      ]
     }
   ],
   "policy": {
